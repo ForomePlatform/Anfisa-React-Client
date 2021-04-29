@@ -7,6 +7,7 @@ export interface DsDistItem {
         doc: any[][][];
         total: number;
         'date-note'?: any;
+        'create-time': string
         ancestors: any[];
         'v-level': number;
         'v-idx': number;
