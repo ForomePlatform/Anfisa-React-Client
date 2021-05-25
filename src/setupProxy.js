@@ -1,9 +1,12 @@
 /* eslint-disable unicorn/filename-case */
 const { createProxyMiddleware } = require('http-proxy-middleware')
+const Routes = require('./router/routes')
 
 const filter = function (pathname) {
+  const isRoute = Object.values(Routes).find(route => route === pathname)
+
   if (
-    pathname === '/' ||
+    isRoute ||
     pathname === '/manifest.json' ||
     pathname.match('hot-update.js') ||
     pathname.match('^/logo') ||
