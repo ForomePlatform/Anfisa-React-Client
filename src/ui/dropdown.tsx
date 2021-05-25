@@ -7,6 +7,7 @@ import DropdownBase, { Option } from 'react-dropdown'
 import styled from 'styled-components'
 
 import { FilterList } from '../..'
+import { useParams } from '../core/hooks/use-params'
 import datasetStore from '../store/dataset'
 
 const StyledDropDown = styled(DropdownBase)`
@@ -95,21 +96,21 @@ const StyledDropDown = styled(DropdownBase)`
 
 export const DropDown = observer(
   (): ReactElement => {
+    const params = useParams()
+
     const presets: string[] = get(datasetStore, 'dsStat.filter-list', []).map(
       (preset: FilterList) => preset.name,
     )
 
-    const defaultOption = presets[0]
-
     const onSelect = (arg: Option) => {
       datasetStore.setActivePreset(arg.value)
+      datasetStore.fetchPresetTaskIdAsync(params.get('ds') ?? '', arg.value)
     }
 
     return (
       <StyledDropDown
         options={presets}
         onChange={onSelect}
-        value={defaultOption}
         placeholder="Select an option"
         controlClassName="controlClassName"
         arrowClassName="arrowClassName"
