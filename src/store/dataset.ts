@@ -21,6 +21,7 @@ class DatasetStore {
   wsTags: WsTagsType = {}
   selectedTags: string[] = []
   columns: string[] = Object.values(tableColumnMap)
+  filteredNo: number[] = []
 
   activePreset = ''
   searchColumnValue = ''
@@ -177,6 +178,32 @@ class DatasetStore {
     }
   }
 
+  async fetchFilteredTabReportAsync(dsName: string) {
+    this.isLoadingTabReport = true
+    this.tabReport = []
+
+    const response = await fetch(getApiUrl(`tab_report`), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        ds: String(dsName),
+        schema: 'xbr',
+        seq: JSON.stringify(this.filteredNo),
+      }),
+    })
+
+    const result = await response.json()
+
+    runInAction(() => {
+      this.tabReport = [...this.tabReport, ...result]
+      this.isLoadingTabReport = false
+      this.isFetchingMore = false
+      // this.indexTabReport += 50
+    })
+  }
+
   async fetchWsTagsAsync(dsName: string | null) {
     const response = await fetch(getApiUrl(`ws_tags?ds=${dsName}&rec=${0}`), {
       method: 'POST',
@@ -188,6 +215,28 @@ class DatasetStore {
       this.wsTags = result
       this.selectedTags = [...result['op-tags'], ...result['check-tags']]
     })
+  }
+
+  async fetchPresetTaskIdAsync(dsName: string, filter: string) {
+    const response = await fetch(
+      getApiUrl(`ds_list?ds=${dsName}&filter=${filter}`),
+    )
+
+    const result = await response.json()
+
+    this.fetchJobStatusAsync(result['task_id'])
+  }
+
+  async fetchJobStatusAsync(taskId: string) {
+    const response = await fetch(getApiUrl(`job_status?task=${taskId}`))
+    const result = await response.json()
+
+    console.log(result)
+    this.filteredNo = result[0]
+      ? result[0].records.map((variant: { no: number }) => variant.no)
+      : []
+
+    await this.fetchFilteredTabReportAsync('PGP3140_HL_PANEL')
   }
 
   async exportReportAsync(dsName: string | null, exportType?: ExportTypeEnum) {
