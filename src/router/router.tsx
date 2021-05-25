@@ -9,7 +9,7 @@ import { MainPage } from '../main/main.page'
 import { GlobalStyle } from '../theme'
 import { VariantPage } from '../variant/variant.page'
 import { WSPage } from '../ws/ws.page'
-import { Routes } from './routes.enum'
+import Routes from './routes'
 
 export const RouterBase = (): ReactElement => (
   <Router>
