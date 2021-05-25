@@ -1,3 +1,4 @@
+import { isObject } from 'lodash'
 import get from 'lodash/get'
 import { makeAutoObservable, runInAction } from 'mobx'
 
@@ -27,6 +28,7 @@ class DatasetStore {
   searchColumnValue = ''
 
   indexTabReport = 0
+  indexFilteredNo = 0
 
   isLoadingTabReport = false
   isFetchingMore = false
@@ -155,32 +157,21 @@ class DatasetStore {
         (_, i) => i + this.indexTabReport,
       )
 
-      const response = await fetch(getApiUrl(`tab_report`), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams({
-          ds: String(dsName),
-          schema: 'xbr',
-          seq: JSON.stringify(seq),
-        }),
-      })
-
-      const result = await response.json()
+      await this._fetchTabReportAsync(dsName || '', seq)
 
       runInAction(() => {
-        this.tabReport = [...this.tabReport, ...result]
-        this.isLoadingTabReport = false
-        this.isFetchingMore = false
         this.indexTabReport += 50
       })
     }
   }
 
-  async fetchFilteredTabReportAsync(dsName: string) {
-    this.isLoadingTabReport = true
-    this.tabReport = []
+  async _fetchTabReportAsync(dsName: string, seq: number[]) {
+    if (seq.length === 0) {
+      this.isLoadingTabReport = false
+      this.isFetchingMore = false
+
+      return
+    }
 
     const response = await fetch(getApiUrl(`tab_report`), {
       method: 'POST',
@@ -190,18 +181,37 @@ class DatasetStore {
       body: new URLSearchParams({
         ds: String(dsName),
         schema: 'xbr',
-        seq: JSON.stringify(this.filteredNo),
+        seq: JSON.stringify(seq),
       }),
     })
 
     const result = await response.json()
 
+    console.log('result tab report', result)
     runInAction(() => {
       this.tabReport = [...this.tabReport, ...result]
       this.isLoadingTabReport = false
       this.isFetchingMore = false
-      // this.indexTabReport += 50
     })
+  }
+
+  async fetchFilteredTabReportAsync(dsName: string) {
+    const seq = this.filteredNo.slice(
+      this.indexFilteredNo,
+      this.indexFilteredNo + 2,
+    )
+
+    if (this.indexFilteredNo === 0) {
+      this.isLoadingTabReport = true
+      this.tabReport = []
+    } else {
+      this.isFetchingMore = true
+    }
+
+    await this._fetchTabReportAsync(dsName, seq)
+
+    this.indexFilteredNo += 2
+    this.isFetchingMore = false
   }
 
   async fetchWsTagsAsync(dsName: string | null) {
@@ -224,19 +234,18 @@ class DatasetStore {
 
     const result = await response.json()
 
-    this.fetchJobStatusAsync(result['task_id'])
+    await this.fetchJobStatusAsync(result['task_id'], dsName)
   }
 
-  async fetchJobStatusAsync(taskId: string) {
+  async fetchJobStatusAsync(taskId: string, dsName: string) {
     const response = await fetch(getApiUrl(`job_status?task=${taskId}`))
     const result = await response.json()
 
-    console.log(result)
-    this.filteredNo = result[0]
+    this.filteredNo = result[0].records
       ? result[0].records.map((variant: { no: number }) => variant.no)
       : []
 
-    await this.fetchFilteredTabReportAsync('PGP3140_HL_PANEL')
+    await this.fetchFilteredTabReportAsync(dsName)
   }
 
   async exportReportAsync(dsName: string | null, exportType?: ExportTypeEnum) {
