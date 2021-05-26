@@ -20,37 +20,28 @@ export const WSPage = observer(
     const params = useParams()
 
     useEffect(() => {
-      dsStore.resetData()
-
       const dsName = params.get('ds') || ''
 
-      const initAsync = async () => {
-        await dsStore.fetchDsStatAsync(dsName)
-        await dsStore.fetchTabReportAsync(dsName)
-      }
-
-      dsStore.fetchWsListAsync(dsName)
-      dsStore.fetchReccntAsync(dsName)
-      dsStore.fetchWsTagsAsync(dsName)
+      dsStore.initDatasetAsync(dsName)
       dirinfoStore.fetchDsinfoAsync(dsName)
-
-      initAsync()
     }, [params])
 
     const handleScroll = debounce(() => {
-      const dsName = params.get('ds') || ''
-
-      if (dsStore.filteredNo.length > 0) {
-        dsStore.fetchFilteredTabReportAsync(dsName)
+      if (
+        dsStore.filteredNo.length > 0 &&
+        dsStore.indexFilteredNo < dsStore.filteredNo.length
+      ) {
+        dsStore.fetchFilteredTabReportAsync()
 
         return
       }
 
       if (
         window.innerHeight + window.scrollY >
-        document.body.clientHeight - 100
+          document.body.clientHeight - 100 &&
+        dsStore.filteredNo.length === 0
       ) {
-        dsStore.fetchTabReportAsync(dsName)
+        dsStore.fetchTabReportAsync()
       }
     }, 200)
 

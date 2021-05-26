@@ -1,4 +1,3 @@
-import { isObject } from 'lodash'
 import get from 'lodash/get'
 import { makeAutoObservable, runInAction } from 'mobx'
 
@@ -14,6 +13,8 @@ import { ExportTypeEnum } from '../core/enum/export-type.enum'
 import { getApiUrl } from '../core/get-api-url'
 import { tableColumnMap } from '../core/table-column-map'
 
+const INCREASE_INDEX = 50
+
 class DatasetStore {
   dsStat: DsStatType = {}
   wsList: WsListType = {}
@@ -24,6 +25,7 @@ class DatasetStore {
   columns: string[] = Object.values(tableColumnMap)
   filteredNo: number[] = []
 
+  datasetName = ''
   activePreset = ''
   searchColumnValue = ''
 
@@ -74,6 +76,19 @@ class DatasetStore {
     this.searchColumnValue = ''
   }
 
+  async initDatasetAsync(datasetName: string) {
+    this.resetData()
+
+    this.datasetName = datasetName
+
+    await this.fetchDsStatAsync()
+    await this.fetchTabReportAsync()
+
+    this.fetchWsListAsync()
+    this.fetchReccntAsync()
+    this.fetchWsTagsAsync()
+  }
+
   get getColumns() {
     if (this.searchColumnValue) {
       return Object.values(tableColumnMap).filter(key =>
@@ -101,11 +116,11 @@ class DatasetStore {
     return groups
   }
 
-  async fetchDsStatAsync(dsName: string | null) {
+  async fetchDsStatAsync() {
     this.isLoadingDsStat = true
     this.isLoadingTabReport = true
 
-    const response = await fetch(getApiUrl(`ds_stat?ds=${dsName}`), {
+    const response = await fetch(getApiUrl(`ds_stat?ds=${this.datasetName}`), {
       method: 'POST',
     })
 
@@ -117,8 +132,8 @@ class DatasetStore {
     })
   }
 
-  async fetchWsListAsync(dsName: string | null) {
-    const response = await fetch(getApiUrl(`ws_list?ds=${dsName}`), {
+  async fetchWsListAsync() {
+    const response = await fetch(getApiUrl(`ws_list?ds=${this.datasetName}`), {
       method: 'POST',
     })
 
@@ -129,8 +144,11 @@ class DatasetStore {
     })
   }
 
-  async fetchReccntAsync(dsName: string | null) {
-    const response = await fetch(getApiUrl(`reccnt?ds=${dsName}&rec=${11}`))
+  async fetchReccntAsync() {
+    const response = await fetch(
+      getApiUrl(`reccnt?ds=${this.datasetName}&rec=${11}`),
+    )
+
     const result = await response.json()
 
     runInAction(() => {
@@ -138,7 +156,7 @@ class DatasetStore {
     })
   }
 
-  async fetchTabReportAsync(dsName: string | null) {
+  async fetchTabReportAsync() {
     const variantsAmount = get(this, 'dsStat.total-counts.0', 0)
 
     if (this.indexTabReport === 0) {
@@ -150,17 +168,18 @@ class DatasetStore {
     }
 
     if (variantsAmount > this.indexTabReport) {
-      const arrayLength = variantsAmount < 50 ? variantsAmount : 50
+      const arrayLength =
+        variantsAmount < INCREASE_INDEX ? variantsAmount : INCREASE_INDEX
 
       const seq = Array.from(
         { length: arrayLength },
         (_, i) => i + this.indexTabReport,
       )
 
-      await this._fetchTabReportAsync(dsName || '', seq)
+      await this._fetchTabReportAsync(this.datasetName, seq)
 
       runInAction(() => {
-        this.indexTabReport += 50
+        this.indexTabReport += INCREASE_INDEX
       })
     }
   }
@@ -169,6 +188,7 @@ class DatasetStore {
     if (seq.length === 0) {
       this.isLoadingTabReport = false
       this.isFetchingMore = false
+      this.tabReport = []
 
       return
     }
@@ -187,7 +207,6 @@ class DatasetStore {
 
     const result = await response.json()
 
-    console.log('result tab report', result)
     runInAction(() => {
       this.tabReport = [...this.tabReport, ...result]
       this.isLoadingTabReport = false
@@ -195,10 +214,10 @@ class DatasetStore {
     })
   }
 
-  async fetchFilteredTabReportAsync(dsName: string) {
+  async fetchFilteredTabReportAsync() {
     const seq = this.filteredNo.slice(
       this.indexFilteredNo,
-      this.indexFilteredNo + 2,
+      this.indexFilteredNo + INCREASE_INDEX,
     )
 
     if (this.indexFilteredNo === 0) {
@@ -208,16 +227,19 @@ class DatasetStore {
       this.isFetchingMore = true
     }
 
-    await this._fetchTabReportAsync(dsName, seq)
+    await this._fetchTabReportAsync(this.datasetName, seq)
 
-    this.indexFilteredNo += 2
+    this.indexFilteredNo += INCREASE_INDEX
     this.isFetchingMore = false
   }
 
-  async fetchWsTagsAsync(dsName: string | null) {
-    const response = await fetch(getApiUrl(`ws_tags?ds=${dsName}&rec=${0}`), {
-      method: 'POST',
-    })
+  async fetchWsTagsAsync() {
+    const response = await fetch(
+      getApiUrl(`ws_tags?ds=${this.datasetName}&rec=${0}`),
+      {
+        method: 'POST',
+      },
+    )
 
     const result = await response.json()
 
@@ -227,30 +249,32 @@ class DatasetStore {
     })
   }
 
-  async fetchPresetTaskIdAsync(dsName: string, filter: string) {
+  async fetchPresetTaskIdAsync(filter: string) {
     const response = await fetch(
-      getApiUrl(`ds_list?ds=${dsName}&filter=${filter}`),
+      getApiUrl(`ds_list?ds=${this.datasetName}&filter=${filter}`),
     )
 
     const result = await response.json()
 
-    await this.fetchJobStatusAsync(result['task_id'], dsName)
+    await this.fetchJobStatusAsync(result['task_id'])
   }
 
-  async fetchJobStatusAsync(taskId: string, dsName: string) {
+  async fetchJobStatusAsync(taskId: string) {
     const response = await fetch(getApiUrl(`job_status?task=${taskId}`))
     const result = await response.json()
+
+    this.indexFilteredNo = 0
 
     this.filteredNo = result[0].records
       ? result[0].records.map((variant: { no: number }) => variant.no)
       : []
 
-    await this.fetchFilteredTabReportAsync(dsName)
+    await this.fetchFilteredTabReportAsync()
   }
 
-  async exportReportAsync(dsName: string | null, exportType?: ExportTypeEnum) {
+  async exportReportAsync(exportType?: ExportTypeEnum) {
     if (exportType === ExportTypeEnum.Excel) {
-      const response = await fetch(getApiUrl(`export?ds=${dsName}`), {
+      const response = await fetch(getApiUrl(`export?ds=${this.datasetName}`), {
         method: 'POST',
       })
 
@@ -262,7 +286,7 @@ class DatasetStore {
         const a = document.createElement('a')
 
         a.href = url
-        a.download = `${dsName}.xlsx`
+        a.download = `${this.datasetName}.xlsx`
         a.click()
 
         return
@@ -271,7 +295,7 @@ class DatasetStore {
 
     if (exportType === ExportTypeEnum.CSV) {
       const response = await fetch(
-        getApiUrl(`csv_export?ds=${dsName}&schema=xbr`),
+        getApiUrl(`csv_export?ds=${this.datasetName}&schema=xbr`),
         {
           method: 'POST',
         },
@@ -282,7 +306,7 @@ class DatasetStore {
         const a = document.createElement('a')
 
         a.href = url
-        a.download = `${dsName}.csv`
+        a.download = `${this.datasetName}.csv`
         a.click()
 
         return
