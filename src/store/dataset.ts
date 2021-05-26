@@ -273,10 +273,15 @@ class DatasetStore {
   }
 
   async exportReportAsync(exportType?: ExportTypeEnum) {
+    const filterParam = this.activePreset ? `&filter=${this.activePreset}` : ''
+
     if (exportType === ExportTypeEnum.Excel) {
-      const response = await fetch(getApiUrl(`export?ds=${this.datasetName}`), {
-        method: 'POST',
-      })
+      const response = await fetch(
+        getApiUrl(`export?ds=${this.datasetName}${filterParam}`),
+        {
+          method: 'POST',
+        },
+      )
 
       const result = await response.json()
       const responseFile = await fetch(getApiUrl(result.fname))
@@ -295,7 +300,7 @@ class DatasetStore {
 
     if (exportType === ExportTypeEnum.CSV) {
       const response = await fetch(
-        getApiUrl(`csv_export?ds=${this.datasetName}&schema=xbr`),
+        getApiUrl(`csv_export?ds=${this.datasetName}&schema=xbr${filterParam}`),
         {
           method: 'POST',
         },
