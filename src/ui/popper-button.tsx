@@ -33,7 +33,7 @@ export const PopperButton = ({
       {isOpen && (
         <div
           ref={setPopperElement}
-          style={styles.popper}
+          style={{ ...styles.popper, zIndex: 1000 }}
           {...attributes.popper}
         >
           <ModalElement close={close} />
