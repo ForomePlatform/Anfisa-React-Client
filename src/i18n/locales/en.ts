@@ -85,5 +85,6 @@ export const en = {
     presets: 'Presets',
     createPreset: '+ Create New',
     actions: 'Actions',
+    searchForAField: 'Search for a field',
   },
 }
