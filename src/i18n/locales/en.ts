@@ -57,6 +57,8 @@ export const en = {
     sample: 'Sample',
     tags: 'Tag(s)',
     edit: 'Edit',
+    notMode: 'NOT Mode',
+    variantsWithNotesOnly: 'Variants with notes only',
   },
   variant: {
     genes: 'Gene(s)',
@@ -87,5 +89,6 @@ export const en = {
     presets: 'Presets',
     createPreset: '+ Create New',
     actions: 'Actions',
+    searchForAField: 'Search for a field',
   },
 }
