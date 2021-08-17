@@ -386,7 +386,7 @@ class DatasetStore {
       const taskResult = await operations.getJobStatusAsync(result.task_id)
 
       runInAction(() => {
-        this.filteredNo = taskResult?.data[0].samples
+        this.filteredNo = taskResult?.data?.[0].samples
           ? taskResult.data[0].samples.map(
               (variant: { no: number }) => variant.no,
             )
