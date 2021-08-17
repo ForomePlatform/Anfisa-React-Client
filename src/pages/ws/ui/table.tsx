@@ -13,6 +13,7 @@ import datasetStore from '@store/dataset'
 import variantStore from '@store/variant'
 import columnsStore from '@store/wsColumns'
 import { NoResultsFound } from '@components/no-results-found'
+import { TableSamples } from './table-samples'
 
 interface Props {
   columns: any[]
@@ -137,7 +138,7 @@ export const Table = observer(
             )}
             onClick={() => handleOpenVariant(row)}
           >
-            {row.cells.map((cell: any) => {
+            {row.cells.map((cell: any, orderNo) => {
               return (
                 <div
                   {...cell.getCellProps()}
@@ -158,7 +159,11 @@ export const Table = observer(
                         : cell.getCellProps().style.width,
                   }}
                 >
-                  {cell.render('Cell')}
+                  {orderNo === 6 ? (
+                    <TableSamples data={cell.value} />
+                  ) : (
+                    cell.render('Cell')
+                  )}
                 </div>
               )
             })}

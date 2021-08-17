@@ -9,6 +9,10 @@ class ZoneStore {
   selectedSamples: string[] = []
   selectedTags: string[] = []
 
+  isFather = false
+  isMother = false
+  isProband = false
+
   constructor() {
     makeAutoObservable(this)
   }
@@ -41,16 +45,31 @@ class ZoneStore {
 
   addSample(sample: string) {
     this.selectedSamples = [...this.selectedSamples, sample]
+    this.checkSampleType(sample)
   }
 
   removeSample(sample: string) {
     this.selectedSamples = this.selectedSamples.filter(
       sampleItem => sampleItem !== sample,
     )
+    this.checkSampleType(sample)
+  }
+
+  checkSampleType(sample: string) {
+    const type = sample.slice(0, 7).trim()
+
+    if (type === 'father') this.isFather = !this.isFather
+
+    if (type === 'mother') this.isMother = !this.isMother
+
+    if (type === 'proband') this.isProband = !this.isProband
   }
 
   unselectAllSamples = () => {
     this.selectedSamples = []
+    this.isFather = false
+    this.isMother = false
+    this.isProband = false
   }
 
   addTag(tagName: string) {

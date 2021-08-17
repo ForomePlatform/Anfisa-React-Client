@@ -21,8 +21,15 @@ module.exports = {
     bright: '#ffff00',
     dirty: '#eae12f',
     secondary: '#fdd500',
+    light: '#FFFAE0',
   },
   red: {
     secondary: '#dc3737',
+  },
+  purple: {
+    light: '#F7EAFF',
+  },
+  orange: {
+    light: '#FFEFE7',
   },
 }
