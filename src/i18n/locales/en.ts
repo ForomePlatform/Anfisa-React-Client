@@ -58,6 +58,15 @@ export const en = {
     tags: 'Tag(s)',
     edit: 'Edit',
   },
+  dsCreation: {
+    saveDataset: 'Save Dataset',
+    datasetCreation: 'Dataset Creation',
+    addDatasetTitle: 'Add new dataset',
+    label: 'Dataset Name:',
+    attention:
+      'Attention: Once a dataset has been added, the filters will be cleared.',
+    addDataset: 'Add Dataset',
+  },
   variant: {
     genes: 'Gene(s)',
     worstAnnotation: 'Worst Annotation',
