@@ -4,6 +4,7 @@ import { makeAutoObservable } from 'mobx'
 import { getApiUrl } from '@core/get-api-url'
 import zoneStore from '@store/filterZone'
 import datasetStore from './dataset'
+const ADD = true
 
 class ZoneStore {
   selectedGenes: string[] = []
@@ -31,11 +32,12 @@ class ZoneStore {
 
     datasetStore.addZone(['Symbol', zoneStore.selectedGenes])
     datasetStore.fetchWsListAsync()
-    datasetStore.clearZone()
   }
 
   unselectAllGenes() {
     this.selectedGenes = []
+    datasetStore.addZone(['Symbol', zoneStore.selectedGenes])
+    datasetStore.fetchWsListAsync()
   }
 
   addGenesList(gene: string) {
@@ -49,35 +51,47 @@ class ZoneStore {
 
     datasetStore.addZone(['Panels', zoneStore.selectedGenesList])
     datasetStore.fetchWsListAsync()
-    datasetStore.clearZone()
   }
 
   unselectAllGenesList() {
     this.selectedGenesList = []
+    datasetStore.addZone(['Panels', zoneStore.selectedGenesList])
+    datasetStore.fetchWsListAsync()
   }
 
   addSample(sample: string) {
     this.selectedSamples = [...this.selectedSamples, sample]
-    this.checkSampleType(sample)
   }
 
   removeSample(sample: string) {
     this.selectedSamples = this.selectedSamples.filter(
       sampleItem => sampleItem !== sample,
     )
+
     this.checkSampleType(sample)
+
     datasetStore.addZone(['Has_Variant', zoneStore.selectedSamples])
     datasetStore.fetchWsListAsync()
   }
 
-  checkSampleType(sample: string) {
+  paintSelectedSamples() {
+    this.selectedSamples.map(sample => this.checkSampleType(sample, ADD))
+  }
+
+  checkSampleType(sample: string, isAdding?: boolean) {
     const type = sample.slice(0, 7).trim()
 
-    if (type === 'father') this.isFather = !this.isFather
+    if (type === 'father') {
+      isAdding ? (this.isFather = true) : (this.isFather = false)
+    }
 
-    if (type === 'mother') this.isMother = !this.isMother
+    if (type === 'mother') {
+      isAdding ? (this.isMother = true) : (this.isMother = false)
+    }
 
-    if (type === 'proband') this.isProband = !this.isProband
+    if (type === 'proband') {
+      isAdding ? (this.isProband = true) : (this.isProband = false)
+    }
   }
 
   unselectAllSamples() {
@@ -85,6 +99,8 @@ class ZoneStore {
     this.isFather = false
     this.isMother = false
     this.isProband = false
+    datasetStore.addZone(['Has_Variant', zoneStore.selectedSamples])
+    datasetStore.fetchWsListAsync()
   }
 
   addTag(tagName: string) {
@@ -103,6 +119,7 @@ class ZoneStore {
     this.selectedTags = []
     this.resetModeNOT()
     this.resetModeWithNotes()
+    this.fetchTagSelectAsync()
   }
 
   resetAllSelectedItems() {
