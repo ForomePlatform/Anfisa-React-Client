@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import { cloneDeep } from 'lodash'
 import get from 'lodash/get'
-import { makeAutoObservable, runInAction, toJS } from 'mobx'
+import { makeAutoObservable, runInAction } from 'mobx'
 
 import { DtreeStatType, StatList } from '@declarations'
 import { getApiUrl } from '@core/get-api-url'
@@ -146,11 +146,7 @@ class DtreeStore {
 
     const splittedCode = this.splitDtreeCode()
 
-    console.log(splittedCode)
-
     const indexOfLabel: number[] = []
-
-    console.log('before:', toJS(dtreePointCounts))
 
     splittedCode.map((item: string, index: number) => {
       if (item.includes('label')) {
@@ -161,7 +157,6 @@ class DtreeStore {
     if (indexOfLabel.length > 0) {
       indexOfLabel.map((item: number) => {
         dtreePointCounts.splice(item * 2, 1)
-        console.log('after:', toJS(dtreePointCounts))
       })
     }
 
@@ -217,8 +212,6 @@ class DtreeStore {
 
     const result = await response.json()
 
-    console.log(result)
-
     runInAction(() => {
       this.dtreeStat = result
       this.statAmount = get(result, 'filtered-counts', [])
@@ -271,15 +264,13 @@ class DtreeStore {
       ]),
     )
 
-    const response = await fetch(getApiUrl(`dtree_set`), {
+    await fetch(getApiUrl(`dtree_set`), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       body,
     })
-
-    // const result = await response.json()
   }
 
   addSelectedGroup(group: any) {

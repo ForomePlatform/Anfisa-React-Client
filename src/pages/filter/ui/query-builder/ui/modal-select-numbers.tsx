@@ -1,5 +1,4 @@
 import { Fragment, ReactElement, useRef, useState } from 'react'
-// import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 
@@ -8,7 +7,6 @@ import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
-import { Input } from '@ui/input'
 import { InputNumber } from '@ui/input-number'
 import { DropDownSelectSign } from './dropdown-select-sign'
 import { ExpandContentButton } from './expand-content-button'
@@ -116,7 +114,6 @@ export const ModalSelectNumbers = observer(
 
               <div className="flex items-center w-12 p-1 ml-2 shadow-dark rounded">
                 <div className="flex items-center justify-center w-3/5 h-full bg-blue-medium rounded text-blue-bright">
-                  {/* <Icon name="LessSign" className="ml-auto mt-auto" /> */}
                   {leftDropType === 0 ? `<` : `≤`}
                 </div>
 
@@ -140,7 +137,6 @@ export const ModalSelectNumbers = observer(
             <div className="flex justify-start h-8 w-1/2 pl-4 pr-px">
               <div className="flex items-center w-12 p-1 mr-2 shadow-dark rounded">
                 <div className="flex items-center justify-center w-3/5 h-full bg-blue-medium rounded text-blue-bright">
-                  {/* <Icon name="LessEqualSign" className="ml-auto mt-auto" /> */}
                   {rightDropType === 1 ? `≤` : `<`}
                 </div>
 
@@ -221,8 +217,3 @@ export const ModalSelectNumbers = observer(
     )
   },
 )
-{
-  /* <div className="flex justify-center items-center text-14 text-grey-blue">
-                There are no filters to show
-              </div> */
-}

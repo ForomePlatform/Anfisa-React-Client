@@ -3,19 +3,18 @@ import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { StatList } from '@declarations'
-import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
 import { Icon } from '@ui/icon'
 import { QueryBuilderSubgroupChart } from './query-builder-subgroup-chart'
 
-type Props = {
+interface IProps {
   subGroupItem: StatList
   isModal?: boolean
   groupName: string
 }
 
 export const QueryBuilderSubgroupItem = observer(
-  ({ subGroupItem, isModal, groupName }: Props) => {
+  ({ subGroupItem, isModal, groupName }: IProps) => {
     const [isVisibleSubGroupItem, setIsVisibleSubGroupItem] = useState(true)
 
     const expandContent = () => {
