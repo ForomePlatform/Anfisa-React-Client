@@ -23,6 +23,9 @@ interface PropsRow {
   index: number
 }
 
+const OFFSETSIZE = 2800;
+const OFFSETSIZETOLOAD = OFFSETSIZE / 100 * 60
+
 export const isRowSelected = (
   rowIndex: number,
   activeIndex: number,
@@ -233,15 +236,16 @@ export const Table = observer(
                 columnsStore.viewType === ViewTypeEnum.Compact ? 60 : 80
               }
               onScroll={debounce(props => {
-                datasetStore.setTableOffest(props.scrollOffset)
-
                 if (
                   props.scrollDirection === 'forward' &&
-                  props.scrollOffset >= 2800
+                  props.scrollOffset >= OFFSETSIZETOLOAD && 
+                  props.scrollOffset > (datasetStore.offset + OFFSETSIZETOLOAD)
                 ) {
-                  handleScrollAsync()
+                  datasetStore.setTableOffest(props.scrollOffset)
+                  handleScrollAsync().then(() => {
+                  })
                 }
-              }, 700)}
+              }, 100)}
               width={totalColumnsWidth}
             >
               {RenderRow}
