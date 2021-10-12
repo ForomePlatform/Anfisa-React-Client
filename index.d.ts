@@ -249,6 +249,7 @@ export interface ReccntCommon {
   parmodes?: any[]
   parcontrol?: string
   content?: string
+  aspect: any
 }
 
 export interface DsStatI {

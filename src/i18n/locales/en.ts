@@ -91,6 +91,8 @@ export const en = {
     notesFor: 'Notes for',
     tagExists: 'Tag is already exists',
     showSelectionOnly: 'Show selection only',
+    noTrHit: 'no-tr-hit',
+    hit: 'norm hit',
   },
   filter: {
     method: 'Filtering method',

@@ -1,4 +1,4 @@
-import { ReactElement, useEffect } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import GridLayout from 'react-grid-layout'
 import Checkbox from 'react-three-state-checkbox'
 import cn from 'classnames'
@@ -19,11 +19,21 @@ const TableView = ({ colhead, rows, name }: ReccntCommon): ReactElement => {
   let colheadData: string[] = []
 
   if (colhead) {
-    colheadData = [colhead && colhead[0][0]]
+    colheadData = [colhead[0][0]]
+
+    const endOfString = colheadData[0].indexOf(']')
+
+    colheadData[0] = colheadData[0].slice(0, endOfString + 1)
 
     if (name === 'view_transcripts') {
       colheadData.push(t('variant.showSelectionOnly'))
     }
+  }
+
+  const [filterSelection, setFilterSelection] = useState('norm')
+
+  const handleSelection = (checked: boolean) => {
+    checked ? setFilterSelection(t('variant.hit')) : setFilterSelection('norm')
   }
 
   return (
@@ -38,7 +48,11 @@ const TableView = ({ colhead, rows, name }: ReccntCommon): ReactElement => {
                   {th}
 
                   {th === t('variant.showSelectionOnly') && (
-                    <Checkbox checked={false} className="ml-1" />
+                    <Checkbox
+                      checked={filterSelection !== 'norm'}
+                      className="ml-1"
+                      onChange={(e: any) => handleSelection(e.target.checked)}
+                    />
                   )}
                 </td>
               ))}
@@ -64,13 +78,18 @@ const TableView = ({ colhead, rows, name }: ReccntCommon): ReactElement => {
                   </td>
                 </Tooltip>
 
-                {row.cells.map((cell, cIndex) => (
-                  <td
-                    key={cIndex}
-                    className="py-3 pr-3 font-medium"
-                    dangerouslySetInnerHTML={{ __html: cell[0] }}
-                  />
-                ))}
+                {row.cells
+                  .filter(cell => cell[1].includes(filterSelection))
+                  .map((cell, cIndex) => (
+                    <td
+                      key={cIndex}
+                      className={cn(
+                        'py-3 pr-3 font-medium',
+                        !cell[1].includes(t('variant.noTrHit')) && 'text-white',
+                      )}
+                      dangerouslySetInnerHTML={{ __html: cell[0] }}
+                    />
+                  ))}
               </tr>
             )
           })}
