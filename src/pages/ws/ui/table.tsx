@@ -244,8 +244,7 @@ export const Table = observer(
                   props.scrollOffset > (datasetStore.offset + OFFSETSIZETOLOAD)
                 ) {
                   datasetStore.setTableOffest(props.scrollOffset)
-                  handleScrollAsync().then(() => {
-                  })
+                  handleScrollAsync()
                 }
               }, 100)}
               width={totalColumnsWidth}
