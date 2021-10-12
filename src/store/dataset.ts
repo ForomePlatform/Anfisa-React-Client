@@ -188,7 +188,6 @@ class DatasetStore {
     await this.fetchDsStatAsync()
     await this.fetchWsTagsAsync()
     await this.fetchWsListAsync(this.isXL)
-
     this.filteredNo.length === 0
       ? await this.fetchTabReportAsync()
       : await this.fetchFilteredTabReportAsync()
@@ -413,9 +412,7 @@ class DatasetStore {
         this.wsRecords = result.records
       })
     }
-
     await this.fetchFilteredTabReportAsync()
-
     return this.filteredNo
   }
 
