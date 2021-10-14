@@ -389,7 +389,7 @@ class DatasetStore {
     })
   }
 
-  async fetchWsListAsync(isXL?: boolean, activePreset?: string) {
+  async fetchWsListAsync(isXL?: boolean) {
     const body = new URLSearchParams({
       ds: this.datasetName,
     })
@@ -399,7 +399,7 @@ class DatasetStore {
       body.append('zone', JSON.stringify(this.zone))
     }
 
-    activePreset && body.append('filter', activePreset)
+    this.activePreset && body.append('filter', this.activePreset)
 
     const response = await fetch(getApiUrl(isXL ? `ds_list` : `ws_list`), {
       method: 'POST',
