@@ -23,8 +23,8 @@ interface PropsRow {
   index: number
 }
 
-const offsetSize = 2800;
-const offsetSizeToLoad = offsetSize / 100 * 60
+const offsetSize = 2800
+const offsetSizeToLoad = (offsetSize / 100) * 60
 
 export const isRowSelected = (
   rowIndex: number,
@@ -239,9 +239,8 @@ export const Table = observer(
               }
               onScroll={debounce(props => {
                 if (
-                  props.scrollDirection === 'forward' &&
-                  props.scrollOffset >= offsetSizeToLoad && 
-                  props.scrollOffset > (datasetStore.offset + offsetSizeToLoad)
+                  props.scrollOffset >
+                  datasetStore.offset + offsetSizeToLoad
                 ) {
                   datasetStore.setTableOffest(props.scrollOffset)
                   handleScrollAsync()
