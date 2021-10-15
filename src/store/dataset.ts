@@ -433,8 +433,6 @@ class DatasetStore {
       })
     }
 
-    await this.fetchFilteredTabReportAsync()
-
     return this.filteredNo
   }
 
