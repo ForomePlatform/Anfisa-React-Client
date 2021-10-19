@@ -1,7 +1,7 @@
 import dtreeStore from '@store/dtree'
 import datasetStore from '../store/dataset'
 
-type AttributeType = 'enum' | 'numeric'
+type AttributeType = 'enum' | 'numeric' | 'func'
 
 export const addAttributeToStep = (
   attributeType: AttributeType,
