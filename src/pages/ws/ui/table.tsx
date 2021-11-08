@@ -25,20 +25,18 @@ interface PropsRow {
 
 const offsetSize = 2800
 const offsetSizeToLoad = (offsetSize / 100) * 60
-const filteredNo = toJS(datasetStore.filteredNo)
 
 export const isRowSelected = (
   rowIndex: number,
   activeIndex: number,
 ): boolean => {
-  return filteredNo[rowIndex] === activeIndex
+  return toJS(datasetStore.filteredNo)[rowIndex] === activeIndex
 }
 
 export const Table = observer(
   ({ columns, data }: Props): ReactElement => {
     const params = useParams()
     const [ref, setRef] = useState<any>(null)
-    const tabReport = toJS(datasetStore.tabReport)
 
     const defaultColumn = {
       width: variantStore.drawerVisible
@@ -89,7 +87,10 @@ export const Table = observer(
     const handleOpenVariant = useCallback(({ index }: PropsRow) => {
       if (window.getSelection()?.toString() || datasetStore.isXL) return
 
-      const idx = filteredNo.length === 0 ? index : filteredNo[index]
+      const idx =
+        toJS(datasetStore.filteredNo).length === 0
+          ? index
+          : toJS(datasetStore.filteredNo)[index]
 
       if (!variantStore.drawerVisible) {
         columnsStore.setColumns(['Gene', 'Variant'])
@@ -168,8 +169,8 @@ export const Table = observer(
 
     const handleScrollAsync = async () => {
       if (
-        filteredNo.length > 0 &&
-        datasetStore.indexFilteredNo < filteredNo.length
+        toJS(datasetStore.filteredNo).length > 0 &&
+        datasetStore.indexFilteredNo < toJS(datasetStore.filteredNo).length
       ) {
         await datasetStore.fetchFilteredTabReportAsync()
 
@@ -218,9 +219,9 @@ export const Table = observer(
           })}
         </div>
 
-        {tabReport.length === 0 && <NoResultsFound />}
+        {toJS(datasetStore.tabReport).length === 0 && <NoResultsFound />}
 
-        {tabReport.length > 0 && (
+        {toJS(datasetStore.tabReport).length > 0 && (
           <div {...getTableBodyProps()} className="text-12 tbody">
             <FixedSizeList
               ref={setRef}
