@@ -1,15 +1,23 @@
 import { Fragment, ReactElement, useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
+import get from 'lodash/get'
 import { observer } from 'mobx-react-lite'
 
 import { FilterMethodEnum } from '@core/enum/filter-method.enum'
 import { useDatasetName } from '@core/hooks/use-dataset-name'
+import { useParams } from '@core/hooks/use-params'
+import { t } from '@i18n'
 import datasetStore from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
 import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
+import variantStore from '@store/variant'
 import { Routes } from '@router/routes.enum'
-import { FilterHeader } from './filter-header'
+import { ExportPanel } from '@components/export-panel'
+import { ExportReportButton } from '@components/export-report-button'
+import { Header } from '@components/header'
+import { PopperButton } from '@components/popper-button'
+import { FilterControl } from './ui/filter-control'
 import { FilterRefiner } from './ui/filter-refiner'
 import { ModalTextEditor } from './ui/query-builder/modal-text-editor'
 import { QueryBuilder } from './ui/query-builder/query-builder'
@@ -37,16 +45,25 @@ export const FilterPage = observer(
 
     useDatasetName()
     const [fetched, setInit] = useState(false)
+    const params = useParams()
+    const dsName = params.get('ds') || ''
 
     useEffect(() => {
       const initAsync = async () => {
         const body = new URLSearchParams({
-          ds: datasetStore.datasetName,
+          ds: dsName,
           tm: '0',
           code: 'return False',
         })
 
-        await dirinfoStore.fetchDsinfoAsync(datasetStore.datasetName)
+        if (dsName && !variantStore.dsName) {
+          variantStore.setDsName(dsName)
+        }
+
+        await dirinfoStore.fetchDsinfoAsync(dsName)
+
+        await datasetStore.initDatasetAsync(dsName)
+        await dirinfoStore.fetchDsinfoAsync(dsName)
 
         if (history.location.pathname === Routes.Refiner) {
           filterStore.setMethod(FilterMethodEnum.Refiner)
@@ -66,7 +83,13 @@ export const FilterPage = observer(
         filterStore.resetData()
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [dsName])
+
+    const [allVariants, transcribedVariants, allTranscripts] = get(
+      datasetStore,
+      'statAmount',
+      [],
+    )
 
     return (
       <Fragment>
@@ -112,8 +135,33 @@ export const FilterPage = observer(
         {dtreeStore.isModalSaveDatasetVisible && <ModalSaveDataset />}
 
         <div className="overflow-hidden">
-          <FilterHeader />
+          <Header>
+            <div className="text-white flex-grow flex justify-end pr-6">
+              <span className="text-12 leading-14px text-white mt-2 ml-auto font-bold">
+                {t('filter.variants', {
+                  all: allVariants,
+                })}
+              </span>
 
+              <span className="header-variants-info">
+                {t('filter.transcribedVariants', {
+                  all: transcribedVariants,
+                })}
+              </span>
+
+              <span className="header-variants-info mr-6">
+                {t('filter.transcripts', {
+                  all: allTranscripts,
+                })}
+              </span>
+
+              <PopperButton
+                ButtonElement={ExportReportButton}
+                ModalElement={ExportPanel}
+              />
+            </div>
+          </Header>
+          <FilterControl />
           {filterStore.method === FilterMethodEnum.DecisionTree && fetched && (
             <QueryBuilder />
           )}

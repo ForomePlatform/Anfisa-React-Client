@@ -1,8 +1,7 @@
 import { difference } from 'lodash'
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, runInAction } from 'mobx'
 
 import { getApiUrl } from '@core/get-api-url'
-import zoneStore from '@store/filterZone'
 import datasetStore from './dataset'
 
 const ADD = true
@@ -25,45 +24,61 @@ class ZoneStore {
   }
 
   addGene(gene: string) {
-    this.selectedGenes = [...this.selectedGenes, gene]
+    runInAction(() => {
+      this.selectedGenes = [...this.selectedGenes, gene]
+    })
   }
 
   removeGene(geneName: string) {
-    this.selectedGenes = this.selectedGenes.filter(gene => geneName !== gene)
+    runInAction(() => {
+      this.selectedGenes = this.selectedGenes.filter(gene => geneName !== gene)
+    })
 
     datasetStore.removeZone(['Symbol', this.selectedGenes])
   }
 
   unselectAllGenes() {
-    this.selectedGenes = []
-    datasetStore.addZone(['Symbol', zoneStore.selectedGenes])
+    runInAction(() => {
+      this.selectedGenes = []
+    })
+    datasetStore.addZone(['Symbol', this.selectedGenes])
   }
 
   addGenesList(gene: string) {
-    this.selectedGenesList = [...this.selectedGenesList, gene]
+    runInAction(() => {
+      this.selectedGenesList = [...this.selectedGenesList, gene]
+    })
   }
 
   removeGenesList(geneName: string) {
-    this.selectedGenesList = this.selectedGenesList.filter(
-      genesList => geneName !== genesList,
-    )
+    runInAction(() => {
+      this.selectedGenesList = this.selectedGenesList.filter(
+        genesList => geneName !== genesList,
+      )
+    })
 
     datasetStore.removeZone(['Panels', this.selectedGenesList])
   }
 
   unselectAllGenesList() {
-    this.selectedGenesList = []
-    datasetStore.addZone(['Panels', zoneStore.selectedGenesList])
+    runInAction(() => {
+      this.selectedGenesList = []
+    })
+    datasetStore.addZone(['Panels', this.selectedGenesList])
   }
 
   addSample(sample: string) {
-    this.selectedSamples = [...this.selectedSamples, sample]
+    runInAction(() => {
+      this.selectedSamples = [...this.selectedSamples, sample]
+    })
   }
 
   removeSample(sample: string) {
-    this.selectedSamples = this.selectedSamples.filter(
-      sampleItem => sampleItem !== sample,
-    )
+    runInAction(() => {
+      this.selectedSamples = this.selectedSamples.filter(
+        sampleItem => sampleItem !== sample,
+      )
+    })
 
     datasetStore.removeZone(['Has_Variant', this.selectedSamples])
   }
@@ -85,19 +100,25 @@ class ZoneStore {
   }
 
   unselectAllSamples = () => {
-    this.selectedSamples = []
-    this.isFather = false
-    this.isMother = false
-    this.isProband = false
-    datasetStore.addZone(['Has_Variant', zoneStore.selectedSamples])
+    runInAction(() => {
+      this.selectedSamples = []
+      this.isFather = false
+      this.isMother = false
+      this.isProband = false
+    })
+    datasetStore.addZone(['Has_Variant', this.selectedSamples])
   }
 
   addTag(tagName: string) {
-    this.selectedTags = [...this.selectedTags, tagName]
+    runInAction(() => {
+      this.selectedTags = [...this.selectedTags, tagName]
+    })
   }
 
   removeTag(tagName: string) {
-    this.selectedTags = this.selectedTags.filter(tag => tag !== tagName)
+    runInAction(() => {
+      this.selectedTags = this.selectedTags.filter(tag => tag !== tagName)
+    })
 
     tagName === '_note' && this.resetModeWithNotes()
 
@@ -105,10 +126,11 @@ class ZoneStore {
   }
 
   unselectAllTags() {
-    this.selectedTags = []
+    runInAction(() => {
+      this.selectedTags = []
+    })
     this.resetModeNOT()
     this.resetModeWithNotes()
-    this.fetchTagSelectAsync()
   }
 
   resetAllSelectedItems() {
@@ -123,7 +145,7 @@ class ZoneStore {
 
   async fetchTagSelectAsync() {
     if (this.selectedTags.length === 0 && !this.isModeWithNotes) {
-      datasetStore.indexTabReport = 0
+      datasetStore.setIndexTabReport(0)
       await datasetStore.fetchTabReportAsync()
 
       return
@@ -132,7 +154,9 @@ class ZoneStore {
     this.isModeWithNotes && this.selectedTags.push('_note')
 
     if (!this.isModeWithNotes && this.selectedTags.includes('_note')) {
-      this.selectedTags = this.selectedTags.filter(item => item !== '_note')
+      runInAction(() => {
+        this.selectedTags = this.selectedTags.filter(item => item !== '_note')
+      })
     }
 
     const filteredData = await Promise.all(
@@ -153,26 +177,34 @@ class ZoneStore {
 
     const uniqueNo = Array.from(new Set(filteredData.flat()))
 
-    datasetStore.indexFilteredNo = 0
-    datasetStore.filteredNo = uniqueNo
+    datasetStore.setIndexFilteredNo(0)
+    datasetStore.setFilteredNo(uniqueNo)
 
     await datasetStore.fetchFilteredTabReportAsync()
   }
 
   setModeNOT() {
-    this.isModeNOT = true
+    runInAction(() => {
+      this.isModeNOT = true
+    })
   }
 
   resetModeNOT() {
-    this.isModeNOT = false
+    runInAction(() => {
+      this.isModeNOT = false
+    })
   }
 
   setModeWithNotes() {
-    this.isModeWithNotes = true
+    runInAction(() => {
+      this.isModeWithNotes = true
+    })
   }
 
   resetModeWithNotes() {
-    this.isModeWithNotes = false
+    runInAction(() => {
+      this.isModeWithNotes = false
+    })
   }
 }
 
