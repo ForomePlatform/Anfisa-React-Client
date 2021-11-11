@@ -1,0 +1,13 @@
+upstream backend {
+    # hello is the internal DNS name used by the backend Service inside Kubernetes
+    server anfisa-backend;
+}
+
+server {
+    listen 80;
+
+    location / {
+        # The following statement will proxy traffic to the upstream named Backend
+        proxy_pass https://anfisa-test-test.asset-forome-dev-162fa491ef10b14d22843708d94ef0ba-0000.us-south.containers.appdomain.cloud;
+    }
+}

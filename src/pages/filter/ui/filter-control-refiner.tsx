@@ -79,6 +79,7 @@ export const FilterControlRefiner = observer(
 
     return (
       <Fragment>
+        <span>FilterControlRefiner</span>
         <div className="flex items-center border-black">
           <div>
             <div className="flex justify-between mb-2">
@@ -145,7 +146,6 @@ export const FilterControlRefiner = observer(
             />
           )}
         </div>
-
         <DatasetCreationButton />
       </Fragment>
     )
