@@ -32,7 +32,7 @@
     "styled-normalize": "8.0.7",
     "styled-tools": "1.7.2",
     "typescript": "4.1.2",
-    "use-query-params": "^1.2.3",
+    "use-query-params": "1.2.3",
     "web-vitals": "1.0.1"
   },
   "devDependencies": {
@@ -60,6 +60,7 @@
     "autoprefixer": "9",
     "classnames": "2.3.1",
     "craco-alias": "3.0.1",
+    "cypress": "^9.0.0",
     "dotenv-cra": "2.0.2",
     "eslint": "7.24.0",
     "eslint-config-react-config-r13v": "1.4.0",
@@ -74,7 +75,8 @@
     "lint:fix": "yarn lint --fix",
     "build": "craco build",
     "test": "craco test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "cypress": "cypress open"
   },
   "husky": {
     "hooks": {

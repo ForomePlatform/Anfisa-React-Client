@@ -46,7 +46,7 @@ export const FilterPage = observer(
     useDatasetName()
     const params = useParams()
     const dsName = params.get('ds') || ''
-    const [fetched, setInit] = useState(false)
+    const [fetched, setFetched] = useState(false)
 
     useEffect(() => {
       const initAsync = async () => {
@@ -71,7 +71,7 @@ export const FilterPage = observer(
       }
 
       initAsync()
-        .then(() => setInit(true))
+        .then(() => setFetched(true))
         .catch(() => null)
 
       return () => {
