@@ -1,4 +1,5 @@
-import { Fragment, ReactElement, useEffect } from 'react'
+import { Fragment, ReactElement, useEffect, useState } from 'react'
+import { useHistory } from 'react-router'
 import { observer } from 'mobx-react-lite'
 
 import { FilterMethodEnum } from '@core/enum/filter-method.enum'
@@ -7,6 +8,7 @@ import datasetStore from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
 import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
+import { Routes } from '@router/routes.enum'
 import { FilterHeader } from './filter-header'
 import { FilterRefiner } from './ui/filter-refiner'
 import { ModalTextEditor } from './ui/query-builder/modal-text-editor'
@@ -31,7 +33,10 @@ import { TableModal } from './ui/TableModal'
 
 export const FilterPage = observer(
   (): ReactElement => {
+    const history = useHistory()
+
     useDatasetName()
+    const [fetched, setInit] = useState(false)
 
     useEffect(() => {
       const initAsync = async () => {
@@ -43,10 +48,16 @@ export const FilterPage = observer(
 
         await dirinfoStore.fetchDsinfoAsync(datasetStore.datasetName)
 
-        await dtreeStore.fetchDtreeSetAsync(body)
+        if (history.location.pathname === Routes.Refiner) {
+          filterStore.setMethod(FilterMethodEnum.Refiner)
+        } else {
+          await dtreeStore.fetchDtreeSetAsync(body)
+        }
       }
 
       initAsync()
+        .then(() => setInit(true))
+        .catch(() => null)
 
       return () => {
         dtreeStore.resetFilterChangeIndicator()
@@ -54,6 +65,7 @@ export const FilterPage = observer(
         datasetStore.resetData()
         filterStore.resetData()
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (
@@ -102,7 +114,7 @@ export const FilterPage = observer(
         <div className="overflow-hidden">
           <FilterHeader />
 
-          {filterStore.method === FilterMethodEnum.DecisionTree && (
+          {filterStore.method === FilterMethodEnum.DecisionTree && fetched && (
             <QueryBuilder />
           )}
           {filterStore.method === FilterMethodEnum.Refiner && <FilterRefiner />}
