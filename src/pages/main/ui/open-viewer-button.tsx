@@ -10,6 +10,7 @@ import dirinfoStore from '@store/dirinfo'
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
 import { PopperButton } from '@components/popper-button'
+import { DatasetInfoDataCy } from '@components/data-testid/dataset-page.cy'
 
 interface PropsButton {
   isOpen?: boolean
@@ -30,6 +31,7 @@ const ButtonBase = ({
 }: PropsButton): ReactElement => (
   <Button
     text={t('home.openInViewer')}
+    dataTestId={DatasetInfoDataCy.openInViewer}
     refEl={refEl}
     size="md"
     onClick={rest.onClick}
