@@ -184,6 +184,8 @@ class DtreeStore {
       this.filteredCounts = this.statAmount[1]
       this.statRequestId = result['rq-id']
     })
+    this.setQueryBuilderRenderKey(Date.now())
+
     fetchStatunitsAsync(statList, no)
     this.resetIsFiltersLoading()
   }
