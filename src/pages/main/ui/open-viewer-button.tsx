@@ -10,7 +10,7 @@ import dirinfoStore from '@store/dirinfo'
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
 import { PopperButton } from '@components/popper-button'
-import { DatasetInfoDataCy } from '@components/data-testid/dataset-page.cy'
+import { DatasetInfoDataCy } from '@components/data-testid/dataset-info.cy'
 
 interface PropsButton {
   isOpen?: boolean
@@ -67,6 +67,7 @@ const Panel = ({ close }: PropsPanel): ReactElement => {
     <div
       className="bg-white text-black rounded shadow-card text-12 cursor-pointer flex flex-col"
       ref={ref}
+      data-testid={DatasetInfoDataCy.decTreePanel}
     >
       {dirinfoStore.dsinfo.kind === 'ws' && (
         <span
