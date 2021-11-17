@@ -2,6 +2,7 @@ import { ReactElement, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import dtreeStore from '@store/dtree'
+import { FinalStep } from './ui/final-step'
 import { NextStep } from './ui/next-step'
 
 export const QueryBuilderTreeView = observer(
@@ -28,7 +29,9 @@ export const QueryBuilderTreeView = observer(
               index
             : index
 
-          return (
+          return element.isFinalStep ? (
+            <FinalStep key={key} index={index} length={stepDataLength} />
+          ) : (
             <NextStep
               key={key}
               index={index}

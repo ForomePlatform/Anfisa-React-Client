@@ -3,21 +3,19 @@ import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 
-import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
-import { Button } from '@ui/button'
 import { makeStepActive } from '@utils/makeStepActive'
 import { NextStepContent } from './next-step-content'
 import { NextStepHeader } from './next-step-header'
 import { NextStepRoute } from './next-step-route'
 
-const TreeView = styled.div`
+export const TreeView = styled.div`
   width: 13%;
   display: flex;
   height: 117%;
 `
 
-const ResultsView = styled.div`
+export const ResultsView = styled.div`
   width: 87%;
   display: flex;
   flex-direction: column;
@@ -50,15 +48,6 @@ export const NextStep = observer(
     }
 
     const currentStep = dtreeStore.getStepData[index]
-    const code = dtreeStore.dtreeCode
-
-    const createStep = (stepIndex: number) => {
-      dtreeStore.addStep(stepIndex)
-      const indexForApi = dtreeStore.getLastStepIndexForApi()
-
-      dtreeStore.setCurrentStepIndexForApi(indexForApi)
-      dtreeStore.fetchDtreeStatAsync(code, String(indexForApi))
-    }
 
     const setStepActive = (stepIndex: number, event: any) => {
       const classList = Array.from(event.target.classList)
@@ -102,15 +91,6 @@ export const NextStep = observer(
             />
 
             {isExpanded && <NextStepContent index={index} />}
-
-            {length - index < 2 && (
-              <Button
-                disabled={!dtreeStore.getStepData[index].groups}
-                text={t('dtree.addStep')}
-                className="absolute -bottom-9 z-1000 left-0"
-                onClick={() => createStep(index)}
-              />
-            )}
           </ResultsView>
         </div>
       </div>

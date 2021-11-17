@@ -114,7 +114,6 @@ export const NextStepRoute = observer(
     )
 
     const startFilterCounts = dtreeStore.getStepData[index].startFilterCounts
-    const finishFilterCounts = dtreeStore.getStepData[index].finishFilterCounts
     const currentStep = dtreeStore.getStepData[index]
 
     const changedStartCounts = startFilterCounts
@@ -146,15 +145,6 @@ export const NextStepRoute = observer(
               ? firstStepValue
               : getNumberWithCommas(startFilterCounts)}
           </div>
-
-          {length - index < 2 && (
-            <div style={{ marginBottom: -3 }}>
-              {(finishFilterCounts &&
-                finishFilterCounts > 0 &&
-                getNumberWithCommas(finishFilterCounts)) ||
-                getNumberWithCommas(startFilterCounts)}
-            </div>
-          )}
         </StartAmount>
 
         <div className="flex flex-col items-center w-1/6">
@@ -210,14 +200,6 @@ export const NextStepRoute = observer(
               </ExcludeTurn>
             </Fragment>
           )}
-
-          <Fragment>
-            {length - index < 2 && (
-              <CircleEndThread className="bg-blue-bright">
-                <SubCircleThread />
-              </CircleEndThread>
-            )}
-          </Fragment>
         </div>
       </div>
     )
