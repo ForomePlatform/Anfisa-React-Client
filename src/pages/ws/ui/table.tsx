@@ -13,7 +13,9 @@ import datasetStore from '@store/dataset'
 import variantStore from '@store/variant'
 import columnsStore from '@store/wsColumns'
 import { NoResultsFound } from '@components/no-results-found'
-
+import { useHistory } from 'react-router'
+import { useLocation } from 'react-router-dom'
+import { Routes } from '@router/routes.enum'
 interface Props {
   columns: any[]
   data: any[]
@@ -36,6 +38,8 @@ export const isRowSelected = (
 export const Table = observer(
   ({ columns, data }: Props): ReactElement => {
     const params = useParams()
+    const location = useLocation()
+    const history = useHistory()
 
     const defaultColumn = {
       width: variantStore.drawerVisible
@@ -108,6 +112,8 @@ export const Table = observer(
       if (!variantStore.drawerVisible) {
         variantStore.setDrawerVisible(true)
       }
+
+      history.push(`${Routes.WS + location.search}&variant=${index}`)
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 

@@ -2,6 +2,7 @@ import { ReactElement } from 'react'
 import { useHistory } from 'react-router'
 import { toast } from 'react-toastify'
 import get from 'lodash/get'
+import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
 import { useParams } from '@core/hooks/use-params'
@@ -10,6 +11,7 @@ import datasetStore from '@store/dataset'
 import { Routes } from '@router/routes.enum'
 import { Button } from '@ui/button'
 import { QueryResults } from './query-results'
+import variantStore from '@store/variant'
 
 export const QuerySelected = observer(
   (): ReactElement => {
@@ -28,6 +30,18 @@ export const QuerySelected = observer(
         : datasetStore.filteredNo.length
 
     const handleClick = () => {
+      const conditions = toJS(datasetStore.conditions)
+
+      let conditionsUrl = ''
+
+      conditions.forEach(condition => {
+        const searchCondition = `&filters=${
+          condition[1]
+        }=${condition[3].join()}`
+
+        conditionsUrl += searchCondition
+      })
+
       allVariants > 2600
         ? toast.error(t('filter.tooMuchVariants'), {
             position: 'bottom-right',
@@ -38,7 +52,9 @@ export const QuerySelected = observer(
             draggable: true,
             progress: 0,
           })
-        : history.push(`${Routes.WS}?ds=${params.get('ds')}`)
+        : history.push(`${Routes.WS}?ds=${params.get('ds')}${conditionsUrl}`)
+
+      if (conditionsUrl) variantStore.setInitialConditions(true)
     }
 
     return (

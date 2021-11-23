@@ -16,6 +16,7 @@ import { DropDown } from '@ui/dropdown'
 import { Icon } from '@ui/icon'
 import { Logo } from '@components/logo'
 import userIcon from '@images/thomas-hunt.jpg'
+import { toJS } from 'mobx'
 
 interface Props {
   children?: ReactElement | ReactNode
@@ -35,15 +36,15 @@ export const Header = observer(
         await dirinfoStore.fetchDirInfoAsync()
 
         const xlName = get(
-          dirinfoStore,
-          `dirinfo['ds-dict'][${ds}].ancestors[0][0]`,
+          toJS(dirinfoStore.dirinfo),
+          `['ds-dict'][${ds}].ancestors[0][0]`,
           '',
         )
 
         setXlDatasetName(xlName)
 
         setDatasets(
-          get(dirinfoStore, `dirinfo.ds-dict.${xlName}.secondary`, []),
+          get(toJS(dirinfoStore.dirinfo), `ds-dict.${xlName}.secondary`, []),
         )
       }
 
@@ -90,7 +91,7 @@ export const Header = observer(
               <Logo mode="white" className="mr-4" />
 
               <span className="text-grey-blue">
-                {dirinfoStore.dirinfo.version as string}
+                {toJS(dirinfoStore.dirinfo).version as string}
               </span>
             </div>
           </Link>

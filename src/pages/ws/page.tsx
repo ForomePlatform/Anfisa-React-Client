@@ -1,7 +1,9 @@
 import { Fragment, ReactElement, useEffect } from 'react'
 import get from 'lodash/get'
 import { observer } from 'mobx-react-lite'
+import { ArrayParam, useQueryParams, withDefault } from 'use-query-params'
 
+import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { useParams } from '@core/hooks/use-params'
 import { t } from '@i18n'
 import datasetStore from '@store/dataset'
@@ -23,9 +25,29 @@ export const WSPage = observer(
   (): ReactElement => {
     const params = useParams()
 
+    const [query] = useQueryParams({
+      filters: withDefault(ArrayParam, []),
+    })
+
+    const { filters } = query
+
     useEffect(() => {
       const initAsync = async () => {
         const dsName = params.get('ds') || ''
+
+        if (filters.length > 0) {
+          const conditions: any = []
+
+          filters.forEach(filter => {
+            const splitted: any = filter?.split('=')
+            const name = splitted[0]
+            const value = splitted[1].split(',')
+            const condition = [FilterKindEnum.Enum, name, '', value]
+
+            conditions.push(condition)
+          })
+          datasetStore.setConditionsAsync(conditions)
+        }
 
         if (dsName && !variantStore.dsName) {
           variantStore.setDsName(params.get('ds') ?? '')

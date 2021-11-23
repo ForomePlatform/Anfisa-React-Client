@@ -11,6 +11,7 @@ export class VariantStore {
   recordsDisplayConfig: any = {}
   index = 0
   choosedIndex = 0
+  hasInitialConditions = false
   dsName = ''
   generalTags: string[] = []
   optionalTags: string[] = []
@@ -28,6 +29,10 @@ export class VariantStore {
 
   setIsActiveVariant() {
     this.isActiveVariant = true
+  }
+
+  setInitialConditions(state: boolean) {
+    this.hasInitialConditions = state
   }
 
   resetIsActiveVariant() {
