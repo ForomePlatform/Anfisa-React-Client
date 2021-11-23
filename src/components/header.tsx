@@ -3,6 +3,7 @@ import { Option } from 'react-dropdown'
 import { Link, useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import get from 'lodash/get'
+import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
 import { copyToClipboard } from '@core/copy-to-clipboard'
@@ -16,7 +17,6 @@ import { DropDown } from '@ui/dropdown'
 import { Icon } from '@ui/icon'
 import { Logo } from '@components/logo'
 import userIcon from '@images/thomas-hunt.jpg'
-import { toJS } from 'mobx'
 
 interface Props {
   children?: ReactElement | ReactNode

@@ -1,4 +1,6 @@
 import { ReactElement, useCallback, useEffect } from 'react'
+import { useHistory } from 'react-router'
+import { useLocation } from 'react-router-dom'
 import { useBlockLayout, useTable } from 'react-table'
 import { FixedSizeList } from 'react-window'
 import cn from 'classnames'
@@ -12,10 +14,8 @@ import { tableColumnMap } from '@core/table-column-map'
 import datasetStore from '@store/dataset'
 import variantStore from '@store/variant'
 import columnsStore from '@store/wsColumns'
-import { NoResultsFound } from '@components/no-results-found'
-import { useHistory } from 'react-router'
-import { useLocation } from 'react-router-dom'
 import { Routes } from '@router/routes.enum'
+import { NoResultsFound } from '@components/no-results-found'
 interface Props {
   columns: any[]
   data: any[]

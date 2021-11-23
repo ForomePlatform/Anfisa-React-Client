@@ -1,11 +1,11 @@
 import { Fragment, ReactElement } from 'react'
+import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
 import dirinfoStore from '@store/dirinfo'
 import dtreeStore from '@store/dtree'
 import { Button } from '@ui/button'
-import { toJS } from 'mobx'
 
 export const QueryBuilderTotalNumbers = observer(
   (): ReactElement => {

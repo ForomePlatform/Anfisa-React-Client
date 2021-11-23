@@ -1,4 +1,5 @@
 import { Dispatch, ReactElement, SetStateAction } from 'react'
+import { useHistory } from 'react-router'
 import get from 'lodash/get'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
@@ -12,7 +13,6 @@ import { Icon } from '@ui/icon'
 import { closeHandler } from '../drawer'
 import { DrawerNote } from './drawer-note'
 import { DrawerTags } from './drawer-tags'
-import { useHistory } from 'react-router'
 
 interface Props {
   setLayout: Dispatch<SetStateAction<any>>
@@ -21,6 +21,7 @@ interface Props {
 export const VariantHeader = observer(
   ({ setLayout }: Props): ReactElement => {
     const history = useHistory()
+
     const genInfo = get(
       toJS(variantStore.variant),
       '[0].rows[0].cells[0][0]',
@@ -59,6 +60,7 @@ export const VariantHeader = observer(
 
     const handleCloseDrawer = () => {
       closeHandler()
+
       // if url has 'variant' should be navigated to prev route
       if (variantStore.hasInitialConditions) {
         history.goBack()
