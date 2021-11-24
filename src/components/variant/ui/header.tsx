@@ -13,6 +13,8 @@ import { Icon } from '@ui/icon'
 import { closeHandler } from '../drawer'
 import { DrawerNote } from './drawer-note'
 import { DrawerTags } from './drawer-tags'
+import { Routes } from '@router/routes.enum'
+import { useLocation } from 'react-router-dom'
 
 interface Props {
   setLayout: Dispatch<SetStateAction<any>>
@@ -21,6 +23,7 @@ interface Props {
 export const VariantHeader = observer(
   ({ setLayout }: Props): ReactElement => {
     const history = useHistory()
+    const location = useLocation()
 
     const genInfo = get(
       toJS(variantStore.variant),
@@ -60,10 +63,9 @@ export const VariantHeader = observer(
 
     const handleCloseDrawer = () => {
       closeHandler()
-
-      // if url has 'variant' should be navigated to prev route
       if (variantStore.hasInitialConditions) {
-        history.goBack()
+        const previousLocation = location.search.split('&variant')[0]
+        history.push(`${Routes.WS + previousLocation}`)
       } else {
         setVariantIndex()
       }

@@ -54,7 +54,7 @@ export const QuerySelected = observer(
           })
         : history.push(`${Routes.WS}?ds=${params.get('ds')}${conditionsUrl}`)
 
-      if (conditionsUrl) variantStore.setInitialConditions(true)
+      // if (conditionsUrl) variantStore.setInitialConditions(true)
     }
 
     return (

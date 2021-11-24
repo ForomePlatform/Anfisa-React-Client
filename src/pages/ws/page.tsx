@@ -1,7 +1,12 @@
 import { Fragment, ReactElement, useEffect } from 'react'
 import get from 'lodash/get'
 import { observer } from 'mobx-react-lite'
-import { ArrayParam, useQueryParams, withDefault } from 'use-query-params'
+import {
+  ArrayParam,
+  useQueryParams,
+  withDefault,
+  NumberParam,
+} from 'use-query-params'
 
 import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { useParams } from '@core/hooks/use-params'
@@ -26,10 +31,11 @@ export const WSPage = observer(
     const params = useParams()
 
     const [query] = useQueryParams({
+      variant: NumberParam,
       filters: withDefault(ArrayParam, []),
     })
 
-    const { filters } = query
+    const { filters, variant } = query
 
     useEffect(() => {
       const initAsync = async () => {
@@ -47,6 +53,7 @@ export const WSPage = observer(
             conditions.push(condition)
           })
           datasetStore.setConditionsAsync(conditions)
+          variantStore.setInitialConditions(true)
         }
 
         if (dsName && !variantStore.dsName) {
@@ -112,7 +119,7 @@ export const WSPage = observer(
           <ControlPanel />
 
           <div className="flex-grow flex overflow-hidden">
-            <TableVariants />
+            <TableVariants variant={variant as number} />
 
             <VariantDrawer />
           </div>
