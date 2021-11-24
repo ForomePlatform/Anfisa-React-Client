@@ -1,5 +1,6 @@
 import { Dispatch, ReactElement, SetStateAction } from 'react'
 import { useHistory } from 'react-router'
+import { useLocation } from 'react-router-dom'
 import get from 'lodash/get'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
@@ -8,13 +9,12 @@ import { useKeydown } from '@core/hooks/use-keydown'
 import { useVariantIndex } from '@core/hooks/use-variant-index'
 import datasetStore from '@store/dataset'
 import variantStore from '@store/variant'
+import { Routes } from '@router/routes.enum'
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
 import { closeHandler } from '../drawer'
 import { DrawerNote } from './drawer-note'
 import { DrawerTags } from './drawer-tags'
-import { Routes } from '@router/routes.enum'
-import { useLocation } from 'react-router-dom'
 
 interface Props {
   setLayout: Dispatch<SetStateAction<any>>
@@ -63,8 +63,10 @@ export const VariantHeader = observer(
 
     const handleCloseDrawer = () => {
       closeHandler()
+
       if (variantStore.hasInitialConditions) {
         const previousLocation = location.search.split('&variant')[0]
+
         history.push(`${Routes.WS + previousLocation}`)
       } else {
         setVariantIndex()

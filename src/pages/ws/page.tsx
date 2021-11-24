@@ -3,9 +3,9 @@ import get from 'lodash/get'
 import { observer } from 'mobx-react-lite'
 import {
   ArrayParam,
+  NumberParam,
   useQueryParams,
   withDefault,
-  NumberParam,
 } from 'use-query-params'
 
 import { FilterKindEnum } from '@core/enum/filter-kind.enum'

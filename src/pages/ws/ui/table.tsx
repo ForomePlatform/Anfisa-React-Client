@@ -113,7 +113,9 @@ export const Table = observer(
         // add case if drawer alreqdy opened and you select another
         if (variantStore.drawerVisible && index !== openedVariant) {
           const previousLocation = location.search.split('&variant')[0]
+
           history.push(`${Routes.WS + previousLocation}&variant=${index}`)
+
           return
         }
 
