@@ -8,7 +8,6 @@ import { observer } from 'mobx-react-lite'
 import { useParams } from '@core/hooks/use-params'
 import { t } from '@i18n'
 import datasetStore from '@store/dataset'
-import variantStore from '@store/variant'
 import { Routes } from '@router/routes.enum'
 import { Button } from '@ui/button'
 import { QueryResults } from './query-results'
@@ -54,7 +53,7 @@ export const QuerySelected = observer(
           })
         : history.push(`${Routes.WS}?ds=${params.get('ds')}${conditionsUrl}`)
 
-      if (conditionsUrl) variantStore.setInitialConditions(true)
+      // if (conditionsUrl) variantStore.setInitialConditions(true)
     }
 
     return (

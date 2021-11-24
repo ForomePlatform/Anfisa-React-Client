@@ -1,5 +1,6 @@
 import { Dispatch, ReactElement, SetStateAction } from 'react'
 import { useHistory } from 'react-router'
+import { useLocation } from 'react-router-dom'
 import get from 'lodash/get'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
@@ -8,6 +9,7 @@ import { useKeydown } from '@core/hooks/use-keydown'
 import { useVariantIndex } from '@core/hooks/use-variant-index'
 import datasetStore from '@store/dataset'
 import variantStore from '@store/variant'
+import { Routes } from '@router/routes.enum'
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
 import { closeHandler } from '../drawer'
@@ -21,6 +23,7 @@ interface Props {
 export const VariantHeader = observer(
   ({ setLayout }: Props): ReactElement => {
     const history = useHistory()
+    const location = useLocation()
 
     const genInfo = get(
       toJS(variantStore.variant),
@@ -61,9 +64,10 @@ export const VariantHeader = observer(
     const handleCloseDrawer = () => {
       closeHandler()
 
-      // if url has 'variant' should be navigated to prev route
       if (variantStore.hasInitialConditions) {
-        history.goBack()
+        const previousLocation = location.search.split('&variant')[0]
+
+        history.push(`${Routes.WS + previousLocation}`)
       } else {
         setVariantIndex()
       }
