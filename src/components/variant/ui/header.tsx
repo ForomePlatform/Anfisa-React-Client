@@ -61,6 +61,11 @@ export const VariantHeader = observer(
     ])
 
     const handleCloseDrawer = () => {
+      setVariantIndex()
+      variantStore.resetIsActiveVariant()
+      datasetStore.fetchWsListAsync()
+      datasetStore.fetchWsTagsAsync()
+
       closeHandler()
 
       // if url has 'variant' should be navigated to prev route

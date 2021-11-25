@@ -125,24 +125,14 @@ export const Table = observer(
       [],
     )
 
-    const getCurrentVariantIndex = () => {
-      return datasetStore.filteredNo[variantStore.choosedIndex]
-        ? variantStore.choosedIndex
-        : 0
-    }
-
     useEffect(() => {
       variantStore.isActiveVariant &&
         handleOpenVariant(
           {
-            index: getCurrentVariantIndex(),
+            index: 0,
           },
           true,
         )
-
-      if (hasOpenedVariant) {
-        handleOpenVariant({ index: openedVariant as number }, false)
-      }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
