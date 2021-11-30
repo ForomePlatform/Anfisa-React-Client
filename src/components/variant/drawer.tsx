@@ -11,7 +11,6 @@ export const closeHandler = () => {
   variantStore.setDrawerVisible(false)
 
   setTimeout(() => {
-    columnsStore.setAllColumn()
     columnsStore.showColumns()
   }, 200)
 }
