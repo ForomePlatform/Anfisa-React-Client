@@ -31,6 +31,7 @@ export const QueryBuilderGroups = observer(
       step => step.isActive || step.isReturnedVariantsActive,
     )
 
+    // const activeStep = dtreeStore.stepData[activeStepIndex]
     const activeStep = dtreeStore.stepData[activeStepIndex]
 
     const returnedVariantsPrompt = activeStep?.excluded

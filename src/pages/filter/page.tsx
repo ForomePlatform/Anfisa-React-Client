@@ -5,7 +5,6 @@ import { useHistory } from 'react-router-dom'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
-import { FilterMethodEnum } from '@core/enum/filter-method.enum'
 import { useDatasetName } from '@core/hooks/use-dataset-name'
 import { useParams } from '@core/hooks/use-params'
 import { t } from '@i18n'
@@ -20,7 +19,6 @@ import { Header } from '@components/header'
 import { PopperButton } from '@components/popper-button'
 import { ErrorPage } from '../error/error'
 import { FilterControl } from './ui/filter-control'
-import { FilterRefiner } from './ui/filter-refiner'
 import { ModalTextEditor } from './ui/query-builder/modal-text-editor'
 import { QueryBuilder } from './ui/query-builder/query-builder'
 import { ModalEditCompoundHet } from './ui/query-builder/ui/modal-edit-compound-het'
@@ -40,7 +38,7 @@ import { ModalSelectGeneRegion } from './ui/query-builder/ui/modal-select-gene-r
 import { ModalSelectInheritanceMode } from './ui/query-builder/ui/modal-select-inheritance-mode'
 import { ModalSelectNumbers } from './ui/query-builder/ui/modal-select-numbers'
 import { TableModal } from './ui/TableModal'
-// import { Routes } from '@router/routes.enum'
+import { GlbPagesNames } from '@glb/glb-names'
 
 const FilterPage = observer(
   (): ReactElement => {
@@ -48,12 +46,11 @@ const FilterPage = observer(
 
     const history = useHistory()
 
-    const locationState = history.location.state
-
     useDatasetName()
     const params = useParams()
     const dsName = params.get('ds') || ''
-    const [fetched, setInit] = useState(false)
+    // const dtreeStatAmount = toJS(dtreeStore.statAmount)
+    // const dataSetStatAmount = toJS(datasetStore.statAmount)
 
     useEffect(() => {
       const initAsync = async () => {
@@ -65,17 +62,10 @@ const FilterPage = observer(
 
         await dirinfoStore.fetchDsinfoAsync(dsName)
 
-        // if (history.location.pathname === Routes.Refiner) {
-        //   filterStore.setMethod(FilterMethodEnum.Refiner)
-        // } else {
-        //   await dtreeStore.fetchDtreeSetAsync(body)
-        // }
         await dtreeStore.fetchDtreeSetAsync(body)
       }
 
       initAsync()
-        .then(() => setInit(true))
-        .catch(() => null)
 
       return () => {
         dtreeStore.resetFilterValue()
@@ -85,39 +75,40 @@ const FilterPage = observer(
         dirinfoStore.resetData()
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dsName])
+    }, [dsName, history])
 
-    const isRefiner = filterStore.method === FilterMethodEnum.Refiner
+    // const isRefiner = filterStore.method === FilterMethodEnum.Refiner
 
+    // remove after resoving conflict / refiner already moved on its own page/route
     const getFiltersValue = (type: string) => {
       if (type === 'all') {
         if (isXL) return toJS(dirinfoStore.dsinfo.total)
 
-        if (filterStore.method === FilterMethodEnum.DecisionTree) {
+        if (filterStore.method === GlbPagesNames.Filter) {
           return toJS(dtreeStore.statAmount[0])
         }
 
-        if (filterStore.method === FilterMethodEnum.Refiner) {
+        if (filterStore.method === GlbPagesNames.Refiner) {
           return toJS(datasetStore.statAmount[0])
         }
       }
 
       if (type === 'transcribedVariants') {
-        if (filterStore.method === FilterMethodEnum.DecisionTree) {
+        if (filterStore.method === GlbPagesNames.Filter) {
           return toJS(dtreeStore.statAmount[1])
         }
 
-        if (filterStore.method === FilterMethodEnum.Refiner) {
+        if (filterStore.method === GlbPagesNames.Refiner) {
           return toJS(datasetStore.statAmount[1])
         }
       }
 
       if (type === 'transcripts') {
-        if (filterStore.method === FilterMethodEnum.DecisionTree) {
+        if (filterStore.method === GlbPagesNames.Filter) {
           return toJS(dtreeStore.statAmount[2])
         }
 
-        if (filterStore.method === FilterMethodEnum.Refiner) {
+        if (filterStore.method === GlbPagesNames.Refiner) {
           return toJS(datasetStore.statAmount[2])
         }
       }
@@ -192,22 +183,18 @@ const FilterPage = observer(
               )}
 
               <div className="ml-2">
-                {isRefiner && (
+                {
                   <PopperButton
                     ButtonElement={ExportReportButton}
                     ModalElement={ExportPanel}
                   />
-                )}
+                }
               </div>
             </div>
           </Header>
 
           <FilterControl />
-
-          {filterStore.method === FilterMethodEnum.DecisionTree && fetched && (
-            <QueryBuilder />
-          )}
-          {isRefiner && <FilterRefiner locationState={locationState} />}
+          <QueryBuilder />
         </div>
       </Fragment>
     )

@@ -1,5 +1,5 @@
-import { FilterMethodEnum } from '@core/enum/filter-method.enum'
 import { getApiUrl } from '@core/get-api-url'
+import { GlbPagesNames } from '@glb/glb-names'
 import datasetStore from '@store/dataset'
 import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
@@ -32,7 +32,7 @@ export const fetchStatunitsAsync = async (
     units: JSON.stringify(incompletePropertyList),
   })
 
-  const isRefiner = filterStore.method === FilterMethodEnum.Refiner
+  const isRefiner = filterStore.method === GlbPagesNames.Refiner
 
   if (isRefiner) {
     const conditions = JSON.stringify(datasetStore.conditions)

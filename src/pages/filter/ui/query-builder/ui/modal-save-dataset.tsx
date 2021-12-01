@@ -5,7 +5,6 @@ import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
 import { DatasetCreationErrorsEnum } from '@core/enum/dataset-creation-errors-enum'
-import { FilterMethodEnum } from '@core/enum/filter-method.enum'
 import { PatnNameEnum } from '@core/enum/path-name-enum'
 import { t } from '@i18n'
 import datasetStore from '@store/dataset'
@@ -20,6 +19,7 @@ import { Attention } from '@ui/icons/attention'
 import { Input } from '@ui/input'
 import { HeaderModal } from './header-modal'
 import { ModalBase } from './modal-base'
+import { GlbPagesNames } from '@glb/glb-names'
 
 export const noSymbolPattern = /[!"#$%&'()*+,./:;<=>?@[\\\]^`{|}~§±№-]/
 export const noFirstNumberPattern = /^[\d_]/
@@ -37,7 +37,7 @@ export const ModalSaveDataset = observer(() => {
   useEffect(() => {
     if (
       pathName === PatnNameEnum.Filter &&
-      filterStore.method === FilterMethodEnum.DecisionTree &&
+      filterStore.method === GlbPagesNames.Filter &&
       dtreeStore.acceptedVariants === 0
     ) {
       setError(DatasetCreationErrorsEnum.EmptyDataset)
@@ -45,7 +45,7 @@ export const ModalSaveDataset = observer(() => {
 
     if (
       pathName === PatnNameEnum.Filter &&
-      filterStore.method === FilterMethodEnum.Refiner &&
+      filterStore.method === GlbPagesNames.Refiner &&
       datasetStore.statAmount[0] === 0
     ) {
       setError(DatasetCreationErrorsEnum.EmptyDataset)
