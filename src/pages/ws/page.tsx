@@ -40,6 +40,8 @@ export const WSPage = observer(
 
     const { filters, variant } = query
 
+    Number.isInteger(variant) && variantStore.setIndex(variant as number)
+
     useEffect(() => {
       const initAsync = async () => {
         const dsName = params.get('ds') || ''
@@ -56,7 +58,6 @@ export const WSPage = observer(
             conditions.push(condition)
           })
           datasetStore.setConditionsAsync(conditions)
-          variantStore.setInitialConditions(true)
         }
 
         if (dsName && !variantStore.dsName) {
@@ -71,9 +72,9 @@ export const WSPage = observer(
 
       return () => {
         filterZone.resetAllSelectedItems()
-        variantStore.resetIsActiveVariant()
         dirinfoStore.resetData()
         datasetStore.resetData()
+        variantStore.resetStore()
       }
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -122,7 +123,7 @@ export const WSPage = observer(
           <ControlPanel />
 
           <div className="flex-grow flex overflow-hidden">
-            <TableVariants variant={variant as number} />
+            <TableVariants />
 
             <VariantDrawer />
           </div>
