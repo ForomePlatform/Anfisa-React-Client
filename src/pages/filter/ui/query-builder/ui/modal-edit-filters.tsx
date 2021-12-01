@@ -28,12 +28,6 @@ export const ModalEditFilters = observer(
     const selectedGroupsAmount =
       currentGroup.length > 0 ? dtreeStore.selectedFilters : []
 
-    const subGroups = Object.values(dtreeStore.getQueryBuilder)
-
-    const currentStatList = subGroups.find(subGroup =>
-      subGroup.find(element => element.name === groupName),
-    )
-
     const currentGroupLength =
       dtreeStore.stepData[dtreeStore.currentStepIndex].groups[
         indexOfCurrentGroup
@@ -72,6 +66,22 @@ export const ModalEditFilters = observer(
     const [searchValue, setSearchValue] = useState('')
     const [currentPage, setCurrentPage] = useState(0)
 
+    const [isAllFiltersChecked, setIsAllFiltersChecked] = useState(false)
+
+    const handleCheckAll = (checked: boolean) => {
+      if (checked && isAllFiltersChecked) return
+      // eslint-disable-next-line @typescript-eslint/no-use-before-define
+      chunks[currentPage]?.forEach(([variantName]: [string, number]) => {
+        if (checked) {
+          dtreeStore.addSelectedFilter(variantName)
+        } else {
+          dtreeStore.removeSelectedFilter(variantName)
+        }
+
+        setIsAllFiltersChecked(checked)
+      })
+    }
+
     const handleChange = (value: string) => {
       setSearchValue(value)
 
@@ -80,7 +90,13 @@ export const ModalEditFilters = observer(
       setCurrentPage(0)
     }
 
-    const originGroupList: any[] = currentStatList?.[0].variants ?? []
+    const subGroups = Object.values(dtreeStore.getQueryBuilder)
+
+    const selectedGroup = subGroups
+      .find(subGroup => subGroup.find(element => element.name === groupName))
+      ?.find(element => element.name === groupName)
+
+    const originGroupList: any[] = selectedGroup?.variants ?? []
 
     const filteredGroupList = originGroupList.filter(
       (variant: [string, number]) =>
@@ -120,21 +136,23 @@ export const ModalEditFilters = observer(
 
             <ModsDivider />
 
-            <div className="text-blue-bright">{t('general.selectAll')}</div>
+            <div
+              className="cursor-pointer text-blue-bright"
+              onClick={() => handleCheckAll(true)}
+            >
+              {t('general.selectAll')}
+            </div>
 
             <ModsDivider />
 
-            <div className="text-blue-bright">{t('general.clearAll')}</div>
+            <div
+              className="cursor-pointer text-blue-bright"
+              onClick={() => handleCheckAll(false)}
+            >
+              {t('general.clearAll')}
+            </div>
           </div>
         </div>
-
-        {filteredGroupList.length > groupsPerPage && (
-          <Pagintaion
-            pagesNumbers={chunks.length}
-            currentPage={currentPage}
-            setPageNumber={setCurrentPage}
-          />
-        )}
 
         <div className="flex-1 overflow-y-auto my-4 text-14">
           {chunks[currentPage] ? (
@@ -171,6 +189,14 @@ export const ModalEditFilters = observer(
             </div>
           )}
         </div>
+
+        {filteredGroupList.length > groupsPerPage && (
+          <Pagintaion
+            pagesNumbers={chunks.length}
+            currentPage={currentPage}
+            setPageNumber={setCurrentPage}
+          />
+        )}
 
         <EditModalButtons
           handleClose={handleClose}

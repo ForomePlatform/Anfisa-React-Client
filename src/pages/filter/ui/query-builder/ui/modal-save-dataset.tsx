@@ -5,7 +5,6 @@ import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
 import { DatasetCreationErrorsEnum } from '@core/enum/dataset-creation-errors-enum'
-import { FilterMethodEnum } from '@core/enum/filter-method.enum'
 import { PatnNameEnum } from '@core/enum/path-name-enum'
 import { t } from '@i18n'
 import datasetStore from '@store/dataset'
@@ -18,8 +17,13 @@ import { Routes } from '@router/routes.enum'
 import { Button } from '@ui/button'
 import { Attention } from '@ui/icons/attention'
 import { Input } from '@ui/input'
+import { DecisionTreesMenuDataCy } from '@components/data-testid/decision-tree-menu.cy'
+import { GlbPagesNames } from '@glb/glb-names'
 import { HeaderModal } from './header-modal'
 import { ModalBase } from './modal-base'
+
+export const noSymbolPattern = /[!"#$%&'()*+,./:;<=>?@[\\\]^`{|}~§±№-]/
+export const noFirstNumberPattern = /^[\d_]/
 
 export const noSymbolPattern = /[!"#$%&'()*+,./:;<=>?@[\\\]^`{|}~§±№-]/
 export const noFirstNumberPattern = /^[\d_]/
@@ -37,7 +41,7 @@ export const ModalSaveDataset = observer(() => {
   useEffect(() => {
     if (
       pathName === PatnNameEnum.Filter &&
-      filterStore.method === FilterMethodEnum.DecisionTree &&
+      filterStore.method === GlbPagesNames.Filter &&
       dtreeStore.acceptedVariants === 0
     ) {
       setError(DatasetCreationErrorsEnum.EmptyDataset)
@@ -45,7 +49,7 @@ export const ModalSaveDataset = observer(() => {
 
     if (
       pathName === PatnNameEnum.Filter &&
-      filterStore.method === FilterMethodEnum.Refiner &&
+      filterStore.method === GlbPagesNames.Refiner &&
       datasetStore.statAmount[0] === 0
     ) {
       setError(DatasetCreationErrorsEnum.EmptyDataset)
@@ -165,6 +169,7 @@ export const ModalSaveDataset = observer(() => {
             value={value}
             onChange={e => handleChange(e.target.value)}
             className="mt-1"
+            data-testid={DecisionTreesMenuDataCy.datasetNameInput}
           />
 
           <span className="text-12 text-red-secondary mt-2">{error}</span>
@@ -194,17 +199,19 @@ export const ModalSaveDataset = observer(() => {
         <div className="flex ml-auto mt-6">
           <Button
             text={t('general.cancel')}
-            hasBackground={false}
-            className="text-black border-grey-light hover:bg-grey-light"
+            variant={'secondary'}
+            className="border-grey-light hover:bg-grey-light"
             onClick={handleClose}
+            dataTestId={DecisionTreesMenuDataCy.cancelAddNewDataset}
           />
 
           <Button
             text={t('dsCreation.addDataset')}
-            className="ml-4 text-black hover:bg-blue-bright hover:text-white"
+            className="ml-4"
             disabled={!value.trim() || error.length > 0}
-            hasBackground={false}
+            variant={'secondary'}
             onClick={saveDatasetAsync}
+            dataTestId={DecisionTreesMenuDataCy.addNewDataset}
           />
         </div>
       </div>

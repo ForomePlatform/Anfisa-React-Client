@@ -12,6 +12,7 @@
     "md5": "2.3.0",
     "mobx": "6.2.0",
     "mobx-react-lite": "3.2.0",
+    "progress-bar-webpack-plugin": "2.1.0",
     "rc-tooltip": "5.1.1",
     "react": "17.0.2",
     "react-beautiful-dnd": "13.1.0",
@@ -34,6 +35,7 @@
     "styled-normalize": "8.0.7",
     "styled-tools": "1.7.2",
     "typescript": "4.1.2",
+    "use-query-params": "1.2.3",
     "web-vitals": "1.0.1"
   },
   "devDependencies": {
@@ -63,6 +65,7 @@
     "craco-alias": "3.0.1",
     "cypress": "9.0.0",
     "cypress-dotenv": "2.0.0",
+    "cypress-wait-until": "1.7.2",
     "dotenv": "10.0.0",
     "dotenv-cra": "2.0.2",
     "eslint": "7.24.0",
@@ -74,13 +77,14 @@
     "tailwindcss": "npm:@tailwindcss/postcss7-compat"
   },
   "scripts": {
-    "start": "craco start",
+    "start": "yarn & craco start",
     "lint": "eslint -c .eslintrc.js --ext js,ts,tsx src cypress",
     "lint:fix": "yarn lint --fix",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject",
-    "cypress": "cypress open"
+    "cy:open": "cypress open",
+    "cy:run": "cypress run"
   },
   "husky": {
     "hooks": {

@@ -1,16 +1,18 @@
 import { Fragment, ReactElement } from 'react'
+import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
 import dirinfoStore from '@store/dirinfo'
 import dtreeStore from '@store/dtree'
 import { Button } from '@ui/button'
+import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
 
 export const QueryBuilderTotalNumbers = observer(
   (): ReactElement => {
-    const variants = dirinfoStore.dsinfo.total
+    const variants = toJS(dirinfoStore.dsinfo).total
 
-    const stepData = dtreeStore.stepData
+    const stepData = toJS(dtreeStore.stepData)
 
     const stepIndex = stepData.findIndex(
       element => element.isActive || element.isReturnedVariantsActive,
@@ -61,7 +63,7 @@ export const QueryBuilderTotalNumbers = observer(
             {variants}
           </span>
 
-          {dtreeStore.stepData.length > 0 && (
+          {toJS(dtreeStore.stepData).length > 0 && (
             <Fragment>
               <div className="text-12 leading-14px text-grey-blue mt-2 ml-2">
                 <span>{t('dtree.acceptedVariants')}</span>
@@ -80,10 +82,11 @@ export const QueryBuilderTotalNumbers = observer(
         <div className="flex">
           {hasReturnedVariants && (
             <Button
+              dataTestId={DecisionTreesResultsDataCy.viewReturnedVariants}
               onClick={() => openTableModal(true)}
               text={t('dtree.viewReturnedVariants')}
-              hasBackground={false}
-              className="ml-auto hover:bg-blue-bright"
+              variant={'secondary-dark'}
+              className="ml-auto"
             />
           )}
 
@@ -91,8 +94,8 @@ export const QueryBuilderTotalNumbers = observer(
             <Button
               onClick={() => openTableModal(false)}
               text={t('dtree.viewVariants')}
-              hasBackground={false}
-              className="ml-5 hover:bg-blue-bright"
+              variant={'secondary-dark'}
+              className="ml-5"
             />
           )}
         </div>

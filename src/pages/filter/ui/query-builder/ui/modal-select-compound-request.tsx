@@ -368,19 +368,17 @@ export const ModalSelectCompoundRequest = observer(
             <Button
               onClick={() => handleRequestBlocksAmount('ADD')}
               text="Add"
-              hasBackground={false}
-              className={cn(
-                'text-black hover:text-white hover:bg-blue-bright mr-4',
-              )}
+              variant={'secondary'}
+              className={cn('mr-4')}
               disabled={requestCondition.length === 5}
             />
 
             <Button
               onClick={() => handleRequestBlocksAmount('REMOVE')}
               text="Remove"
-              hasBackground={false}
+              variant={'secondary'}
               className={cn(
-                'text-black border-red-secondary hover:text-white hover:bg-red-secondary',
+                'border-red-secondary hover:text-white hover:bg-red-secondary',
               )}
               disabled={requestCondition.length === 1}
             />

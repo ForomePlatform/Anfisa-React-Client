@@ -7,7 +7,6 @@ import dirinfoStore from '@store/dirinfo'
 import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
 import filterZone from '@store/filterZone'
-import variantStore from '@store/variant'
 import { Header } from '@components/header'
 import { ErrorPage } from '@pages/error/error'
 import { Datasets } from './ui/datasets'
@@ -32,7 +31,7 @@ const MainPage = (): ReactElement => {
       filterStore.resetData()
       dtreeStore.resetData()
       filterZone.resetAllSelectedItems()
-      variantStore.resetIsActiveVariant()
+      // variantStore.resetIsActiveVariant()
     }
 
     handlerAsync()

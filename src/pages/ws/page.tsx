@@ -2,13 +2,22 @@ import { Fragment, ReactElement, useEffect } from 'react'
 import { withErrorBoundary } from 'react-error-boundary'
 import get from 'lodash/get'
 import { observer } from 'mobx-react-lite'
+import {
+  ArrayParam,
+  NumberParam,
+  useQueryParams,
+  withDefault,
+} from 'use-query-params'
 
+import { FilterKindEnum } from '@core/enum/filter-kind.enum'
+import { useDatasetName } from '@core/hooks/use-dataset-name'
 import { useParams } from '@core/hooks/use-params'
 import { t } from '@i18n'
 import datasetStore from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
 import dtreeStore from '@store/dtree'
 import variantStore from '@store/variant'
+import { MainTableDataCy } from '@components/data-testid/main-table.cy'
 import { ExportPanel } from '@components/export-panel'
 import { ExportReportButton } from '@components/export-report-button'
 import { Header } from '@components/header'
@@ -24,9 +33,34 @@ const WSPage = observer(
   (): ReactElement => {
     const params = useParams()
 
+    useDatasetName()
+
+    const [query] = useQueryParams({
+      variant: NumberParam,
+      filters: withDefault(ArrayParam, []),
+    })
+
+    const { filters, variant } = query
+
+    Number.isInteger(variant) && variantStore.setIndex(variant as number)
+
     useEffect(() => {
       const initAsync = async () => {
         const dsName = params.get('ds') || ''
+
+        if (filters.length > 0) {
+          const conditions: any = []
+
+          filters.forEach(filter => {
+            const splitted: any = filter?.split('=')
+            const name = splitted[0]
+            const value = splitted[1].split(',')
+            const condition = [FilterKindEnum.Enum, name, '', value]
+
+            conditions.push(condition)
+          })
+          datasetStore.setConditionsAsync(conditions)
+        }
 
         if (dsName && !variantStore.dsName) {
           variantStore.setDsName(params.get('ds') ?? '')
@@ -56,7 +90,10 @@ const WSPage = observer(
         <div className="h-full flex flex-col">
           <Header>
             <div className="text-white flex-grow flex justify-end pr-6">
-              <span className="text-12 leading-14px text-white mt-2 ml-auto font-bold">
+              <span
+                className="text-12 leading-14px text-white mt-2 ml-auto font-bold"
+                data-testid={MainTableDataCy.numVariants}
+              >
                 {t('filter.variants', {
                   all: allVariants,
                 })}

@@ -4,13 +4,14 @@ import { makeAutoObservable, runInAction } from 'mobx'
 import { ReccntCommon, ReccntDisplayItem } from '@declarations'
 import { getApiUrl } from '@core/get-api-url'
 import datasetStore from './dataset'
+import { INITIAL_VARIANT } from './store.const'
 
 export class VariantStore {
   drawerVisible = false
   variant: ReccntCommon[] = []
   recordsDisplayConfig: any = {}
-  index = 0
-  choosedIndex = 0
+
+  index = INITIAL_VARIANT
   dsName = ''
   generalTags: string[] = []
   optionalTags: string[] = []
@@ -112,13 +113,10 @@ export class VariantStore {
   }
 
   setIndex(index: number) {
-    this.index = index
-
-    this.fetchVarinatInfoAsync()
-  }
-
-  setChoosedIndex(index: number) {
-    this.choosedIndex = index
+    runInAction(() => {
+      this.index = index
+      this.fetchVarinatInfoAsync()
+    })
   }
 
   setDsName(dsName: string) {
@@ -257,6 +255,12 @@ export class VariantStore {
 
   setCurrentTag(tag: string) {
     this.currentTag = tag
+  }
+
+  resetStore(): void {
+    runInAction(() => {
+      this.index = INITIAL_VARIANT
+    })
   }
 }
 
