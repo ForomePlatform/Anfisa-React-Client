@@ -41,6 +41,8 @@ const WSPage = observer(
 
     const { filters, variant } = query
 
+    Number.isInteger(variant) && variantStore.setIndex(variant as number)
+
     useEffect(() => {
       const initAsync = async () => {
         const dsName = params.get('ds') || ''
@@ -57,7 +59,6 @@ const WSPage = observer(
             conditions.push(condition)
           })
           datasetStore.setConditionsAsync(conditions)
-          variantStore.setInitialConditions(true)
         }
 
         if (dsName && !variantStore.dsName) {
@@ -116,7 +117,7 @@ const WSPage = observer(
           <ControlPanel />
 
           <div className="flex-grow flex overflow-hidden">
-            <TableVariants variant={variant as number} />
+            <TableVariants />
 
             <VariantDrawer />
           </div>
