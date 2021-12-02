@@ -24,6 +24,9 @@ import { GlbPagesNames } from '@glb/glb-names'
 export const noSymbolPattern = /[!"#$%&'()*+,./:;<=>?@[\\\]^`{|}~§±№-]/
 export const noFirstNumberPattern = /^[\d_]/
 
+export const noSymbolPattern = /[!"#$%&'()*+,./:;<=>?@[\\\]^`{|}~§±№-]/
+export const noFirstNumberPattern = /^[\d_]/
+
 export const ModalSaveDataset = observer(() => {
   const ref = useRef<any>(null)
   const history = useHistory()
