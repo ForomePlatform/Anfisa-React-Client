@@ -7,10 +7,10 @@ import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { InheritanceModeEnum } from '@core/enum/inheritance-mode-enum'
 import datasetStore from '@store/dataset'
 import filterStore from '@store/filter'
+import { GlbPagesNames } from '@glb/glb-names'
 import { getQueryBuilder } from '@utils/getQueryBuilder'
 import { getSortedArray } from '@utils/getSortedArray'
 import { CustomInheritanceModeContent } from './query-builder/ui/custom-inheritance-mode-content'
-import { GlbPagesNames } from '@glb/glb-names'
 
 export const CustomInheritanceMode = observer(
   ({ setFieldValue }: FormikProps<{ scenario: any; variants: string[] }>) => {
