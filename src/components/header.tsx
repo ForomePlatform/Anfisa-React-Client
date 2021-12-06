@@ -12,6 +12,7 @@ import { t } from '@i18n'
 import datasetStore from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
 import filterStore from '@store/filter'
+import filterZone from '@store/filterZone'
 import variantStore from '@store/variant'
 import { PageRoute, RouteNames, Routes } from '@router/routes.enum'
 import { DropDown } from '@ui/dropdown'
@@ -62,6 +63,8 @@ export const Header = observer(
     }, [ds, source])
 
     const handleChangeDataset = (arg: Option) => {
+      if (arg.value === ds) return
+
       ds !== arg.value &&
         history.push(`${history.location.pathname}?ds=${arg.value}`)
       datasetStore.setDatasetName(history.location.pathname)
@@ -72,6 +75,9 @@ export const Header = observer(
         variantStore.setDsName(arg.value)
       }
 
+      datasetStore.resetConditions()
+      datasetStore.resetActivePreset()
+      filterZone.resetAllSelectedItems()
       datasetStore.initDatasetAsync(dsName)
     }
 
