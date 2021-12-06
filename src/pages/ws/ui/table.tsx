@@ -19,7 +19,6 @@ import { NoResultsFound } from '@components/no-results-found'
 interface Props {
   columns: any[]
   data: any[]
-  openedVariant: number | undefined
 }
 
 interface PropsRow {
@@ -37,11 +36,11 @@ export const isRowSelected = (
 }
 
 export const Table = observer(
-  ({ columns, data, openedVariant }: Props): ReactElement => {
+  ({ columns, data }: Props): ReactElement => {
     const params = useParams()
     const location = useLocation()
     const history = useHistory()
-    const hasOpenedVariant = openedVariant !== undefined
+    const alreadyOpened = !!params.get('variant')
 
     const defaultColumn = {
       width: variantStore.drawerVisible
@@ -84,59 +83,40 @@ export const Table = observer(
       useBlockLayout,
     )
 
-    const handleOpenVariant = useCallback(
-      ({ index }: PropsRow, withRoute: boolean) => {
-        if (window.getSelection()?.toString() || datasetStore.isXL) return
+    const routeToVariant = (variant: number) => {
+      let search = location.search
 
-        const idx =
-          toJS(datasetStore.filteredNo).length === 0
-            ? index
-            : toJS(datasetStore.filteredNo)[index]
+      alreadyOpened && (search = location.search.split('&variant')[0])
+      history.push(`${Routes.WS + search}&variant=${variant}`)
+    }
+
+    const handleOpenVariant = useCallback(
+      ({ index }: PropsRow) => {
+        if (window.getSelection()?.toString() || datasetStore.isXL) return
 
         if (!variantStore.drawerVisible) {
           columnsStore.setColumns(columnsStore.getColumnsForOpenDrawer())
           columnsStore.showColumns()
           variantStore.setDsName(params.get('ds') ?? '')
-        }
-
-        variantStore.setIndex(idx)
-        variantStore.setChoosedIndex(index)
-
-        variantStore.setIsActiveVariant()
-
-        variantStore.fetchVarinatInfoAsync()
-
-        if (!variantStore.drawerVisible) {
           variantStore.setDrawerVisible(true)
         }
 
-        if (variantStore.drawerVisible && index !== openedVariant) {
-          const previousLocation = location.search.split('&variant')[0]
+        variantStore.setIndex(index)
 
-          history.push(`${Routes.WS + previousLocation}&variant=${index}`)
+        variantStore.fetchVarinatInfoAsync()
 
-          return
-        }
-
-        withRoute &&
-          history.push(`${Routes.WS + location.search}&variant=${index}`)
+        routeToVariant(index)
       },
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [],
     )
 
     useEffect(() => {
-      variantStore.isActiveVariant &&
-        handleOpenVariant(
-          {
-            index: 0,
-          },
-          true,
-        )
+      alreadyOpened &&
+        handleOpenVariant({
+          index: Number(params.get('variant')),
+        })
 
-      if (hasOpenedVariant) {
-        handleOpenVariant({ index: openedVariant as number }, false)
-      }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -158,7 +138,7 @@ export const Table = observer(
                 ? 'bg-blue-bright text-white'
                 : 'text-black hover:bg-blue-light',
             )}
-            onClick={() => handleOpenVariant(row, !hasOpenedVariant)}
+            onClick={() => handleOpenVariant(row)}
           >
             {row.cells.map((cell: any) => {
               return (

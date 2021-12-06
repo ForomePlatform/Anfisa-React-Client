@@ -59,20 +59,19 @@ export const VariantHeader = observer(
     ])
 
     const handleCloseDrawer = () => {
-      variantStore.resetIsActiveVariant()
       datasetStore.fetchWsListAsync()
       datasetStore.fetchWsTagsAsync()
 
       closeHandler()
 
       // if url has 'variant' should be navigated to prev route
-      if (variantStore.hasInitialConditions) {
-        const previousLocation = location.search.split('&variant')[0]
+      // if (variantStore.hasInitialConditions) {
+      const previousLocation = location.search.split('&variant')[0]
 
-        history.push(`${Routes.WS + previousLocation}`)
-      } else {
-        setVariantIndex()
-      }
+      history.push(`${Routes.WS + previousLocation}`)
+      // } else {
+      setVariantIndex()
+      // }
     }
 
     return (
