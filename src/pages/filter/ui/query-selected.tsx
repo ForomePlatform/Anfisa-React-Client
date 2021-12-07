@@ -73,13 +73,15 @@ export const QuerySelected = observer(
             )}
           </div>
 
-          <Button
-            className="ml-auto"
-            text={t('general.apply', {
-              amount: selectedVariants,
-            })}
-            onClick={handleClick}
-          />
+          {!datasetStore.isXL && (
+            <Button
+              className="ml-auto"
+              text={t('general.apply', {
+                amount: selectedVariants,
+              })}
+              onClick={handleClick}
+            />
+          )}
         </div>
 
         {datasetStore.isLoadingDsStat ? <Loader /> : <QueryResults />}
