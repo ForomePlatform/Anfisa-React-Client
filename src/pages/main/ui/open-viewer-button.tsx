@@ -55,6 +55,14 @@ const Panel = ({ close }: PropsPanel): ReactElement => {
   const ref = useRef<any>(null)
   const history = useHistory()
 
+  let pages = Object.values(GlbPagesNames).filter(
+    name => name !== GlbPagesNames.Root,
+  )
+
+  if (datasetStore.isXL) {
+    pages = pages.filter(p => p !== GlbPagesNames.Table)
+  }
+
   // todo: might be replaced to shared source
   const goToPage = (name: GlbPagesNames) => {
     // commented according prev hot-fixes
@@ -74,22 +82,20 @@ const Panel = ({ close }: PropsPanel): ReactElement => {
       ref={ref}
       data-testid={DatasetInfoDataCy.decTreePanel}
     >
-      {Object.values(GlbPagesNames)
-        .filter(name => name !== GlbPagesNames.Root)
-        .map((pageName, index) => {
-          return (
-            <span
-              className="py-1 px-3 rounded hover:bg-blue-light"
-              key={index}
-              onClick={() => {
-                datasetStore.setIsXL(dirinfoStore.dsinfo.kind === 'xl')
-                goToPage(pageName)
-              }}
-            >
-              {t(`home.${pageName}`)}
-            </span>
-          )
-        })}
+      {pages.map((pageName, index) => {
+        return (
+          <span
+            className="py-1 px-3 rounded hover:bg-blue-light"
+            key={index}
+            onClick={() => {
+              datasetStore.setIsXL(dirinfoStore.dsinfo.kind === 'xl')
+              goToPage(pageName)
+            }}
+          >
+            {t(`home.${pageName}`)}
+          </span>
+        )
+      })}
     </div>
   )
 }
