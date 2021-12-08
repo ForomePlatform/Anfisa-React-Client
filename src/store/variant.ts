@@ -91,6 +91,7 @@ export class VariantStore {
   setIndex(index: number) {
     runInAction(() => {
       this.index = index
+      this.fetchVarinatInfoAsync()
     })
   }
 
