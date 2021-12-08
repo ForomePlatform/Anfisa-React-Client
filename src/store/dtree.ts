@@ -219,7 +219,27 @@ class DtreeStore {
   }
 
   get getQueryBuilder() {
-    return getQueryBuilder(toJS(this.dtreeStat['stat-list']))
+    let filteredAttrsList = []
+
+    if (this.dtreeStat['stat-list']) {
+      filteredAttrsList = this.dtreeStat['stat-list'].map((item: any) => {
+        if (item.kind === 'enum' && item.variants) {
+          const filteredVariants = item.variants.filter(
+            (subItem: any) => subItem[1] > 0,
+          )
+
+          item.variants = filteredVariants
+
+          if (item.variants.length > 0) return item
+
+          return
+        }
+
+        return item
+      })
+    }
+
+    return getQueryBuilder(filteredAttrsList.filter((item: any) => item))
   }
 
   getStepIndexForApi = (index: number) => {

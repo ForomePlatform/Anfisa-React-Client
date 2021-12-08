@@ -236,24 +236,48 @@ class DatasetStore {
       : await this.fetchFilteredTabReportAsync()
   }
 
+  getfilteredAttrsList(data: any[]) {
+    const filteredAttrsList = data.map((item: any) => {
+      if (item.kind === 'enum') {
+        const filteredVariants = item.variants.filter(
+          (subItem: any) => subItem[1] > 0,
+        )
+
+        item.variants = filteredVariants
+
+        if (item.variants.length > 0) return item
+
+        return
+      }
+
+      return item
+    })
+
+    return filteredAttrsList.filter((item: any) => item)
+  }
+
   get getFilterRefiner() {
     const groups: Record<string, StatList[]> = {}
+    let filteredList = []
 
-    this.dsStat['stat-list'] &&
-      this.dsStat['stat-list'].forEach((item: StatList) => {
-        if (
-          (item.title || item.name) &&
-          (item.title || item.name)
-            .toLocaleLowerCase()
-            .includes(this.searchField.toLocaleLowerCase())
-        ) {
-          if (groups[item.vgroup]) {
-            groups[item.vgroup] = [...groups[item.vgroup], item]
-          } else {
-            groups[item.vgroup] = [item]
-          }
+    if (this.dsStat['stat-list']) {
+      filteredList = this.getfilteredAttrsList(this.dsStat['stat-list'])
+    }
+
+    filteredList.forEach((item: StatList) => {
+      if (
+        (item.title || item.name) &&
+        (item.title || item.name)
+          .toLocaleLowerCase()
+          .includes(this.searchField.toLocaleLowerCase())
+      ) {
+        if (groups[item.vgroup]) {
+          groups[item.vgroup] = [...groups[item.vgroup], item]
+        } else {
+          groups[item.vgroup] = [item]
         }
-      })
+      }
+    })
 
     return groups
   }
