@@ -91,6 +91,10 @@ export const Table = observer(
       history.push(`${Routes.WS + search}&variant=${variant}`)
     }
 
+    const isFiltered = (): boolean => {
+      return toJS(datasetStore.filteredNo).length > 0
+    }
+
     const handleOpenVariant = useCallback(
       ({ index }: PropsRow) => {
         if (window.getSelection()?.toString() || datasetStore.isXL) return
@@ -102,11 +106,13 @@ export const Table = observer(
           variantStore.setDrawerVisible(true)
         }
 
-        variantStore.setIndex(index)
+        const idx = isFiltered() ? toJS(datasetStore.filteredNo)[index] : index
+
+        variantStore.setIndex(idx)
 
         variantStore.fetchVarinatInfoAsync()
 
-        routeToVariant(index)
+        routeToVariant(idx)
       },
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [],
@@ -115,7 +121,7 @@ export const Table = observer(
     useEffect(() => {
       alreadyOpened &&
         handleOpenVariant({
-          index: Number(params.get('variant')),
+          index: isFiltered() ? 0 : Number(params.get('variant')),
         })
 
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -138,6 +144,7 @@ export const Table = observer(
             {...row.getRowProps({
               style,
             })}
+            onClick={() => handleOpenVariant(row)}
             className={cn(
               'cursor-pointer flex items-center tr',
               variantStore.drawerVisible &&
@@ -145,7 +152,6 @@ export const Table = observer(
                 ? 'bg-blue-bright text-white'
                 : 'text-black hover:bg-blue-light',
             )}
-            onClick={() => handleOpenVariant(row)}
           >
             {row.cells.map((cell: any) => {
               const isSampleColumn = cell?.column?.Header === 'Samples'
