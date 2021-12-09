@@ -1,5 +1,5 @@
 import React, { Fragment, ReactElement, useEffect, useState } from 'react'
-import { useHistory } from 'react-router'
+// import { useHistory } from 'react-router'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
@@ -11,7 +11,7 @@ import datasetStore from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
 import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
-import { Routes } from '@router/routes.enum'
+// import { Routes } from '@router/routes.enum'
 import { ExportPanel } from '@components/export-panel'
 import { ExportReportButton } from '@components/export-report-button'
 import { Header } from '@components/header'
@@ -40,7 +40,7 @@ import { TableModal } from './ui/TableModal'
 
 export const FilterPage = observer(
   (): ReactElement => {
-    const history = useHistory()
+    // const history = useHistory()
     const isXL = datasetStore.isXL
 
     useDatasetName()
@@ -58,11 +58,12 @@ export const FilterPage = observer(
 
         await dirinfoStore.fetchDsinfoAsync(dsName)
 
-        if (history.location.pathname === Routes.Refiner) {
-          filterStore.setMethod(FilterMethodEnum.Refiner)
-        } else {
-          await dtreeStore.fetchDtreeSetAsync(body)
-        }
+        // if (history.location.pathname === Routes.Refiner) {
+        //   filterStore.setMethod(FilterMethodEnum.Refiner)
+        // } else {
+        //   await dtreeStore.fetchDtreeSetAsync(body)
+        // }
+        await dtreeStore.fetchDtreeSetAsync(body)
       }
 
       initAsync()
