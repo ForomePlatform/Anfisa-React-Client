@@ -69,7 +69,6 @@ const FilterPage = observer(
       return () => {
         dtreeStore.resetFilterValue()
         dtreeStore.resetAlgorithmFilterValue()
-        datasetStore.removeSearchField()
         dtreeStore.resetData()
         dirinfoStore.resetData()
         datasetStore.resetData()
