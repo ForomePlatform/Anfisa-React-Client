@@ -17,6 +17,7 @@ import datasetStore from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
 import dtreeStore from '@store/dtree'
 import variantStore from '@store/variant'
+import { MainTableDataCy } from '@components/data-testid/main-table.cy'
 import { ExportPanel } from '@components/export-panel'
 import { ExportReportButton } from '@components/export-report-button'
 import { Header } from '@components/header'
@@ -89,7 +90,10 @@ const WSPage = observer(
         <div className="h-full flex flex-col">
           <Header>
             <div className="text-white flex-grow flex justify-end pr-6">
-              <span className="text-12 leading-14px text-white mt-2 ml-auto font-bold">
+              <span
+                className="text-12 leading-14px text-white mt-2 ml-auto font-bold"
+                data-testid={MainTableDataCy.numVariants}
+              >
                 {t('filter.variants', {
                   all: allVariants,
                 })}
