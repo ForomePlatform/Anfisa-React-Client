@@ -102,7 +102,8 @@ const DrawerNoteModal = observer(({ close }: any) => {
               text={t('general.delete')}
               onClick={deleteNoteAsync}
               hasBackground={false}
-              className="text-black border-red-secondary hover:text-white hover:bg-red-secondary"
+              isBlackText
+              className="border-red-secondary hover:text-white hover:bg-red-secondary"
             />
           )}
         </div>
@@ -112,14 +113,16 @@ const DrawerNoteModal = observer(({ close }: any) => {
             text={t('general.cancel')}
             onClick={close}
             hasBackground={false}
-            className="ml-4 text-black hover:bg-blue-bright hover:text-white"
+            isBlackText
+            className="ml-4 hover:bg-blue-bright hover:text-white"
           />
 
           <Button
             text="Save note"
             disabled={!value || !value.trim()}
             hasBackground={false}
-            className="ml-4 text-black hover:bg-blue-bright hover:text-white"
+            isBlackText
+            className="ml-4 hover:bg-blue-bright hover:text-white"
             onClick={handleSaveNoteAsync}
           />
         </div>
