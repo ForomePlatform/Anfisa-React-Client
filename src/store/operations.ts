@@ -5,9 +5,9 @@ import { getApiUrl } from '@core/get-api-url'
 import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
 import { Routes } from '@router/routes.enum'
+import { GlbPagesNames } from '@glb/glb-names'
 import datasetStore from './dataset'
 import dirinfoStore from './dirinfo'
-import { GlbPagesNames } from '@glb/glb-names'
 class OperationsStore {
   savingStatus: [boolean, string] = [false, '']
   isCreationOver = true

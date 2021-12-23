@@ -16,6 +16,7 @@ import { ExportPanel } from '@components/export-panel'
 import { ExportReportButton } from '@components/export-report-button'
 import { Header } from '@components/header'
 import { PopperButton } from '@components/popper-button'
+import { GlbPagesNames } from '@glb/glb-names'
 import { ErrorPage } from '../error/error'
 import { FilterControl } from './ui/filter-control'
 import { ModalTextEditor } from './ui/query-builder/modal-text-editor'
@@ -37,7 +38,6 @@ import { ModalSelectGeneRegion } from './ui/query-builder/ui/modal-select-gene-r
 import { ModalSelectInheritanceMode } from './ui/query-builder/ui/modal-select-inheritance-mode'
 import { ModalSelectNumbers } from './ui/query-builder/ui/modal-select-numbers'
 import { TableModal } from './ui/TableModal'
-import { GlbPagesNames } from '@glb/glb-names'
 
 const FilterPage = observer(
   (): ReactElement => {
@@ -72,6 +72,7 @@ const FilterPage = observer(
         datasetStore.removeSearchField()
         dtreeStore.resetData()
         dirinfoStore.resetData()
+        datasetStore.resetData()
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dsName, history])
@@ -159,15 +160,6 @@ const FilterPage = observer(
                   </span>
                 </React.Fragment>
               )}
-
-              <div className="ml-2">
-                {
-                  <PopperButton
-                    ButtonElement={ExportReportButton}
-                    ModalElement={ExportPanel}
-                  />
-                }
-              </div>
             </div>
           </Header>
 

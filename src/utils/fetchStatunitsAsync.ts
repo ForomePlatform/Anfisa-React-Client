@@ -1,8 +1,8 @@
 import { getApiUrl } from '@core/get-api-url'
-import { GlbPagesNames } from '@glb/glb-names'
 import datasetStore from '@store/dataset'
 import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
+import { GlbPagesNames } from '@glb/glb-names'
 import { getFilteredAttrsList } from './getFilteredAttrsList'
 
 export const fetchStatunitsAsync = async (

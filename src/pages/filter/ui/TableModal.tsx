@@ -9,9 +9,9 @@ import filterStore from '@store/filter'
 import variantStore from '@store/variant'
 import { RadioButton } from '@ui/radio-button'
 import { VariantBody } from '@components/variant/ui/body'
+import { GlbPagesNames } from '@glb/glb-names'
 import { fetchDsListAsync } from '@utils/TableModal/fetchDsListAsync'
 import { fetchJobStatusAsync } from '@utils/TableModal/fetchJobStatusAsync'
-import { GlbPagesNames } from '@glb/glb-names'
 
 const ModalView = styled.div`
   display: flex;

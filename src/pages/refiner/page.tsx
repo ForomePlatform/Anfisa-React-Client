@@ -19,6 +19,7 @@ export const RefinerPage = observer(
     const isXL = datasetStore.isXL
 
     const statAmount = toJS(datasetStore.statAmount)
+
     useDatasetName()
 
     useEffect(() => {

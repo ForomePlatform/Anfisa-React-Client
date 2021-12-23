@@ -1,10 +1,10 @@
 import { ReactElement } from 'react'
 
+import { useDatasetName } from '@core/hooks/use-dataset-name'
+import datasetStore from '@store/dataset'
 import { FilterRefinerGroups } from './filter-refiner-groups'
 import { QuerySelected } from './query-selected'
 import { SelectedGroup } from './selected-group'
-import datasetStore from '@store/dataset'
-import { useDatasetName } from '@core/hooks/use-dataset-name'
 
 export const FilterRefiner = (): ReactElement => {
   return (

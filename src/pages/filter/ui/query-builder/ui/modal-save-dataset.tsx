@@ -17,9 +17,9 @@ import { Routes } from '@router/routes.enum'
 import { Button } from '@ui/button'
 import { Attention } from '@ui/icons/attention'
 import { Input } from '@ui/input'
+import { GlbPagesNames } from '@glb/glb-names'
 import { HeaderModal } from './header-modal'
 import { ModalBase } from './modal-base'
-import { GlbPagesNames } from '@glb/glb-names'
 
 export const noSymbolPattern = /[!"#$%&'()*+,./:;<=>?@[\\\]^`{|}~§±№-]/
 export const noFirstNumberPattern = /^[\d_]/
