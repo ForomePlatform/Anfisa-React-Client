@@ -465,6 +465,9 @@ describe('Open saved dataset in MainTable', () => {
     mainTablePage.mainTable.exportReport.click()
     mainTablePage.mainTable.exportExcel.click()
     cy.wait('@reportDownload')
+    cy.readFile('./cypress/downloads/Dataset_from_autotests.xlsx').should(
+      'exist',
+    )
   })
 
   function loginWithPreset() {
