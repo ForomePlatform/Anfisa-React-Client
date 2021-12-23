@@ -81,12 +81,12 @@ const Panel = ({ close }: PropsPanel): ReactElement => {
       className="bg-white text-black rounded shadow-card text-12 cursor-pointer flex flex-col"
       ref={ref}
     >
-<<<<<<< HEAD
       {pages.map((pageName, index) => {
         return (
           <span
             className="py-1 px-3 rounded hover:bg-blue-light"
             key={index}
+            data-testid={DatasetInfoDataCy.decTreePanel}
             onClick={() => {
               datasetStore.setIsXL(dirinfoStore.dsinfo.kind === 'xl')
               goToPage(pageName)
@@ -96,32 +96,6 @@ const Panel = ({ close }: PropsPanel): ReactElement => {
           </span>
         )
       })}
-=======
-      {dirinfoStore.dsinfo.kind === 'ws' && (
-        <span
-          className="py-1 px-3 rounded hover:bg-blue-light"
-          onClick={goToWs}
-          data-testid={DatasetInfoDataCy.mainTable}
-        >
-          {t('home.table')}
-        </span>
-      )}
-
-      <span
-        className="py-1 px-3 rounded hover:bg-blue-light"
-        onClick={goToFilter}
-        data-testid={DatasetInfoDataCy.decTreePanel}
-      >
-        {t('home.filter')}
-      </span>
-
-      <span
-        className="py-1 px-3 rounded hover:bg-blue-light"
-        onClick={goToRefiner}
-      >
-        {t('home.refiner')}
-      </span>
->>>>>>> f748038 (feat(FOROME-00): update cypress tests)
     </div>
   )
 }

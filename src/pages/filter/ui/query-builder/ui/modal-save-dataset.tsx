@@ -17,11 +17,8 @@ import { Routes } from '@router/routes.enum'
 import { Button } from '@ui/button'
 import { Attention } from '@ui/icons/attention'
 import { Input } from '@ui/input'
-<<<<<<< HEAD
-import { GlbPagesNames } from '@glb/glb-names'
-=======
 import { DecisionTreesMenuDataCy } from '@components/data-testid/decision-tree-menu.cy'
->>>>>>> f748038 (feat(FOROME-00): update cypress tests)
+import { GlbPagesNames } from '@glb/glb-names'
 import { HeaderModal } from './header-modal'
 import { ModalBase } from './modal-base'
 
