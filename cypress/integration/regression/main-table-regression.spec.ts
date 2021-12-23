@@ -3,6 +3,7 @@ import { CommonSelectors } from '../../../src/components/data-testid/common-sele
 import { datasetPage } from '../../page-objects/app/datasets-page'
 import { mainTablePage } from '../../page-objects/app/main-table-page'
 import { variantDrawerPage } from '../../page-objects/app/variant-drawer-page'
+import { Timeouts } from '../../page-objects/lib/timeouts.cy'
 
 describe('Regression test of the main table | step 1', () => {
   it('should open main table for PGP3140_wgs_panel_hl dataset', () => {
@@ -179,7 +180,7 @@ describe('Regression test of the main table | step 1', () => {
     mainTablePage.mainTable.customizeTable.click()
     mainTablePage.mainTable.searchColumn.type('In-Silico')
     mainTablePage.mainTable.customizeTableList.element.within($list => {
-      $list.find(CommonSelectors.columnSwitch).click()
+      $list.find(CommonSelectors.columnSwitch).trigger('click')
     })
     //mainTablePage.mainTable.columnSwitch.eq(1).click()
     mainTablePage.mainTable.applyButton.click()
@@ -211,6 +212,9 @@ describe('Regression test of the main table | step 1', () => {
     mainTablePage.mainTable.exportReport.click()
     mainTablePage.mainTable.exportExcel.click()
     cy.wait('@reportDownload')
+    cy.readFile('./cypress/downloads/Dataset_from_autotests.xlsx').should(
+      'exist',
+    )
   })
 
   it('should save csv file | test #13', () => {
@@ -226,9 +230,10 @@ describe('Regression test of the main table | step 1', () => {
     cy.wait('@loadPreset', { timeout: 20000 })
     //number of variants changes
     mainTablePage.mainTable.numVariants.haveText('Variants: 2')
-    cy.intercept('POST', '/app/export').as('reportCsvDownload')
+    cy.intercept('POST', '/app/csv_export').as('reportCsvDownload')
     mainTablePage.mainTable.exportReport.click()
-    mainTablePage.mainTable.exportExcel.click()
-    cy.wait('@reportCsvDownload', { timeout: 20000 })
+    mainTablePage.mainTable.exportCsv.click()
+    cy.wait('@reportCsvDownload', { timeout: Timeouts.TwentySecondsTimeout })
+    cy.readFile('./cypress/downloads/PGP3140_wgs_panel_hl.csv').should('exist')
   })
 })

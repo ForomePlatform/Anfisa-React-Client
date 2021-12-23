@@ -22,6 +22,7 @@ export interface MainTableSelectors {
   numVariants: string
   exportReport: string
   exportExcel: string
+  exportCsv: string
   customizeTable: string
   columnSwitch: string
   searchColumn: string
@@ -51,6 +52,7 @@ export class MainTableWidget extends UIWidget {
   readonly numVariants: Label
   readonly exportReport: Button
   readonly exportExcel: Button
+  readonly exportCsv: Button
   readonly customizeTable: Button
   readonly columnSwitch: Button
   readonly searchColumn: Input
@@ -93,6 +95,7 @@ export class MainTableWidget extends UIWidget {
       selectors.customizeTableList,
       labels.customizeTableList,
     )
+    this.exportCsv = new Button(selectors.exportCsv)
   }
 }
 class MainTablePage extends BasePage {
@@ -115,6 +118,7 @@ class MainTablePage extends BasePage {
         numVariants: `[data-testid = "${MainTableDataCy.numVariants}"]`,
         exportReport: `[data-testid = "${MainTableDataCy.exportReport}"]`,
         exportExcel: `[data-testid = "${MainTableDataCy.exportExcel}"]`,
+        exportCsv: `[data-testid = "${MainTableDataCy.exportCsv}"]`,
         customizeTable: `[data-testid = "${MainTableDataCy.customizeTable}"]`,
         columnSwitch: `${CommonSelectors.columnSwitch}`,
         searchColumn: `[data-testid = "${MainTableDataCy.searchColumn}"]`,
