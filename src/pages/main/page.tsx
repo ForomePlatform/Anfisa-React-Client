@@ -32,7 +32,7 @@ const MainPage = (): ReactElement => {
       filterStore.resetData()
       dtreeStore.resetData()
       filterZone.resetAllSelectedItems()
-      variantStore.resetIsActiveVariant()
+      // variantStore.resetIsActiveVariant()
     }
 
     handlerAsync()

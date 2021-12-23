@@ -3,12 +3,10 @@ import { ReactElement } from 'react'
 import { FilterRefinerGroups } from './filter-refiner-groups'
 import { QuerySelected } from './query-selected'
 import { SelectedGroup } from './selected-group'
+import datasetStore from '@store/dataset'
+import { useDatasetName } from '@core/hooks/use-dataset-name'
 
 export const FilterRefiner = (): ReactElement => {
-  // in case if will be needed
-  // datasetStore.fetchDsStatAsync()
-  // datasetStore.fetchWsListAsync()
-
   return (
     <div
       className="flex overflow-y-hidden"

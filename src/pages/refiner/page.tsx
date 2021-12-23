@@ -17,13 +17,14 @@ import { FilterRefiner } from '@pages/filter/ui/filter-refiner'
 export const RefinerPage = observer(
   (): ReactElement => {
     const isXL = datasetStore.isXL
-    const statAmount = toJS(datasetStore.statAmount)
 
+    const statAmount = toJS(datasetStore.statAmount)
     useDatasetName()
 
     useEffect(() => {
       const initAsync = async () => {
         await datasetStore.fetchDsStatAsync()
+        await datasetStore.fetchWsListAsync()
 
         if (Object.keys(toJS(dirinfoStore.dsinfo)).length === 0) {
           await dirinfoStore.fetchDsinfoAsync(datasetStore.datasetName)
