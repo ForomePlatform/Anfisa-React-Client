@@ -12,4 +12,5 @@ export const MainTableDataCy = {
   customizeTable: 'customize-table',
   searchColumn: 'search-input',
   checkboxListElement: 'checkbox-list-element',
+  customizeTableList: 'draggable-list-element',
 }

@@ -27,11 +27,13 @@ export interface MainTableSelectors {
   searchColumn: string
   columnHeader: string
   checkboxListElement: string
+  customizeTableList: string
 }
 export interface MainTableLables {
   numVariants: string
   columnHeader?: string
   checkboxListElement?: string
+  customizeTableList: string
 }
 
 export class MainTableWidget extends UIWidget {
@@ -54,6 +56,7 @@ export class MainTableWidget extends UIWidget {
   readonly searchColumn: Input
   readonly columnHeader: Label
   readonly checkboxListElement: Label
+  readonly customizeTableList: Label
 
   constructor(options: {
     selectors: MainTableSelectors
@@ -86,6 +89,10 @@ export class MainTableWidget extends UIWidget {
       selectors.checkboxListElement,
       labels.checkboxListElement!,
     )
+    this.customizeTableList = new Label(
+      selectors.customizeTableList,
+      labels.customizeTableList,
+    )
   }
 }
 class MainTablePage extends BasePage {
@@ -113,11 +120,13 @@ class MainTablePage extends BasePage {
         searchColumn: `[data-testid = "${MainTableDataCy.searchColumn}"]`,
         columnHeader: `${CommonSelectors.columnHeader}`,
         checkboxListElement: `[data-testid = "${MainTableDataCy.checkboxListElement}"]`,
+        customizeTableList: `[data-testid = "${MainTableDataCy.customizeTableList}"]`,
       },
       labels: {
         numVariants: 'number-of-variants',
         columnHeader: labelContent,
         checkboxListElement: labelContent,
+        customizeTableList: 'In-Silico',
       },
     })
   }
