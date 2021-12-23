@@ -35,7 +35,7 @@ class DecisionTreesPage extends BasePage {
         treeTooltip: `${CommonSelectors.treeTooltip}`,
         addAttribute: `[data-testid = "${DecisionTreesResultsDataCy.addAttrbute}"]`,
         searchForAttr: `[data-testid = "${DecisionTreesResultsDataCy.searchForAttr}"]`,
-        selectAll: `${CommonSelectors.selectAll}`,
+        selectAll: `${DecisionTreesResultsDataCy.selectAllFromAttribute}`,
       },
       labels: {
         graphHeaders: '',
