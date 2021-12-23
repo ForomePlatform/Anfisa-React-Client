@@ -171,13 +171,13 @@ describe('Regression test of the main table | step 1', () => {
     mainTablePage.mainTable.columnHeader.countElements(7)
   })
 
-  it.only('should turn on column from the middle part of table | step 10', () => {
+  it('should turn on column from the middle part of table | step 10', () => {
     mainTablePage.visit('/ws?ds=PGP3140_wgs_panel_hl')
     cy.intercept('POST', '/app/tab_report').as('dsUpload')
     cy.wait('@dsUpload', { timeout: 20000 })
     mainTablePage.mainTable.numVariants.haveText('Variants: 2592')
     mainTablePage.mainTable.customizeTable.click()
-    //mainTablePage.mainTable.searchColumn.type('In-Silico')
+    mainTablePage.mainTable.searchColumn.type('In-Silico')
     mainTablePage.mainTable.customizeTableList.element.within($list => {
       $list.find(CommonSelectors.columnSwitch).click()
     })
