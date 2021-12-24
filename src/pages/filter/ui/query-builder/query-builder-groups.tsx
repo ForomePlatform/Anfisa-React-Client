@@ -17,6 +17,7 @@ export const QueryBuilderGroups = observer(
     } = useFilterQueryBuilder()
 
     const groupNames = Object.keys(filteredQueryBuilder)
+    console.log('groupNames -----', groupNames)
     const subGroupData = Object.values(filteredQueryBuilder)
 
     const chunkSize = 2

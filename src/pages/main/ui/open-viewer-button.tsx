@@ -63,11 +63,7 @@ const Panel = ({ close }: PropsPanel): ReactElement => {
     pages = pages.filter(p => p !== GlbPagesNames.Table)
   }
 
-  // todo: might be replaced to shared source
   const goToPage = (name: GlbPagesNames) => {
-    // commented according prev hot-fixes
-    // datasetStore.setDatasetName(dirinfoStore.selectedDirinfoName)
-    // datasetStore.setIsXL(dirinfoStore.dsinfo.kind === 'xl')
     const route = getPageRoute(name)
 
     history.push(`${route}?ds=${dirinfoStore.selectedDirinfoName}`)

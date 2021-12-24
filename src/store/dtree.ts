@@ -221,6 +221,7 @@ class DtreeStore {
   }
 
   get getQueryBuilder() {
+    console.log('dtreeStat', toJS(this.dtreeStat))
     return getQueryBuilder(toJS(this.dtreeStat['stat-list']))
   }
 

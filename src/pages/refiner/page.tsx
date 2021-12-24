@@ -20,6 +20,7 @@ export const RefinerPage = observer(
 
     const statAmount = toJS(datasetStore.statAmount)
 
+    console.log('refiner init')
     useDatasetName()
 
     useEffect(() => {
