@@ -14,8 +14,6 @@ export interface DecisionTreeResultsSelectors {
   viewReturnedVariants: string
   treeTooltip: string
   addAttribute: string
-  searchForAttr: string
-  selectAll: string
 }
 
 export interface DecisionTreeResultsLabels {
@@ -35,8 +33,6 @@ export class DecisionTreeResultsWidget extends UIWidget {
   readonly viewReturnedVariants: Button
   readonly treeToolptip: Label
   readonly addAttribute: Button
-  readonly searchForAttr: Input
-  readonly selectAll: Button
 
   constructor(options: {
     selectors: DecisionTreeResultsSelectors
@@ -62,7 +58,5 @@ export class DecisionTreeResultsWidget extends UIWidget {
     this.viewReturnedVariants = new Button(selectors.viewReturnedVariants)
     this.treeToolptip = new Label(selectors.treeTooltip, labels.treeTooltip)
     this.addAttribute = new Button(selectors.addAttribute)
-    this.searchForAttr = new Input(selectors.searchForAttr)
-    this.selectAll = new Button(selectors.selectAll)
   }
 }

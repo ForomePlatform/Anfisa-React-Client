@@ -10,4 +10,6 @@ export const DecisionTreesResultsDataCy = {
   searchForAttr: 'search-input',
   selectAllFromAttribute: 'select-all',
   clearAllFromAttribute: 'clear-all',
+  addSelectedAttributes: 'add-selected',
+  addByJoin: 'add-by-joining',
 }
