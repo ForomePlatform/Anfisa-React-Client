@@ -27,6 +27,7 @@ class FilterStore {
   actionName?: ActionFilterEnum
   statFuncData: any = []
   error = ''
+  filterCondition: Record<string, any> = {}
 
   selectedFiltersHistory: SelectedFiltersType[] = []
 
@@ -176,6 +177,16 @@ class FilterStore {
 
   setSelectedFiltersHistory(history: SelectedFiltersType[]) {
     this.selectedFiltersHistory = JSON.parse(JSON.stringify(history))
+  }
+
+  setFilterCondition<T = any>(filterName: string, values: T) {
+    this.filterCondition[filterName] = values
+  }
+
+  readFilterCondition<T = any>(filterName: string) {
+    return this.filterCondition[filterName]
+      ? (this.filterCondition[filterName] as T)
+      : undefined
   }
 }
 

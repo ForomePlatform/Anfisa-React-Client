@@ -12,13 +12,34 @@ import { getQueryBuilder } from '@utils/getQueryBuilder'
 import { getSortedArray } from '@utils/getSortedArray'
 import { CustomInheritanceModeContent } from './query-builder/ui/custom-inheritance-mode-content'
 
+export interface ICustomInheritanceModeProps {
+  scenario: any
+  variants: string[]
+}
+
+export interface ICustomInheritanceFormValues {
+  first: string
+  second: string
+  third: string
+  reset: string
+}
+
+const CUSTOM_INHERITANCE = 'Custom_Inheritance_Mode'
+
 export const CustomInheritanceMode = observer(
-  ({ setFieldValue }: FormikProps<{ scenario: any; variants: string[] }>) => {
-    const [firstSelectValue, setFirstSelectValue] = useState<string>('2')
-    const [secondSelectValue, setSecondSelectValue] = useState<string>('0-1')
-    const [thirdSelectValue, setThirdSelectValue] = useState<string>('0-1')
+  ({ setFieldValue }: FormikProps<ICustomInheritanceModeProps>) => {
+    const cachedValues = filterStore.readFilterCondition<ICustomInheritanceFormValues>(
+      CUSTOM_INHERITANCE,
+    )
+
+    const { first, second, third, reset } = cachedValues || {}
+
+    const [firstSelectValue, setFirstSelectValue] = useState(first || '2')
+    const [secondSelectValue, setSecondSelectValue] = useState(second || '0-1')
+    const [thirdSelectValue, setThirdSelectValue] = useState(third || '0-1')
+
     const selectStates = [firstSelectValue, secondSelectValue, thirdSelectValue]
-    const [resetValue, setResetValue] = useState('')
+    const [resetValue, setResetValue] = useState(reset || '')
     const variants = filterStore.statFuncData.variants
 
     useEffect(() => {
@@ -31,7 +52,17 @@ export const CustomInheritanceMode = observer(
       } else {
         filterStore.setError('')
       }
-    }, [firstSelectValue, secondSelectValue, thirdSelectValue])
+
+      filterStore.setFilterCondition<ICustomInheritanceFormValues>(
+        CUSTOM_INHERITANCE,
+        {
+          first: firstSelectValue,
+          second: secondSelectValue,
+          third: thirdSelectValue,
+          reset: resetValue,
+        },
+      )
+    }, [firstSelectValue, secondSelectValue, thirdSelectValue, resetValue])
 
     useEffect(() => {
       const params = datasetStore.isXL
