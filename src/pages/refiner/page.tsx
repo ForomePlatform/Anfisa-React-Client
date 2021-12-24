@@ -6,12 +6,15 @@ import { useDatasetName } from '@core/hooks/use-dataset-name'
 import { t } from '@i18n'
 import datasetStore from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
+import dtreeStore from '@store/dtree'
 import { ExportPanel } from '@components/export-panel'
 import { ExportReportButton } from '@components/export-report-button'
 import { Header } from '@components/header'
 import { PopperButton } from '@components/popper-button'
 import { FilterControl } from '@pages/filter/ui/filter-control'
 import { FilterRefiner } from '@pages/filter/ui/filter-refiner'
+import { ModalSaveDataset } from '@pages/filter/ui/query-builder/ui/modal-save-dataset'
+import { TableModal } from '@pages/filter/ui/TableModal'
 
 export const RefinerPage = observer(
   (): ReactElement => {
@@ -42,6 +45,8 @@ export const RefinerPage = observer(
 
     return (
       <Fragment>
+        {dtreeStore.isTableModalVisible && <TableModal />}
+        {dtreeStore.isModalSaveDatasetVisible && <ModalSaveDataset />}
         <Header source="refiner">
           <div className="text-white flex-grow flex justify-end pr-6">
             <span className="text-12 leading-14px text-white mt-2 ml-auto font-bold">

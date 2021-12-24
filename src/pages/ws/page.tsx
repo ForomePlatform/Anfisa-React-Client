@@ -1,7 +1,6 @@
 import { Fragment, ReactElement, useEffect } from 'react'
 import { withErrorBoundary } from 'react-error-boundary'
 import get from 'lodash/get'
-import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import {
   ArrayParam,
@@ -17,7 +16,6 @@ import { t } from '@i18n'
 import datasetStore from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
 import dtreeStore from '@store/dtree'
-import filterStore from '@store/filter'
 import variantStore from '@store/variant'
 import { MainTableDataCy } from '@components/data-testid/main-table.cy'
 import { ExportPanel } from '@components/export-panel'
