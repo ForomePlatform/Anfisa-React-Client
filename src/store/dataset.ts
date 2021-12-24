@@ -275,8 +275,6 @@ class DatasetStore {
 
     const result = await response.json()
 
-    console.log('result', result)
-
     result['stat-list'] = getFilteredAttrsList(result['stat-list'])
 
     const conditionFromHistory = bodyFromHistory?.get('conditions')

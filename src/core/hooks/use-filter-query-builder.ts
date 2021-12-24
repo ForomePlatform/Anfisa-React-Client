@@ -6,8 +6,6 @@ export const useFilterQueryBuilder = () => {
   const queryBuilder = dtreeStore.getQueryBuilder
   const entriesQueryBuilder = Object.entries(queryBuilder)
 
-  console.log('queryBuilder', queryBuilder)
-
   const [filterValue, setFilterValue] = useState('')
 
   const filteredEntriesQueryBuilder = entriesQueryBuilder

@@ -17,7 +17,7 @@ export const EditFilter = observer(
     const params = useParams()
 
     const handleClick = () => {
-      histroy.push(`${Routes.Filter}?ds=${params.get('ds')}`)
+      histroy.push(`${Routes.Refiner}?ds=${params.get('ds')}`)
       filterStore.setMethod(GlbPagesNames.Refiner)
     }
 

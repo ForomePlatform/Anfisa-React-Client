@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement, useEffect, useState } from 'react'
+import React, { Fragment, ReactElement, useEffect } from 'react'
 import { withErrorBoundary } from 'react-error-boundary'
 import { useHistory } from 'react-router-dom'
 import { toJS } from 'mobx'
@@ -42,8 +42,6 @@ const FilterPage = observer(
     useDatasetName()
     const params = useParams()
     const dsName = params.get('ds') || ''
-    // const dtreeStatAmount = toJS(dtreeStore.statAmount)
-    // const dataSetStatAmount = toJS(datasetStore.statAmount)
 
     useEffect(() => {
       const initAsync = async () => {

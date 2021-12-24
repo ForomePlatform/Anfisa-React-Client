@@ -221,8 +221,10 @@ class DtreeStore {
   }
 
   get getQueryBuilder() {
-    console.log('dtreeStat', toJS(this.dtreeStat))
-    return getQueryBuilder(toJS(this.dtreeStat['stat-list']))
+    const statList =
+      this.dtreeStat['stat-list'] ?? datasetStore.dsStat['stat-list']
+
+    return getQueryBuilder(toJS(statList))
   }
 
   getStepIndexForApi = (index: number) => {

@@ -21,8 +21,6 @@ export const FilterRefinerGroups = observer(
 
     const keys = Object.keys(filteredQueryBuilder)
 
-    console.log('keys -----', keys)
-
     const values = Object.values(filteredQueryBuilder)
 
     const handleCheckGroupItem = (

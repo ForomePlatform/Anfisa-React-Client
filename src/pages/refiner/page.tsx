@@ -6,7 +6,6 @@ import { useDatasetName } from '@core/hooks/use-dataset-name'
 import { t } from '@i18n'
 import datasetStore from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
-import filterStore from '@store/filter'
 import { ExportPanel } from '@components/export-panel'
 import { ExportReportButton } from '@components/export-report-button'
 import { Header } from '@components/header'
@@ -20,7 +19,6 @@ export const RefinerPage = observer(
 
     const statAmount = toJS(datasetStore.statAmount)
 
-    console.log('refiner init')
     useDatasetName()
 
     useEffect(() => {
@@ -37,7 +35,6 @@ export const RefinerPage = observer(
 
       return () => {
         datasetStore.resetData()
-        filterStore.resetData()
         dirinfoStore.resetData()
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
