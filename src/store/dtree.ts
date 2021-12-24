@@ -961,6 +961,10 @@ class DtreeStore {
     })
   }
 
+  setStatRequestId(id: string) {
+    this.statRequestId = id
+  }
+
   clearStatRequestId() {
     runInAction(() => {
       this.statRequestId = ''
