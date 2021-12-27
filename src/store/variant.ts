@@ -19,7 +19,6 @@ export class VariantStore {
   tagsWithNotes: any = {}
   currentTag = ''
   noteText = ''
-  isActiveVariant = false
 
   isModalNotesVisible = false
 
@@ -40,14 +39,6 @@ export class VariantStore {
 
   constructor() {
     makeAutoObservable(this)
-  }
-
-  setIsActiveVariant() {
-    this.isActiveVariant = true
-  }
-
-  resetIsActiveVariant() {
-    this.isActiveVariant = false
   }
 
   setNoteText(value: string) {

@@ -72,35 +72,17 @@ const FilterPage = observer(
 
     const getFiltersValue = (type: string) => {
       if (type === 'all') {
-        if (isXL) return toJS(dirinfoStore.dsinfo.total)
-
-        if (filterStore.method === GlbPagesNames.Filter) {
-          return toJS(dtreeStore.statAmount[0])
-        }
-
-        if (filterStore.method === GlbPagesNames.Refiner) {
-          return toJS(datasetStore.statAmount[0])
-        }
+        return isXL
+          ? toJS(dirinfoStore.dsinfo.total)
+          : toJS(datasetStore.statAmount[0])
       }
 
       if (type === 'transcribedVariants') {
-        if (filterStore.method === GlbPagesNames.Filter) {
-          return toJS(dtreeStore.statAmount[1])
-        }
-
-        if (filterStore.method === GlbPagesNames.Refiner) {
-          return toJS(datasetStore.statAmount[1])
-        }
+        return toJS(datasetStore.statAmount[1])
       }
 
       if (type === 'transcripts') {
-        if (filterStore.method === GlbPagesNames.Filter) {
-          return toJS(dtreeStore.statAmount[2])
-        }
-
-        if (filterStore.method === GlbPagesNames.Refiner) {
-          return toJS(datasetStore.statAmount[2])
-        }
+        return toJS(dtreeStore.statAmount[2])
       }
     }
 
