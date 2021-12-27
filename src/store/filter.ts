@@ -178,13 +178,6 @@ class FilterStore {
   setSelectedFiltersHistory(history: SelectedFiltersType[]) {
     this.selectedFiltersHistory = JSON.parse(JSON.stringify(history))
   }
-
-  setSelectedFilters(filters: SelectedFiltersType) {
-    this.selectedFilters = JSON.parse(JSON.stringify(filters))
-  }
-  setSelectedFiltersHistory(history: SelectedFiltersType[]) {
-    this.selectedFiltersHistory = JSON.parse(JSON.stringify(history))
-  }
 }
 
 export default new FilterStore()

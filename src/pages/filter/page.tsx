@@ -32,6 +32,8 @@ import { ModalSelectGeneRegion } from './ui/query-builder/ui/modal-select-gene-r
 import { ModalSelectInheritanceMode } from './ui/query-builder/ui/modal-select-inheritance-mode'
 import { ModalSelectNumbers } from './ui/query-builder/ui/modal-select-numbers'
 import { TableModal } from './ui/TableModal'
+import filterStore from '@store/filter'
+import { GlbPagesNames } from '@glb/glb-names'
 
 const FilterPage = observer(
   (): ReactElement => {
