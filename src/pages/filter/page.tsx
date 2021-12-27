@@ -10,7 +10,9 @@ import { t } from '@i18n'
 import datasetStore from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
 import dtreeStore from '@store/dtree'
+import filterStore from '@store/filter'
 import { Header } from '@components/header'
+import { GlbPagesNames } from '@glb/glb-names'
 import { ErrorPage } from '../error/error'
 import { FilterControl } from './ui/filter-control'
 import { ModalTextEditor } from './ui/query-builder/modal-text-editor'
@@ -32,8 +34,6 @@ import { ModalSelectGeneRegion } from './ui/query-builder/ui/modal-select-gene-r
 import { ModalSelectInheritanceMode } from './ui/query-builder/ui/modal-select-inheritance-mode'
 import { ModalSelectNumbers } from './ui/query-builder/ui/modal-select-numbers'
 import { TableModal } from './ui/TableModal'
-import filterStore from '@store/filter'
-import { GlbPagesNames } from '@glb/glb-names'
 
 const FilterPage = observer(
   (): ReactElement => {
