@@ -6,6 +6,9 @@ import { variantDrawerPage } from '../../page-objects/app/variant-drawer-page'
 import { Timeouts } from '../../page-objects/lib/timeouts.cy'
 
 describe('Regression test of the main table | step 1', () => {
+  const link = '/ws?ds=PGP3140_wgs_panel_hl'
+  const homozygous = '⏚BGM_Homozygous_Rec'
+
   it('should open main table for PGP3140_wgs_panel_hl dataset', () => {
     datasetPage.visit()
     datasetPage.leftPanel.leftPanelHeader.checkLabelText('Datasets')
@@ -20,31 +23,27 @@ describe('Regression test of the main table | step 1', () => {
   })
 
   it('should apply preset on a dataset | step 2', () => {
-    mainTablePage.visit('/ws?ds=PGP3140_wgs_panel_hl')
+    mainTablePage.visit(link)
     cy.intercept('POST', '/app/tab_report').as('dsUpload')
     cy.wait('@dsUpload', { timeout: 20000 })
     mainTablePage.mainTable.numVariants.haveText('Variants: 2592')
     mainTablePage.mainTable.selectPreset.click()
     cy.intercept('POST', '/app/tab_report').as('loadPreset')
-    mainTablePage.mainTable.preset
-      .getButtonByText('⏚BGM_Homozygous_Rec')
-      .click()
+    mainTablePage.mainTable.preset.getButtonByText(homozygous).click()
     cy.wait('@loadPreset', { timeout: 20000 })
     //number of variants changes
     mainTablePage.mainTable.numVariants.haveText('Variants: 2')
   })
 
   it('should apply gene to the preset | step 3', () => {
-    mainTablePage.visit('/ws?ds=PGP3140_wgs_panel_hl')
+    mainTablePage.visit(link)
     cy.intercept('POST', '/app/tab_report').as('dsUpload')
     cy.wait('@dsUpload', { timeout: 20000 })
     mainTablePage.mainTable.selectPreset.click()
     cy.intercept('POST', '/app/tab_report').as('loadPreset')
     mainTablePage.mainTable.numVariants.haveText('Variants: 2592')
-    mainTablePage.mainTable.preset
-      .getButtonByText('⏚BGM_Homozygous_Rec')
-      .click()
-    cy.wait('@loadPreset', { timeout: 20000 })
+    mainTablePage.mainTable.preset.getButtonByText(homozygous).click()
+    cy.wait('@loadPreset', { timeout: Timeouts.TwentySecondsTimeout })
     //number of variants changes
     mainTablePage.mainTable.numVariants.haveText('Variants: 2')
     mainTablePage.mainTable.addGene.click()
@@ -55,16 +54,14 @@ describe('Regression test of the main table | step 1', () => {
   })
 
   it('should add custom tag to the variant | step 4', () => {
-    mainTablePage.visit('/ws?ds=PGP3140_wgs_panel_hl')
+    mainTablePage.visit(link)
     cy.intercept('POST', '/app/tab_report').as('dsUpload')
-    cy.wait('@dsUpload', { timeout: 20000 })
+    cy.wait('@dsUpload', { timeout: Timeouts.TwentySecondsTimeout })
     cy.intercept('POST', '/app/tab_report').as('loadPreset')
     mainTablePage.mainTable.numVariants.haveText('Variants: 2592')
     mainTablePage.mainTable.selectPreset.click()
-    mainTablePage.mainTable.preset
-      .getButtonByText('⏚BGM_Homozygous_Rec')
-      .click()
-    cy.wait('@loadPreset', { timeout: 20000 })
+    mainTablePage.mainTable.preset.getButtonByText(homozygous).click()
+    cy.wait('@loadPreset', { timeout: Timeouts.TwentySecondsTimeout })
     //number of variants changes
     mainTablePage.mainTable.numVariants.haveText('Variants: 2')
     mainTablePage.mainTable.addGene.click()
@@ -79,20 +76,18 @@ describe('Regression test of the main table | step 1', () => {
     cy.wait(500)
     cy.intercept('POST', '/app/ws_tags').as('addTags')
     variantDrawerPage.variantDrawer.saveTags.forceClick()
-    cy.wait('@addTags', { timeout: 20000 })
+    cy.wait('@addTags', { timeout: Timeouts.TwentySecondsTimeout })
   })
 
   it('should add note to the variant | step 5', () => {
-    mainTablePage.visit('/ws?ds=PGP3140_wgs_panel_hl')
+    mainTablePage.visit(link)
     cy.intercept('POST', '/app/tab_report').as('dsUpload')
-    cy.wait('@dsUpload', { timeout: 20000 })
+    cy.wait('@dsUpload', { timeout: Timeouts.TwentySecondsTimeout })
     mainTablePage.mainTable.selectPreset.click()
     cy.intercept('POST', '/app/tab_report').as('loadPreset')
     mainTablePage.mainTable.numVariants.haveText('Variants: 2592')
-    mainTablePage.mainTable.preset
-      .getButtonByText('⏚BGM_Homozygous_Rec')
-      .click()
-    cy.wait('@loadPreset', { timeout: 20000 })
+    mainTablePage.mainTable.preset.getButtonByText(homozygous).click()
+    cy.wait('@loadPreset', { timeout: Timeouts.TwentySecondsTimeout })
     //number of variants changes
     mainTablePage.mainTable.numVariants.haveText('Variants: 2')
     mainTablePage.mainTable.addGene.click()
@@ -107,20 +102,18 @@ describe('Regression test of the main table | step 1', () => {
       'addNote',
     )
     variantDrawerPage.variantDrawer.saveNote.click()
-    cy.wait('@addNote', { timeout: 20000 })
+    cy.wait('@addNote', { timeout: Timeouts.TwentySecondsTimeout })
   })
 
   it('should filter main table by custom tag | step 6', () => {
     mainTablePage.visit('/ws?ds=PGP3140_wgs_panel_hl')
     cy.intercept('POST', '/app/tab_report').as('dsUpload')
-    cy.wait('@dsUpload', { timeout: 20000 })
+    cy.wait('@dsUpload', { timeout: Timeouts.TwentySecondsTimeout })
     mainTablePage.mainTable.selectPreset.click()
     cy.intercept('POST', '/app/tab_report').as('loadPreset')
     mainTablePage.mainTable.numVariants.haveText('Variants: 2592')
-    mainTablePage.mainTable.preset
-      .getButtonByText('⏚BGM_Homozygous_Rec')
-      .click()
-    cy.wait('@loadPreset', { timeout: 20000 })
+    mainTablePage.mainTable.preset.getButtonByText(homozygous).click()
+    cy.wait('@loadPreset', { timeout: Timeouts.TwentySecondsTimeout })
     //number of variants changes
     mainTablePage.mainTable.numVariants.haveText('Variants: 2')
     mainTablePage.mainTable.addTag.first().click()
@@ -131,9 +124,9 @@ describe('Regression test of the main table | step 1', () => {
   })
 
   it('should turn off Gene column | step 7', () => {
-    mainTablePage.visit('/ws?ds=PGP3140_wgs_panel_hl')
+    mainTablePage.visit(link)
     cy.intercept('POST', '/app/tab_report').as('dsUpload')
-    cy.wait('@dsUpload', { timeout: 20000 })
+    cy.wait('@dsUpload', { timeout: Timeouts.TwentySecondsTimeout })
     mainTablePage.mainTable.numVariants.haveText('Variants: 2592')
     mainTablePage.mainTable.customizeTable.click()
     mainTablePage.mainTable.searchColumn.type('Gene')
@@ -143,9 +136,9 @@ describe('Regression test of the main table | step 1', () => {
   })
 
   it('should turn on Gene column | step 8', () => {
-    mainTablePage.visit('/ws?ds=PGP3140_wgs_panel_hl')
+    mainTablePage.visit(link)
     cy.intercept('POST', '/app/tab_report').as('dsUpload')
-    cy.wait('@dsUpload', { timeout: 20000 })
+    cy.wait('@dsUpload', { timeout: Timeouts.TwentySecondsTimeout })
     mainTablePage.mainTable.numVariants.haveText('Variants: 2592')
     mainTablePage.mainTable.customizeTable.click()
     mainTablePage.mainTable.searchColumn.type('Gene')
@@ -161,9 +154,9 @@ describe('Regression test of the main table | step 1', () => {
   })
 
   it('should turn off column from the middle part of a table | step 9', () => {
-    mainTablePage.visit('/ws?ds=PGP3140_wgs_panel_hl')
+    mainTablePage.visit(link)
     cy.intercept('POST', '/app/tab_report').as('dsUpload')
-    cy.wait('@dsUpload', { timeout: 20000 })
+    cy.wait('@dsUpload', { timeout: Timeouts.TwentySecondsTimeout })
     mainTablePage.mainTable.numVariants.haveText('Variants: 2592')
     mainTablePage.mainTable.customizeTable.click()
     mainTablePage.mainTable.searchColumn.type('In-Silico')
@@ -173,9 +166,9 @@ describe('Regression test of the main table | step 1', () => {
   })
 
   it('should turn on column from the middle part of table | step 10', () => {
-    mainTablePage.visit('/ws?ds=PGP3140_wgs_panel_hl')
+    mainTablePage.visit(link)
     cy.intercept('POST', '/app/tab_report').as('dsUpload')
-    cy.wait('@dsUpload', { timeout: 20000 })
+    cy.wait('@dsUpload', { timeout: Timeouts.TwentySecondsTimeout })
     mainTablePage.mainTable.numVariants.haveText('Variants: 2592')
     mainTablePage.mainTable.customizeTable.click()
     mainTablePage.mainTable.searchColumn.type('In-Silico')
@@ -194,16 +187,14 @@ describe('Regression test of the main table | step 1', () => {
   })
 
   it('should save Excel file | test #12', () => {
-    mainTablePage.visit('/ws?ds=PGP3140_wgs_panel_hl')
+    mainTablePage.visit(link)
     cy.intercept('POST', '/app/tab_report').as('dsUpload')
-    cy.wait('@dsUpload', { timeout: 20000 })
+    cy.wait('@dsUpload', { timeout: Timeouts.TwentySecondsTimeout })
     mainTablePage.mainTable.selectPreset.click()
     cy.intercept('POST', '/app/tab_report').as('loadPreset')
     mainTablePage.mainTable.numVariants.haveText('Variants: 2592')
-    mainTablePage.mainTable.preset
-      .getButtonByText('⏚BGM_Homozygous_Rec')
-      .click()
-    cy.wait('@loadPreset', { timeout: 20000 })
+    mainTablePage.mainTable.preset.getButtonByText(homozygous).click()
+    cy.wait('@loadPreset', { timeout: Timeouts.TwentySecondsTimeout })
     //number of variants changes
     mainTablePage.mainTable.numVariants.haveText('Variants: 2')
     cy.intercept('GET', '/app/excel/PGP3140_wgs_panel_hl_****.xlsx').as(
@@ -218,16 +209,14 @@ describe('Regression test of the main table | step 1', () => {
   })
 
   it('should save csv file | test #13', () => {
-    mainTablePage.visit('/ws?ds=PGP3140_wgs_panel_hl')
+    mainTablePage.visit(link)
     cy.intercept('POST', '/app/tab_report').as('dsUpload')
-    cy.wait('@dsUpload', { timeout: 20000 })
+    cy.wait('@dsUpload', { timeout: Timeouts.TwentySecondsTimeout })
     mainTablePage.mainTable.selectPreset.click()
     cy.intercept('POST', '/app/tab_report').as('loadPreset')
     mainTablePage.mainTable.numVariants.haveText('Variants: 2592')
-    mainTablePage.mainTable.preset
-      .getButtonByText('⏚BGM_Homozygous_Rec')
-      .click()
-    cy.wait('@loadPreset', { timeout: 20000 })
+    mainTablePage.mainTable.preset.getButtonByText(homozygous).click()
+    cy.wait('@loadPreset', { timeout: Timeouts.TwentySecondsTimeout })
     //number of variants changes
     mainTablePage.mainTable.numVariants.haveText('Variants: 2')
     cy.intercept('POST', '/app/csv_export').as('reportCsvDownload')
