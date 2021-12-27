@@ -2,6 +2,7 @@ import { CommonSelectors } from '../../../src/components/data-testid/common-sele
 import { DecisionTreesMenuDataCy } from '../../../src/components/data-testid/decision-tree-menu.cy'
 import { DecisionTreesResultsDataCy } from '../../../src/components/data-testid/decision-tree-results.cy'
 import { BasePage } from '../lib/base-page'
+import Helper from '../lib/helpers'
 import { AttributesListWidget } from './widgets/attributes-list.widget'
 import { DecisionTreeWidget } from './widgets/decision-tree-menu.widget'
 import { DecisionTreeResultsWidget } from './widgets/decision-tree-results.widget'
@@ -15,15 +16,19 @@ class DecisionTreesPage extends BasePage {
     this.decisionTreeMenu = new DecisionTreeWidget({
       selectors: {
         selectDecision: `[aria-haspopup = "${DecisionTreesMenuDataCy.selectDecision}"]`,
-        decisionActions: addDataId(DecisionTreesMenuDataCy.decisionActions),
-        loadDecision: addDataId(DecisionTreesMenuDataCy.loadDecision),
-        selectDropdownElem: addDataId(
+        decisionActions: Helper.getDataId(
+          DecisionTreesMenuDataCy.decisionActions,
+        ),
+        loadDecision: Helper.getDataId(DecisionTreesMenuDataCy.loadDecision),
+        selectDropdownElem: Helper.getDataId(
           DecisionTreesMenuDataCy.selectDropdownElem,
         ),
-        saveDataset: addDataId(DecisionTreesMenuDataCy.saveDataset),
-        datasetNameInput: addDataId(DecisionTreesMenuDataCy.datasetNameInput),
-        addNewDataset: addDataId(DecisionTreesMenuDataCy.addNewDataset),
-        cancelAddNewDataset: addDataId(
+        saveDataset: Helper.getDataId(DecisionTreesMenuDataCy.saveDataset),
+        datasetNameInput: Helper.getDataId(
+          DecisionTreesMenuDataCy.datasetNameInput,
+        ),
+        addNewDataset: Helper.getDataId(DecisionTreesMenuDataCy.addNewDataset),
+        cancelAddNewDataset: Helper.getDataId(
           DecisionTreesMenuDataCy.cancelAddNewDataset,
         ),
       },
@@ -31,23 +36,23 @@ class DecisionTreesPage extends BasePage {
     })
     this.decisionTreeResults = new DecisionTreeResultsWidget({
       selectors: {
-        searchGraphResults: addDataId(
+        searchGraphResults: Helper.getDataId(
           DecisionTreesResultsDataCy.searchGraphResults,
         ),
-        searchStepsResults: addDataId(
+        searchStepsResults: Helper.getDataId(
           DecisionTreesResultsDataCy.searchStepsResults,
         ),
-        groupGraphHeaders: addDataId(
+        groupGraphHeaders: Helper.getDataId(
           DecisionTreesResultsDataCy.groupGraphHeaders,
         ),
-        graphHeaders: addDataId(DecisionTreesResultsDataCy.graphHeaders),
-        stepCard: addDataId(DecisionTreesResultsDataCy.stepCard),
-        excludeInfo: addDataId(DecisionTreesResultsDataCy.excludeInfo),
-        viewReturnedVariants: addDataId(
+        graphHeaders: Helper.getDataId(DecisionTreesResultsDataCy.graphHeaders),
+        stepCard: Helper.getDataId(DecisionTreesResultsDataCy.stepCard),
+        excludeInfo: Helper.getDataId(DecisionTreesResultsDataCy.excludeInfo),
+        viewReturnedVariants: Helper.getDataId(
           DecisionTreesResultsDataCy.viewReturnedVariants,
         ),
         treeTooltip: `${CommonSelectors.treeTooltip}`,
-        addAttribute: addDataId(DecisionTreesResultsDataCy.addAttrbute),
+        addAttribute: Helper.getDataId(DecisionTreesResultsDataCy.addAttrbute),
       },
       labels: {
         graphHeaders: '',
@@ -58,19 +63,19 @@ class DecisionTreesPage extends BasePage {
     })
     this.attributesList = new AttributesListWidget({
       selectors: {
-        searchForAttr: addDataId(DecisionTreesResultsDataCy.searchForAttr),
-        selectAll: addDataId(DecisionTreesResultsDataCy.selectAllFromAttribute),
-        addSelectedAttributes: addDataId(
+        searchForAttr: Helper.getDataId(
+          DecisionTreesResultsDataCy.searchForAttr,
+        ),
+        selectAll: Helper.getDataId(
+          DecisionTreesResultsDataCy.selectAllFromAttribute,
+        ),
+        addSelectedAttributes: Helper.getDataId(
           DecisionTreesResultsDataCy.addSelectedAttributes,
         ),
-        addByJoin: addDataId(DecisionTreesResultsDataCy.addByJoin),
+        addByJoin: Helper.getDataId(DecisionTreesResultsDataCy.addByJoin),
       },
     })
   }
 }
 
 export const decisionTreesPage = new DecisionTreesPage()
-
-function addDataId(selector: string): string {
-  return `[data-testid = "${selector}"]`
-}

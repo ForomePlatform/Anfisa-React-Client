@@ -2,6 +2,7 @@ import { CommonSelectors } from '../../../src/components/data-testid/common-sele
 import { MainTableDataCy } from '../../../src/components/data-testid/main-table.cy'
 import { BasePage } from '../lib/base-page'
 import { Button } from '../lib/button'
+import Helper from '../lib/helpers'
 import { Input } from '../lib/input'
 import { Label } from '../lib/label'
 import { MainTableCheckbox } from '../lib/main-table-checkbox'
@@ -104,27 +105,31 @@ class MainTablePage extends BasePage {
     super()
     this.mainTable = new MainTableWidget({
       selectors: {
-        selectPreset: addDataId(MainTableDataCy.selectPreset),
+        selectPreset: Helper.getDataId(MainTableDataCy.selectPreset),
         preset: `${CommonSelectors.preset}`,
-        addSample: addDataId(MainTableDataCy.addSample),
-        addTag: addDataId(MainTableDataCy.addTag),
-        applyButton: addDataId(MainTableDataCy.applyButton),
-        cancelButton: addDataId(MainTableDataCy.cancelButton),
+        addSample: Helper.getDataId(MainTableDataCy.addSample),
+        addTag: Helper.getDataId(MainTableDataCy.addTag),
+        applyButton: Helper.getDataId(MainTableDataCy.applyButton),
+        cancelButton: Helper.getDataId(MainTableDataCy.cancelButton),
         checkbox: `${CommonSelectors.checkbox}`,
         tableRow: `${CommonSelectors.tableRow}`,
-        addGene: addDataId(MainTableDataCy.addGene),
+        addGene: Helper.getDataId(MainTableDataCy.addGene),
         geneCheckbox: `${CommonSelectors.checkbox}`,
-        searchFilter: addDataId(MainTableDataCy.searchFilter),
-        numVariants: addDataId(MainTableDataCy.numVariants),
-        exportReport: addDataId(MainTableDataCy.exportReport),
-        exportExcel: addDataId(MainTableDataCy.exportExcel),
-        exportCsv: addDataId(MainTableDataCy.exportCsv),
-        customizeTable: addDataId(MainTableDataCy.customizeTable),
+        searchFilter: Helper.getDataId(MainTableDataCy.searchFilter),
+        numVariants: Helper.getDataId(MainTableDataCy.numVariants),
+        exportReport: Helper.getDataId(MainTableDataCy.exportReport),
+        exportExcel: Helper.getDataId(MainTableDataCy.exportExcel),
+        exportCsv: Helper.getDataId(MainTableDataCy.exportCsv),
+        customizeTable: Helper.getDataId(MainTableDataCy.customizeTable),
         columnSwitch: `${CommonSelectors.columnSwitch}`,
-        searchColumn: addDataId(MainTableDataCy.searchColumn),
+        searchColumn: Helper.getDataId(MainTableDataCy.searchColumn),
         columnHeader: `${CommonSelectors.columnHeader}`,
-        checkboxListElement: addDataId(MainTableDataCy.checkboxListElement),
-        customizeTableList: addDataId(MainTableDataCy.customizeTableList),
+        checkboxListElement: Helper.getDataId(
+          MainTableDataCy.checkboxListElement,
+        ),
+        customizeTableList: Helper.getDataId(
+          MainTableDataCy.customizeTableList,
+        ),
       },
       labels: {
         numVariants: 'number-of-variants',
@@ -136,7 +141,3 @@ class MainTablePage extends BasePage {
   }
 }
 export const mainTablePage = new MainTablePage()
-
-function addDataId(selector: string): string {
-  return `[data-testid = "${selector}"]`
-}

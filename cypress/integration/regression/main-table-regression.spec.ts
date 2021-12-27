@@ -8,29 +8,27 @@ import { Timeouts } from '../../page-objects/lib/timeouts.cy'
 describe('Regression test of the main table | step 1', () => {
   const link = '/ws?ds=PGP3140_wgs_panel_hl'
   const homozygous = '⏚BGM_Homozygous_Rec'
+  const datasetName = 'PGP3140_wgs_panel_hl'
 
   it('should open main table for PGP3140_wgs_panel_hl dataset', () => {
     datasetPage.visit()
     datasetPage.leftPanel.leftPanelHeader.checkLabelText('Datasets')
-    datasetPage.leftPanel.datasetsListElem
-      .getButtonByText('PGP3140_wgs_panel_hl')
-      .click()
+    datasetPage.leftPanel.datasetsListElem.getButtonByText(datasetName).click()
     datasetPage.leftPanel.leftPanelHeader.checkLabelText('Datasets')
-    cy.wait(500)
     datasetPage.datasetInfo.openInViewer.click()
     datasetPage.datasetInfo.mainTable.click()
-    cy.url().should('include', '/ws?ds=PGP3140_wgs_panel_hl')
+    cy.url().should('include', link)
   })
 
   it('should apply preset on a dataset | step 2', () => {
     mainTablePage.visit(link)
     cy.intercept('POST', '/app/tab_report').as('dsUpload')
-    cy.wait('@dsUpload', { timeout: 20000 })
+    cy.wait('@dsUpload', { timeout: Timeouts.TwentySecondsTimeout })
     mainTablePage.mainTable.numVariants.haveText('Variants: 2592')
     mainTablePage.mainTable.selectPreset.click()
     cy.intercept('POST', '/app/tab_report').as('loadPreset')
     mainTablePage.mainTable.preset.getButtonByText(homozygous).click()
-    cy.wait('@loadPreset', { timeout: 20000 })
+    cy.wait('@loadPreset', { timeout: Timeouts.TwentySecondsTimeout })
     //number of variants changes
     mainTablePage.mainTable.numVariants.haveText('Variants: 2')
   })
@@ -38,7 +36,7 @@ describe('Regression test of the main table | step 1', () => {
   it('should apply gene to the preset | step 3', () => {
     mainTablePage.visit(link)
     cy.intercept('POST', '/app/tab_report').as('dsUpload')
-    cy.wait('@dsUpload', { timeout: 20000 })
+    cy.wait('@dsUpload', { timeout: Timeouts.TwentySecondsTimeout })
     mainTablePage.mainTable.selectPreset.click()
     cy.intercept('POST', '/app/tab_report').as('loadPreset')
     mainTablePage.mainTable.numVariants.haveText('Variants: 2592')
@@ -46,11 +44,8 @@ describe('Regression test of the main table | step 1', () => {
     cy.wait('@loadPreset', { timeout: Timeouts.TwentySecondsTimeout })
     //number of variants changes
     mainTablePage.mainTable.numVariants.haveText('Variants: 2')
-    mainTablePage.mainTable.addGene.click()
-    mainTablePage.mainTable.searchFilter.type('CHSY1')
-    mainTablePage.mainTable.geneCheckbox.check()
-    mainTablePage.mainTable.applyButton.click()
-    mainTablePage.mainTable.numVariants.haveText('Variants: 1')
+
+    filterByGene('CHSY1', 'Variants: 1')
   })
 
   it('should add custom tag to the variant | step 4', () => {
@@ -64,16 +59,11 @@ describe('Regression test of the main table | step 1', () => {
     cy.wait('@loadPreset', { timeout: Timeouts.TwentySecondsTimeout })
     //number of variants changes
     mainTablePage.mainTable.numVariants.haveText('Variants: 2')
-    mainTablePage.mainTable.addGene.click()
-    mainTablePage.mainTable.searchFilter.type('CHSY1')
-    mainTablePage.mainTable.geneCheckbox.check()
-    mainTablePage.mainTable.applyButton.click()
-    mainTablePage.mainTable.numVariants.haveText('Variants: 1')
+    filterByGene('CHSY1', 'Variants: 1')
     mainTablePage.mainTable.tableRow.getButtonByText('p.Y434=').click()
     variantDrawerPage.variantDrawer.addTag.eq(1).click()
     variantDrawerPage.variantDrawer.tagInput.type('Custom_tag')
     variantDrawerPage.variantDrawer.addCustomTag.forceClick()
-    cy.wait(500)
     cy.intercept('POST', '/app/ws_tags').as('addTags')
     variantDrawerPage.variantDrawer.saveTags.forceClick()
     cy.wait('@addTags', { timeout: Timeouts.TwentySecondsTimeout })
@@ -90,23 +80,17 @@ describe('Regression test of the main table | step 1', () => {
     cy.wait('@loadPreset', { timeout: Timeouts.TwentySecondsTimeout })
     //number of variants changes
     mainTablePage.mainTable.numVariants.haveText('Variants: 2')
-    mainTablePage.mainTable.addGene.click()
-    mainTablePage.mainTable.searchFilter.type('CHSY1')
-    mainTablePage.mainTable.geneCheckbox.check()
-    mainTablePage.mainTable.applyButton.click()
-    mainTablePage.mainTable.numVariants.haveText('Variants: 1')
+    filterByGene('CHSY1', 'Variants: 1')
     mainTablePage.mainTable.tableRow.getButtonByText('p.Y434=').click()
     variantDrawerPage.variantDrawer.addNote.click()
     variantDrawerPage.variantDrawer.fillSpace.type('note addition test')
-    cy.intercept('POST', '/app/ws_tags?ds=PGP3140_wgs_panel_hl&rec=**').as(
-      'addNote',
-    )
+    cy.intercept('POST', `/app/ws_tags?ds=${datasetName}&rec=**`).as('addNote')
     variantDrawerPage.variantDrawer.saveNote.click()
     cy.wait('@addNote', { timeout: Timeouts.TwentySecondsTimeout })
   })
 
   it('should filter main table by custom tag | step 6', () => {
-    mainTablePage.visit('/ws?ds=PGP3140_wgs_panel_hl')
+    mainTablePage.visit(link)
     cy.intercept('POST', '/app/tab_report').as('dsUpload')
     cy.wait('@dsUpload', { timeout: Timeouts.TwentySecondsTimeout })
     mainTablePage.mainTable.selectPreset.click()
@@ -172,10 +156,9 @@ describe('Regression test of the main table | step 1', () => {
     mainTablePage.mainTable.numVariants.haveText('Variants: 2592')
     mainTablePage.mainTable.customizeTable.click()
     mainTablePage.mainTable.searchColumn.type('In-Silico')
-    mainTablePage.mainTable.customizeTableList.element.within($list => {
+    mainTablePage.mainTable.customizeTableList.element.within(($list: any) => {
       $list.find(CommonSelectors.columnSwitch).trigger('click')
     })
-    //mainTablePage.mainTable.columnSwitch.eq(1).click()
     mainTablePage.mainTable.applyButton.click()
     mainTablePage.mainTable.columnHeader.countElements(7)
     mainTablePage.mainTable.customizeTable.click()
@@ -197,13 +180,13 @@ describe('Regression test of the main table | step 1', () => {
     cy.wait('@loadPreset', { timeout: Timeouts.TwentySecondsTimeout })
     //number of variants changes
     mainTablePage.mainTable.numVariants.haveText('Variants: 2')
-    cy.intercept('GET', '/app/excel/PGP3140_wgs_panel_hl_****.xlsx').as(
+    cy.intercept('GET', `/app/excel/${datasetName}_****.xlsx`).as(
       'reportDownload',
     )
     mainTablePage.mainTable.exportReport.click()
     mainTablePage.mainTable.exportExcel.click()
     cy.wait('@reportDownload', { timeout: Timeouts.FifteenSecondsTimeout })
-    cy.readFile('./cypress/downloads/PGP3140_wgs_panel_hl.xlsx').should('exist')
+    cy.readFile(`./cypress/downloads/${datasetName}.xlsx`).should('exist')
   })
 
   it('should save csv file | test #13', () => {
@@ -221,6 +204,14 @@ describe('Regression test of the main table | step 1', () => {
     mainTablePage.mainTable.exportReport.click()
     mainTablePage.mainTable.exportCsv.click()
     cy.wait('@reportCsvDownload', { timeout: Timeouts.TwentySecondsTimeout })
-    cy.readFile('./cypress/downloads/PGP3140_wgs_panel_hl.csv').should('exist')
+    cy.readFile(`./cypress/downloads/${datasetName}.csv`).should('exist')
   })
+
+  function filterByGene(geneName: string, numVariants: string) {
+    mainTablePage.mainTable.addGene.click()
+    mainTablePage.mainTable.searchFilter.type(geneName)
+    mainTablePage.mainTable.geneCheckbox.check()
+    mainTablePage.mainTable.applyButton.click()
+    mainTablePage.mainTable.numVariants.haveText(numVariants)
+  }
 })
