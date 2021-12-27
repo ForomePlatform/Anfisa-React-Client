@@ -15,27 +15,39 @@ class DecisionTreesPage extends BasePage {
     this.decisionTreeMenu = new DecisionTreeWidget({
       selectors: {
         selectDecision: `[aria-haspopup = "${DecisionTreesMenuDataCy.selectDecision}"]`,
-        decisionActions: `[data-testid = "${DecisionTreesMenuDataCy.decisionActions}"]`,
-        loadDecision: `[data-testid = "${DecisionTreesMenuDataCy.loadDecision}"]`,
-        selectDropdownElem: `[data-testid = "${DecisionTreesMenuDataCy.selectDropdownElem}"]`,
-        saveDataset: `[data-testid = "${DecisionTreesMenuDataCy.saveDataset}"]`,
-        datasetNameInput: `[data-testid = "${DecisionTreesMenuDataCy.datasetNameInput}"]`,
-        addNewDataset: `[data-testid = "${DecisionTreesMenuDataCy.addNewDataset}"]`,
-        cancelAddNewDataset: `[data-testid = "${DecisionTreesMenuDataCy.cancelAddNewDataset}"]`,
+        decisionActions: addDataId(DecisionTreesMenuDataCy.decisionActions),
+        loadDecision: addDataId(DecisionTreesMenuDataCy.loadDecision),
+        selectDropdownElem: addDataId(
+          DecisionTreesMenuDataCy.selectDropdownElem,
+        ),
+        saveDataset: addDataId(DecisionTreesMenuDataCy.saveDataset),
+        datasetNameInput: addDataId(DecisionTreesMenuDataCy.datasetNameInput),
+        addNewDataset: addDataId(DecisionTreesMenuDataCy.addNewDataset),
+        cancelAddNewDataset: addDataId(
+          DecisionTreesMenuDataCy.cancelAddNewDataset,
+        ),
       },
       labels: {},
     })
     this.decisionTreeResults = new DecisionTreeResultsWidget({
       selectors: {
-        searchGraphResults: `[data-testid = "${DecisionTreesResultsDataCy.searchGraphResults}"]`,
-        searchStepsResults: `[data-testid = "${DecisionTreesResultsDataCy.searchStepsResults}"]`,
-        groupGraphHeaders: `[data-testid = "${DecisionTreesResultsDataCy.groupGraphHeaders}" ]`,
-        graphHeaders: `[data-testid = "${DecisionTreesResultsDataCy.graphHeaders}"]`,
-        stepCard: `[data-testid = "${DecisionTreesResultsDataCy.stepCard}"]`,
-        excludeInfo: `[data-testid = "${DecisionTreesResultsDataCy.excludeInfo}"]`,
-        viewReturnedVariants: `[data-testid = "${DecisionTreesResultsDataCy.viewReturnedVariants}"]`,
+        searchGraphResults: addDataId(
+          DecisionTreesResultsDataCy.searchGraphResults,
+        ),
+        searchStepsResults: addDataId(
+          DecisionTreesResultsDataCy.searchStepsResults,
+        ),
+        groupGraphHeaders: addDataId(
+          DecisionTreesResultsDataCy.groupGraphHeaders,
+        ),
+        graphHeaders: addDataId(DecisionTreesResultsDataCy.graphHeaders),
+        stepCard: addDataId(DecisionTreesResultsDataCy.stepCard),
+        excludeInfo: addDataId(DecisionTreesResultsDataCy.excludeInfo),
+        viewReturnedVariants: addDataId(
+          DecisionTreesResultsDataCy.viewReturnedVariants,
+        ),
         treeTooltip: `${CommonSelectors.treeTooltip}`,
-        addAttribute: `[data-testid = "${DecisionTreesResultsDataCy.addAttrbute}"]`,
+        addAttribute: addDataId(DecisionTreesResultsDataCy.addAttrbute),
       },
       labels: {
         graphHeaders: '',
@@ -46,13 +58,19 @@ class DecisionTreesPage extends BasePage {
     })
     this.attributesList = new AttributesListWidget({
       selectors: {
-        searchForAttr: `[data-testid = "${DecisionTreesResultsDataCy.searchForAttr}"]`,
-        selectAll: `[data-testid = "${DecisionTreesResultsDataCy.selectAllFromAttribute}"]`,
-        addSelectedAttributes: `[data-testid = "${DecisionTreesResultsDataCy.addSelectedAttributes}"]`,
-        addByJoin: `[data-testid = "${DecisionTreesResultsDataCy.addByJoin}"]`,
+        searchForAttr: addDataId(DecisionTreesResultsDataCy.searchForAttr),
+        selectAll: addDataId(DecisionTreesResultsDataCy.selectAllFromAttribute),
+        addSelectedAttributes: addDataId(
+          DecisionTreesResultsDataCy.addSelectedAttributes,
+        ),
+        addByJoin: addDataId(DecisionTreesResultsDataCy.addByJoin),
       },
     })
   }
 }
 
 export const decisionTreesPage = new DecisionTreesPage()
+
+function addDataId(selector: string): string {
+  return `[data-testid = "${selector}"]`
+}

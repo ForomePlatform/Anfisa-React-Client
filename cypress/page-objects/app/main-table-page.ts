@@ -104,27 +104,27 @@ class MainTablePage extends BasePage {
     super()
     this.mainTable = new MainTableWidget({
       selectors: {
-        selectPreset: `[data-testid = "${MainTableDataCy.selectPreset}"]`,
+        selectPreset: addDataId(MainTableDataCy.selectPreset),
         preset: `${CommonSelectors.preset}`,
-        addSample: `[data-testid = "${MainTableDataCy.addSample}"]`,
-        addTag: `[data-testid = "${MainTableDataCy.addTag}"]`,
-        applyButton: `[data-testid = "${MainTableDataCy.applyButton}"]`,
-        cancelButton: `[data-testid = "${MainTableDataCy.cancelButton}"]`,
+        addSample: addDataId(MainTableDataCy.addSample),
+        addTag: addDataId(MainTableDataCy.addTag),
+        applyButton: addDataId(MainTableDataCy.applyButton),
+        cancelButton: addDataId(MainTableDataCy.cancelButton),
         checkbox: `${CommonSelectors.checkbox}`,
         tableRow: `${CommonSelectors.tableRow}`,
-        addGene: `[data-testid = "${MainTableDataCy.addGene}"]`,
+        addGene: addDataId(MainTableDataCy.addGene),
         geneCheckbox: `${CommonSelectors.checkbox}`,
-        searchFilter: `[data-testid = "${MainTableDataCy.searchFilter}"]`,
-        numVariants: `[data-testid = "${MainTableDataCy.numVariants}"]`,
-        exportReport: `[data-testid = "${MainTableDataCy.exportReport}"]`,
-        exportExcel: `[data-testid = "${MainTableDataCy.exportExcel}"]`,
-        exportCsv: `[data-testid = "${MainTableDataCy.exportCsv}"]`,
-        customizeTable: `[data-testid = "${MainTableDataCy.customizeTable}"]`,
+        searchFilter: addDataId(MainTableDataCy.searchFilter),
+        numVariants: addDataId(MainTableDataCy.numVariants),
+        exportReport: addDataId(MainTableDataCy.exportReport),
+        exportExcel: addDataId(MainTableDataCy.exportExcel),
+        exportCsv: addDataId(MainTableDataCy.exportCsv),
+        customizeTable: addDataId(MainTableDataCy.customizeTable),
         columnSwitch: `${CommonSelectors.columnSwitch}`,
-        searchColumn: `[data-testid = "${MainTableDataCy.searchColumn}"]`,
+        searchColumn: addDataId(MainTableDataCy.searchColumn),
         columnHeader: `${CommonSelectors.columnHeader}`,
-        checkboxListElement: `[data-testid = "${MainTableDataCy.checkboxListElement}"]`,
-        customizeTableList: `[data-testid = "${MainTableDataCy.customizeTableList}"]`,
+        checkboxListElement: addDataId(MainTableDataCy.checkboxListElement),
+        customizeTableList: addDataId(MainTableDataCy.customizeTableList),
       },
       labels: {
         numVariants: 'number-of-variants',
@@ -136,3 +136,7 @@ class MainTablePage extends BasePage {
   }
 }
 export const mainTablePage = new MainTablePage()
+
+function addDataId(selector: string): string {
+  return `[data-testid = "${selector}"]`
+}

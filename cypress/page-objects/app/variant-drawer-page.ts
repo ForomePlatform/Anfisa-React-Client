@@ -9,15 +9,15 @@ class VariantDrawerPage extends BasePage {
     super()
     this.variantDrawer = new VariantDrawerWidget({
       selectors: {
-        addTag: `[data-testid = "${VariantDrawerDataCy.addTag}"]`,
+        addTag: addDataId(VariantDrawerDataCy.addTag),
         tagInput: `${CommonSelectors.tagInput}`,
-        addCustomTag: `[data-testid = "${VariantDrawerDataCy.addCustomTag}"]`,
+        addCustomTag: addDataId(VariantDrawerDataCy.addCustomTag),
         tagCheckbox: `${CommonSelectors.checkbox}`,
-        saveTags: `[data-testid = "${VariantDrawerDataCy.saveTags}"]`,
-        addNote: `[data-testid = "${VariantDrawerDataCy.addNote}"]`,
+        saveTags: addDataId(VariantDrawerDataCy.saveTags),
+        addNote: addDataId(VariantDrawerDataCy.addNote),
         fillSpace: `${CommonSelectors.fillSpace}`,
-        saveNote: `[data-testid = "${VariantDrawerDataCy.saveNote}"]`,
-        addedTag: `[data-testid = "${VariantDrawerDataCy.addedTag}"]`,
+        saveNote: addDataId(VariantDrawerDataCy.saveNote),
+        addedTag: addDataId(VariantDrawerDataCy.addedTag),
       },
       labels: {
         addedTag: '',
@@ -26,3 +26,7 @@ class VariantDrawerPage extends BasePage {
   }
 }
 export const variantDrawerPage = new VariantDrawerPage()
+
+function addDataId(selector: string): string {
+  return `[data-testid = "${selector}"]`
+}

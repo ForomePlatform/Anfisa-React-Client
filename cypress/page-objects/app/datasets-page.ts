@@ -12,18 +12,18 @@ class DatasetPage extends BasePage {
     super()
     this.leftPanel = new LeftPanelWidget({
       selectors: {
-        searchInput: `[data-testid = "${FilterDatasetDataCy.searchInput}"]`,
-        leftPanelHeader: `[data-testid = "${FilterDatasetDataCy.leftPanelHeader}"]`,
-        datasetsListElem: `[data-testid = "${FilterDatasetDataCy.datasetsListElem}"]`,
+        searchInput: addDataId(FilterDatasetDataCy.searchInput),
+        leftPanelHeader: addDataId(FilterDatasetDataCy.leftPanelHeader),
+        datasetsListElem: addDataId(FilterDatasetDataCy.datasetsListElem),
       },
       labels: { leftPanelHeader: 'Datasets' },
     })
     this.datasetInfo = new DatasetInfoWidget({
       selectors: {
-        openInViewer: `[data-testid = "${DatasetInfoDataCy.openInViewer}"]`,
-        decTreePanel: `[data-testid = "${DatasetInfoDataCy.decTreePanel}"]`,
-        datasetHeader: `[data-testid = "${DatasetCard.datasetHeader}"]`,
-        mainTable: `[data-testid = "${DatasetInfoDataCy.mainTable}"]`,
+        openInViewer: addDataId(DatasetInfoDataCy.openInViewer),
+        decTreePanel: addDataId(DatasetInfoDataCy.decTreePanel),
+        datasetHeader: addDataId(DatasetCard.datasetHeader),
+        mainTable: addDataId(DatasetInfoDataCy.mainTable),
       },
       labels: {
         datasetHeader: 'xl_PGP3140_wgs_NIST-4_2',
@@ -36,3 +36,7 @@ class DatasetPage extends BasePage {
 }
 
 export const datasetPage = new DatasetPage()
+
+function addDataId(selector: string): string {
+  return `[data-testid = "${selector}"]`
+}
