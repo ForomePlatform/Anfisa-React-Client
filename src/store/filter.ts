@@ -1,3 +1,4 @@
+import cloneDeep from 'lodash/cloneDeep'
 import get from 'lodash/get'
 import isEmpty from 'lodash/isEmpty'
 import { makeAutoObservable, runInAction } from 'mobx'
@@ -180,7 +181,7 @@ class FilterStore {
   }
 
   setFilterCondition<T = any>(filterName: string, values: T) {
-    this.filterCondition[filterName] = values
+    this.filterCondition[filterName] = cloneDeep(values)
   }
 
   readFilterCondition<T = any>(filterName: string) {
