@@ -202,10 +202,8 @@ describe('Regression test of the main table | step 1', () => {
     )
     mainTablePage.mainTable.exportReport.click()
     mainTablePage.mainTable.exportExcel.click()
-    cy.wait('@reportDownload')
-    cy.readFile('./cypress/downloads/Dataset_from_autotests.xlsx').should(
-      'exist',
-    )
+    cy.wait('@reportDownload', { timeout: Timeouts.FifteenSecondsTimeout })
+    cy.readFile('./cypress/downloads/PGP3140_wgs_panel_hl.xlsx').should('exist')
   })
 
   it('should save csv file | test #13', () => {
