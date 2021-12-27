@@ -3,6 +3,7 @@ import Checkbox from 'react-three-state-checkbox'
 import { Form, FormikProps } from 'formik'
 import { observer } from 'mobx-react-lite'
 
+import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { t } from '@i18n'
 import filterStore from '@store/filter'
 
@@ -11,12 +12,10 @@ export interface IInheritanceFormValues {
   variants: string[]
 }
 
-const INHERITANCE = 'Inheritance_Mode'
-
 export const InheritanceMode = observer(
   ({ values, setFieldValue }: FormikProps<IInheritanceFormValues>) => {
     const cachedValues = filterStore.readFilterCondition<IInheritanceFormValues>(
-      INHERITANCE,
+      FuncStepTypesEnum.InheritanceMode,
     )
 
     const [variants, setVariants] = useState([])
@@ -31,7 +30,7 @@ export const InheritanceMode = observer(
       param?: Record<string, string | string[]>,
     ) => {
       const statFuncData = await filterStore.fetchStatFuncAsync(
-        INHERITANCE,
+        FuncStepTypesEnum.InheritanceMode,
         JSON.stringify(param) || JSON.stringify({ problem_group: [] }),
       )
 
@@ -80,10 +79,13 @@ export const InheritanceMode = observer(
     }, [problemGroupValues])
 
     useEffect(() => {
-      filterStore.setFilterCondition<IInheritanceFormValues>(INHERITANCE, {
-        problemGroups: values.problemGroups,
-        variants: values.variants,
-      })
+      filterStore.setFilterCondition<IInheritanceFormValues>(
+        FuncStepTypesEnum.InheritanceMode,
+        {
+          problemGroups: values.problemGroups,
+          variants: values.variants,
+        },
+      )
     }, [values.problemGroups, values.variants])
 
     const handleSetFieldValueAsync = async () => {

@@ -49,12 +49,10 @@ export const resetOptions = [
   'Compensational',
 ]
 
-const COMPOUND_REQUEST = 'Compound_Request'
-
 export const CompoundRequest = observer(
   ({ setFieldValue }: FormikProps<ICompoundRequestProps>): ReactElement => {
     const cachedValues = filterStore.readFilterCondition<ICompoundRequestFormValues>(
-      COMPOUND_REQUEST,
+      FuncStepTypesEnum.CompoundRequest,
     )
 
     const [requestCondition, setRequestCondition] = useState(
@@ -83,7 +81,7 @@ export const CompoundRequest = observer(
 
     useEffect(() => {
       filterStore.fetchStatFuncAsync(
-        COMPOUND_REQUEST,
+        FuncStepTypesEnum.CompoundRequest,
         JSON.stringify({ request: [] }),
       )
 
@@ -92,7 +90,7 @@ export const CompoundRequest = observer(
 
     useEffect(() => {
       filterStore.setFilterCondition<ICompoundRequestFormValues>(
-        COMPOUND_REQUEST,
+        FuncStepTypesEnum.CompoundRequest,
         {
           reset: resetValue,
           requestCondition,
@@ -127,7 +125,7 @@ export const CompoundRequest = observer(
     }
 
     async function sendRequestAsync(newRequestCondition: any[]) {
-      const requestString = getFuncParams('Compound_Request', {
+      const requestString = getFuncParams(FuncStepTypesEnum.CompoundRequest, {
         request: newRequestCondition,
       })
         .slice(10)
@@ -135,7 +133,7 @@ export const CompoundRequest = observer(
 
       const params = `{"approx":${null},"state":${null},"request":${requestString}}`
 
-      filterStore.fetchStatFuncAsync('Compound_Request', params)
+      filterStore.fetchStatFuncAsync(FuncStepTypesEnum.CompoundRequest, params)
     }
 
     const [activeRequestIndex, setActiveRequestIndex] = useState(

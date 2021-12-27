@@ -3,6 +3,7 @@ import { Option } from 'react-dropdown'
 import { Form, FormikProps } from 'formik'
 
 import { IStatFuncData } from '@declarations'
+import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import filterStore from '@store/filter'
 import { DropDown } from '@ui/dropdown'
 
@@ -11,8 +12,6 @@ export interface ICompoundHetFormValues {
   approx: string | null
   state?: string | null
 }
-
-const COMPOUND_HET = 'Compound_Het'
 
 const options = [
   { label: 'shared transcript', value: '' },
@@ -25,7 +24,7 @@ export const CompundHet = ({
   values: { approx, variants },
 }: FormikProps<ICompoundHetFormValues>): ReactElement => {
   const cachedValues = filterStore.readFilterCondition<ICompoundHetFormValues>(
-    COMPOUND_HET,
+    FuncStepTypesEnum.CompoundHet,
   )
 
   const [statFuncStatus, setStatFuncStatus] = useState<IStatFuncData>()
@@ -36,7 +35,7 @@ export const CompundHet = ({
     param?: Record<string, string | string[]>,
   ) => {
     const statFuncData = await filterStore.fetchStatFuncAsync(
-      COMPOUND_HET,
+      FuncStepTypesEnum.CompoundHet,
       JSON.stringify(param) || {},
     )
 
@@ -54,10 +53,13 @@ export const CompundHet = ({
   }, [])
 
   useEffect(() => {
-    filterStore.setFilterCondition<ICompoundHetFormValues>(COMPOUND_HET, {
-      variants,
-      approx,
-    })
+    filterStore.setFilterCondition<ICompoundHetFormValues>(
+      FuncStepTypesEnum.CompoundHet,
+      {
+        variants,
+        approx,
+      },
+    )
   }, [variants, approx])
 
   const onChangeAsync = async (arg: Option) => {

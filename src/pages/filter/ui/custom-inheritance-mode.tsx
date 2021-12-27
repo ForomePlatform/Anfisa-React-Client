@@ -24,12 +24,10 @@ export interface ICustomInheritanceFormValues {
   reset: string
 }
 
-const CUSTOM_INHERITANCE = 'Custom_Inheritance_Mode'
-
 export const CustomInheritanceMode = observer(
   ({ setFieldValue }: FormikProps<ICustomInheritanceModeProps>) => {
     const cachedValues = filterStore.readFilterCondition<ICustomInheritanceFormValues>(
-      CUSTOM_INHERITANCE,
+      FuncStepTypesEnum.CustomInheritanceMode,
     )
 
     const { first, second, third, reset } = cachedValues || {}
@@ -54,7 +52,7 @@ export const CustomInheritanceMode = observer(
       }
 
       filterStore.setFilterCondition<ICustomInheritanceFormValues>(
-        CUSTOM_INHERITANCE,
+        FuncStepTypesEnum.CustomInheritanceMode,
         {
           first: firstSelectValue,
           second: secondSelectValue,

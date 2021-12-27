@@ -10,8 +10,6 @@ interface IProps {
   locationState: any
 }
 
-export const FILTER_REFINER_PREFIX = 'filterRefinerData'
-
 export const FilterRefiner = observer(
   ({ locationState }: IProps): ReactElement => {
     useEffect(() => {
