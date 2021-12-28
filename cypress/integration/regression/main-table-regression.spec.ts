@@ -3,12 +3,14 @@ import { CommonSelectors } from '../../../src/components/data-testid/common-sele
 import { datasetPage } from '../../page-objects/app/datasets-page'
 import { mainTablePage } from '../../page-objects/app/main-table-page'
 import { variantDrawerPage } from '../../page-objects/app/variant-drawer-page'
+import { testData } from '../../page-objects/lib/faker'
 import { Timeouts } from '../../page-objects/lib/timeouts.cy'
 
 describe('Regression test of the main table | step 1', () => {
   const link = '/ws?ds=PGP3140_wgs_panel_hl'
   const homozygous = '⏚BGM_Homozygous_Rec'
   const datasetName = 'PGP3140_wgs_panel_hl'
+  const customTag = testData.getFakeData(1)
 
   it('should open main table for PGP3140_wgs_panel_hl dataset', () => {
     datasetPage.visit()
@@ -62,7 +64,7 @@ describe('Regression test of the main table | step 1', () => {
     filterByGene('CHSY1', 'Variants: 1')
     mainTablePage.mainTable.tableRow.getButtonByText('p.Y434=').click()
     variantDrawerPage.variantDrawer.addTag.eq(1).click()
-    variantDrawerPage.variantDrawer.tagInput.type('Custom_tag')
+    variantDrawerPage.variantDrawer.tagInput.type(customTag)
     variantDrawerPage.variantDrawer.addCustomTag.forceClick()
     cy.intercept('POST', '/app/ws_tags').as('addTags')
     variantDrawerPage.variantDrawer.saveTags.forceClick()
@@ -81,9 +83,14 @@ describe('Regression test of the main table | step 1', () => {
     //number of variants changes
     mainTablePage.mainTable.numVariants.haveText('Variants: 2')
     filterByGene('CHSY1', 'Variants: 1')
+    cy.waitUntil(() =>
+      mainTablePage.mainTable.tableRow.element.then(
+        () => Cypress.$(CommonSelectors.tableCell).length,
+      ),
+    )
     mainTablePage.mainTable.tableRow.getButtonByText('p.Y434=').click()
     variantDrawerPage.variantDrawer.addNote.click()
-    variantDrawerPage.variantDrawer.fillSpace.type('note addition test')
+    variantDrawerPage.variantDrawer.fillSpace.type(testData.getFakeData(4))
     cy.intercept('POST', `/app/ws_tags?ds=${datasetName}&rec=**`).as('addNote')
     variantDrawerPage.variantDrawer.saveNote.click()
     cy.wait('@addNote', { timeout: Timeouts.TwentySecondsTimeout })
@@ -101,10 +108,10 @@ describe('Regression test of the main table | step 1', () => {
     //number of variants changes
     mainTablePage.mainTable.numVariants.haveText('Variants: 2')
     mainTablePage.mainTable.addTag.first().click()
-    mainTablePage.mainTable.searchFilter.type('CustomTag')
-    mainTablePage.mainTable.checkbox.variantMainTableCheckbox('CustomTag')
+    mainTablePage.mainTable.searchFilter.type(customTag)
+    mainTablePage.mainTable.checkbox.variantMainTableCheckbox(customTag)
     mainTablePage.mainTable.applyButton.click()
-    mainTablePage.mainTable.numVariants.haveText('Variants: 0')
+    mainTablePage.mainTable.numVariants.haveText('Variants: 1')
   })
 
   it('should turn off Gene column | step 7', () => {
@@ -186,7 +193,9 @@ describe('Regression test of the main table | step 1', () => {
     mainTablePage.mainTable.exportReport.click()
     mainTablePage.mainTable.exportExcel.click()
     cy.wait('@reportDownload', { timeout: Timeouts.FifteenSecondsTimeout })
-    cy.readFile(`./cypress/downloads/${datasetName}.xlsx`).should('exist')
+    cy.readFile(`./cypress/downloads/${datasetName}.xlsx`, 'utf8').should(
+      'exist',
+    )
   })
 
   it('should save csv file | test #13', () => {
@@ -205,13 +214,19 @@ describe('Regression test of the main table | step 1', () => {
     mainTablePage.mainTable.exportCsv.click()
     cy.wait('@reportCsvDownload', { timeout: Timeouts.TwentySecondsTimeout })
     cy.readFile(`./cypress/downloads/${datasetName}.csv`).should('exist')
+    cy.readFile(`./cypress/downloads/${datasetName}.csv`).should(
+      'contain',
+      'ClinVar,HGMD,Coordinate,Change,MSQ',
+    )
   })
 
   function filterByGene(geneName: string, numVariants: string) {
     mainTablePage.mainTable.addGene.click()
     mainTablePage.mainTable.searchFilter.type(geneName)
     mainTablePage.mainTable.geneCheckbox.check()
+    cy.intercept('POST', '/app/tab_report').as('applyGeneFilter')
     mainTablePage.mainTable.applyButton.click()
+    cy.wait('@applyGeneFilter')
     mainTablePage.mainTable.numVariants.haveText(numVariants)
   }
 })
