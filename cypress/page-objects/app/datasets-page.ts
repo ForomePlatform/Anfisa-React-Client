@@ -2,7 +2,7 @@ import { DatasetCard } from '../../../src/components/data-testid/dataset-card.cy
 import { DatasetInfoDataCy } from '../../../src/components/data-testid/dataset-info.cy'
 import { FilterDatasetDataCy } from '../../../src/components/data-testid/filter-dataset.cy'
 import { BasePage } from '../lib/base-page'
-import Helper from '../lib/helpers'
+import { Helper } from '../lib/helpers'
 import { DatasetInfoWidget } from './widgets/dataset-info.widget'
 import { LeftPanelWidget } from './widgets/left-panel.widget'
 

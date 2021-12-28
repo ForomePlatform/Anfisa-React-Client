@@ -2,7 +2,7 @@ import { CommonSelectors } from '../../../src/components/data-testid/common-sele
 import { DecisionTreesMenuDataCy } from '../../../src/components/data-testid/decision-tree-menu.cy'
 import { DecisionTreesResultsDataCy } from '../../../src/components/data-testid/decision-tree-results.cy'
 import { BasePage } from '../lib/base-page'
-import Helper from '../lib/helpers'
+import { Helper } from '../lib/helpers'
 import { AttributesListWidget } from './widgets/attributes-list.widget'
 import { DecisionTreeWidget } from './widgets/decision-tree-menu.widget'
 import { DecisionTreeResultsWidget } from './widgets/decision-tree-results.widget'
