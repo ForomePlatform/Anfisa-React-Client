@@ -103,13 +103,15 @@ export const RangePanel = observer(
     }, [min, max])
 
     useEffect(() => {
-      reaction(
+      const dispose = reaction(
         () => filterStore.selectedGroupItem.name,
         () => {
           setMin(getCachedValues()?.min || '')
           setMax(getCachedValues()?.max || '')
         },
       )
+
+      return () => dispose()
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
