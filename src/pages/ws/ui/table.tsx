@@ -153,7 +153,7 @@ export const Table = observer(
                 <div
                   {...cell.getCellProps()}
                   key={Math.random()}
-                  className={cn('td overflow-hidden column-3', {
+                  className={cn('td overflow-hidden', {
                     'py-1':
                       cell.column.Header !== tableColumnMap.samples &&
                       columnsStore.viewType === ViewTypeEnum.Compact,
