@@ -54,6 +54,8 @@ class DecisionTreesPage extends BasePage {
         treeTooltip: `${CommonSelectors.treeTooltip}`,
         addAttribute: Helper.getDataId(DecisionTreesResultsDataCy.addAttrbute),
         joinByLabel: Helper.getDataId(DecisionTreesResultsDataCy.joinByLabel),
+        optionsMenu: Helper.getDataId(DecisionTreesResultsDataCy.optionsMenu),
+        addStepAfter: Helper.getDataId(DecisionTreesResultsDataCy.addStepAfter),
       },
       labels: {
         graphHeaders: '',
