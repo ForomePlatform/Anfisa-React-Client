@@ -1,4 +1,5 @@
 import { ReactElement, useEffect, useState } from 'react'
+import { reaction } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
 import { FilterKindEnum } from '@core/enum/filter-kind.enum'
@@ -8,16 +9,27 @@ import filterStore from '@store/filter'
 import { Button } from '@ui/button'
 import { InputNumber } from '@ui/input-number'
 
+export interface IRangePanelFormValues {
+  min: string
+  max: string
+}
+
+const getCachedValues = () => {
+  return filterStore.readFilterCondition<IRangePanelFormValues>(
+    filterStore.selectedGroupItem.name,
+  )
+}
+
 export const RangePanel = observer(
   (): ReactElement => {
-    const [min, setMin] = useState('')
-    const [max, setMax] = useState('')
+    const selectedFilter = filterStore.selectedGroupItem
+
+    const [min, setMin] = useState(getCachedValues()?.min || '')
+    const [max, setMax] = useState(getCachedValues()?.max || '')
 
     const [isVisibleMinError, setIsVisibleMinError] = useState(false)
     const [isVisibleMaxError, setIsVisibleMaxError] = useState(false)
     const [isVisibleMixedError, setIsVisibleMixedError] = useState(false)
-
-    const selectedFilter = filterStore.selectedGroupItem
 
     const handleAddConditionsAsync = async () => {
       const arrayNo = await datasetStore.setConditionsAsync([
@@ -80,7 +92,28 @@ export const RangePanel = observer(
       } else {
         setIsVisibleMixedError(false)
       }
+
+      filterStore.setFilterCondition<IRangePanelFormValues>(
+        filterStore.selectedGroupItem.name,
+        {
+          min,
+          max,
+        },
+      )
     }, [min, max])
+
+    useEffect(() => {
+      const dispose = reaction(
+        () => filterStore.selectedGroupItem.name,
+        () => {
+          setMin(getCachedValues()?.min || '')
+          setMax(getCachedValues()?.max || '')
+        },
+      )
+
+      return () => dispose()
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
       <div>

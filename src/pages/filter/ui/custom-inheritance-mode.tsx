@@ -3,22 +3,41 @@ import { FormikProps } from 'formik'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
-import { FilterMethodEnum } from '@core/enum/filter-method.enum'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { InheritanceModeEnum } from '@core/enum/inheritance-mode-enum'
 import datasetStore from '@store/dataset'
 import filterStore from '@store/filter'
+import { GlbPagesNames } from '@glb/glb-names'
 import { getQueryBuilder } from '@utils/getQueryBuilder'
 import { getSortedArray } from '@utils/getSortedArray'
 import { CustomInheritanceModeContent } from './query-builder/ui/custom-inheritance-mode-content'
 
+export interface ICustomInheritanceModeProps {
+  scenario: any
+  variants: string[]
+}
+
+export interface ICustomInheritanceFormValues {
+  first: string
+  second: string
+  third: string
+  reset: string
+}
+
 export const CustomInheritanceMode = observer(
-  ({ setFieldValue }: FormikProps<{ scenario: any; variants: string[] }>) => {
-    const [firstSelectValue, setFirstSelectValue] = useState<string>('2')
-    const [secondSelectValue, setSecondSelectValue] = useState<string>('0-1')
-    const [thirdSelectValue, setThirdSelectValue] = useState<string>('0-1')
+  ({ setFieldValue }: FormikProps<ICustomInheritanceModeProps>) => {
+    const cachedValues = filterStore.readFilterCondition<ICustomInheritanceFormValues>(
+      FuncStepTypesEnum.CustomInheritanceMode,
+    )
+
+    const { first, second, third, reset } = cachedValues || {}
+
+    const [firstSelectValue, setFirstSelectValue] = useState(first || '2')
+    const [secondSelectValue, setSecondSelectValue] = useState(second || '0-1')
+    const [thirdSelectValue, setThirdSelectValue] = useState(third || '0-1')
+
     const selectStates = [firstSelectValue, secondSelectValue, thirdSelectValue]
-    const [resetValue, setResetValue] = useState('')
+    const [resetValue, setResetValue] = useState(reset || '')
     const variants = filterStore.statFuncData.variants
 
     useEffect(() => {
@@ -31,7 +50,17 @@ export const CustomInheritanceMode = observer(
       } else {
         filterStore.setError('')
       }
-    }, [firstSelectValue, secondSelectValue, thirdSelectValue])
+
+      filterStore.setFilterCondition<ICustomInheritanceFormValues>(
+        FuncStepTypesEnum.CustomInheritanceMode,
+        {
+          first: firstSelectValue,
+          second: secondSelectValue,
+          third: thirdSelectValue,
+          reset: resetValue,
+        },
+      )
+    }, [firstSelectValue, secondSelectValue, thirdSelectValue, resetValue])
 
     useEffect(() => {
       const params = datasetStore.isXL
@@ -95,8 +124,7 @@ export const CustomInheritanceMode = observer(
 
       const params = `{"scenario":{${scenarioString}}}`
 
-      // GlbPagesNames.Refiner &&
-      filterStore.method === FilterMethodEnum.Refiner &&
+      filterStore.method === GlbPagesNames.Refiner &&
         setFieldValue('scenario', Object.fromEntries(newScenario))
       filterStore.fetchStatFuncAsync('Custom_Inheritance_Mode', params)
     }

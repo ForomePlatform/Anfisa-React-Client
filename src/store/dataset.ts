@@ -3,9 +3,15 @@ import cloneDeep from 'lodash/cloneDeep'
 import get from 'lodash/get'
 import { makeAutoObservable, runInAction } from 'mobx'
 
-import { DsStatType, TabReportType } from '@declarations'
+import {
+  DsStatType,
+  IRemoveConditionItem,
+  StatListType,
+  TabReportType,
+} from '@declarations'
 import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { getApiUrl } from '@core/get-api-url'
+import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
 import variantStore from '@store/variant'
 import { addToActionHistory } from '@utils/addToActionHistory'
@@ -95,7 +101,7 @@ class DatasetStore {
     this.datasetName = datasetName
   }
 
-  addZone(zone: [string, string[]]) {
+  addZone(zone: [string, string[], false?]) {
     if (zone[1].length === 0) {
       this.zone = this.zone.filter(item => item[0] !== zone[0])
 
@@ -158,13 +164,10 @@ class DatasetStore {
     await this.fetchDsStatAsync()
   }
 
-  removeCondition({
-    subGroup,
-    itemName,
-  }: {
-    subGroup: string
-    itemName: string
-  }) {
+  removeCondition(
+    { subGroup, itemName }: IRemoveConditionItem,
+    shouldSendDsStat = true,
+  ) {
     const cloneConditions = cloneDeep(this.conditions)
 
     const subGroupIndex = cloneConditions.findIndex(
@@ -189,7 +192,7 @@ class DatasetStore {
 
     this.conditions = cloneConditions
 
-    this.fetchDsStatAsync()
+    shouldSendDsStat && this.fetchDsStatAsync()
   }
 
   removeConditionGroup({ subGroup }: { subGroup: string }) {
@@ -222,6 +225,7 @@ class DatasetStore {
     this.variantsAmount = 0
     this.statAmount = []
     this.prevPreset = ''
+    this.wsRecords = []
   }
 
   resetConditions() {
@@ -275,6 +279,7 @@ class DatasetStore {
 
     const result = await response.json()
 
+    dtreeStore.setStatRequestId(result['rq-id'])
     result['stat-list'] = getFilteredAttrsList(result['stat-list'])
 
     const conditionFromHistory = bodyFromHistory?.get('conditions')
@@ -291,8 +296,7 @@ class DatasetStore {
       this.dsStat = result
       this.variantsAmount = result['total-counts']['0']
 
-      // TODO: do not delete
-      // this.statAmount = get(result, 'filtered-counts', [])
+      this.statAmount = get(result, 'filtered-counts', [])
       this.isLoadingDsStat = false
     })
   }
@@ -528,8 +532,8 @@ class DatasetStore {
     })
   }
 
-  setDsStat(newDsStat: DsStatType) {
-    this.dsStat = newDsStat
+  setStatList(statList: StatListType) {
+    this.dsStat['stat-list'] = statList
   }
 }
 

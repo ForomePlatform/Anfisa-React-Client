@@ -1,8 +1,8 @@
-import { FilterMethodEnum } from '@core/enum/filter-method.enum'
 import { getApiUrl } from '@core/get-api-url'
 import datasetStore from '@store/dataset'
 import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
+import { GlbPagesNames } from '@glb/glb-names'
 import { getFilteredAttrsList } from './getFilteredAttrsList'
 
 export const fetchStatunitsAsync = async (
@@ -32,7 +32,7 @@ export const fetchStatunitsAsync = async (
     units: JSON.stringify(incompletePropertyList),
   })
 
-  const isRefiner = filterStore.method === FilterMethodEnum.Refiner
+  const isRefiner = filterStore.method === GlbPagesNames.Refiner
 
   if (isRefiner) {
     const conditions = JSON.stringify(datasetStore.conditions)
@@ -68,19 +68,9 @@ export const fetchStatunitsAsync = async (
 
   const filteredStatList = getFilteredAttrsList(newStatList)
 
-  if (isRefiner) {
-    const changedDtreeStat = JSON.parse(JSON.stringify(datasetStore.dsStat))
-
-    changedDtreeStat['stat-list'] = filteredStatList
-
-    datasetStore.setDsStat(changedDtreeStat)
-  } else {
-    const changedDtreeStat = JSON.parse(JSON.stringify(dtreeStore.dtreeStat))
-
-    changedDtreeStat['stat-list'] = filteredStatList
-
-    dtreeStore.setDtreeStat(changedDtreeStat)
-  }
+  isRefiner
+    ? datasetStore.setStatList(filteredStatList)
+    : dtreeStore.setStatList(filteredStatList)
 
   fetchStatunitsAsync(newStatList, stepIndex)
 }
