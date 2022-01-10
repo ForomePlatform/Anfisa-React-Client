@@ -35,7 +35,7 @@ describe('Open saved dataset in MainTable', () => {
       }),
     )
     datasetPage.datasetInfo.openInViewer.click()
-    datasetPage.datasetInfo.mainTable.click()
+    datasetPage.datasetInfo.viewerOption.contains('Main Table').click()
     cy.url().should('include', '/ws?ds=Dataset_from_autotests')
   })
 

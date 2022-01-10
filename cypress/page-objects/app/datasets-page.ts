@@ -24,9 +24,8 @@ class DatasetPage extends BasePage {
     this.datasetInfo = new DatasetInfoWidget({
       selectors: {
         openInViewer: Helper.getDataId(DatasetInfoDataCy.openInViewer),
-        decTreePanel: Helper.getDataId(DatasetInfoDataCy.decTreePanel),
+        viewerOption: Helper.getDataId(DatasetInfoDataCy.viewerOption),
         datasetHeader: Helper.getDataId(DatasetCard.datasetHeader),
-        mainTable: Helper.getDataId(DatasetInfoDataCy.mainTable),
       },
       labels: {
         datasetHeader: 'xl_PGP3140_wgs_NIST-4_2',
