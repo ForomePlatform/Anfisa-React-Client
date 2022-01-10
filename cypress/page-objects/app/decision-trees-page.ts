@@ -53,12 +53,14 @@ class DecisionTreesPage extends BasePage {
         ),
         treeTooltip: `${CommonSelectors.treeTooltip}`,
         addAttribute: Helper.getDataId(DecisionTreesResultsDataCy.addAttrbute),
+        joinByLabel: Helper.getDataId(DecisionTreesResultsDataCy.joinByLabel),
       },
       labels: {
         graphHeaders: '',
         groupGraphHeaders: 'Variant',
         stepCard: 'header3',
         treeTooltip: 'Show excluded varants for step 5',
+        joinByLabel: 'Join by AND',
       },
     })
     this.attributesList = new AttributesListWidget({
@@ -73,6 +75,9 @@ class DecisionTreesPage extends BasePage {
           DecisionTreesResultsDataCy.addSelectedAttributes,
         ),
         addByJoin: Helper.getDataId(DecisionTreesResultsDataCy.addByJoin),
+        problemGroup: CommonSelectors.checkbox,
+        joinByAnd: Helper.getDataId(DecisionTreesResultsDataCy.joinByAnd),
+        joinByOr: Helper.getDataId(DecisionTreesResultsDataCy.joinByOr),
       },
     })
   }

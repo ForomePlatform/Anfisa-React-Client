@@ -12,4 +12,7 @@ export const DecisionTreesResultsDataCy = {
   clearAllFromAttribute: 'clear-all',
   addSelectedAttributes: 'add-selected',
   addByJoin: 'add-by-joining',
+  joinByAnd: 'join-by-and',
+  joinByOr: 'join-by-or',
+  joinByLabel: 'join-by',
 }

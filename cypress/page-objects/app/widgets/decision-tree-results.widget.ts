@@ -14,6 +14,7 @@ export interface DecisionTreeResultsSelectors {
   viewReturnedVariants: string
   treeTooltip: string
   addAttribute: string
+  joinByLabel: string
 }
 
 export interface DecisionTreeResultsLabels {
@@ -21,6 +22,7 @@ export interface DecisionTreeResultsLabels {
   groupGraphHeaders: string
   stepCard: string
   treeTooltip: string
+  joinByLabel: string
 }
 
 export class DecisionTreeResultsWidget extends UIWidget {
@@ -33,6 +35,7 @@ export class DecisionTreeResultsWidget extends UIWidget {
   readonly viewReturnedVariants: Button
   readonly treeToolptip: Label
   readonly addAttribute: Button
+  readonly joinByLabel: Label
 
   constructor(options: {
     selectors: DecisionTreeResultsSelectors
@@ -58,5 +61,6 @@ export class DecisionTreeResultsWidget extends UIWidget {
     this.viewReturnedVariants = new Button(selectors.viewReturnedVariants)
     this.treeToolptip = new Label(selectors.treeTooltip, labels.treeTooltip)
     this.addAttribute = new Button(selectors.addAttribute)
+    this.joinByLabel = new Label(selectors.joinByLabel, labels.joinByLabel)
   }
 }
