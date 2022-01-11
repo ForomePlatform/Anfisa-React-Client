@@ -1,6 +1,7 @@
 import { CommonSelectors } from '../../../src/components/data-testid/common-selectors.cy'
 import { DecisionTreesMenuDataCy } from '../../../src/components/data-testid/decision-tree-menu.cy'
 import { DecisionTreesResultsDataCy } from '../../../src/components/data-testid/decision-tree-results.cy'
+import { DecisionTreeMinGQ } from '../../../src/components/data-testid/min-gq.cy'
 import { BasePage } from '../lib/base-page'
 import { Helper } from '../lib/helpers'
 import { AttributesListWidget } from './widgets/attributes-list.widget'
@@ -56,6 +57,8 @@ class DecisionTreesPage extends BasePage {
         joinByLabel: Helper.getDataId(DecisionTreesResultsDataCy.joinByLabel),
         optionsMenu: Helper.getDataId(DecisionTreesResultsDataCy.optionsMenu),
         addStepAfter: Helper.getDataId(DecisionTreesResultsDataCy.addStepAfter),
+        leftInput: Helper.getDataId(DecisionTreeMinGQ.leftInput),
+        rightInput: Helper.getDataId(DecisionTreeMinGQ.rightInput),
       },
       labels: {
         graphHeaders: '',

@@ -18,7 +18,7 @@ describe('Regression test of the main table | step 1', () => {
     datasetPage.leftPanel.datasetsListElem.getButtonByText(datasetName).click()
     datasetPage.leftPanel.leftPanelHeader.checkLabelText('Datasets')
     datasetPage.datasetInfo.openInViewer.click()
-    datasetPage.datasetInfo.mainTable.click()
+    datasetPage.datasetInfo.viewerOption.contains('Main Table').click()
     cy.url().should('include', link)
   })
 

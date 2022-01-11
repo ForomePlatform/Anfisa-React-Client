@@ -17,6 +17,8 @@ export interface DecisionTreeResultsSelectors {
   joinByLabel: string
   optionsMenu: string
   addStepAfter: string
+  leftInput: string
+  rightInput: string
 }
 
 export interface DecisionTreeResultsLabels {
@@ -40,6 +42,8 @@ export class DecisionTreeResultsWidget extends UIWidget {
   readonly joinByLabel: Label
   readonly optionsMenu: Button
   readonly addStepAfter: Button
+  readonly leftInput: Input
+  readonly rightInput: Input
 
   constructor(options: {
     selectors: DecisionTreeResultsSelectors
@@ -68,5 +72,7 @@ export class DecisionTreeResultsWidget extends UIWidget {
     this.joinByLabel = new Label(selectors.joinByLabel, labels.joinByLabel)
     this.optionsMenu = new Button(selectors.optionsMenu)
     this.addStepAfter = new Button(selectors.addStepAfter)
+    this.leftInput = new Input(selectors.leftInput)
+    this.rightInput = new Input(selectors.rightInput)
   }
 }
