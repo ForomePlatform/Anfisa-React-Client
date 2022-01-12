@@ -98,7 +98,7 @@ export const NextStepContentItem = observer(
               'flex w-full h-2/5 py-2 text-14 font-normal items-center relative step-content-area',
               currentStep.isActive ? 'bg-green-light' : 'bg-blue-light',
             )}
-            data-testId={DecisionTreesResultsDataCy.joinByLabel}
+            data-testid={DecisionTreesResultsDataCy.joinByLabel}
           >
             <div className="mr-1">{t('dtree.joinBy')}</div>
             <JoinType className="flex items-center justify-center bg-orange-light text-orange-bright">

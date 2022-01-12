@@ -154,7 +154,7 @@ export const ModalSelectNumbers = observer(
 
             <div className="flex w-full flex-col h-8">
               <InputNumber
-                data-testId={DecisionTreeMinGQ.leftInput}
+                data-testid={DecisionTreeMinGQ.leftInput}
                 value={valueFrom}
                 onChange={(e: any) => {
                   setValueFrom(e.target.value)
@@ -237,7 +237,7 @@ export const ModalSelectNumbers = observer(
             </div>
             <div className="flex flex-col w-full h-8">
               <InputNumber
-                data-testId={DecisionTreeMinGQ.rightInput}
+                data-testid={DecisionTreeMinGQ.rightInput}
                 value={valueTo}
                 onChange={(e: any) => {
                   setValueTo(e.target.value)
