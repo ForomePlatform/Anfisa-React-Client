@@ -23,30 +23,17 @@ const RefinerPage = observer(
     const isXL = datasetStore.isXL
 
     const statAmount = toJS(datasetStore.statAmount)
-    const dsinfo = toJS(dirinfoStore.dsinfo)
 
     useDatasetName()
 
     useEffect(() => {
-      const initAsync = async () => {
-        await datasetStore.fetchDsStatAsync()
+      datasetStore.fetchDsStatAsync()
 
-        if (Object.keys(dsinfo).length === 0) {
-          await dirinfoStore
-            .fetchDsinfoAsync(datasetStore.datasetName)
-            .then(() => {
-              return !isXL
-                ? datasetStore.fetchWsListAsync(datasetStore.isXL)
-                : undefined
-            })
-        } else {
-          if (!isXL) {
-            datasetStore.fetchWsListAsync(datasetStore.isXL)
-          }
-        }
+      dirinfoStore.fetchDsinfoAsync(datasetStore.datasetName)
+
+      if (!datasetStore.isXL) {
+        datasetStore.fetchWsListAsync()
       }
-
-      initAsync()
 
       return () => {
         dirinfoStore.resetData()
