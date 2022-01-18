@@ -292,6 +292,11 @@ class DatasetStore {
 
     runInAction(() => {
       this.dsStat = result
+
+      if (this.isXL) {
+        this.statAmount = get(result, 'filtered-counts', [])
+      }
+
       this.variantsAmount = result['total-counts']['0']
       this.isLoadingDsStat = false
     })
