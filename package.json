@@ -101,7 +101,8 @@
   },
   "simple-git-hooks": {
     "pre-commit": "yarn lint-stage && yarn lint:fix",
-    "pre-push": "yarn commitlint && yarn lint && yarn stylelint"
+    "pre-push": "yarn lint && yarn stylelint",
+    "commit-msg": "yarn commitlint"
   },
   "eslintConfig": {
     "extends": [
