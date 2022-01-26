@@ -20,14 +20,15 @@ import { FilterButton } from './filter-button'
 import { FilterModal } from './filter-modal'
 
 export const FilterControlRefiner = observer((): ReactElement => {
-  const [activePreset, setActivePreset] = useState(datasetStore.activePreset)
+  const activePreset = datasetStore.activePreset
+
   const [createPresetName, setCreatePresetName] = useState('')
 
   useEffect(() => {
     const dispose = reaction(
       () => datasetStore.activePreset,
       () => {
-        if (!datasetStore.activePreset) setActivePreset('')
+        if (!datasetStore.activePreset) datasetStore.resetActivePreset()
       },
     )
 
@@ -35,45 +36,37 @@ export const FilterControlRefiner = observer((): ReactElement => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const presets: string[] = get(datasetStore, 'dsStat.filter-list', [])
-    .filter((preset: FilterList) => {
-      if (
-        filterStore.actionName === ActionFilterEnum.Delete ||
-        filterStore.actionName === ActionFilterEnum.Modify
-      ) {
-        return !preset.standard
-      }
+  const loadPreset = (preset: string) => {
+    datasetStore.setActivePreset(preset)
 
-      return true
-    })
+    if (datasetStore.prevPreset !== datasetStore.activePreset) {
+      presetStore.loadPresetAsync(preset, 'refiner')
+
+      if (!datasetStore.isXL) datasetStore.fetchWsListAsync()
+    }
+  }
+
+  const canBeModified = (preset: FilterList): boolean => {
+    return filterStore.actionName === ActionFilterEnum.Delete ||
+      filterStore.actionName === ActionFilterEnum.Modify
+      ? !preset.standard
+      : true
+  }
+
+  const presets: string[] = get(datasetStore, 'dsStat.filter-list', [])
+    .filter(canBeModified)
     .map((preset: FilterList) => preset.name)
 
   const handleClick = () => {
-    if (filterStore.actionName === ActionFilterEnum.Load) {
-      datasetStore.setActivePreset(activePreset)
-
-      if (datasetStore.prevPreset !== datasetStore.activePreset) {
-        presetStore.loadPresetAsync(activePreset, 'refiner')
-
-        if (!datasetStore.isXL) datasetStore.fetchWsListAsync()
-      }
-
-      filterStore.resetActionName()
-    }
-
     if (filterStore.actionName === ActionFilterEnum.Delete) {
       presetStore.deletePresetAsync(activePreset)
-      setActivePreset('')
-
-      filterStore.resetActionName()
-      showToast(t('header.presetFilterAction.delete'), 'success')
+      datasetStore.resetActivePreset()
     }
 
     if (filterStore.actionName === ActionFilterEnum.Join) {
       presetStore.joinPresetAsync(activePreset)
 
       filterStore.resetActionName()
-      setActivePreset('')
 
       showToast(t('header.presetFilterAction.join'), 'success')
     }
@@ -137,7 +130,7 @@ export const FilterControlRefiner = observer((): ReactElement => {
             <DropDown
               options={presets}
               value={activePreset}
-              onSelect={args => setActivePreset(args.value)}
+              onSelect={args => loadPreset(args.value)}
             />
           )}
         </div>
@@ -156,7 +149,7 @@ export const FilterControlRefiner = observer((): ReactElement => {
             variant={'secondary-dark'}
             className="mt-auto ml-2"
             onClick={() => {
-              setActivePreset('')
+              datasetStore.resetActivePreset()
               setCreatePresetName('')
               filterStore.setActionName()
             }}
