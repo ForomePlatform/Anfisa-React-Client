@@ -1,6 +1,7 @@
-import { Fragment, ReactElement, useState } from 'react'
+import { Fragment, ReactElement, useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import get from 'lodash/get'
+import { reaction } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
 import { FilterList } from '@declarations'
@@ -26,6 +27,18 @@ export const FilterControlRefiner = observer(
     const [activePreset, setActivePreset] = useState(datasetStore.activePreset)
     const [createPresetName, setCreatePresetName] = useState('')
 
+    useEffect(() => {
+      const dispose = reaction(
+        () => datasetStore.activePreset,
+        () => {
+          if (!datasetStore.activePreset) setActivePreset('')
+        },
+      )
+
+      return () => dispose()
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
+
     const presets: string[] = get(datasetStore, 'dsStat.filter-list', [])
       .filter((preset: FilterList) => {
         if (
@@ -41,10 +54,15 @@ export const FilterControlRefiner = observer(
 
     const handleClick = () => {
       if (filterStore.actionName === ActionFilterEnum.Load) {
-        presetStore.loadPresetAsync(activePreset, 'refiner')
         datasetStore.setActivePreset(activePreset)
+
+        if (datasetStore.prevPreset !== datasetStore.activePreset) {
+          presetStore.loadPresetAsync(activePreset, 'refiner')
+
+          if (!datasetStore.isXL) datasetStore.fetchWsListAsync()
+        }
+
         filterStore.resetActionName()
-        datasetStore.fetchWsListAsync()
       }
 
       if (filterStore.actionName === ActionFilterEnum.Delete) {

@@ -10,8 +10,13 @@ import { observer } from 'mobx-react-lite'
 
 import { ViewTypeEnum } from '@core/enum/view-type-enum'
 import { useParams } from '@core/hooks/use-params'
+import { useScrollPosition } from '@core/hooks/use-scroll-position'
+import { SessionStoreManager } from '@core/storage-management/session-store-manager'
 import { tableColumnMap } from '@core/table-column-map'
+import { t } from '@i18n'
 import datasetStore from '@store/dataset'
+import filterStore from '@store/filter'
+import zoneStore from '@store/filterZone'
 import variantStore from '@store/variant'
 import columnsStore from '@store/wsColumns'
 import { Routes } from '@router/routes.enum'
@@ -34,6 +39,8 @@ export enum RowHeight {
 const offsetSize = 2800
 const offsetSizeToLoad = (offsetSize / 100) * 60
 
+const TABLE_SCROLL_POSITION = 'tableScrollPosition'
+
 export const isRowSelected = (
   rowIndex: number,
   activeIndex: number,
@@ -48,6 +55,15 @@ export const Table = observer(
     const history = useHistory()
     const alreadyOpened = !!params.get('variant')
 
+    const { selectedFilters } = filterStore
+
+    const {
+      selectedGenes,
+      selectedGenesList,
+      selectedSamples,
+      selectedTags,
+    } = zoneStore
+
     const defaultColumn = {
       width: variantStore.drawerVisible
         ? 190
@@ -55,23 +71,6 @@ export const Table = observer(
             document.documentElement.clientWidth ||
             document.body.clientWidth) / 8,
     }
-
-    useEffect(() => {
-      const handleResize = debounce(() => {
-        datasetStore.setIsLoadingTabReport(true)
-
-        setTimeout(() => {
-          datasetStore.setIsLoadingTabReport(false)
-        }, 500)
-      }, 500)
-
-      window.addEventListener('resize', handleResize)
-
-      return () => {
-        window.removeEventListener('resize', handleResize)
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     const {
       getTableProps,
@@ -100,6 +99,11 @@ export const Table = observer(
       return toJS(datasetStore.filteredNo).length > 0
     }
 
+    const [readScrollPosition, writeScrollPosition] = useScrollPosition({
+      elem: 'div[role="rowgroup"]>div',
+      storageId: TABLE_SCROLL_POSITION,
+    })
+
     const handleOpenVariant = useCallback(
       ({ index }: PropsRow) => {
         if (window.getSelection()?.toString() || datasetStore.isXL) return
@@ -113,15 +117,32 @@ export const Table = observer(
 
         const idx = isFiltered() ? toJS(datasetStore.filteredNo)[index] : index
 
+        datasetStore.setSelectedVariantNumber(idx)
+
         variantStore.setIndex(idx)
 
         variantStore.fetchVarinatInfoAsync()
 
         routeToVariant(idx)
+
+        writeScrollPosition()
       },
       // eslint-disable-next-line react-hooks/exhaustive-deps
       [],
     )
+
+    const stopPropagation = (event: any) => {
+      event.preventDefault()
+      event.stopPropagation()
+      event.nativeEvent.stopImmediatePropagation()
+    }
+
+    const resetTableToInitial = () => {
+      filterStore.resetData()
+      zoneStore.resetAllSelectedItems()
+      datasetStore.clearZone()
+      datasetStore.initDatasetAsync()
+    }
 
     useEffect(() => {
       alreadyOpened &&
@@ -129,14 +150,59 @@ export const Table = observer(
           index: isFiltered() ? 0 : Number(params.get('variant')),
         })
 
+      const handleResize = debounce(() => {
+        datasetStore.setIsLoadingTabReport(true)
+
+        setTimeout(() => {
+          datasetStore.setIsLoadingTabReport(false)
+        }, 500)
+      }, 500)
+
+      window.addEventListener('resize', handleResize)
+
+      return () => {
+        window.removeEventListener('resize', handleResize)
+        SessionStoreManager.delete(TABLE_SCROLL_POSITION)
+      }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    const stopPropagation = (event: any) => {
-      event.preventDefault()
-      event.stopPropagation()
-      event.nativeEvent.stopImmediatePropagation()
-    }
+    useEffect(() => {
+      readScrollPosition()
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [datasetStore.isLoadingTabReport])
+
+    const renderNoResults = useCallback(() => {
+      const isFiltersSelected =
+        Object.keys(selectedFilters).length > 0 ||
+        selectedGenes.length > 0 ||
+        selectedGenesList.length > 0 ||
+        selectedSamples.length > 0 ||
+        selectedTags.length > 0
+
+      if (datasetStore.tabReport.length === 0) {
+        return isFiltersSelected ? (
+          <NoResultsFound
+            text={t('general.noResultsFoundByFilters')}
+            className="text-black font-bold"
+            action={{
+              text: t('general.resetFilters'),
+              handler: resetTableToInitial,
+            }}
+          />
+        ) : (
+          <NoResultsFound text={t('general.noResultsFound')} />
+        )
+      } else {
+        return null
+      }
+    }, [
+      selectedFilters,
+      selectedGenes,
+      selectedGenesList,
+      selectedSamples,
+      selectedTags,
+    ])
 
     const RenderRow = useCallback(
       ({ index, style }) => {
@@ -254,7 +320,7 @@ export const Table = observer(
           })}
         </div>
 
-        {toJS(datasetStore.tabReport).length === 0 && <NoResultsFound />}
+        {renderNoResults()}
 
         {toJS(datasetStore.tabReport).length > 0 && (
           <div {...getTableBodyProps()} className="text-12 tbody">

@@ -22,6 +22,8 @@ import operations from './operations'
 
 const INCREASE_INDEX = 50
 
+export type Condition = [string, string, unknown, string[]?, unknown?]
+
 class DatasetStore {
   dsStat: DsStatType = {}
   variantsAmount = 0
@@ -30,6 +32,7 @@ class DatasetStore {
   genesList: string[] = []
   tags: string[] = []
   samples: string[] = []
+  selectedVariantNumber?: number
 
   wsRecords: { no: number; cl: string; dt: string; lb: string }[] = []
   offset = 0
@@ -38,7 +41,7 @@ class DatasetStore {
   datasetName = ''
   activePreset = ''
   prevPreset = ''
-  conditions: any[] = []
+  conditions: Condition[] = []
   zone: any[] = []
   statAmount: number[] = []
 
@@ -83,6 +86,10 @@ class DatasetStore {
 
   setActivePreset(value: string) {
     this.activePreset = value
+  }
+
+  setSelectedVariantNumber(index: number | undefined) {
+    this.selectedVariantNumber = index
   }
 
   resetActivePreset() {
@@ -135,7 +142,7 @@ class DatasetStore {
     this.zone = []
   }
 
-  async setConditionsAsync(conditions: any[][]) {
+  async setConditionsAsync(conditions: Condition[]) {
     if (!conditions[0]) {
       this.conditions = []
       await this.fetchDsStatAsync()
@@ -164,24 +171,23 @@ class DatasetStore {
     await this.fetchDsStatAsync()
   }
 
-  removeCondition(
-    { subGroup, itemName }: IRemoveConditionItem,
-    shouldSendDsStat = true,
-  ) {
+  removeCondition({ subGroup, itemName }: IRemoveConditionItem) {
     const cloneConditions = cloneDeep(this.conditions)
 
     const subGroupIndex = cloneConditions.findIndex(
       item => item[1] === subGroup,
     )
 
-    const conditionKind = cloneConditions.find(item => item[1] === subGroup)[0]
+    const conditionKind = cloneConditions.find(
+      item => item![1] === subGroup,
+    )![0]
 
     if (conditionKind === FilterKindEnum.Enum) {
-      const filteredItems = cloneConditions[subGroupIndex][3].filter(
+      const filteredItems = cloneConditions[subGroupIndex][3]?.filter(
         (item: string) => item !== itemName,
       )
 
-      if (filteredItems.length === 0) {
+      if (filteredItems?.length === 0) {
         cloneConditions.splice(subGroupIndex, 1)
       } else {
         cloneConditions[subGroupIndex][3] = filteredItems
@@ -192,7 +198,7 @@ class DatasetStore {
 
     this.conditions = cloneConditions
 
-    shouldSendDsStat && this.fetchDsStatAsync()
+    this.fetchDsStatAsync()
   }
 
   removeConditionGroup({ subGroup }: { subGroup: string }) {
@@ -226,22 +232,30 @@ class DatasetStore {
     this.statAmount = []
     this.prevPreset = ''
     this.wsRecords = []
+    this.tabReport = []
   }
 
   resetConditions() {
     this.conditions = []
   }
 
-  async initDatasetAsync(datasetName: string) {
+  async initDatasetAsync(
+    datasetName: string = this.datasetName,
+    prevPage?: string,
+  ) {
     this.datasetName = datasetName
 
     await dirinfoStore.fetchDsinfoAsync(datasetName)
-    await this.fetchDsStatAsync()
-    await this.fetchWsTagsAsync()
-    await this.fetchWsListAsync(this.isXL)
-    this.filteredNo.length === 0
-      ? await this.fetchTabReportAsync()
-      : await this.fetchFilteredTabReportAsync()
+
+    if (!prevPage) {
+      await this.fetchWsListAsync(this.isXL, 'withoutTabReport')
+
+      this.filteredNo.length === 0
+        ? await this.fetchTabReportAsync()
+        : await this.fetchFilteredTabReportAsync()
+
+      this.fetchDsStatAsync()
+    }
   }
 
   async fetchDsStatAsync(
@@ -249,7 +263,6 @@ class DatasetStore {
     bodyFromHistory?: URLSearchParams,
   ) {
     this.isLoadingDsStat = true
-    this.setIsLoadingTabReport(true)
 
     const localBody = new URLSearchParams({
       ds: this.datasetName,
@@ -261,7 +274,9 @@ class DatasetStore {
         localBody.append('conditions', JSON.stringify(this.conditions))
     }
 
-    this.activePreset && localBody.append('filter', this.activePreset)
+    this.activePreset &&
+      this.conditions.length === 0 &&
+      localBody.append('filter', this.activePreset)
 
     if (shouldSaveInHistory) {
       addToActionHistory(localBody, true)
@@ -294,9 +309,12 @@ class DatasetStore {
 
     runInAction(() => {
       this.dsStat = result
-      this.variantsAmount = result['total-counts']['0']
 
-      this.statAmount = get(result, 'filtered-counts', [])
+      if (this.isXL) {
+        this.statAmount = get(result, 'filtered-counts', [])
+      }
+
+      this.variantsAmount = result['total-counts']['0']
       this.isLoadingDsStat = false
     })
   }
@@ -322,8 +340,7 @@ class DatasetStore {
         })
       }
     })
-
-    !source && this.fetchDsStatAsync()
+    !source || (this.isXL && this.fetchDsStatAsync())
   }
 
   async fetchTabReportAsync() {
@@ -384,10 +401,27 @@ class DatasetStore {
     this.setIsLoadingTabReport(false)
   }
   async fetchFilteredTabReportAsync() {
-    const seq = this.filteredNo.slice(
-      this.indexFilteredNo,
-      this.indexFilteredNo + INCREASE_INDEX,
-    )
+    let seq: number[] = []
+
+    if (
+      this.selectedVariantNumber !== undefined &&
+      this.selectedVariantNumber > 0
+    ) {
+      const lastVariant = this.filteredNo[this.filteredNo.length - 1]
+
+      const currentSet = Math.ceil(this.selectedVariantNumber / INCREASE_INDEX)
+      const lastVariantInSet = currentSet * INCREASE_INDEX
+
+      seq =
+        lastVariantInSet >= lastVariant
+          ? this.filteredNo
+          : this.filteredNo.slice(0, lastVariantInSet)
+    } else {
+      seq = this.filteredNo.slice(
+        this.indexFilteredNo,
+        this.indexFilteredNo + INCREASE_INDEX,
+      )
+    }
 
     if (this.indexFilteredNo === 0) {
       this.setIsLoadingTabReport(true)
@@ -400,6 +434,8 @@ class DatasetStore {
 
     this.indexFilteredNo += INCREASE_INDEX
     this.isFetchingMore = false
+    // eslint-disable-next-line unicorn/no-useless-undefined
+    this.setSelectedVariantNumber(undefined)
   }
 
   async fetchTagSelectAsync() {
@@ -439,19 +475,22 @@ class DatasetStore {
   }
 
   async fetchWsListAsync(isXL?: boolean, kind?: string) {
+    this.setIsLoadingTabReport(true)
+
     const body = new URLSearchParams({
       ds: this.datasetName,
     })
 
     if (!this.isFilterDisabled) {
-      body.append('conditions', kind ? '[]' : JSON.stringify(this.conditions))
+      body.append(
+        'conditions',
+        kind === 'reset' ? '[]' : JSON.stringify(this.conditions),
+      )
       body.append('zone', JSON.stringify(this.zone))
     }
 
-    if (!this.prevPreset || this.prevPreset !== this.activePreset) {
-      body.append('filter', this.activePreset)
-      this.prevPreset = this.activePreset
-    }
+    this.prevPreset = this.activePreset
+    body.append('filter', this.activePreset)
 
     const response = await fetch(getApiUrl(isXL ? `ds_list` : `ws_list`), {
       method: 'POST',
@@ -486,7 +525,7 @@ class DatasetStore {
       })
     }
 
-    await this.fetchFilteredTabReportAsync()
+    if (kind !== 'withoutTabReport') await this.fetchFilteredTabReportAsync()
 
     return this.filteredNo
   }

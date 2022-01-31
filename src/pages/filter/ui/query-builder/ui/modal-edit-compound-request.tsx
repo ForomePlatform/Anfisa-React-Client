@@ -8,6 +8,7 @@ import dtreeStore from '@store/dtree'
 import { Button } from '@ui/button'
 import { InputNumber } from '@ui/input-number'
 import { Select } from '@ui/select'
+import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-modal.cy'
 import { changeFunctionalStep } from '@utils/changeAttribute/changeFunctionalStep'
 import { getFuncParams } from '@utils/getFuncParams'
 import { getRequestData } from '@utils/getRequestData'
@@ -17,8 +18,8 @@ import { getSortedArray } from '@utils/getSortedArray'
 import { resetOptions } from '../../compound-request'
 import { AllNotModalMods } from './all-not-modal-mods'
 import { ApproxStateModalMods } from './approx-state-modal-mods'
+import { DisabledVariantsAmount } from './disabled-variants-amount'
 import { EditModalButtons } from './edit-modal-buttons'
-import { EditModalVariants } from './edit-modal-variants'
 import { HeaderModal } from './header-modal'
 import { ModalBase } from './modal-base'
 import { IParams } from './modal-edit-compound-het'
@@ -435,6 +436,7 @@ export const ModalEditCompoundRequest = observer(
               variant={'secondary'}
               className={cn('mr-4')}
               disabled={requestCondition.length === 5}
+              dataTestId={DecisionTreeModalDataCy.addButton}
             />
 
             <Button
@@ -445,6 +447,7 @@ export const ModalEditCompoundRequest = observer(
                 'border-red-secondary hover:text-white hover:bg-red-secondary',
               )}
               disabled={requestCondition.length === 1}
+              dataTestId={DecisionTreeModalDataCy.removeButton}
             />
           </div>
 
@@ -457,11 +460,12 @@ export const ModalEditCompoundRequest = observer(
               onChange={(e: any) => handleReset(e.target.value)}
               className="w-full ml-2"
               reset
+              data-testid={DecisionTreeModalDataCy.selectReset}
             />
           </div>
         </div>
 
-        <EditModalVariants variants={variants} disabled={true} />
+        <DisabledVariantsAmount variants={variants} disabled={true} />
 
         <EditModalButtons
           handleClose={handleClose}

@@ -5,6 +5,9 @@ export const en = {
     excel: 'Excel',
     csv: 'Csv',
     noResultsFound: 'No results found',
+    noResultsFoundByFilters:
+      'There are no results. Try to reset filters and try again',
+    resetFilters: 'Reset filters',
     selectAll: 'Select All',
     clearAll: 'Clear All',
     cancel: 'Cancel',
@@ -201,5 +204,11 @@ export const en = {
   error: {
     getBack: 'Get back to start page',
     smthWentWrong: 'Sorry, something went wrong...',
+    noFirstSymbols: 'No symbols at the first position',
+    tooLongNote: 'Note is too long',
+    tagNameIsTooLong: 'Tag name is too long',
+  },
+  igv: {
+    openIgv: 'Open igv',
   },
 }

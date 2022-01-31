@@ -1,4 +1,5 @@
 import React, { Fragment, ReactElement, useEffect } from 'react'
+import { withErrorBoundary } from 'react-error-boundary'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
@@ -11,37 +12,27 @@ import { ExportPanel } from '@components/export-panel'
 import { ExportReportButton } from '@components/export-report-button'
 import { Header } from '@components/header'
 import { PopperButton } from '@components/popper-button'
+import { ErrorPage } from '@pages/error/error'
 import { FilterControl } from '@pages/filter/ui/filter-control'
 import { FilterRefiner } from '@pages/filter/ui/filter-refiner'
 import { ModalSaveDataset } from '@pages/filter/ui/query-builder/ui/modal-save-dataset'
 import { TableModal } from '@pages/filter/ui/TableModal'
 
-export const RefinerPage = observer(
+const RefinerPage = observer(
   (): ReactElement => {
     const isXL = datasetStore.isXL
 
     const statAmount = toJS(datasetStore.statAmount)
-    const dsinfo = toJS(dirinfoStore.dsinfo)
 
     useDatasetName()
 
     useEffect(() => {
       const initAsync = async () => {
-        await datasetStore.fetchDsStatAsync()
+        await dirinfoStore.fetchDsinfoAsync(datasetStore.datasetName)
 
-        if (Object.keys(dsinfo).length === 0) {
-          await dirinfoStore
-            .fetchDsinfoAsync(datasetStore.datasetName)
-            .then(() => {
-              return !isXL
-                ? datasetStore.fetchWsListAsync(datasetStore.isXL)
-                : undefined
-            })
-        } else {
-          if (!isXL) {
-            datasetStore.fetchWsListAsync(datasetStore.isXL)
-          }
-        }
+        datasetStore.fetchDsStatAsync()
+
+        if (!datasetStore.isXL) datasetStore.fetchWsListAsync()
       }
 
       initAsync()
@@ -94,3 +85,7 @@ export const RefinerPage = observer(
     )
   },
 )
+
+export default withErrorBoundary(RefinerPage, {
+  fallback: <ErrorPage />,
+})

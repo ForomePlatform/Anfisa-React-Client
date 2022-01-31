@@ -92,12 +92,10 @@ export const VariantHeader = observer(
                 onClick={handleNextVariant}
               />
             </div>
-
             <div className="text-blue-bright font-bold leading-18px">
               {`[${genInfo}] `}
               <span dangerouslySetInnerHTML={{ __html: hg19 }} />
             </div>
-
             <DrawerTags />
 
             <DrawerNote />

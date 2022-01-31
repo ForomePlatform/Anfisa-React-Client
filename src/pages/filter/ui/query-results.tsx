@@ -10,6 +10,29 @@ export const QueryResults = observer(
   (): ReactElement => {
     const keys = Object.keys(filterStore.selectedFilters)
 
+    const handleRemoveItem = (
+      itemName: string,
+      subGroupKey: string,
+      title: string,
+    ) => {
+      datasetStore.resetActivePreset()
+
+      filterStore.removeSelectedFilters({
+        group: subGroupKey,
+        groupItemName: title,
+        variant: [itemName, 0],
+      })
+
+      datasetStore.removeCondition({
+        subGroup: title,
+        itemName,
+      })
+
+      if (!datasetStore.isXL) {
+        datasetStore.fetchWsListAsync()
+      }
+    }
+
     if (keys.length === 0) {
       return (
         <div
@@ -36,20 +59,9 @@ export const QueryResults = observer(
                   key={title}
                   title={title}
                   filters={filterStore.selectedFilters[subGroupKey][title]}
-                  onRemove={itemName => {
-                    filterStore.removeSelectedFilters({
-                      group: subGroupKey,
-                      groupItemName: title,
-                      variant: [itemName, 0],
-                    })
-
-                    datasetStore.removeCondition({
-                      subGroup: title,
-                      itemName,
-                    })
-
-                    datasetStore.fetchWsListAsync()
-                  }}
+                  onRemove={itemName =>
+                    handleRemoveItem(itemName, subGroupKey, title)
+                  }
                 />
               ),
             )}
