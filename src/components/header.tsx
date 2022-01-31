@@ -104,7 +104,7 @@ export const Header = observer(
             <div className="flex items-center text-white">
               <Logo mode="white" className="mr-4" />
 
-              <span className="text-grey-blue">
+              <span className="text-grey-blue whitespace-pre-line text-xs">
                 {t('header.version', {
                   frontend: process.env.REACT_APP_VERSION,
                   backend: toJS(dirinfoStore.dirinfo).version,
