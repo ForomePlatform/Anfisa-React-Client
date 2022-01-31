@@ -23,6 +23,9 @@ export const en = {
     closeWindow: 'Close window',
     creaitionIsInProcess: 'Dataset creation has not been finished yet',
   },
+  header: {
+    version: 'Frontend: Anfisa {frontend}, Backend: {backend}',
+  },
   home: {
     title: 'Home',
     datasets: 'Datasets',
