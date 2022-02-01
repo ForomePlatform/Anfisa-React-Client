@@ -24,7 +24,10 @@ export const en = {
     creaitionIsInProcess: 'Dataset creation has not been finished yet',
   },
   header: {
-    version: 'Frontend: Anfisa {frontend}\n Backend: {backend}',
+    version: {
+      frontend: 'Frontend: Anfisa {version}',
+      backend: 'Backend: {version}',
+    },
   },
   home: {
     title: 'Home',
