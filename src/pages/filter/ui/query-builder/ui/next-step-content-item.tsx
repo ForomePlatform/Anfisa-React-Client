@@ -140,7 +140,7 @@ export const NextStepContentItem = observer(
 
             {isNegateStep && (
               <NegateWrapper className="flex items-center justify-center">
-                NOT
+                {'NOT'}
               </NegateWrapper>
             )}
 
@@ -171,7 +171,7 @@ export const NextStepContentItem = observer(
           <div className="flex flex-row step-content-area">
             {isNegateAttribute && (
               <NegateWrapper className="flex items-center justify-center">
-                NOT
+                {'NOT'}
               </NegateWrapper>
             )}
 
