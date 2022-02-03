@@ -9,6 +9,7 @@ import dtreeStore from '@store/dtree'
 import { Button } from '@ui/button'
 import { InputNumber } from '@ui/input-number'
 import { Select } from '@ui/select'
+import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-modal.cy'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { getFuncParams } from '@utils/getFuncParams'
 import { getRequestData } from '@utils/getRequestData'
@@ -367,7 +368,8 @@ export const ModalSelectCompoundRequest = observer((): ReactElement => {
           <Button
             onClick={() => handleRequestBlocksAmount('ADD')}
             text="Add"
-            variant="secondary"
+            dataTestId={DecisionTreeModalDataCy.addButton}
+            variant={'secondary'}
             className={cn('mr-4')}
             disabled={requestCondition.length === 5}
           />
@@ -375,7 +377,8 @@ export const ModalSelectCompoundRequest = observer((): ReactElement => {
           <Button
             onClick={() => handleRequestBlocksAmount('REMOVE')}
             text="Remove"
-            variant="secondary"
+            dataTestId={DecisionTreeModalDataCy.removeButton}
+            variant={'secondary'}
             className={cn(
               'border-red-secondary hover:text-white hover:bg-red-secondary',
             )}
@@ -392,6 +395,7 @@ export const ModalSelectCompoundRequest = observer((): ReactElement => {
             onChange={(e: any) => handleReset(e.target.value)}
             className="w-full ml-2"
             reset
+            data-testid={DecisionTreeModalDataCy.selectReset}
           />
         </div>
       </div>

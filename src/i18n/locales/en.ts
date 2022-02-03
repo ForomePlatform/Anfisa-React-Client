@@ -23,6 +23,12 @@ export const en = {
     closeWindow: 'Close window',
     creaitionIsInProcess: 'Dataset creation has not been finished yet',
   },
+  header: {
+    version: {
+      frontend: 'Frontend: Anfisa {version}',
+      backend: 'Backend: {version}',
+    },
+  },
   home: {
     title: 'Home',
     datasets: 'Datasets',
@@ -210,5 +216,6 @@ export const en = {
   },
   igv: {
     openIgv: 'Open igv',
+    filesNotFound: 'Files not found',
   },
 }

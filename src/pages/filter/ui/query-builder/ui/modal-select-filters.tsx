@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite'
 import { ActionType } from '@declarations'
 import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
-import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
+import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-modal.cy'
 import { Pagintaion } from '@components/pagintaion'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { createChunks } from '@utils/createChunks'
@@ -105,7 +105,7 @@ export const ModalSelectFilters = observer((): ReactElement => {
 
       <div className="flex justify-between w-full mt-4 text-14">
         <div className="text-grey-blue">
-          {dtreeStore.selectedFilters.length} {'selected'}
+          {dtreeStore.selectedFilters.length} selected
         </div>
 
         <div className="flex">
@@ -119,7 +119,7 @@ export const ModalSelectFilters = observer((): ReactElement => {
           <div
             className="cursor-pointer text-blue-bright"
             onClick={() => handleCheckAll(true)}
-            data-testid={DecisionTreesResultsDataCy.selectAllFromAttribute}
+            data-testid={DecisionTreeModalDataCy.selectAllFromAttribute}
           >
             {t('general.selectAll')}
           </div>
@@ -129,7 +129,7 @@ export const ModalSelectFilters = observer((): ReactElement => {
           <div
             className="cursor-pointer text-blue-bright"
             onClick={() => handleCheckAll(false)}
-            data-testid={DecisionTreesResultsDataCy.clearAllFromAttribute}
+            data-testid={DecisionTreeModalDataCy.clearAllFromAttribute}
           >
             {t('general.clearAll')}
           </div>

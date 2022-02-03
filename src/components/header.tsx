@@ -103,10 +103,17 @@ export const Header = observer(({ children, source }: Props): ReactElement => {
           <div className="flex items-center text-white">
             <Logo mode="white" className="mr-4" />
 
-            <span className="text-grey-blue">
-              {'Anfisa front: '}
-              {process.env.REACT_APP_VERSION}
-              {' back:'} {toJS(dirinfoStore.dirinfo).version as string}
+            <span className="text-grey-blue whitespace-pre-line text-xs flex flex-col">
+              <span>
+                {t('header.version.frontend', {
+                  version: process.env.REACT_APP_VERSION,
+                })}
+              </span>
+              <span>
+                {t('header.version.backend', {
+                  version: toJS(dirinfoStore.dirinfo).version,
+                })}
+              </span>
             </span>
           </div>
         </Link>
@@ -120,11 +127,11 @@ export const Header = observer(({ children, source }: Props): ReactElement => {
                 {t('home.title')}
               </span>
 
-              <span className="mx-2">{'/'}</span>
+              <span className="mx-2">/</span>
 
               <span>{xlDatasetName}</span>
 
-              <span className="mx-2">{'/'}</span>
+              <span className="mx-2">/</span>
 
               <DropDown
                 options={datasets}
@@ -145,7 +152,7 @@ export const Header = observer(({ children, source }: Props): ReactElement => {
       {children}
 
       <div className="text-white flex flex-row items-center">
-        <div className="mr-2">{'Thomas Hunt'}</div>
+        <div className="mr-2">Thomas Hunt</div>
 
         <img src={userIcon} className="w-8 h-8 rounded-full" />
       </div>

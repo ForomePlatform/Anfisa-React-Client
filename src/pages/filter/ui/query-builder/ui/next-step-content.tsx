@@ -39,7 +39,7 @@ export const NextStepContent = observer(({ index }: IProps): ReactElement => {
     const textList = text.split(/{|}/)
 
     const changedTextList = textList.map(element => {
-      if (element.includes('"')) return `{${element}}`
+      if (element.includes(`"`)) return `{${element}}`
 
       return element.split(' ')
     })
@@ -95,7 +95,10 @@ export const NextStepContent = observer(({ index }: IProps): ReactElement => {
 
         {groups && groups.length > 0 && (
           <ContentEditor className="w-1/3 h-full">
-            <div className="bg-blue-secondary w-full h-auto rounded-md text-12 p-2 font-normal font-mono">
+            <div
+              className="bg-blue-secondary w-full h-auto rounded-md text-12 p-2 font-normal font-mono"
+              data-testid={DecisionTreesResultsDataCy.contentEditor}
+            >
               {dtreeStore.stepData[index].comment && (
                 <div className="text-white mb-2">
                   {dtreeStore.stepData[index].comment}
@@ -108,10 +111,7 @@ export const NextStepContent = observer(({ index }: IProps): ReactElement => {
                 </div>
               </div>
 
-              <div className="text-grey-light pl-2">
-                {'return '}
-                {result}
-              </div>
+              <div className="text-grey-light pl-2">return {result}</div>
             </div>
           </ContentEditor>
         )}
