@@ -46,17 +46,22 @@ const WSPage = observer((): ReactElement => {
 
   const { variant, refiner } = query
 
+  const hasConditionsInSearchParamsOnly =
+    refiner.length > 0 && datasetStore.conditions.length === 0
+
   Number.isInteger(variant) && variantStore.setIndex(variant as number)
 
   useEffect(() => {
-    const conditions: Condition[] = (refiner as string[]).map((c: string) => {
-      const item: string[] = c!.split(',')
-      const [name, group, symbol, value] = item
+    if (hasConditionsInSearchParamsOnly) {
+      const conditions: Condition[] = (refiner as string[]).map((c: string) => {
+        const item: string[] = c!.split(',')
+        const [name, group, symbol, value] = item
 
-      return [name, group, symbol, [value]]
-    })
+        return [name, group, symbol, [value]]
+      })
 
-    datasetStore.setConditionsAsync(conditions)
+      datasetStore.setConditionsAsync(conditions)
+    }
 
     const initAsync = async () => {
       const dsName = params.get('ds') || ''
