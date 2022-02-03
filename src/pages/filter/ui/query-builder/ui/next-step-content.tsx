@@ -39,7 +39,7 @@ export const NextStepContent = observer(({ index }: IProps): ReactElement => {
     const textList = text.split(/{|}/)
 
     const changedTextList = textList.map(element => {
-      if (element.includes(`"`)) return `{${element}}`
+      if (element.includes('"')) return `{${element}}`
 
       return element.split(' ')
     })
