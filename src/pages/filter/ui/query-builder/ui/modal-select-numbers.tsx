@@ -6,6 +6,7 @@ import { ActionType } from '@declarations'
 import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
 import { InputNumber } from '@ui/input-number'
+import { RangeSlider } from '@ui/range-slider'
 import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-modal.cy'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { DropDownSelectSign } from './dropdown-select-sign'
@@ -141,6 +142,8 @@ export const ModalSelectNumbers = observer((): ReactElement => {
     dtreeStore.closeModalSelectNumbers()
   }
 
+  const [v, setV] = useState(0)
+
   return (
     <ModalBase refer={ref} minHeight={200}>
       <HeaderModal groupName={groupName} handleClose={handleClose} />
@@ -259,7 +262,18 @@ export const ModalSelectNumbers = observer((): ReactElement => {
           </div>
         )}
       </div>
-
+      <RangeSlider
+        className="mb-4"
+        min={minValue}
+        max={maxValue}
+        step={1}
+        value={[valueFrom ? +valueFrom : null, valueTo ? +valueTo : null]}
+        scale="linear"
+        onChange={value => {
+          setValueFrom(typeof value[0] === 'number' ? value[0].toString() : '')
+          setValueTo(typeof value[1] === 'number' ? value[1].toString() : '')
+        }}
+      />
       <SelectModalButtons
         handleClose={handleClose}
         handleModals={handleModals}
