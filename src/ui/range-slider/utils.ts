@@ -29,6 +29,8 @@ export const getScaleTransform = ({
     }
   }
 
+  const clampValue = (value: number) => Math.max(Math.min(value, max), min)
+
   const fractionDigits = step < 1 ? Math.ceil(-Math.log10(step)) : 0
 
   const alignValue = (value: number) => {
@@ -38,7 +40,7 @@ export const getScaleTransform = ({
       rounded = +rounded.toFixed(fractionDigits)
     }
 
-    return Math.max(Math.min(rounded, max), min)
+    return clampValue(rounded)
   }
 
   if (scale === 'logarithmic') {
@@ -57,7 +59,7 @@ export const getScaleTransform = ({
 
     return {
       getOffset: value =>
-        value === 0 ? 0 : pad + Math.log10(value / logMin) / k,
+        value === 0 ? 0 : pad + Math.log10(clampValue(value) / logMin) / k,
       getValue: offset =>
         offset < pad / 2
           ? 0
@@ -69,7 +71,7 @@ export const getScaleTransform = ({
   const k = (max - min) / width
 
   return {
-    getOffset: value => (value - min) / k,
+    getOffset: value => (clampValue(value) - min) / k,
     getValue: offset => min + offset * k,
     alignValue,
   }

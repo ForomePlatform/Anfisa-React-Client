@@ -82,7 +82,13 @@ export const RangeSliderTick = styled.div`
   border-left: 1px solid ${theme('colors.grey.disabled')};
 `
 
-export const RangeSliderRange = styled.div<{ readonly isDisabled?: boolean }>`
+interface RangeSliderRangeProps {
+  isDisabled?: boolean
+  isLeftHandle?: boolean
+  isRightHandle?: boolean
+}
+
+export const RangeSliderRange = styled.div<RangeSliderRangeProps>`
   position: absolute;
   top: 6px;
   height: 4px;
@@ -90,8 +96,14 @@ export const RangeSliderRange = styled.div<{ readonly isDisabled?: boolean }>`
   ::before {
     content: '';
     position: absolute;
-    left: 8px;
-    right: 7px;
+    left: ${props => (props.isLeftHandle ? '8px' : '-2px')};
+    right: ${props => (props.isRightHandle ? '7px' : '-2px')};
+    ${props =>
+      !props.isLeftHandle &&
+      'border-top-left-radius: 2px; border-bottom-left-radius: 2px;'}
+    ${props =>
+      !props.isRightHandle &&
+      'border-top-right-radius: 2px; border-bottom-right-radius: 2px;'}
     top: 0;
     bottom: 0;
     background: ${props =>

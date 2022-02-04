@@ -72,10 +72,18 @@ export const RangeSlider = ({
   )
 
   const leftOffset =
-    leftValue != null && !Number.isNaN(leftValue) ? getOffset(leftValue) : null
+    leftValue != null &&
+    !Number.isNaN(leftValue) &&
+    leftValue >= min &&
+    leftValue <= max
+      ? getOffset(leftValue)
+      : null
 
   const rightOffset =
-    rightValue != null && !Number.isNaN(rightValue)
+    rightValue != null &&
+    !Number.isNaN(rightValue) &&
+    rightValue >= min &&
+    rightValue <= max
       ? getOffset(rightValue)
       : null
 
@@ -135,6 +143,7 @@ export const RangeSlider = ({
     event.stopPropagation()
 
     if (rootRef.current && !dragState) {
+      const handle = (event.target as HTMLElement).dataset?.handle
       const { x: rootX } = rootRef.current.getBoundingClientRect()
 
       const newValue = getValue(event.clientX - rootX)
@@ -142,7 +151,9 @@ export const RangeSlider = ({
       const isRightHandle =
         isRangeMode &&
         disabled !== 'right' &&
+        handle !== 'left' &&
         (disabled === 'left' ||
+          handle === 'right' ||
           (leftValue != null && rightValue == null && newValue > leftValue) ||
           (leftValue != null &&
             rightValue != null &&
@@ -167,7 +178,7 @@ export const RangeSlider = ({
         isRightHandle,
       })
 
-      if (!(event.target as HTMLElement).dataset?.handle) {
+      if (!handle) {
         onMouseMove(event.nativeEvent)
       }
     }
@@ -203,18 +214,20 @@ export const RangeSlider = ({
       >
         –
       </RangeSliderLabel>
-      {leftOffset !== null && rightOffset !== null && (
+      {isRangeMode && (leftValue != null || rightValue != null) && (
         <RangeSliderRange
           isDisabled={disabled === true}
+          isLeftHandle={leftOffset != null}
+          isRightHandle={rightOffset != null}
           style={{
-            left: `${leftOffset}px`,
-            width: `${rightOffset - leftOffset}px`,
+            left: `${leftOffset != null ? leftOffset : 0}px`,
+            right: `${rightOffset != null ? rootWidth - rightOffset : 0}px`,
           }}
         />
       )}
       {leftOffset !== null && (
         <RangeSliderHandle
-          data-handle
+          data-handle="left"
           isActive={!!(dragState && !dragState.isRightHandle)}
           isDisabled={disabled === true || disabled === 'left'}
           style={{
@@ -224,7 +237,7 @@ export const RangeSlider = ({
       )}
       {rightOffset !== null && (
         <RangeSliderHandle
-          data-handle
+          data-handle="right"
           isActive={!!(dragState && dragState.isRightHandle)}
           isDisabled={disabled === true || disabled === 'right'}
           style={{

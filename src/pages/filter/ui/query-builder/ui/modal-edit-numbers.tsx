@@ -37,6 +37,7 @@ export const ModalEditNumbers = observer((): ReactElement => {
 
   const minValue = attrData.min
   const maxValue = attrData.max
+  const numKind = attrData['sub-kind']
 
   const currentGroupLength: number = currentGroup.length
 
@@ -79,7 +80,7 @@ export const ModalEditNumbers = observer((): ReactElement => {
 
   const validateValues = (value: string, type: string) => {
     if (type === 'from') {
-      value <= minValue || value > maxValue || value === '-0'
+      value < minValue || value > maxValue || value === '-0'
         ? setIsVisibleLeftError(true)
         : setIsVisibleLeftError(false)
 
@@ -87,7 +88,7 @@ export const ModalEditNumbers = observer((): ReactElement => {
     }
 
     if (type === 'to') {
-      value > maxValue || value <= minValue || value === '-0'
+      value > maxValue || value < minValue || value === '-0'
         ? setIsVisibleRightError(true)
         : setIsVisibleRightError(false)
 
@@ -271,7 +272,7 @@ export const ModalEditNumbers = observer((): ReactElement => {
         className="mb-4"
         min={minValue}
         max={maxValue}
-        step={1}
+        step={numKind === 'float' ? 0.001 : 1}
         value={[valueFrom ? +valueFrom : null, valueTo ? +valueTo : null]}
         onChange={value => {
           setValueFrom(typeof value[0] === 'number' ? value[0].toString() : '')
