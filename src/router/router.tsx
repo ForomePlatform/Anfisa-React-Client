@@ -13,7 +13,7 @@ import WSPage from '@pages/ws/page'
 
 export const RouterBase = (): ReactElement => {
   let baseName = '/'
-  const featureId = window.location.pathname.match(/FOROME-\d*/gm)
+  const featureId = window.location.pathname.match(/FOROME-\d*/)
 
   if (featureId?.length) {
     baseName = `${baseName}${featureId[0]}`
