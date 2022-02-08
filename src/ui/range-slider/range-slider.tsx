@@ -40,9 +40,9 @@ export const RangeSlider = ({
   value,
   max,
   min,
-  mode = 'range',
+  mode = RangeSliderMode.Range,
   step = 1,
-  scale = 'linear',
+  scale = RangeSliderScale.Linear,
   onChange,
   disabled,
 }: RangeSliderProps): ReactElement => {

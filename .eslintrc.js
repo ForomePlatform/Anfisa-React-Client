@@ -48,6 +48,7 @@ module.exports = {
     'unicorn/no-static-only-class': 'off',
     'unicorn/no-useless-undefined': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-unused-vars': 'warn',
     'react/jsx-no-literals': 'off',
     'react/react-in-jsx-scope': 'off',
     'jest/expect-expect': 'off',
