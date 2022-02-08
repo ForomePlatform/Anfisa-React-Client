@@ -1,101 +1,62 @@
-import { FC, memo, useEffect, useRef, useState } from 'react'
-import { ChartConfiguration, ChartData } from 'chart.js'
+import { FC, memo, useEffect, useRef } from 'react'
+import isEqual from 'lodash/isEqual'
 
-import { theme } from '@theme'
 import Chart from './chart-register'
-import { getHistogramChartData } from './utils/getHistogramChartData'
-import { getVariantsChartData } from './utils/getVariantsChartData'
+import { getChartConfig, getChartData } from './utils'
 
 interface IQueryBuilderSubgroupChartProps {
   variants?: any[][]
   histogram?: any[]
 }
 
-export const QueryBuilderSubgroupChart: FC<IQueryBuilderSubgroupChartProps> = memo(
-  ({ variants = [], histogram = [] }) => {
-    const ref = useRef<HTMLCanvasElement>(document.createElement('canvas'))
-    const [chart, setChart] = useState<Chart>()
+export const QueryBuilderSubgroupChart: FC<IQueryBuilderSubgroupChartProps> =
+  memo(
+    ({ variants, histogram }) => {
+      const canvasRef = useRef<HTMLCanvasElement>(null)
+      const chartRef = useRef<Chart>()
 
-    const getChartData = () => {
-      let chartData: ChartData | null = null
+      useEffect(() => {
+        if (!canvasRef.current) {
+          return
+        }
 
-      if (variants.length > 0) {
-        chartData = getVariantsChartData(variants)
-      }
+        const chartData = getChartData({ variants, histogram })
 
-      if (histogram.length > 0) {
-        chartData = getHistogramChartData(histogram)
-      }
+        if (chartData) {
+          const chart = chartRef.current
 
-      return chartData || ({} as ChartData)
-    }
+          if (!chart) {
+            chartRef.current = new Chart(
+              canvasRef.current,
+              getChartConfig(chartData),
+            )
+          } else {
+            chart.data = chartData
+            chart.update()
+          }
+        } else {
+          if (chartRef.current) {
+            chartRef.current.destroy()
+            chartRef.current = undefined
+          }
+        }
+      }, [variants, histogram])
 
-    useEffect(() => {
-      const chartData = getChartData()
+      useEffect(() => {
+        return () => {
+          chartRef.current?.destroy()
+        }
+      }, [])
 
-      const config: ChartConfiguration = {
-        type: 'bar',
-        data: chartData,
-        options: {
-          layout: { padding: { left: 12, right: 12, top: 12 } },
-          plugins: { legend: { display: false } },
-          scales: {
-            yAxes: {
-              ticks: { color: theme('colors.grey.blue') },
-              grid: {
-                borderWidth: 0,
-                borderColor: theme('colors.grey.blue'),
-                lineWidth: 1,
-              },
-              type: 'logarithmic',
-            },
-            xAxes: {
-              display: false,
-              grid: {
-                borderWidth: 1,
-                borderColor: theme('colors.grey.blue'),
-                lineWidth: 0,
-              },
-              ticks: { color: theme('colors.grey.blue') },
-            },
-          },
-        },
-      }
+      return (
+        <div className="rounded-md bg-blue-secondary p-2 mr-5">
+          <canvas ref={canvasRef} />
+        </div>
+      )
+    },
+    (prevProps, nextProps) =>
+      isEqual(prevProps.variants, nextProps.variants) &&
+      isEqual(prevProps.histogram, nextProps.histogram),
+  )
 
-      setChart(new Chart(ref.current, config))
-
-      return () => {
-        chart?.destroy()
-      }
-
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-    useEffect(() => {
-      const newChartData = getChartData()
-
-      if (newChartData && chart && chart.data) {
-        chart.data.labels = newChartData.labels
-        chart.data.datasets = newChartData.datasets
-        chart.update()
-      }
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [variants, histogram, chart])
-
-    return (
-      <div className="rounded-md bg-blue-secondary p-2 mr-5">
-        <canvas ref={ref} />
-      </div>
-    )
-  },
-  (prevProps, nextProps) => {
-    if (
-      nextProps.variants?.length !== prevProps.variants?.length ||
-      nextProps.histogram?.length !== prevProps.histogram?.length
-    ) {
-      return false
-    }
-
-    return true
-  },
-)
+QueryBuilderSubgroupChart.displayName = 'QueryBuilderSubgroupChart'
