@@ -10,7 +10,7 @@ on:
       - 'FOROME-*'
       - '!main'
       - '!develop'
-    tags: [ stage ]
+    tags: [ dev ]
     
 jobs:
   build:
