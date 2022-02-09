@@ -1,88 +1,106 @@
 import { ReactElement, useEffect, useState } from 'react'
 import cloneDeep from 'lodash/cloneDeep'
-import { toJS } from 'mobx'
+import { makeAutoObservable, toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
-import { StatList } from '@declarations'
 import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { t } from '@i18n'
 import datasetStore from '@store/dataset'
 import filterStore from '@store/filter'
 import { Button } from '@ui/button'
 import { Pagintaion } from '@components/pagintaion'
-import { createChunks } from '@utils/createChunks'
 import { QueryBuilderSearch } from './query-builder/query-builder-search'
 import { SelectedGroupItem } from './selected-group-item'
 
+const variantsPerPage = 12
+
+const enumPanelState = makeAutoObservable({
+  get group() {
+    return [
+      filterStore.selectedGroupItem.vgroup,
+      filterStore.selectedGroupItem.name,
+    ]
+  },
+
+  get variants(): [string, number][] {
+    return toJS(
+      datasetStore.dsStat['stat-list']?.find(
+        (item: any) => item.name === this.group[1],
+      )?.variants ?? [],
+    )
+  },
+
+  get datasetVariants(): string[] {
+    return (
+      datasetStore.conditions.find(
+        (element: any[]) => element[1] === this.group[1],
+      )?.[3] ?? []
+    )
+  },
+})
+
 export const EnumPanel = observer((): ReactElement => {
-  const statList: StatList[] = toJS(datasetStore.dsStat['stat-list']) ?? []
+  const {
+    group: [group, groupItem],
+    variants,
+    datasetVariants,
+  } = enumPanelState
 
-  const currentStatList: StatList | undefined = statList.find(
-    (item: any) => item.name === filterStore.selectedGroupItem.name,
-  )
-
-  const variants = currentStatList?.variants ?? []
-
-  const [selectedVariants, setSelectedVariants] = useState<[string, number][]>(
-    [],
-  )
+  const [selectedVariants, setSelectedVariants] = useState<string[]>([])
 
   const [searchValue, setSearchValue] = useState('')
   const [currentPage, setCurrentPage] = useState(0)
 
-  const filteredVariants = variants.filter((variant: any[]) =>
-    variant[0].toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
+  useEffect(() => {
+    setSearchValue('')
+    setCurrentPage(0)
+  }, [groupItem])
+
+  const preparedSearchValue = searchValue.toLocaleLowerCase()
+  const filteredVariants = variants.filter(variant =>
+    variant[0].toLocaleLowerCase().includes(preparedSearchValue),
   )
 
-  const groupsPerPage = 12
-  const chunks = createChunks(filteredVariants, groupsPerPage)
+  const pagesCount = Math.ceil(filteredVariants.length / variantsPerPage)
+
+  const variantsPage = filteredVariants.slice(
+    currentPage * variantsPerPage,
+    (currentPage + 1) * variantsPerPage,
+  )
 
   const handleCheckGroupItem = (
     checked: boolean,
     variant: [string, number],
   ) => {
+    const variantName = variant[0]
+
     if (checked) {
-      const localVariantNameList = [...selectedVariants, variant]
-
-      setSelectedVariants(localVariantNameList)
+      setSelectedVariants([...selectedVariants, variantName])
     } else {
-      const localVariantNameList = selectedVariants.filter(
-        element => element[0] !== variant[0],
+      setSelectedVariants(
+        selectedVariants.filter(element => element !== variantName),
       )
-
-      setSelectedVariants(localVariantNameList)
     }
   }
-
-  const group = filterStore.selectedGroupItem.vgroup
-  const groupItemName: string = filterStore.selectedGroupItem.name
-
-  useEffect(() => {
-    setSearchValue('')
-    setCurrentPage(0)
-  }, [groupItemName])
-
-  const [shouldClear, setShouldClear] = useState(false)
 
   const handleClear = () => {
     const localSelectedFilters = cloneDeep(filterStore.selectedFilters)
 
-    if (localSelectedFilters[group]?.[groupItemName]) {
-      delete localSelectedFilters[group][groupItemName]
+    if (localSelectedFilters[group]?.[groupItem]) {
+      delete localSelectedFilters[group][groupItem]
 
       if (datasetStore.activePreset) datasetStore.resetActivePreset()
     }
 
     filterStore.setSelectedFilters(localSelectedFilters)
 
-    datasetStore.removeConditionGroup({ subGroup: groupItemName })
+    datasetStore.removeConditionGroup({ subGroup: groupItem })
 
     if (!datasetStore.isXL) {
       datasetStore.fetchWsListAsync()
     }
 
     setCurrentPage(0)
-    setShouldClear(true)
   }
 
   const handleAddConditions = () => {
@@ -90,14 +108,14 @@ export const EnumPanel = observer((): ReactElement => {
 
     if (datasetStore.activePreset) datasetStore.resetActivePreset()
 
-    const nameVariantList = selectedVariants.map(element => element[0])
+    const newVariants = [...selectedVariants, ...datasetVariants]
 
     datasetStore.setConditionsAsync([
       [
         FilterKindEnum.Enum,
         filterStore.selectedGroupItem.name,
         'OR',
-        nameVariantList,
+        newVariants,
       ],
     ])
     setCurrentPage(0)
@@ -106,22 +124,31 @@ export const EnumPanel = observer((): ReactElement => {
       datasetStore.fetchWsListAsync()
     }
 
+    /**
+     * TODO: I think it would be better to update the state of filters
+     *       based on the setConditionsAsync response,
+     *       than use separately updated filter state
+     */
     const localSelectedFilters = cloneDeep(filterStore.selectedFilters)
 
     if (!localSelectedFilters[group]) {
       localSelectedFilters[group] = {}
     }
 
-    if (!localSelectedFilters[group][groupItemName]) {
-      localSelectedFilters[group][groupItemName] = {}
+    if (!localSelectedFilters[group][groupItem]) {
+      localSelectedFilters[group][groupItem] = {}
     }
 
-    const selectedSubAttributes: any = {}
+    const selectedSubAttributes: Record<string, number> = {}
 
-    selectedVariants.forEach(element => {
-      selectedSubAttributes[element[0]] = element[1]
+    newVariants.forEach(variantName => {
+      const variant = variants.find(variant => variant[0] === variantName)
+
+      if (variant) {
+        selectedSubAttributes[variant[0]] = variant[1]
+      }
     })
-    localSelectedFilters[group][groupItemName] = selectedSubAttributes
+    localSelectedFilters[group][groupItem] = selectedSubAttributes
 
     filterStore.setSelectedFilters(localSelectedFilters)
     setSelectedVariants([])
@@ -130,18 +157,10 @@ export const EnumPanel = observer((): ReactElement => {
   const handleChange = (value: string) => {
     setSearchValue(value)
 
-    if (currentPage === 0) return
-
-    setCurrentPage(0)
+    if (currentPage !== 0) {
+      setCurrentPage(0)
+    }
   }
-
-  const { conditions } = datasetStore
-
-  const currentCondition: any[] | undefined = conditions.find(
-    (element: any[]) => element[1] === groupItemName,
-  )
-
-  const attributeList: string[] | undefined = currentCondition?.[3]
 
   const isBlockAddBtn = selectedVariants.length === 0
 
@@ -157,23 +176,19 @@ export const EnumPanel = observer((): ReactElement => {
 
       <div className="mt-4">
         <div className="flex-1 mt-4 overflow-y-auto">
-          {chunks[currentPage] ? (
-            chunks[currentPage].map((variant: [string, number]) => {
-              const isAdded = Boolean(attributeList?.includes(variant[0]))
-
-              return (
+          {variantsPage.length > 0 ? (
+            variantsPage.map(
+              variant =>
                 variant[1] !== 0 && (
                   <SelectedGroupItem
                     key={variant[0]}
-                    setShouldClear={setShouldClear}
-                    shouldClear={shouldClear}
-                    isAdded={isAdded}
+                    isSelected={selectedVariants.includes(variant[0])}
+                    isInDataset={datasetVariants.includes(variant[0])}
                     variant={variant}
                     handleCheckGroupItem={handleCheckGroupItem}
                   />
-                )
-              )
-            })
+                ),
+            )
           ) : (
             <div className="flex justify-center items-center text-14 text-grey-blue">
               {t('dtree.noFilters')}
@@ -182,9 +197,9 @@ export const EnumPanel = observer((): ReactElement => {
         </div>
       </div>
 
-      {filteredVariants.length > groupsPerPage && (
+      {pagesCount > 1 && (
         <Pagintaion
-          pagesNumbers={chunks.length}
+          pagesNumbers={pagesCount}
           currentPage={currentPage}
           setPageNumber={setCurrentPage}
         />
