@@ -2,6 +2,7 @@ import uniq from 'lodash/uniq'
 
 import datasetStore from '@store/dataset'
 import dtreeStore from '@store/dtree'
+import changeDtreeProvider from '@utils/changeDtree/change-dtree.provider'
 
 export const changeEnumAttribute = () => {
   const code = dtreeStore.dtreeCode ?? 'return False'
@@ -11,13 +12,12 @@ export const changeEnumAttribute = () => {
     code,
   })
 
-  const stepIndex = dtreeStore.currentStepIndex
-  const locationIndex = dtreeStore.groupIndexToChange
+  const { currentStepIndex, groupIndexToChange } = dtreeStore
 
-  const indexForApi = dtreeStore.getStepIndexForApi(stepIndex)
-  const location = [indexForApi, locationIndex]
+  const location = changeDtreeProvider.getLocationForChangeAttribute()
 
-  const attribute: any[] = dtreeStore.stepData[stepIndex].groups[locationIndex]
+  const attribute: any[] =
+    dtreeStore.stepData[currentStepIndex].groups[groupIndexToChange]
 
   const filteredAttribute: any[] = []
 
