@@ -1,6 +1,5 @@
-import { toJS } from 'mobx'
-
 import dtreeStore from '@store/dtree'
+import changeDtreeAdapters from '@utils/changeDtree/change-dtree.adapters'
 
 export const makeStepActive = (
   index: number,
@@ -21,12 +20,7 @@ export const makeStepActive = (
 
   dtreeStore.setStepActive(index, option)
 
-  const localStepData = toJS(dtreeStore.stepData)
-  const emptyStepList = localStepData.filter(
-    element => element.groups.length === 0 && !element.isFinalStep,
-  )
-
-  const calculatedIndex = index - emptyStepList.length
+  const calculatedIndex = changeDtreeAdapters.getIndexWithoutEmptySteps(index)
 
   const indexForApi = isReturnedVariants
     ? dtreeStore.getStepIndexForApi(calculatedIndex) + 1
