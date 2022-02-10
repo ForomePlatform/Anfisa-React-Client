@@ -3,7 +3,7 @@ import { makeAutoObservable } from 'mobx'
 import dtreeStore from '@store/dtree'
 import { getIndexWithoutEmptySteps } from '@utils/getIndexWithoutEmptySteps'
 
-export class ModalEditStore {
+class ModalEditStore {
   constructor() {
     makeAutoObservable(this)
   }
@@ -17,3 +17,5 @@ export class ModalEditStore {
     return location
   }
 }
+
+export default new ModalEditStore()
