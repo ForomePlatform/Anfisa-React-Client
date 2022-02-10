@@ -605,8 +605,6 @@ export class DatasetStore {
       Object.keys(memorizedConditions).forEach((key: string) => {
         ;(this as any)[key] = (memorizedConditions as any)[key]
       })
-
-      console.log(this.conditions)
     }
   }
 }
