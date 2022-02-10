@@ -2,8 +2,8 @@ import cloneDeep from 'lodash/cloneDeep'
 import { makeAutoObservable, toJS } from 'mobx'
 
 import { FilterKindEnum } from '@core/enum/filter-kind.enum'
-import datasetStore, { DatasetStore } from './dataset'
-import filterStore, { FilterStore } from './filter'
+import datasetStore, { DatasetStore } from '@store/dataset'
+import filterStore, { FilterStore } from '@store/filter'
 
 type FilterAttributesStoreParams = {
   datasetStore: DatasetStore
