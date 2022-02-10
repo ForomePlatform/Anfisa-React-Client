@@ -2,14 +2,13 @@ import { toJS } from 'mobx'
 
 import { ActionType, AttributeType } from '@declarations'
 import dtreeStore from '@store/dtree'
+import { getIndexWithoutEmptySteps } from '@utils/getIndexWithoutEmptySteps'
 import datasetStore from '../store/dataset'
-import changeDtreeAdapters from './changeDtree/change-dtree.adapters'
 
 const getIndexForAddAttribute = (isJoin: boolean) => {
   const indexes = toJS(dtreeStore.dtreeStepIndices)
 
-  const stepIndexWithoutEmptySteps =
-    changeDtreeAdapters.getIndexWithoutEmptySteps()
+  const stepIndexWithoutEmptySteps = getIndexWithoutEmptySteps()
 
   const { currentStepIndex } = dtreeStore
   const index = isJoin ? stepIndexWithoutEmptySteps : currentStepIndex

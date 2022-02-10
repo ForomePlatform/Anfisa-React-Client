@@ -1,5 +1,5 @@
 import dtreeStore from '@store/dtree'
-import changeDtreeAdapters from '@utils/changeDtree/change-dtree.adapters'
+import { getIndexWithoutEmptySteps } from './getIndexWithoutEmptySteps'
 
 export const makeStepActive = (
   index: number,
@@ -20,7 +20,7 @@ export const makeStepActive = (
 
   dtreeStore.setStepActive(index, option)
 
-  const calculatedIndex = changeDtreeAdapters.getIndexWithoutEmptySteps(index)
+  const calculatedIndex = getIndexWithoutEmptySteps(index)
 
   const indexForApi = isReturnedVariants
     ? dtreeStore.getStepIndexForApi(calculatedIndex) + 1
