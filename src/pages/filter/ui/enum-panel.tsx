@@ -1,12 +1,8 @@
 import { ReactElement, useEffect, useState } from 'react'
-import cloneDeep from 'lodash/cloneDeep'
-import { makeAutoObservable, toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { t } from '@i18n'
-import datasetStore from '@store/dataset'
-import filterStore from '@store/filter'
+import filterAttributesStore from '@store/filterAttributes'
 import { Button } from '@ui/button'
 import { Pagintaion } from '@components/pagintaion'
 import { QueryBuilderSearch } from './query-builder/query-builder-search'
@@ -14,37 +10,12 @@ import { SelectedGroupItem } from './selected-group-item'
 
 const variantsPerPage = 12
 
-const enumPanelState = makeAutoObservable({
-  get group() {
-    return [
-      filterStore.selectedGroupItem.vgroup,
-      filterStore.selectedGroupItem.name,
-    ]
-  },
-
-  get variants(): [string, number][] {
-    return toJS(
-      datasetStore.dsStat['stat-list']?.find(
-        (item: any) => item.name === this.group[1],
-      )?.variants ?? [],
-    )
-  },
-
-  get datasetVariants(): string[] {
-    return (
-      datasetStore.conditions.find(
-        (element: any[]) => element[1] === this.group[1],
-      )?.[3] ?? []
-    )
-  },
-})
-
 export const EnumPanel = observer((): ReactElement => {
   const {
-    group: [group, groupItem],
-    variants,
-    datasetVariants,
-  } = enumPanelState
+    currentGroup: { groupName },
+    allEnumVariants: variants,
+    datasetEnumValues: datasetVariants,
+  } = filterAttributesStore
 
   const [selectedVariants, setSelectedVariants] = useState<string[]>([])
 
@@ -54,7 +25,7 @@ export const EnumPanel = observer((): ReactElement => {
   useEffect(() => {
     setSearchValue('')
     setCurrentPage(0)
-  }, [groupItem])
+  }, [groupName])
 
   const preparedSearchValue = searchValue.toLocaleLowerCase()
   const filteredVariants = variants.filter(variant =>
@@ -84,73 +55,14 @@ export const EnumPanel = observer((): ReactElement => {
   }
 
   const handleClear = () => {
-    const localSelectedFilters = cloneDeep(filterStore.selectedFilters)
-
-    if (localSelectedFilters[group]?.[groupItem]) {
-      delete localSelectedFilters[group][groupItem]
-
-      if (datasetStore.activePreset) datasetStore.resetActivePreset()
-    }
-
-    filterStore.setSelectedFilters(localSelectedFilters)
-
-    datasetStore.removeConditionGroup({ subGroup: groupItem })
-
-    if (!datasetStore.isXL) {
-      datasetStore.fetchWsListAsync()
-    }
+    filterAttributesStore.clearCurrentGroupFilter()
 
     setCurrentPage(0)
   }
 
   const handleAddConditions = () => {
-    if (selectedVariants.length === 0) return
-
-    if (datasetStore.activePreset) datasetStore.resetActivePreset()
-
-    const newVariants = [...selectedVariants, ...datasetVariants]
-
-    datasetStore.setConditionsAsync([
-      [
-        FilterKindEnum.Enum,
-        filterStore.selectedGroupItem.name,
-        'OR',
-        newVariants,
-      ],
-    ])
+    filterAttributesStore.addValuesToCurrentGroupEnumFilter(selectedVariants)
     setCurrentPage(0)
-
-    if (!datasetStore.isXL) {
-      datasetStore.fetchWsListAsync()
-    }
-
-    /**
-     * TODO: I think it would be better to update the state of filters
-     *       based on the setConditionsAsync response,
-     *       than use separately updated filter state
-     */
-    const localSelectedFilters = cloneDeep(filterStore.selectedFilters)
-
-    if (!localSelectedFilters[group]) {
-      localSelectedFilters[group] = {}
-    }
-
-    if (!localSelectedFilters[group][groupItem]) {
-      localSelectedFilters[group][groupItem] = {}
-    }
-
-    const selectedSubAttributes: Record<string, number> = {}
-
-    newVariants.forEach(variantName => {
-      const variant = variants.find(variant => variant[0] === variantName)
-
-      if (variant) {
-        selectedSubAttributes[variant[0]] = variant[1]
-      }
-    })
-    localSelectedFilters[group][groupItem] = selectedSubAttributes
-
-    filterStore.setSelectedFilters(localSelectedFilters)
     setSelectedVariants([])
   }
 
