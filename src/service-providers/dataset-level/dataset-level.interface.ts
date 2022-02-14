@@ -13,7 +13,7 @@ export interface IDsInfoClass {
 }
 
 export interface IDsInfo extends IBaseDatasetDescriptor {
-  meta: JSON
+  meta: object
   classes: IDsInfoClass[]
   'unit-groups': string[]
   cohorts: string[]
@@ -65,7 +65,7 @@ export interface ITableAspectDescriptor extends ICommonAspectDescriptor {
   colgroup?: null | string[]
   rows: [] | IAttributeDescriptors[]
   parcontrol: string | undefined
-  parmodes: JSON[] | undefined
+  parmodes: object[] | undefined
 }
 
 export interface IPreAspectDescriptor extends ICommonAspectDescriptor {

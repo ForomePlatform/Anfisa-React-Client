@@ -37,7 +37,7 @@ export interface IDirInfo {
 // single_cnt
 
 export interface ISingleCntArgument {
-  record: JSON
+  record: object
 }
 
 // job_status
