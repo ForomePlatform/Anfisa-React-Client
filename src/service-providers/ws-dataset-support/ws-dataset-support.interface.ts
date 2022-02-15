@@ -1,9 +1,9 @@
 import {
+  IRecordDescriptor,
   TCondition,
   TCount,
-} from 'service-providers/filtering-regime/filtering-regime.interface'
-import { TZoneSetting } from 'service-providers/operations/operations.interface'
-import { IRecordDescriptor } from 'service-providers/vault-level/vault-level.interface'
+  TZoneSetting,
+} from 'service-providers/common/common.interface'
 
 // ws_list
 
@@ -39,7 +39,7 @@ export type TZoneList = IZoneDescriptor | IZoneDescriptor[]
 
 // ws_tags
 
-export type TTagsDescriptor = [string, string | true][]
+export type TTagsDescriptor = [tagName: string, value: string | true][]
 
 export interface IWsTagsArguments {
   ds: string

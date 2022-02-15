@@ -1,53 +1,68 @@
 import {
+  DatasetKinds,
   ISolutionEntryDescription,
   TCondition,
   TCount,
   TPropertyStatus,
-} from 'service-providers/filtering-regime/filtering-regime.interface'
+} from 'service-providers/common/common.interface'
 
 // dtree_set
 
-export type TDtreeModyfyingActions = ['DTREE', 'UPDATE' | 'DELETE', string]
+export enum DtreeModyfyingActions {
+  UPDATE = 'UPDATE',
+  DELETE = 'DELETE',
+}
 
-export type TInstrModyfingActionName =
-  | 'DUPLICATE'
-  | 'DELETE'
-  | 'NEGATE'
-  | 'JOIN-AND'
-  | 'JOIN-OR'
-  | 'SPLIT'
-  | 'BOOL-TRUE'
-  | 'BOOL-FALSE'
-  | 'LABEL'
-  | 'COMMENTS'
+export type TDtreeModyfyingActions = [
+  actionType: 'DTREE',
+  actionName: DtreeModyfyingActions,
+  decisionTreeName: string,
+]
+
+export enum InstrModyfingActionNames {
+  DUPLICATE = 'DUPLICATE',
+  DELETE = 'DELETE',
+  NEGATE = 'NEGATE',
+  JOIN_AND = 'JOIN-AND',
+  JOIN_OR = 'JOIN-OR',
+  SPLIT = 'SPLIT',
+  BOOL_TRUE = 'BOOL-TRUE',
+  BOOL_FALSE = 'BOOL-FALSE',
+  LABEL = 'LABEL',
+  COMMENTS = 'COMMENTS',
+}
 
 export type TInstrModyfingActions = [
-  'INSTR',
-  TInstrModyfingActionName,
-  number,
-  any,
+  actionType: 'INSTR',
+  actionName: InstrModyfingActionNames,
+  pointNo: number,
+  additionalOption: unknown,
 ]
 
-export type TPointModyfingActionName =
-  | 'INSERT'
-  | 'REPLACE'
-  | 'JOIN-AND'
-  | 'JOIN-OR'
+export enum PointModyfingActionNames {
+  INSERT = 'INSERT',
+  REPLACE = 'REPLACE',
+  JOIN_AND = 'JOIN-AND',
+  JOIN_OR = 'JOIN-OR',
+}
 
 export type TPointModyfingActions = [
-  'POINT',
-  TPointModyfingActionName,
-  number,
-  TCondition,
+  actionType: 'POINT',
+  actionName: PointModyfingActionNames,
+  pointNo: number,
+  condition: TCondition,
 ]
 
-export type TAtomModyfingActionName = 'EDIT' | 'DELETE'
+export enum AtomModyfingActionName {
+  EDIT = 'EDIT',
+  DELETE = 'DELETE',
+}
 
 export type TAtomModyfingActions = [
-  'ATOM',
-  TAtomModyfingActionName,
-  [number, number],
-  any,
+  actionType: 'ATOM',
+  actionName: AtomModyfingActionName,
+  atomLocation: [pointNo: number, atomNoInPointAtomList: number],
+  additionalArgument?: unknown,
 ]
 
 export type TModyfyingAction =
@@ -64,8 +79,16 @@ export interface IDtreeSetArguments {
   instr: TModyfyingAction
 }
 
+export enum DtreeSetPointKinds {
+  IF = 'If',
+  RETURN = 'Return',
+  EMPTY = '',
+  LABEL = 'Label',
+  ERROR = 'Error',
+}
+
 export interface IDtreeSetPoint {
-  kind: 'If' | 'Return' | '' | 'Label' | 'Error'
+  kind: DtreeSetPointKinds
   level: 0 | 1
   decision: boolean | null
   'code-frag': string
@@ -75,7 +98,7 @@ export interface IDtreeSetPoint {
 export type PointCount = TCount | null
 
 export interface IDtreeSet {
-  kind: 'ws' | 'xl'
+  kind: DatasetKinds
   'total-counts': TCount[]
   'point-counts': PointCount[]
   code: string

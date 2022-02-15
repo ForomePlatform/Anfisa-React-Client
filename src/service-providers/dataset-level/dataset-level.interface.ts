@@ -1,5 +1,7 @@
-import { TCondition } from 'service-providers/filtering-regime/filtering-regime.interface'
-import { IBaseDatasetDescriptor } from 'service-providers/vault-level/vault-level.interface'
+import {
+  IBaseDatasetDescriptor,
+  TCondition,
+} from 'service-providers/common/common.interface'
 
 // dsinfo
 
@@ -13,7 +15,7 @@ export interface IDsInfoClass {
 }
 
 export interface IDsInfo extends IBaseDatasetDescriptor {
-  meta: object
+  meta: Record<string, unknown>
   classes: IDsInfoClass[]
   'unit-groups': string[]
   cohorts: string[]
@@ -44,28 +46,38 @@ export interface IReccntArguments {
   samples?: number[]
 }
 
+export enum CommonAspectDescriptorKinds {
+  norm = 'norm',
+  tech = 'tech',
+}
+
+export enum CommonAspectDescriptorTypes {
+  table = 'table',
+  pre = 'pre',
+}
+
 export interface ICommonAspectDescriptor {
   name: string
   title: string
-  kind: 'norm' | 'tech'
-  type: 'table' | 'pre'
+  kind: CommonAspectDescriptorKinds
+  type: CommonAspectDescriptorTypes
 }
 
 export interface IAttributeDescriptors {
   name: string
   title: string
-  cells: [string, string][]
+  cells: [content: string, cellClassName: string][]
   tooltip: string | undefined
   render: string | undefined
 }
 
 export interface ITableAspectDescriptor extends ICommonAspectDescriptor {
   columns: number
-  colhead: null | [string, number][]
+  colhead: null | [title: string, count: number][]
   colgroup?: null | string[]
   rows: [] | IAttributeDescriptors[]
   parcontrol: string | undefined
-  parmodes: object[] | undefined
+  parmodes: Record<string, unknown>[] | undefined
 }
 
 export interface IPreAspectDescriptor extends ICommonAspectDescriptor {
@@ -95,20 +107,22 @@ export interface IVsetupArguments {
   ds: string
 }
 
+export interface IVsetupAspectDescriptorAttrs {
+  name: string
+  title: string
+  kind: string
+  is_seq: boolean
+  tooltip?: string
+}
+
 export interface IVsetupAspectDescriptor {
   name: string
   title: string
   source: 'view' | 'data'
   field?: string
   ignored: boolean
-  col_groups?: [string, number][]
-  attrs: {
-    name: string
-    title: string
-    kind: string
-    is_seq: boolean
-    tooltip?: string
-  }[]
+  col_groups?: [columnTitle: string, columnCount: number][]
+  attrs: IVsetupAspectDescriptorAttrs[]
 }
 
 // solutions

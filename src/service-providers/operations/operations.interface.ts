@@ -1,4 +1,7 @@
-import { TCondition } from 'service-providers/filtering-regime/filtering-regime.interface'
+import {
+  TCondition,
+  TZoneSetting,
+} from 'service-providers/common/common.interface'
 
 export interface IBaseExportArguments {
   ds: string
@@ -7,8 +10,6 @@ export interface IBaseExportArguments {
 }
 
 // export
-
-export type TZoneSetting = [string, string[], false?]
 
 export interface IExportOpearationArguments extends IBaseExportArguments {
   zone?: TZoneSetting[]
