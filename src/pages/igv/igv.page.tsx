@@ -30,7 +30,7 @@ const IgvPage = observer((): ReactElement => {
     // eslint-disable-next-line promise/catch-or-return
     igvServiceProvider
       .getListBucketAsync()
-      .then(listBucket => convertToListObject(listBucket))
+      .then(listBucket => convertToListObject(listBucket, hg38Folder))
       .then(list => setListObject(list))
   }, [])
 
