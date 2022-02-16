@@ -58,7 +58,7 @@ export const Header = observer(({ children, source }: Props): ReactElement => {
     }
 
     initAsync()
-  }, [ds, source])
+  }, [ds])
 
   const handleChangeDataset = (arg: Option) => {
     if (arg.value === ds) return
