@@ -3,3 +3,8 @@ export interface IGeneRegionCachedValues {
     locus: string
   }
 }
+
+export interface IInheritanceModeCachedValues {
+  conditions: { problem_group: string[] }
+  variants: string[]
+}

@@ -23,7 +23,7 @@ export const GeneRegion = observer(() => {
     )
 
   const locusValue: string = cachedValues?.conditions.locus || ''
-  const variants: string[] = functionPanelStore.variants
+  const variants: string[] = functionPanelStore.simpleVariants
 
   const selectedFilterName: string = functionPanelStore.filterName
   const selectedFilterGroup: string = functionPanelStore.filterGroup

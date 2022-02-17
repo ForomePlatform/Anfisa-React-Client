@@ -1,20 +1,27 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, toJS } from 'mobx'
 
+import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import datasetStore from '@store/dataset'
 import filterStore from '@store/filter'
 import {
   TFuncCondition,
   TVariant,
 } from '@service-providers/common/common.interface'
+import { getQueryBuilder } from '@utils/getQueryBuilder'
 
 class FunctionPanelStore {
   constructor() {
     makeAutoObservable(this)
   }
 
-  public get variants(): string[] {
+  public get simpleVariants(): string[] {
     const { variants } = filterStore.statFuncData
     return variants
+  }
+
+  public get complexVariants(): [string, number][] {
+    const { variants } = filterStore.statFuncData
+    return variants || []
   }
 
   public get filterName(): string {
@@ -25,6 +32,23 @@ class FunctionPanelStore {
     return filterStore.selectedGroupItem.vgroup
   }
 
+  public get problemGroups(): string[] {
+    let attrData: any
+
+    const statList = toJS(datasetStore.dsStat['stat-list'])
+    const subGroups = Object.values(getQueryBuilder(statList))
+
+    subGroups.map(subGroup => {
+      subGroup.map((item, currNo) => {
+        if (item.name === FuncStepTypesEnum.CustomInheritanceMode) {
+          attrData = subGroup[currNo]
+        }
+      })
+    })
+
+    return attrData.family
+  }
+
   public getCachedValues<T>(componentName: string): T {
     return filterStore.readFilterCondition(componentName) as T
   }
@@ -33,8 +57,8 @@ class FunctionPanelStore {
     filterStore.setFilterCondition<T>(componentName, cachedValues)
   }
 
-  public clearCachedValues(componentName: string): void {
-    filterStore.clearFilterCondition(componentName)
+  public clearCachedValues(componentName: string, filterName?: string): void {
+    filterStore.clearFilterCondition(componentName, filterName)
   }
 
   public async applyConditions(conditions: TFuncCondition): Promise<void> {
@@ -64,8 +88,8 @@ class FunctionPanelStore {
     }
   }
 
-  public fetchStatFunc(componentName: string, params: string): void {
-    filterStore.fetchStatFuncAsync(componentName, params)
+  public fetchStatFunc(componentName: string, params: string) {
+    return filterStore.fetchStatFuncAsync(componentName, params)
   }
 }
 
