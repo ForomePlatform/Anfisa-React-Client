@@ -8,7 +8,7 @@ import { CompundHet } from './components/compound-het'
 import { CompoundRequest } from './components/compound-request'
 import { CustomInheritanceMode } from './components/custom-inheritance-mode'
 import { GeneRegion } from './components/gene-region'
-import { InheritanceMode } from './components/inheritance-mode'
+import { InheritanceMode } from './components/inheritance-mode/inheritance-mode'
 
 const functionsMap: Record<string, any> = {
   GeneRegion,
@@ -19,10 +19,6 @@ const functionsMap: Record<string, any> = {
 }
 
 const initialStateMap: Record<string, any> = {
-  Inheritance_Mode: {
-    problemGroups: [],
-    variants: [],
-  },
   Custom_Inheritance_Mode: {
     scenario: {},
     variants: [],
@@ -48,27 +44,6 @@ export const FunctionPanel = (): ReactElement => {
 
   const onSubmitAsync = async (values: any) => {
     if (datasetStore.activePreset) datasetStore.resetActivePreset()
-
-    if (selectedFilter.name === FuncStepTypesEnum.InheritanceMode) {
-      const noArray = await datasetStore.setConditionsAsync([
-        [
-          'func',
-          FuncStepTypesEnum.InheritanceMode,
-          '',
-          values.variants,
-          {
-            problem_group:
-              values.problemGroups.length > 0 ? values.problemGroups : null,
-          },
-        ],
-      ])
-
-      filterStore.addSelectedFilterGroup(
-        'Inheritance',
-        FuncStepTypesEnum.InheritanceMode,
-        [[FuncStepTypesEnum.InheritanceMode, noArray.length]],
-      )
-    }
 
     if (selectedFilter.name === FuncStepTypesEnum.CustomInheritanceMode) {
       const noArray = await datasetStore.setConditionsAsync([
