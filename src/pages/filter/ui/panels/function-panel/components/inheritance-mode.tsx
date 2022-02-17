@@ -1,201 +1,234 @@
-import React, { ChangeEvent, Fragment, useEffect, useState } from 'react'
+import React, { ChangeEvent, useEffect, useMemo } from 'react'
 import Checkbox from 'react-three-state-checkbox'
-import { Form, FormikProps } from 'formik'
 import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { t } from '@i18n'
+import datasetStore from '@store/dataset'
 import filterStore from '@store/filter'
+import {
+  ConditionJoinMode,
+  TFuncCondition,
+  TVariant,
+} from '@service-providers/common/common.interface'
+import { IInheritanceModeCachedValues } from '../function-panel.interface'
+import functionPanelStore from '../function-panel.store'
 import { PanelButtons } from './panelButtons'
 
-export interface IInheritanceFormValues {
-  problemGroups: string[]
-  variants: string[]
-}
+export const InheritanceMode = observer(() => {
+  const cachedValues =
+    filterStore.readFilterCondition<IInheritanceModeCachedValues>(
+      FuncStepTypesEnum.InheritanceMode,
+    )
 
-export const InheritanceMode = observer(
-  ({
-    values,
-    setFieldValue,
-    submitForm,
-    resetForm,
-  }: FormikProps<IInheritanceFormValues>) => {
-    const cachedValues =
-      filterStore.readFilterCondition<IInheritanceFormValues>(
+  const { filterName } = functionPanelStore
+  const { filterGroup } = functionPanelStore
+  const { problemGroups } = functionPanelStore
+  const variants: [string, number][] = functionPanelStore.complexVariants
+
+  const filteredVariants: [string, number][] = useMemo(() => {
+    return variants.filter(([, variantValue]) => variantValue > 0)
+  }, [variants])
+
+  const problemGroupValues: string[] =
+    cachedValues?.conditions.problem_group || []
+  const variantsValues: string[] = cachedValues?.variants || []
+
+  // check if there is some data in cachedValues from preset
+  useEffect(() => {
+    functionPanelStore.fetchStatFunc(
+      FuncStepTypesEnum.InheritanceMode,
+      JSON.stringify({
+        problem_group: problemGroupValues || [],
+      }),
+    )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cachedValues])
+
+  const handleChangeProblemGroups = (
+    e: ChangeEvent<HTMLInputElement>,
+    problemGroup: string,
+  ) => {
+    const problemGroups = e.target.checked
+      ? [...problemGroupValues, problemGroup]
+      : problemGroupValues.filter((group: string) => group !== problemGroup)
+
+    handleSetConditions({ problemGroups })
+  }
+
+  const handleChangeVariants = (
+    e: ChangeEvent<HTMLInputElement>,
+    variantName: string,
+  ) => {
+    const variants = e.target.checked
+      ? [...variantsValues, variantName]
+      : variantsValues.filter(
+          (variantValue: string) => variantValue !== variantName,
+        )
+
+    handleSetConditions({ variants })
+  }
+
+  // cach values in every change
+  const handleSetConditions = ({
+    problemGroups,
+    variants,
+  }: {
+    problemGroups?: string[]
+    variants?: string[]
+  }): void => {
+    functionPanelStore.setCachedValues<IInheritanceModeCachedValues>(
+      FuncStepTypesEnum.InheritanceMode,
+      {
+        conditions: {
+          problem_group: problemGroups ? problemGroups : problemGroupValues,
+        },
+        variants: variants ? variants : variantsValues,
+      },
+    )
+
+    problemGroups &&
+      functionPanelStore.fetchStatFunc(
         FuncStepTypesEnum.InheritanceMode,
+        JSON.stringify({
+          problem_group: problemGroups || problemGroupValues,
+        }),
       )
+  }
 
-    const [variants, setVariants] = useState([])
-    const [problemGroups, setProblemGroups] = useState<string[]>([])
+  const handleSumbitCondtionsAsync = async () => {
+    if (datasetStore.activePreset) datasetStore.resetActivePreset()
 
-    const [problemGroupValues, variantsValues] = [
-      cachedValues?.problemGroups || [],
-      cachedValues?.variants || [],
+    const inhModeConditions: TFuncCondition = [
+      'func',
+      FuncStepTypesEnum.InheritanceMode,
+      ConditionJoinMode.OR,
+      variantsValues,
+      {
+        problem_group:
+          problemGroupValues.length > 0 ? problemGroupValues : null,
+      },
     ]
 
-    const fetchStatFuncAsync = async (
-      param?: Record<string, string | string[]>,
-    ) => {
-      const statFuncData = await filterStore.fetchStatFuncAsync(
-        FuncStepTypesEnum.InheritanceMode,
-        JSON.stringify(param) || JSON.stringify({ problem_group: [] }),
-      )
+    const variant: TVariant = [`${variantsValues}`, 0]
 
-      const filteredVaraints = statFuncData?.variants?.filter(
-        item => item[1] > 0,
-      )
+    functionPanelStore.handleSumbitConditions(inhModeConditions, variant)
 
-      setVariants(filteredVaraints || ([] as any))
-    }
-
-    const handleChangeAsync = async (
-      e: ChangeEvent<HTMLInputElement>,
-      problemGroup: string,
-    ) => {
-      const value = e.target.checked
-        ? [...values.problemGroups, problemGroup]
-        : values.problemGroups.filter(group => group !== problemGroup)
-
-      setFieldValue('variants', [])
-      setFieldValue('problemGroups', value)
-    }
-
-    useEffect(() => {
-      const initAsync = async () => {
-        const [problemGroupsData] = await Promise.all([
-          filterStore.fetchProblemGroupsAsync(),
-          fetchStatFuncAsync(),
-        ])
-
-        setProblemGroups(problemGroupsData)
-      }
-
-      initAsync()
-    }, [])
-
-    useEffect(() => {
-      fetchStatFuncAsync({
-        problem_group: problemGroupValues,
-      })
-    }, [problemGroupValues])
-
-    useEffect(() => {
-      filterStore.setFilterCondition<IInheritanceFormValues>(
-        FuncStepTypesEnum.InheritanceMode,
-        {
-          problemGroups: values.problemGroups,
-          variants: values.variants,
-        },
-      )
-    }, [values.problemGroups, values.variants])
-
-    const handleSetFieldValueAsync = async () => {
-      setFieldValue('problemGroups', [])
-
-      await fetchStatFuncAsync()
-    }
-
-    const handleResetFields = () => {
-      filterStore.clearFilterCondition(FuncStepTypesEnum.InheritanceMode)
-
-      setFieldValue('variants', [])
-      setFieldValue('problemGroups', [])
-    }
-
-    return (
-      <React.Fragment>
-        <Form>
-          <div className="flex items-center justify-between">
-            <p className="text-14 leading-16px font-bold text-grey-blue mt-4">
-              Problem group
-            </p>
-
-            <p
-              className="text-12 text-blue-bright leading-14px cursor-pointer"
-              onClick={handleSetFieldValueAsync}
-            >
-              Reset
-            </p>
-          </div>
-          <div className="flex items-center justify-between mt-4">
-            {problemGroups.map(problemGroup => (
-              <div key={problemGroup} className="flex items-center">
-                <Checkbox
-                  checked={problemGroupValues.includes(problemGroup)}
-                  onChange={e => handleChangeAsync(e, problemGroup)}
-                />
-                <span className="text-14 leading-16px ml-2">
-                  {problemGroup}
-                </span>
-              </div>
-            ))}
-          </div>
-
-          <div className="h-px w-full bg-white my-4" />
-
-          <div className="flex items-center justify-between">
-            <p className="text-14 leading-14px text-grey-blue">
-              {variantsValues?.length} Selected
-            </p>
-
-            <p
-              className="text-12 leading-14px text-blue-bright cursor-pointer ml-auto mr-2"
-              onClick={() => {
-                setFieldValue(
-                  'variants',
-                  variants.map(variant => variant[0]),
-                )
-              }}
-            >
-              {t('general.selectAll')}
-            </p>
-            <p
-              className="text-12 leading-14px text-blue-bright cursor-pointer"
-              onClick={() => setFieldValue('variants', [])}
-            >
-              {t('general.clearAll')}
-            </p>
-          </div>
-
-          {variants.map(variant => {
-            if (variant[1] === 0) {
-              return <Fragment />
-            }
-
-            return (
-              <div key={variant[0]} className="flex items-center mt-4">
-                <Checkbox
-                  checked={variantsValues.includes(variant[0])}
-                  onChange={e => {
-                    const value = e.target.checked
-                      ? [...variantsValues, variant[0]]
-                      : variantsValues.filter(item => item !== variant[0])
-
-                    setFieldValue('variants', value)
-                  }}
-                />
-                <span className="text-14 leading-16px ml-2">{variant[0]}</span>
-                <span className="text-14 leading-16px text-grey-blue ml-1">{`(${variant[1]})`}</span>
-              </div>
-            )
-          })}
-
-          {variants.length === 0 && (
-            <div className="flex justify-center w-full mt-2 text-14 text-grey-blue">
-              Out of choice. Select problem group.
-            </div>
-          )}
-        </Form>
-
-        <PanelButtons
-          selectedFilterName={filterStore.selectedGroupItem.name}
-          selectedFilterGroup={filterStore.selectedGroupItem.vgroup}
-          onSubmit={submitForm}
-          resetForm={resetForm}
-          resetFields={handleResetFields}
-          disabled={variantsValues.length === 0}
-        />
-      </React.Fragment>
+    functionPanelStore.fetchStatFunc(
+      FuncStepTypesEnum.InheritanceMode,
+      JSON.stringify({ problem_group: problemGroupValues }),
     )
-  },
-)
+  }
+
+  const handleSelectAllVariant = () => {
+    if (filteredVariants.length === 0) return
+
+    const variantsGroup = filteredVariants.map(variant => variant[0])
+
+    functionPanelStore.setCachedValues<IInheritanceModeCachedValues>(
+      FuncStepTypesEnum.InheritanceMode,
+      {
+        conditions: { problem_group: problemGroupValues },
+        variants: variantsGroup,
+      },
+    )
+  }
+
+  const handleResetAllFieldsLocally = () => {
+    if (problemGroupValues.length === 0) return
+
+    functionPanelStore.clearCachedValues(FuncStepTypesEnum.InheritanceMode)
+  }
+
+  const handleResetVariantsLocally = () => {
+    if (variantsValues.length === 0) return
+
+    functionPanelStore.clearCachedValues(
+      FuncStepTypesEnum.InheritanceMode,
+      'variants',
+    )
+  }
+
+  // to avoid displaying this data on the another func attr
+  useEffect(() => {
+    return () => filterStore.resetStatFuncData()
+  }, [])
+
+  return (
+    <React.Fragment>
+      <div className="flex items-center justify-between">
+        <p className="text-14 leading-16px font-bold text-grey-blue mt-4">
+          Problem group
+        </p>
+
+        <p
+          className="text-12 text-blue-bright leading-14px cursor-pointer"
+          onClick={handleResetAllFieldsLocally}
+        >
+          Reset
+        </p>
+      </div>
+      <div className="flex items-center justify-between mt-4">
+        {problemGroups.map(problemGroup => (
+          <div key={problemGroup} className="flex items-center">
+            <Checkbox
+              checked={problemGroupValues.includes(problemGroup)}
+              onChange={e => handleChangeProblemGroups(e, problemGroup)}
+            />
+            <span className="text-14 leading-16px ml-2">{problemGroup}</span>
+          </div>
+        ))}
+      </div>
+
+      <div className="h-px w-full bg-white my-4" />
+
+      <div className="flex items-center justify-between">
+        <p className="text-14 leading-14px text-grey-blue">
+          {variantsValues.length} Selected
+        </p>
+
+        <p
+          className="text-12 leading-14px text-blue-bright cursor-pointer ml-auto mr-2"
+          onClick={handleSelectAllVariant}
+        >
+          {t('general.selectAll')}
+        </p>
+        <p
+          className="text-12 leading-14px text-blue-bright cursor-pointer"
+          onClick={handleResetVariantsLocally}
+        >
+          {t('general.clearAll')}
+        </p>
+      </div>
+
+      {filteredVariants.map(([variantName, variantValue]) => {
+        return (
+          <div key={variantName} className="flex items-center mt-4">
+            <Checkbox
+              checked={variantsValues.includes(variantName)}
+              onChange={e => {
+                handleChangeVariants(e, variantName)
+              }}
+            />
+            <span className="text-14 leading-16px ml-2">{variantName}</span>
+            <span className="text-14 leading-16px text-grey-blue ml-1">{`(${variantValue})`}</span>
+          </div>
+        )
+      })}
+
+      {filteredVariants.length === 0 && (
+        <div className="flex justify-center w-full mt-2 text-14 text-grey-blue">
+          Out of choice. Select problem group.
+        </div>
+      )}
+
+      <PanelButtons
+        selectedFilterName={filterName}
+        selectedFilterGroup={filterGroup}
+        onSubmit={handleSumbitCondtionsAsync}
+        resetFields={handleResetAllFieldsLocally}
+        disabled={variantsValues.length === 0}
+      />
+    </React.Fragment>
+  )
+})
