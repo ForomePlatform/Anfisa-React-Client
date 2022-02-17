@@ -48,6 +48,18 @@ export const FilterControlRefiner = observer((): ReactElement => {
     })
     .map((preset: FilterList) => preset.name)
 
+  const showSuccesToast = (content: string): void => {
+    toast.info(content, {
+      position: 'bottom-right',
+      autoClose: 2500,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: 0,
+    })
+  }
+
   const handleClick = () => {
     if (filterStore.actionName === ActionFilterEnum.Load) {
       datasetStore.setActivePreset(activePreset)
@@ -64,10 +76,15 @@ export const FilterControlRefiner = observer((): ReactElement => {
     if (filterStore.actionName === ActionFilterEnum.Delete) {
       presetStore.deletePresetAsync(activePreset)
       setActivePreset('')
+
+      filterStore.resetActionName()
+      showSuccesToast(t('header.presetFilterAction.delete'))
     }
 
     if (filterStore.actionName === ActionFilterEnum.Join) {
       presetStore.joinPresetAsync(activePreset)
+      filterStore.resetActionName()
+      showSuccesToast(t('header.presetFilterAction.join'))
     }
 
     if (filterStore.actionName === ActionFilterEnum.Create) {
@@ -88,16 +105,7 @@ export const FilterControlRefiner = observer((): ReactElement => {
       }
 
       createPresetName && presetStore.updatePresetAsync(createPresetName)
-
-      toast.info(t('general.presetCreated'), {
-        position: 'bottom-right',
-        autoClose: 2000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: 0,
-      })
+      showSuccesToast(t('general.presetCreated'))
 
       setCreatePresetName('')
 
@@ -106,6 +114,9 @@ export const FilterControlRefiner = observer((): ReactElement => {
 
     if (filterStore.actionName === ActionFilterEnum.Modify) {
       presetStore.updatePresetAsync(activePreset)
+      filterStore.resetActionName()
+
+      showSuccesToast(t('header.presetFilterAction.modify'))
     }
   }
 
