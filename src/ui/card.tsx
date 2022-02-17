@@ -14,6 +14,10 @@ interface CardTitleProps {
   style?: CSSProperties
 }
 
+const addWordBreaks = (txt: string) => {
+  return txt.replace(/_/g, '_<wbr>')
+}
+
 export const Card = ({ children, className }: CardProps): ReactElement => (
   <div className={cn('shadow-card p-4 rounded-lg', className)}>{children}</div>
 )
@@ -29,10 +33,6 @@ export const CardTitle = ({
     size === 'md'
       ? 'text-xl text-blue-dark leading-24px font-bold'
       : 'text-sm leading-16px mb-3'
-
-  const addWordBreaks = (txt: string) => {
-    return txt.replace(/_/g, '_<wbr>')
-  }
 
   return (
     <div
