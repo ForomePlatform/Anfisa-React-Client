@@ -1,7 +1,6 @@
 import { Fragment, ReactElement } from 'react'
 import { withErrorBoundary } from 'react-error-boundary'
 import { Link } from 'react-router-dom'
-import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 
 import { t } from '@i18n'
@@ -43,7 +42,7 @@ const Info = styled.span`
   margin: 16px 0px 20px;
 `
 
-const NotFoundPage = observer((): ReactElement => {
+const NotFoundPage = (): ReactElement => {
   return (
     <Fragment>
       <Header />
@@ -61,7 +60,7 @@ const NotFoundPage = observer((): ReactElement => {
       </Wrapper>
     </Fragment>
   )
-})
+}
 
 export default withErrorBoundary(NotFoundPage, {
   fallback: <ErrorPage />,
