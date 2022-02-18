@@ -19,10 +19,6 @@ const functionsMap: Record<string, any> = {
 }
 
 const initialStateMap: Record<string, any> = {
-  Custom_Inheritance_Mode: {
-    scenario: {},
-    variants: [],
-  },
   Compound_Het: {
     variants: [],
     approx: '',
@@ -44,24 +40,6 @@ export const FunctionPanel = (): ReactElement => {
 
   const onSubmitAsync = async (values: any) => {
     if (datasetStore.activePreset) datasetStore.resetActivePreset()
-
-    if (selectedFilter.name === FuncStepTypesEnum.CustomInheritanceMode) {
-      const noArray = await datasetStore.setConditionsAsync([
-        [
-          'func',
-          FuncStepTypesEnum.CustomInheritanceMode,
-          'OR',
-          ['True'],
-          { scenario: values.scenario },
-        ],
-      ])
-
-      filterStore.addSelectedFilterGroup(
-        'Inheritance',
-        FuncStepTypesEnum.CustomInheritanceMode,
-        [[FuncStepTypesEnum.CustomInheritanceMode, noArray.length]],
-      )
-    }
 
     if (selectedFilter.name === FuncStepTypesEnum.CompoundHet) {
       const noArray = await datasetStore.setConditionsAsync([

@@ -8,6 +8,7 @@ import {
   TVariant,
 } from '@service-providers/common/common.interface'
 import { getQueryBuilder } from '@utils/getQueryBuilder'
+import { TScenario } from './function-panel.interface'
 
 class FunctionPanelStore {
   constructor() {
@@ -90,6 +91,30 @@ class FunctionPanelStore {
 
   public fetchStatFunc(componentName: string, params: string) {
     return filterStore.fetchStatFuncAsync(componentName, params)
+  }
+
+  public getStringScenario(arrayScenario: TScenario[]): string {
+    let scenarioToString = ''
+
+    arrayScenario.map((item: TScenario, index: number) => {
+      scenarioToString += `"${item[0]}":["${item[1]
+        .toString()
+        .split(',')
+        .join('","')}"]`
+
+      if (arrayScenario[index + 1]) scenarioToString += ','
+    })
+
+    return scenarioToString
+  }
+
+  public getSelectValue(scenario: TScenario[], problemGroup: string): string {
+    for (const item of scenario) {
+      if (item[1].includes(problemGroup)) {
+        return item[0]
+      }
+    }
+    return '--'
   }
 }
 
