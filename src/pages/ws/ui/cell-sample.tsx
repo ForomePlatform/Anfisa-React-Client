@@ -29,16 +29,6 @@ export const CellSample = ({
   const shouldTooltipBeVisible =
     isTooltipVisible && isTruncated && samplesAmount < 4
 
-  const ModalTooltipContent = () => (
-    <div className="flex flex-wrap justify-start">
-      <div>{sample}</div>
-
-      <div className="w-full">{genotype}</div>
-
-      <div>{quality}</div>
-    </div>
-  )
-
   return (
     <div
       onMouseEnter={showTooltip}
@@ -58,7 +48,13 @@ export const CellSample = ({
 
       {shouldTooltipBeVisible && (
         <ModalTooltip>
-          <ModalTooltipContent />
+          <div className="flex flex-wrap justify-start">
+            <div>{sample}</div>
+
+            <div className="w-full">{genotype}</div>
+
+            <div>{quality}</div>
+          </div>
         </ModalTooltip>
       )}
     </div>
