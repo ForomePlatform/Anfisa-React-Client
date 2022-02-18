@@ -28,12 +28,6 @@ const initialStateMap: Record<string, any> = {
     approx: '',
     state: null,
   },
-  Compound_Request: {
-    variants: [],
-    approx: '',
-    state: null,
-    request: [],
-  },
 }
 
 export const FunctionPanel = (): ReactElement => {
@@ -78,28 +72,6 @@ export const FunctionPanel = (): ReactElement => {
         'Inheritance',
         FuncStepTypesEnum.CompoundHet,
         [[FuncStepTypesEnum.CompoundHet, noArray.length]],
-      )
-    }
-
-    if (selectedFilter.name === FuncStepTypesEnum.CompoundRequest) {
-      const noArray = await datasetStore.setConditionsAsync([
-        [
-          'func',
-          selectedFilter.name,
-          '',
-          [values.variants[0][0]],
-          {
-            approx: values.approx || null,
-            state: values.state || null,
-            request: values.request || null,
-          },
-        ],
-      ])
-
-      filterStore.addSelectedFilterGroup(
-        'Inheritance',
-        FuncStepTypesEnum.CompoundRequest,
-        [[FuncStepTypesEnum.CompoundRequest, noArray.length]],
       )
     }
 

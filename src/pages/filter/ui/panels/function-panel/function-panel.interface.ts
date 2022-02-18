@@ -8,3 +8,18 @@ export interface IInheritanceModeCachedValues {
   conditions: { problem_group: string[] }
   variants: string[]
 }
+
+export interface ICompoundRequestCachedValues {
+  conditions: {
+    approx: null
+    state: null
+    request: TRequestCondition[]
+  }
+  reset: string
+}
+
+export type TRequestCondition = [number, TSelectValues]
+
+export type TSelectValues = {
+  [key: string]: string[]
+}

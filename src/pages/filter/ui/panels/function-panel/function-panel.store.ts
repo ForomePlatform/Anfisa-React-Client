@@ -8,6 +8,7 @@ import {
   TVariant,
 } from '@service-providers/common/common.interface'
 import { getQueryBuilder } from '@utils/getQueryBuilder'
+import { TRequestCondition } from './function-panel.interface'
 
 class FunctionPanelStore {
   constructor() {
@@ -90,6 +91,24 @@ class FunctionPanelStore {
 
   public fetchStatFunc(componentName: string, params: string) {
     return filterStore.fetchStatFuncAsync(componentName, params)
+  }
+
+  public getSelectedValue(
+    group: string,
+    index: number,
+    requestCondition: TRequestCondition[],
+  ): string {
+    let value = '--'
+
+    const currentRequestBlock = requestCondition[index][1]
+
+    Object.entries(currentRequestBlock).map((item: any[]) => {
+      if (item[1].includes(group)) {
+        value = item[0]
+      }
+    })
+
+    return value
   }
 }
 

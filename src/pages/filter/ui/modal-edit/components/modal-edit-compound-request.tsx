@@ -227,7 +227,11 @@ export const ModalEditCompoundRequest = observer((): ReactElement => {
     currentSelectIndex: number,
     target: any,
   ) => {
-    const requestData = getRequestData(target, currentSelectIndex, attrData)
+    const requestData = getRequestData(
+      target,
+      currentSelectIndex,
+      attrData.family,
+    )
 
     const newRequest = Object.fromEntries(getSortedArray(requestData))
 
@@ -247,7 +251,7 @@ export const ModalEditCompoundRequest = observer((): ReactElement => {
   }
 
   const handleReset = (name: string) => {
-    const resetRequestData = getResetRequestData(name, attrData)
+    const resetRequestData = getResetRequestData(name, attrData.family)
 
     const newRequest = Object.fromEntries(getSortedArray(resetRequestData))
 
