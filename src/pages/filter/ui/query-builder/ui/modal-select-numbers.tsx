@@ -36,6 +36,7 @@ export const ModalSelectNumbers = observer((): ReactElement => {
   const minValue = attrData.min
   const maxValue = attrData.max
   const subKind = attrData['sub-kind']
+  const histogram = attrData.histogram
 
   const [valueFrom, setValueFrom] = useState('')
   const [valueTo, setValueTo] = useState('')
@@ -257,6 +258,7 @@ export const ModalSelectNumbers = observer((): ReactElement => {
           setValueTo(value[1] != null ? value[1].toString() : '')
         }}
         step={subKind === 'float' ? 0.001 : 1}
+        histogram={histogram}
       />
       <SelectModalButtons
         handleClose={handleClose}

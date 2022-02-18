@@ -21,6 +21,7 @@ module.exports = {
     light: '#e4e4e4',
     lighter: '#fafafa',
     disabled: '#e2e7ec',
+    tertiary: '#f5f7f9',
   },
   yellow: {
     bright: '#ffff00',

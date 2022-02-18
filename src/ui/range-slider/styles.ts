@@ -1,15 +1,20 @@
 import styled from 'styled-components'
 
 import { theme } from '@theme'
+import { RangeSliderHistogramRoot } from '@ui/range-slider/range-slider-histogram/styles'
 
 export const RangeSliderRoot = styled.div<{
   readonly isActive?: boolean
   readonly isDisabled?: boolean
 }>`
-  position: relative;
-  height: 32px;
+  margin-left: 40px;
   cursor: ${props =>
     props.isDisabled ? 'default' : props.isActive ? 'grabbing' : 'pointer'};
+`
+
+export const RangeSliderRuler = styled.div`
+  position: relative;
+  height: 32px;
 
   ::before {
     content: '';
@@ -21,11 +26,16 @@ export const RangeSliderRoot = styled.div<{
     background: ${theme('colors.grey.disabled')};
     border-radius: 2px;
   }
+
+  ${RangeSliderHistogramRoot} + & {
+    margin-top: -6px;
+  }
 `
 
 interface RangeSliderHandleProps {
   isActive?: boolean
   isDisabled?: boolean
+  isStrong?: boolean
 }
 
 const getHandleColor = ({
@@ -37,7 +47,7 @@ const getHandleColor = ({
       ? 'colors.grey.blue'
       : isActive
       ? 'colors.blue.active'
-      : 'colors.blue.bright',
+      : 'colors.blue.hover',
   )
 
 export const RangeSliderHandle = styled.div<RangeSliderHandleProps>`
@@ -58,7 +68,9 @@ export const RangeSliderHandle = styled.div<RangeSliderHandleProps>`
     top: 2px;
     right: 2px;
     bottom: 2px;
-    background: ${props => getHandleColor(props)};
+    ${props => props.isStrong && `border: 1px solid ${getHandleColor(props)};`}
+    background: ${props =>
+      props.isStrong ? 'rgba(255,255,255,0.5)' : getHandleColor(props)};
     border-radius: 50%;
   }
 
@@ -109,7 +121,7 @@ export const RangeSliderRange = styled.div<RangeSliderRangeProps>`
     background: ${props =>
       props.isDisabled
         ? theme('colors.grey.blue')
-        : theme('colors.blue.bright')};
+        : theme('colors.blue.hover')};
   }
 `
 

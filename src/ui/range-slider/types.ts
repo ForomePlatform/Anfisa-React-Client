@@ -17,3 +17,10 @@ export const RangeSliderScale = Glb.makeEnum({
 })
 
 export type RangeSliderScale = EnumValue<typeof RangeSliderScale>
+
+export enum RangeSliderSide {
+  None = 0,
+  Left = 1,
+  Right = 2,
+  Both = 3,
+}
