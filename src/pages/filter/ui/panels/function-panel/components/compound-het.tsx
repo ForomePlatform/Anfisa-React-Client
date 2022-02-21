@@ -1,18 +1,20 @@
 import React, { ReactElement, useEffect, useState } from 'react'
 import { Option } from 'react-dropdown'
-import { Form, FormikProps } from 'formik'
+import { observer } from 'mobx-react-lite'
 
 import { IStatFuncData } from '@declarations'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import filterStore from '@store/filter'
 import { DropDown } from '@ui/dropdown'
+import { DisabledVariantsAmount } from '@pages/filter/ui/query-builder/ui/disabled-variants-amount'
+import {
+  ConditionJoinMode,
+  TFuncCondition,
+  TVariant,
+} from '@service-providers/common/common.interface'
+import { ICompoundHetCachedValues } from '../function-panel.interface'
+import functionPanelStore from '../function-panel.store'
 import { PanelButtons } from './panelButtons'
-
-export interface ICompoundHetFormValues {
-  variants: string[]
-  approx: string | null
-  state?: string | null
-}
 
 const options = [
   { label: 'shared transcript', value: '' },
@@ -20,93 +22,109 @@ const options = [
   { label: 'non-intersecting transcripts', value: 'rough' },
 ]
 
-export const CompundHet = ({
-  setFieldValue,
-  values: { approx, variants },
-  submitForm,
-}: FormikProps<ICompoundHetFormValues>): ReactElement => {
-  const cachedValues = filterStore.readFilterCondition<ICompoundHetFormValues>(
-    FuncStepTypesEnum.CompoundHet,
-  )
+export const CompundHet = observer((): ReactElement => {
+  const cachedValues =
+    functionPanelStore.getCachedValues<ICompoundHetCachedValues>(
+      FuncStepTypesEnum.CompoundHet,
+    )
+
+  const { simpleVariants, filterName, filterGroup } = functionPanelStore
 
   const [statFuncStatus, setStatFuncStatus] = useState<IStatFuncData>()
 
-  const initialApprox = cachedValues?.approx || options[0].value
+  const initialApprox: string =
+    cachedValues?.conditions.approx || options[0].value
 
-  const fetchStatFuncAsync = async (
-    param?: Record<string, string | string[]>,
-  ) => {
+  const handleSetConditions = (approx: string | null, variants?: string[]) => {
+    functionPanelStore.setCachedValues<ICompoundHetCachedValues>(
+      FuncStepTypesEnum.GeneRegion,
+      {
+        conditions: { approx: approx, state: null },
+        variants: variants || ['Proband'],
+      },
+    )
+  }
+
+  const fetchStatFuncAsync = async () => {
     const statFuncData = await filterStore.fetchStatFuncAsync(
       FuncStepTypesEnum.CompoundHet,
-      JSON.stringify(param) || {},
+      JSON.stringify({
+        approx: cachedValues?.conditions.approx || null,
+        state: null,
+      }),
     )
-
-    const nameList = statFuncData.variants?.map(variant => variant?.[0])
-
-    setFieldValue('variants', nameList || cachedValues?.variants)
 
     setStatFuncStatus(statFuncData)
   }
 
   useEffect(() => {
-    fetchStatFuncAsync({ approx: initialApprox })
-
+    fetchStatFuncAsync()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [cachedValues])
 
-  useEffect(() => {
-    filterStore.setFilterCondition<ICompoundHetFormValues>(
+  const handleChangeApprox = (arg: Option) => {
+    const approx = !arg.value ? null : arg.value
+
+    handleSetConditions(approx)
+
+    functionPanelStore.fetchStatFunc(
       FuncStepTypesEnum.CompoundHet,
-      {
-        variants,
+      JSON.stringify({
         approx,
-      },
+        state: '',
+      }),
     )
-  }, [variants, approx])
-
-  const onChangeAsync = async (arg: Option) => {
-    setFieldValue('approx', arg.value)
-    await fetchStatFuncAsync({ approx: arg.value, state: '' })
   }
 
   const handleResetFieldsAsync = async () => {
-    setFieldValue('approx', 'shared transcript')
-    filterStore.clearFilterCondition(FuncStepTypesEnum.CompoundHet)
+    handleSetConditions('shared transcript')
 
-    await fetchStatFuncAsync({ approx: '' })
+    functionPanelStore.clearCachedValues(FuncStepTypesEnum.CompoundHet)
   }
+
+  const handleSumbitCondtions = () => {
+    const conditions: TFuncCondition = [
+      'func',
+      FuncStepTypesEnum.CompoundHet,
+      ConditionJoinMode.OR,
+      ['Proband'],
+      { approx: cachedValues?.conditions.approx || null, state: null },
+    ]
+
+    const variant: TVariant = ['Proband', 0]
+
+    functionPanelStore.handleSumbitConditions(conditions, variant)
+  }
+
+  // to avoid displaying this data on the another func attr
+  useEffect(() => {
+    return () => filterStore.resetStatFuncData()
+  }, [])
 
   return (
     <React.Fragment>
-      <Form>
-        <div className="text-red-secondary">{statFuncStatus?.err}</div>
-        <div className="flex items-center mt-4">
-          <span className="mr-2 text-18 leading-14px">Approx:</span>
+      <div className="text-red-secondary">{statFuncStatus?.err}</div>
+      <div className="flex items-center mt-4">
+        <span className="mr-2 text-18 leading-14px">Approx:</span>
 
-          <DropDown
-            value={initialApprox}
-            options={options}
-            onSelect={onChangeAsync}
-          />
-        </div>
+        <DropDown
+          value={initialApprox}
+          options={options}
+          onSelect={handleChangeApprox}
+        />
+      </div>
 
-        <div className="mt-4">
-          {statFuncStatus?.variants?.map(variant => (
-            <div key={variant[0]} className="text-14 leading-14px">
-              <span>{variant[0]}</span>
-              <span className="text-grey-blue ml-1">{`(${variant[1]})`}</span>
-            </div>
-          ))}
-        </div>
-      </Form>
+      <div className="mt-4">
+        <DisabledVariantsAmount variants={simpleVariants} disabled={true} />
+      </div>
 
       <PanelButtons
-        selectedFilterName={filterStore.selectedGroupItem.name}
-        selectedFilterGroup={filterStore.selectedGroupItem.vgroup}
-        onSubmit={submitForm}
+        selectedFilterName={filterName}
+        selectedFilterGroup={filterGroup}
+        onSubmit={handleSumbitCondtions}
         resetFields={handleResetFieldsAsync}
-        disabled={!variants}
+        disabled={!simpleVariants}
       />
     </React.Fragment>
   )
-}
+})

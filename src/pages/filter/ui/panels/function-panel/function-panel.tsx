@@ -23,11 +23,6 @@ const initialStateMap: Record<string, any> = {
     scenario: {},
     variants: [],
   },
-  Compound_Het: {
-    variants: [],
-    approx: '',
-    state: null,
-  },
   Compound_Request: {
     variants: [],
     approx: '',
@@ -60,24 +55,6 @@ export const FunctionPanel = (): ReactElement => {
         'Inheritance',
         FuncStepTypesEnum.CustomInheritanceMode,
         [[FuncStepTypesEnum.CustomInheritanceMode, noArray.length]],
-      )
-    }
-
-    if (selectedFilter.name === FuncStepTypesEnum.CompoundHet) {
-      const noArray = await datasetStore.setConditionsAsync([
-        [
-          'func',
-          selectedFilter.name,
-          '',
-          values.variants,
-          { approx: values.approx || null, state: values.state || null },
-        ],
-      ])
-
-      filterStore.addSelectedFilterGroup(
-        'Inheritance',
-        FuncStepTypesEnum.CompoundHet,
-        [[FuncStepTypesEnum.CompoundHet, noArray.length]],
       )
     }
 
