@@ -21,7 +21,8 @@ export const ModalOperation = observer(
     useOutsideClick(ref, hideModal)
 
     const createStep = (stepIndex: number, position: 'BEFORE' | 'AFTER') => {
-      createEmptyStep(stepIndex, position)
+      // TODO: remove 3 argeument
+      createEmptyStep(stepIndex, position, stepIndex)
 
       hideModal()
     }

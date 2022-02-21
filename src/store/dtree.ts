@@ -13,8 +13,8 @@ import { getDataFromCode } from '@utils/getDataFromCode'
 import { getFilteredAttrsList } from '@utils/getFilteredAttrsList'
 import { getQueryBuilder } from '@utils/getQueryBuilder'
 import { getStepDataAsync } from '@utils/getStepDataAsync'
-import { makeStepActive } from '@utils/makeStepActive'
 import datasetStore from './dataset'
+import activeStepStore, { ActiveStepOptions } from './dtree/active-step.store'
 
 export type IStepData = {
   step: number
@@ -116,7 +116,9 @@ class DtreeStore {
   groupNameToChange = ''
   groupIndexToChange = 0
 
+  // TODO:currentStepIndex === activeStepIndex
   currentStepIndex = 0
+  // TODO: delete it
   currentStepIndexForApi = 0
 
   requestData: IRequestData[] = []
@@ -172,6 +174,8 @@ class DtreeStore {
       difference: null,
       isFinalStep: true,
     }
+
+    // add setActiveStep
 
     runInAction(() => {
       this.stepData = [...newStepData, finalStep]
@@ -290,6 +294,7 @@ class DtreeStore {
   async fetchStatFuncAsync(subGroupName: string, param: string) {
     const body = new URLSearchParams({
       ds: datasetStore.datasetName,
+      // TODO: change no
       no: this.currentStepIndexForApi.toString(),
       code: this.dtreeCode,
       rq_id: Math.random().toString(),
@@ -420,7 +425,10 @@ class DtreeStore {
     this.stepData.map((item, currNo: number) => {
       item.step = currNo + 1
     })
-    makeStepActive(this.stepData.length - 1)
+    activeStepStore.makeStepActive(
+      this.stepData.length - 1,
+      ActiveStepOptions.StartedVariants,
+    )
 
     this.resetLocalDtreeCode()
   }
@@ -912,17 +920,20 @@ class DtreeStore {
     this.resetLocalDtreeCode()
   }
 
-  setStepActive = (
-    index: number,
-    option: 'isActive' | 'isReturnedVariantsActive',
-  ) => {
+  // ADD THIS
+  changeStepDataAcitveStep = (index: number, option: ActiveStepOptions) => {
     this.stepData.forEach(element => {
       element.isActive = false
       element.isReturnedVariantsActive = false
     })
 
-    this.stepData[index][option] = !this.stepData[index][option]
-    this.activeStepIndex = index
+    if (option === ActiveStepOptions.StartedVariants) {
+      this.stepData[index].isActive = true
+    } else {
+      this.stepData[index].isReturnedVariantsActive = true
+    }
+
+    // this.activeStepIndex = index
   }
 
   openTableModal(index?: number) {

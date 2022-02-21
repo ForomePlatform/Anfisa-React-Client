@@ -4,11 +4,13 @@ import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
+import activeStepStore, {
+  ActiveStepOptions,
+} from '@store/dtree/active-step.store'
 import { Button } from '@ui/button'
 import { RadioButton } from '@ui/radio-button'
 import { changeStep } from '@utils/changeStep'
 import { createEmptyStep } from '@utils/createEmptyStep'
-import { makeStepActive } from '@utils/makeStepActive'
 import { ResultsView, TreeView } from './next-step'
 import { Operation, Step } from './next-step-header'
 import { NextStepRoute } from './next-step-route'
@@ -28,7 +30,10 @@ export const FinalStep = observer(({ index }: IProps): ReactElement => {
     const shouldMakeActive = classList.includes('step-content-area')
 
     if (shouldMakeActive) {
-      makeStepActive(stepIndex, 'isActive', true)
+      activeStepStore.makeStepActive(
+        stepIndex,
+        ActiveStepOptions.StartedVariants,
+      )
     }
   }
 
@@ -93,7 +98,8 @@ export const FinalStep = observer(({ index }: IProps): ReactElement => {
           <Button
             text={t('dtree.addStep')}
             className="absolute -bottom-9 z-1000 left-0"
-            onClick={() => createEmptyStep(prevStepIndex, 'AFTER')}
+            // TODO: remove 3 argeument
+            onClick={() => createEmptyStep(prevStepIndex, 'AFTER', index)}
           />
         </ResultsView>
       </div>
