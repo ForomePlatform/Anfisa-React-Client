@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite'
 
 import { ActionType } from '@declarations'
 import dtreeStore from '@store/dtree'
+import activeStepStore from '@store/dtree/active-step.store'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { HeaderModal } from './header-modal'
 import { InheritanceModeContent } from './inheritance-mode-content'
@@ -12,7 +13,7 @@ import { SelectModalButtons } from './select-modal-buttons'
 export const ModalSelectInheritanceMode = observer((): ReactElement => {
   const ref = useRef(null)
 
-  const currentStepIndex = dtreeStore.currentStepIndex
+  const currentStepIndex = activeStepStore.activeStepIndex
 
   const currentGroup = dtreeStore.stepData[currentStepIndex].groups
 

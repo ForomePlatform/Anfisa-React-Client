@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
+import activeStepStore from '@store/dtree/active-step.store'
 import { Button } from '@ui/button'
 import { InputNumber } from '@ui/input-number'
 import { Select } from '@ui/select'
@@ -30,7 +31,7 @@ export const ModalEditCompoundRequest = observer((): ReactElement => {
 
   // important variables
 
-  const currentStepIndex = dtreeStore.currentStepIndex
+  const currentStepIndex = activeStepStore.activeStepIndex
   const currentGroupIndex = dtreeStore.groupIndexToChange
 
   const currentGroup =

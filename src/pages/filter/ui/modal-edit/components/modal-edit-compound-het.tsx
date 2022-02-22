@@ -3,6 +3,7 @@ import { get } from 'lodash'
 import { observer } from 'mobx-react-lite'
 
 import dtreeStore from '@store/dtree'
+import activeStepStore from '@store/dtree/active-step.store'
 import { changeFunctionalStep } from '@utils/changeAttribute/changeFunctionalStep'
 import { AllNotModalMods } from '../../query-builder/ui/all-not-modal-mods'
 import { ApproxStateModalMods } from '../../query-builder/ui/approx-state-modal-mods'
@@ -22,7 +23,7 @@ export interface IParams {
 export const ModalEditCompoundHet = observer((): ReactElement => {
   const ref = useRef(null)
 
-  const currentStepIndex = dtreeStore.currentStepIndex
+  const currentStepIndex = activeStepStore.activeStepIndex
   const currentGroupIndex = dtreeStore.groupIndexToChange
 
   const currentGroup =

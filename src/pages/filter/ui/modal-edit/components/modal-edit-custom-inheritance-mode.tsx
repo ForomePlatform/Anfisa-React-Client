@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite'
 
 import { InheritanceModeEnum } from '@core/enum/inheritance-mode-enum'
 import dtreeStore from '@store/dtree'
+import activeStepStore from '@store/dtree/active-step.store'
 import { changeFunctionalStep } from '@utils/changeAttribute/changeFunctionalStep'
 import { getFuncParams } from '@utils/getFuncParams'
 import { getResetType } from '@utils/getResetType'
@@ -17,7 +18,7 @@ export const ModalEditCustomInheritanceMode = observer((): ReactElement => {
 
   const [resetValue, setResetValue] = useState('')
 
-  const currentStepIndex = dtreeStore.currentStepIndex
+  const currentStepIndex = activeStepStore.activeStepIndex
   const currentGroupIndex = dtreeStore.groupIndexToChange
 
   const currentGroup =

@@ -5,6 +5,7 @@ import { ActionType } from '@declarations'
 import { InheritanceModeEnum } from '@core/enum/inheritance-mode-enum'
 import datasetStore from '@store/dataset'
 import dtreeStore from '@store/dtree'
+import activeStepStore from '@store/dtree/active-step.store'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { getSortedArray } from '@utils/getSortedArray'
 import { CustomInheritanceModeContent } from './custom-inheritance-mode-content'
@@ -17,7 +18,7 @@ export const selectOptions = ['--', '0', '0-1', '1', '1-2', '2']
 export const ModalSelectCustomInheritanceMode = observer((): ReactElement => {
   const ref = useRef(null)
 
-  const currentStepIndex = dtreeStore.currentStepIndex
+  const currentStepIndex = activeStepStore.activeStepIndex
 
   const currentGroup = dtreeStore.stepData[currentStepIndex].groups
 
