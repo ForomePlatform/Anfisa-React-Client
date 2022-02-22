@@ -42,7 +42,7 @@ export interface ICompoundHetArgs {
 
 export interface ICompoundRequestArgs {
   approx: string | null
-  request: [number, { [key: string]: string[] }]
+  request: string
   state?: string | null
 }
 

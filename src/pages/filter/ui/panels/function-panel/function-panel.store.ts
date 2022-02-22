@@ -8,6 +8,11 @@ import {
   TVariant,
 } from '@service-providers/common/common.interface'
 import { getQueryBuilder } from '@utils/getQueryBuilder'
+import {
+  IInheritanceModeCachedValues,
+  TRequestCondition,
+  TScenario,
+} from './function-panel.interface'
 
 class FunctionPanelStore {
   constructor() {
@@ -22,6 +27,10 @@ class FunctionPanelStore {
   public get complexVariants(): [string, number][] {
     const { variants } = filterStore.statFuncData
     return variants || []
+  }
+
+  public get filteredComplexVariants(): [string, number][] {
+    return this.complexVariants.filter(([, variantValue]) => variantValue > 0)
   }
 
   public get filterName(): string {
@@ -90,6 +99,76 @@ class FunctionPanelStore {
 
   public fetchStatFunc(componentName: string, params: string) {
     return filterStore.fetchStatFuncAsync(componentName, params)
+  }
+
+  public getSelectedValue(
+    group: string,
+    index: number,
+    requestCondition: TRequestCondition[],
+  ): string {
+    let value = '--'
+
+    const currentRequestBlock = requestCondition[index][1]
+
+    Object.entries(currentRequestBlock).map((item: any[]) => {
+      if (item[1].includes(group)) {
+        value = item[0]
+      }
+    })
+
+    return value
+  }
+
+  public getStringScenario(arrayScenario: TScenario[]): string {
+    let scenarioToString = ''
+
+    arrayScenario.map((item: TScenario, index: number) => {
+      scenarioToString += `"${item[0]}":["${item[1]
+        .toString()
+        .split(',')
+        .join('","')}"]`
+
+      if (arrayScenario[index + 1]) scenarioToString += ','
+    })
+
+    return scenarioToString
+  }
+
+  public getSelectValue(scenario: TScenario[], problemGroup: string): string {
+    for (const item of scenario) {
+      if (item[1].includes(problemGroup)) {
+        return item[0]
+      }
+    }
+    return '--'
+  }
+
+  public handleSelectAllVariants(problemGroupValues: string[]): void {
+    if (this.filteredComplexVariants.length === 0) return
+
+    const variantsGroup = this.filteredComplexVariants.map(
+      variant => variant[0],
+    )
+
+    this.setCachedValues<IInheritanceModeCachedValues>(
+      FuncStepTypesEnum.InheritanceMode,
+      {
+        conditions: { problem_group: problemGroupValues },
+        variants: variantsGroup,
+      },
+    )
+  }
+
+  public handleResetAllFieldsLocally(problemGroupValues: string[]): void {
+    if (problemGroupValues.length === 0) return
+
+    this.clearCachedValues(FuncStepTypesEnum.InheritanceMode)
+  }
+
+  public handleResetVariantsLocally(variantsValues: string[]): void {
+    if (variantsValues.length === 0) return
+
+    this.clearCachedValues(FuncStepTypesEnum.InheritanceMode, 'variants')
   }
 }
 
