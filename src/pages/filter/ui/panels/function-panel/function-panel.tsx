@@ -8,7 +8,7 @@ import { CompundHet } from './components/compound-het'
 import { CompoundRequest } from './components/compound-request'
 import { CustomInheritanceMode } from './components/custom-inheritance-mode'
 import { GeneRegion } from './components/gene-region'
-import { InheritanceMode } from './components/inheritance-mode'
+import { InheritanceMode } from './components/inheritance-mode/inheritance-mode'
 
 const functionsMap: Record<string, any> = {
   GeneRegion,
