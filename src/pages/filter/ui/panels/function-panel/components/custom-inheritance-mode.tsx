@@ -1,252 +1,223 @@
-import React, { useEffect, useState } from 'react'
-import { FormikProps } from 'formik'
-import { toJS } from 'mobx'
+import React, { useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { InheritanceModeEnum } from '@core/enum/inheritance-mode-enum'
 import datasetStore from '@store/dataset'
 import filterStore from '@store/filter'
-import { GlbPagesNames } from '@glb/glb-names'
-import { getQueryBuilder } from '@utils/getQueryBuilder'
+import { CustomInheritanceModeContent } from '@pages/filter/ui/query-builder/ui/custom-inheritance-mode-content'
+import {
+  ConditionJoinMode,
+  TFuncCondition,
+  TVariant,
+} from '@service-providers/common/common.interface'
 import { getSortedArray } from '@utils/getSortedArray'
-import { CustomInheritanceModeContent } from '../../../query-builder/ui/custom-inheritance-mode-content'
+import {
+  ICustomInheritanceModeCachedValues,
+  TScenario,
+} from '../function-panel.interface'
+import functionPanelStore from '../function-panel.store'
 import { PanelButtons } from './panelButtons'
 
-export interface ICustomInheritanceModeProps {
-  scenario: any
-  variants: string[]
+interface IConditions {
+  arrayScenario: TScenario[]
+  resetName: string
 }
 
-export interface ICustomInheritanceFormValues {
-  first: string
-  second: string
-  third: string
-  reset: string
-  scenario: string | undefined
-}
-
-export const CustomInheritanceMode = observer(
-  ({
-    setFieldValue,
-    submitForm,
-    resetForm,
-  }: FormikProps<ICustomInheritanceModeProps>) => {
-    const cachedValues =
-      filterStore.readFilterCondition<ICustomInheritanceFormValues>(
-        FuncStepTypesEnum.CustomInheritanceMode,
-      )
-
-    const { first, second, third, reset, scenario } = cachedValues || {}
-
-    const [firstSelectValue, setFirstSelectValue] = useState(first || '')
-    const [secondSelectValue, setSecondSelectValue] = useState(second || '')
-    const [thirdSelectValue, setThirdSelectValue] = useState(third || '')
-    const [filterScenario, setFilterScenario] = useState(scenario || '')
-
-    const selectStates = [firstSelectValue, secondSelectValue, thirdSelectValue]
-    const [resetValue, setResetValue] = useState(reset || '')
-    const variants = filterStore.statFuncData.variants
-
-    useEffect(() => {
-      filterStore.setFilterCondition<ICustomInheritanceFormValues>(
-        FuncStepTypesEnum.CustomInheritanceMode,
-        {
-          first: firstSelectValue,
-          second: secondSelectValue,
-          third: thirdSelectValue,
-          reset: resetValue,
-          scenario: filterScenario,
-        },
-      )
-    }, [
-      firstSelectValue,
-      secondSelectValue,
-      thirdSelectValue,
-      resetValue,
-      filterScenario,
-    ])
-
-    useEffect(() => {
-      const params = `{"scenario":${
-        filterScenario ? `{${filterScenario}}` : '{}'
-      }}`
-
-      filterStore.fetchStatFuncAsync('Custom_Inheritance_Mode', params)
-
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
-
-    useEffect(() => {
-      if (variants) setFieldValue('variants', variants)
-    }, [setFieldValue, variants])
-
-    let attrData: any
-
-    const statList = toJS(datasetStore.dsStat['stat-list'])
-    const subGroups = Object.values(getQueryBuilder(statList))
-
-    subGroups.map(subGroup => {
-      subGroup.map((item, currNo) => {
-        if (item.name === FuncStepTypesEnum.CustomInheritanceMode) {
-          attrData = subGroup[currNo]
-        }
-      })
-    })
-
-    const sendRequestAsync = async (
-      type: string,
-      value: string,
-      multiData?: any[],
-    ) => {
-      let selectedData: any[] = []
-
-      if (type && value) {
-        selectedData = [
-          [
-            type === 'first' ? value : firstSelectValue || '--',
-            attrData.family[0],
-          ],
-          [
-            type === 'second' ? value : secondSelectValue || '--',
-            attrData.family[1],
-          ],
-          [
-            type === 'third' ? value : thirdSelectValue || '--',
-            attrData.family[2],
-          ],
-        ]
-      }
-
-      let scenarioString = ''
-
-      const newScenario = getSortedArray(multiData || selectedData)
-
-      newScenario.map((item, index) => {
-        scenarioString += `"${item[0]}":["${item[1]
-          .toString()
-          .split(',')
-          .join('","')}"]`
-
-        if (newScenario[index + 1]) scenarioString += ','
-      })
-
-      const params = `{"scenario":{${scenarioString}}}`
-
-      setFilterScenario(scenarioString)
-
-      filterStore.method === GlbPagesNames.Refiner &&
-        setFieldValue('scenario', Object.fromEntries(newScenario))
-      filterStore.fetchStatFuncAsync('Custom_Inheritance_Mode', params)
-    }
-
-    const handleSetScenario = (group: string, value: string) => {
-      if (group === attrData.family[0]) {
-        setFirstSelectValue(value)
-        sendRequestAsync('first', value)
-      }
-
-      if (group === attrData.family[1]) {
-        setSecondSelectValue(value)
-        sendRequestAsync('second', value)
-      }
-
-      if (group === attrData.family[2]) {
-        setThirdSelectValue(value)
-        sendRequestAsync('third', value)
-      }
-
-      setResetValue('')
-    }
-
-    const handleReset = (name: string) => {
-      if (name === InheritanceModeEnum.HomozygousRecessive_XLinked) {
-        setFirstSelectValue('2')
-        setSecondSelectValue('0-1')
-        setThirdSelectValue('0-1')
-
-        const multiData: any[] = [
-          ['2', attrData.family[0]],
-          ['0-1', attrData.family[1]],
-          ['0-1', attrData.family[2]],
-        ]
-
-        sendRequestAsync('', '', multiData)
-      }
-
-      if (name === InheritanceModeEnum.AutosomalDominant) {
-        setFirstSelectValue('1-2')
-        setSecondSelectValue('0')
-        setThirdSelectValue('0')
-
-        const multiData: any[] = [
-          ['1-2', attrData.family[0]],
-          ['0', attrData.family[1]],
-          ['0', attrData.family[2]],
-        ]
-
-        sendRequestAsync('', '', multiData)
-      }
-
-      if (name === InheritanceModeEnum.Compensational) {
-        setFirstSelectValue('0')
-        setSecondSelectValue('1-2')
-        setThirdSelectValue('1-2')
-
-        const multiData: any[] = [
-          ['0', attrData.family[0]],
-          ['1-2', attrData.family[1]],
-          ['1-2', attrData.family[2]],
-        ]
-
-        sendRequestAsync('', '', multiData)
-      }
-
-      if (name === 'empty') {
-        setFirstSelectValue('--')
-        setSecondSelectValue('--')
-        setThirdSelectValue('--')
-
-        const multiData: any[] = [
-          ['--', attrData.family[0]],
-          ['--', attrData.family[1]],
-          ['--', attrData.family[2]],
-        ]
-
-        sendRequestAsync('', '', multiData)
-      }
-
-      setResetValue(name)
-    }
-
-    const handleResetFields = () => {
-      filterStore.clearFilterCondition(FuncStepTypesEnum.CustomInheritanceMode)
-
-      setFirstSelectValue('--')
-      setSecondSelectValue('--')
-      setThirdSelectValue('--')
-      setResetValue('empty')
-    }
-
-    return (
-      <React.Fragment>
-        <CustomInheritanceModeContent
-          problemGroups={attrData.family}
-          handleSetScenario={handleSetScenario}
-          selectStates={selectStates}
-          handleReset={handleReset}
-          resetValue={resetValue}
-        />
-
-        <PanelButtons
-          selectedFilterName={filterStore.selectedGroupItem.name}
-          selectedFilterGroup={filterStore.selectedGroupItem.vgroup}
-          onSubmit={submitForm}
-          resetForm={resetForm}
-          resetFields={handleResetFields}
-          disabled={!variants}
-        />
-      </React.Fragment>
+export const CustomInheritanceMode = observer(() => {
+  const cachedValues =
+    filterStore.readFilterCondition<ICustomInheritanceModeCachedValues>(
+      FuncStepTypesEnum.CustomInheritanceMode,
     )
-  },
-)
+
+  const {
+    simpleVariants,
+    filterName,
+    filterGroup,
+    problemGroups,
+    getSelectValue,
+    getStringScenario,
+  } = functionPanelStore
+
+  const { conditions, reset } = cachedValues || {}
+  const resetValue = reset || ''
+  const stringScenario = cachedValues
+    ? getStringScenario(conditions!.scenario)
+    : ''
+
+  const firstSelectValue = cachedValues
+    ? getSelectValue(cachedValues.conditions.scenario, problemGroups[0])
+    : ''
+
+  const secondSelectValue = cachedValues
+    ? getSelectValue(conditions!.scenario, problemGroups[1])
+    : ''
+
+  const thirdSelectValue = cachedValues
+    ? getSelectValue(conditions!.scenario, problemGroups[2])
+    : ''
+
+  const selectStates = [firstSelectValue, secondSelectValue, thirdSelectValue]
+
+  // check if there is some data in cachedValues from preset
+  useEffect(() => {
+    const params = `{"scenario":${
+      cachedValues ? `{${getStringScenario(conditions!.scenario)}}` : '{}'
+    }}`
+
+    functionPanelStore.fetchStatFunc('Custom_Inheritance_Mode', params)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cachedValues])
+
+  // cach values in every change
+  const handleSetConditions = ({ arrayScenario, resetName }: IConditions) => {
+    functionPanelStore.setCachedValues<ICustomInheritanceModeCachedValues>(
+      FuncStepTypesEnum.CustomInheritanceMode,
+      {
+        conditions: { scenario: arrayScenario },
+        reset: resetName || resetValue,
+      },
+    )
+  }
+
+  // root function to update data
+  const sendRequestAsync = async ({
+    selectType,
+    selectValue,
+    complexScenario,
+    resetName,
+  }: any) => {
+    let selectiveData: any[] = []
+
+    if (selectType && selectValue) {
+      selectiveData = [
+        [
+          selectType === 'first' ? selectValue : firstSelectValue || '--',
+          problemGroups[0],
+        ],
+        [
+          selectType === 'second' ? selectValue : secondSelectValue || '--',
+          problemGroups[1],
+        ],
+        [
+          selectType === 'third' ? selectValue : thirdSelectValue || '--',
+          problemGroups[2],
+        ],
+      ]
+    }
+
+    const arrayScenario = getSortedArray(complexScenario || selectiveData)
+
+    const stringScenario = getStringScenario(arrayScenario)
+
+    const params = `{"scenario":{${stringScenario}}}`
+
+    handleSetConditions({ arrayScenario, resetName })
+
+    functionPanelStore.fetchStatFunc('Custom_Inheritance_Mode', params)
+  }
+
+  // scenario creation step by step
+  const handleSetSingleScenario = (group: string, selectValue: string) => {
+    if (group === problemGroups[0]) {
+      sendRequestAsync({ selectType: 'first', selectValue })
+    }
+
+    if (group === problemGroups[1]) {
+      sendRequestAsync({ selectType: 'second', selectValue })
+    }
+
+    if (group === problemGroups[2]) {
+      sendRequestAsync({ selectType: 'third', selectValue })
+    }
+  }
+
+  // prepared scenario creation
+  const handleSetComplexScenario = (resetName: string) => {
+    if (resetName === InheritanceModeEnum.HomozygousRecessive_XLinked) {
+      const complexScenario: any[] = [
+        ['2', problemGroups[0]],
+        ['0-1', problemGroups[1]],
+        ['0-1', problemGroups[2]],
+      ]
+
+      sendRequestAsync({ complexScenario, resetName })
+    }
+
+    if (resetName === InheritanceModeEnum.AutosomalDominant) {
+      const complexScenario: any[] = [
+        ['1-2', problemGroups[0]],
+        ['0', problemGroups[1]],
+        ['0', problemGroups[2]],
+      ]
+
+      sendRequestAsync({ complexScenario, resetName })
+    }
+
+    if (resetName === InheritanceModeEnum.Compensational) {
+      const complexScenario: any[] = [
+        ['0', problemGroups[0]],
+        ['1-2', problemGroups[1]],
+        ['1-2', problemGroups[2]],
+      ]
+
+      sendRequestAsync({ complexScenario, resetName })
+    }
+
+    if (resetName === 'empty') {
+      const complexScenario: any[] = [
+        ['--', problemGroups[0]],
+        ['--', problemGroups[1]],
+        ['--', problemGroups[2]],
+      ]
+
+      sendRequestAsync({ complexScenario, resetName })
+    }
+  }
+
+  const handleResetFields = () => {
+    filterStore.clearFilterCondition(FuncStepTypesEnum.CustomInheritanceMode)
+  }
+
+  const handleSumbitCondtions = () => {
+    if (datasetStore.activePreset) datasetStore.resetActivePreset()
+
+    const custInhModeConditions: TFuncCondition = [
+      'func',
+      FuncStepTypesEnum.CustomInheritanceMode,
+      ConditionJoinMode.OR,
+      ['True'],
+      JSON.parse(`{"scenario":{${stringScenario}}}`),
+    ]
+
+    const variant: TVariant = [`"scenario": ${stringScenario}`, 0]
+
+    functionPanelStore.handleSumbitConditions(custInhModeConditions, variant)
+  }
+
+  // to avoid displaying this data on the another func attr
+  useEffect(() => {
+    return () => filterStore.resetStatFuncData()
+  }, [])
+
+  return (
+    <React.Fragment>
+      <CustomInheritanceModeContent
+        problemGroups={problemGroups}
+        handleSetScenario={handleSetSingleScenario}
+        selectStates={selectStates}
+        handleReset={handleSetComplexScenario}
+        resetValue={resetValue}
+      />
+
+      <PanelButtons
+        selectedFilterName={filterName}
+        selectedFilterGroup={filterGroup}
+        onSubmit={handleSumbitCondtions}
+        resetFields={handleResetFields}
+        disabled={!simpleVariants}
+      />
+    </React.Fragment>
+  )
+})
