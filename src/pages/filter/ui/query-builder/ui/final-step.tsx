@@ -22,7 +22,6 @@ interface IProps {
 
 export const FinalStep = observer(({ index }: IProps): ReactElement => {
   const currentStep = dtreeStore.getStepData[index]
-  const prevStepIndex = index - 1
 
   const setStepActive = (stepIndex: number, event: any) => {
     const classList = Array.from(event.target.classList)
@@ -99,7 +98,7 @@ export const FinalStep = observer(({ index }: IProps): ReactElement => {
             text={t('dtree.addStep')}
             className="absolute -bottom-9 z-1000 left-0"
             // TODO: remove 3 argeument
-            onClick={() => createEmptyStep(prevStepIndex, 'AFTER', index)}
+            onClick={() => createEmptyStep(index, 'AFTER', true)}
           />
         </ResultsView>
       </div>
