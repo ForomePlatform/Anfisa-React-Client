@@ -116,8 +116,6 @@ class DtreeStore {
   groupNameToChange = ''
   groupIndexToChange = 0
 
-  // TODO:currentStepIndex === activeStepIndex
-  currentStepIndex = 0
   // TODO: delete it
   currentStepIndexForApi = 0
 
@@ -380,8 +378,6 @@ class DtreeStore {
         difference: 0,
       })
     } else {
-      this.currentStepIndex = index + 1
-
       const startFilterCounts = localStepData[index].finishFilterCounts
 
       localStepData.splice(index + 1, 0, {
@@ -471,8 +467,6 @@ class DtreeStore {
 
   openModalAttribute(index: number) {
     this.isModalAttributeVisible = true
-
-    this.currentStepIndex = index
   }
 
   closeModalAttribute() {
@@ -525,8 +519,6 @@ class DtreeStore {
     this.isModalSelectInheritanceModeVisible = true
 
     this.groupNameToChange = groupName
-
-    this.currentStepIndex = stepIndex
   }
 
   closeModalSelectInheritanceMode() {
@@ -543,8 +535,6 @@ class DtreeStore {
     this.isModalSelectCustomInheritanceModeVisible = true
 
     this.groupNameToChange = groupName
-
-    this.currentStepIndex = stepIndex
   }
 
   closeModalSelectCustomInheritanceMode() {
@@ -561,8 +551,6 @@ class DtreeStore {
     this.isModalSelectCompoundHetVisible = true
 
     this.groupNameToChange = groupName
-
-    this.currentStepIndex = stepIndex
   }
 
   closeModalSelectCompoundHet() {
@@ -579,8 +567,6 @@ class DtreeStore {
     this.isModalSelectCompoundRequestVisible = true
 
     this.groupNameToChange = groupName
-
-    this.currentStepIndex = stepIndex
   }
 
   closeModalSelectCompoundRequest() {
@@ -596,8 +582,6 @@ class DtreeStore {
 
     this.isModalSelectGeneRegionVisible = true
     this.groupNameToChange = groupName
-
-    this.currentStepIndex = stepIndex
   }
 
   closeModalSelectGeneRegion() {
@@ -616,8 +600,6 @@ class DtreeStore {
     this.isModalEditFiltersVisible = true
     this.groupNameToChange = groupName
     this.groupIndexToChange = groupIndex
-
-    this.currentStepIndex = stepIndex
   }
 
   closeModalEditFilters() {
@@ -635,8 +617,6 @@ class DtreeStore {
     this.isModalEditNumbersVisible = true
     this.groupNameToChange = groupName
     this.groupIndexToChange = groupIndex
-
-    this.currentStepIndex = stepIndex
   }
 
   closeModalEditNumbers() {
@@ -655,8 +635,6 @@ class DtreeStore {
     this.groupNameToChange = groupName
 
     this.groupIndexToChange = groupIndex
-
-    this.currentStepIndex = stepIndex
   }
 
   closeModalEditInheritanceMode() {
@@ -671,8 +649,6 @@ class DtreeStore {
     this.isModalEditCustomInheritanceModeVisible = true
     this.groupNameToChange = groupName
     this.groupIndexToChange = groupIndex
-
-    this.currentStepIndex = stepIndex
   }
 
   closeModalEditCustomInheritanceMode() {
@@ -687,8 +663,6 @@ class DtreeStore {
     this.isModalEditCompoundHetVisible = true
     this.groupNameToChange = groupName
     this.groupIndexToChange = groupIndex
-
-    this.currentStepIndex = stepIndex
   }
 
   closeModalEditCompoundHet() {
@@ -703,8 +677,6 @@ class DtreeStore {
     this.isModalEditCompoundRequestVisible = true
     this.groupNameToChange = groupName
     this.groupIndexToChange = groupIndex
-
-    this.currentStepIndex = stepIndex
   }
 
   openModalEditCustomInheritanceModeFunc(
@@ -715,8 +687,6 @@ class DtreeStore {
     this.isModalEditCompoundRequestVisible = true
     this.groupNameToChange = groupName
     this.groupIndexToChange = groupIndex
-
-    this.currentStepIndex = stepIndex
   }
 
   closeModalEditCompoundRequest() {
@@ -731,8 +701,6 @@ class DtreeStore {
     this.isModalEditGeneRegionVisible = true
     this.groupNameToChange = groupName
     this.groupIndexToChange = groupIndex
-
-    this.currentStepIndex = stepIndex
   }
 
   closeModalEditGeneRegion() {
