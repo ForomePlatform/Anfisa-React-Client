@@ -128,8 +128,6 @@ class DtreeStore {
   actionHistory: URLSearchParams[] = []
   actionHistoryIndex = -1
 
-  activeStepIndex = -1
-
   constructor() {
     makeAutoObservable(this)
   }
@@ -150,24 +148,18 @@ class DtreeStore {
       },
     ]
 
-    const currentStepIndex = isLoadingNewTree ? -1 : this.activeStepIndex
-
-    const computedStepData = await getStepDataAsync(currentStepIndex)
+    const computedStepData = await getStepDataAsync(isLoadingNewTree)
 
     const newStepData =
       computedStepData.length === 0 ? initialStepData : computedStepData
 
     const stepCodes = getDataFromCode(this.dtreeCode)
 
-    const newActiveStepIndex = newStepData.findIndex(
-      element => element.isActive || element.isReturnedVariantsActive,
-    )
-
     const finalStep = {
       step: newStepData.length,
       groups: [],
       excluded: !stepCodes[stepCodes.length - 1]?.result,
-      isActive: newActiveStepIndex === -1,
+      isActive: false,
       isReturnedVariantsActive: false,
       startFilterCounts: null,
       finishFilterCounts: null,
@@ -175,17 +167,24 @@ class DtreeStore {
       isFinalStep: true,
     }
 
-    // add setActiveStep
+    newStepData.push(finalStep)
 
     runInAction(() => {
-      this.stepData = [...newStepData, finalStep]
+      this.stepData = [...newStepData]
       this.dtreeStepIndices = Object.keys(this.dtree['cond-atoms'])
-      this.activeStepIndex = newActiveStepIndex
     })
 
-    const stepIndexForApi = this.getStepIndexForApi(newActiveStepIndex)
+    const stepDataActiveIndex = newStepData.findIndex(
+      element => element.isActive || element.isReturnedVariantsActive,
+    )
 
-    this.fetchDtreeStatAsync(this.dtreeCode, String(stepIndexForApi))
+    const nextActiveStep =
+      stepDataActiveIndex === -1 ? newStepData.length - 1 : stepDataActiveIndex
+
+    activeStepStore.makeStepActive(
+      nextActiveStep,
+      ActiveStepOptions.StartedVariants,
+    )
   }
 
   async fetchDtreeStatAsync(code = 'return False', no = '0') {
