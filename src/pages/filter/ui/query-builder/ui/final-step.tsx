@@ -6,11 +6,11 @@ import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
 import activeStepStore, {
   ActiveStepOptions,
+  CreateEmptyStepPositions,
 } from '@store/dtree/active-step.store'
 import { Button } from '@ui/button'
 import { RadioButton } from '@ui/radio-button'
 import { changeStep } from '@utils/changeStep'
-import { createEmptyStep } from '@utils/createEmptyStep'
 import { ResultsView, TreeView } from './next-step'
 import { Operation, Step } from './next-step-header'
 import { NextStepRoute } from './next-step-route'
@@ -97,8 +97,12 @@ export const FinalStep = observer(({ index }: IProps): ReactElement => {
           <Button
             text={t('dtree.addStep')}
             className="absolute -bottom-9 z-1000 left-0"
-            // TODO: remove 3 argeument
-            onClick={() => createEmptyStep(index, 'AFTER', true)}
+            onClick={() =>
+              activeStepStore.createEmptyStep(
+                index,
+                CreateEmptyStepPositions.FINAL,
+              )
+            }
           />
         </ResultsView>
       </div>

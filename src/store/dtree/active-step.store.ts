@@ -7,6 +7,12 @@ export enum ActiveStepOptions {
   ReturnedVariants = 'returnedVariants',
 }
 
+export enum CreateEmptyStepPositions {
+  BEFORE = 'BEFORE',
+  AFTER = 'AFTER',
+  FINAL = 'FINAL',
+}
+
 class ActiveStep {
   activeStepIndex: number = 0
   activeStepOption: ActiveStepOptions = ActiveStepOptions.StartedVariants
@@ -69,6 +75,34 @@ class ActiveStep {
 
     const { dtreeCode } = dtreeStore
     dtreeStore.fetchDtreeStatAsync(dtreeCode, this.stepIndexForApi)
+  }
+
+  createEmptyStep(stepIndex: number, position: CreateEmptyStepPositions) {
+    const previousStepIndex = stepIndex - 1
+    const nextStepIndex = stepIndex + 1
+
+    switch (position) {
+      case CreateEmptyStepPositions.FINAL:
+        dtreeStore.insertStep(position, previousStepIndex)
+
+        this.makeStepActive(stepIndex, ActiveStepOptions.StartedVariants)
+        break
+
+      case CreateEmptyStepPositions.BEFORE:
+        dtreeStore.insertStep(position, stepIndex)
+
+        this.makeStepActive(stepIndex, ActiveStepOptions.StartedVariants)
+        break
+
+      case CreateEmptyStepPositions.AFTER:
+        dtreeStore.insertStep(position, stepIndex)
+
+        this.makeStepActive(nextStepIndex, ActiveStepOptions.StartedVariants)
+        break
+
+      default:
+        break
+    }
   }
 }
 

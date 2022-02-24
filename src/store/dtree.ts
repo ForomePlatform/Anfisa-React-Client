@@ -877,7 +877,6 @@ class DtreeStore {
     this.resetLocalDtreeCode()
   }
 
-  // ADD THIS
   changeStepDataAcitveStep = (index: number, option: ActiveStepOptions) => {
     this.stepData.forEach(element => {
       element.isActive = false
@@ -889,8 +888,6 @@ class DtreeStore {
     } else {
       this.stepData[index].isReturnedVariantsActive = true
     }
-
-    // this.activeStepIndex = index
   }
 
   openTableModal(index?: number) {
