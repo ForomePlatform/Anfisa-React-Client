@@ -1,13 +1,16 @@
-import { color2str, interpolateColor, parseColor } from '@core/colors'
+import { Color, color2str, interpolateColor, parseColor } from '@core/colors'
 import { theme } from '@theme'
+import { RangeSliderColor } from '../types'
 
 export const pixelRatio = window.devicePixelRatio || 1
 
 const inactiveBarCssColor: string = theme('colors.grey.disabled')
-const activeBarCssColor: string = theme('colors.blue.hover')
+const activeBarPrimaryCssColor: string = theme('colors.blue.hover')
+const activeBarSecondaryCssColor: string = theme('colors.purple.bright')
 const axisCssColor: string = theme('colors.grey.tertiary')
 
-const activeColor = parseColor(activeBarCssColor)
+const activePrimaryColor = parseColor(activeBarPrimaryCssColor)
+const activeSecondaryColor = parseColor(activeBarSecondaryCssColor)
 const inactiveColor = parseColor(inactiveBarCssColor)
 
 export const prepareCanvas = (
@@ -34,6 +37,9 @@ export const getYAxis = (max: number, height: number): HistogramAxis => {
   return ret
 }
 
+const getBarColor = (color: RangeSliderColor): Color =>
+  color === RangeSliderColor.Primary ? activePrimaryColor : activeSecondaryColor
+
 type GetPartialFillParams = {
   ctx: CanvasRenderingContext2D
   left: number
@@ -42,14 +48,20 @@ type GetPartialFillParams = {
   x1: number
   y0: number
   y1: number
+  color: RangeSliderColor
 }
 
 export const getFlatPartialFill = ({
   left,
   right,
+  color,
 }: GetPartialFillParams): string => {
   return color2str(
-    interpolateColor(inactiveColor, activeColor, Math.max(right - left, 0)),
+    interpolateColor(
+      inactiveColor,
+      getBarColor(color),
+      Math.max(right - left, 0),
+    ),
   )
 }
 
@@ -59,15 +71,16 @@ export const getVerticalGradientPartialFill = ({
   right,
   y0,
   y1,
+  color,
 }: GetPartialFillParams): CanvasGradient => {
   const gradient = ctx.createLinearGradient(0, y0, 0, y1)
   const k = 1 - Math.max(right - left, 0)
 
-  const c = interpolateColor(activeColor, inactiveColor, k)
+  const c = interpolateColor(getBarColor(color), inactiveColor, k)
 
   gradient.addColorStop(0, inactiveBarCssColor)
   gradient.addColorStop(k, color2str(c))
-  gradient.addColorStop(1, activeBarCssColor)
+  gradient.addColorStop(1, activeBarPrimaryCssColor)
 
   return gradient
 }
@@ -78,8 +91,10 @@ export const getHorizontalGradientPartialFill = ({
   right,
   x0,
   x1,
+  color,
 }: GetPartialFillParams): CanvasGradient => {
   const gradient = ctx.createLinearGradient(x0, 0, x1, 0)
+  const activeColor = getBarColor(color)
 
   const c1 = interpolateColor(activeColor, inactiveColor, left)
   const c2 = interpolateColor(activeColor, inactiveColor, 1 - right)
@@ -105,8 +120,10 @@ type DrawHistogramParams = {
   data: number[]
   selectedArea?: [number, number] | null
   yAxis?: HistogramAxis
+  barPositions: number[]
   barSpacing?: number
   partialFill?: HistogramPartialFill
+  color: RangeSliderColor
 }
 
 export const drawHistogram = ({
@@ -116,8 +133,10 @@ export const drawHistogram = ({
   data,
   selectedArea,
   yAxis,
+  barPositions,
   barSpacing = 2,
   partialFill = HistogramPartialFill.Horizontal,
+  color,
 }: DrawHistogramParams): void => {
   const drawWidth = width * pixelRatio
   const drawHeight = height * pixelRatio
@@ -149,41 +168,34 @@ export const drawHistogram = ({
   ctx.stroke()
 
   const barCount = data.length
-  const barWidth = drawWidth / (barCount - 1)
-  const edgeOffset = (barCount * barWidth - drawWidth) / 2
 
   const selectedLeft = selectedArea ? selectedArea[0] * pixelRatio : 0
   const selectedRight = selectedArea ? selectedArea[1] * pixelRatio : 0
 
   const halfBarDrawSpacing = (barSpacing / 2) * pixelRatio
+  const barColor = color2str(getBarColor(color))
 
-  for (let i = 0; i < data.length; ++i) {
+  for (let i = 0; i < barCount; ++i) {
     const value = data[i]
 
     if (!value) {
       continue
     }
 
-    const x0 = Math.max(i * barWidth - edgeOffset, 0)
-    const currentBarWidth =
-      edgeOffset > 0 && (i === 0 || i === barCount - 1)
-        ? barWidth - edgeOffset
-        : barWidth
+    const x0 = Math.max(barPositions[i], 0) * pixelRatio
+    const x1 = Math.min(barPositions[i + 1] ?? width, width) * pixelRatio
+    const barWidth = x1 - x0
 
-    const x1 = x0 + currentBarWidth
-
-    if (!selectedArea || x0 > selectedRight || x1 < selectedLeft) {
+    if (!selectedArea || x0 >= selectedRight || x1 <= selectedLeft) {
       ctx.fillStyle = inactiveBarCssColor
     } else {
-      const left = Math.max(selectedLeft - x0, 0) / currentBarWidth
-      const right =
-        Math.min(selectedRight - x0, currentBarWidth) / currentBarWidth
-
+      const left = Math.max(selectedLeft - x0, 0) / barWidth
+      const right = Math.min(selectedRight - x0, barWidth) / barWidth
       if (
         (left > Number.EPSILON && left < 1) ||
         (right > Number.EPSILON && right < 1)
       ) {
-        const fillParams = {
+        const fillParams: GetPartialFillParams = {
           ctx,
           left,
           right,
@@ -191,6 +203,7 @@ export const drawHistogram = ({
           x1,
           y0: drawHeight - data[i] * yScale,
           y1: drawHeight,
+          color,
         }
 
         switch (partialFill) {
@@ -205,14 +218,14 @@ export const drawHistogram = ({
             break
         }
       } else {
-        ctx.fillStyle = activeBarCssColor
+        ctx.fillStyle = barColor
       }
     }
 
     ctx.fillRect(
       x0 + (i > 0 ? halfBarDrawSpacing : 0),
       drawHeight - value * yScale,
-      currentBarWidth - (i < barCount - 1 ? halfBarDrawSpacing : 0),
+      barWidth - (i < barCount - 1 ? halfBarDrawSpacing : 0),
       value * yScale,
     )
   }

@@ -1,16 +1,25 @@
 import styled from 'styled-components'
 
 import { theme } from '@theme'
-import { RangeSliderHistogramRoot } from '@ui/range-slider/range-slider-histogram/styles'
+import { RangeSliderHistogramRoot } from './range-slider-histogram/styles'
+import { RangeSliderColor } from './types'
 
 export const RangeSliderRoot = styled.div<{
+  readonly hasHistogram?: boolean
   readonly isActive?: boolean
   readonly isDisabled?: boolean
 }>`
-  margin-left: 40px;
+  margin-left: ${props => (props.hasHistogram ? '40px' : '0')};
   cursor: ${props =>
     props.isDisabled ? 'default' : props.isActive ? 'grabbing' : 'pointer'};
 `
+
+const disabledColor = theme('colors.grey.disabled')
+const controlDisabledColor = theme('colors.grey.blue')
+const controlPrimaryActiveColor = theme('colors.blue.active')
+const controlPrimaryColor = theme('colors.blue.hover')
+const controlSecondaryActiveColor = theme('colors.purple.hover')
+const controlSecondaryColor = theme('colors.purple.static')
 
 export const RangeSliderRuler = styled.div`
   position: relative;
@@ -23,7 +32,7 @@ export const RangeSliderRuler = styled.div`
     right: -2px;
     top: 6px;
     height: 4px;
-    background: ${theme('colors.grey.disabled')};
+    background: ${disabledColor};
     border-radius: 2px;
   }
 
@@ -32,25 +41,30 @@ export const RangeSliderRuler = styled.div`
   }
 `
 
-interface RangeSliderHandleProps {
+interface IRangeSliderHandleProps {
+  color: RangeSliderColor
   isActive?: boolean
   isDisabled?: boolean
   isStrong?: boolean
 }
 
 const getHandleColor = ({
+  color,
   isActive,
   isDisabled,
-}: RangeSliderHandleProps): string =>
-  theme(
-    isDisabled
-      ? 'colors.grey.blue'
-      : isActive
-      ? 'colors.blue.active'
-      : 'colors.blue.hover',
-  )
+}: IRangeSliderHandleProps): string => {
+  if (isDisabled) {
+    return controlDisabledColor
+  }
 
-export const RangeSliderHandle = styled.div<RangeSliderHandleProps>`
+  if (color === RangeSliderColor.Primary) {
+    return isActive ? controlPrimaryActiveColor : controlPrimaryColor
+  }
+
+  return isActive ? controlSecondaryActiveColor : controlSecondaryColor
+}
+
+export const RangeSliderHandle = styled.div<IRangeSliderHandleProps>`
   position: absolute;
   left: 0;
   top: 0;
@@ -77,10 +91,18 @@ export const RangeSliderHandle = styled.div<RangeSliderHandleProps>`
   ${props =>
     !props.isDisabled &&
     `:hover {
-      border-color: ${theme('colors.blue.active')};
+      border-color: ${
+        props.color === RangeSliderColor.Primary
+          ? controlPrimaryActiveColor
+          : controlSecondaryActiveColor
+      };
   
       ::before {
-        background: ${theme('colors.blue.active')};
+        ${props.isStrong ? 'border-color' : 'background'}: ${
+      props.color === RangeSliderColor.Primary
+        ? controlPrimaryActiveColor
+        : controlSecondaryActiveColor
+    };
       }
     }
   `}
@@ -91,16 +113,17 @@ export const RangeSliderTick = styled.div`
   height: 6px;
   top: 8px;
   width: 0;
-  border-left: 1px solid ${theme('colors.grey.disabled')};
+  border-left: 1px solid ${disabledColor};
 `
 
-interface RangeSliderRangeProps {
+interface IRangeSliderRangeProps {
   isDisabled?: boolean
   isLeftHandle?: boolean
   isRightHandle?: boolean
+  color: RangeSliderColor
 }
 
-export const RangeSliderRange = styled.div<RangeSliderRangeProps>`
+export const RangeSliderRange = styled.div<IRangeSliderRangeProps>`
   position: absolute;
   top: 6px;
   height: 4px;
@@ -120,8 +143,10 @@ export const RangeSliderRange = styled.div<RangeSliderRangeProps>`
     bottom: 0;
     background: ${props =>
       props.isDisabled
-        ? theme('colors.grey.blue')
-        : theme('colors.blue.hover')};
+        ? controlDisabledColor
+        : props.color === RangeSliderColor.Primary
+        ? controlPrimaryColor
+        : controlSecondaryColor};
   }
 `
 

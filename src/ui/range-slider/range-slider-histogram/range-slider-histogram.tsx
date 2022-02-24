@@ -1,34 +1,41 @@
 import React, { ReactElement, useEffect, useMemo, useRef } from 'react'
 
-import {
-  drawHistogram,
-  getYAxis,
-  prepareCanvas,
-} from '@ui/range-slider/range-slider-histogram/utils'
+import { RangeSliderColor } from '../types'
 import {
   RangeSliderHistogramAxisLabel,
   RangeSliderHistogramRoot,
 } from './styles'
+import { drawHistogram, getYAxis, prepareCanvas } from './utils'
 
 export interface IRangeSliderHistogramProps {
   className?: string
   width: number
   height?: number
   data: number[]
+  barPositions?: number[]
   selectedArea?: [number, number] | null
+  color?: RangeSliderColor
 }
 
 export const RangeSliderHistogram = ({
   height = 80,
   width,
   data,
+  barPositions: barPositionsProp,
   selectedArea,
+  color = RangeSliderColor.Primary,
 }: IRangeSliderHistogramProps): ReactElement | null => {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   const yAxis = useMemo(
     () => getYAxis(Math.max(...data), height),
     [data, height],
+  )
+
+  const barPositions = useMemo(
+    () =>
+      barPositionsProp || data.map((_, index) => (width / data.length) * index),
+    [barPositionsProp, width, data],
   )
 
   useEffect(() => {
@@ -51,12 +58,14 @@ export const RangeSliderHistogram = ({
         height,
         data,
         yAxis,
+        barPositions,
         selectedArea,
+        color,
       }),
     )
 
     return () => window.cancelAnimationFrame(handleId)
-  }, [data, width, height, selectedArea, yAxis])
+  }, [data, width, height, selectedArea, yAxis, color, barPositions])
 
   if (data.length < 2) {
     return null

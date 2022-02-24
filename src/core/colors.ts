@@ -1,4 +1,4 @@
-type Color = [number, number, number, number]
+export type Color = [number, number, number, number]
 
 export const parseColor = (color: string): Color => {
   if (color.startsWith('#')) {
