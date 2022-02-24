@@ -92,15 +92,11 @@ export const ModalEditCompoundHet = observer((): ReactElement => {
   }
 
   useEffect(() => {
-    const indexForApi = dtreeStore.getStepIndexForApi(currentStepIndex)
-
     const params = `{"approx":${getApprox(approxCondition)},"state":${
       stateCondition === '-current-' || !stateCondition
         ? null
         : `"${stateCondition}"`
     }}`
-
-    dtreeStore.setCurrentStepIndexForApi(indexForApi)
 
     dtreeStore.fetchStatFuncAsync(groupName, params)
 
@@ -126,16 +122,12 @@ export const ModalEditCompoundHet = observer((): ReactElement => {
   }
 
   const handleSetCondition = (value: string, type: string) => {
-    const indexForApi = dtreeStore.getStepIndexForApi(currentStepIndex)
-
     if (type === 'approx') {
       setApproxCondition(value)
 
       const params = `{"approx":${getApprox(value)},"state":${
         stateCondition !== '-current-' ? `"${stateCondition}"` : null
       }}`
-
-      dtreeStore.setCurrentStepIndexForApi(indexForApi)
 
       dtreeStore.fetchStatFuncAsync(groupName, params)
     }
@@ -146,8 +138,6 @@ export const ModalEditCompoundHet = observer((): ReactElement => {
       const params = `{"approx":${getApprox(approxCondition)},"state":${
         value !== '-current-' ? `"${value}"` : null
       }}`
-
-      dtreeStore.setCurrentStepIndexForApi(indexForApi)
 
       dtreeStore.fetchStatFuncAsync(groupName, params)
     }

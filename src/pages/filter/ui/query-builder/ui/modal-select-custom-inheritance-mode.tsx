@@ -39,13 +39,9 @@ export const ModalSelectCustomInheritanceMode = observer((): ReactElement => {
   })
 
   useEffect(() => {
-    const indexForApi = dtreeStore.getStepIndexForApi(currentStepIndex)
-
     const params = datasetStore.isXL
       ? '{"scenario":{"2":["HG002"],"0-1":["HG003","HG004"]}}'
       : '{"scenario":{"2":["NA24385"],"0-1":["NA24143","NA24149"]}}'
-
-    dtreeStore.setCurrentStepIndexForApi(indexForApi)
 
     dtreeStore.fetchStatFuncAsync(groupName, params)
 
@@ -88,11 +84,7 @@ export const ModalSelectCustomInheritanceMode = observer((): ReactElement => {
       if (newScenario[index + 1]) scenarioString += ','
     })
 
-    const indexForApi = dtreeStore.getStepIndexForApi(currentStepIndex)
-
     const params = `{"scenario":{${scenarioString}}}`
-
-    dtreeStore.setCurrentStepIndexForApi(indexForApi)
 
     dtreeStore.fetchStatFuncAsync(groupName, params)
   }

@@ -57,14 +57,10 @@ export const ModalEditInheritanceMode = observer((): ReactElement => {
   }, [currentGroupIndex, currentGroupLength, currentStepIndex])
 
   useEffect(() => {
-    const indexForApi = dtreeStore.getStepIndexForApi(currentStepIndex)
-
     const params = `{"problem_group":["${problemGroup
       .toString()
       .split(',')
       .join('","')}"]}`
-
-    dtreeStore.setCurrentStepIndexForApi(indexForApi)
 
     const initAsync = async () => {
       await dtreeStore.fetchStatFuncAsync(groupName, params)

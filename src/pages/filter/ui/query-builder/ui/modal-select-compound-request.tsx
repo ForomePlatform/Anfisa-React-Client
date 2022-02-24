@@ -77,8 +77,6 @@ export const ModalSelectCompoundRequest = observer((): ReactElement => {
   const stateOptions: string[] = [stateCondition]
 
   const handleSetCondition = (value: string, type: string) => {
-    const indexForApi = dtreeStore.getStepIndexForApi(currentStepIndex)
-
     if (type === 'approx') {
       setApproxCondition(value)
 
@@ -95,8 +93,6 @@ export const ModalSelectCompoundRequest = observer((): ReactElement => {
         stateCondition !== '-current-' ? `"${stateCondition}"` : null
       },"request":${request}}`
 
-      dtreeStore.setCurrentStepIndexForApi(indexForApi)
-
       dtreeStore.fetchStatFuncAsync(groupName, params)
     }
 
@@ -109,8 +105,6 @@ export const ModalSelectCompoundRequest = observer((): ReactElement => {
       const params = `{"approx":${approx},"state":${
         value !== '-current-' ? `"${value}"` : null
       }}`
-
-      dtreeStore.setCurrentStepIndexForApi(indexForApi)
 
       dtreeStore.fetchStatFuncAsync(groupName, params)
     }
@@ -244,8 +238,6 @@ export const ModalSelectCompoundRequest = observer((): ReactElement => {
   }
 
   function sendRequest(newRequestCondition: any[]) {
-    const indexForApi = dtreeStore.getStepIndexForApi(currentStepIndex)
-
     const requestString = getFuncParams(groupName, {
       request: newRequestCondition,
     })
@@ -260,8 +252,6 @@ export const ModalSelectCompoundRequest = observer((): ReactElement => {
         ? null
         : `"${stateCondition}"`
     },"request":${requestString}}`
-
-    dtreeStore.setCurrentStepIndexForApi(indexForApi)
 
     dtreeStore.fetchStatFuncAsync(groupName, params)
   }

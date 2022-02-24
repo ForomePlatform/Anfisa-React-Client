@@ -116,9 +116,6 @@ class DtreeStore {
   groupNameToChange = ''
   groupIndexToChange = 0
 
-  // TODO: delete it
-  currentStepIndexForApi = 0
-
   requestData: IRequestData[] = []
 
   modalSource = ''
@@ -247,12 +244,6 @@ class DtreeStore {
     return stepIndexForApi
   }
 
-  setCurrentStepIndexForApi = (index: number) => {
-    runInAction(() => {
-      this.currentStepIndexForApi = index
-    })
-  }
-
   async fetchDtreeSetAsync(body: URLSearchParams, shouldSaveInHistory = true) {
     if (shouldSaveInHistory) addToActionHistory(body)
 
@@ -291,8 +282,7 @@ class DtreeStore {
   async fetchStatFuncAsync(subGroupName: string, param: string) {
     const body = new URLSearchParams({
       ds: datasetStore.datasetName,
-      // TODO: change no
-      no: this.currentStepIndexForApi.toString(),
+      no: activeStepStore.stepIndexForApi,
       code: this.dtreeCode,
       rq_id: Math.random().toString(),
       unit: subGroupName,

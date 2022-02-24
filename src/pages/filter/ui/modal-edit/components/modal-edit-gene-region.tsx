@@ -48,11 +48,7 @@ export const ModalEditGeneRegion = observer((): ReactElement => {
   }
 
   useEffect(() => {
-    const indexForApi = dtreeStore.getStepIndexForApi(currentStepIndex)
-
     const params = `{"locus":"${getDefaultValue()}"}`
-
-    dtreeStore.setCurrentStepIndexForApi(indexForApi)
 
     dtreeStore.fetchStatFuncAsync(groupName, params)
 
