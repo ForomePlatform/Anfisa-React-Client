@@ -5,7 +5,7 @@ import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import datasetStore from '@store/dataset'
 import filterStore from '@store/filter'
 import { CompundHet } from './components/compound-het'
-import { CompoundRequest } from './components/compound-request'
+import { CompoundRequest } from './components/compound-request/compound-request'
 import { CustomInheritanceMode } from './components/custom-inheritance-mode/custom-inheritance-mode'
 import { GeneRegion } from './components/gene-region'
 import { InheritanceMode } from './components/inheritance-mode/inheritance-mode'
@@ -23,12 +23,6 @@ const initialStateMap: Record<string, any> = {
     variants: [],
     approx: '',
     state: null,
-  },
-  Compound_Request: {
-    variants: [],
-    approx: '',
-    state: null,
-    request: [],
   },
 }
 
@@ -56,28 +50,6 @@ export const FunctionPanel = (): ReactElement => {
         'Inheritance',
         FuncStepTypesEnum.CompoundHet,
         [[FuncStepTypesEnum.CompoundHet, noArray.length]],
-      )
-    }
-
-    if (selectedFilter.name === FuncStepTypesEnum.CompoundRequest) {
-      const noArray = await datasetStore.setConditionsAsync([
-        [
-          'func',
-          selectedFilter.name,
-          '',
-          [values.variants[0][0]],
-          {
-            approx: values.approx || null,
-            state: values.state || null,
-            request: values.request || null,
-          },
-        ],
-      ])
-
-      filterStore.addSelectedFilterGroup(
-        'Inheritance',
-        FuncStepTypesEnum.CompoundRequest,
-        [[FuncStepTypesEnum.CompoundRequest, noArray.length]],
       )
     }
 
