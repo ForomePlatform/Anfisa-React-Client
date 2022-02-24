@@ -455,7 +455,7 @@ class DtreeStore {
 
   // 3.1 Modals for creation brand new tree
 
-  openModalAttribute(index: number) {
+  openModalAttribute() {
     this.isModalAttributeVisible = true
   }
 

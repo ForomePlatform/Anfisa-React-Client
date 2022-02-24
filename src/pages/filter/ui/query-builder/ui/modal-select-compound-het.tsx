@@ -96,7 +96,7 @@ export const ModalSelectCompoundHet = observer((): ReactElement => {
 
   const handleModals = () => {
     dtreeStore.closeModalSelectCompoundHet()
-    dtreeStore.openModalAttribute(currentStepIndex)
+    dtreeStore.openModalAttribute()
     dtreeStore.resetSelectedFilters()
   }
 

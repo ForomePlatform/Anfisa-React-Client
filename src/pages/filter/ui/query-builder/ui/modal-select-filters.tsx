@@ -46,7 +46,7 @@ export const ModalSelectFilters = observer((): ReactElement => {
 
   const handleModals = () => {
     dtreeStore.closeModalSelectFilter()
-    dtreeStore.openModalAttribute(index)
+    dtreeStore.openModalAttribute()
     dtreeStore.resetSelectedFilters()
   }
 

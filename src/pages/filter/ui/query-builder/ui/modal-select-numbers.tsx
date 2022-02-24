@@ -82,7 +82,7 @@ export const ModalSelectNumbers = observer((): ReactElement => {
 
   const handleModals = () => {
     dtreeStore.closeModalSelectNumbers()
-    dtreeStore.openModalAttribute(activeStepStore.activeStepIndex)
+    dtreeStore.openModalAttribute()
   }
 
   const handleAddAttribute = (action: ActionType) => {

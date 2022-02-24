@@ -258,7 +258,7 @@ export const ModalSelectCompoundRequest = observer((): ReactElement => {
 
   const handleModals = () => {
     dtreeStore.closeModalSelectCompoundRequest()
-    dtreeStore.openModalAttribute(currentStepIndex)
+    dtreeStore.openModalAttribute()
     dtreeStore.resetSelectedFilters()
   }
 

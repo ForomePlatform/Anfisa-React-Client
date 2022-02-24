@@ -106,7 +106,7 @@ export const ModalSelectInheritanceMode = observer((): ReactElement => {
 
   const handleModals = () => {
     dtreeStore.closeModalSelectInheritanceMode()
-    dtreeStore.openModalAttribute(currentStepIndex)
+    dtreeStore.openModalAttribute()
     dtreeStore.resetSelectedFilters()
   }
 

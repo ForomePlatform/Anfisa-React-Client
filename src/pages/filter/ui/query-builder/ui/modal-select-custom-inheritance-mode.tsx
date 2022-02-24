@@ -174,7 +174,7 @@ export const ModalSelectCustomInheritanceMode = observer((): ReactElement => {
 
   const handleModals = () => {
     dtreeStore.closeModalSelectCustomInheritanceMode()
-    dtreeStore.openModalAttribute(currentStepIndex)
+    dtreeStore.openModalAttribute()
     dtreeStore.resetSelectedFilters()
   }
 

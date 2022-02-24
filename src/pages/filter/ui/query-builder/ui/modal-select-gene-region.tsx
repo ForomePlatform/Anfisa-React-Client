@@ -49,7 +49,7 @@ export const ModalSelectGeneRegion = observer((): ReactElement => {
 
   const handleModals = () => {
     dtreeStore.closeModalSelectGeneRegion()
-    dtreeStore.openModalAttribute(currentStepIndex)
+    dtreeStore.openModalAttribute()
     dtreeStore.resetSelectedFilters()
   }
 

@@ -73,7 +73,7 @@ export const NextStepContent = observer(({ index }: IProps): ReactElement => {
   const openModal = () => {
     activeStepStore.makeStepActive(index, ActiveStepOptions.StartedVariants)
 
-    dtreeStore.openModalAttribute(index)
+    dtreeStore.openModalAttribute()
   }
 
   return (
