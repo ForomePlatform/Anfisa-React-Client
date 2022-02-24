@@ -38,11 +38,8 @@ export const VariantHeader = observer(({ setLayout }: Props): ReactElement => {
   const hg19locus = findElementInRow(rows, 'hg19')
   const hg38locus = findElementInRow(rows, 'hg38')
 
-  // TODO: update type after implantion IDsInfo interface
-  const { meta }: any = toJS(dirinfoStore.dsinfo)
-  const hgModeValue: HgModes = meta?.modes?.[0]
-
-  const currentLocus = hgModeValue === HgModes.HG19 ? hg19locus : hg38locus
+  const { locusMode } = dirinfoStore
+  const currentLocus = locusMode === HgModes.HG19 ? hg19locus : hg38locus
 
   const filteredNo = toJS(datasetStore.filteredNo)
 
