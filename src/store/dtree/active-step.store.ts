@@ -44,15 +44,20 @@ class ActiveStep {
     // index is undefined in First step and Final step in Empty Tree
     const indexFromIndexes = indexes[this.activeStepIndex] ?? firstStepIndex
 
+    // 1)Case: For adding attribute in empty step
+    const isFirstElement = !indexes[this.activeStepIndex - 1]
+    if (this.activeStepIndex === emptyStepIndex && !isFirstElement) {
+      const nextStepIndex = indexes[this.activeStepIndex + 1]
+      return nextStepIndex
+    }
+
+    // 2)Case: For other cases
     const isReturnedVariants =
       this.activeStepOption === ActiveStepOptions.ReturnedVariants
 
     const indexForApi = isReturnedVariants
       ? String(+indexFromIndexes + 1)
       : indexFromIndexes
-
-    console.log('indexForApi', indexForApi)
-    console.log('indexes', indexes)
 
     return indexForApi
   }
@@ -64,6 +69,14 @@ class ActiveStep {
     const { dtreeCode } = dtreeStore
     dtreeStore.fetchDtreeStatAsync(dtreeCode, this.stepIndexForApi)
   }
+
+  // setInsertStepType(type: InsertStepTypes) {
+  //   this.insertStepType = type
+  // }
+
+  // resetInsertStepType() {
+  //   this.insertStepType = null
+  // }
 }
 
 export default new ActiveStep()
