@@ -16,6 +16,7 @@ import {
   HgModes,
   IAttributeDescriptors,
 } from '@service-providers/dataset-level/dataset-level.interface'
+import { findElementInRow } from '@utils/mian-table/find-element-in-row'
 import { closeHandler } from '../drawer'
 import { DrawerNote } from './drawer-note'
 import { DrawerTags } from './drawer-tags'
@@ -31,15 +32,11 @@ export const VariantHeader = observer(({ setLayout }: Props): ReactElement => {
   const variant = toJS(variantStore.variant)
   const rows: IAttributeDescriptors[] = get(variant, '[0].rows', [])
 
-  const genesRow = rows.find(element => element?.name === 'genes')
   const variantWithoutGenesName = 'None'
-  const genes = genesRow?.cells[0][0] ?? variantWithoutGenesName
+  const genes = findElementInRow(rows, 'genes') || variantWithoutGenesName
 
-  const hg19Row = rows.find(element => element.name === 'hg19')
-  const hg19locus = hg19Row?.cells[0][0] ?? ''
-
-  const hg38Row = rows.find(element => element.name === 'hg38')
-  const hg38locus = hg38Row?.cells[0][0] ?? ''
+  const hg19locus = findElementInRow(rows, 'hg19')
+  const hg38locus = findElementInRow(rows, 'hg38')
 
   // TODO: update type after implantion IDsInfo interface
   const { meta }: any = toJS(dirinfoStore.dsinfo)
