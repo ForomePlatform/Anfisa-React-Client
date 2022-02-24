@@ -12,5 +12,11 @@ export const createEmptyStep = (
   const changedStepIndex = isFinalStep ? previousStepIndex : stepIndex
   dtreeStore.insertStep(position, changedStepIndex)
 
-  activeStepStore.makeStepActive(stepIndex, ActiveStepOptions.StartedVariants)
+  const nextStepIndex = stepIndex + 1
+  const newActiveStepIndex = position === 'BEFORE' ? stepIndex : nextStepIndex
+
+  activeStepStore.makeStepActive(
+    newActiveStepIndex,
+    ActiveStepOptions.StartedVariants,
+  )
 }

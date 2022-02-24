@@ -48,6 +48,7 @@ class ActiveStep {
     const isFirstElement = !indexes[this.activeStepIndex - 1]
     if (this.activeStepIndex === emptyStepIndex && !isFirstElement) {
       const nextStepIndex = indexes[this.activeStepIndex + 1]
+
       return nextStepIndex
     }
 
@@ -69,14 +70,6 @@ class ActiveStep {
     const { dtreeCode } = dtreeStore
     dtreeStore.fetchDtreeStatAsync(dtreeCode, this.stepIndexForApi)
   }
-
-  // setInsertStepType(type: InsertStepTypes) {
-  //   this.insertStepType = type
-  // }
-
-  // resetInsertStepType() {
-  //   this.insertStepType = null
-  // }
 }
 
 export default new ActiveStep()
