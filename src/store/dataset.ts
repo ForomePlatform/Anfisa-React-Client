@@ -154,7 +154,7 @@ export class DatasetStore {
     this.zone = []
   }
 
-  async setConditionsAsync(conditions: Condition[]) {
+  async setConditionsAsync(conditions: Condition[], conditionsType?: string) {
     if (!conditions[0]) {
       this.conditions = []
       await this.fetchDsStatAsync()
@@ -163,7 +163,7 @@ export class DatasetStore {
         (item: any) => item[1] === conditions[0][1],
       )
 
-      if (groupCondtionsIndex !== -1) {
+      if (groupCondtionsIndex !== -1 && conditionsType !== 'func') {
         this.conditions.splice(groupCondtionsIndex, 1)
       }
 
@@ -184,7 +184,7 @@ export class DatasetStore {
   }
 
   removeCondition({ subGroup, itemName }: IRemoveConditionItem) {
-    const cloneConditions = cloneDeep(this.conditions)
+    let cloneConditions: Condition[] = cloneDeep(this.conditions)
 
     const subGroupIndex = cloneConditions.findIndex(
       item => item[1] === subGroup,
@@ -204,6 +204,11 @@ export class DatasetStore {
       } else {
         cloneConditions[subGroupIndex][3] = filteredItems
       }
+    } else if (conditionKind === FilterKindEnum.Func) {
+      cloneConditions = cloneConditions.filter(
+        (condition: any) =>
+          JSON.stringify(condition[condition.length - 1]) !== itemName,
+      )
     } else {
       cloneConditions.splice(subGroupIndex, 1)
     }

@@ -10,8 +10,7 @@ import { PanelButtons } from '../panelButtons'
 import customInheritanceModeStore from './custom-inheritance-mode.store'
 
 export const CustomInheritanceMode = observer(() => {
-  const { simpleVariants, filterName, filterGroup, problemGroups } =
-    functionPanelStore
+  const { simpleVariants, problemGroups } = functionPanelStore
 
   const { cachedValues, scenario, reset, selectStates } =
     customInheritanceModeStore
@@ -51,8 +50,6 @@ export const CustomInheritanceMode = observer(() => {
       />
 
       <PanelButtons
-        selectedFilterName={filterName}
-        selectedFilterGroup={filterGroup}
         onSubmit={() => customInheritanceModeStore.handleSumbitCondtions()}
         resetFields={() =>
           functionPanelStore.clearCachedValues(
@@ -60,6 +57,9 @@ export const CustomInheritanceMode = observer(() => {
           )
         }
         disabled={!simpleVariants}
+        selectedFilterValue={`"scenario": ${
+          cachedValues ? `${getStringScenario(scenario)}` : '{}'
+        }`}
       />
     </React.Fragment>
   )

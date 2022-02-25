@@ -14,7 +14,7 @@ import geneRegionStore from './gene-region.store'
 export const GeneRegion = observer(() => {
   const { locusValue } = geneRegionStore
 
-  const { simpleVariants, filterName, filterGroup } = functionPanelStore
+  const { simpleVariants } = functionPanelStore
 
   const [isErrorVisible, setIsErrorVisible] = useState<boolean>(false)
 
@@ -64,13 +64,12 @@ export const GeneRegion = observer(() => {
       </div>
 
       <PanelButtons
-        selectedFilterName={filterName}
-        selectedFilterGroup={filterGroup}
         onSubmit={() => geneRegionStore.handleSumbitCondtions()}
         resetFields={() =>
           functionPanelStore.clearCachedValues(FuncStepTypesEnum.GeneRegion)
         }
         disabled={!simpleVariants || isErrorVisible}
+        // selectedFilterValue={`{"locus":"${locusValue}"}`}
       />
     </React.Fragment>
   )

@@ -10,8 +10,7 @@ import inheritanceModeStore from './inheritance-mode.store'
 import { ProblemGroups } from './problem-groups'
 
 export const InheritanceMode = observer(() => {
-  const { filterName, filterGroup, problemGroups, filteredComplexVariants } =
-    functionPanelStore
+  const { problemGroups, filteredComplexVariants } = functionPanelStore
 
   const { cachedValues, problemGroupValues, variantsValues } =
     inheritanceModeStore
@@ -64,13 +63,12 @@ export const InheritanceMode = observer(() => {
       />
 
       <PanelButtons
-        selectedFilterName={filterName}
-        selectedFilterGroup={filterGroup}
         onSubmit={inheritanceModeStore.handleSumbitCondtions}
         resetFields={() =>
           inheritanceModeStore.handleResetAllFieldsLocally(problemGroupValues)
         }
         disabled={variantsValues.length === 0}
+        selectedFilterValue={variantsValues.toString()}
       />
     </React.Fragment>
   )

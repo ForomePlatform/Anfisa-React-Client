@@ -204,7 +204,7 @@ class CompoundRequestStore {
       0,
     ]
 
-    functionPanelStore.handleSumbitConditions(conditions, variant)
+    functionPanelStore.sumbitConditions(conditions, variant)
   }
 }
 

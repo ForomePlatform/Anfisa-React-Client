@@ -221,7 +221,7 @@ class CustomInheritanceModeStore {
 
     const variant: TVariant = [`"scenario": ${this.stringScenario}`, 0]
 
-    functionPanelStore.handleSumbitConditions(custInhModeConditions, variant)
+    functionPanelStore.sumbitConditions(custInhModeConditions, variant)
   }
 }
 

@@ -24,7 +24,7 @@ export const resetOptions = [
 export const CompoundRequest = observer((): ReactElement => {
   const { cachedValues, requestCondition } = compoundRequestStore
 
-  const { filterName, filterGroup, simpleVariants } = functionPanelStore
+  const { simpleVariants } = functionPanelStore
 
   const [activeRequestIndex, setActiveRequestIndex] = useState(
     requestCondition.length - 1,
@@ -74,11 +74,16 @@ export const CompoundRequest = observer((): ReactElement => {
       <DisabledVariantsAmount variants={simpleVariants} disabled={true} />
 
       <PanelButtons
-        selectedFilterName={filterName}
-        selectedFilterGroup={filterGroup}
         onSubmit={() => compoundRequestStore.handleSumbitCondtions()}
         resetFields={handleResetFields}
         disabled={!simpleVariants}
+        selectedFilterValue={`"request":${getPureRequestString(
+          getFuncParams(FuncStepTypesEnum.CompoundRequest, {
+            request: getFilteredRequestCondition(
+              cachedValues?.conditions.request || requestCondition,
+            ),
+          }).replace(/\s+/g, ''),
+        )}}`}
       />
     </React.Fragment>
   )
