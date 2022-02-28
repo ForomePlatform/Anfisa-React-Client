@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useRef, useState } from 'react'
+import React, { ReactElement, useEffect, useRef, useState } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
@@ -10,11 +10,16 @@ import { InputNumber } from '@ui/input-number'
 import { RangeSlider } from '@ui/range-slider'
 import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-modal.cy'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
-import { DropDownSelectSign } from './dropdown-select-sign'
-import { ExpandContentButton } from './expand-content-button'
-import { HeaderModal } from './header-modal'
-import { ModalBase } from './modal-base'
-import { SelectModalButtons } from './select-modal-buttons'
+import { DropDownSelectSign } from '../../../query-builder/ui/dropdown-select-sign'
+import { ExpandContentButton } from '../../../query-builder/ui/expand-content-button'
+import { HeaderModal } from '../../../query-builder/ui/header-modal'
+import { ModalBase } from '../../../query-builder/ui/modal-base'
+import { SelectModalButtons } from '../../../query-builder/ui/select-modal-buttons'
+import {
+  getNumericValue,
+  getRangeSliderProps,
+  getRangeSliderStrongSide,
+} from './utils'
 
 export const ModalSelectNumbers = observer((): ReactElement => {
   const ref = useRef(null)
@@ -38,7 +43,6 @@ export const ModalSelectNumbers = observer((): ReactElement => {
 
   const minValue = attrData.min
   const maxValue = attrData.max
-  const subKind = attrData['sub-kind']
 
   const [valueFrom, setValueFrom] = useState('')
   const [valueTo, setValueTo] = useState('')
@@ -251,15 +255,13 @@ export const ModalSelectNumbers = observer((): ReactElement => {
         )}
       </div>
       <RangeSlider
-        mode="range"
-        min={minValue}
-        max={maxValue}
-        value={[valueFrom ? +valueFrom : null, valueTo ? +valueTo : null]}
+        value={[getNumericValue(valueFrom), getNumericValue(valueTo)]}
         onChange={value => {
           setValueFrom(value[0] != null ? value[0].toString() : '')
           setValueTo(value[1] != null ? value[1].toString() : '')
         }}
-        step={subKind === 'float' ? 0.001 : 1}
+        strong={getRangeSliderStrongSide(leftDropType, rightDropType)}
+        {...getRangeSliderProps(attrData)}
       />
       <SelectModalButtons
         handleClose={handleClose}
