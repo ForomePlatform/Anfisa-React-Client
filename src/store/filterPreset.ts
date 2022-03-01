@@ -1,7 +1,9 @@
 import { makeAutoObservable, runInAction } from 'mobx'
 
 import { getApiUrl } from '@core/get-api-url'
+import { t } from '@i18n'
 import filterStore from '@store/filter'
+import { showToast } from '@utils/notifications/showToast'
 import datasetStore from './dataset'
 
 class PresetStore {
@@ -56,19 +58,14 @@ class PresetStore {
   async joinPresetAsync(presetName: string) {
     const body = new URLSearchParams({
       ds: datasetStore.datasetName,
-      conditions: JSON.stringify(datasetStore.conditions),
       instr: JSON.stringify(['JOIN', presetName]),
     })
 
-    const response = await fetch(getApiUrl('ds_stat'), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body,
-    })
+    datasetStore.prevPreset
+      ? body.append('filter', datasetStore.prevPreset)
+      : body.append('conditions', JSON.stringify(datasetStore.conditions))
 
-    const result = await response.json()
+    const result = await datasetStore.fetchDsStatAsync(false, body)
 
     await datasetStore.updatePresetLoad(result)
   }
@@ -95,6 +92,67 @@ class PresetStore {
     })
 
     await datasetStore.updatePresetLoad(result)
+  }
+
+  handleDeletePreset(): void {
+    this.deletePresetAsync(datasetStore.activePreset)
+
+    datasetStore.resetActivePreset()
+
+    datasetStore.resetPrevPreset()
+
+    filterStore.resetActionName()
+
+    showToast(t('header.presetFilterAction.delete'), 'success')
+  }
+
+  handleJoinPreset(preset: string): void {
+    this.joinPresetAsync(preset)
+
+    filterStore.resetActionName()
+
+    datasetStore.resetActivePreset()
+
+    showToast(t('header.presetFilterAction.join'), 'success')
+
+    preset && datasetStore.setPrevPreset(preset)
+  }
+
+  handleCreatePreset(createPresetName: string): void {
+    createPresetName && this.updatePresetAsync(createPresetName)
+
+    filterStore.resetActionName()
+
+    datasetStore.setActivePreset(createPresetName)
+
+    showToast(t('general.presetCreated'), 'success')
+  }
+
+  handleModifyPreset(preset: string): void {
+    this.updatePresetAsync(preset)
+
+    filterStore.resetActionName()
+
+    showToast(t('header.presetFilterAction.modify'), 'success')
+
+    preset && datasetStore.setPrevPreset(preset)
+  }
+
+  handleLoadPreset(preset: string): void {
+    if (preset === datasetStore.activePreset) return
+
+    datasetStore.activePreset &&
+      datasetStore.setPrevPreset(datasetStore.activePreset)
+
+    datasetStore.setActivePreset(preset)
+
+    if (filterStore.actionName) return
+
+    if (datasetStore.prevPreset !== datasetStore.activePreset) {
+      this.loadPresetAsync(preset, 'refiner')
+
+      if (!datasetStore.isXL) datasetStore.fetchWsListAsync()
+    }
   }
 }
 

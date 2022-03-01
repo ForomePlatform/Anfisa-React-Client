@@ -1,5 +1,6 @@
 import { Fragment, ReactElement, useEffect, useState } from 'react'
 import get from 'lodash/get'
+import isEmpty from 'lodash/isEmpty'
 import { reaction } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
@@ -14,15 +15,29 @@ import { DropDown } from '@ui/dropdown'
 import { Input } from '@ui/input'
 import { PopperButton } from '@components/popper-button'
 import { DatasetCreationButton } from '@pages/ws/ui/dataset-creation-button'
+import { compareConditions } from '@utils/filter-refiner/compareConditions'
 import { showToast } from '@utils/notifications/showToast'
 import { validatePresetName } from '@utils/validation/validatePresetName'
 import { FilterButton } from './filter-button'
 import { FilterModal } from './filter-modal'
 
 export const FilterControlRefiner = observer((): ReactElement => {
-  const activePreset = datasetStore.activePreset
+  const activePreset: string = datasetStore.activePreset
 
-  const [createPresetName, setCreatePresetName] = useState('')
+  const [createPresetName, setCreatePresetName] = useState<string>('')
+
+  const isSelectedFiltersEmpty: boolean = isEmpty(filterStore.selectedFilters)
+
+  const canBeModified = (preset: FilterList): boolean => {
+    return filterStore.actionName === ActionFilterEnum.Delete ||
+      filterStore.actionName === ActionFilterEnum.Modify
+      ? !preset.standard
+      : true
+  }
+
+  const presets: string[] = get(datasetStore, 'dsStat.filter-list', [])
+    .filter(canBeModified)
+    .map((preset: FilterList) => preset.name)
 
   useEffect(() => {
     const dispose = reaction(
@@ -36,39 +51,35 @@ export const FilterControlRefiner = observer((): ReactElement => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const loadPreset = (preset: string) => {
-    datasetStore.setActivePreset(preset)
+  const isApplyDisabled =
+    activePreset.startsWith('⏚') &&
+    (filterStore.actionName === ActionFilterEnum.Modify ||
+      filterStore.actionName === ActionFilterEnum.Delete)
 
-    if (datasetStore.prevPreset !== datasetStore.activePreset) {
-      presetStore.loadPresetAsync(preset, 'refiner')
-
-      if (!datasetStore.isXL) datasetStore.fetchWsListAsync()
-    }
-  }
-
-  const canBeModified = (preset: FilterList): boolean => {
-    return filterStore.actionName === ActionFilterEnum.Delete ||
-      filterStore.actionName === ActionFilterEnum.Modify
-      ? !preset.standard
-      : true
-  }
-
-  const presets: string[] = get(datasetStore, 'dsStat.filter-list', [])
-    .filter(canBeModified)
-    .map((preset: FilterList) => preset.name)
+  useEffect(() => {
+    if (isSelectedFiltersEmpty) filterStore.resetActionName()
+  }, [isSelectedFiltersEmpty])
 
   const handleClick = () => {
     if (filterStore.actionName === ActionFilterEnum.Delete) {
-      presetStore.deletePresetAsync(activePreset)
-      datasetStore.resetActivePreset()
+      presetStore.handleDeletePreset()
     }
 
     if (filterStore.actionName === ActionFilterEnum.Join) {
-      presetStore.joinPresetAsync(activePreset)
+      const isConditionsAbleToJoin = compareConditions({
+        currentConditions: datasetStore.conditions,
+        startConditions: datasetStore.startPresetConditions,
+        currentPreset: datasetStore.activePreset,
+        prevPreset: datasetStore.prevPreset,
+      })
 
-      filterStore.resetActionName()
+      if (!isConditionsAbleToJoin) {
+        showToast(t('error.cantJoinTheSamePreset'), 'error')
 
-      showToast(t('header.presetFilterAction.join'), 'success')
+        return
+      }
+
+      presetStore.handleJoinPreset(datasetStore.activePreset)
     }
 
     if (filterStore.actionName === ActionFilterEnum.Create) {
@@ -80,26 +91,38 @@ export const FilterControlRefiner = observer((): ReactElement => {
         return
       }
 
-      createPresetName && presetStore.updatePresetAsync(createPresetName)
-      showToast(t('general.presetCreated'), 'success')
+      if (isSelectedFiltersEmpty) {
+        showToast(t('error.chooseFiltersFirst'), 'error')
 
-      setCreatePresetName('')
+        return
+      }
 
-      filterStore.setActionName()
+      presetStore.handleCreatePreset(createPresetName)
     }
 
     if (filterStore.actionName === ActionFilterEnum.Modify) {
-      presetStore.updatePresetAsync(activePreset)
-      filterStore.resetActionName()
+      const isConditionsAbleToModify = compareConditions({
+        currentConditions: datasetStore.conditions,
+        startConditions: datasetStore.startPresetConditions,
+        currentPreset: datasetStore.activePreset,
+        prevPreset: datasetStore.prevPreset,
+      })
 
-      showToast(t('header.presetFilterAction.modify'), 'success')
+      if (!datasetStore.activePreset) {
+        showToast(t('error.choosePresetFirst'), 'error')
+
+        return
+      }
+
+      if (!isConditionsAbleToModify) {
+        showToast(t('error.noChangesToModify'), 'error')
+
+        return
+      }
+
+      presetStore.handleModifyPreset(datasetStore.activePreset)
     }
   }
-
-  const isApplyDisabled =
-    activePreset.startsWith('⏚') &&
-    (filterStore.actionName === ActionFilterEnum.Modify ||
-      filterStore.actionName === ActionFilterEnum.Delete)
 
   return (
     <Fragment>
@@ -130,40 +153,39 @@ export const FilterControlRefiner = observer((): ReactElement => {
             <DropDown
               options={presets}
               value={activePreset}
-              onSelect={args => loadPreset(args.value)}
+              onSelect={args => presetStore.handleLoadPreset(args.value)}
             />
           )}
         </div>
 
-        {filterStore.actionName !== ActionFilterEnum.Create && activePreset && (
+        {!isSelectedFiltersEmpty && (
           <PopperButton
             ButtonElement={FilterButton}
             ModalElement={FilterModal}
           />
         )}
 
-        {filterStore.actionName === ActionFilterEnum.Create && (
-          <Button
-            text={t('general.cancel')}
-            size="md"
-            variant={'secondary-dark'}
-            className="mt-auto ml-2"
-            onClick={() => {
-              datasetStore.resetActivePreset()
-              setCreatePresetName('')
-              filterStore.setActionName()
-            }}
-          />
-        )}
+        {filterStore.actionName && (
+          <>
+            <Button
+              text={t('general.apply')}
+              size="md"
+              onClick={handleClick}
+              disabled={isApplyDisabled}
+              className="text-white mt-auto ml-2"
+            />
 
-        {filterStore.actionName && (activePreset || createPresetName) && (
-          <Button
-            text={t('general.apply')}
-            size="md"
-            onClick={handleClick}
-            disabled={isApplyDisabled}
-            className="text-white mt-auto ml-2"
-          />
+            <Button
+              text={t('general.cancel')}
+              size="md"
+              variant={'secondary-dark'}
+              className="mt-auto ml-2"
+              onClick={() => {
+                setCreatePresetName('')
+                filterStore.resetActionName()
+              }}
+            />
+          </>
         )}
       </div>
 
