@@ -1,17 +1,27 @@
 import { FC, memo, useEffect, useRef } from 'react'
 import isEqual from 'lodash/isEqual'
 
+import { StatList } from '@declarations'
 import Chart from './chart-register'
 import { getChartConfig, getChartData } from './utils'
+import { getDoughnutChartConfig } from './utils/getDoughnutChartConfig'
 
 interface IQueryBuilderSubgroupChartProps {
-  variants?: any[][]
-  histogram?: any[]
+  // TODO: change types when refactoring
+  // subGroupItem: TPropertyStatus
+  subGroupItem: StatList
+}
+
+export enum ChartRenderModes {
+  Pie = 'pie',
+  Bar = 'bar',
 }
 
 export const QueryBuilderSubgroupChart: FC<IQueryBuilderSubgroupChartProps> =
   memo(
-    ({ variants, histogram }) => {
+    ({ subGroupItem }) => {
+      const { 'render-mode': renderMode } = subGroupItem
+
       const canvasRef = useRef<HTMLCanvasElement>(null)
       const chartRef = useRef<Chart>()
 
@@ -20,16 +30,18 @@ export const QueryBuilderSubgroupChart: FC<IQueryBuilderSubgroupChartProps> =
           return
         }
 
-        const chartData = getChartData({ variants, histogram })
+        const chartData = getChartData(subGroupItem)
 
         if (chartData) {
           const chart = chartRef.current
 
+          const currentChartConfig =
+            renderMode === ChartRenderModes.Pie
+              ? getDoughnutChartConfig(chartData)
+              : getChartConfig(chartData)
+
           if (!chart) {
-            chartRef.current = new Chart(
-              canvasRef.current,
-              getChartConfig(chartData),
-            )
+            chartRef.current = new Chart(canvasRef.current, currentChartConfig)
           } else {
             chart.data = chartData
             chart.update()
@@ -40,7 +52,8 @@ export const QueryBuilderSubgroupChart: FC<IQueryBuilderSubgroupChartProps> =
             chartRef.current = undefined
           }
         }
-      }, [variants, histogram])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+      }, [subGroupItem])
 
       useEffect(() => {
         return () => {
@@ -55,8 +68,7 @@ export const QueryBuilderSubgroupChart: FC<IQueryBuilderSubgroupChartProps> =
       )
     },
     (prevProps, nextProps) =>
-      isEqual(prevProps.variants, nextProps.variants) &&
-      isEqual(prevProps.histogram, nextProps.histogram),
+      isEqual(prevProps.subGroupItem, nextProps.subGroupItem),
   )
 
 QueryBuilderSubgroupChart.displayName = 'QueryBuilderSubgroupChart'
