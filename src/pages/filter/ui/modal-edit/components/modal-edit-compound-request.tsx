@@ -15,7 +15,7 @@ import { getRequestData } from '@utils/getRequestData'
 import { getResetRequestData } from '@utils/getResetRequestData'
 import { getResetType } from '@utils/getResetType'
 import { getSortedArray } from '@utils/getSortedArray'
-import { resetOptions } from '../../panels/function-panel/components/compound-request'
+import { resetOptions } from '../../panels/function-panel/components/compound-request/compound-request'
 import { AllNotModalMods } from '../../query-builder/ui/all-not-modal-mods'
 import { ApproxStateModalMods } from '../../query-builder/ui/approx-state-modal-mods'
 import { DisabledVariantsAmount } from '../../query-builder/ui/disabled-variants-amount'
@@ -227,7 +227,11 @@ export const ModalEditCompoundRequest = observer((): ReactElement => {
     currentSelectIndex: number,
     target: any,
   ) => {
-    const requestData = getRequestData(target, currentSelectIndex, attrData)
+    const requestData = getRequestData(
+      target,
+      currentSelectIndex,
+      attrData.family,
+    )
 
     const newRequest = Object.fromEntries(getSortedArray(requestData))
 
@@ -247,7 +251,7 @@ export const ModalEditCompoundRequest = observer((): ReactElement => {
   }
 
   const handleReset = (name: string) => {
-    const resetRequestData = getResetRequestData(name, attrData)
+    const resetRequestData = getResetRequestData(name, attrData.family)
 
     const newRequest = Object.fromEntries(getSortedArray(resetRequestData))
 
