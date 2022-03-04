@@ -10,12 +10,11 @@ import { PanelButtons } from '../panelButtons'
 import customInheritanceModeStore from './custom-inheritance-mode.store'
 
 export const CustomInheritanceMode = observer(() => {
-  const cachedValues = customInheritanceModeStore.cachedValues
-
   const { simpleVariants, filterName, filterGroup, problemGroups } =
     functionPanelStore
 
-  const { scenario, reset, selectStates } = customInheritanceModeStore
+  const { cachedValues, scenario, reset, selectStates } =
+    customInheritanceModeStore
 
   const setComplexScenario = (resetName: string): void => {
     customInheritanceModeStore.setComplexScenario(resetName)
