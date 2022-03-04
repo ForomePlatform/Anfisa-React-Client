@@ -1,13 +1,10 @@
 import { Fragment, FunctionComponent, ReactElement } from 'react'
-import { Formik } from 'formik'
 
-import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
-import datasetStore from '@store/dataset'
 import filterStore from '@store/filter'
-import { CompundHet } from './components/compound-het'
+import { CompundHet } from './components/compound-het/compound-het'
 import { CompoundRequest } from './components/compound-request/compound-request'
 import { CustomInheritanceMode } from './components/custom-inheritance-mode/custom-inheritance-mode'
-import { GeneRegion } from './components/gene-region'
+import { GeneRegion } from './components/gene-region/gene-region'
 import { InheritanceMode } from './components/inheritance-mode/inheritance-mode'
 
 const functionsMap: Record<string, any> = {
@@ -18,61 +15,15 @@ const functionsMap: Record<string, any> = {
   Compound_Request: CompoundRequest,
 }
 
-const initialStateMap: Record<string, any> = {
-  Compound_Het: {
-    variants: [],
-    approx: '',
-    state: null,
-  },
-}
-
 export const FunctionPanel = (): ReactElement => {
   const selectedFilter = filterStore.selectedGroupItem
 
   const Component: FunctionComponent<Record<string, any>> =
     functionsMap[selectedFilter.name]
 
-  const onSubmitAsync = async (values: any) => {
-    if (datasetStore.activePreset) datasetStore.resetActivePreset()
-
-    if (selectedFilter.name === FuncStepTypesEnum.CompoundHet) {
-      const noArray = await datasetStore.setConditionsAsync([
-        [
-          'func',
-          selectedFilter.name,
-          '',
-          values.variants,
-          { approx: values.approx || null, state: values.state || null },
-        ],
-      ])
-
-      filterStore.addSelectedFilterGroup(
-        'Inheritance',
-        FuncStepTypesEnum.CompoundHet,
-        [[FuncStepTypesEnum.CompoundHet, noArray.length]],
-      )
-    }
-
-    if (!datasetStore.isXL) {
-      datasetStore.fetchWsListAsync()
-    }
-  }
-
   if (!Component) {
     return <Fragment />
   }
 
-  const initialValues = { ...initialStateMap, ...filterStore.filterCondition }
-
-  return (
-    <div>
-      <Formik
-        initialValues={initialValues[selectedFilter.name]}
-        enableReinitialize
-        onSubmit={onSubmitAsync}
-      >
-        {props => <Component {...props} />}
-      </Formik>
-    </div>
-  )
+  return <Component />
 }
