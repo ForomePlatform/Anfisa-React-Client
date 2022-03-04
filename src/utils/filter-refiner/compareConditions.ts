@@ -19,15 +19,17 @@ export const compareConditions = ({
 
   if (prevPreset && currentPreset !== prevPreset) return true
 
-  let acc = 0
+  const sum = currentConditions.reduce(
+    (acc, condition: any[], index): number => {
+      if (difference(condition[index], startConditions[index]).length === 0) {
+        acc += 1
+      }
+      return acc
+    },
+    0,
+  )
 
-  currentConditions.forEach((condition: any[], index) => {
-    if (difference(condition[index], startConditions[index]).length === 0) {
-      acc += 1
-    }
-  })
-
-  if (acc === currentConditions.length) return false
+  if (sum === currentConditions.length) return false
 
   return false
 }

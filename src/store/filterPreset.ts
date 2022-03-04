@@ -6,6 +6,8 @@ import filterStore from '@store/filter'
 import { showToast } from '@utils/notifications/showToast'
 import datasetStore from './dataset'
 
+export const DEFAULT_PRESET_LABEL = '⏚'
+
 class PresetStore {
   constructor() {
     makeAutoObservable(this)
@@ -94,7 +96,7 @@ class PresetStore {
     await datasetStore.updatePresetLoad(result)
   }
 
-  handleDeletePreset(): void {
+  deletePreset(): void {
     this.deletePresetAsync(datasetStore.activePreset)
 
     datasetStore.resetActivePreset()
@@ -106,7 +108,7 @@ class PresetStore {
     showToast(t('header.presetFilterAction.delete'), 'success')
   }
 
-  handleJoinPreset(preset: string): void {
+  joinPreset(preset: string): void {
     this.joinPresetAsync(preset)
 
     filterStore.resetActionName()
@@ -118,7 +120,7 @@ class PresetStore {
     preset && datasetStore.setPrevPreset(preset)
   }
 
-  handleCreatePreset(createPresetName: string): void {
+  createPreset(createPresetName: string): void {
     createPresetName && this.updatePresetAsync(createPresetName)
 
     filterStore.resetActionName()
@@ -128,7 +130,7 @@ class PresetStore {
     showToast(t('general.presetCreated'), 'success')
   }
 
-  handleModifyPreset(preset: string): void {
+  modifyPreset(preset: string): void {
     this.updatePresetAsync(preset)
 
     filterStore.resetActionName()
@@ -138,7 +140,7 @@ class PresetStore {
     preset && datasetStore.setPrevPreset(preset)
   }
 
-  handleLoadPreset(preset: string): void {
+  loadPreset(preset: string): void {
     if (preset === datasetStore.activePreset) return
 
     datasetStore.activePreset &&
