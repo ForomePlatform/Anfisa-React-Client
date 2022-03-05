@@ -12,8 +12,12 @@ import { ProblemGroups } from './problem-groups'
 export const InheritanceMode = observer(() => {
   const { problemGroups, filteredComplexVariants } = functionPanelStore
 
-  const { cachedValues, problemGroupValues, variantsValues } =
-    inheritanceModeStore
+  const {
+    cachedValues,
+    problemGroupValues,
+    variantsValues,
+    selectedFilterValue,
+  } = inheritanceModeStore
 
   const handleChangeProblemGroups = (
     e: ChangeEvent<HTMLInputElement>,
@@ -68,7 +72,7 @@ export const InheritanceMode = observer(() => {
           inheritanceModeStore.handleResetAllFieldsLocally(problemGroupValues)
         }
         disabled={variantsValues.length === 0}
-        selectedFilterValue={variantsValues.toString()}
+        selectedFilterValue={selectedFilterValue}
       />
     </React.Fragment>
   )

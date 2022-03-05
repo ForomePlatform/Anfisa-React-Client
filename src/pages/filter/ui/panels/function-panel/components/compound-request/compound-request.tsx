@@ -4,9 +4,6 @@ import { observer } from 'mobx-react-lite'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import filterStore from '@store/filter'
 import { DisabledVariantsAmount } from '@pages/filter/ui/query-builder/ui/disabled-variants-amount'
-import { getFilteredRequestCondition } from '@utils/function-panel/getFilteredRequestCondition'
-import { getPureRequestString } from '@utils/function-panel/getPureRequestString'
-import { getFuncParams } from '@utils/getFuncParams'
 import functionPanelStore from '../../function-panel.store'
 import { PanelButtons } from '../panelButtons'
 import { AprroxAndState } from './approx-state'
@@ -22,27 +19,18 @@ export const resetOptions = [
 ]
 
 export const CompoundRequest = observer((): ReactElement => {
-  const { cachedValues, requestCondition } = compoundRequestStore
+  const { cachedValues, requestCondition, selectedFilterValue } =
+    compoundRequestStore
 
   const { simpleVariants } = functionPanelStore
 
-  const [activeRequestIndex, setActiveRequestIndex] = useState(
+  const [activeRequestIndex, setActiveRequestIndex] = useState<number>(
     requestCondition.length - 1,
   )
 
   // check if there is some data in cachedValues from preset
   useEffect(() => {
-    const filteredRequestCondition = getFilteredRequestCondition(
-      cachedValues?.conditions.request || requestCondition,
-    )
-
-    const requestString = getFuncParams(FuncStepTypesEnum.CompoundRequest, {
-      request: filteredRequestCondition,
-    }).replace(/\s+/g, '')
-
-    const params = `{"approx":${null},"state":${null},"request":${getPureRequestString(
-      requestString,
-    )}}`
+    const params = `{"approx":${null},"state":${null},${selectedFilterValue}`
 
     functionPanelStore.fetchStatFunc(FuncStepTypesEnum.CompoundRequest, params)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -77,13 +65,7 @@ export const CompoundRequest = observer((): ReactElement => {
         onSubmit={() => compoundRequestStore.handleSumbitCondtions()}
         resetFields={handleResetFields}
         disabled={!simpleVariants}
-        selectedFilterValue={`"request":${getPureRequestString(
-          getFuncParams(FuncStepTypesEnum.CompoundRequest, {
-            request: getFilteredRequestCondition(
-              cachedValues?.conditions.request || requestCondition,
-            ),
-          }).replace(/\s+/g, ''),
-        )}}`}
+        selectedFilterValue={selectedFilterValue}
       />
     </React.Fragment>
   )

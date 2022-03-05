@@ -12,7 +12,7 @@ import customInheritanceModeStore from './custom-inheritance-mode.store'
 export const CustomInheritanceMode = observer(() => {
   const { simpleVariants, problemGroups } = functionPanelStore
 
-  const { cachedValues, scenario, reset, selectStates } =
+  const { cachedValues, scenario, reset, selectStates, selectedFilterValue } =
     customInheritanceModeStore
 
   const setComplexScenario = (resetName: string): void => {
@@ -57,9 +57,7 @@ export const CustomInheritanceMode = observer(() => {
           )
         }
         disabled={!simpleVariants}
-        selectedFilterValue={`"scenario": ${
-          cachedValues ? `${getStringScenario(scenario)}` : '{}'
-        }`}
+        selectedFilterValue={selectedFilterValue}
       />
     </React.Fragment>
   )

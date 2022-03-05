@@ -79,6 +79,12 @@ class CustomInheritanceModeStore {
     ]
   }
 
+  public get selectedFilterValue(): string {
+    return `"scenario": ${
+      this.cachedValues ? `${getStringScenario(this.scenario)}` : '{}'
+    }`
+  }
+
   // scenario creation step by step
   public setSingleScenario(group: string, selectValue: string): void {
     if (group === functionPanelStore.problemGroups[0]) {

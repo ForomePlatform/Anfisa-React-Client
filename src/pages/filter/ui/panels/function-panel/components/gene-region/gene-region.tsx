@@ -12,7 +12,7 @@ import { PanelButtons } from '../panelButtons'
 import geneRegionStore from './gene-region.store'
 
 export const GeneRegion = observer(() => {
-  const { locusValue } = geneRegionStore
+  const { locusValue, selectedFilterValue } = geneRegionStore
 
   const { simpleVariants } = functionPanelStore
 
@@ -23,10 +23,10 @@ export const GeneRegion = observer(() => {
   }
 
   useEffect(() => {
-    const params: string = `{"locus":"${locusValue}"}`
+    const params: string = selectedFilterValue
 
     functionPanelStore.fetchStatFunc(FuncStepTypesEnum.GeneRegion, params)
-  }, [locusValue])
+  }, [selectedFilterValue])
 
   // to avoid displaying this data on the another func attr
   useEffect(() => {
@@ -69,7 +69,7 @@ export const GeneRegion = observer(() => {
           functionPanelStore.clearCachedValues(FuncStepTypesEnum.GeneRegion)
         }
         disabled={!simpleVariants || isErrorVisible}
-        // selectedFilterValue={`{"locus":"${locusValue}"}`}
+        selectedFilterValue={selectedFilterValue}
       />
     </React.Fragment>
   )

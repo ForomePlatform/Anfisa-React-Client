@@ -29,6 +29,10 @@ class InheritanceModeStore {
     return this.cachedValues?.variants || []
   }
 
+  public get selectedFilterValue(): string {
+    return this.variantsValues.toString()
+  }
+
   public handleChangeProblemGroups(
     e: ChangeEvent<HTMLInputElement>,
     problemGroup: string,
