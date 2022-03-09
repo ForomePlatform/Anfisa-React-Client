@@ -1,7 +1,7 @@
 import { ChartData } from 'chart.js'
 
 import { theme } from '@theme'
-import { ChartRenderModes } from '../query-builder-subgroup-chart'
+import { ChartRenderModes } from '../chart.interface'
 
 export const getVariantsChartData = (subGroupItem: any) => {
   const { variants, 'render-mode': renderMode } = subGroupItem
