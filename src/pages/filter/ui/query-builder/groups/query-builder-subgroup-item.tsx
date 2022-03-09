@@ -9,7 +9,6 @@ import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModalSources } from '@core/enum/modal-sources'
 import { useScrollPosition } from '@core/hooks/use-scroll-position'
 import dtreeStore from '@store/dtree'
-import activeStepStore from '@store/dtree/active-step.store'
 import filterStore from '@store/filter'
 import { Icon } from '@ui/icon'
 import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
@@ -58,43 +57,24 @@ export const QueryBuilderSubgroupItem = observer(
         dtreeModalStore.openModalNumbers(group.name, undefined, source)
       }
 
-      const { activeStepIndex } = activeStepStore
-
       if (group.kind === FilterKindEnum.Func) {
         group.name === FuncStepTypesEnum.InheritanceMode &&
-          dtreeModalStore.openModalSelectInheritanceMode(
-            group.name,
-            activeStepIndex,
-            source,
-          )
+          dtreeModalStore.openModalSelectInheritanceMode(group.name, source)
 
         group.name === FuncStepTypesEnum.CustomInheritanceMode &&
           dtreeModalStore.openModalSelectCustomInheritanceMode(
             group.name,
-            activeStepIndex,
             source,
           )
 
         group.name === FuncStepTypesEnum.CompoundHet &&
-          dtreeModalStore.openModalSelectCompoundHet(
-            group.name,
-            activeStepIndex,
-            source,
-          )
+          dtreeModalStore.openModalSelectCompoundHet(group.name, source)
 
         group.name === FuncStepTypesEnum.CompoundRequest &&
-          dtreeModalStore.openModalSelectCompoundRequest(
-            group.name,
-            activeStepIndex,
-            source,
-          )
+          dtreeModalStore.openModalSelectCompoundRequest(group.name, source)
 
         group.name === FuncStepTypesEnum.GeneRegion &&
-          dtreeModalStore.openModalSelectGeneRegion(
-            group.name,
-            activeStepIndex,
-            source,
-          )
+          dtreeModalStore.openModalSelectGeneRegion(group.name, source)
       }
     }
 

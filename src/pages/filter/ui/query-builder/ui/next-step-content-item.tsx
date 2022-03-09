@@ -65,30 +65,26 @@ export const NextStepContentItem = observer(
       activeStepStore.makeStepActive(index, ActiveStepOptions.StartedVariants)
 
       group[0] === StepTypeEnum.Enum &&
-        dtreeModalStore.openModalEditFilters(group[1], index, currNo)
+        dtreeModalStore.openModalEditFilters(group[1], currNo)
 
       group[0] === StepTypeEnum.Numeric &&
         dtreeModalStore.openModalNumbers(group[1], currNo)
 
       if (group[0] === StepTypeEnum.Func) {
         group[1] === FuncStepTypesEnum.InheritanceMode &&
-          dtreeModalStore.openModalEditInheritanceMode(group[1], index, currNo)
+          dtreeModalStore.openModalEditInheritanceMode(group[1], currNo)
 
         group[1] === FuncStepTypesEnum.CustomInheritanceMode &&
-          dtreeModalStore.openModalEditCustomInheritanceMode(
-            group[1],
-            index,
-            currNo,
-          )
+          dtreeModalStore.openModalEditCustomInheritanceMode(group[1], currNo)
 
         group[1] === FuncStepTypesEnum.CompoundHet &&
-          dtreeModalStore.openModalEditCompoundHet(group[1], index, currNo)
+          dtreeModalStore.openModalEditCompoundHet(group[1], currNo)
 
         group[1] === FuncStepTypesEnum.CompoundRequest &&
-          dtreeModalStore.openModalEditCompoundRequest(group[1], index, currNo)
+          dtreeModalStore.openModalEditCompoundRequest(group[1], currNo)
 
         group[1] === FuncStepTypesEnum.GeneRegion &&
-          dtreeModalStore.openModalEditGeneRegion(group[1], index, currNo)
+          dtreeModalStore.openModalEditGeneRegion(group[1], currNo)
       }
     }
 

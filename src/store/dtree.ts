@@ -476,7 +476,7 @@ class DtreeStore {
     this.localDtreeCode = ''
   }
 
-  // 3.4 Other UI/UX modals
+  // 3.4 Common UI/UX modals
 
   openModalSaveDataset() {
     this.isModalSaveDatasetVisible = true
@@ -484,6 +484,17 @@ class DtreeStore {
 
   closeModalSaveDataset() {
     this.isModalSaveDatasetVisible = false
+  }
+
+  openTableModal(index?: number) {
+    this.isTableModalVisible = true
+
+    if (index) this.tableModalIndexNumber = index
+  }
+
+  closeTableModal() {
+    this.isTableModalVisible = false
+    this.tableModalIndexNumber = null
   }
 
   // 4. Other UI control functions
@@ -641,17 +652,6 @@ class DtreeStore {
     } else {
       this.stepData[index].isReturnedVariantsActive = true
     }
-  }
-
-  openTableModal(index?: number) {
-    this.isTableModalVisible = true
-
-    if (index) this.tableModalIndexNumber = index
-  }
-
-  closeTableModal() {
-    this.isTableModalVisible = false
-    this.tableModalIndexNumber = null
   }
 
   resetStatFuncData() {
