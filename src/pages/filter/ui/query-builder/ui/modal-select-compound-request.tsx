@@ -41,7 +41,7 @@ export const ModalSelectCompoundRequest = observer((): ReactElement => {
 
   const currentGroup = dtreeStore.stepData[currentStepIndex].groups
 
-  const groupName = dtreeStore.groupNameToChange
+  const groupName = dtreeModalStore.groupNameToChange
 
   const variants = dtreeStore.statFuncData.variants
 
@@ -296,7 +296,7 @@ export const ModalSelectCompoundRequest = observer((): ReactElement => {
   return (
     <ModalBase refer={ref} minHeight={300}>
       <HeaderModal
-        groupName={dtreeStore.groupNameToChange}
+        groupName={dtreeModalStore.groupNameToChange}
         handleClose={handleClose}
       />
 

@@ -14,6 +14,7 @@ import { getDataFromCode } from '@utils/getDataFromCode'
 import { getFilteredAttrsList } from '@utils/getFilteredAttrsList'
 import { getQueryBuilder } from '@utils/getQueryBuilder'
 import { getStepDataAsync } from '@utils/getStepDataAsync'
+import dtreeModalStore from '../pages/filter/modals.store'
 import datasetStore from './dataset'
 import activeStepStore, { ActiveStepOptions } from './dtree/active-step.store'
 
@@ -94,12 +95,7 @@ class DtreeStore {
   isTableModalVisible = false
   tableModalIndexNumber: null | number = null
 
-  groupNameToChange = ''
-  groupIndexToChange = 0
-
   requestData: IRequestData[] = []
-
-  modalSource = ''
 
   actionHistory: URLSearchParams[] = []
   actionHistoryIndex = -1
@@ -216,8 +212,8 @@ class DtreeStore {
   }
 
   get attributeStatusToChange(): TPropertyStatus | undefined {
-    return this.groupNameToChange
-      ? this.getAttributeStatus(this.groupNameToChange)
+    return dtreeModalStore.groupNameToChange
+      ? this.getAttributeStatus(dtreeModalStore.groupNameToChange)
       : undefined
   }
 
@@ -226,13 +222,13 @@ class DtreeStore {
   }
 
   get currentStepGroupToChange() {
-    if (this.groupIndexToChange < 0) {
+    if (dtreeModalStore.groupIndexToChange < 0) {
       return undefined
     }
 
     return toJS(
       this.stepData[activeStepStore.activeStepIndex].groups[
-        this.groupIndexToChange
+        dtreeModalStore.groupIndexToChange
       ],
     )
   }

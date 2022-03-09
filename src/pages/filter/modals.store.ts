@@ -7,27 +7,31 @@ import filterStore from '@store/filter'
 import { showToast } from '@utils/notifications/showToast'
 
 class DtreeModalStore {
+  groupNameToChange = ''
+  groupIndexToChange = 0
   dtreeOperation = ''
-  isModalConfirmationVisible = false
+  modalSource = ''
+
   isModalAttributeVisible = false
-  isModalSelectFilterVisible = false
-  isModalEditFiltersVisible = false
   isModalJoinVisible = false
   isModalNumbersVisible = false
 
-  isModalTextEditorVisible = false
-
+  isModalEditFiltersVisible = false
   isModalEditInheritanceModeVisible = false
   isModalEditCustomInheritanceModeVisible = false
   isModalEditCompoundHetVisible = false
   isModalEditCompoundRequestVisible = false
   isModalEditGeneRegionVisible = false
 
+  isModalSelectFilterVisible = false
   isModalSelectInheritanceModeVisible = false
   isModalSelectCustomInheritanceModeVisible = false
   isModalSelectCompoundHetVisible = false
   isModalSelectCompoundRequestVisible = false
   isModalSelectGeneRegionVisible = false
+
+  isModalTextEditorVisible = false
+  isModalConfirmationVisible = false
 
   constructor() {
     makeAutoObservable(this)
@@ -68,7 +72,7 @@ class DtreeModalStore {
     this.isModalConfirmationVisible = false
   }
 
-  // 3.1 Modals for creation brand new tree
+  // 1. Modals for creation brand new tree
 
   openModalAttribute() {
     this.isModalAttributeVisible = true
@@ -86,38 +90,36 @@ class DtreeModalStore {
     this.isModalJoinVisible = false
   }
 
-  // 3.1.1 Modal for enum attr
-
-  openModalSelectFilter(groupName: string, source: string) {
-    dtreeStore.modalSource = source
-
-    this.isModalSelectFilterVisible = true
-    dtreeStore.groupNameToChange = groupName
-  }
-
-  closeModalSelectFilter() {
-    this.isModalSelectFilterVisible = false
-  }
-
-  // 3.1.2 Modal for numeric attr
+  // 2. Modal for numeric attr
 
   openModalNumbers(
     groupName: string,
     groupIndex: number | undefined,
     source: string = '',
   ) {
-    dtreeStore.modalSource = source
+    this.modalSource = source
 
     this.isModalNumbersVisible = true
-    dtreeStore.groupNameToChange = groupName
-    dtreeStore.groupIndexToChange = groupIndex ?? -1
+    this.groupNameToChange = groupName
+    this.groupIndexToChange = groupIndex ?? -1
   }
 
   closeModalNumbers() {
     this.isModalNumbersVisible = false
   }
 
-  // 3.2.1 Modal for enum attr
+  // 3. Modal for enum attr
+
+  openModalSelectFilter(groupName: string, source: string) {
+    this.modalSource = source
+
+    this.isModalSelectFilterVisible = true
+    this.groupNameToChange = groupName
+  }
+
+  closeModalSelectFilter() {
+    this.isModalSelectFilterVisible = false
+  }
 
   openModalEditFilters(
     groupName: string,
@@ -125,8 +127,8 @@ class DtreeModalStore {
     groupIndex: number,
   ) {
     this.isModalEditFiltersVisible = true
-    dtreeStore.groupNameToChange = groupName
-    dtreeStore.groupIndexToChange = groupIndex
+    this.groupNameToChange = groupName
+    this.groupIndexToChange = groupIndex
   }
 
   closeModalEditFilters() {
@@ -134,7 +136,7 @@ class DtreeModalStore {
     dtreeStore.resetSelectedFilters()
   }
 
-  // 3.2.3 Modals for func attr
+  // 4. Modals for func attr
 
   openModalEditInheritanceMode(
     groupName: string,
@@ -143,9 +145,9 @@ class DtreeModalStore {
   ) {
     this.isModalEditInheritanceModeVisible = true
 
-    dtreeStore.groupNameToChange = groupName
+    this.groupNameToChange = groupName
 
-    dtreeStore.groupIndexToChange = groupIndex
+    this.groupIndexToChange = groupIndex
   }
 
   closeModalEditInheritanceMode() {
@@ -158,8 +160,8 @@ class DtreeModalStore {
     groupIndex: number,
   ) {
     this.isModalEditCustomInheritanceModeVisible = true
-    dtreeStore.groupNameToChange = groupName
-    dtreeStore.groupIndexToChange = groupIndex
+    this.groupNameToChange = groupName
+    this.groupIndexToChange = groupIndex
   }
 
   closeModalEditCustomInheritanceMode() {
@@ -172,8 +174,8 @@ class DtreeModalStore {
     groupIndex: number,
   ) {
     this.isModalEditCompoundHetVisible = true
-    dtreeStore.groupNameToChange = groupName
-    dtreeStore.groupIndexToChange = groupIndex
+    this.groupNameToChange = groupName
+    this.groupIndexToChange = groupIndex
   }
 
   closeModalEditCompoundHet() {
@@ -186,8 +188,8 @@ class DtreeModalStore {
     groupIndex: number,
   ) {
     this.isModalEditCompoundRequestVisible = true
-    dtreeStore.groupNameToChange = groupName
-    dtreeStore.groupIndexToChange = groupIndex
+    this.groupNameToChange = groupName
+    this.groupIndexToChange = groupIndex
   }
 
   openModalEditCustomInheritanceModeFunc(
@@ -196,8 +198,8 @@ class DtreeModalStore {
     groupIndex: number,
   ) {
     this.isModalEditCompoundRequestVisible = true
-    dtreeStore.groupNameToChange = groupName
-    dtreeStore.groupIndexToChange = groupIndex
+    this.groupNameToChange = groupName
+    this.groupIndexToChange = groupIndex
   }
 
   closeModalEditCompoundRequest() {
@@ -210,36 +212,24 @@ class DtreeModalStore {
     groupIndex: number,
   ) {
     this.isModalEditGeneRegionVisible = true
-    dtreeStore.groupNameToChange = groupName
-    dtreeStore.groupIndexToChange = groupIndex
+    this.groupNameToChange = groupName
+    this.groupIndexToChange = groupIndex
   }
 
   closeModalEditGeneRegion() {
     this.isModalEditGeneRegionVisible = false
   }
 
-  // 3.3 Modal for editing dtree code (new / loaded)
-
-  openModalTextEditor() {
-    this.isModalTextEditorVisible = true
-  }
-
-  closeModalTextEditor() {
-    this.isModalTextEditorVisible = false
-  }
-
-  // 3.1.3 Modals for func attr
-
   openModalSelectInheritanceMode(
     groupName: string,
     stepIndex: number,
     source: string,
   ) {
-    dtreeStore.modalSource = source
+    this.modalSource = source
 
     this.isModalSelectInheritanceModeVisible = true
 
-    dtreeStore.groupNameToChange = groupName
+    this.groupNameToChange = groupName
   }
 
   closeModalSelectInheritanceMode() {
@@ -251,11 +241,11 @@ class DtreeModalStore {
     stepIndex: number,
     source: string,
   ) {
-    dtreeStore.modalSource = source
+    this.modalSource = source
 
     this.isModalSelectCustomInheritanceModeVisible = true
 
-    dtreeStore.groupNameToChange = groupName
+    this.groupNameToChange = groupName
   }
 
   closeModalSelectCustomInheritanceMode() {
@@ -267,11 +257,11 @@ class DtreeModalStore {
     stepIndex: number,
     source: string,
   ) {
-    dtreeStore.modalSource = source
+    this.modalSource = source
 
     this.isModalSelectCompoundHetVisible = true
 
-    dtreeStore.groupNameToChange = groupName
+    this.groupNameToChange = groupName
   }
 
   closeModalSelectCompoundHet() {
@@ -283,11 +273,11 @@ class DtreeModalStore {
     stepIndex: number,
     source: string,
   ) {
-    dtreeStore.modalSource = source
+    this.modalSource = source
 
     this.isModalSelectCompoundRequestVisible = true
 
-    dtreeStore.groupNameToChange = groupName
+    this.groupNameToChange = groupName
   }
 
   closeModalSelectCompoundRequest() {
@@ -299,14 +289,24 @@ class DtreeModalStore {
     stepIndex: number,
     source: string,
   ) {
-    dtreeStore.modalSource = source
+    this.modalSource = source
 
     this.isModalSelectGeneRegionVisible = true
-    dtreeStore.groupNameToChange = groupName
+    this.groupNameToChange = groupName
   }
 
   closeModalSelectGeneRegion() {
     this.isModalSelectGeneRegionVisible = false
+  }
+
+  // 5. Modal for editing dtree code (new / loaded)
+
+  openModalTextEditor() {
+    this.isModalTextEditorVisible = true
+  }
+
+  closeModalTextEditor() {
+    this.isModalTextEditorVisible = false
   }
 }
 

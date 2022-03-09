@@ -23,7 +23,7 @@ export const ModalSelectGeneRegion = observer((): ReactElement => {
 
   const currentGroup = dtreeStore.stepData[currentStepIndex].groups
 
-  const groupName = dtreeStore.groupNameToChange
+  const groupName = dtreeModalStore.groupNameToChange
 
   const variants = dtreeStore.statFuncData.variants
 
@@ -70,7 +70,7 @@ export const ModalSelectGeneRegion = observer((): ReactElement => {
   return (
     <ModalBase refer={ref} minHeight={250}>
       <HeaderModal
-        groupName={dtreeStore.groupNameToChange}
+        groupName={dtreeModalStore.groupNameToChange}
         handleClose={handleClose}
       />
 

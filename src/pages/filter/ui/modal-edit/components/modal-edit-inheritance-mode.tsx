@@ -14,12 +14,12 @@ export const ModalEditInheritanceMode = observer((): ReactElement => {
   const ref = useRef(null)
 
   const currentStepIndex = activeStepStore.activeStepIndex
-  const currentGroupIndex = dtreeStore.groupIndexToChange
+  const currentGroupIndex = dtreeModalStore.groupIndexToChange
 
   const currentGroup =
     dtreeStore.stepData[currentStepIndex].groups[currentGroupIndex]
 
-  const groupName = dtreeStore.groupNameToChange
+  const groupName = dtreeModalStore.groupNameToChange
 
   const selectedGroupsAmount =
     currentGroup && currentGroup.length > 0 ? dtreeStore.selectedFilters : []
@@ -131,7 +131,7 @@ export const ModalEditInheritanceMode = observer((): ReactElement => {
   return (
     <ModalBase refer={ref} minHeight={340}>
       <HeaderModal
-        groupName={dtreeStore.groupNameToChange}
+        groupName={dtreeModalStore.groupNameToChange}
         handleClose={handleClose}
       />
 

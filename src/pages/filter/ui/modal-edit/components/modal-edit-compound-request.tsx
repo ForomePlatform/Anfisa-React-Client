@@ -33,12 +33,12 @@ export const ModalEditCompoundRequest = observer((): ReactElement => {
   // important variables
 
   const currentStepIndex = activeStepStore.activeStepIndex
-  const currentGroupIndex = dtreeStore.groupIndexToChange
+  const currentGroupIndex = dtreeModalStore.groupIndexToChange
 
   const currentGroup =
     dtreeStore.stepData[currentStepIndex].groups[currentGroupIndex]
 
-  const groupName = dtreeStore.groupNameToChange
+  const groupName = dtreeModalStore.groupNameToChange
 
   const variants = dtreeStore.statFuncData.variants
 
@@ -352,7 +352,7 @@ export const ModalEditCompoundRequest = observer((): ReactElement => {
   return (
     <ModalBase refer={ref} minHeight={300}>
       <HeaderModal
-        groupName={dtreeStore.groupNameToChange}
+        groupName={dtreeModalStore.groupNameToChange}
         handleClose={handleClose}
       />
 

@@ -18,7 +18,7 @@ export const ModalSelectInheritanceMode = observer((): ReactElement => {
 
   const currentGroup = dtreeStore.stepData[currentStepIndex].groups
 
-  const groupName = dtreeStore.groupNameToChange
+  const groupName = dtreeModalStore.groupNameToChange
 
   let attrData: any
 
@@ -127,7 +127,7 @@ export const ModalSelectInheritanceMode = observer((): ReactElement => {
   return (
     <ModalBase refer={ref} minHeight={340}>
       <HeaderModal
-        groupName={dtreeStore.groupNameToChange}
+        groupName={dtreeModalStore.groupNameToChange}
         handleClose={handleClose}
       />
 

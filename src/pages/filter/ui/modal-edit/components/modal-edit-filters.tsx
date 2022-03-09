@@ -21,10 +21,12 @@ export const ModalEditFilters = observer((): ReactElement => {
   const { activeStepIndex } = activeStepStore
 
   const currentGroup =
-    dtreeStore.stepData[activeStepIndex].groups[dtreeStore.groupIndexToChange]
+    dtreeStore.stepData[activeStepIndex].groups[
+      dtreeModalStore.groupIndexToChange
+    ]
 
-  const indexOfCurrentGroup = dtreeStore.groupIndexToChange
-  const groupName = dtreeStore.groupNameToChange
+  const indexOfCurrentGroup = dtreeModalStore.groupIndexToChange
+  const groupName = dtreeModalStore.groupNameToChange
 
   const selectedGroupsAmount =
     currentGroup.length > 0 ? dtreeStore.selectedFilters : []

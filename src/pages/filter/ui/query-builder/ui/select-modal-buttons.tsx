@@ -5,7 +5,6 @@ import { observer } from 'mobx-react-lite'
 import { ActionType } from '@declarations'
 import { ModalSources } from '@core/enum/modal-sources'
 import { t } from '@i18n'
-import dtreeStore from '@store/dtree'
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
 import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-modal.cy'
@@ -36,11 +35,12 @@ export const SelectModalButtons = observer(
     return (
       <div
         className={cn('flex mt-1 items-center', {
-          'justify-end': dtreeStore.modalSource === ModalSources.TreeStat,
-          'justify-between': dtreeStore.modalSource === ModalSources.TreeStep,
+          'justify-end': dtreeModalStore.modalSource === ModalSources.TreeStat,
+          'justify-between':
+            dtreeModalStore.modalSource === ModalSources.TreeStep,
         })}
       >
-        {dtreeStore.modalSource === ModalSources.TreeStep && (
+        {dtreeModalStore.modalSource === ModalSources.TreeStep && (
           <div
             className="text-14 text-blue-bright font-medium cursor-pointer"
             onClick={handleModals}

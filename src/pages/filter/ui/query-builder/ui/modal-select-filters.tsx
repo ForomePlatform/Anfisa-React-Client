@@ -23,7 +23,7 @@ export const ModalSelectFilters = observer((): ReactElement => {
 
   const index = activeStepStore.activeStepIndex
   const currentGroup = dtreeStore.stepData[index].groups
-  const groupName = dtreeStore.groupNameToChange
+  const groupName = dtreeModalStore.groupNameToChange
 
   const handleCheckGroupItem = (checked: boolean, name: string) => {
     if (checked) {
