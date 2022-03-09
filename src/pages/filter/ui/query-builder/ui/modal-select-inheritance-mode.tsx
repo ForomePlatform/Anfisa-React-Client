@@ -58,7 +58,7 @@ export const ModalSelectInheritanceMode = observer((): ReactElement => {
   }, [])
 
   const handleClose = () => {
-    dtreeStore.closeModalSelectInheritanceMode()
+    dtreeModalStore.closeModalSelectInheritanceMode()
   }
 
   const handleProblemGroup = (checked: boolean, value: string) => {
@@ -106,7 +106,7 @@ export const ModalSelectInheritanceMode = observer((): ReactElement => {
   }
 
   const handleModals = () => {
-    dtreeStore.closeModalSelectInheritanceMode()
+    dtreeModalStore.closeModalSelectInheritanceMode()
     dtreeModalStore.openModalAttribute()
     dtreeStore.resetSelectedFilters()
   }
@@ -121,7 +121,7 @@ export const ModalSelectInheritanceMode = observer((): ReactElement => {
     addAttributeToStep(action, 'func', null, params)
 
     dtreeStore.resetSelectedFilters()
-    dtreeStore.closeModalSelectInheritanceMode()
+    dtreeModalStore.closeModalSelectInheritanceMode()
   }
 
   return (

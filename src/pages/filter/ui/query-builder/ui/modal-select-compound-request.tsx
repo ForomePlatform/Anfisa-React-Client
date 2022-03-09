@@ -239,7 +239,7 @@ export const ModalSelectCompoundRequest = observer((): ReactElement => {
   // common UI functions
 
   const handleClose = () => {
-    dtreeStore.closeModalSelectCompoundRequest()
+    dtreeModalStore.closeModalSelectCompoundRequest()
   }
 
   function sendRequest(newRequestCondition: any[]) {
@@ -262,7 +262,7 @@ export const ModalSelectCompoundRequest = observer((): ReactElement => {
   }
 
   const handleModals = () => {
-    dtreeStore.closeModalSelectCompoundRequest()
+    dtreeModalStore.closeModalSelectCompoundRequest()
     dtreeModalStore.openModalAttribute()
     dtreeStore.resetSelectedFilters()
   }
@@ -290,7 +290,7 @@ export const ModalSelectCompoundRequest = observer((): ReactElement => {
 
     addAttributeToStep(action, 'func', null, params)
     dtreeStore.resetSelectedFilters()
-    dtreeStore.closeModalSelectCompoundRequest()
+    dtreeModalStore.closeModalSelectCompoundRequest()
   }
 
   return (

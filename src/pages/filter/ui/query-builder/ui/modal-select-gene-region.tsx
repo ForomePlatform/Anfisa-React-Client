@@ -45,11 +45,11 @@ export const ModalSelectGeneRegion = observer((): ReactElement => {
   }
 
   const handleClose = () => {
-    dtreeStore.closeModalSelectGeneRegion()
+    dtreeModalStore.closeModalSelectGeneRegion()
   }
 
   const handleModals = () => {
-    dtreeStore.closeModalSelectGeneRegion()
+    dtreeModalStore.closeModalSelectGeneRegion()
     dtreeModalStore.openModalAttribute()
     dtreeStore.resetSelectedFilters()
   }
@@ -64,7 +64,7 @@ export const ModalSelectGeneRegion = observer((): ReactElement => {
 
     addAttributeToStep(action, 'func', null, params)
     dtreeStore.resetSelectedFilters()
-    dtreeStore.closeModalSelectGeneRegion()
+    dtreeModalStore.closeModalSelectGeneRegion()
   }
 
   return (

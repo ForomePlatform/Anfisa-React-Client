@@ -4,7 +4,6 @@ import { observer } from 'mobx-react-lite'
 import { ActionType } from '@declarations'
 import { useOutsideClick } from '@core/hooks/use-outside-click'
 import { t } from '@i18n'
-import dtreeStore from '@store/dtree'
 import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-modal.cy'
 import dtreeModalStore from '../../../modals.store'
 
@@ -24,8 +23,8 @@ export const ModalJoin = observer(
       dtreeModalStore.closeModalJoin()
       dtreeModalStore.closeModalSelectFilter()
       dtreeModalStore.closeModalNumbers()
-      dtreeStore.closeModalSelectInheritanceMode()
-      dtreeStore.closeModalSelectCustomInheritanceMode()
+      dtreeModalStore.closeModalSelectInheritanceMode()
+      dtreeModalStore.closeModalSelectCustomInheritanceMode()
     }
 
     return (

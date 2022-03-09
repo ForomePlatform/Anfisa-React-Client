@@ -170,11 +170,11 @@ export const ModalSelectCustomInheritanceMode = observer((): ReactElement => {
   }
 
   const handleClose = () => {
-    dtreeStore.closeModalSelectCustomInheritanceMode()
+    dtreeModalStore.closeModalSelectCustomInheritanceMode()
   }
 
   const handleModals = () => {
-    dtreeStore.closeModalSelectCustomInheritanceMode()
+    dtreeModalStore.closeModalSelectCustomInheritanceMode()
     dtreeModalStore.openModalAttribute()
     dtreeStore.resetSelectedFilters()
   }
@@ -189,7 +189,7 @@ export const ModalSelectCustomInheritanceMode = observer((): ReactElement => {
 
     addAttributeToStep(action, 'func', [null], params)
     dtreeStore.resetSelectedFilters()
-    dtreeStore.closeModalSelectCustomInheritanceMode()
+    dtreeModalStore.closeModalSelectCustomInheritanceMode()
   }
 
   return (

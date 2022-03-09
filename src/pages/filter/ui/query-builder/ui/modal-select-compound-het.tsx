@@ -70,7 +70,7 @@ export const ModalSelectCompoundHet = observer((): ReactElement => {
   }, [])
 
   const handleClose = () => {
-    dtreeStore.closeModalSelectCompoundHet()
+    dtreeModalStore.closeModalSelectCompoundHet()
   }
 
   const handleSetCondition = (value: string, type: string) => {
@@ -96,7 +96,7 @@ export const ModalSelectCompoundHet = observer((): ReactElement => {
   }
 
   const handleModals = () => {
-    dtreeStore.closeModalSelectCompoundHet()
+    dtreeModalStore.closeModalSelectCompoundHet()
     dtreeModalStore.openModalAttribute()
     dtreeStore.resetSelectedFilters()
   }
@@ -120,7 +120,7 @@ export const ModalSelectCompoundHet = observer((): ReactElement => {
     addAttributeToStep(action, 'func', null, params)
 
     dtreeStore.resetSelectedFilters()
-    dtreeStore.closeModalSelectCompoundHet()
+    dtreeModalStore.closeModalSelectCompoundHet()
   }
 
   return (

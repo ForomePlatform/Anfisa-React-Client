@@ -116,31 +116,35 @@ const FilterPage = observer((): ReactElement => {
       {dtreeModalStore.isModalEditInheritanceModeVisible && (
         <ModalEditInheritanceMode />
       )}
-      {dtreeStore.isModalSelectInheritanceModeVisible && (
+      {dtreeModalStore.isModalSelectInheritanceModeVisible && (
         <ModalSelectInheritanceMode />
       )}
 
       {dtreeModalStore.isModalEditCustomInheritanceModeVisible && (
         <ModalEditCustomInheritanceMode />
       )}
-      {dtreeStore.isModalSelectCustomInheritanceModeVisible && (
+      {dtreeModalStore.isModalSelectCustomInheritanceModeVisible && (
         <ModalSelectCustomInheritanceMode />
       )}
 
       {dtreeModalStore.isModalEditCompoundHetVisible && (
         <ModalEditCompoundHet />
       )}
-      {dtreeStore.isModalSelectCompoundHetVisible && <ModalSelectCompoundHet />}
+      {dtreeModalStore.isModalSelectCompoundHetVisible && (
+        <ModalSelectCompoundHet />
+      )}
 
       {dtreeModalStore.isModalEditCompoundRequestVisible && (
         <ModalEditCompoundRequest />
       )}
-      {dtreeStore.isModalSelectCompoundRequestVisible && (
+      {dtreeModalStore.isModalSelectCompoundRequestVisible && (
         <ModalSelectCompoundRequest />
       )}
 
       {dtreeModalStore.isModalEditGeneRegionVisible && <ModalEditGeneRegion />}
-      {dtreeStore.isModalSelectGeneRegionVisible && <ModalSelectGeneRegion />}
+      {dtreeModalStore.isModalSelectGeneRegionVisible && (
+        <ModalSelectGeneRegion />
+      )}
 
       {dtreeStore.isTableModalVisible && <TableModal />}
       {dtreeModalStore.isModalTextEditorVisible && <ModalTextEditor />}

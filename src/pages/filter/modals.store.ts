@@ -23,6 +23,12 @@ class DtreeModalStore {
   isModalEditCompoundRequestVisible = false
   isModalEditGeneRegionVisible = false
 
+  isModalSelectInheritanceModeVisible = false
+  isModalSelectCustomInheritanceModeVisible = false
+  isModalSelectCompoundHetVisible = false
+  isModalSelectCompoundRequestVisible = false
+  isModalSelectGeneRegionVisible = false
+
   constructor() {
     makeAutoObservable(this)
   }
@@ -220,6 +226,87 @@ class DtreeModalStore {
 
   closeModalTextEditor() {
     this.isModalTextEditorVisible = false
+  }
+
+  // 3.1.3 Modals for func attr
+
+  openModalSelectInheritanceMode(
+    groupName: string,
+    stepIndex: number,
+    source: string,
+  ) {
+    dtreeStore.modalSource = source
+
+    this.isModalSelectInheritanceModeVisible = true
+
+    dtreeStore.groupNameToChange = groupName
+  }
+
+  closeModalSelectInheritanceMode() {
+    this.isModalSelectInheritanceModeVisible = false
+  }
+
+  openModalSelectCustomInheritanceMode(
+    groupName: string,
+    stepIndex: number,
+    source: string,
+  ) {
+    dtreeStore.modalSource = source
+
+    this.isModalSelectCustomInheritanceModeVisible = true
+
+    dtreeStore.groupNameToChange = groupName
+  }
+
+  closeModalSelectCustomInheritanceMode() {
+    this.isModalSelectCustomInheritanceModeVisible = false
+  }
+
+  openModalSelectCompoundHet(
+    groupName: string,
+    stepIndex: number,
+    source: string,
+  ) {
+    dtreeStore.modalSource = source
+
+    this.isModalSelectCompoundHetVisible = true
+
+    dtreeStore.groupNameToChange = groupName
+  }
+
+  closeModalSelectCompoundHet() {
+    this.isModalSelectCompoundHetVisible = false
+  }
+
+  openModalSelectCompoundRequest(
+    groupName: string,
+    stepIndex: number,
+    source: string,
+  ) {
+    dtreeStore.modalSource = source
+
+    this.isModalSelectCompoundRequestVisible = true
+
+    dtreeStore.groupNameToChange = groupName
+  }
+
+  closeModalSelectCompoundRequest() {
+    this.isModalSelectCompoundRequestVisible = false
+  }
+
+  openModalSelectGeneRegion(
+    groupName: string,
+    stepIndex: number,
+    source: string,
+  ) {
+    dtreeStore.modalSource = source
+
+    this.isModalSelectGeneRegionVisible = true
+    dtreeStore.groupNameToChange = groupName
+  }
+
+  closeModalSelectGeneRegion() {
+    this.isModalSelectGeneRegionVisible = false
   }
 }
 
