@@ -90,6 +90,7 @@ class DtreeStore {
   stepData: IStepData[] = []
   stepAmout = 0
 
+  // TODO: create a special dtree modal store (and add modal hook for stupid modals)
   isModalAttributeVisible = false
   isModalSelectFilterVisible = false
   isModalEditFiltersVisible = false
