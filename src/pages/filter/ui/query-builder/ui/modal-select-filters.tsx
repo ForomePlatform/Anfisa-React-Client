@@ -11,6 +11,7 @@ import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-m
 import { Pagintaion } from '@components/pagintaion'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { createChunks } from '@utils/createChunks'
+import dtreeModalStore from '../../../modals.store'
 import { QueryBuilderSearch } from '../query-builder-search'
 import { HeaderModal } from './header-modal'
 import { ModalBase } from './modal-base'
@@ -36,22 +37,22 @@ export const ModalSelectFilters = observer((): ReactElement => {
     addAttributeToStep(action, 'enum')
 
     dtreeStore.resetSelectedFilters()
-    dtreeStore.closeModalSelectFilter()
+    dtreeModalStore.closeModalSelectFilter()
   }
 
   const handleClose = () => {
-    dtreeStore.closeModalSelectFilter()
+    dtreeModalStore.closeModalSelectFilter()
     dtreeStore.resetSelectedFilters()
   }
 
   const handleModals = () => {
-    dtreeStore.closeModalSelectFilter()
-    dtreeStore.openModalAttribute()
+    dtreeModalStore.closeModalSelectFilter()
+    dtreeModalStore.openModalAttribute()
     dtreeStore.resetSelectedFilters()
   }
 
   const handleModalJoin = () => {
-    dtreeStore.openModalJoin()
+    dtreeModalStore.openModalJoin()
   }
 
   const [searchValue, setSearchValue] = useState('')

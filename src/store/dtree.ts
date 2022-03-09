@@ -91,11 +91,6 @@ class DtreeStore {
   stepAmout = 0
 
   // TODO: create a special dtree modal store (and add modal hook for stupid modals)
-  isModalAttributeVisible = false
-  isModalSelectFilterVisible = false
-  isModalEditFiltersVisible = false
-  isModalJoinVisible = false
-  isModalNumbersVisible = false
 
   isModalTextEditorVisible = false
   isModalSaveDatasetVisible = false
@@ -485,55 +480,6 @@ class DtreeStore {
 
   // 3. Modals control block
 
-  // 3.1 Modals for creation brand new tree
-
-  openModalAttribute() {
-    this.isModalAttributeVisible = true
-  }
-
-  closeModalAttribute() {
-    this.isModalAttributeVisible = false
-  }
-
-  openModalJoin() {
-    this.isModalJoinVisible = true
-  }
-
-  closeModalJoin() {
-    this.isModalJoinVisible = false
-  }
-
-  // 3.1.1 Modal for enum attr
-
-  openModalSelectFilter(groupName: string, source: string) {
-    this.modalSource = source
-
-    this.isModalSelectFilterVisible = true
-    this.groupNameToChange = groupName
-  }
-
-  closeModalSelectFilter() {
-    this.isModalSelectFilterVisible = false
-  }
-
-  // 3.1.2 Modal for numeric attr
-
-  openModalNumbers(
-    groupName: string,
-    groupIndex: number | undefined,
-    source: string = '',
-  ) {
-    this.modalSource = source
-
-    this.isModalNumbersVisible = true
-    this.groupNameToChange = groupName
-    this.groupIndexToChange = groupIndex ?? -1
-  }
-
-  closeModalNumbers() {
-    this.isModalNumbersVisible = false
-  }
-
   // 3.1.3 Modals for func attr
 
   openModalSelectInheritanceMode(
@@ -616,23 +562,6 @@ class DtreeStore {
   }
 
   // 3.2 Modals for editing loaded tree
-
-  // 3.2.1 Modal for enum attr
-
-  openModalEditFilters(
-    groupName: string,
-    stepIndex: number,
-    groupIndex: number,
-  ) {
-    this.isModalEditFiltersVisible = true
-    this.groupNameToChange = groupName
-    this.groupIndexToChange = groupIndex
-  }
-
-  closeModalEditFilters() {
-    this.isModalEditFiltersVisible = false
-    this.selectedFilters = []
-  }
 
   // 3.2.3 Modals for func attr
 

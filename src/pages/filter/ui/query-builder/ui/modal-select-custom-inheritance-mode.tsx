@@ -8,6 +8,7 @@ import dtreeStore from '@store/dtree'
 import activeStepStore from '@store/dtree/active-step.store'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { getSortedArray } from '@utils/getSortedArray'
+import dtreeModalStore from '../../../modals.store'
 import { CustomInheritanceModeContent } from './custom-inheritance-mode-content'
 import { HeaderModal } from './header-modal'
 import { ModalBase } from './modal-base'
@@ -174,12 +175,12 @@ export const ModalSelectCustomInheritanceMode = observer((): ReactElement => {
 
   const handleModals = () => {
     dtreeStore.closeModalSelectCustomInheritanceMode()
-    dtreeStore.openModalAttribute()
+    dtreeModalStore.openModalAttribute()
     dtreeStore.resetSelectedFilters()
   }
 
   const handleModalJoin = () => {
-    dtreeStore.openModalJoin()
+    dtreeModalStore.openModalJoin()
   }
 
   const handleAddAttribute = (action: ActionType) => {

@@ -6,6 +6,7 @@ import dtreeStore from '@store/dtree'
 import activeStepStore from '@store/dtree/active-step.store'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { validateLocusCondition } from '@utils/validation/validateLocusCondition'
+import dtreeModalStore from '../../../modals.store'
 import { GeneRegionContent } from './gene-region-content'
 import { HeaderModal } from './header-modal'
 import { ModalBase } from './modal-base'
@@ -49,12 +50,12 @@ export const ModalSelectGeneRegion = observer((): ReactElement => {
 
   const handleModals = () => {
     dtreeStore.closeModalSelectGeneRegion()
-    dtreeStore.openModalAttribute()
+    dtreeModalStore.openModalAttribute()
     dtreeStore.resetSelectedFilters()
   }
 
   const handleModalJoin = () => {
-    dtreeStore.openModalJoin()
+    dtreeModalStore.openModalJoin()
   }
 
   const handleAddAttribute = (action: ActionType) => {

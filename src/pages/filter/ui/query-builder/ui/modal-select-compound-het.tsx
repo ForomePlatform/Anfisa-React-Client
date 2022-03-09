@@ -5,6 +5,7 @@ import { ActionType } from '@declarations'
 import dtreeStore from '@store/dtree'
 import activeStepStore from '@store/dtree/active-step.store'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
+import dtreeModalStore from '../../../modals.store'
 import { IParams } from '../../modal-edit/components/modal-edit-compound-het'
 import { AllNotModalMods } from './all-not-modal-mods'
 import { ApproxStateModalMods } from './approx-state-modal-mods'
@@ -96,12 +97,12 @@ export const ModalSelectCompoundHet = observer((): ReactElement => {
 
   const handleModals = () => {
     dtreeStore.closeModalSelectCompoundHet()
-    dtreeStore.openModalAttribute()
+    dtreeModalStore.openModalAttribute()
     dtreeStore.resetSelectedFilters()
   }
 
   const handleModalJoin = () => {
-    dtreeStore.openModalJoin()
+    dtreeModalStore.openModalJoin()
   }
 
   const handleAddAttribute = (action: ActionType) => {

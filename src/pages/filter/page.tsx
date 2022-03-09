@@ -106,12 +106,12 @@ const FilterPage = observer((): ReactElement => {
 
   return (
     <Fragment>
-      {dtreeStore.isModalAttributeVisible && <ModalSelectAttribute />}
+      {dtreeModalStore.isModalAttributeVisible && <ModalSelectAttribute />}
 
-      {dtreeStore.isModalEditFiltersVisible && <ModalEditFilters />}
-      {dtreeStore.isModalSelectFilterVisible && <ModalSelectFilters />}
+      {dtreeModalStore.isModalEditFiltersVisible && <ModalEditFilters />}
+      {dtreeModalStore.isModalSelectFilterVisible && <ModalSelectFilters />}
 
-      {dtreeStore.isModalNumbersVisible && <ModalNumbers />}
+      {dtreeModalStore.isModalNumbersVisible && <ModalNumbers />}
 
       {dtreeStore.isModalEditInheritanceModeVisible && (
         <ModalEditInheritanceMode />

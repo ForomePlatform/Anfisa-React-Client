@@ -8,6 +8,7 @@ import activeStepStore from '@store/dtree/active-step.store'
 import { Pagintaion } from '@components/pagintaion'
 import { changeEnumAttribute } from '@utils/changeAttribute/changeEnumAttribute'
 import { createChunks } from '@utils/createChunks'
+import dtreeModalStore from '../../../modals.store'
 import { QueryBuilderSearch } from '../../query-builder/query-builder-search'
 import { HeaderModal } from '../../query-builder/ui/header-modal'
 import { ModalBase } from '../../query-builder/ui/modal-base'
@@ -52,11 +53,11 @@ export const ModalEditFilters = observer((): ReactElement => {
 
   const handleSaveChanges = () => {
     changeEnumAttribute()
-    dtreeStore.closeModalEditFilters()
+    dtreeModalStore.closeModalEditFilters()
   }
 
   const handleClose = () => {
-    dtreeStore.closeModalEditFilters()
+    dtreeModalStore.closeModalEditFilters()
     dtreeStore.resetSelectedFilters()
   }
 

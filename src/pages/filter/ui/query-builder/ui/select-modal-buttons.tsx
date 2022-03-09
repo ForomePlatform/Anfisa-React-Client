@@ -9,6 +9,7 @@ import dtreeStore from '@store/dtree'
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
 import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-modal.cy'
+import dtreeModalStore from '../../../modals.store'
 import { ModalJoin } from './modal-join'
 
 // TODO: `currentGroup` prop is used only for empty group test
@@ -75,7 +76,7 @@ export const SelectModalButtons = observer(
                   dataTestId={DecisionTreeModalDataCy.addByJoin}
                 />
 
-                {dtreeStore.isModalJoinVisible && (
+                {dtreeModalStore.isModalJoinVisible && (
                   <ModalJoin handleAddAttribute={handleAddAttribute} />
                 )}
               </div>

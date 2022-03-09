@@ -5,6 +5,7 @@ import { ActionType } from '@declarations'
 import dtreeStore from '@store/dtree'
 import activeStepStore from '@store/dtree/active-step.store'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
+import dtreeModalStore from '../../../modals.store'
 import { HeaderModal } from './header-modal'
 import { InheritanceModeContent } from './inheritance-mode-content'
 import { ModalBase } from './modal-base'
@@ -106,12 +107,12 @@ export const ModalSelectInheritanceMode = observer((): ReactElement => {
 
   const handleModals = () => {
     dtreeStore.closeModalSelectInheritanceMode()
-    dtreeStore.openModalAttribute()
+    dtreeModalStore.openModalAttribute()
     dtreeStore.resetSelectedFilters()
   }
 
   const handleModalJoin = () => {
-    dtreeStore.openModalJoin()
+    dtreeModalStore.openModalJoin()
   }
 
   const handleAddAttribute = (action: ActionType) => {

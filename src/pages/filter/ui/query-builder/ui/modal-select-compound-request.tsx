@@ -17,6 +17,7 @@ import { getRequestData } from '@utils/getRequestData'
 import { getResetRequestData } from '@utils/getResetRequestData'
 import { getResetType } from '@utils/getResetType'
 import { getSortedArray } from '@utils/getSortedArray'
+import dtreeModalStore from '../../../modals.store'
 import { IParams } from '../../modal-edit/components/modal-edit-compound-het'
 import { resetOptions } from '../../panels/function-panel/components/compound-request/compound-request'
 import { AllNotModalMods } from './all-not-modal-mods'
@@ -262,12 +263,12 @@ export const ModalSelectCompoundRequest = observer((): ReactElement => {
 
   const handleModals = () => {
     dtreeStore.closeModalSelectCompoundRequest()
-    dtreeStore.openModalAttribute()
+    dtreeModalStore.openModalAttribute()
     dtreeStore.resetSelectedFilters()
   }
 
   const handleModalJoin = () => {
-    dtreeStore.openModalJoin()
+    dtreeModalStore.openModalJoin()
   }
 
   const handleAddAttribute = (action: ActionType) => {

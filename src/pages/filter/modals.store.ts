@@ -9,6 +9,11 @@ import { showToast } from '@utils/notifications/showToast'
 class DtreeModalStore {
   dtreeOperation = ''
   isModalConfirmationVisible = false
+  isModalAttributeVisible = false
+  isModalSelectFilterVisible = false
+  isModalEditFiltersVisible = false
+  isModalJoinVisible = false
+  isModalNumbersVisible = false
 
   constructor() {
     makeAutoObservable(this)
@@ -47,6 +52,72 @@ class DtreeModalStore {
 
   public closeModalConfirmation(): void {
     this.isModalConfirmationVisible = false
+  }
+
+  // 3.1 Modals for creation brand new tree
+
+  openModalAttribute() {
+    this.isModalAttributeVisible = true
+  }
+
+  closeModalAttribute() {
+    this.isModalAttributeVisible = false
+  }
+
+  openModalJoin() {
+    this.isModalJoinVisible = true
+  }
+
+  closeModalJoin() {
+    this.isModalJoinVisible = false
+  }
+
+  // 3.1.1 Modal for enum attr
+
+  openModalSelectFilter(groupName: string, source: string) {
+    dtreeStore.modalSource = source
+
+    this.isModalSelectFilterVisible = true
+    dtreeStore.groupNameToChange = groupName
+  }
+
+  closeModalSelectFilter() {
+    this.isModalSelectFilterVisible = false
+  }
+
+  // 3.1.2 Modal for numeric attr
+
+  openModalNumbers(
+    groupName: string,
+    groupIndex: number | undefined,
+    source: string = '',
+  ) {
+    dtreeStore.modalSource = source
+
+    this.isModalNumbersVisible = true
+    dtreeStore.groupNameToChange = groupName
+    dtreeStore.groupIndexToChange = groupIndex ?? -1
+  }
+
+  closeModalNumbers() {
+    this.isModalNumbersVisible = false
+  }
+
+  // 3.2.1 Modal for enum attr
+
+  openModalEditFilters(
+    groupName: string,
+    stepIndex: number,
+    groupIndex: number,
+  ) {
+    this.isModalEditFiltersVisible = true
+    dtreeStore.groupNameToChange = groupName
+    dtreeStore.groupIndexToChange = groupIndex
+  }
+
+  closeModalEditFilters() {
+    this.isModalEditFiltersVisible = false
+    dtreeStore.resetSelectedFilters()
   }
 }
 

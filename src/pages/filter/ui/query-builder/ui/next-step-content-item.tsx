@@ -18,6 +18,7 @@ import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tre
 import { FnLabel } from '@components/fn-label'
 import { editStepAttribute } from '@utils/editStepAttribute'
 import { getNumericExpression } from '@utils/getNumericExpression'
+import dtreeModalStore from '../../../modals.store'
 import { DropDownJoin } from './dropdown-join'
 
 const ContentControl = styled.div`
@@ -64,10 +65,10 @@ export const NextStepContentItem = observer(
       activeStepStore.makeStepActive(index, ActiveStepOptions.StartedVariants)
 
       group[0] === StepTypeEnum.Enum &&
-        dtreeStore.openModalEditFilters(group[1], index, currNo)
+        dtreeModalStore.openModalEditFilters(group[1], index, currNo)
 
       group[0] === StepTypeEnum.Numeric &&
-        dtreeStore.openModalNumbers(group[1], currNo)
+        dtreeModalStore.openModalNumbers(group[1], currNo)
 
       if (group[0] === StepTypeEnum.Func) {
         group[1] === FuncStepTypesEnum.InheritanceMode &&

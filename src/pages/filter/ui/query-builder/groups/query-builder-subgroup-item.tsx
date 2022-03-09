@@ -15,6 +15,7 @@ import { Icon } from '@ui/icon'
 import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
 import { FnLabel } from '@components/fn-label'
 import { GlbPagesNames } from '@glb/glb-names'
+import dtreeModalStore from '../../../modals.store'
 import { QueryBuilderSubgroupChart } from './chart/query-builder-subgroup-chart'
 
 interface IProps {
@@ -47,14 +48,14 @@ export const QueryBuilderSubgroupItem = observer(
 
       writeScrollPosition()
       addSelectedGroup()
-      dtreeStore.closeModalAttribute()
+      dtreeModalStore.closeModalAttribute()
 
       if (group.kind === FilterKindEnum.Enum) {
-        dtreeStore.openModalSelectFilter(group.name, source)
+        dtreeModalStore.openModalSelectFilter(group.name, source)
       }
 
       if (group.kind === FilterKindEnum.Numeric) {
-        dtreeStore.openModalNumbers(group.name, undefined, source)
+        dtreeModalStore.openModalNumbers(group.name, undefined, source)
       }
 
       const { activeStepIndex } = activeStepStore
