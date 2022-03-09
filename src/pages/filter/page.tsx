@@ -15,7 +15,9 @@ import { Header } from '@components/header'
 import { GlbPagesNames } from '@glb/glb-names'
 import { ModalNumbers } from '@pages/filter/ui/modal-edit/components/modal-numbers'
 import { ErrorPage } from '../error/error'
+import dtreeModalStore from './modals.store'
 import { FilterControl } from './ui/filter-control/filter-control'
+import { ModalConfiramtion } from './ui/modal-confirmation'
 import { ModalEditCompoundHet } from './ui/modal-edit/components/modal-edit-compound-het'
 import { ModalEditCompoundRequest } from './ui/modal-edit/components/modal-edit-compound-request'
 import { ModalEditCustomInheritanceMode } from './ui/modal-edit/components/modal-edit-custom-inheritance-mode'
@@ -142,6 +144,7 @@ const FilterPage = observer((): ReactElement => {
       {dtreeStore.isTableModalVisible && <TableModal />}
       {dtreeStore.isModalTextEditorVisible && <ModalTextEditor />}
       {dtreeStore.isModalSaveDatasetVisible && <ModalSaveDataset />}
+      {dtreeModalStore.isModalConfirmationVisible && <ModalConfiramtion />}
 
       <div className="overflow-hidden">
         <Header>

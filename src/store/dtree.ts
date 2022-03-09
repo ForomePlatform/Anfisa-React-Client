@@ -49,6 +49,7 @@ class DtreeStore {
   localDtreeCode = ''
   currentDtreeName = ''
   previousDtreeName = ''
+  createNewDtreeName = ''
 
   statFuncData: any = []
   scenario: any
@@ -931,7 +932,7 @@ class DtreeStore {
     this.statRequestId = ''
   }
 
-  setDtreeName(name: string) {
+  setCurrentDtreeName(name: string) {
     if (this.currentDtreeName) {
       this.setPrevDtreeName(this.currentDtreeName)
     }
@@ -939,8 +940,16 @@ class DtreeStore {
     this.currentDtreeName = name
   }
 
-  resetDtreeName() {
+  resetCurrentDtreeName() {
     this.currentDtreeName = ''
+  }
+
+  setCreateNewDtreeName(dtreeName: string) {
+    this.createNewDtreeName = dtreeName
+  }
+
+  resetCreateNewDtreeName() {
+    this.createNewDtreeName = ''
   }
 
   setPrevDtreeName(name: string) {
