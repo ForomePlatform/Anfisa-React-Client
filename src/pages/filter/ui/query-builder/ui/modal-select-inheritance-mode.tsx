@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite'
 
 import { ActionType } from '@declarations'
 import dtreeStore from '@store/dtree'
-import activeStepStore from '@store/dtree/active-step.store'
+import activeStepStore from '@pages/filter/active-step.store'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import dtreeModalStore from '../../../modals.store'
 import { HeaderModal } from './header-modal'

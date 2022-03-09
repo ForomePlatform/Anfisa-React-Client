@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite'
 
 import { InheritanceModeEnum } from '@core/enum/inheritance-mode-enum'
 import dtreeStore from '@store/dtree'
-import activeStepStore from '@store/dtree/active-step.store'
+import activeStepStore from '@pages/filter/active-step.store'
 import { changeFunctionalStep } from '@utils/changeAttribute/changeFunctionalStep'
 import { getFuncParams } from '@utils/getFuncParams'
 import { getResetType } from '@utils/getResetType'

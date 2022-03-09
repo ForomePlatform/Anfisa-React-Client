@@ -3,7 +3,7 @@ import { get } from 'lodash'
 import { observer } from 'mobx-react-lite'
 
 import dtreeStore from '@store/dtree'
-import activeStepStore from '@store/dtree/active-step.store'
+import activeStepStore from '@pages/filter/active-step.store'
 import { changeFunctionalStep } from '@utils/changeAttribute/changeFunctionalStep'
 import { validateLocusCondition } from '@utils/validation/validateLocusCondition'
 import dtreeModalStore from '../../../modals.store'

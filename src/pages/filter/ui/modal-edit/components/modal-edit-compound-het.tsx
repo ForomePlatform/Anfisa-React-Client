@@ -3,7 +3,7 @@ import { get } from 'lodash'
 import { observer } from 'mobx-react-lite'
 
 import dtreeStore from '@store/dtree'
-import activeStepStore from '@store/dtree/active-step.store'
+import activeStepStore from '@pages/filter/active-step.store'
 import { changeFunctionalStep } from '@utils/changeAttribute/changeFunctionalStep'
 import dtreeModalStore from '../../../modals.store'
 import { AllNotModalMods } from '../../query-builder/ui/all-not-modal-mods'

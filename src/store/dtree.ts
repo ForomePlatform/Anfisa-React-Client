@@ -14,9 +14,11 @@ import { getDataFromCode } from '@utils/getDataFromCode'
 import { getFilteredAttrsList } from '@utils/getFilteredAttrsList'
 import { getQueryBuilder } from '@utils/getQueryBuilder'
 import { getStepDataAsync } from '@utils/getStepDataAsync'
+import activeStepStore, {
+  ActiveStepOptions,
+} from '../pages/filter/active-step.store'
 import dtreeModalStore from '../pages/filter/modals.store'
 import datasetStore from './dataset'
-import activeStepStore, { ActiveStepOptions } from './dtree/active-step.store'
 
 export type IStepData = {
   step: number

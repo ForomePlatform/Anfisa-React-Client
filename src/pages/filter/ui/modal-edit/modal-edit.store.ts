@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 
-import activeStepStore from '@store/dtree/active-step.store'
+import activeStepStore from '@pages/filter/active-step.store'
 import dtreeModalStore from '../../modals.store'
 class ModalEditStore {
   constructor() {

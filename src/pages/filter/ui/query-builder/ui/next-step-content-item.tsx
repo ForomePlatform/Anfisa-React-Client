@@ -9,13 +9,13 @@ import { StepTypeEnum } from '@core/enum/step-type-enum'
 import { t } from '@i18n'
 import { theme } from '@theme'
 import dtreeStore from '@store/dtree'
-import activeStepStore, {
-  ActiveStepOptions,
-} from '@store/dtree/active-step.store'
 import { Icon } from '@ui/icon'
 import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-modal.cy'
 import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
 import { FnLabel } from '@components/fn-label'
+import activeStepStore, {
+  ActiveStepOptions,
+} from '@pages/filter/active-step.store'
 import { editStepAttribute } from '@utils/editStepAttribute'
 import { getNumericExpression } from '@utils/getNumericExpression'
 import dtreeModalStore from '../../../modals.store'
