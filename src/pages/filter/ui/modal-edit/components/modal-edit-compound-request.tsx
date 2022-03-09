@@ -16,6 +16,7 @@ import { getRequestData } from '@utils/getRequestData'
 import { getResetRequestData } from '@utils/getResetRequestData'
 import { getResetType } from '@utils/getResetType'
 import { getSortedArray } from '@utils/getSortedArray'
+import dtreeModalStore from '../../../modals.store'
 import { resetOptions } from '../../panels/function-panel/components/compound-request/compound-request'
 import { AllNotModalMods } from '../../query-builder/ui/all-not-modal-mods'
 import { ApproxStateModalMods } from '../../query-builder/ui/approx-state-modal-mods'
@@ -302,7 +303,7 @@ export const ModalEditCompoundRequest = observer((): ReactElement => {
   // common UI functions
 
   const handleClose = () => {
-    dtreeStore.closeModalEditCompoundRequest()
+    dtreeModalStore.closeModalEditCompoundRequest()
   }
 
   const handleSaveChanges = () => {
@@ -323,7 +324,7 @@ export const ModalEditCompoundRequest = observer((): ReactElement => {
     params.request = requestCondition
 
     changeFunctionalStep(params)
-    dtreeStore.closeModalEditCompoundRequest()
+    dtreeModalStore.closeModalEditCompoundRequest()
   }
 
   function sendRequest(newRequestCondition: any[]) {

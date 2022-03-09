@@ -8,6 +8,7 @@ import { changeFunctionalStep } from '@utils/changeAttribute/changeFunctionalSte
 import { getFuncParams } from '@utils/getFuncParams'
 import { getResetType } from '@utils/getResetType'
 import { getSortedArray } from '@utils/getSortedArray'
+import dtreeModalStore from '../../../modals.store'
 import { CustomInheritanceModeContent } from '../../query-builder/ui/custom-inheritance-mode-content'
 import { HeaderModal } from '../../query-builder/ui/header-modal'
 import { ModalBase } from '../../query-builder/ui/modal-base'
@@ -196,14 +197,14 @@ export const ModalEditCustomInheritanceMode = observer((): ReactElement => {
   }
 
   const handleClose = () => {
-    dtreeStore.closeModalEditCustomInheritanceMode()
+    dtreeModalStore.closeModalEditCustomInheritanceMode()
   }
 
   const handleSaveChanges = () => {
     const params = { scenario: dtreeStore.scenario }
 
     changeFunctionalStep(params)
-    dtreeStore.closeModalEditCustomInheritanceMode()
+    dtreeModalStore.closeModalEditCustomInheritanceMode()
   }
 
   return (

@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite'
 import dtreeStore from '@store/dtree'
 import activeStepStore from '@store/dtree/active-step.store'
 import { changeFunctionalStep } from '@utils/changeAttribute/changeFunctionalStep'
+import dtreeModalStore from '../../../modals.store'
 import { AllNotModalMods } from '../../query-builder/ui/all-not-modal-mods'
 import { ApproxStateModalMods } from '../../query-builder/ui/approx-state-modal-mods'
 import { DisabledVariantsAmount } from '../../query-builder/ui/disabled-variants-amount'
@@ -104,7 +105,7 @@ export const ModalEditCompoundHet = observer((): ReactElement => {
   }, [])
 
   const handleClose = () => {
-    dtreeStore.closeModalEditCompoundHet()
+    dtreeModalStore.closeModalEditCompoundHet()
   }
 
   const handleSaveChanges = () => {
@@ -118,7 +119,7 @@ export const ModalEditCompoundHet = observer((): ReactElement => {
     }
 
     changeFunctionalStep(params)
-    dtreeStore.closeModalEditCompoundHet()
+    dtreeModalStore.closeModalEditCompoundHet()
   }
 
   const handleSetCondition = (value: string, type: string) => {

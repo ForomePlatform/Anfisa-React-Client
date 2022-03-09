@@ -15,6 +15,14 @@ class DtreeModalStore {
   isModalJoinVisible = false
   isModalNumbersVisible = false
 
+  isModalTextEditorVisible = false
+
+  isModalEditInheritanceModeVisible = false
+  isModalEditCustomInheritanceModeVisible = false
+  isModalEditCompoundHetVisible = false
+  isModalEditCompoundRequestVisible = false
+  isModalEditGeneRegionVisible = false
+
   constructor() {
     makeAutoObservable(this)
   }
@@ -118,6 +126,100 @@ class DtreeModalStore {
   closeModalEditFilters() {
     this.isModalEditFiltersVisible = false
     dtreeStore.resetSelectedFilters()
+  }
+
+  // 3.2.3 Modals for func attr
+
+  openModalEditInheritanceMode(
+    groupName: string,
+    stepIndex: number,
+    groupIndex: number,
+  ) {
+    this.isModalEditInheritanceModeVisible = true
+
+    dtreeStore.groupNameToChange = groupName
+
+    dtreeStore.groupIndexToChange = groupIndex
+  }
+
+  closeModalEditInheritanceMode() {
+    this.isModalEditInheritanceModeVisible = false
+  }
+
+  openModalEditCustomInheritanceMode(
+    groupName: string,
+    stepIndex: number,
+    groupIndex: number,
+  ) {
+    this.isModalEditCustomInheritanceModeVisible = true
+    dtreeStore.groupNameToChange = groupName
+    dtreeStore.groupIndexToChange = groupIndex
+  }
+
+  closeModalEditCustomInheritanceMode() {
+    this.isModalEditCustomInheritanceModeVisible = false
+  }
+
+  openModalEditCompoundHet(
+    groupName: string,
+    stepIndex: number,
+    groupIndex: number,
+  ) {
+    this.isModalEditCompoundHetVisible = true
+    dtreeStore.groupNameToChange = groupName
+    dtreeStore.groupIndexToChange = groupIndex
+  }
+
+  closeModalEditCompoundHet() {
+    this.isModalEditCompoundHetVisible = false
+  }
+
+  openModalEditCompoundRequest(
+    groupName: string,
+    stepIndex: number,
+    groupIndex: number,
+  ) {
+    this.isModalEditCompoundRequestVisible = true
+    dtreeStore.groupNameToChange = groupName
+    dtreeStore.groupIndexToChange = groupIndex
+  }
+
+  openModalEditCustomInheritanceModeFunc(
+    groupName: string,
+    stepIndex: number,
+    groupIndex: number,
+  ) {
+    this.isModalEditCompoundRequestVisible = true
+    dtreeStore.groupNameToChange = groupName
+    dtreeStore.groupIndexToChange = groupIndex
+  }
+
+  closeModalEditCompoundRequest() {
+    this.isModalEditCompoundRequestVisible = false
+  }
+
+  openModalEditGeneRegion(
+    groupName: string,
+    stepIndex: number,
+    groupIndex: number,
+  ) {
+    this.isModalEditGeneRegionVisible = true
+    dtreeStore.groupNameToChange = groupName
+    dtreeStore.groupIndexToChange = groupIndex
+  }
+
+  closeModalEditGeneRegion() {
+    this.isModalEditGeneRegionVisible = false
+  }
+
+  // 3.3 Modal for editing dtree code (new / loaded)
+
+  openModalTextEditor() {
+    this.isModalTextEditorVisible = true
+  }
+
+  closeModalTextEditor() {
+    this.isModalTextEditorVisible = false
   }
 }
 

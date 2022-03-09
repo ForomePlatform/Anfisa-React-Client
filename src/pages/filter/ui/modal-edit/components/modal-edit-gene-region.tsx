@@ -6,6 +6,7 @@ import dtreeStore from '@store/dtree'
 import activeStepStore from '@store/dtree/active-step.store'
 import { changeFunctionalStep } from '@utils/changeAttribute/changeFunctionalStep'
 import { validateLocusCondition } from '@utils/validation/validateLocusCondition'
+import dtreeModalStore from '../../../modals.store'
 import { GeneRegionContent } from '../../query-builder/ui/gene-region-content'
 import { HeaderModal } from '../../query-builder/ui/header-modal'
 import { ModalBase } from '../../query-builder/ui/modal-base'
@@ -58,14 +59,14 @@ export const ModalEditGeneRegion = observer((): ReactElement => {
   }, [])
 
   const handleClose = () => {
-    dtreeStore.closeModalEditGeneRegion()
+    dtreeModalStore.closeModalEditGeneRegion()
   }
 
   const handleSaveChanges = () => {
     const params = { locus: locusCondition }
 
     changeFunctionalStep(params)
-    dtreeStore.closeModalEditGeneRegion()
+    dtreeModalStore.closeModalEditGeneRegion()
   }
 
   return (
