@@ -1,6 +1,5 @@
 import { FC, memo, useEffect, useRef, useState } from 'react'
 import isEqual from 'lodash/isEqual'
-import { toJS } from 'mobx'
 import styled from 'styled-components'
 
 import { StatList } from '@declarations'
@@ -9,7 +8,6 @@ import { theme } from '@theme'
 import { ChartRenderModes } from './chart.interface'
 import chartStore from './chart.store'
 import Chart from './chart-register'
-import { getChartConfig, getChartData } from './utils'
 
 const CollapseBtn = styled.span`
   font-size: 12px;
@@ -30,8 +28,13 @@ interface IQueryBuilderSubgroupChartProps {
 export const QueryBuilderSubgroupChart: FC<IQueryBuilderSubgroupChartProps> =
   memo(
     ({ subGroupItem }) => {
-      const { getPieChartConfig, minPieChartHeight, getFullPieChartHeight } =
-        chartStore
+      const {
+        getBarChartConfig,
+        getPieChartConfig,
+        minPieChartHeight,
+        getFullPieChartHeight,
+        getChartData,
+      } = chartStore
 
       const chartData = getChartData(subGroupItem)
       const labelsQuantity = chartData?.labels?.length ?? 0
@@ -61,7 +64,7 @@ export const QueryBuilderSubgroupChart: FC<IQueryBuilderSubgroupChartProps> =
 
           const currentChartConfig = isPieChart
             ? getPieChartConfig(chartData)
-            : getChartConfig(chartData)
+            : getBarChartConfig(chartData)
 
           if (!chart) {
             chartRef.current = new Chart(canvasRef.current, currentChartConfig)
