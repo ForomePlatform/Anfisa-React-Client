@@ -42,6 +42,12 @@ class FilterControlRefinerStore {
     }
 
     if (filterStore.actionName === ActionFilterEnum.Join) {
+      if (!datasetStore.activePreset) {
+        showToast(t('error.choosePresetFirst'), 'error')
+
+        return
+      }
+
       const isConditionsAbleToJoin = compareConditions({
         currentConditions: datasetStore.conditions,
         startConditions: datasetStore.startPresetConditions,
@@ -77,18 +83,18 @@ class FilterControlRefinerStore {
     }
 
     if (filterStore.actionName === ActionFilterEnum.Modify) {
+      if (!datasetStore.activePreset) {
+        showToast(t('error.choosePresetFirst'), 'error')
+
+        return
+      }
+
       const isConditionsAbleToModify = compareConditions({
         currentConditions: datasetStore.conditions,
         startConditions: datasetStore.startPresetConditions,
         currentPreset: datasetStore.activePreset,
         prevPreset: datasetStore.prevPreset,
       })
-
-      if (!datasetStore.activePreset) {
-        showToast(t('error.choosePresetFirst'), 'error')
-
-        return
-      }
 
       if (!isConditionsAbleToModify) {
         showToast(t('error.noChangesToModify'), 'error')
