@@ -114,8 +114,7 @@ class ChartStore {
     const { variants, 'render-mode': renderMode } = subGroupItem
 
     const filteredVariants = variants.sort(
-      ([_firstName, firstNumber], [_secondName, secondNumber]) =>
-        secondNumber - firstNumber,
+      (firstVariant, secondVariant) => secondVariant[1] - firstVariant[1],
     )
 
     const titleList = filteredVariants.map(varaint => varaint[0])

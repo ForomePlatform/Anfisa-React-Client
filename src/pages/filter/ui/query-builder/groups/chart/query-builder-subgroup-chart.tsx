@@ -1,24 +1,11 @@
-import { FC, memo, useEffect, useRef, useState } from 'react'
+import { FC, memo, useEffect, useRef } from 'react'
 import isEqual from 'lodash/isEqual'
-import styled from 'styled-components'
 
 import { StatList } from '@declarations'
-import { t } from '@i18n'
-import { theme } from '@theme'
 import { ChartRenderModes } from './chart.interface'
 import chartStore from './chart.store'
 import Chart from './chart-register'
 import { PieChartWrapper } from './pie-chart-wrapper'
-
-const CollapseBtn = styled.span`
-  font-size: 12px;
-  font-weight: 500;
-  position: relative;
-  bottom: 16px;
-  left: 10px;
-  cursor: pointer;
-  color: ${theme('colors.blue.bright')};
-`
 
 interface IQueryBuilderSubgroupChartProps {
   // TODO: change types when refactoring

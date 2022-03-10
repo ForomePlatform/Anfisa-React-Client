@@ -56,14 +56,12 @@ export const PieChartWrapper: FC<IPieChartProps> = ({
   const { variants } = subGroupItem
 
   const totalCountsOnChart = variants.reduce(
-    (previousValue, [_variantName, variantNumber]) =>
-      previousValue + variantNumber,
+    (previousValue, variant) => previousValue + variant[1],
     0,
   )
 
   const filteredVariants = variants.sort(
-    ([_firstName, firstNumber], [_secondName, secondNumber]) =>
-      secondNumber - firstNumber,
+    (firstVariant, secondVariant) => secondVariant[1] - firstVariant[1],
   )
 
   const labelsInCollapsedMode = 4
