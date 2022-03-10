@@ -23,9 +23,10 @@ export const GeneRegion = observer(() => {
   }
 
   useEffect(() => {
-    const params: string = selectedFilterValue
-
-    functionPanelStore.fetchStatFunc(FuncStepTypesEnum.GeneRegion, params)
+    functionPanelStore.fetchStatFunc(
+      FuncStepTypesEnum.GeneRegion,
+      selectedFilterValue,
+    )
   }, [selectedFilterValue])
 
   // to avoid displaying this data on the another func attr

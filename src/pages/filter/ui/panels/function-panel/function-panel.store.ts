@@ -113,19 +113,13 @@ class FunctionPanelStore {
   }
 
   public isFilterInSelectedFilters(selectedFilterValue: string): boolean {
-    if (
-      filterStore.selectedFilters &&
-      filterStore.selectedFilters[this.filterGroup] &&
-      filterStore.selectedFilters[this.filterGroup][this.filterName] &&
-      selectedFilterValue
-    ) {
-      return (
-        selectedFilterValue in
-        filterStore.selectedFilters[this.filterGroup][this.filterName]
-      )
-    } else {
-      return false
-    }
+    const selectedFilter =
+      filterStore.selectedFilters?.[this.filterGroup]?.[this.filterName]
+
+    return selectedFilter && selectedFilterValue
+      ? selectedFilterValue in
+          filterStore.selectedFilters[this.filterGroup][this.filterName]
+      : false
   }
 }
 
