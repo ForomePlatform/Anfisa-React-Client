@@ -1,7 +1,9 @@
 import { ReactElement, useEffect, useRef } from 'react'
 import { observer } from 'mobx-react-lite'
 
+import { ActionType } from '@declarations'
 import dtreeStore from '@store/dtree'
+import { SelectModalButtons } from '@pages/filter/ui/query-builder/ui/select-modal-buttons'
 import { getFuncParams } from '@utils/getFuncParams'
 import { getResetType } from '@utils/getResetType'
 import { CustomInheritanceModeContent } from '../../../query-builder/ui/custom-inheritance-mode-content'
@@ -11,7 +13,7 @@ import modalEditStore from '../../modal-edit.store'
 import { EditModalButtons } from '../edit-modal-buttons'
 import modalCustomInheritanceModeStore from './modal-custom-inheritance-mode.store'
 
-export const ModalEditCustomInheritanceMode = observer((): ReactElement => {
+export const ModalCustomInheritanceMode = observer((): ReactElement => {
   const ref = useRef(null)
 
   const { currentGroup, groupName, variants, problemGroups } = modalEditStore
@@ -20,20 +22,22 @@ export const ModalEditCustomInheritanceMode = observer((): ReactElement => {
     modalCustomInheritanceModeStore
 
   useEffect(() => {
-    const scenarioString = getFuncParams(
-      groupName,
-      currentGroup[currentGroup.length - 1],
-    )
-      .slice(10)
-      .replace(/\s+/g, '')
+    if (currentGroup) {
+      const scenarioString = getFuncParams(
+        groupName,
+        currentGroup[currentGroup.length - 1],
+      )
+        .slice(10)
+        .replace(/\s+/g, '')
 
-    modalCustomInheritanceModeStore.setResetValue(
-      getResetType(currentGroup[currentGroup.length - 1].scenario),
-    )
+      modalCustomInheritanceModeStore.setResetValue(
+        getResetType(currentGroup[currentGroup.length - 1].scenario),
+      )
 
-    const params = `{"scenario":${scenarioString}}`
+      const params = `{"scenario":${scenarioString}}`
 
-    dtreeStore.fetchStatFuncAsync(groupName, params)
+      dtreeStore.fetchStatFuncAsync(groupName, params)
+    }
 
     return () => dtreeStore.resetStatFuncData()
 
@@ -48,6 +52,10 @@ export const ModalEditCustomInheritanceMode = observer((): ReactElement => {
 
   const handleSetComplexScenario = (name: string) => {
     modalCustomInheritanceModeStore.setComplexScenario(name)
+  }
+
+  const handleAddAttribute = (action: ActionType) => {
+    modalCustomInheritanceModeStore.addAttribute(action)
   }
 
   return (
@@ -65,11 +73,28 @@ export const ModalEditCustomInheritanceMode = observer((): ReactElement => {
         resetValue={resetValue}
       />
 
-      <EditModalButtons
-        handleClose={() => modalCustomInheritanceModeStore.closeModal()}
-        handleSaveChanges={() => modalCustomInheritanceModeStore.saveChanges()}
-        disabled={!variants}
-      />
+      {currentGroup ? (
+        <EditModalButtons
+          handleClose={() => modalCustomInheritanceModeStore.closeModal()}
+          handleSaveChanges={() =>
+            modalCustomInheritanceModeStore.saveChanges()
+          }
+          disabled={!variants}
+        />
+      ) : (
+        <SelectModalButtons
+          handleClose={() => modalCustomInheritanceModeStore.closeModal()}
+          handleModals={() =>
+            modalCustomInheritanceModeStore.openModalAttribute()
+          }
+          handleModalJoin={() =>
+            modalCustomInheritanceModeStore.openModalJoin()
+          }
+          handleAddAttribute={handleAddAttribute}
+          disabled={!variants}
+          currentGroup={currentGroup}
+        />
+      )}
     </ModalBase>
   )
 })

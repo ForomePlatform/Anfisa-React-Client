@@ -2,7 +2,6 @@ import { makeAutoObservable } from 'mobx'
 
 import { ActionType } from '@declarations'
 import { InheritanceModeEnum } from '@core/enum/inheritance-mode-enum'
-import { ModalTypeEnum } from '@core/enum/modal-type-enum'
 import dtreeStore from '@store/dtree'
 import modalEditStore from '@pages/filter/ui/modal-edit/modal-edit.store'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
@@ -202,14 +201,18 @@ class ModalCustomInheritanceModeStore {
     this.setResetValue(name)
   }
 
-  public closeModal(modalType?: string): void {
-    modalType === ModalTypeEnum.Select
-      ? dtreeStore.closeModalSelectCustomInheritanceMode()
-      : dtreeStore.closeModalEditCustomInheritanceMode()
+  public closeModal(): void {
+    dtreeStore.closeModalCustomInheritanceMode()
+    this.resetValue = ''
+    this.selectValues = {
+      first: '--',
+      second: '--',
+      third: '--',
+    }
   }
 
   public openModalAttribute(): void {
-    dtreeStore.closeModalSelectCustomInheritanceMode()
+    dtreeStore.closeModalCustomInheritanceMode()
     dtreeStore.openModalAttribute()
     dtreeStore.resetSelectedFilters()
   }
@@ -224,14 +227,14 @@ class ModalCustomInheritanceModeStore {
 
     addAttributeToStep(action, 'func', [null], params)
     dtreeStore.resetSelectedFilters()
-    dtreeStore.closeModalSelectCustomInheritanceMode()
+    dtreeStore.closeModalCustomInheritanceMode()
   }
 
   public saveChanges = () => {
     const params = { scenario: dtreeStore.scenario }
 
     changeFunctionalStep(params)
-    dtreeStore.closeModalEditCustomInheritanceMode()
+    dtreeStore.closeModalCustomInheritanceMode()
   }
 }
 

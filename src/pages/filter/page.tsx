@@ -16,8 +16,7 @@ import { GlbPagesNames } from '@glb/glb-names'
 import { ModalNumbers } from '@pages/filter/ui/modal-edit/components/modal-numbers'
 import { ErrorPage } from '../error/error'
 import { FilterControl } from './ui/filter-control/filter-control'
-import { ModalEditCustomInheritanceMode } from './ui/modal-edit/components/modal-custom-inheritance-mode/modal-edit-custom-inheritance-mode'
-import { ModalSelectCustomInheritanceMode } from './ui/modal-edit/components/modal-custom-inheritance-mode/modal-select-custom-inheritance-mode'
+import { ModalCustomInheritanceMode } from './ui/modal-edit/components/modal-custom-inheritance-mode/modal-custom-inheritance-mode'
 import { ModalEditCompoundHet } from './ui/modal-edit/components/modal-edit-compound-het'
 import { ModalEditCompoundRequest } from './ui/modal-edit/components/modal-edit-compound-request'
 import { ModalEditFilters } from './ui/modal-edit/components/modal-edit-filters'
@@ -119,11 +118,8 @@ const FilterPage = observer((): ReactElement => {
         <ModalSelectInheritanceMode />
       )}
 
-      {dtreeStore.isModalEditCustomInheritanceModeVisible && (
-        <ModalEditCustomInheritanceMode />
-      )}
-      {dtreeStore.isModalSelectCustomInheritanceModeVisible && (
-        <ModalSelectCustomInheritanceMode />
+      {dtreeStore.isModalCustomInheritanceModeVisible && (
+        <ModalCustomInheritanceMode />
       )}
 
       {dtreeStore.isModalEditCompoundHetVisible && <ModalEditCompoundHet />}
