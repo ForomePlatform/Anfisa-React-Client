@@ -21,7 +21,8 @@ import { ModalEditCompoundRequest } from './ui/modal-edit/components/modal-edit-
 import { ModalEditCustomInheritanceMode } from './ui/modal-edit/components/modal-edit-custom-inheritance-mode'
 import { ModalEditFilters } from './ui/modal-edit/components/modal-edit-filters'
 import { ModalEditGeneRegion } from './ui/modal-edit/components/modal-edit-gene-region'
-import { ModalEditInheritanceMode } from './ui/modal-edit/components/modal-edit-inheritance-mode'
+import { ModalEditInheritanceMode } from './ui/modal-edit/components/modal-inheritance-mode/modal-edit-inheritance-mode'
+import { ModalSelectInheritanceMode } from './ui/modal-edit/components/modal-inheritance-mode/modal-select-inheritance-mode'
 import { ModalTextEditor } from './ui/query-builder/modal-text-editor'
 import { QueryBuilder } from './ui/query-builder/query-builder'
 import { ModalSaveDataset } from './ui/query-builder/ui/modal-save-dataset'
@@ -31,7 +32,6 @@ import { ModalSelectCompoundRequest } from './ui/query-builder/ui/modal-select-c
 import { ModalSelectCustomInheritanceMode } from './ui/query-builder/ui/modal-select-custom-inheritance-mode'
 import { ModalSelectFilters } from './ui/query-builder/ui/modal-select-filters'
 import { ModalSelectGeneRegion } from './ui/query-builder/ui/modal-select-gene-region'
-import { ModalSelectInheritanceMode } from './ui/query-builder/ui/modal-select-inheritance-mode'
 import { getNumberWithCommas } from './ui/query-builder/ui/next-step-route'
 import { TableModal } from './ui/TableModal'
 

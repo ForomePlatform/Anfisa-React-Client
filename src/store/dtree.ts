@@ -56,6 +56,8 @@ class DtreeStore {
   queryBuilderRenderKey = Date.now()
 
   dtreeStat: DtreeStatType = {}
+  startDtreeStat: DtreeStatType = {}
+
   statAmount: number[] = []
   statRequestId = ''
 
@@ -209,6 +211,11 @@ class DtreeStore {
 
     runInAction(() => {
       this.dtreeStat = result
+
+      if (Object.values(this.startDtreeStat).length === 0) {
+        this.startDtreeStat = result
+      }
+
       this.statAmount = get(result, 'filtered-counts', [])
       this.filteredCounts = this.statAmount[1]
       this.statRequestId = result['rq-id']
