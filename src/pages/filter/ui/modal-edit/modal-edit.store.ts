@@ -4,6 +4,8 @@ import dtreeStore from '@store/dtree'
 import activeStepStore from '@store/dtree/active-step.store'
 import { getQueryBuilder } from '@utils/getQueryBuilder'
 
+export const selectOptions = ['--', '0', '0-1', '1', '1-2', '2']
+
 class ModalEditStore {
   constructor() {
     makeAutoObservable(this)
@@ -17,6 +19,10 @@ class ModalEditStore {
     return location
   }
 
+  public get variants(): string[] {
+    return dtreeStore.statFuncData.variants
+  }
+
   public get currentStepIndex(): number {
     return activeStepStore.activeStepIndex
   }
@@ -26,7 +32,7 @@ class ModalEditStore {
   }
 
   public get currentGroup(): any[] {
-    return dtreeStore.stepData[this.currentStepIndex].groups[
+    return dtreeStore.stepData[activeStepStore.activeStepIndex].groups[
       this.currentGroupIndex
     ]
   }
@@ -47,22 +53,26 @@ class ModalEditStore {
     ].length
   }
 
+  public get currentStepGroups(): string[] {
+    return dtreeStore.currentStepGroups
+  }
+
   public get problemGroups(): string[] {
-    let attrData: any
+    let problemGroups: string[] = []
 
     const subGroups = Object.values(
       getQueryBuilder(dtreeStore.startDtreeStat['stat-list']),
     )
 
-    subGroups.map(subGroup => {
-      subGroup.map((item, currNo) => {
+    subGroups.forEach(subGroup => {
+      subGroup.find((item, currNo) => {
         if (item.name === this.groupName) {
-          attrData = subGroup[currNo]
+          problemGroups = subGroup[currNo].family
         }
       })
     })
 
-    return attrData.family
+    return problemGroups
   }
 }
 
