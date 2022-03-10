@@ -40,7 +40,7 @@ class FunctionPanelStore {
   public get problemGroups(): string[] {
     let attrData: any
 
-    const statList = toJS(datasetStore.dsStat['stat-list'])
+    const statList = toJS(datasetStore.startDsStat['stat-list'])
     const subGroups = Object.values(getQueryBuilder(statList))
 
     subGroups.map(subGroup => {

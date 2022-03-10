@@ -35,6 +35,7 @@ export type Condition = [string, string, unknown, string[]?, unknown?]
 
 export class DatasetStore {
   dsStat: DsStatType = {}
+  startDsStat: DsStatType = {}
   variantsAmount = 0
   tabReport: TabReportType[] = []
   genes: string[] = []
@@ -245,6 +246,7 @@ export class DatasetStore {
     this.samples = []
     this.tags = []
     this.dsStat = {}
+    this.startDsStat = {}
     this.variantsAmount = 0
     this.statAmount = []
     this.prevPreset = ''
@@ -326,6 +328,10 @@ export class DatasetStore {
 
     runInAction(() => {
       this.dsStat = result
+
+      if (Object.keys(this.startDsStat).length === 0) {
+        this.startDsStat = this.dsStat
+      }
 
       if (this.isXL) {
         this.statAmount = get(result, 'filtered-counts', [])
