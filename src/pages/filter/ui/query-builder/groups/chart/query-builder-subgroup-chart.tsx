@@ -8,6 +8,7 @@ import { theme } from '@theme'
 import { ChartRenderModes } from './chart.interface'
 import chartStore from './chart.store'
 import Chart from './chart-register'
+import { PieChartWrapper } from './pie-chart-wrapper'
 
 const CollapseBtn = styled.span`
   font-size: 12px;
@@ -28,31 +29,15 @@ interface IQueryBuilderSubgroupChartProps {
 export const QueryBuilderSubgroupChart: FC<IQueryBuilderSubgroupChartProps> =
   memo(
     ({ subGroupItem }) => {
-      const {
-        getBarChartConfig,
-        getPieChartConfig,
-        minPieChartHeight,
-        getFullPieChartHeight,
-        getChartData,
-      } = chartStore
+      const { getBarChartConfig, getPieChartConfig, getChartData } = chartStore
 
       const chartData = getChartData(subGroupItem)
-      const labelsQuantity = chartData?.labels?.length ?? 0
-
-      const [isListExpanded, setIsListExpanded] = useState(false)
-
-      const pieChartHeight = isListExpanded
-        ? getFullPieChartHeight(labelsQuantity)
-        : minPieChartHeight
 
       const { 'render-mode': renderMode } = subGroupItem
       const isPieChart = renderMode === ChartRenderModes.Pie
 
       const canvasRef = useRef<HTMLCanvasElement>(null)
       const chartRef = useRef<Chart>()
-
-      const shouldShowSeeAllBtn = isPieChart && labelsQuantity > 4
-      const chartHeight = isPieChart ? pieChartHeight : 'auto'
 
       useEffect(() => {
         if (!canvasRef.current) {
@@ -88,18 +73,13 @@ export const QueryBuilderSubgroupChart: FC<IQueryBuilderSubgroupChartProps> =
       }, [])
 
       return (
-        <div
-          className="rounded-md bg-blue-secondary p-2 mr-5"
-          style={{ height: chartHeight }}
-        >
-          <canvas ref={canvasRef} />
-
-          {shouldShowSeeAllBtn && (
-            <CollapseBtn onClick={() => setIsListExpanded(!isListExpanded)}>
-              {isListExpanded
-                ? t('filter.chart.collapse')
-                : t('filter.chart.seeAll')}
-            </CollapseBtn>
+        <div className="rounded-md bg-blue-secondary p-2 mr-5">
+          {isPieChart ? (
+            <PieChartWrapper subGroupItem={subGroupItem}>
+              <canvas ref={canvasRef} />
+            </PieChartWrapper>
+          ) : (
+            <canvas ref={canvasRef} />
           )}
         </div>
       )

@@ -1,6 +1,7 @@
 import { ChartConfiguration, ChartData } from 'chart.js'
 import { makeAutoObservable } from 'mobx'
 
+import { StatList } from '@declarations'
 import { theme } from '@theme'
 import { ChartRenderModes } from './chart.interface'
 
@@ -9,14 +10,39 @@ class ChartStore {
     makeAutoObservable(this)
   }
 
-  minPieChartHeight = 126
-
-  getFullPieChartHeight(labelsQuantity: number) {
-    const labelHeight = 24
-    const calculatedPieChartHeight = labelsQuantity * labelHeight
-
-    return calculatedPieChartHeight
-  }
+  // temporary solution. I'll fix it in the next PR
+  colorListForPieChart: string[] = [
+    theme('colors.blue.bright'),
+    theme('colors.purple.bright'),
+    theme('colors.yellow.secondary'),
+    theme('colors.orange.bright'),
+    theme('colors.grey.disabled'),
+    theme('colors.grey.disabled'),
+    theme('colors.grey.disabled'),
+    theme('colors.grey.disabled'),
+    theme('colors.grey.disabled'),
+    theme('colors.grey.disabled'),
+    theme('colors.grey.disabled'),
+    theme('colors.grey.disabled'),
+    theme('colors.grey.disabled'),
+    theme('colors.grey.disabled'),
+    theme('colors.grey.disabled'),
+    theme('colors.grey.disabled'),
+    theme('colors.grey.disabled'),
+    theme('colors.grey.disabled'),
+    theme('colors.grey.disabled'),
+    theme('colors.grey.disabled'),
+    theme('colors.grey.disabled'),
+    theme('colors.grey.disabled'),
+    theme('colors.grey.disabled'),
+    theme('colors.grey.disabled'),
+    theme('colors.grey.disabled'),
+    theme('colors.grey.disabled'),
+    theme('colors.grey.disabled'),
+    theme('colors.grey.disabled'),
+    theme('colors.grey.disabled'),
+    theme('colors.grey.disabled'),
+  ]
 
   getBarChartConfig = (data: ChartData): ChartConfiguration => ({
     type: 'bar',
@@ -54,20 +80,9 @@ class ChartStore {
       options: {
         maintainAspectRatio: false,
         plugins: {
-          legend: {
-            maxWidth: 200,
-            align: 'center',
-            position: 'left',
-            fullSize: true,
-            labels: {
-              boxWidth: 100,
-              usePointStyle: true,
-              color: '#ffffff',
-            },
-          },
+          legend: { display: false },
         },
         borderColor: 'transparent',
-        aspectRatio: 1.8,
       },
     }
   }
@@ -95,25 +110,23 @@ class ChartStore {
     return data
   }
 
-  getVariantsChartData = (subGroupItem: any) => {
+  getVariantsChartData = (subGroupItem: StatList) => {
     const { variants, 'render-mode': renderMode } = subGroupItem
 
-    const titleList = variants.map((element: any[]) => element[0])
+    const filteredVariants = variants.sort(
+      ([_firstName, firstNumber], [_secondName, secondNumber]) =>
+        secondNumber - firstNumber,
+    )
 
-    const quantityList = variants.map((element: any[]) => +element[1])
+    const titleList = filteredVariants.map(varaint => varaint[0])
 
-    const colorListForPieChart = [
-      theme('colors.blue.bright'),
-      theme('colors.purple.bright'),
-      theme('colors.yellow.secondary'),
-      theme('colors.orange.bright'),
-    ]
+    const quantityList = filteredVariants.map(element => +element[1])
 
     const defaultColorList = [theme('colors.blue.bright')]
 
     const colors =
       renderMode === ChartRenderModes.Pie
-        ? colorListForPieChart
+        ? this.colorListForPieChart
         : defaultColorList
 
     const data: ChartData = {
@@ -130,7 +143,7 @@ class ChartStore {
     return data
   }
 
-  getChartData = (subGroupItem: any): ChartData | undefined => {
+  getChartData = (subGroupItem: StatList): ChartData | undefined => {
     const { variants, histogram } = subGroupItem
 
     if (histogram) {
