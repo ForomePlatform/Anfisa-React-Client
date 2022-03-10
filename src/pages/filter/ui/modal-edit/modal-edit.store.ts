@@ -4,6 +4,8 @@ import dtreeStore from '@store/dtree'
 import activeStepStore from '@store/dtree/active-step.store'
 import { getQueryBuilder } from '@utils/getQueryBuilder'
 
+export const selectOptions = ['--', '0', '0-1', '1', '1-2', '2']
+
 class ModalEditStore {
   constructor() {
     makeAutoObservable(this)
@@ -15,6 +17,10 @@ class ModalEditStore {
 
     const location: [number, number] = [+stepIndexForApi, locationIndex]
     return location
+  }
+
+  public get variants(): string[] {
+    return dtreeStore.statFuncData.variants
   }
 
   public get currentStepIndex(): number {
