@@ -23,7 +23,7 @@ export const ModalJoin = observer(
       dtreeStore.closeModalJoin()
       dtreeStore.closeModalSelectFilter()
       dtreeStore.closeModalNumbers()
-      dtreeStore.closeModalSelectInheritanceMode()
+      dtreeStore.closeModalInheritanceMode()
       dtreeStore.closeModalSelectCustomInheritanceMode()
     }
 

@@ -71,7 +71,7 @@ export const NextStepContentItem = observer(
 
       if (group[0] === StepTypeEnum.Func) {
         group[1] === FuncStepTypesEnum.InheritanceMode &&
-          dtreeStore.openModalEditInheritanceMode(group[1], index, currNo)
+          dtreeStore.openModalInheritanceMode(group[1], currNo)
 
         group[1] === FuncStepTypesEnum.CustomInheritanceMode &&
           dtreeStore.openModalEditCustomInheritanceMode(group[1], index, currNo)

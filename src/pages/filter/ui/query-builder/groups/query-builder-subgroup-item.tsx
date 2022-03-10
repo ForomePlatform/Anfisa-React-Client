@@ -61,11 +61,7 @@ export const QueryBuilderSubgroupItem = observer(
 
       if (group.kind === FilterKindEnum.Func) {
         group.name === FuncStepTypesEnum.InheritanceMode &&
-          dtreeStore.openModalSelectInheritanceMode(
-            group.name,
-            activeStepIndex,
-            source,
-          )
+          dtreeStore.openModalInheritanceMode(group.name, undefined, source)
 
         group.name === FuncStepTypesEnum.CustomInheritanceMode &&
           dtreeStore.openModalSelectCustomInheritanceMode(

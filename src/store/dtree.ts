@@ -100,13 +100,12 @@ class DtreeStore {
   isModalTextEditorVisible = false
   isModalSaveDatasetVisible = false
 
-  isModalEditInheritanceModeVisible = false
+  isModalInheritanceModeVisible = false
   isModalEditCustomInheritanceModeVisible = false
   isModalEditCompoundHetVisible = false
   isModalEditCompoundRequestVisible = false
   isModalEditGeneRegionVisible = false
 
-  isModalSelectInheritanceModeVisible = false
   isModalSelectCustomInheritanceModeVisible = false
   isModalSelectCompoundHetVisible = false
   isModalSelectCompoundRequestVisible = false
@@ -541,22 +540,6 @@ class DtreeStore {
 
   // 3.1.3 Modals for func attr
 
-  openModalSelectInheritanceMode(
-    groupName: string,
-    stepIndex: number,
-    source: string,
-  ) {
-    this.modalSource = source
-
-    this.isModalSelectInheritanceModeVisible = true
-
-    this.groupNameToChange = groupName
-  }
-
-  closeModalSelectInheritanceMode() {
-    this.isModalSelectInheritanceModeVisible = false
-  }
-
   openModalSelectCustomInheritanceMode(
     groupName: string,
     stepIndex: number,
@@ -641,20 +624,21 @@ class DtreeStore {
 
   // 3.2.3 Modals for func attr
 
-  openModalEditInheritanceMode(
+  openModalInheritanceMode(
     groupName: string,
-    stepIndex: number,
-    groupIndex: number,
+    groupIndex: number | undefined,
+    source: string = '',
   ) {
-    this.isModalEditInheritanceModeVisible = true
+    this.modalSource = source
+
+    this.isModalInheritanceModeVisible = true
 
     this.groupNameToChange = groupName
-
-    this.groupIndexToChange = groupIndex
+    this.groupIndexToChange = groupIndex ?? -1
   }
 
-  closeModalEditInheritanceMode() {
-    this.isModalEditInheritanceModeVisible = false
+  closeModalInheritanceMode() {
+    this.isModalInheritanceModeVisible = false
   }
 
   openModalEditCustomInheritanceMode(

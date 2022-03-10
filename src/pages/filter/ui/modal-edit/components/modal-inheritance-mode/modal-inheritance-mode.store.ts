@@ -2,7 +2,6 @@ import { Dispatch, SetStateAction } from 'react'
 import { makeAutoObservable } from 'mobx'
 
 import { ActionType } from '@declarations'
-import { ModalTypeEnum } from '@core/enum/modal-type-enum'
 import dtreeStore from '@store/dtree'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { changeFunctionalStep } from '@utils/changeAttribute/changeFunctionalStep'
@@ -68,7 +67,7 @@ class ModalInheritanceModeStore {
     const params = { problem_group: selectedProblemGroups }
 
     changeFunctionalStep(params, true)
-    dtreeStore.closeModalEditInheritanceMode()
+    dtreeStore.closeModalInheritanceMode()
     dtreeStore.resetSelectedFilters()
   }
 
@@ -81,19 +80,17 @@ class ModalInheritanceModeStore {
     addAttributeToStep(action, 'func', null, params)
 
     dtreeStore.resetSelectedFilters()
-    dtreeStore.closeModalSelectInheritanceMode()
+    dtreeStore.closeModalInheritanceMode()
   }
 
   public openModalAttribute = (): void => {
-    dtreeStore.closeModalSelectInheritanceMode()
+    dtreeStore.closeModalInheritanceMode()
     dtreeStore.openModalAttribute()
     dtreeStore.resetSelectedFilters()
   }
 
-  public closeModal(modalType?: string): void {
-    modalType === ModalTypeEnum.Select
-      ? dtreeStore.closeModalSelectInheritanceMode()
-      : dtreeStore.closeModalEditInheritanceMode()
+  public closeModal(): void {
+    dtreeStore.closeModalInheritanceMode()
   }
 }
 
