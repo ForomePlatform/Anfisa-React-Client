@@ -5,10 +5,10 @@ import { ActionType } from '@declarations'
 import { ModalTypeEnum } from '@core/enum/modal-type-enum'
 import dtreeStore from '@store/dtree'
 import { HeaderModal } from '../../../query-builder/ui/header-modal'
-import { InheritanceModeContent } from '../../../query-builder/ui/inheritance-mode-content'
 import { ModalBase } from '../../../query-builder/ui/modal-base'
 import { SelectModalButtons } from '../../../query-builder/ui/select-modal-buttons'
 import modalEditStore from '../../modal-edit.store'
+import { InheritanceModeContent } from './components/inheritance-mode-content'
 import modalInheritanceModeStore from './modal-inheritance-mode.store'
 
 export const ModalSelectInheritanceMode = observer((): ReactElement => {

@@ -5,8 +5,8 @@ import { observer } from 'mobx-react-lite'
 import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
 import { Button } from '@ui/button'
-import { DisabledVariantsAmount } from './disabled-variants-amount'
-import { ModsDivider } from './mods-divider'
+import { DisabledVariantsAmount } from '../../../../query-builder/ui/disabled-variants-amount'
+import { ModsDivider } from '../../../../query-builder/ui/mods-divider'
 
 interface IProps {
   problemGroups: string[]
