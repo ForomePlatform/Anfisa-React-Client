@@ -48,7 +48,7 @@ class ModalCompoundRequestStore {
     this.activeRequestIndex = index
   }
 
-  public sendRequest(newRequestCondition: any[]) {
+  public sendRequest(newRequestCondition: ({}[] | [number, any])[]): void {
     const requestString = getFuncParams(modalEditStore.groupName, {
       request: newRequestCondition,
     })
@@ -69,7 +69,7 @@ class ModalCompoundRequestStore {
 
   // request control functions
 
-  public setActiveRequest = (requestBlockIndex: number, event: any) => {
+  public setActiveRequest(requestBlockIndex: number, event: any): void {
     const classList = Array.from(event.target.classList)
 
     const shouldMakeActive = classList.includes('step-content-area')
@@ -83,7 +83,7 @@ class ModalCompoundRequestStore {
     this.setResetValue(getResetType(currentRequest[1]))
   }
 
-  public setRequestBlocksAmount = (type: string) => {
+  public setRequestBlocksAmount(type: string): void {
     if (type === 'ADD') {
       const emptyBlock: [number, any] = [1, {}]
       const newRequestCondition = [
@@ -110,10 +110,10 @@ class ModalCompoundRequestStore {
     }
   }
 
-  public changeRequestConditionNumber = (
+  public changeRequestConditionNumber(
     requestBlockIndex: number,
     value: number,
-  ) => {
+  ): void {
     if (value < 0) return
 
     const newRequestCondition: any[] = cloneDeep(this.requestCondition)
@@ -131,7 +131,7 @@ class ModalCompoundRequestStore {
 
   // approx, state control function
 
-  public setCondition = (value: string, type: string): void => {
+  public setCondition(value: string, type: string): void {
     if (type === 'approx') {
       this.setApproxCondition(value)
 
@@ -169,7 +169,7 @@ class ModalCompoundRequestStore {
 
   // helper fucntion
 
-  public getSelectedValue(group: string, index: number): any {
+  public getSelectedValue(group: string, index: number): string {
     let value = '--'
 
     const currentRequestBlock = this.requestCondition[index][1]
@@ -236,7 +236,7 @@ class ModalCompoundRequestStore {
     this.setResetValue(name)
   }
 
-  // final function to add filter into tree
+  // final functions to add/save filter
 
   public addAttribute(action: ActionType): void {
     const approx =
