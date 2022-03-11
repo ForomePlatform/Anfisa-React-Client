@@ -102,12 +102,11 @@ class DtreeStore {
 
   isModalEditInheritanceModeVisible = false
   isModalCustomInheritanceModeVisible = false
-  isModalEditCompoundHetVisible = false
+  isModalCompoundHetVisible = false
   isModalEditCompoundRequestVisible = false
   isModalEditGeneRegionVisible = false
 
   isModalSelectInheritanceModeVisible = false
-  isModalSelectCompoundHetVisible = false
   isModalSelectCompoundRequestVisible = false
   isModalSelectGeneRegionVisible = false
 
@@ -556,22 +555,6 @@ class DtreeStore {
     this.isModalSelectInheritanceModeVisible = false
   }
 
-  openModalSelectCompoundHet(
-    groupName: string,
-    stepIndex: number,
-    source: string,
-  ) {
-    this.modalSource = source
-
-    this.isModalSelectCompoundHetVisible = true
-
-    this.groupNameToChange = groupName
-  }
-
-  closeModalSelectCompoundHet() {
-    this.isModalSelectCompoundHetVisible = false
-  }
-
   openModalSelectCompoundRequest(
     groupName: string,
     stepIndex: number,
@@ -657,18 +640,21 @@ class DtreeStore {
     this.isModalCustomInheritanceModeVisible = false
   }
 
-  openModalEditCompoundHet(
+  openModalCompoundHet(
     groupName: string,
-    stepIndex: number,
-    groupIndex: number,
+    groupIndex: number | undefined,
+    source: string = '',
   ) {
-    this.isModalEditCompoundHetVisible = true
+    this.modalSource = source
+
+    this.isModalCompoundHetVisible = true
+
     this.groupNameToChange = groupName
-    this.groupIndexToChange = groupIndex
+    this.groupIndexToChange = groupIndex ?? -1
   }
 
-  closeModalEditCompoundHet() {
-    this.isModalEditCompoundHetVisible = false
+  closeModalCompoundHet() {
+    this.isModalCompoundHetVisible = false
   }
 
   openModalEditCompoundRequest(

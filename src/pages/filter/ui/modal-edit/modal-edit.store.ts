@@ -1,10 +1,16 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, toJS } from 'mobx'
 
 import dtreeStore from '@store/dtree'
 import activeStepStore from '@store/dtree/active-step.store'
 import { getQueryBuilder } from '@utils/getQueryBuilder'
 
 export const selectOptions = ['--', '0', '0-1', '1', '1-2', '2']
+export interface IParams {
+  approx: any
+  state?: string[] | null
+  default?: string
+  request?: any[]
+}
 
 class ModalEditStore {
   constructor() {
@@ -73,6 +79,44 @@ class ModalEditStore {
     })
 
     return problemGroups
+  }
+
+  public get approxModes() {
+    let approxModes: string[][] = []
+
+    const subGroups = Object.values(
+      getQueryBuilder(toJS(dtreeStore.startDtreeStat['stat-list'])),
+    )
+
+    subGroups.map(subGroup => {
+      subGroup.map((item, currNo) => {
+        if (item.name === this.groupName) {
+          approxModes = subGroup[currNo]['approx-modes']
+        }
+      })
+    })
+
+    return approxModes
+  }
+
+  public get approxOptions(): string[] {
+    const approxOptions: string[] = []
+
+    this.approxModes.map((mode: string[]) => {
+      approxOptions.push(mode[1])
+    })
+
+    return approxOptions
+  }
+
+  public get approxValues(): string[] {
+    const approxValues: string[] = []
+
+    this.approxModes.map((mode: string[]) => {
+      approxValues.push(mode[0])
+    })
+
+    return approxValues
   }
 }
 
