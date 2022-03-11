@@ -17,8 +17,7 @@ import { ModalNumbers } from '@pages/filter/ui/modal-edit/components/modal-numbe
 import { ErrorPage } from '../error/error'
 import { FilterControl } from './ui/filter-control/filter-control'
 import { ModalCompoundHet } from './ui/modal-edit/components/modal-compound-het/modal-compound-het'
-import { ModalEditCompoundRequest } from './ui/modal-edit/components/modal-compound-request/modal-edit-compound-request'
-import { ModalSelectCompoundRequest } from './ui/modal-edit/components/modal-compound-request/modal-select-compound-request'
+import { ModalCompoundRequest } from './ui/modal-edit/components/modal-compound-request/modal-compound-request'
 import { ModalCustomInheritanceMode } from './ui/modal-edit/components/modal-custom-inheritance-mode/modal-custom-inheritance-mode'
 import { ModalEditFilters } from './ui/modal-edit/components/modal-edit-filters'
 import { ModalEditGeneRegion } from './ui/modal-edit/components/modal-edit-gene-region'
@@ -123,12 +122,7 @@ const FilterPage = observer((): ReactElement => {
 
       {dtreeStore.isModalCompoundHetVisible && <ModalCompoundHet />}
 
-      {dtreeStore.isModalEditCompoundRequestVisible && (
-        <ModalEditCompoundRequest />
-      )}
-      {dtreeStore.isModalSelectCompoundRequestVisible && (
-        <ModalSelectCompoundRequest />
-      )}
+      {dtreeStore.isModalCompoundRequestVisible && <ModalCompoundRequest />}
 
       {dtreeStore.isModalEditGeneRegionVisible && <ModalEditGeneRegion />}
       {dtreeStore.isModalSelectGeneRegionVisible && <ModalSelectGeneRegion />}

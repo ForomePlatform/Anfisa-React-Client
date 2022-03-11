@@ -2,6 +2,7 @@ import { ReactElement, useEffect, useRef } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
+import { ActionType } from '@declarations'
 import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
 import { Button } from '@ui/button'
@@ -14,13 +15,14 @@ import { ApproxStateModalMods } from '@pages/filter/ui/query-builder/ui/approx-s
 import { DisabledVariantsAmount } from '@pages/filter/ui/query-builder/ui/disabled-variants-amount'
 import { HeaderModal } from '@pages/filter/ui/query-builder/ui/header-modal'
 import { ModalBase } from '@pages/filter/ui/query-builder/ui/modal-base'
+import { SelectModalButtons } from '@pages/filter/ui/query-builder/ui/select-modal-buttons'
 import { getFuncParams } from '@utils/getFuncParams'
 import { getResetType } from '@utils/getResetType'
 import modalEditStore, { selectOptions } from '../../modal-edit.store'
 import { EditModalButtons } from '../edit-modal-buttons'
 import modalCompoundRequestStore from './modal-compound-request.store'
 
-export const ModalEditCompoundRequest = observer((): ReactElement => {
+export const ModalCompoundRequest = observer((): ReactElement => {
   const ref = useRef(null)
 
   const {
@@ -46,31 +48,33 @@ export const ModalEditCompoundRequest = observer((): ReactElement => {
   }
 
   useEffect(() => {
-    const approx =
-      approxCondition === 'transcript' ? null : `"${approxCondition}"`
+    if (currentGroup) {
+      const approx =
+        approxCondition === 'transcript' ? null : `"${approxCondition}"`
 
-    const requestString = getFuncParams(
-      groupName,
-      currentGroup[currentGroup.length - 1],
-    )
-      .slice(10)
-      .replace(/\s+/g, '')
+      const requestString = getFuncParams(
+        groupName,
+        currentGroup[currentGroup.length - 1],
+      )
+        .slice(10)
+        .replace(/\s+/g, '')
 
-    modalCompoundRequestStore.setResetValue(
-      getResetType(
-        currentGroup[currentGroup.length - 1].request[
-          currentGroup[currentGroup.length - 1].request.length - 1
-        ][1],
-      ),
-    )
+      modalCompoundRequestStore.setResetValue(
+        getResetType(
+          currentGroup[currentGroup.length - 1].request[
+            currentGroup[currentGroup.length - 1].request.length - 1
+          ][1],
+        ),
+      )
 
-    const params = `{"approx":${approx},"state":${
-      stateCondition === '-current-' || !stateCondition
-        ? null
-        : `"${stateCondition}"`
-    },"request":${requestString}}`
+      const params = `{"approx":${approx},"state":${
+        stateCondition === '-current-' || !stateCondition
+          ? null
+          : `"${stateCondition}"`
+      },"request":${requestString}}`
 
-    dtreeStore.fetchStatFuncAsync(groupName, params)
+      dtreeStore.fetchStatFuncAsync(groupName, params)
+    }
 
     return () => dtreeStore.resetStatFuncData()
 
@@ -78,7 +82,11 @@ export const ModalEditCompoundRequest = observer((): ReactElement => {
   }, [])
 
   const handleClose = () => {
-    dtreeStore.closeModalEditCompoundRequest()
+    dtreeStore.closeModalCompoundRequest()
+  }
+
+  const handleAddAttribute = (action: ActionType) => {
+    modalCompoundRequestStore.addAttribute(action)
   }
 
   return (
@@ -206,11 +214,22 @@ export const ModalEditCompoundRequest = observer((): ReactElement => {
 
       <DisabledVariantsAmount variants={variants} disabled={true} />
 
-      <EditModalButtons
-        handleClose={handleClose}
-        handleSaveChanges={() => modalCompoundRequestStore.saveChanges()}
-        disabled={!variants}
-      />
+      {currentGroup ? (
+        <EditModalButtons
+          handleClose={handleClose}
+          handleSaveChanges={() => modalCompoundRequestStore.saveChanges()}
+          disabled={!variants}
+        />
+      ) : (
+        <SelectModalButtons
+          handleClose={() => modalCompoundRequestStore.closeModal()}
+          handleModals={() => modalCompoundRequestStore.openModalAttribute()}
+          handleModalJoin={() => modalCompoundRequestStore.openModalJoin()}
+          disabled={!variants}
+          currentGroup={currentGroup}
+          handleAddAttribute={handleAddAttribute}
+        />
+      )}
     </ModalBase>
   )
 })

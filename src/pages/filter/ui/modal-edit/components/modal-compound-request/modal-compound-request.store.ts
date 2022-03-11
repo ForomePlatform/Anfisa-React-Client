@@ -257,7 +257,7 @@ class ModalCompoundRequestStore {
 
     addAttributeToStep(action, 'func', null, params)
     dtreeStore.resetSelectedFilters()
-    dtreeStore.closeModalSelectCompoundRequest()
+    dtreeStore.closeModalCompoundRequest()
   }
 
   public saveChanges(): void {
@@ -278,17 +278,17 @@ class ModalCompoundRequestStore {
     params.request = this.requestCondition
 
     changeFunctionalStep(params)
-    dtreeStore.closeModalEditCompoundRequest()
+    dtreeStore.closeModalCompoundRequest()
   }
 
   // other control functions
 
   public closeModal(): void {
-    dtreeStore.closeModalSelectCompoundRequest()
+    dtreeStore.closeModalCompoundRequest()
   }
 
   public openModalAttribute = () => {
-    dtreeStore.closeModalSelectCompoundRequest()
+    dtreeStore.closeModalCompoundRequest()
     dtreeStore.openModalAttribute()
     dtreeStore.resetSelectedFilters()
   }
