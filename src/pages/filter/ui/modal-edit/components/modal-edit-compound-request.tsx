@@ -22,9 +22,8 @@ import { ApproxStateModalMods } from '../../query-builder/ui/approx-state-modal-
 import { DisabledVariantsAmount } from '../../query-builder/ui/disabled-variants-amount'
 import { HeaderModal } from '../../query-builder/ui/header-modal'
 import { ModalBase } from '../../query-builder/ui/modal-base'
-import { selectOptions } from '../modal-edit.store'
+import { IParams, selectOptions } from '../modal-edit.store'
 import { EditModalButtons } from './edit-modal-buttons'
-import { IParams } from './modal-edit-compound-het'
 
 export const ModalEditCompoundRequest = observer((): ReactElement => {
   const ref = useRef(null)

@@ -77,7 +77,7 @@ export const NextStepContentItem = observer(
           dtreeStore.openModalCustomInheritanceMode(group[1], currNo)
 
         group[1] === FuncStepTypesEnum.CompoundHet &&
-          dtreeStore.openModalEditCompoundHet(group[1], index, currNo)
+          dtreeStore.openModalCompoundHet(group[1], currNo)
 
         group[1] === FuncStepTypesEnum.CompoundRequest &&
           dtreeStore.openModalEditCompoundRequest(group[1], index, currNo)

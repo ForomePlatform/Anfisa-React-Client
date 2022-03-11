@@ -5,6 +5,12 @@ import activeStepStore from '@store/dtree/active-step.store'
 import { getQueryBuilder } from '@utils/getQueryBuilder'
 
 export const selectOptions = ['--', '0', '0-1', '1', '1-2', '2']
+export interface IParams {
+  approx: any
+  state?: string[] | null
+  default?: string
+  request?: any[]
+}
 
 class ModalEditStore {
   constructor() {
