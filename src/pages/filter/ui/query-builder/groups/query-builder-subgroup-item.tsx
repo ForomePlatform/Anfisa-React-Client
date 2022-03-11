@@ -78,11 +78,7 @@ export const QueryBuilderSubgroupItem = observer(
           dtreeStore.openModalCompoundHet(group.name, undefined, source)
 
         group.name === FuncStepTypesEnum.CompoundRequest &&
-          dtreeStore.openModalSelectCompoundRequest(
-            group.name,
-            activeStepIndex,
-            source,
-          )
+          dtreeStore.openModalCompoundRequest(group.name, undefined, source)
 
         group.name === FuncStepTypesEnum.GeneRegion &&
           dtreeStore.openModalSelectGeneRegion(
