@@ -16,15 +16,11 @@ import modalCompoundHetStore from './modal-compound-het.store'
 export const ModalCompoundHet = observer((): ReactElement => {
   const ref = useRef(null)
 
-  const { groupName, variants, currentGroup } = modalEditStore
+  const { groupName, variants, currentGroup, approxValues, approxOptions } =
+    modalEditStore
 
-  const {
-    approxValues,
-    approxOptions,
-    stateOptions,
-    stateCondition,
-    approxCondition,
-  } = modalCompoundHetStore
+  const { stateOptions, stateCondition, approxCondition } =
+    modalCompoundHetStore
 
   useEffect(() => {
     const params = `{"approx":${modalCompoundHetStore.getApprox(

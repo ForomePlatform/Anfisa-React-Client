@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, toJS } from 'mobx'
 
 import dtreeStore from '@store/dtree'
 import activeStepStore from '@store/dtree/active-step.store'
@@ -75,6 +75,44 @@ class ModalEditStore {
     })
 
     return attrData.family
+  }
+
+  public get attrData() {
+    let attrData: any
+
+    const subGroups = Object.values(
+      getQueryBuilder(toJS(dtreeStore.startDtreeStat['stat-list'])),
+    )
+
+    subGroups.map(subGroup => {
+      subGroup.map((item, currNo) => {
+        if (item.name === this.groupName) {
+          attrData = subGroup[currNo]
+        }
+      })
+    })
+
+    return attrData
+  }
+
+  public get approxOptions(): string[] {
+    const approxOptions: string[] = []
+
+    this.attrData['approx-modes'].map((mode: string[]) => {
+      approxOptions.push(mode[1])
+    })
+
+    return approxOptions
+  }
+
+  public get approxValues(): string[] {
+    const approxValues: string[] = []
+
+    this.attrData['approx-modes'].map((mode: string[]) => {
+      approxValues.push(mode[0])
+    })
+
+    return approxValues
   }
 }
 
