@@ -7,6 +7,7 @@ import modalEditStore, {
   IParams,
 } from '@pages/filter/ui/modal-edit/modal-edit.store'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
+import { changeFunctionalStep } from '@utils/changeAttribute/changeFunctionalStep'
 import { getFuncParams } from '@utils/getFuncParams'
 import { getRequestData } from '@utils/getRequestData'
 import { getResetRequestData } from '@utils/getResetRequestData'
@@ -184,11 +185,11 @@ class ModalCompoundRequestStore {
 
   // set scenarion functions
 
-  public setSingleScenario = (
+  public setSingleScenario(
     requestBlockIndex: number,
     currentSelectIndex: number,
     target: any,
-  ) => {
+  ): void {
     const requestData = getRequestData(
       target,
       currentSelectIndex,
@@ -212,7 +213,7 @@ class ModalCompoundRequestStore {
     this.setResetValue('')
   }
 
-  public setComplexScenario(name: string) {
+  public setComplexScenario(name: string): void {
     const resetRequestData = getResetRequestData(
       name,
       modalEditStore.problemGroups,
@@ -237,7 +238,7 @@ class ModalCompoundRequestStore {
 
   // final function to add filter into tree
 
-  public addAttribute = (action: ActionType) => {
+  public addAttribute(action: ActionType): void {
     const approx =
       this.approxCondition === 'transcript' ? null : `"${this.approxCondition}"`
 
@@ -259,9 +260,30 @@ class ModalCompoundRequestStore {
     dtreeStore.closeModalSelectCompoundRequest()
   }
 
+  public saveChanges(): void {
+    const approx =
+      this.approxCondition === 'transcript' ? null : `"${this.approxCondition}"`
+
+    const params: IParams = {
+      approx,
+    }
+
+    if (this.stateCondition) {
+      params.state =
+        JSON.stringify(this.stateOptions) === JSON.stringify(['-current-'])
+          ? null
+          : this.stateOptions
+    }
+
+    params.request = this.requestCondition
+
+    changeFunctionalStep(params)
+    dtreeStore.closeModalEditCompoundRequest()
+  }
+
   // other control functions
 
-  public closeModal = () => {
+  public closeModal(): void {
     dtreeStore.closeModalSelectCompoundRequest()
   }
 
@@ -271,7 +293,7 @@ class ModalCompoundRequestStore {
     dtreeStore.resetSelectedFilters()
   }
 
-  public openModalJoin = () => {
+  public openModalJoin(): void {
     dtreeStore.openModalJoin()
   }
 }

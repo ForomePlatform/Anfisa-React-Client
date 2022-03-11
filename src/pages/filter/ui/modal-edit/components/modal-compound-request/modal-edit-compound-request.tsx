@@ -1,11 +1,9 @@
-import { ReactElement, useEffect, useRef, useState } from 'react'
+import { ReactElement, useEffect, useRef } from 'react'
 import cn from 'classnames'
-import { cloneDeep, get } from 'lodash'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
-import activeStepStore from '@store/dtree/active-step.store'
 import { Button } from '@ui/button'
 import { InputNumber } from '@ui/input-number'
 import { Select } from '@ui/select'
@@ -16,255 +14,36 @@ import { ApproxStateModalMods } from '@pages/filter/ui/query-builder/ui/approx-s
 import { DisabledVariantsAmount } from '@pages/filter/ui/query-builder/ui/disabled-variants-amount'
 import { HeaderModal } from '@pages/filter/ui/query-builder/ui/header-modal'
 import { ModalBase } from '@pages/filter/ui/query-builder/ui/modal-base'
-import { changeFunctionalStep } from '@utils/changeAttribute/changeFunctionalStep'
 import { getFuncParams } from '@utils/getFuncParams'
-import { getRequestData } from '@utils/getRequestData'
-import { getResetRequestData } from '@utils/getResetRequestData'
 import { getResetType } from '@utils/getResetType'
-import { getSortedArray } from '@utils/getSortedArray'
-import { IParams, selectOptions } from '../../modal-edit.store'
+import modalEditStore, { selectOptions } from '../../modal-edit.store'
 import { EditModalButtons } from '../edit-modal-buttons'
+import modalCompoundRequestStore from './modal-compound-request.store'
 
 export const ModalEditCompoundRequest = observer((): ReactElement => {
   const ref = useRef(null)
 
-  // important variables
+  const {
+    currentGroup,
+    variants,
+    approxValues,
+    approxOptions,
+    problemGroups,
+    groupName,
+  } = modalEditStore
 
-  const currentStepIndex = activeStepStore.activeStepIndex
-  const currentGroupIndex = dtreeStore.groupIndexToChange
-
-  const currentGroup =
-    dtreeStore.stepData[currentStepIndex].groups[currentGroupIndex]
-
-  const groupName = dtreeStore.groupNameToChange
-
-  const variants = dtreeStore.statFuncData.variants
-
-  const approxValues: string[] = []
-  const approxOptions: string[] = []
-
-  let attrData: any
-
-  const subGroups = Object.values(dtreeStore.getQueryBuilder)
-
-  subGroups.map(subGroup => {
-    subGroup.map((item, currNo) => {
-      if (item.name === groupName) {
-        attrData = subGroup[currNo]
-      }
-    })
-  })
-
-  // approx-condition & state-condition & request-condition functions
-
-  const [resetValue, setResetValue] = useState('')
-
-  attrData['approx-modes'].map((mode: string[]) => {
-    approxOptions.push(mode[1])
-    approxValues.push(mode[0])
-  })
-
-  const [stateCondition, setStateCondition] = useState(getDefaultValue('state'))
-
-  const [approxCondition, setApproxCondition] = useState(
-    getDefaultValue('approx'),
-  )
-
-  const [requestCondition, setRequestCondition] = useState(
-    currentGroup[currentGroup.length - 1].request,
-  )
-
-  const getStateOptions = () => {
-    const state = get(currentGroup[currentGroup.length - 1], 'state')
-    const defaultValue = get(currentGroup[currentGroup.length - 1], 'default')
-
-    if (!state) return ['-current-']
-
-    return defaultValue === null || defaultValue ? state : ['-current-', state]
-  }
-
-  const stateOptions: string[] = getStateOptions()
-
-  function getDefaultValue(type: string) {
-    const approx = get(currentGroup[currentGroup.length - 1], 'approx')
-    const state = get(currentGroup[currentGroup.length - 1], 'state')
-    const defaultValue = get(currentGroup[currentGroup.length - 1], 'default')
-
-    if (type === 'approx') {
-      if (approx === null) return 'transcript'
-
-      if (!approx) return 'transcript'
-
-      return `${approx}`
-    }
-
-    if (type === 'state') {
-      if (state === undefined) return '-current-'
-
-      if (defaultValue === null) return '-current-'
-
-      return defaultValue ? defaultValue : state
-    }
-  }
+  const {
+    stateCondition,
+    requestCondition,
+    approxCondition,
+    resetValue,
+    stateOptions,
+    activeRequestIndex,
+  } = modalCompoundRequestStore
 
   const handleSetCondition = (value: string, type: string) => {
-    if (type === 'approx') {
-      setApproxCondition(value)
-
-      const approx = value === 'transcript' ? null : `"${value}"`
-
-      const request = getFuncParams(groupName, {
-        approx: value,
-        request: requestCondition,
-      })
-        .slice(10)
-        .replace(/\s+/g, '')
-
-      const params = `{"approx":${approx},"state":${
-        stateCondition !== '-current-' ? `"${stateCondition}"` : null
-      },"request":${request}}`
-
-      dtreeStore.fetchStatFuncAsync(groupName, params)
-    }
-
-    if (type === 'state') {
-      setStateCondition(value)
-
-      const approx =
-        approxCondition === 'transcript' ? null : `"${approxCondition}"`
-
-      const params = `{"approx":${approx},"state":${
-        value !== '-current-' ? `"${value}"` : null
-      }}`
-
-      dtreeStore.fetchStatFuncAsync(groupName, params)
-    }
+    modalCompoundRequestStore.setCondition(value, type)
   }
-
-  const [activeRequestIndex, setActiveRequestIndex] = useState(
-    requestCondition.length - 1,
-  )
-
-  const handleActiveRequest = (requestBlockIndex: number, event: any) => {
-    const classList = Array.from(event.target.classList)
-
-    const shouldMakeActive = classList.includes('step-content-area')
-
-    if (shouldMakeActive) {
-      setActiveRequestIndex(requestBlockIndex)
-    }
-
-    const currentRequest = requestCondition[requestBlockIndex]
-
-    setResetValue(getResetType(currentRequest[1]))
-  }
-
-  const handleRequestBlocksAmount = (type: string) => {
-    if (type === 'ADD') {
-      const emptyBlock: [number, any] = [1, {}]
-      const newRequestCondition = [...cloneDeep(requestCondition), emptyBlock]
-
-      setRequestCondition(newRequestCondition)
-      setActiveRequestIndex(newRequestCondition.length - 1)
-      setResetValue('')
-    } else {
-      const newRequestCondition = cloneDeep(requestCondition).filter(
-        (_item: any[], index: number) => index !== activeRequestIndex,
-      )
-
-      setRequestCondition(newRequestCondition)
-      setActiveRequestIndex(newRequestCondition.length - 1)
-
-      sendRequest(newRequestCondition)
-
-      setResetValue(
-        getResetType(newRequestCondition[newRequestCondition.length - 1][1]),
-      )
-    }
-  }
-
-  function getSelectedValue(group: string, index: number): any {
-    let value = '--'
-
-    const currentRequestBlock = requestCondition[index][1]
-
-    Object.entries(currentRequestBlock).map((item: any[]) => {
-      if (item[1].includes(group)) {
-        value = item[0]
-      }
-    })
-
-    return value
-  }
-
-  const handleRequestConditionNumber = (
-    requestBlockIndex: number,
-    value: number,
-  ) => {
-    if (value < 0) return
-
-    const newRequestCondition: any[] = cloneDeep(requestCondition)
-
-    newRequestCondition.map((item: any[], index: number) => {
-      if (index === requestBlockIndex) {
-        item[0] = +value
-      }
-    })
-
-    setRequestCondition(newRequestCondition)
-
-    sendRequest(newRequestCondition)
-  }
-
-  const handleRequestCondition = (
-    requestBlockIndex: number,
-    currentSelectIndex: number,
-    target: any,
-  ) => {
-    const requestData = getRequestData(
-      target,
-      currentSelectIndex,
-      attrData.family,
-    )
-
-    const newRequest = Object.fromEntries(getSortedArray(requestData))
-
-    const newRequestCondition: any[] = cloneDeep(requestCondition)
-
-    newRequestCondition.map((item: any[], index: number) => {
-      if (index === requestBlockIndex) {
-        item[1] = newRequest
-      }
-    })
-
-    setRequestCondition(newRequestCondition)
-
-    sendRequest(newRequestCondition)
-
-    setResetValue('')
-  }
-
-  const handleReset = (name: string) => {
-    const resetRequestData = getResetRequestData(name, attrData.family)
-
-    const newRequest = Object.fromEntries(getSortedArray(resetRequestData))
-
-    const newRequestCondition: any[] = cloneDeep(requestCondition)
-
-    newRequestCondition.map((item: any[], index: number) => {
-      if (index === activeRequestIndex) {
-        item[1] = newRequest
-      }
-    })
-
-    setRequestCondition(newRequestCondition)
-
-    sendRequest(newRequestCondition)
-
-    setResetValue(name)
-  }
-
-  // get start variants
 
   useEffect(() => {
     const approx =
@@ -277,7 +56,7 @@ export const ModalEditCompoundRequest = observer((): ReactElement => {
       .slice(10)
       .replace(/\s+/g, '')
 
-    setResetValue(
+    modalCompoundRequestStore.setResetValue(
       getResetType(
         currentGroup[currentGroup.length - 1].request[
           currentGroup[currentGroup.length - 1].request.length - 1
@@ -298,53 +77,8 @@ export const ModalEditCompoundRequest = observer((): ReactElement => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  // common UI functions
-
   const handleClose = () => {
     dtreeStore.closeModalEditCompoundRequest()
-  }
-
-  const handleSaveChanges = () => {
-    const approx =
-      approxCondition === 'transcript' ? null : `"${approxCondition}"`
-
-    const params: IParams = {
-      approx,
-    }
-
-    if (stateCondition) {
-      params.state =
-        JSON.stringify(stateOptions) === JSON.stringify(['-current-'])
-          ? null
-          : stateOptions
-    }
-
-    params.request = requestCondition
-
-    changeFunctionalStep(params)
-    dtreeStore.closeModalEditCompoundRequest()
-  }
-
-  function sendRequest(newRequestCondition: any[]) {
-    const requestString = getFuncParams(groupName, {
-      request: newRequestCondition,
-    })
-      .slice(10)
-      .replace(/\s+/g, '')
-
-    const approx =
-      approxCondition === 'transcript' || !approxCondition
-        ? null
-        : `"${approxCondition}"`
-
-    const state =
-      stateCondition === '-current-' || !stateCondition
-        ? null
-        : `"${stateCondition}"`
-
-    const params = `{"approx":${approx},"state":${state},"request":${requestString}}`
-
-    dtreeStore.fetchStatFuncAsync(groupName, params)
   }
 
   return (
@@ -375,23 +109,30 @@ export const ModalEditCompoundRequest = observer((): ReactElement => {
               index === activeRequestIndex ? 'bg-blue-medium' : 'bg-white',
             )}
             key={Math.random()}
-            onClick={(e: any) => handleActiveRequest(index, e)}
+            onClick={(e: any) =>
+              modalCompoundRequestStore.setActiveRequest(index, e)
+            }
           >
             <div className="flex cursor-pointer step-content-area">
               <InputNumber
                 value={item[0]}
                 onChange={(e: any) =>
-                  handleRequestConditionNumber(index, e.target.value)
+                  modalCompoundRequestStore.changeRequestConditionNumber(
+                    index,
+                    e.target.value,
+                  )
                 }
                 className="shadow-dark w-1/3 h-5"
               />
             </div>
 
             <div className="flex flex-1 justify-between step-content-area">
-              {attrData.family.map((group: string, currNo: number) => (
+              {problemGroups.map((group: string, currNo: number) => (
                 <div
                   className="step-content-area"
-                  onClick={(e: any) => handleActiveRequest(index, e)}
+                  onClick={(e: any) =>
+                    modalCompoundRequestStore.setActiveRequest(index, e)
+                  }
                   key={group}
                 >
                   <span className="cursor-pointer step-content-area">
@@ -400,11 +141,18 @@ export const ModalEditCompoundRequest = observer((): ReactElement => {
 
                   <Select
                     onChange={(e: any) =>
-                      handleRequestCondition(index, currNo, e.target)
+                      modalCompoundRequestStore.setSingleScenario(
+                        index,
+                        currNo,
+                        e.target,
+                      )
                     }
                     className="w-auto ml-1"
                     options={selectOptions}
-                    value={getSelectedValue(group, index)}
+                    value={modalCompoundRequestStore.getSelectedValue(
+                      group,
+                      index,
+                    )}
                   />
                 </div>
               ))}
@@ -416,7 +164,9 @@ export const ModalEditCompoundRequest = observer((): ReactElement => {
       <div className="flex items-center justify-between w-full mt-4 text-14">
         <div className="flex">
           <Button
-            onClick={() => handleRequestBlocksAmount('ADD')}
+            onClick={() =>
+              modalCompoundRequestStore.setRequestBlocksAmount('ADD')
+            }
             text="Add"
             variant={'secondary'}
             className={cn('mr-4')}
@@ -425,7 +175,9 @@ export const ModalEditCompoundRequest = observer((): ReactElement => {
           />
 
           <Button
-            onClick={() => handleRequestBlocksAmount('REMOVE')}
+            onClick={() =>
+              modalCompoundRequestStore.setRequestBlocksAmount('REMOVE')
+            }
             text="Remove"
             variant={'secondary'}
             className={cn(
@@ -442,7 +194,9 @@ export const ModalEditCompoundRequest = observer((): ReactElement => {
           <Select
             options={resetOptions}
             value={resetValue}
-            onChange={(e: any) => handleReset(e.target.value)}
+            onChange={(e: any) =>
+              modalCompoundRequestStore.setComplexScenario(e.target.value)
+            }
             className="w-full ml-2"
             reset
             data-testid={DecisionTreeModalDataCy.selectReset}
@@ -454,7 +208,7 @@ export const ModalEditCompoundRequest = observer((): ReactElement => {
 
       <EditModalButtons
         handleClose={handleClose}
-        handleSaveChanges={handleSaveChanges}
+        handleSaveChanges={() => modalCompoundRequestStore.saveChanges()}
         disabled={!variants}
       />
     </ModalBase>
