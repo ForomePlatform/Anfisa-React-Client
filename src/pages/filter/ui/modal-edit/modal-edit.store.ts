@@ -60,21 +60,21 @@ class ModalEditStore {
   }
 
   public get problemGroups(): string[] {
-    let attrData: any
+    let problemGroups: string[] = []
 
     const subGroups = Object.values(
       getQueryBuilder(dtreeStore.startDtreeStat['stat-list']),
     )
 
-    subGroups.map(subGroup => {
-      subGroup.map((item, currNo) => {
+    subGroups.forEach(subGroup => {
+      subGroup.find((item, currNo) => {
         if (item.name === this.groupName) {
-          attrData = subGroup[currNo]
+          problemGroups = subGroup[currNo].family
         }
       })
     })
 
-    return attrData.family
+    return problemGroups
   }
 }
 
