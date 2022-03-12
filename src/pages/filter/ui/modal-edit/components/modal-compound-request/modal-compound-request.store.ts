@@ -283,8 +283,15 @@ class ModalCompoundRequestStore {
 
   // other control functions
 
+  public resetData() {
+    this.stateCondition = '-current-'
+    this.approxCondition = 'transcript'
+    this.resetValue = ''
+  }
+
   public closeModal(): void {
     dtreeStore.closeModalCompoundRequest()
+    this.resetData()
   }
 
   public openModalAttribute = () => {
