@@ -217,10 +217,6 @@ class ModalCustomInheritanceModeStore {
     dtreeStore.resetSelectedFilters()
   }
 
-  public openModalJoin(): void {
-    dtreeStore.openModalJoin()
-  }
-
   public addAttribute = (action: ActionType) => {
     dtreeStore.addSelectedFilter(modalEditStore.variants[0][0])
     const params = { scenario: dtreeStore.scenario }

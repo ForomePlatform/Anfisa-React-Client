@@ -25,7 +25,7 @@ class ModalEditStore {
     return location
   }
 
-  public get variants(): string[] {
+  public get variants(): string[] | [string, number] {
     return dtreeStore.statFuncData.variants
   }
 
@@ -117,6 +117,10 @@ class ModalEditStore {
     })
 
     return approxValues
+  }
+
+  public openModalJoin(): void {
+    dtreeStore.openModalJoin()
   }
 }
 

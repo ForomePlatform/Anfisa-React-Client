@@ -20,7 +20,7 @@ import { ModalCompoundHet } from './ui/modal-edit/components/modal-compound-het/
 import { ModalCompoundRequest } from './ui/modal-edit/components/modal-compound-request/modal-compound-request'
 import { ModalCustomInheritanceMode } from './ui/modal-edit/components/modal-custom-inheritance-mode/modal-custom-inheritance-mode'
 import { ModalEditFilters } from './ui/modal-edit/components/modal-edit-filters'
-import { ModalEditGeneRegion } from './ui/modal-edit/components/modal-edit-gene-region'
+import { ModalGeneRegion } from './ui/modal-edit/components/modal-gene-region/modal-gene-region'
 import { ModalEditInheritanceMode } from './ui/modal-edit/components/modal-inheritance-mode/modal-edit-inheritance-mode'
 import { ModalSelectInheritanceMode } from './ui/modal-edit/components/modal-inheritance-mode/modal-select-inheritance-mode'
 import { ModalTextEditor } from './ui/query-builder/modal-text-editor'
@@ -28,7 +28,6 @@ import { QueryBuilder } from './ui/query-builder/query-builder'
 import { ModalSaveDataset } from './ui/query-builder/ui/modal-save-dataset'
 import { ModalSelectAttribute } from './ui/query-builder/ui/modal-select-attribute'
 import { ModalSelectFilters } from './ui/query-builder/ui/modal-select-filters'
-import { ModalSelectGeneRegion } from './ui/query-builder/ui/modal-select-gene-region'
 import { getNumberWithCommas } from './ui/query-builder/ui/next-step-route'
 import { TableModal } from './ui/TableModal'
 
@@ -124,8 +123,7 @@ const FilterPage = observer((): ReactElement => {
 
       {dtreeStore.isModalCompoundRequestVisible && <ModalCompoundRequest />}
 
-      {dtreeStore.isModalEditGeneRegionVisible && <ModalEditGeneRegion />}
-      {dtreeStore.isModalSelectGeneRegionVisible && <ModalSelectGeneRegion />}
+      {dtreeStore.isModalGeneRegionVisible && <ModalGeneRegion />}
 
       {dtreeStore.isTableModalVisible && <TableModal />}
       {dtreeStore.isModalTextEditorVisible && <ModalTextEditor />}

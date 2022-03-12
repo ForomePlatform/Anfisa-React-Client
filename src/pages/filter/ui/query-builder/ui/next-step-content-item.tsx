@@ -83,7 +83,7 @@ export const NextStepContentItem = observer(
           dtreeStore.openModalCompoundRequest(group[1], currNo)
 
         group[1] === FuncStepTypesEnum.GeneRegion &&
-          dtreeStore.openModalEditGeneRegion(group[1], index, currNo)
+          dtreeStore.openModalGeneRegion(group[1], currNo)
       }
     }
 

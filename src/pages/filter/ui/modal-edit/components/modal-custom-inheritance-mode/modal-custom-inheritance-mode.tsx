@@ -87,9 +87,7 @@ export const ModalCustomInheritanceMode = observer((): ReactElement => {
           handleModals={() =>
             modalCustomInheritanceModeStore.openModalAttribute()
           }
-          handleModalJoin={() =>
-            modalCustomInheritanceModeStore.openModalJoin()
-          }
+          handleModalJoin={() => modalEditStore.openModalJoin()}
           handleAddAttribute={handleAddAttribute}
           disabled={!variants}
           currentGroup={currentGroup}

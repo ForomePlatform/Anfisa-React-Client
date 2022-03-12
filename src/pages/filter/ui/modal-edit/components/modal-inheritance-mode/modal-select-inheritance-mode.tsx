@@ -79,7 +79,7 @@ export const ModalSelectInheritanceMode = observer((): ReactElement => {
           modalInheritanceModeStore.closeModal(ModalTypeEnum.Select)
         }
         handleModals={() => modalInheritanceModeStore.openModalAttribute()}
-        handleModalJoin={() => dtreeStore.openModalJoin()}
+        handleModalJoin={() => modalEditStore.openModalJoin()}
         handleAddAttribute={addAttribute}
         disabled={dtreeStore.selectedFilters.length === 0}
         currentGroup={currentGroup}

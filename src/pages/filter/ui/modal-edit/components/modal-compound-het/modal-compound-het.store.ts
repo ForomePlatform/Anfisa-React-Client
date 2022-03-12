@@ -34,10 +34,6 @@ class ModalCompoundHetStore {
     dtreeStore.resetSelectedFilters()
   }
 
-  public openModalJoin(): void {
-    dtreeStore.openModalJoin()
-  }
-
   public addAttribute(action: ActionType): void {
     dtreeStore.addSelectedFilter(modalEditStore.variants[0][0])
 

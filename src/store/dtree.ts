@@ -104,10 +104,9 @@ class DtreeStore {
   isModalCustomInheritanceModeVisible = false
   isModalCompoundHetVisible = false
   isModalCompoundRequestVisible = false
-  isModalEditGeneRegionVisible = false
+  isModalGeneRegionVisible = false
 
   isModalSelectInheritanceModeVisible = false
-  isModalSelectGeneRegionVisible = false
 
   isTableModalVisible = false
   tableModalIndexNumber: null | number = null
@@ -554,21 +553,6 @@ class DtreeStore {
     this.isModalSelectInheritanceModeVisible = false
   }
 
-  openModalSelectGeneRegion(
-    groupName: string,
-    stepIndex: number,
-    source: string,
-  ) {
-    this.modalSource = source
-
-    this.isModalSelectGeneRegionVisible = true
-    this.groupNameToChange = groupName
-  }
-
-  closeModalSelectGeneRegion() {
-    this.isModalSelectGeneRegionVisible = false
-  }
-
   // 3.2 Modals for editing loaded tree
 
   // 3.2.1 Modal for enum attr
@@ -657,18 +641,22 @@ class DtreeStore {
     this.isModalCompoundRequestVisible = false
   }
 
-  openModalEditGeneRegion(
+  openModalGeneRegion(
     groupName: string,
-    stepIndex: number,
-    groupIndex: number,
+    groupIndex: number | undefined,
+    source: string = '',
   ) {
-    this.isModalEditGeneRegionVisible = true
+    this.modalSource = source
+
+    this.isModalGeneRegionVisible = true
+
     this.groupNameToChange = groupName
-    this.groupIndexToChange = groupIndex
+
+    this.groupIndexToChange = groupIndex ?? -1
   }
 
-  closeModalEditGeneRegion() {
-    this.isModalEditGeneRegionVisible = false
+  closeModalGeneRegion() {
+    this.isModalGeneRegionVisible = false
   }
 
   // 3.3 Modal for editing dtree code (new / loaded)
