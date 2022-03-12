@@ -34,6 +34,18 @@ export const ModalCustomInheritanceMode = observer((): ReactElement => {
         getResetType(currentGroup[currentGroup.length - 1].scenario),
       )
 
+      modalCustomInheritanceModeStore.setComplexSelectValues({
+        first: modalCustomInheritanceModeStore.getSelectedValue(
+          problemGroups[0],
+        ),
+        second: modalCustomInheritanceModeStore.getSelectedValue(
+          problemGroups[1],
+        ),
+        third: modalCustomInheritanceModeStore.getSelectedValue(
+          problemGroups[2],
+        ),
+      })
+
       const params = `{"scenario":${scenarioString}}`
 
       dtreeStore.fetchStatFuncAsync(groupName, params)

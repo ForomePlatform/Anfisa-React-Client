@@ -203,12 +203,7 @@ class ModalCustomInheritanceModeStore {
 
   public closeModal(): void {
     dtreeStore.closeModalCustomInheritanceMode()
-    this.resetValue = ''
-    this.selectValues = {
-      first: '--',
-      second: '--',
-      third: '--',
-    }
+    this.resetData()
   }
 
   public openModalAttribute(): void {
@@ -221,20 +216,49 @@ class ModalCustomInheritanceModeStore {
     dtreeStore.openModalJoin()
   }
 
-  public addAttribute = (action: ActionType) => {
+  public addAttribute(action: ActionType): void {
     dtreeStore.addSelectedFilter(modalEditStore.variants[0][0])
     const params = { scenario: dtreeStore.scenario }
 
     addAttributeToStep(action, 'func', [null], params)
     dtreeStore.resetSelectedFilters()
     dtreeStore.closeModalCustomInheritanceMode()
+    this.resetData()
   }
 
-  public saveChanges = () => {
+  public saveChanges(): void {
     const params = { scenario: dtreeStore.scenario }
 
     changeFunctionalStep(params)
     dtreeStore.closeModalCustomInheritanceMode()
+    this.resetData()
+  }
+
+  public resetData(): void {
+    this.selectValues = {
+      first: '--',
+      second: '--',
+      third: '--',
+    }
+
+    this.resetValue = ''
+  }
+
+  public getSelectedValue(group: string): any {
+    const data: any[] = Object.entries(
+      modalEditStore.currentGroup[modalEditStore.currentGroup.length - 1]
+        .scenario,
+    )
+
+    let value = '--'
+
+    data?.map((item, index) => {
+      if (group && item[1].includes(group)) {
+        value = data[index][0]
+      }
+    })
+
+    return value
   }
 }
 
