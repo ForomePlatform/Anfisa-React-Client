@@ -258,6 +258,7 @@ class ModalCompoundRequestStore {
     addAttributeToStep(action, 'func', null, params)
     dtreeStore.resetSelectedFilters()
     dtreeStore.closeModalCompoundRequest()
+    this.resetData()
   }
 
   public saveChanges(): void {
@@ -279,6 +280,7 @@ class ModalCompoundRequestStore {
 
     changeFunctionalStep(params)
     dtreeStore.closeModalCompoundRequest()
+    this.resetData()
   }
 
   // other control functions
@@ -287,6 +289,7 @@ class ModalCompoundRequestStore {
     this.stateCondition = '-current-'
     this.approxCondition = 'transcript'
     this.resetValue = ''
+    this.requestCondition = [[1, {}]]
   }
 
   public closeModal(): void {

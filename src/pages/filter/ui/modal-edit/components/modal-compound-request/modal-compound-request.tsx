@@ -55,6 +55,10 @@ export const ModalCompoundRequest = observer((): ReactElement => {
         ),
       )
 
+      modalCompoundRequestStore.setRequestCondition(
+        currentGroup[currentGroup.length - 1].request,
+      )
+
       const params = `{"approx":${approx},"state":${
         stateCondition === '-current-' || !stateCondition
           ? null
