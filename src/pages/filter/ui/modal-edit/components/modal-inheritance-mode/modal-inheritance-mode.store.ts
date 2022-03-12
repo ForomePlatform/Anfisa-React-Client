@@ -6,17 +6,23 @@ import dtreeStore from '@store/dtree'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { changeFunctionalStep } from '@utils/changeAttribute/changeFunctionalStep'
 
+interface ISetProblemGroupsProps {
+  checked: boolean
+  value: string
+  groupName: string
+  setSelectedProblemGroups: Dispatch<SetStateAction<string[]>>
+}
 class ModalInheritanceModeStore {
   constructor() {
     makeAutoObservable(this)
   }
 
-  public setProblemGroups = (
-    checked: boolean,
-    value: string,
-    groupName: string,
-    setSelectedProblemGroups: Dispatch<SetStateAction<string[]>>,
-  ) => {
+  public setProblemGroups = ({
+    checked,
+    value,
+    groupName,
+    setSelectedProblemGroups,
+  }: ISetProblemGroupsProps) => {
     if (checked) {
       setSelectedProblemGroups((prev: any) => {
         const newProblemGroupData = [...prev, value]

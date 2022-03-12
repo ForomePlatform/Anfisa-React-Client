@@ -57,12 +57,12 @@ export const ModalInheritanceMode = observer((): ReactElement => {
   }, [])
 
   const setProblemGroups = (checked: boolean, value: string) => {
-    modalInheritanceModeStore.setProblemGroups(
+    modalInheritanceModeStore.setProblemGroups({
       checked,
       value,
       groupName,
       setSelectedProblemGroups,
-    )
+    })
   }
 
   const addAttribute = (action: ActionType) => {
