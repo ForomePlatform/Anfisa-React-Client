@@ -17,31 +17,6 @@ class ChartStore {
     theme('colors.yellow.secondary'),
     theme('colors.orange.bright'),
     theme('colors.grey.disabled'),
-    theme('colors.grey.disabled'),
-    theme('colors.grey.disabled'),
-    theme('colors.grey.disabled'),
-    theme('colors.grey.disabled'),
-    theme('colors.grey.disabled'),
-    theme('colors.grey.disabled'),
-    theme('colors.grey.disabled'),
-    theme('colors.grey.disabled'),
-    theme('colors.grey.disabled'),
-    theme('colors.grey.disabled'),
-    theme('colors.grey.disabled'),
-    theme('colors.grey.disabled'),
-    theme('colors.grey.disabled'),
-    theme('colors.grey.disabled'),
-    theme('colors.grey.disabled'),
-    theme('colors.grey.disabled'),
-    theme('colors.grey.disabled'),
-    theme('colors.grey.disabled'),
-    theme('colors.grey.disabled'),
-    theme('colors.grey.disabled'),
-    theme('colors.grey.disabled'),
-    theme('colors.grey.disabled'),
-    theme('colors.grey.disabled'),
-    theme('colors.grey.disabled'),
-    theme('colors.grey.disabled'),
   ]
 
   getBarChartConfig = (data: ChartData): ChartConfiguration => ({
@@ -151,6 +126,74 @@ class ChartStore {
 
     if (variants) {
       return this.getVariantsChartData(subGroupItem)
+    }
+  }
+
+  getDataForPieChart(filteredVariants: [string, number][]): any {
+    const displayedFieldsNumber = 4
+    if (filteredVariants.length <= displayedFieldsNumber) {
+      return filteredVariants
+    }
+
+    const mainVariantList = filteredVariants.slice(0, displayedFieldsNumber)
+    const otherVariantList = filteredVariants.slice(displayedFieldsNumber)
+
+    const otherVariantsQuantity = otherVariantList.reduce(
+      (previousValue, variant) => previousValue + variant[1],
+      0,
+    )
+
+    const dataForPieChart = [
+      ...mainVariantList,
+      ['Other', otherVariantsQuantity],
+    ]
+
+    return dataForPieChart
+  }
+
+  drawDoughnutChart(
+    canvas: HTMLCanvasElement,
+    variantList: [string, number][],
+    totalCounts: number,
+  ) {
+    const COLORS_PIE_CHART: string[] = [
+      theme('colors.blue.bright'),
+      theme('colors.purple.bright'),
+      theme('colors.yellow.secondary'),
+      theme('colors.orange.bright'),
+      theme('colors.grey.disabled'),
+    ]
+    const chartDiameter = 110
+
+    canvas.width = chartDiameter
+    canvas.height = chartDiameter
+
+    if (canvas.getContext) {
+      const ctx = canvas.getContext('2d')
+      if (!ctx) return
+
+      const radius = chartDiameter / 2
+      const x = chartDiameter / 2
+      const y = chartDiameter / 2
+
+      let start = 0
+
+      variantList.forEach((variant, index) => {
+        const end = start + Math.PI * 2 * (variant[1] / totalCounts)
+
+        ctx.beginPath()
+        ctx.moveTo(x, y)
+        ctx.arc(x, y, radius, start, end)
+        ctx.fillStyle = COLORS_PIE_CHART[index]
+        ctx.fill()
+
+        start = end
+      })
+      // create empty zone in circle
+      ctx.beginPath()
+      ctx.arc(x, y, radius / 2, 0, Math.PI * 2)
+      ctx.fillStyle = '#2a4567'
+      ctx.fill()
     }
   }
 }

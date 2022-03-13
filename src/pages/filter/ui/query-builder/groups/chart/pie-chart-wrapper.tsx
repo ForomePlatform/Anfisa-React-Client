@@ -6,6 +6,7 @@ import { t } from '@i18n'
 import { theme } from '@theme'
 import { Icon } from '@ui/icon'
 import chartStore from './chart.store'
+import { PieChart } from './pie-chart'
 
 const MainWrapper = styled.div`
   display: flex;
@@ -103,7 +104,10 @@ export const PieChartWrapper: FC<IPieChartProps> = ({
         )}
       </LabelsWrapper>
 
-      <div style={{ width: '33%', height: 110 }}>{children}</div>
+      <PieChart
+        filteredVariants={filteredVariants}
+        totalCounts={totalCountsOnChart}
+      />
     </MainWrapper>
   )
 }
