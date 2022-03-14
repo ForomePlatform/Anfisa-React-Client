@@ -13,29 +13,11 @@ import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
 import { Header } from '@components/header'
 import { GlbPagesNames } from '@glb/glb-names'
-import {
-  ModalEditNumbers,
-  ModalSelectNumbers,
-} from '@pages/filter/ui/modal-edit/components/modal-numbers'
 import { ErrorPage } from '../error/error'
-import { FilterControl } from './ui/filter-control'
-import { ModalEditCompoundHet } from './ui/modal-edit/components/modal-edit-compound-het'
-import { ModalEditCompoundRequest } from './ui/modal-edit/components/modal-edit-compound-request'
-import { ModalEditCustomInheritanceMode } from './ui/modal-edit/components/modal-edit-custom-inheritance-mode'
-import { ModalEditFilters } from './ui/modal-edit/components/modal-edit-filters'
-import { ModalEditGeneRegion } from './ui/modal-edit/components/modal-edit-gene-region'
-import { ModalEditInheritanceMode } from './ui/modal-edit/components/modal-edit-inheritance-mode'
-import { ModalTextEditor } from './ui/query-builder/modal-text-editor'
+import { ModalsBlock } from './modals-block'
+import { FilterControl } from './ui/filter-control/filter-control'
 import { QueryBuilder } from './ui/query-builder/query-builder'
-import { ModalSaveDataset } from './ui/query-builder/ui/modal-save-dataset'
-import { ModalSelectAttribute } from './ui/query-builder/ui/modal-select-attribute'
-import { ModalSelectCompoundHet } from './ui/query-builder/ui/modal-select-compound-het'
-import { ModalSelectCompoundRequest } from './ui/query-builder/ui/modal-select-compound-request'
-import { ModalSelectCustomInheritanceMode } from './ui/query-builder/ui/modal-select-custom-inheritance-mode'
-import { ModalSelectFilters } from './ui/query-builder/ui/modal-select-filters'
-import { ModalSelectGeneRegion } from './ui/query-builder/ui/modal-select-gene-region'
-import { ModalSelectInheritanceMode } from './ui/query-builder/ui/modal-select-inheritance-mode'
-import { TableModal } from './ui/TableModal'
+import { getNumberWithCommas } from './ui/query-builder/ui/next-step-route'
 
 const FilterPage = observer((): ReactElement => {
   const isXL = datasetStore.isXL
@@ -76,75 +58,38 @@ const FilterPage = observer((): ReactElement => {
       if (isXL) return toJS(dirinfoStore.dsinfo.total)
 
       if (filterStore.method === GlbPagesNames.Filter) {
-        return toJS(dtreeStore.statAmount[0])
+        return getNumberWithCommas(toJS(dtreeStore.statAmount[0]))
       }
 
       if (filterStore.method === GlbPagesNames.Refiner) {
-        return toJS(datasetStore.statAmount[0])
+        return getNumberWithCommas(toJS(datasetStore.statAmount[0]))
       }
     }
 
     if (type === 'transcribedVariants') {
       if (filterStore.method === GlbPagesNames.Filter) {
-        return toJS(dtreeStore.statAmount[1])
+        return getNumberWithCommas(toJS(dtreeStore.statAmount[1]))
       }
 
       if (filterStore.method === GlbPagesNames.Refiner) {
-        return toJS(datasetStore.statAmount[1])
+        return getNumberWithCommas(toJS(datasetStore.statAmount[1]))
       }
     }
 
     if (type === 'transcripts') {
       if (filterStore.method === GlbPagesNames.Filter) {
-        return toJS(dtreeStore.statAmount[2])
+        return getNumberWithCommas(toJS(dtreeStore.statAmount[2]))
       }
 
       if (filterStore.method === GlbPagesNames.Refiner) {
-        return toJS(datasetStore.statAmount[2])
+        return getNumberWithCommas(toJS(datasetStore.statAmount[2]))
       }
     }
   }
 
   return (
     <Fragment>
-      {dtreeStore.isModalAttributeVisible && <ModalSelectAttribute />}
-
-      {dtreeStore.isModalEditFiltersVisible && <ModalEditFilters />}
-      {dtreeStore.isModalSelectFilterVisible && <ModalSelectFilters />}
-
-      {dtreeStore.isModalEditNumbersVisible && <ModalEditNumbers />}
-      {dtreeStore.isModalSelectNumbersVisible && <ModalSelectNumbers />}
-
-      {dtreeStore.isModalEditInheritanceModeVisible && (
-        <ModalEditInheritanceMode />
-      )}
-      {dtreeStore.isModalSelectInheritanceModeVisible && (
-        <ModalSelectInheritanceMode />
-      )}
-
-      {dtreeStore.isModalEditCustomInheritanceModeVisible && (
-        <ModalEditCustomInheritanceMode />
-      )}
-      {dtreeStore.isModalSelectCustomInheritanceModeVisible && (
-        <ModalSelectCustomInheritanceMode />
-      )}
-
-      {dtreeStore.isModalEditCompoundHetVisible && <ModalEditCompoundHet />}
-      {dtreeStore.isModalSelectCompoundHetVisible && <ModalSelectCompoundHet />}
-
-      {dtreeStore.isModalEditCompoundRequestVisible && (
-        <ModalEditCompoundRequest />
-      )}
-      {dtreeStore.isModalSelectCompoundRequestVisible && (
-        <ModalSelectCompoundRequest />
-      )}
-
-      {dtreeStore.isModalEditGeneRegionVisible && <ModalEditGeneRegion />}
-      {dtreeStore.isModalSelectGeneRegionVisible && <ModalSelectGeneRegion />}
-
-      {dtreeStore.isTableModalVisible && <TableModal />}
-      {dtreeStore.isModalTextEditorVisible && <ModalTextEditor />}
-      {dtreeStore.isModalSaveDatasetVisible && <ModalSaveDataset />}
+      <ModalsBlock />
 
       <div className="overflow-hidden">
         <Header>

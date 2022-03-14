@@ -100,7 +100,6 @@ export const PieChartWrapper: FC<IPieChartProps> = ({
   const shouldShowCollapseBtn = filteredVariants.length > labelsInCollapsedMode
 
   const { colorListForPieChart } = chartStore
-
   return (
     <MainWrapper>
       <LabelsWrapper>

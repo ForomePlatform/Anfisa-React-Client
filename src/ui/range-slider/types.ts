@@ -1,8 +1,6 @@
 import { EnumValue, Glb } from '@glb/glb'
 
-export type RangeSliderValue =
-  | [number | null | undefined, number | null | undefined]
-  | [number | null | undefined]
+export type RangeSliderValue = [number | null, number | null] | [number | null]
 
 export const RangeSliderMode = Glb.makeEnum({
   Single: 'single',
@@ -31,3 +29,10 @@ export enum RangeSliderSide {
   Right = 2,
   Both = 3,
 }
+
+export const RangeSliderOrientation = Glb.makeEnum({
+  Horizontal: 'horizontal',
+  Vertical: 'vertical',
+})
+
+export type RangeSliderOrientation = EnumValue<typeof RangeSliderOrientation>

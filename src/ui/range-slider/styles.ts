@@ -4,22 +4,26 @@ import { theme } from '@theme'
 import { RangeSliderHistogramRoot } from './range-slider-histogram/styles'
 import { RangeSliderColor } from './types'
 
-export const RangeSliderRoot = styled.div<{
-  readonly hasHistogram?: boolean
-  readonly isActive?: boolean
-  readonly isDisabled?: boolean
-}>`
-  margin-left: ${props => (props.hasHistogram ? '40px' : '0')};
-  cursor: ${props =>
-    props.isDisabled ? 'default' : props.isActive ? 'grabbing' : 'pointer'};
-`
-
 const disabledColor = theme('colors.grey.disabled')
 const controlDisabledColor = theme('colors.grey.blue')
 const controlPrimaryActiveColor = theme('colors.blue.active')
 const controlPrimaryColor = theme('colors.blue.hover')
 const controlSecondaryActiveColor = theme('colors.purple.hover')
 const controlSecondaryColor = theme('colors.purple.static')
+
+interface IRangeSliderRootProps {
+  hasHistogram?: boolean
+  isActive?: boolean
+  isDisabled?: boolean
+  isVertical?: boolean
+}
+
+export const RangeSliderRoot = styled.div<IRangeSliderRootProps>`
+  ${props => props.isVertical && 'height: 100%;'}
+  margin-left: ${props => (props.hasHistogram ? '40px' : '0')};
+  cursor: ${props =>
+    props.isDisabled ? 'default' : props.isActive ? 'grabbing' : 'pointer'};
+`
 
 export const RangeSliderRuler = styled.div`
   position: relative;
@@ -41,11 +45,28 @@ export const RangeSliderRuler = styled.div`
   }
 `
 
+export const RangeSliderVerticalRuler = styled.div`
+  position: relative;
+  width: 32px;
+  height: 100%;
+
+  ::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    bottom: -2px;
+    left: 6px;
+    width: 4px;
+    background: ${disabledColor};
+    border-radius: 2px;
+  }
+`
+
 interface IRangeSliderHandleProps {
   color: RangeSliderColor
   isActive?: boolean
   isDisabled?: boolean
-  isStrong?: boolean
+  isStrict?: boolean
 }
 
 const getHandleColor = ({
@@ -70,10 +91,17 @@ export const RangeSliderHandle = styled.div<IRangeSliderHandleProps>`
   top: 0;
   width: 16px;
   height: 16px;
-  margin-left: -8px;
   border: 1px solid ${props => getHandleColor(props)};
   border-radius: 8px;
   cursor: ${props => (props.isActive ? 'grabbing' : 'grab')};
+
+  ${RangeSliderRuler} > & {
+    margin-left: -8px;
+  }
+
+  ${RangeSliderVerticalRuler} > & {
+    margin-top: -8px;
+  }
 
   ::before {
     content: '';
@@ -82,9 +110,9 @@ export const RangeSliderHandle = styled.div<IRangeSliderHandleProps>`
     top: 2px;
     right: 2px;
     bottom: 2px;
-    ${props => props.isStrong && `border: 1px solid ${getHandleColor(props)};`}
+    ${props => props.isStrict && `border: 1px solid ${getHandleColor(props)};`}
     background: ${props =>
-      props.isStrong ? 'rgba(255,255,255,0.5)' : getHandleColor(props)};
+      props.isStrict ? 'rgba(255,255,255,0.5)' : getHandleColor(props)};
     border-radius: 50%;
   }
 
@@ -98,7 +126,7 @@ export const RangeSliderHandle = styled.div<IRangeSliderHandleProps>`
       };
   
       ::before {
-        ${props.isStrong ? 'border-color' : 'background'}: ${
+        ${props.isStrict ? 'border-color' : 'background'}: ${
       props.color === RangeSliderColor.Primary
         ? controlPrimaryActiveColor
         : controlSecondaryActiveColor
@@ -110,10 +138,20 @@ export const RangeSliderHandle = styled.div<IRangeSliderHandleProps>`
 
 export const RangeSliderTick = styled.div`
   position: absolute;
-  height: 6px;
-  top: 8px;
-  width: 0;
-  border-left: 1px solid ${disabledColor};
+
+  ${RangeSliderRuler} > & {
+    top: 8px;
+    width: 0;
+    height: 6px;
+    border-left: 1px solid ${disabledColor};
+  }
+
+  ${RangeSliderVerticalRuler} > & {
+    left: 8px;
+    width: 6px;
+    height: 0;
+    border-top: 1px solid ${disabledColor};
+  }
 `
 
 interface IRangeSliderRangeProps {
@@ -152,5 +190,14 @@ export const RangeSliderRange = styled.div<IRangeSliderRangeProps>`
 
 export const RangeSliderLabel = styled.div`
   position: absolute;
-  top: 16px;
+
+  ${RangeSliderRuler} > & {
+    top: 16px;
+  }
+
+  ${RangeSliderVerticalRuler} > & {
+    left: 0;
+    transform: translateX(32px) rotate(-90deg);
+    transform-origin: 0 100%;
+  }
 `
