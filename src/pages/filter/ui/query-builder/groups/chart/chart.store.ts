@@ -10,13 +10,12 @@ class ChartStore {
     makeAutoObservable(this)
   }
 
-  // temporary solution. I'll fix it in the next PR
   colorListForPieChart: string[] = [
     theme('colors.blue.bright'),
     theme('colors.purple.bright'),
     theme('colors.yellow.secondary'),
     theme('colors.orange.bright'),
-    theme('colors.grey.disabled'),
+    theme('colors.grey.blue'),
   ]
 
   getBarChartConfig = (data: ChartData): ChartConfiguration => ({
@@ -48,7 +47,7 @@ class ChartStore {
     },
   })
 
-  getPieChartConfig(data: ChartData): ChartConfiguration {
+  getPieChartConfig(data: ChartData): any {
     return {
       type: 'doughnut',
       data,
@@ -58,6 +57,11 @@ class ChartStore {
           legend: { display: false },
         },
         borderColor: 'transparent',
+        cutout: '60%',
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
       },
     }
   }
@@ -92,9 +96,14 @@ class ChartStore {
       (firstVariant, secondVariant) => secondVariant[1] - firstVariant[1],
     )
 
-    const titleList = filteredVariants.map(varaint => varaint[0])
+    const currentVariants =
+      renderMode === ChartRenderModes.Pie
+        ? this.getVariantListForPieChart(filteredVariants)
+        : filteredVariants
 
-    const quantityList = filteredVariants.map(element => +element[1])
+    const titleList = currentVariants.map(varaint => varaint[0])
+
+    const quantityList = currentVariants.map(element => +element[1])
 
     const defaultColorList = [theme('colors.blue.bright')]
 
@@ -129,7 +138,9 @@ class ChartStore {
     }
   }
 
-  getDataForPieChart(filteredVariants: [string, number][]): any {
+  getVariantListForPieChart(
+    filteredVariants: [string, number][],
+  ): [string, number][] {
     const displayedFieldsNumber = 4
     if (filteredVariants.length <= displayedFieldsNumber) {
       return filteredVariants
@@ -143,60 +154,10 @@ class ChartStore {
       0,
     )
 
-    const dataForPieChart = [
-      ...mainVariantList,
-      ['Others', othersVariantsQuantity],
-    ]
+    const othersVaraints: [string, number] = ['Others', othersVariantsQuantity]
+    const dataForPieChart = [...mainVariantList, othersVaraints]
 
     return dataForPieChart
-  }
-
-  drawDoughnutChart(
-    canvas: HTMLCanvasElement,
-    variantList: [string, number][],
-    totalCounts: number,
-  ) {
-    const COLORS_PIE_CHART: string[] = [
-      theme('colors.blue.bright'),
-      theme('colors.purple.bright'),
-      theme('colors.yellow.secondary'),
-      theme('colors.orange.bright'),
-      theme('colors.grey.disabled'),
-    ]
-    const chartDiameter = 110
-
-    canvas.width = chartDiameter
-    canvas.height = chartDiameter
-
-    if (canvas.getContext) {
-      const ctx = canvas.getContext('2d')
-      if (!ctx) return
-
-      const radius = chartDiameter / 2
-      const x = chartDiameter / 2
-      const y = chartDiameter / 2
-
-      let start = 0
-
-      variantList.forEach((variant, index) => {
-        const end = start + Math.PI * 2 * (variant[1] / totalCounts)
-
-        ctx.beginPath()
-        ctx.moveTo(x, y)
-        ctx.arc(x, y, radius, start, end)
-        ctx.fillStyle = COLORS_PIE_CHART[index]
-        ctx.fill()
-
-        start = end
-      })
-
-      // create empty zone in circle
-      const emptyZoneRadius = 33
-      ctx.beginPath()
-      ctx.arc(x, y, emptyZoneRadius, 0, Math.PI * 2)
-      ctx.fillStyle = theme('colors.blue.secondary')
-      ctx.fill()
-    }
   }
 }
 

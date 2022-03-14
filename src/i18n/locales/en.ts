@@ -132,7 +132,9 @@ export const en = {
     notValidName: 'Preset name is not valid',
     chart: {
       seeAll: 'See all',
-      collapse: 'Collapse',
+      hide: 'Hide',
+      total: 'Total',
+      variants: 'variants',
     },
   },
   dtree: {
