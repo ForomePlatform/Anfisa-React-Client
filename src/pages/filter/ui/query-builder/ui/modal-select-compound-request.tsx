@@ -20,7 +20,7 @@ import { getSortedArray } from '@utils/getSortedArray'
 import dtreeModalStore from '../../../modals.store'
 import { IParams } from '../../modal-edit/components/modal-edit-compound-het'
 import { resetOptions } from '../../panels/function-panel/components/compound-request/compound-request'
-import { AllNotModalMods } from './all-not-modal-mods'
+import { AllNotMods } from './all-not-mods'
 import { ApproxStateModalMods } from './approx-state-modal-mods'
 import { DisabledVariantsAmount } from './disabled-variants-amount'
 import { HeaderModal } from './header-modal'
@@ -310,7 +310,7 @@ export const ModalSelectCompoundRequest = observer((): ReactElement => {
           handleSetCondition={handleSetCondition}
         />
 
-        <AllNotModalMods />
+        <AllNotMods />
       </div>
 
       <div className="flex flex-col w-full mt-4 text-14">

@@ -2,7 +2,9 @@ import React, { ChangeEvent } from 'react'
 import Checkbox from 'react-three-state-checkbox'
 import { observer } from 'mobx-react-lite'
 
+import { ModeTypes } from '@core/enum/mode-types-enum'
 import { t } from '@i18n'
+import { AllNotMods } from '@pages/filter/ui/query-builder/ui/all-not-mods'
 import inheritanceModeStore from './inheritance-mode.store'
 
 interface IComplexVariantsProps {
@@ -48,20 +50,41 @@ export const ComplexVariants = observer(
           </span>
         </div>
 
-        {filteredComplexVariants.map(([variantName, variantValue]) => {
-          return (
-            <div key={variantName} className="flex items-center mt-4">
-              <Checkbox
-                checked={variantsValues.includes(variantName)}
-                onChange={e => {
-                  handleChangeVariants(e, variantName)
-                }}
-              />
-              <span className="text-14 leading-16px ml-2">{variantName}</span>
-              <span className="text-14 leading-16px text-grey-blue ml-1">{`(${variantValue})`}</span>
-            </div>
-          )
-        })}
+        <div className="flex justify-between">
+          <div>
+            {filteredComplexVariants.map(([variantName, variantValue]) => {
+              return (
+                <div key={variantName} className="flex items-center mt-4">
+                  <Checkbox
+                    checked={variantsValues.includes(variantName)}
+                    onChange={e => {
+                      handleChangeVariants(e, variantName)
+                    }}
+                  />
+                  <span className="text-14 leading-16px ml-2">
+                    {variantName}
+                  </span>
+                  <span className="text-14 leading-16px text-grey-blue ml-1">{`(${variantValue})`}</span>
+                </div>
+              )
+            })}
+          </div>
+
+          <div className="mt-1">
+            <AllNotMods
+              isAllModeDisabled={variantsValues.length < 2}
+              isNotModeDisabled={problemGroupValues.length === 0}
+              isAllModeChecked={inheritanceModeStore.isAllMode}
+              isNotModeChecked={inheritanceModeStore.isNotMode}
+              toggleAllMode={() =>
+                inheritanceModeStore.toggleMode(ModeTypes.All)
+              }
+              toggleNotMode={() =>
+                inheritanceModeStore.toggleMode(ModeTypes.Not)
+              }
+            />
+          </div>
+        </div>
 
         {filteredComplexVariants.length === 0 && (
           <div className="flex justify-center w-full mt-2 text-14 text-grey-blue">

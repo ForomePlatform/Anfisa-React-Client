@@ -1,8 +1,9 @@
 import { makeAutoObservable } from 'mobx'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
+import { ModeTypes } from '@core/enum/mode-types-enum'
+import modalEditStore from '@pages/filter/ui/modal-edit/modal-edit.store'
 import {
-  ConditionJoinMode,
   TFuncCondition,
   TVariant,
 } from '@service-providers/common/common.interface'
@@ -10,8 +11,16 @@ import functionPanelStore from '../../function-panel.store'
 import { IGeneRegionCachedValues } from './../../function-panel.interface'
 
 class GeneRegionStore {
+  isAllMode = false
+  isNotMode = false
+
   constructor() {
     makeAutoObservable(this)
+  }
+
+  public toggleMode(modeType: string): void {
+    this.isAllMode = modeType === ModeTypes.All
+    this.isNotMode = modeType === ModeTypes.Not
   }
 
   public get cachedValues(): IGeneRegionCachedValues {
@@ -38,7 +47,7 @@ class GeneRegionStore {
     const conditions: TFuncCondition = [
       'func',
       FuncStepTypesEnum.GeneRegion,
-      ConditionJoinMode.OR,
+      modalEditStore.getModeType(this.isAllMode, this.isNotMode),
       ['True'],
       { locus: this.locusValue },
     ]

@@ -2,8 +2,9 @@ import { makeAutoObservable, toJS } from 'mobx'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { InheritanceModeEnum } from '@core/enum/inheritance-mode-enum'
+import { ModeTypes } from '@core/enum/mode-types-enum'
+import modalEditStore from '@pages/filter/ui/modal-edit/modal-edit.store'
 import {
-  ConditionJoinMode,
   TFuncCondition,
   TVariant,
 } from '@service-providers/common/common.interface'
@@ -29,8 +30,16 @@ interface ISendRequest {
 }
 
 class CustomInheritanceModeStore {
+  isAllMode = false
+  isNotMode = false
+
   constructor() {
     makeAutoObservable(this)
+  }
+
+  public toggleMode(modeType: string): void {
+    this.isAllMode = modeType === ModeTypes.All
+    this.isNotMode = modeType === ModeTypes.Not
   }
 
   public get cachedValues(): ICustomInheritanceModeCachedValues {
@@ -220,7 +229,7 @@ class CustomInheritanceModeStore {
     const custInhModeConditions: TFuncCondition = [
       'func',
       FuncStepTypesEnum.CustomInheritanceMode,
-      ConditionJoinMode.OR,
+      modalEditStore.getModeType(this.isAllMode, this.isNotMode),
       ['True'],
       JSON.parse(`{"scenario":{${this.stringScenario}}}`),
     ]

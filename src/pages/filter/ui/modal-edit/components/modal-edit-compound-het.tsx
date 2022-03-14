@@ -6,7 +6,7 @@ import dtreeStore from '@store/dtree'
 import activeStepStore from '@pages/filter/active-step.store'
 import { changeFunctionalStep } from '@utils/changeAttribute/changeFunctionalStep'
 import dtreeModalStore from '../../../modals.store'
-import { AllNotModalMods } from '../../query-builder/ui/all-not-modal-mods'
+import { AllNotMods } from '../../query-builder/ui/all-not-mods'
 import { ApproxStateModalMods } from '../../query-builder/ui/approx-state-modal-mods'
 import { DisabledVariantsAmount } from '../../query-builder/ui/disabled-variants-amount'
 import { HeaderModal } from '../../query-builder/ui/header-modal'
@@ -161,7 +161,7 @@ export const ModalEditCompoundHet = observer((): ReactElement => {
           handleSetCondition={handleSetCondition}
         />
 
-        <AllNotModalMods />
+        <AllNotMods />
       </div>
 
       <DisabledVariantsAmount variants={variants} disabled={true} />

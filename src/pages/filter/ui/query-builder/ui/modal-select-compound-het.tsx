@@ -7,7 +7,7 @@ import activeStepStore from '@pages/filter/active-step.store'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import dtreeModalStore from '../../../modals.store'
 import { IParams } from '../../modal-edit/components/modal-edit-compound-het'
-import { AllNotModalMods } from './all-not-modal-mods'
+import { AllNotMods } from './all-not-mods'
 import { ApproxStateModalMods } from './approx-state-modal-mods'
 import { DisabledVariantsAmount } from './disabled-variants-amount'
 import { HeaderModal } from './header-modal'
@@ -140,7 +140,7 @@ export const ModalSelectCompoundHet = observer((): ReactElement => {
           handleSetCondition={handleSetCondition}
         />
 
-        <AllNotModalMods />
+        <AllNotMods />
       </div>
 
       <DisabledVariantsAmount variants={variants} disabled={true} />

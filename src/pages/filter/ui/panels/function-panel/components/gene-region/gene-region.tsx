@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
+import { ModeTypes } from '@core/enum/mode-types-enum'
 import { t } from '@i18n'
 import filterStore from '@store/filter'
 import { Input } from '@ui//input'
+import { AllNotMods } from '@pages/filter/ui/query-builder/ui/all-not-mods'
 import { validateLocusCondition } from '@utils/validation/validateLocusCondition'
 import { DisabledVariantsAmount } from '../../../../query-builder/ui/disabled-variants-amount'
 import functionPanelStore from '../../function-panel.store'
@@ -37,9 +39,24 @@ export const GeneRegion = observer(() => {
   return (
     <React.Fragment>
       <div className="mt-4">
-        <span className="text-14 leading-16px text-grey-blue font-bold">
-          Locus
-        </span>
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-14 leading-16px text-grey-blue font-bold">
+            Locus
+          </span>
+
+          <AllNotMods
+            isAllModeChecked={geneRegionStore.isAllMode}
+            isNotModeChecked={geneRegionStore.isNotMode}
+            isAllModeDisabled={
+              simpleVariants ? simpleVariants.length === 0 : true
+            }
+            isNotModeDisabled={
+              simpleVariants ? simpleVariants.length === 0 : true
+            }
+            toggleAllMode={() => geneRegionStore.toggleMode(ModeTypes.All)}
+            toggleNotMode={() => geneRegionStore.toggleMode(ModeTypes.Not)}
+          />
+        </div>
 
         <div className="relative flex">
           <Input

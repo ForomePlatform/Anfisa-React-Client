@@ -6,7 +6,7 @@ import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
 import { Select } from '@ui/select'
 import { resetOptions } from '../../panels/function-panel/components/compound-request/compound-request'
-import { AllNotModalMods } from './all-not-modal-mods'
+import { AllNotMods } from './all-not-mods'
 import { DisabledVariantsAmount } from './disabled-variants-amount'
 import { selectOptions } from './modal-select-custom-inheritance-mode'
 
@@ -16,6 +16,10 @@ interface IProps {
   selectStates: string[]
   handleReset: (e: string) => void
   resetValue?: string
+  isAllModeChecked?: boolean
+  isNotModeChecked?: boolean
+  toggleAllMode?: () => void
+  toggleNotMode?: () => void
 }
 
 export const CustomInheritanceModeContent = observer(
@@ -25,6 +29,10 @@ export const CustomInheritanceModeContent = observer(
     selectStates,
     handleReset,
     resetValue,
+    isAllModeChecked,
+    isNotModeChecked,
+    toggleAllMode,
+    toggleNotMode,
   }: IProps) => {
     const variants =
       dtreeStore.statFuncData.variants ?? filterStore.statFuncData?.variants
@@ -61,7 +69,14 @@ export const CustomInheritanceModeContent = observer(
             />
           </div>
 
-          <AllNotModalMods />
+          <AllNotMods
+            isAllModeChecked={isAllModeChecked}
+            isNotModeChecked={isNotModeChecked}
+            isAllModeDisabled={variants ? variants.length === 0 : true}
+            isNotModeDisabled={variants ? variants.length === 0 : true}
+            toggleAllMode={toggleAllMode}
+            toggleNotMode={toggleNotMode}
+          />
         </div>
 
         <DisabledVariantsAmount variants={variants} disabled={true} />

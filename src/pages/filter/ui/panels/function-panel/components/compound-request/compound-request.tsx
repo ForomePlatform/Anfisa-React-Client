@@ -43,7 +43,7 @@ export const CompoundRequest = observer((): ReactElement => {
 
   return (
     <React.Fragment>
-      <AprroxAndState />
+      <AprroxAndState simpleVariants={simpleVariants} />
 
       <RequestConditions
         activeRequestIndex={activeRequestIndex}

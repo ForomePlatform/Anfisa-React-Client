@@ -3,9 +3,10 @@ import { makeAutoObservable, runInAction } from 'mobx'
 
 import { IStatFuncData } from '@declarations'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
+import { ModeTypes } from '@core/enum/mode-types-enum'
 import filterStore from '@store/filter'
+import modalEditStore from '@pages/filter/ui/modal-edit/modal-edit.store'
 import {
-  ConditionJoinMode,
   TFuncCondition,
   TVariant,
 } from '@service-providers/common/common.interface'
@@ -20,9 +21,16 @@ export const CompoundHetSelectOptions = [
 
 class CompoundHetStore {
   statFuncStatus = ''
+  isAllMode = false
+  isNotMode = false
 
   constructor() {
     makeAutoObservable(this)
+  }
+
+  public toggleMode(modeType: string): void {
+    this.isAllMode = modeType === ModeTypes.All
+    this.isNotMode = modeType === ModeTypes.Not
   }
 
   public get cachedValues(): ICompoundHetCachedValues {
@@ -79,7 +87,7 @@ class CompoundHetStore {
     const conditions: TFuncCondition = [
       'func',
       FuncStepTypesEnum.CompoundHet,
-      ConditionJoinMode.OR,
+      modalEditStore.getModeType(this.isAllMode, this.isNotMode),
       ['Proband'],
       { approx: this.cachedValues?.conditions.approx || null, state: null },
     ]

@@ -18,7 +18,7 @@ import { getResetType } from '@utils/getResetType'
 import { getSortedArray } from '@utils/getSortedArray'
 import dtreeModalStore from '../../../modals.store'
 import { resetOptions } from '../../panels/function-panel/components/compound-request/compound-request'
-import { AllNotModalMods } from '../../query-builder/ui/all-not-modal-mods'
+import { AllNotMods } from '../../query-builder/ui/all-not-mods'
 import { ApproxStateModalMods } from '../../query-builder/ui/approx-state-modal-mods'
 import { DisabledVariantsAmount } from '../../query-builder/ui/disabled-variants-amount'
 import { HeaderModal } from '../../query-builder/ui/header-modal'
@@ -366,7 +366,7 @@ export const ModalEditCompoundRequest = observer((): ReactElement => {
           handleSetCondition={handleSetCondition}
         />
 
-        <AllNotModalMods />
+        <AllNotMods />
       </div>
 
       <div className="flex flex-col w-full mt-4 text-14">
