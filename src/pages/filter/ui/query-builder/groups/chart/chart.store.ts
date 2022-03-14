@@ -136,16 +136,16 @@ class ChartStore {
     }
 
     const mainVariantList = filteredVariants.slice(0, displayedFieldsNumber)
-    const otherVariantList = filteredVariants.slice(displayedFieldsNumber)
+    const othersVariantList = filteredVariants.slice(displayedFieldsNumber)
 
-    const otherVariantsQuantity = otherVariantList.reduce(
+    const othersVariantsQuantity = othersVariantList.reduce(
       (previousValue, variant) => previousValue + variant[1],
       0,
     )
 
     const dataForPieChart = [
       ...mainVariantList,
-      ['Other', otherVariantsQuantity],
+      ['Others', othersVariantsQuantity],
     ]
 
     return dataForPieChart
@@ -189,10 +189,12 @@ class ChartStore {
 
         start = end
       })
+
       // create empty zone in circle
+      const emptyZoneRadius = 33
       ctx.beginPath()
-      ctx.arc(x, y, radius / 2, 0, Math.PI * 2)
-      ctx.fillStyle = '#2a4567'
+      ctx.arc(x, y, emptyZoneRadius, 0, Math.PI * 2)
+      ctx.fillStyle = theme('colors.blue.secondary')
       ctx.fill()
     }
   }
