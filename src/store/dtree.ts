@@ -28,7 +28,6 @@ export type IStepData = {
   isActive: boolean
   isReturnedVariantsActive: boolean
   startFilterCounts: FilterCountsType
-  finishFilterCounts: FilterCountsType
   difference: FilterCountsType
   comment?: string
   condition?: string
@@ -117,7 +116,6 @@ class DtreeStore {
         isActive: false,
         isReturnedVariantsActive: false,
         startFilterCounts: null,
-        finishFilterCounts: null,
         difference: null,
       },
     ]
@@ -136,7 +134,6 @@ class DtreeStore {
       isActive: false,
       isReturnedVariantsActive: false,
       startFilterCounts: null,
-      finishFilterCounts: null,
       difference: null,
       isFinalStep: true,
     }
@@ -362,9 +359,21 @@ class DtreeStore {
     })
 
     if (type === 'BEFORE') {
-      const startFilterCounts =
-        localStepData[index - 1]?.finishFilterCounts ??
-        localStepData[index]?.finishFilterCounts
+      const isFirstStep = index === 0
+      const prevIndex = isFirstStep ? index : index - 1
+
+      const prevStartFilterCounts = localStepData?.[prevIndex].startFilterCounts
+      const prevDifference = localStepData?.[prevIndex].difference
+
+      const isStepCalculated =
+        typeof prevStartFilterCounts === 'number' &&
+        typeof prevDifference === 'number'
+
+      const test = isStepCalculated
+        ? prevStartFilterCounts - prevDifference
+        : prevStartFilterCounts
+
+      const startFilterCounts = isFirstStep ? prevStartFilterCounts : test
 
       localStepData.splice(index, 0, {
         step: index,
@@ -373,11 +382,19 @@ class DtreeStore {
         isActive: true,
         isReturnedVariantsActive: false,
         startFilterCounts,
-        finishFilterCounts: startFilterCounts,
         difference: 0,
       })
     } else {
-      const startFilterCounts = localStepData[index].finishFilterCounts
+      const prevStartFilterCounts = localStepData?.[index].startFilterCounts
+      const prevDifference = localStepData?.[index].difference
+
+      const isStepCalculated =
+        typeof prevStartFilterCounts === 'number' &&
+        typeof prevDifference === 'number'
+
+      const startFilterCounts = isStepCalculated
+        ? prevStartFilterCounts - prevDifference
+        : prevStartFilterCounts
 
       localStepData.splice(index + 1, 0, {
         step: index,
@@ -386,7 +403,6 @@ class DtreeStore {
         isActive: true,
         isReturnedVariantsActive: false,
         startFilterCounts,
-        finishFilterCounts: startFilterCounts,
         difference: 0,
       })
     }
