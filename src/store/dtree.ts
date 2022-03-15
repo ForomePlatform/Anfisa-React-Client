@@ -6,6 +6,7 @@ import { makeAutoObservable, runInAction, toJS } from 'mobx'
 
 import { DtreeStatType, FilterCountsType, StatListType } from '@declarations'
 import { getApiUrl } from '@core/get-api-url'
+import { CreateEmptyStepPositions } from '@pages/filter/active-step.store'
 import { TPropertyStatus } from '@service-providers/common/common.interface'
 import { addToActionHistory } from '@utils/addToActionHistory'
 import { calculateAcceptedVariants } from '@utils/calculateAcceptedVariants'
@@ -349,7 +350,7 @@ class DtreeStore {
     return this.algorithmFilterValue ? data : stepData
   }
 
-  insertStep(type: string, index: number) {
+  insertStep(position: CreateEmptyStepPositions, index: number) {
     const localStepData = [...this.stepData]
 
     localStepData.forEach(element => {
@@ -358,54 +359,40 @@ class DtreeStore {
       return element
     })
 
-    if (type === 'BEFORE') {
-      const isFirstStep = index === 0
-      const prevIndex = isFirstStep ? index : index - 1
+    const isPositionBefore = position === CreateEmptyStepPositions.BEFORE
+    const isFirstStep = index === 0
+    const prevStepIndex = isFirstStep ? index : index - 1
 
-      const prevStartFilterCounts = localStepData?.[prevIndex].startFilterCounts
-      const prevDifference = localStepData?.[prevIndex].difference
+    const currentStepIndex = isPositionBefore ? prevStepIndex : index
 
-      const isStepCalculated =
-        typeof prevStartFilterCounts === 'number' &&
-        typeof prevDifference === 'number'
+    const prevStartFilterCounts =
+      localStepData?.[currentStepIndex].startFilterCounts
+    const prevDifference = localStepData?.[currentStepIndex].difference
 
-      const test = isStepCalculated
-        ? prevStartFilterCounts - prevDifference
-        : prevStartFilterCounts
+    const isStepCalculated =
+      typeof prevStartFilterCounts === 'number' &&
+      typeof prevDifference === 'number'
 
-      const startFilterCounts = isFirstStep ? prevStartFilterCounts : test
+    const newStartFilterCounts = isStepCalculated
+      ? prevStartFilterCounts - prevDifference
+      : prevStartFilterCounts
 
-      localStepData.splice(index, 0, {
-        step: index,
-        groups: [],
-        excluded: true,
-        isActive: true,
-        isReturnedVariantsActive: false,
-        startFilterCounts,
-        difference: 0,
-      })
-    } else {
-      const prevStartFilterCounts = localStepData?.[index].startFilterCounts
-      const prevDifference = localStepData?.[index].difference
+    const startFilterCounts =
+      isFirstStep && isPositionBefore
+        ? prevStartFilterCounts
+        : newStartFilterCounts
 
-      const isStepCalculated =
-        typeof prevStartFilterCounts === 'number' &&
-        typeof prevDifference === 'number'
+    const spliceIndex = isPositionBefore ? index : index + 1
 
-      const startFilterCounts = isStepCalculated
-        ? prevStartFilterCounts - prevDifference
-        : prevStartFilterCounts
-
-      localStepData.splice(index + 1, 0, {
-        step: index,
-        groups: [],
-        excluded: true,
-        isActive: true,
-        isReturnedVariantsActive: false,
-        startFilterCounts,
-        difference: 0,
-      })
-    }
+    localStepData.splice(spliceIndex, 0, {
+      step: index,
+      groups: [],
+      excluded: true,
+      isActive: true,
+      isReturnedVariantsActive: false,
+      startFilterCounts,
+      difference: 0,
+    })
 
     localStepData.forEach((item, currNo: number) => {
       item.step = currNo + 1
