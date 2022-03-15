@@ -1,4 +1,4 @@
-Feature: Filter Refiner, Filter by Compound_Het
+ Feature: Filter Refiner, Filter by Compound_Het
 	As a user, I want to have an ability to filter variants by Compound Het
 
 	Scenario Outline: Secondary dataset 
