@@ -3,10 +3,10 @@ export enum DatasetKinds {
   XL = 'xl',
 }
 
-export type TCount = [
-  variantCounts: [number],
-  dnaVariantsCounts?: [number],
-  transcriptsCounts?: [number],
+export type TItemsCount = [
+  variantCounts: number,
+  dnaVariantsCounts: number,
+  transcriptsCounts: number,
 ]
 
 export type TDateISOString = string
@@ -124,7 +124,7 @@ export interface INumericPropertyStatus
   extends IBasePropertyStatus<AttributeKinds.NUMERIC> {
   min?: number
   max?: number
-  counts?: TCount[]
+  counts?: TItemsCount[]
   histogram?: TNumericPropertyHistogram
   'sub-kind': NumericPropertyStatusSubKinds
 }

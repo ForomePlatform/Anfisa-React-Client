@@ -2,7 +2,7 @@ import {
   DatasetKinds,
   ISolutionEntryDescription,
   TCondition,
-  TCount,
+  TItemsCount,
   TPropertyStatus,
 } from 'service-providers/common/common.interface'
 
@@ -95,11 +95,11 @@ export interface IDtreeSetPoint {
   actions: string[]
 }
 
-export type PointCount = TCount | null
+export type PointCount = TItemsCount | null
 
 export interface IDtreeSet {
   kind: DatasetKinds
-  'total-counts': TCount[]
+  'total-counts': TItemsCount[]
   'point-counts': PointCount[]
   code: string
   points: IDtreeSetPoint[]
@@ -143,11 +143,11 @@ export interface IDtreeStatArguments {
   no?: string
 }
 
-export interface IDtreeStat {
-  'total-counts': TCount[]
-  'filtered-counts': TCount[]
+export interface IDtreeStatResponse {
+  'total-counts': TItemsCount
+  'filtered-counts': TItemsCount
   'stat-list': TPropertyStatus[]
-  rq_id: string
+  'rq-id': string
 }
 
 // dtree_check
