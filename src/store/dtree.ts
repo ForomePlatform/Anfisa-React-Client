@@ -382,9 +382,9 @@ class DtreeStore {
         ? prevStartFilterCounts
         : newStartFilterCounts
 
-    const spliceIndex = isPositionBefore ? index : index + 1
+    const startSpliceIndex = isPositionBefore ? index : index + 1
 
-    localStepData.splice(spliceIndex, 0, {
+    localStepData.splice(startSpliceIndex, 0, {
       step: index,
       groups: [],
       excluded: true,
