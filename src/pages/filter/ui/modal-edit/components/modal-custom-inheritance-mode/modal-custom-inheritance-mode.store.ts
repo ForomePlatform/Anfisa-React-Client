@@ -47,27 +47,19 @@ class ModalCustomInheritanceModeStore {
     this.resetValue = resetValue
   }
 
-  get reset(): string {
-    return this.resetValue
-  }
-
   public sendRequest({ type, value, complexScenario }: ISendRequest): void {
     let selectedData: any[] = []
 
+    const { problemGroups, groupName } = modalEditStore
+
     if (type && value) {
       selectedData = [
-        [
-          type === 'first' ? value : this.selectValues.first,
-          modalEditStore.problemGroups[0],
-        ],
+        [type === 'first' ? value : this.selectValues.first, problemGroups[0]],
         [
           type === 'second' ? value : this.selectValues.second,
-          modalEditStore.problemGroups[1],
+          problemGroups[1],
         ],
-        [
-          type === 'third' ? value : this.selectValues.third,
-          modalEditStore.problemGroups[2],
-        ],
+        [type === 'third' ? value : this.selectValues.third, problemGroups[2]],
       ]
     }
 
@@ -86,11 +78,11 @@ class ModalCustomInheritanceModeStore {
 
     const params = `{"scenario":{${scenarioString}}}`
 
-    dtreeStore.fetchStatFuncAsync(modalEditStore.groupName, params)
+    dtreeStore.fetchStatFuncAsync(groupName, params)
   }
 
   public setSingleScenario = (group: string, value: string): void => {
-    const problemGroups: string[] = modalEditStore.problemGroups
+    const { problemGroups } = modalEditStore
 
     if (group === problemGroups[0]) {
       this.setSingleSelectValue('first', value)
