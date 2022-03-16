@@ -4,6 +4,7 @@ import { makeAutoObservable } from 'mobx'
 import { StatList } from '@declarations'
 import { theme } from '@theme'
 import { ChartRenderModes } from './chart.interface'
+import { getVariantListForPieChart } from './utils/getVariantListForPieChart'
 
 class ChartStore {
   constructor() {
@@ -47,7 +48,9 @@ class ChartStore {
     },
   })
 
-  getPieChartConfig(data: ChartData): any {
+  getPieChartConfig(
+    data: ChartData<'doughnut'>,
+  ): ChartConfiguration<'doughnut'> {
     return {
       type: 'doughnut',
       data,
@@ -98,7 +101,7 @@ class ChartStore {
 
     const currentVariants =
       renderMode === ChartRenderModes.Pie
-        ? this.getVariantListForPieChart(filteredVariants)
+        ? getVariantListForPieChart(filteredVariants)
         : filteredVariants
 
     const titleList = currentVariants.map(varaint => varaint[0])
@@ -136,28 +139,6 @@ class ChartStore {
     if (variants) {
       return this.getVariantsChartData(subGroupItem)
     }
-  }
-
-  getVariantListForPieChart(
-    filteredVariants: [string, number][],
-  ): [string, number][] {
-    const displayedFieldsNumber = 4
-    if (filteredVariants.length <= displayedFieldsNumber) {
-      return filteredVariants
-    }
-
-    const mainVariantList = filteredVariants.slice(0, displayedFieldsNumber)
-    const othersVariantList = filteredVariants.slice(displayedFieldsNumber)
-
-    const othersVariantsQuantity = othersVariantList.reduce(
-      (previousValue, variant) => previousValue + variant[1],
-      0,
-    )
-
-    const othersVaraints: [string, number] = ['Others', othersVariantsQuantity]
-    const dataForPieChart = [...mainVariantList, othersVaraints]
-
-    return dataForPieChart
   }
 }
 
