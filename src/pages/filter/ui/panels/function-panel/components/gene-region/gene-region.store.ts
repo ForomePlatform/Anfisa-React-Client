@@ -2,11 +2,11 @@ import { makeAutoObservable } from 'mobx'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
-import modalEditStore from '@pages/filter/ui/modal-edit/modal-edit.store'
 import {
   TFuncCondition,
   TVariant,
 } from '@service-providers/common/common.interface'
+import { getModeType } from '@utils/getModeType'
 import functionPanelStore from '../../function-panel.store'
 import { IGeneRegionCachedValues } from './../../function-panel.interface'
 
@@ -47,7 +47,7 @@ class GeneRegionStore {
     const conditions: TFuncCondition = [
       'func',
       FuncStepTypesEnum.GeneRegion,
-      modalEditStore.getModeType(this.isAllMode, this.isNotMode),
+      getModeType(this.isAllMode, this.isNotMode),
       ['True'],
       { locus: this.locusValue },
     ]

@@ -3,13 +3,13 @@ import { makeAutoObservable } from 'mobx'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
-import modalEditStore from '@pages/filter/ui/modal-edit/modal-edit.store'
 import {
   TFuncCondition,
   TVariant,
 } from '@service-providers/common/common.interface'
 import { getFilteredRequestCondition } from '@utils/function-panel/getFilteredRequestCondition'
 import { getFuncParams } from '@utils/getFuncParams'
+import { getModeType } from '@utils/getModeType'
 import { getRequestData } from '@utils/getRequestData'
 import { getResetRequestData } from '@utils/getResetRequestData'
 import { getResetType } from '@utils/getResetType'
@@ -211,7 +211,7 @@ class CompoundRequestStore {
     const conditions: TFuncCondition = [
       'func',
       FuncStepTypesEnum.CompoundRequest,
-      modalEditStore.getModeType(this.isAllMode, this.isNotMode),
+      getModeType(this.isAllMode, this.isNotMode),
       ['True'],
       {
         approx: this.cachedValues?.conditions.approx || null,

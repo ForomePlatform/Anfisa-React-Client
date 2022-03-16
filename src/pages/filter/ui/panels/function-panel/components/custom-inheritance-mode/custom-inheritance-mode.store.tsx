@@ -3,13 +3,13 @@ import { makeAutoObservable, toJS } from 'mobx'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { InheritanceModeEnum } from '@core/enum/inheritance-mode-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
-import modalEditStore from '@pages/filter/ui/modal-edit/modal-edit.store'
 import {
   TFuncCondition,
   TVariant,
 } from '@service-providers/common/common.interface'
 import { getSelectValue } from '@utils/function-panel/getSelectValue'
 import { getStringScenario } from '@utils/function-panel/getStringScenario'
+import { getModeType } from '@utils/getModeType'
 import { getSortedArray } from '@utils/getSortedArray'
 import {
   ICustomInheritanceModeCachedValues,
@@ -229,7 +229,7 @@ class CustomInheritanceModeStore {
     const custInhModeConditions: TFuncCondition = [
       'func',
       FuncStepTypesEnum.CustomInheritanceMode,
-      modalEditStore.getModeType(this.isAllMode, this.isNotMode),
+      getModeType(this.isAllMode, this.isNotMode),
       ['True'],
       JSON.parse(`{"scenario":{${this.stringScenario}}}`),
     ]

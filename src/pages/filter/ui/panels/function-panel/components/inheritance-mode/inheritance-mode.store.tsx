@@ -3,11 +3,11 @@ import { makeAutoObservable } from 'mobx'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
-import modalEditStore from '@pages/filter/ui/modal-edit/modal-edit.store'
 import {
   TFuncCondition,
   TVariant,
 } from '@service-providers/common/common.interface'
+import { getModeType } from '@utils/getModeType'
 import { IInheritanceModeCachedValues } from '../../function-panel.interface'
 import functionPanelStore from '../../function-panel.store'
 
@@ -135,7 +135,7 @@ class InheritanceModeStore {
     const conditions: TFuncCondition = [
       'func',
       FuncStepTypesEnum.InheritanceMode,
-      modalEditStore.getModeType(this.isAllMode, this.isNotMode),
+      getModeType(this.isAllMode, this.isNotMode),
       this.variantsValues,
       {
         problem_group:

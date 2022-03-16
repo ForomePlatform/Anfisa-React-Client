@@ -1,6 +1,7 @@
 import Checkbox from 'react-three-state-checkbox'
 import { observer } from 'mobx-react-lite'
 
+import { SubKindsEnum } from '@core/enum/sub-kinds-enum'
 import { t } from '@i18n'
 import { ModsDivider } from './mods-divider'
 
@@ -11,6 +12,7 @@ interface IAllNotModsProps {
   isNotModeChecked?: boolean
   toggleAllMode?: () => void
   toggleNotMode?: () => void
+  groupSubKind?: string
 }
 
 export const AllNotMods = observer(
@@ -21,20 +23,26 @@ export const AllNotMods = observer(
     isNotModeChecked,
     toggleAllMode,
     toggleNotMode,
+    groupSubKind,
   }: IAllNotModsProps) => (
     <div className="flex text-14 text-blue-bright">
-      <div className="flex items-center">
-        <Checkbox
-          checked={isAllModeChecked ?? false}
-          className="mr-1 cursor-pointer"
-          disabled={isAllModeDisabled}
-          onChange={toggleAllMode}
-        />
+      {(groupSubKind === SubKindsEnum.Multi ||
+        groupSubKind === SubKindsEnum.InheritanceZ) && (
+        <>
+          <div className="flex items-center">
+            <Checkbox
+              checked={isAllModeChecked ?? false}
+              className="mr-1 cursor-pointer"
+              disabled={isAllModeDisabled}
+              onChange={toggleAllMode}
+            />
 
-        <span>{t('dtree.all')}</span>
-      </div>
+            <span>{t('dtree.all')}</span>
+          </div>
 
-      <ModsDivider />
+          <ModsDivider />
+        </>
+      )}
 
       <div className="flex items-center">
         <Checkbox

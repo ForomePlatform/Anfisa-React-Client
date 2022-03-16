@@ -2,8 +2,10 @@ import cloneDeep from 'lodash/cloneDeep'
 import { makeAutoObservable, toJS } from 'mobx'
 
 import { FilterKindEnum } from '@core/enum/filter-kind.enum'
+import { ModeTypes } from '@core/enum/mode-types-enum'
 import datasetStore, { DatasetStore } from '@store/dataset'
 import filterStore, { FilterStore } from '@store/filter'
+import { getModeType } from '@utils/getModeType'
 
 type FilterAttributesStoreParams = {
   datasetStore: DatasetStore
@@ -25,6 +27,9 @@ export class FilterAttributesStore {
   private datasetStore: DatasetStore
   private filterStore: FilterStore
 
+  isAllMode = false
+  isNotMode = false
+
   constructor(params: FilterAttributesStoreParams) {
     const { datasetStore, filterStore } = params
 
@@ -41,12 +46,26 @@ export class FilterAttributesStore {
     }
   }
 
+  get groupSubKind(): string {
+    return this.filterStore.selectedGroupItem['sub-kind']
+  }
+
   get allEnumVariants(): [string, number][] {
     return toJS(this.getAllEnumVariants(this.currentGroup))
   }
 
   get datasetEnumValues(): string[] {
     return toJS(this.getDatasetEnumValues(this.currentGroup))
+  }
+
+  toggleMode(modeType: string): void {
+    this.isAllMode = modeType === ModeTypes.All
+    this.isNotMode = modeType === ModeTypes.Not
+  }
+
+  resetModes(): void {
+    this.isAllMode = false
+    this.isNotMode = false
   }
 
   clearGroupFilter({ vgroup, groupName }: FilterGroup): void {
@@ -81,7 +100,12 @@ export class FilterAttributesStore {
     }
 
     this.datasetStore.setConditionsAsync([
-      [FilterKindEnum.Enum, groupName, 'OR', values],
+      [
+        FilterKindEnum.Enum,
+        groupName,
+        getModeType(this.isAllMode, this.isNotMode),
+        values,
+      ],
     ])
 
     if (!this.datasetStore.isXL) {
