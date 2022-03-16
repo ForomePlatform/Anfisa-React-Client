@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useRef } from 'react'
+import { ReactElement, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { ActionType } from '@declarations'
@@ -14,26 +14,19 @@ import { EditModalButtons } from '../edit-modal-buttons'
 import modalCompoundHetStore from './modal-compound-het.store'
 
 export const ModalCompoundHet = observer((): ReactElement => {
-  const ref = useRef(null)
-
-  const { groupName, variants, currentGroup, approxValues, approxOptions } =
-    modalEditStore
+  const {
+    variants,
+    currentGroup,
+    approxValues,
+    approxOptions,
+    currentStepGroups,
+  } = modalEditStore
 
   const { stateOptions, stateCondition, approxCondition } =
     modalCompoundHetStore
 
   useEffect(() => {
-    const params = `{"approx":${modalCompoundHetStore.getApprox(
-      approxCondition,
-    )},"state":${
-      stateCondition === '-current-' || !stateCondition
-        ? null
-        : `"${stateCondition}"`
-    }}`
-
-    dtreeStore.fetchStatFuncAsync(groupName, params)
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    modalCompoundHetStore.fetchStatFunc()
   }, [])
 
   const handleSetCondition = (value: string, type: string) => {
@@ -45,7 +38,7 @@ export const ModalCompoundHet = observer((): ReactElement => {
   }
 
   return (
-    <ModalBase refer={ref} minHeight={250}>
+    <ModalBase minHeight={250}>
       <HeaderModal
         groupName={dtreeStore.groupNameToChange}
         handleClose={() => modalCompoundHetStore.closeModal()}
@@ -78,7 +71,7 @@ export const ModalCompoundHet = observer((): ReactElement => {
           handleModals={() => modalCompoundHetStore.openModalAttribute()}
           handleModalJoin={() => modalCompoundHetStore.openModalJoin()}
           disabled={!variants}
-          currentGroup={currentGroup}
+          currentGroup={currentStepGroups}
           handleAddAttribute={handleAddAttribute}
         />
       )}

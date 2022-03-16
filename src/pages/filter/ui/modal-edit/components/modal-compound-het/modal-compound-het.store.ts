@@ -102,6 +102,16 @@ class ModalCompoundHetStore {
     changeFunctionalStep(params)
     dtreeStore.closeModalCompoundHet()
   }
+
+  public fetchStatFunc(): void {
+    const params = `{"approx":${this.getApprox(this.approxCondition)},"state":${
+      this.stateCondition === '-current-' || !this.stateCondition
+        ? null
+        : `"${this.stateCondition}"`
+    }}`
+
+    dtreeStore.fetchStatFuncAsync(modalEditStore.groupName, params)
+  }
 }
 
 export default new ModalCompoundHetStore()
