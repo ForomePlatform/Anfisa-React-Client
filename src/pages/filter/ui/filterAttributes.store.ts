@@ -128,6 +128,15 @@ export class FilterAttributesStore {
         selectedSubAttributes[variant[0]] = variant[1]
       }
     })
+
+    if (this.isAllMode) {
+      selectedSubAttributes['All'] = 1
+    }
+
+    if (this.isNotMode) {
+      selectedSubAttributes['Not'] = 1
+    }
+
     updatedFilters[vgroup][groupName] = selectedSubAttributes
 
     this.filterStore.setSelectedFilters(updatedFilters)

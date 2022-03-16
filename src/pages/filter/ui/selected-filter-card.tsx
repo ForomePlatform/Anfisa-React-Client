@@ -1,4 +1,4 @@
-import { Fragment, ReactElement } from 'react'
+import { Fragment, ReactElement, useMemo } from 'react'
 import Checkbox from 'react-three-state-checkbox'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
@@ -6,6 +6,7 @@ import { observer } from 'mobx-react-lite'
 import { useToggle } from '@core/hooks/use-toggle'
 import { Icon } from '@ui/icon'
 import { getNumericExpression } from '@utils/getNumericExpression'
+import { AllNotModeView } from './all-not-mode-view'
 
 interface Props {
   title: string
@@ -16,7 +17,12 @@ interface Props {
 export const SelectedFilterCard = observer(
   ({ title, filters, onRemove }: Props): ReactElement => {
     const [isOpen, open, close] = useToggle(true)
-    const filtersEntries = Object.entries(filters)
+
+    const filtersEntries = useMemo(() => {
+      return Object.entries(filters).filter(
+        filter => filter[0] !== 'All' && filter[0] !== 'Not',
+      )
+    }, [filters])
 
     if (filtersEntries.length === 0) {
       return <Fragment />
@@ -38,6 +44,7 @@ export const SelectedFilterCard = observer(
           onClick={isOpen ? close : open}
         >
           <span className="leading-16px">{title}</span>
+          <AllNotModeView filters={filters} />
 
           <Icon
             name="Arrow"
