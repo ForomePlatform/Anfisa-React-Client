@@ -6,12 +6,20 @@ import dtreeStore from '@store/dtree'
 import modalEditStore from '@pages/filter/ui/modal-edit/modal-edit.store'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { changeFunctionalStep } from '@utils/changeAttribute/changeFunctionalStep'
+import { getFuncParams } from '@utils/getFuncParams'
+import { getResetType } from '@utils/getResetType'
 import { getSortedArray } from '@utils/getSortedArray'
 
 interface ISelectValues {
   first: string
   second: string
   third: string
+}
+
+interface ISendRequest {
+  complexScenario?: [string, string][]
+  type?: keyof ISelectValues
+  value?: string
 }
 
 class ModalCustomInheritanceModeStore {
@@ -27,34 +35,12 @@ class ModalCustomInheritanceModeStore {
     makeAutoObservable(this)
   }
 
-  public setSingleSelectValue(type: string, value: string): void {
-    switch (type) {
-      case 'first':
-        this.selectValues.first = value
-        break
-      case 'second':
-        this.selectValues.second = value
-        break
-      case 'third':
-        this.selectValues.third = value
-        break
-    }
+  public setSingleSelectValue(type: keyof ISelectValues, value: string): void {
+    this.selectValues[type] = value
   }
 
   public setComplexSelectValues(complexValue: ISelectValues): void {
     this.selectValues = complexValue
-  }
-
-  get firstSelectValue(): string {
-    return this.selectValues.first
-  }
-
-  get secondSelectValue(): string {
-    return this.selectValues.second
-  }
-
-  get thirdSelectValue(): string {
-    return this.selectValues.third
   }
 
   public setResetValue(resetValue: string) {
@@ -65,11 +51,7 @@ class ModalCustomInheritanceModeStore {
     return this.resetValue
   }
 
-  public sendRequest(
-    type: string,
-    value: string,
-    complexScenario?: ISelectValues[],
-  ): void {
+  public sendRequest({ type, value, complexScenario }: ISendRequest): void {
     let selectedData: any[] = []
 
     if (type && value) {
@@ -113,92 +95,58 @@ class ModalCustomInheritanceModeStore {
     if (group === problemGroups[0]) {
       this.setSingleSelectValue('first', value)
 
-      this.sendRequest('first', value)
+      this.sendRequest({ type: 'first', value })
     }
 
     if (group === problemGroups[1]) {
       this.setSingleSelectValue('second', value)
 
-      this.sendRequest('second', value)
+      this.sendRequest({ type: 'second', value })
     }
 
     if (group === problemGroups[2]) {
       this.setSingleSelectValue('third', value)
 
-      this.sendRequest('third', value)
+      this.sendRequest({ type: 'third', value })
     }
 
     this.setResetValue('')
   }
 
-  public setComplexScenario(name: string): void {
-    const problemGroups: string[] = modalEditStore.problemGroups
-
+  public prepareAndSetComplexScenario(name: string): void {
     if (name === InheritanceModeEnum.HomozygousRecessive_XLinked) {
-      this.setComplexSelectValues({
-        first: '2',
-        second: '0-1',
-        third: '0-1',
-      })
-
-      const complexScenario: any[] = [
-        ['2', problemGroups[0]],
-        ['0-1', problemGroups[1]],
-        ['0-1', problemGroups[2]],
-      ]
-
-      this.sendRequest('', '', complexScenario)
+      this.setComplexScenario({ first: '2', second: '0-1', third: '0-1' })
     }
 
     if (name === InheritanceModeEnum.AutosomalDominant) {
-      this.setComplexSelectValues({
-        first: '1-2',
-        second: '0',
-        third: '0',
-      })
-
-      const complexScenario: any[] = [
-        ['1-2', problemGroups[0]],
-        ['0', problemGroups[1]],
-        ['0', problemGroups[2]],
-      ]
-
-      this.sendRequest('', '', complexScenario)
+      this.setComplexScenario({ first: '1-2', second: '0', third: '0' })
     }
 
     if (name === InheritanceModeEnum.Compensational) {
-      this.setComplexSelectValues({
-        first: '0',
-        second: '1-2',
-        third: '1-2',
-      })
-
-      const complexScenario: any[] = [
-        ['0', problemGroups[0]],
-        ['1-2', problemGroups[1]],
-        ['1-2', problemGroups[2]],
-      ]
-
-      this.sendRequest('', '', complexScenario)
+      this.setComplexScenario({ first: '0', second: '1-2', third: '1-2' })
     }
 
     if (name === 'empty') {
-      this.setComplexSelectValues({
-        first: '--',
-        second: '--',
-        third: '--',
-      })
-
-      const complexScenario: any[] = [
-        ['--', problemGroups[0]],
-        ['--', problemGroups[1]],
-        ['--', problemGroups[2]],
-      ]
-
-      this.sendRequest('', '', complexScenario)
+      this.setComplexScenario({ first: '--', second: '--', third: '--' })
     }
 
     this.setResetValue(name)
+  }
+
+  public setComplexScenario({ first, second, third }: ISelectValues): void {
+    this.setComplexSelectValues({
+      first,
+      second,
+      third,
+    })
+
+    const complexScenario: [string, string][] = [
+      [first, modalEditStore.problemGroups[0]],
+      [second, modalEditStore.problemGroups[1]],
+      [third, modalEditStore.problemGroups[2]],
+    ]
+
+    this.sendRequest({ complexScenario })
   }
 
   public closeModal(): void {
@@ -259,6 +207,31 @@ class ModalCustomInheritanceModeStore {
     })
 
     return value
+  }
+
+  public checkExistedSelectedFilters(): void {
+    const { currentGroup, groupName, problemGroups } = modalEditStore
+
+    const scenarioString = getFuncParams(
+      groupName,
+      currentGroup[currentGroup.length - 1],
+    )
+      .slice(10)
+      .replace(/\s+/g, '')
+
+    this.setResetValue(
+      getResetType(currentGroup[currentGroup.length - 1].scenario),
+    )
+
+    this.setComplexSelectValues({
+      first: this.getSelectedValue(problemGroups[0]),
+      second: this.getSelectedValue(problemGroups[1]),
+      third: this.getSelectedValue(problemGroups[2]),
+    })
+
+    const params = `{"scenario":${scenarioString}}`
+
+    dtreeStore.fetchStatFuncAsync(groupName, params)
   }
 }
 

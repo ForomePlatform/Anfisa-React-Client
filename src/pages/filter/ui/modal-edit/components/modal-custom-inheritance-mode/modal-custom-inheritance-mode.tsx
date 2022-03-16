@@ -1,11 +1,9 @@
-import { ReactElement, useEffect, useRef } from 'react'
+import { ReactElement, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { ActionType } from '@declarations'
 import dtreeStore from '@store/dtree'
 import { SelectModalButtons } from '@pages/filter/ui/query-builder/ui/select-modal-buttons'
-import { getFuncParams } from '@utils/getFuncParams'
-import { getResetType } from '@utils/getResetType'
 import { CustomInheritanceModeContent } from '../../../query-builder/ui/custom-inheritance-mode-content'
 import { HeaderModal } from '../../../query-builder/ui/header-modal'
 import { ModalBase } from '../../../query-builder/ui/modal-base'
@@ -14,56 +12,32 @@ import { EditModalButtons } from '../edit-modal-buttons'
 import modalCustomInheritanceModeStore from './modal-custom-inheritance-mode.store'
 
 export const ModalCustomInheritanceMode = observer((): ReactElement => {
-  const ref = useRef(null)
+  const { currentGroup, variants, problemGroups, currentStepGroups } =
+    modalEditStore
 
-  const { currentGroup, groupName, variants, problemGroups } = modalEditStore
-
-  const { resetValue, firstSelectValue, secondSelectValue, thirdSelectValue } =
-    modalCustomInheritanceModeStore
+  const selectValues = modalCustomInheritanceModeStore.selectValues
 
   useEffect(() => {
     if (currentGroup) {
-      const scenarioString = getFuncParams(
-        groupName,
-        currentGroup[currentGroup.length - 1],
-      )
-        .slice(10)
-        .replace(/\s+/g, '')
-
-      modalCustomInheritanceModeStore.setResetValue(
-        getResetType(currentGroup[currentGroup.length - 1].scenario),
-      )
-
-      modalCustomInheritanceModeStore.setComplexSelectValues({
-        first: modalCustomInheritanceModeStore.getSelectedValue(
-          problemGroups[0],
-        ),
-        second: modalCustomInheritanceModeStore.getSelectedValue(
-          problemGroups[1],
-        ),
-        third: modalCustomInheritanceModeStore.getSelectedValue(
-          problemGroups[2],
-        ),
-      })
-
-      const params = `{"scenario":${scenarioString}}`
-
-      dtreeStore.fetchStatFuncAsync(groupName, params)
+      modalCustomInheritanceModeStore.checkExistedSelectedFilters()
     }
-
     return () => dtreeStore.resetStatFuncData()
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const selectStates = [firstSelectValue, secondSelectValue, thirdSelectValue]
+  const selectStates = [
+    selectValues.first,
+    selectValues.second,
+    selectValues.third,
+  ]
 
   const handleSetSingleScenario = (group: string, value: string) => {
     modalCustomInheritanceModeStore.setSingleScenario(group, value)
   }
 
   const handleSetComplexScenario = (name: string) => {
-    modalCustomInheritanceModeStore.setComplexScenario(name)
+    modalCustomInheritanceModeStore.prepareAndSetComplexScenario(name)
   }
 
   const handleAddAttribute = (action: ActionType) => {
@@ -71,7 +45,7 @@ export const ModalCustomInheritanceMode = observer((): ReactElement => {
   }
 
   return (
-    <ModalBase refer={ref} minHeight={250}>
+    <ModalBase minHeight={250}>
       <HeaderModal
         groupName={dtreeStore.groupNameToChange}
         handleClose={() => modalCustomInheritanceModeStore.closeModal()}
@@ -82,7 +56,7 @@ export const ModalCustomInheritanceMode = observer((): ReactElement => {
         handleSetScenario={handleSetSingleScenario}
         selectStates={selectStates}
         handleReset={handleSetComplexScenario}
-        resetValue={resetValue}
+        resetValue={modalCustomInheritanceModeStore.resetValue}
       />
 
       {currentGroup ? (
@@ -104,7 +78,7 @@ export const ModalCustomInheritanceMode = observer((): ReactElement => {
           }
           handleAddAttribute={handleAddAttribute}
           disabled={!variants}
-          currentGroup={currentGroup}
+          currentGroup={currentStepGroups}
         />
       )}
     </ModalBase>
