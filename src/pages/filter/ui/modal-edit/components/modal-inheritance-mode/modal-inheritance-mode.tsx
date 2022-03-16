@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useRef, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { ActionType } from '@declarations'
@@ -12,15 +12,12 @@ import { EditModalButtons } from '../edit-modal-buttons'
 import modalInheritanceModeStore from './modal-inheritance-mode.store'
 
 export const ModalInheritanceMode = observer((): ReactElement => {
-  const ref = useRef(null)
-
   const {
-    currentStepIndex,
-    currentGroupIndex,
     currentGroup,
     groupName,
     selectedGroupsAmount,
     problemGroups,
+    currentStepGroups,
   } = modalEditStore
 
   const [selectedProblemGroups, setSelectedProblemGroups] = useState<string[]>(
@@ -31,15 +28,13 @@ export const ModalInheritanceMode = observer((): ReactElement => {
 
   useEffect(() => {
     if (currentGroup) {
-      dtreeStore.stepData[currentStepIndex].groups[currentGroupIndex]
-        .find((elem: any) => Array.isArray(elem))
-        .map((item: string) => dtreeStore.addSelectedFilter(item))
+      modalInheritanceModeStore.checkExistedSelectedFilters()
     }
 
     return () => {
       dtreeStore.resetSelectedFilters()
     }
-  }, [currentGroup, currentGroupIndex, currentStepIndex])
+  }, [currentGroup])
 
   useEffect(() => {
     const params = `{"problem_group":["${selectedProblemGroups
@@ -47,11 +42,7 @@ export const ModalInheritanceMode = observer((): ReactElement => {
       .split(',')
       .join('","')}"]}`
 
-    const initAsync = async () => {
-      await dtreeStore.fetchStatFuncAsync(groupName, params)
-    }
-
-    initAsync()
+    modalInheritanceModeStore.fetchStatFunc(groupName, params)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -70,7 +61,7 @@ export const ModalInheritanceMode = observer((): ReactElement => {
   }
 
   return (
-    <ModalBase refer={ref} minHeight={340}>
+    <ModalBase minHeight={340}>
       <HeaderModal
         groupName={dtreeStore.groupNameToChange}
         handleClose={() => modalInheritanceModeStore.closeModal()}
@@ -106,7 +97,7 @@ export const ModalInheritanceMode = observer((): ReactElement => {
           handleModalJoin={() => dtreeStore.openModalJoin()}
           handleAddAttribute={addAttribute}
           disabled={dtreeStore.selectedFilters.length === 0}
-          currentGroup={currentGroup}
+          currentGroup={currentStepGroups}
         />
       )}
     </ModalBase>

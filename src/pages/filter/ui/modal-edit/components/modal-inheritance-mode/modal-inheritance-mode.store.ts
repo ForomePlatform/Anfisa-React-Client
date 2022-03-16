@@ -3,6 +3,7 @@ import { makeAutoObservable } from 'mobx'
 
 import { ActionType } from '@declarations'
 import dtreeStore from '@store/dtree'
+import modalEditStore from '@pages/filter/ui/modal-edit/modal-edit.store'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { changeFunctionalStep } from '@utils/changeAttribute/changeFunctionalStep'
 
@@ -97,6 +98,18 @@ class ModalInheritanceModeStore {
 
   public closeModal(): void {
     dtreeStore.closeModalInheritanceMode()
+  }
+
+  public fetchStatFunc(groupName: string, params: string): void {
+    dtreeStore.fetchStatFuncAsync(groupName, params)
+  }
+
+  public checkExistedSelectedFilters() {
+    dtreeStore.stepData[modalEditStore.currentStepIndex].groups[
+      modalEditStore.currentGroupIndex
+    ]
+      .find((elem: any) => Array.isArray(elem))
+      .map((item: string) => dtreeStore.addSelectedFilter(item))
   }
 }
 
