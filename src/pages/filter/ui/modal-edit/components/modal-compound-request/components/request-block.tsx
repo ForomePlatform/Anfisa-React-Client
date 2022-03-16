@@ -1,4 +1,4 @@
-import { ReactElement } from 'react'
+import { ChangeEvent, ReactElement } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
@@ -22,15 +22,14 @@ export const RequestBlock = observer(
           'flex justify-between w-full shadow-dark py-2 my-2 px-2 cursor-pointer step-content-area',
           index === activeRequestIndex ? 'bg-blue-medium' : 'bg-white',
         )}
-        key={Math.random()}
-        onClick={(e: any) =>
+        onClick={(e: React.MouseEvent) =>
           modalCompoundRequestStore.setActiveRequest(index, e)
         }
       >
         <div className="flex cursor-pointer step-content-area">
           <InputNumber
             value={item[0]}
-            onChange={(e: any) =>
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
               modalCompoundRequestStore.changeRequestConditionNumber(
                 index,
                 e.target.value,
@@ -44,7 +43,7 @@ export const RequestBlock = observer(
           {problemGroups.map((group: string, currNo: number) => (
             <div
               className="step-content-area"
-              onClick={(e: any) =>
+              onClick={(e: React.MouseEvent) =>
                 modalCompoundRequestStore.setActiveRequest(index, e)
               }
               key={group}
@@ -52,7 +51,7 @@ export const RequestBlock = observer(
               <span className="cursor-pointer step-content-area">{group}</span>
 
               <Select
-                onChange={(e: any) =>
+                onChange={(e: ChangeEvent<HTMLSelectElement>) =>
                   modalCompoundRequestStore.setSingleScenario(
                     index,
                     currNo,

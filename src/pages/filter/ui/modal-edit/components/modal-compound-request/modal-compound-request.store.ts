@@ -112,9 +112,9 @@ class ModalCompoundRequestStore {
 
   public changeRequestConditionNumber(
     requestBlockIndex: number,
-    value: number,
+    value: string,
   ): void {
-    if (value < 0) return
+    if (+value < 0) return
 
     const newRequestCondition: any[] = cloneDeep(this.requestCondition)
 
@@ -256,8 +256,11 @@ class ModalCompoundRequestStore {
     params.request = this.requestCondition
 
     addAttributeToStep(action, 'func', null, params)
+
     dtreeStore.resetSelectedFilters()
+
     dtreeStore.closeModalCompoundRequest()
+
     this.resetData()
   }
 
@@ -279,7 +282,9 @@ class ModalCompoundRequestStore {
     params.request = this.requestCondition
 
     changeFunctionalStep(params)
+
     dtreeStore.closeModalCompoundRequest()
+
     this.resetData()
   }
 
@@ -294,6 +299,7 @@ class ModalCompoundRequestStore {
 
   public closeModal(): void {
     dtreeStore.closeModalCompoundRequest()
+
     this.resetData()
   }
 
@@ -305,6 +311,38 @@ class ModalCompoundRequestStore {
 
   public openModalJoin(): void {
     dtreeStore.openModalJoin()
+  }
+
+  public checkExistedSelectedFilters() {
+    const approx =
+      this.approxCondition === 'transcript' ? null : `"${this.approxCondition}"`
+
+    const { currentGroup, groupName } = modalEditStore
+
+    const requestString = getFuncParams(
+      groupName,
+      currentGroup[currentGroup.length - 1],
+    )
+      .slice(10)
+      .replace(/\s+/g, '')
+
+    this.setResetValue(
+      getResetType(
+        currentGroup[currentGroup.length - 1].request[
+          currentGroup[currentGroup.length - 1].request.length - 1
+        ][1],
+      ),
+    )
+
+    this.setRequestCondition(currentGroup[currentGroup.length - 1].request)
+
+    const params = `{"approx":${approx},"state":${
+      this.stateCondition === '-current-' || !this.stateCondition
+        ? null
+        : `"${this.stateCondition}"`
+    },"request":${requestString}}`
+
+    dtreeStore.fetchStatFuncAsync(groupName, params)
   }
 }
 

@@ -59,6 +59,10 @@ class ModalEditStore {
     ].length
   }
 
+  public get currentStepGroups(): string[] {
+    return dtreeStore.currentStepGroups
+  }
+
   public get problemGroups(): string[] {
     let problemGroups: string[] = []
 
