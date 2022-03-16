@@ -1,5 +1,5 @@
 import { ChangeEvent } from 'react'
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, toJS } from 'mobx'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
@@ -143,9 +143,14 @@ class InheritanceModeStore {
       },
     ]
 
-    const variant: TVariant = [`${this.variantsValues}`, 0]
+    const variants: TVariant[] = this.variantsValues.map(variantValue => {
+      return [`${variantValue}`, 0]
+    })
 
-    functionPanelStore.sumbitConditions(conditions, variant)
+    functionPanelStore.sumbitConditions(conditions, variants, [
+      this.isAllMode,
+      this.isNotMode,
+    ])
 
     functionPanelStore.fetchStatFunc(
       FuncStepTypesEnum.InheritanceMode,

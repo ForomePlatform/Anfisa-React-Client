@@ -6,6 +6,7 @@ import { TVariant } from 'service-providers/common/common.interface'
 
 import { IStatFuncData, StatListType } from '@declarations'
 import { ActionFilterEnum } from '@core/enum/action-filter.enum'
+import { ModeTypes } from '@core/enum/mode-types-enum'
 import { getApiUrl } from '@core/get-api-url'
 import { GlbPagesNames } from '@glb/glb-names'
 import { FilterControlOptions } from '@pages/filter/ui/filter-control/filter-control.const'
@@ -20,6 +21,8 @@ interface AddSelectedFiltersI {
   group: string
   groupItemName: string
   variant?: TVariant
+  variants?: any[]
+  modeTypes?: boolean[]
 }
 
 export class FilterStore {
@@ -54,7 +57,13 @@ export class FilterStore {
     this.selectedGroupItem = item
   }
 
-  addSelectedFilters({ group, groupItemName, variant }: AddSelectedFiltersI) {
+  addSelectedFilters({
+    group,
+    groupItemName,
+    variant,
+    variants,
+    modeTypes,
+  }: AddSelectedFiltersI) {
     if (!this.selectedFilters[group]) {
       this.selectedFilters[group] = {}
     }
@@ -63,8 +72,28 @@ export class FilterStore {
       this.selectedFilters[group][groupItemName] = {}
     }
 
+    if (variants) {
+      variants.forEach(item => {
+        this.selectedFilters[group][groupItemName][item[0]] = item[1]
+      })
+    }
+
     if (variant) {
       this.selectedFilters[group][groupItemName][variant[0]] = variant[1]
+    }
+    console.log(modeTypes)
+
+    // temporarilly, remove this agr begin required
+    if (modeTypes) {
+      if (modeTypes[0]) {
+        this.selectedFilters[group][groupItemName][ModeTypes.All] = 1
+      }
+
+      if (modeTypes[1]) {
+        this.selectedFilters[group][groupItemName][ModeTypes.Not] = 1
+      }
+
+      console.log(toJS(this.selectedFilters))
     }
   }
 

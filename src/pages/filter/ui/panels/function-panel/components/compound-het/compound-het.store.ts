@@ -92,9 +92,12 @@ class CompoundHetStore {
       { approx: this.cachedValues?.conditions.approx || null, state: null },
     ]
 
-    const variant: TVariant = ['Proband', 0]
+    const variants: TVariant[] = [['Proband', 0]]
 
-    functionPanelStore.sumbitConditions(conditions, variant)
+    functionPanelStore.sumbitConditions(conditions, variants, [
+      this.isAllMode,
+      this.isNotMode,
+    ])
   }
 
   public handleResetFields(): void {

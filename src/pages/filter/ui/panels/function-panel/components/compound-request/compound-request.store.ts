@@ -220,12 +220,14 @@ class CompoundRequestStore {
       },
     ]
 
-    const variant: TVariant = [
-      `"request":${getPureRequestString(requestString)}}`,
-      0,
+    const variants: TVariant[] = [
+      [`"request":${getPureRequestString(requestString)}}`, 0],
     ]
 
-    functionPanelStore.sumbitConditions(conditions, variant)
+    functionPanelStore.sumbitConditions(conditions, variants, [
+      this.isAllMode,
+      this.isNotMode,
+    ])
   }
 }
 

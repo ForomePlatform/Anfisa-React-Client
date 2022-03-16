@@ -52,9 +52,12 @@ class GeneRegionStore {
       { locus: this.locusValue },
     ]
 
-    const variant: TVariant = [`{"locus":"${this.locusValue}"}`, 0]
+    const variants: TVariant[] = [[`{"locus":"${this.locusValue}"}`, 0]]
 
-    functionPanelStore.sumbitConditions(conditions, variant)
+    functionPanelStore.sumbitConditions(conditions, variants, [
+      this.isAllMode,
+      this.isNotMode,
+    ])
   }
 }
 
