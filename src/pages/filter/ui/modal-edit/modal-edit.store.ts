@@ -26,7 +26,7 @@ class ModalEditStore {
   }
 
   public get currentGroup(): any[] {
-    return dtreeStore.stepData[this.currentStepIndex].groups[
+    return dtreeStore.stepData[activeStepStore.activeStepIndex].groups[
       this.currentGroupIndex
     ]
   }
