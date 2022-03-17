@@ -1,2 +1,3 @@
 export * from './decision-trees.interface'
-export * from './dtree-stat'
+export { default as dtreeProvider } from './decision-trees.provider'
+export * from './decision-trees.types'

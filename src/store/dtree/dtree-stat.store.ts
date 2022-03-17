@@ -4,7 +4,7 @@ import {
   TItemsCount,
   TPropertyStatus,
 } from '@service-providers/common/common.interface'
-import { fetchDtreeStat, TDtreeStat } from '@service-providers/decision-trees'
+import { dtreeProvider, TDtreeStat } from '@service-providers/decision-trees'
 import { getFilteredAttrsList } from '@utils/getFilteredAttrsList'
 
 type TSetSourceParams = {
@@ -113,34 +113,36 @@ export class DtreeStatStore {
       this.data = undefined
     })
 
-    fetchDtreeStat(
-      {
-        ds: this.datasetName,
-        no: this.stepIndex,
-        code: this.code,
-      },
-      {
-        onPartialResponse: data =>
+    dtreeProvider
+      .getFullDtreeStat(
+        {
+          ds: this.datasetName,
+          no: this.stepIndex,
+          code: this.code,
+        },
+        {
+          onPartialResponse: data =>
+            runInAction(() => {
+              this.data = data
+            }),
+          abortSignal: this.abortController.signal,
+        },
+      )
+      .then(
+        data => {
           runInAction(() => {
             this.data = data
-          }),
-        abortSignal: this.abortController.signal,
-      },
-    ).then(
-      data => {
-        runInAction(() => {
-          this.data = data
-        })
-        this.cache.set(this.stepIndex, data)
-      },
-      error => {
-        if (!(error instanceof DOMException) || error.name !== 'AbortError') {
-          this.state = {
-            ...this.state,
-            error,
+          })
+          this.cache.set(this.stepIndex, data)
+        },
+        error => {
+          if (!(error instanceof DOMException) || error.name !== 'AbortError') {
+            this.state = {
+              ...this.state,
+              error,
+            }
           }
-        }
-      },
-    )
+        },
+      )
   }
 }
