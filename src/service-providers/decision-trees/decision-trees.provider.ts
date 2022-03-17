@@ -2,24 +2,15 @@ import { AxiosRequestConfig } from 'axios'
 
 import { ServiceProviderBase } from '../common'
 import { filteringProvider } from '../filtering-regime'
-import { adoptDtreeStatResponse } from './decision-trees.adapters'
+import { adaptDtreeStatResponse } from './decision-trees.adapters'
 import {
   IDtreeStatArguments,
   IDtreeStatResponse,
+  TDtreeStat,
+  TGetFullDtreeStatOptions,
+  TGetFullDtreeStatParams,
 } from './decision-trees.interface'
-import { TDtreeStat } from './decision-trees.types'
 import { getIncompleteProps } from './decision-trees.utils'
-
-type TGetFullDtreeStatParams = {
-  ds: string
-  no: string
-  code: string
-}
-
-type TGetFullDtreeStatOptions = {
-  abortSignal?: AbortSignal
-  onPartialResponse?: (response: TDtreeStat) => void
-}
 
 class DecisionTreesProvider extends ServiceProviderBase {
   constructor() {
@@ -62,7 +53,7 @@ class DecisionTreesProvider extends ServiceProviderBase {
 
     const requestId = statResponse['rq-id']
 
-    let result = adoptDtreeStatResponse(statResponse)
+    let result = adaptDtreeStatResponse(statResponse)
     let incompleteProps = getIncompleteProps(result.list)
 
     while (incompleteProps.length > 0) {

@@ -1,7 +1,6 @@
-import { IDtreeStatResponse } from './decision-trees.interface'
-import { TDtreeStat } from './decision-trees.types'
+import { IDtreeStatResponse, TDtreeStat } from './decision-trees.interface'
 
-export const adoptDtreeStatResponse = (
+export const adaptDtreeStatResponse = (
   response: IDtreeStatResponse,
 ): TDtreeStat => {
   return {
