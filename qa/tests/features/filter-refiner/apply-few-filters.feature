@@ -18,7 +18,7 @@ Scenario Outline: Apply a few filters
 	And clicks the <Group> problem group
 	And selects the <Inheritance_Mode> value
 	And clicks the "Add" button to apply the filter
-	Then all filters are applied correcly
+	Then all filters are applied correctly
 	And the number of variants equal to <Variants Number>
 
 Examples:
