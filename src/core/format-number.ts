@@ -1,5 +1,5 @@
-export const formatNumber = (value: unknown): string => {
-  if (typeof value !== 'number') return '...'
+export const intlNumberFormat = new Intl.NumberFormat().format
 
-  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+export const formatNumber = (value: unknown): string => {
+  return typeof value === 'number' ? intlNumberFormat(value) : '...'
 }
