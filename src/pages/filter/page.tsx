@@ -19,7 +19,7 @@ import { FilterControl } from './ui/filter-control/filter-control'
 import { ModalCompoundHet } from './ui/modal-edit/components/modal-compound-het/modal-compound-het'
 import { ModalCompoundRequest } from './ui/modal-edit/components/modal-compound-request/modal-compound-request'
 import { ModalCustomInheritanceMode } from './ui/modal-edit/components/modal-custom-inheritance-mode/modal-custom-inheritance-mode'
-import { ModalEditFilters } from './ui/modal-edit/components/modal-edit-filters'
+import { ModalFilters } from './ui/modal-edit/components/modal-filters/modal-filters'
 import { ModalGeneRegion } from './ui/modal-edit/components/modal-gene-region/modal-gene-region'
 import { ModalEditInheritanceMode } from './ui/modal-edit/components/modal-inheritance-mode/modal-edit-inheritance-mode'
 import { ModalSelectInheritanceMode } from './ui/modal-edit/components/modal-inheritance-mode/modal-select-inheritance-mode'
@@ -27,7 +27,6 @@ import { ModalTextEditor } from './ui/query-builder/modal-text-editor'
 import { QueryBuilder } from './ui/query-builder/query-builder'
 import { ModalSaveDataset } from './ui/query-builder/ui/modal-save-dataset'
 import { ModalSelectAttribute } from './ui/query-builder/ui/modal-select-attribute'
-import { ModalSelectFilters } from './ui/query-builder/ui/modal-select-filters'
 import { getNumberWithCommas } from './ui/query-builder/ui/next-step-route'
 import { TableModal } from './ui/TableModal'
 
@@ -103,8 +102,7 @@ const FilterPage = observer((): ReactElement => {
     <Fragment>
       {dtreeStore.isModalAttributeVisible && <ModalSelectAttribute />}
 
-      {dtreeStore.isModalEditFiltersVisible && <ModalEditFilters />}
-      {dtreeStore.isModalSelectFilterVisible && <ModalSelectFilters />}
+      {dtreeStore.isModalFiltersVisible && <ModalFilters />}
 
       {dtreeStore.isModalNumbersVisible && <ModalNumbers />}
 

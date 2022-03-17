@@ -92,8 +92,7 @@ class DtreeStore {
   stepAmout = 0
 
   isModalAttributeVisible = false
-  isModalSelectFilterVisible = false
-  isModalEditFiltersVisible = false
+  isModalFiltersVisible = false
   isModalJoinVisible = false
   isModalNumbersVisible = false
 
@@ -504,19 +503,6 @@ class DtreeStore {
     this.isModalJoinVisible = false
   }
 
-  // 3.1.1 Modal for enum attr
-
-  openModalSelectFilter(groupName: string, source: string) {
-    this.modalSource = source
-
-    this.isModalSelectFilterVisible = true
-    this.groupNameToChange = groupName
-  }
-
-  closeModalSelectFilter() {
-    this.isModalSelectFilterVisible = false
-  }
-
   // 3.1.2 Modal for numeric attr
 
   openModalNumbers(
@@ -557,18 +543,21 @@ class DtreeStore {
 
   // 3.2.1 Modal for enum attr
 
-  openModalEditFilters(
+  openModalFilters(
     groupName: string,
-    stepIndex: number,
-    groupIndex: number,
+    groupIndex: number | undefined,
+    source: string = '',
   ) {
-    this.isModalEditFiltersVisible = true
+    this.modalSource = source
+
+    this.isModalFiltersVisible = true
+
     this.groupNameToChange = groupName
-    this.groupIndexToChange = groupIndex
+    this.groupIndexToChange = groupIndex ?? -1
   }
 
-  closeModalEditFilters() {
-    this.isModalEditFiltersVisible = false
+  closeModalFilters() {
+    this.isModalFiltersVisible = false
     this.selectedFilters = []
   }
 

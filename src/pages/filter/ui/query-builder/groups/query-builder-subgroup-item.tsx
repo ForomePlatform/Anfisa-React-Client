@@ -50,7 +50,7 @@ export const QueryBuilderSubgroupItem = observer(
       dtreeStore.closeModalAttribute()
 
       if (group.kind === FilterKindEnum.Enum) {
-        dtreeStore.openModalSelectFilter(group.name, source)
+        dtreeStore.openModalFilters(group.name, undefined, source)
       }
 
       if (group.kind === FilterKindEnum.Numeric) {
