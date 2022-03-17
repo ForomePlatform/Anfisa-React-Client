@@ -4,6 +4,7 @@ import { makeAutoObservable, toJS } from 'mobx'
 import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import datasetStore, { DatasetStore } from '@store/dataset'
 import filterStore, { FilterStore } from '@store/filter'
+import { ConditionJoinMode } from '@service-providers/common'
 
 type FilterAttributesStoreParams = {
   datasetStore: DatasetStore
@@ -81,7 +82,7 @@ export class FilterAttributesStore {
     }
 
     this.datasetStore.setConditionsAsync([
-      [FilterKindEnum.Enum, groupName, 'OR', values],
+      [FilterKindEnum.Enum, groupName, ConditionJoinMode.OR, values],
     ])
 
     if (!this.datasetStore.isXL) {

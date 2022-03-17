@@ -11,10 +11,11 @@ import {
 } from 'use-query-params'
 
 import { HistoryLocationState } from '@declarations'
+import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { useDatasetName } from '@core/hooks/use-dataset-name'
 import { useParams } from '@core/hooks/use-params'
 import { t } from '@i18n'
-import datasetStore, { Condition } from '@store/dataset'
+import datasetStore from '@store/dataset'
 import dtreeStore from '@store/dtree'
 import variantStore from '@store/variant'
 import { MainTableDataCy } from '@components/data-testid/main-table.cy'
@@ -26,6 +27,7 @@ import { VariantDrawer } from '@components/variant/drawer'
 import { ErrorPage } from '@pages/error/error'
 import { ModalSaveDataset } from '@pages/filter/ui/query-builder/ui/modal-save-dataset'
 import { getNumberWithCommas } from '@pages/filter/ui/query-builder/ui/next-step-route'
+import { ConditionJoinMode, TEnumCondition } from '@service-providers/common'
 import { ControlPanel } from './ui/control-panel'
 import { ModalNotes } from './ui/modal-notes'
 import { TableVariants } from './ui/table-variants'
@@ -54,12 +56,19 @@ const WSPage = observer((): ReactElement => {
 
   useEffect(() => {
     if (hasConditionsInSearchParamsOnly) {
-      const conditions: Condition[] = (refiner as string[]).map((c: string) => {
-        const item: string[] = c!.split(',')
-        const [name, group, symbol, value] = item
+      const conditions: TEnumCondition[] = (refiner as string[]).map(
+        (c: string) => {
+          const item: string[] = c!.split(',')
+          const [name, group, symbol, value] = item
 
-        return [name, group, symbol, [value]]
-      })
+          return [
+            name as FilterKindEnum.Enum,
+            group,
+            symbol as ConditionJoinMode,
+            [value],
+          ]
+        },
+      )
 
       datasetStore.setConditionsAsync(conditions)
     }
