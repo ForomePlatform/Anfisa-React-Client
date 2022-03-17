@@ -1,7 +1,7 @@
 import axios, { AxiosRequestHeaders } from 'axios'
 
 export class ServiceProviderBase {
-  protected axios = axios.create({
+  private axios = axios.create({
     baseURL:
       process.env.NODE_ENV === 'development'
         ? '/app/'
@@ -17,7 +17,16 @@ export class ServiceProviderBase {
 
       return data
     },
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
   })
+
+  protected get = this.axios.get
+  protected post = this.axios.post
+  protected put = this.axios.put
+  protected patch = this.axios.patch
+  protected delete = this.axios.delete
 
   protected convertToURLParams(data: any) {
     const result = new URLSearchParams()

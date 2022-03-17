@@ -12,12 +12,7 @@ export class FilteringRegimeProvider extends ServiceProviderBase {
     params: IStatunitsArguments,
     options: Partial<AxiosRequestConfig> = {},
   ): Promise<IStatunits> {
-    const response = await this.axios.post<IStatunits>('/statunits', params, {
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      ...options,
-    })
+    const response = await this.post<IStatunits>('/statunits', params, options)
 
     return response.data
   }

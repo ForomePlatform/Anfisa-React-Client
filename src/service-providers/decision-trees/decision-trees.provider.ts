@@ -35,15 +35,10 @@ class DecisionTreesProvider extends ServiceProviderBase {
     params: IDtreeStatArguments,
     options: Partial<AxiosRequestConfig<string>> = {},
   ): Promise<IDtreeStatResponse> {
-    const response = await this.axios.post<IDtreeStatResponse>(
+    const response = await this.post<IDtreeStatResponse>(
       '/dtree_stat',
       params,
-      {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        ...options,
-      },
+      options,
     )
 
     return response.data
