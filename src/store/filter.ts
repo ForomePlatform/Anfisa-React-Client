@@ -61,7 +61,6 @@ export class FilterStore {
     group,
     groupItemName,
     variant,
-    variants,
     modeTypes,
   }: AddSelectedFiltersI) {
     if (!this.selectedFilters[group]) {
@@ -72,16 +71,9 @@ export class FilterStore {
       this.selectedFilters[group][groupItemName] = {}
     }
 
-    if (variants) {
-      variants.forEach(item => {
-        this.selectedFilters[group][groupItemName][item[0]] = item[1]
-      })
-    }
-
     if (variant) {
       this.selectedFilters[group][groupItemName][variant[0]] = variant[1]
     }
-    console.log(modeTypes)
 
     // temporarilly, remove this agr begin required
     if (modeTypes) {
@@ -92,8 +84,6 @@ export class FilterStore {
       if (modeTypes[1]) {
         this.selectedFilters[group][groupItemName][ModeTypes.Not] = 1
       }
-
-      console.log(toJS(this.selectedFilters))
     }
   }
 

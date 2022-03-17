@@ -234,9 +234,9 @@ class CustomInheritanceModeStore {
       JSON.parse(`{"scenario":{${this.stringScenario}}}`),
     ]
 
-    const variants: TVariant[] = [[`"scenario": ${this.stringScenario}`, 0]]
+    const variant: TVariant = [`"scenario": ${this.stringScenario}`, 0]
 
-    functionPanelStore.sumbitConditions(custInhModeConditions, variants, [
+    functionPanelStore.sumbitConditions(custInhModeConditions, variant, [
       this.isAllMode,
       this.isNotMode,
     ])

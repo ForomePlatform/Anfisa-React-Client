@@ -70,25 +70,25 @@ class FunctionPanelStore {
     await datasetStore.setConditionsAsync([conditions], 'func')
   }
 
-  public addSelectedFilters(variants: TVariant[], modeTypes?: boolean[]): void {
+  public addSelectedFilters(variant: TVariant, modeTypes?: boolean[]): void {
     filterStore.addSelectedFilters({
       group: this.filterGroup,
       groupItemName: this.filterName,
-      variants,
+      variant,
       modeTypes,
     })
   }
 
   public sumbitConditions(
     conditions: TFuncCondition,
-    variants: TVariant[],
+    variant: TVariant,
     modeTypes?: boolean[],
   ): void {
     if (datasetStore.activePreset) datasetStore.resetActivePreset()
 
     this.applyConditions(conditions)
 
-    this.addSelectedFilters(variants, modeTypes)
+    this.addSelectedFilters(variant, modeTypes)
 
     if (!datasetStore.isXL) {
       datasetStore.fetchWsListAsync()
