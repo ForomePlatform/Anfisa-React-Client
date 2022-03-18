@@ -20,8 +20,7 @@ export type SelectedFiltersType = Record<
 interface AddSelectedFiltersI {
   group: string
   groupItemName: string
-  variant?: TVariant
-  variants?: any[]
+  variant: TVariant
   modeTypes?: boolean[]
 }
 
