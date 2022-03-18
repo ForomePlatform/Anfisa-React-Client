@@ -22,7 +22,11 @@ import { TableModal } from '@pages/filter/ui/TableModal'
 const RefinerPage = observer((): ReactElement => {
   const isXL = datasetStore.isXL
 
-  const statAmount = toJS(datasetStore.statAmount)
+  const { statAmount } = datasetStore
+
+  const variantCounts = statAmount?.[0] ?? null
+  const dnaVariantsCounts = statAmount?.[1] ?? null
+  const transcriptsCounts = statAmount?.[2] ?? null
 
   useDatasetName()
 
@@ -55,7 +59,7 @@ const RefinerPage = observer((): ReactElement => {
               all: getNumberWithCommas(
                 isXL
                   ? (toJS(dirinfoStore.dsinfo).total as number)
-                  : statAmount[0],
+                  : variantCounts,
               ),
             })}
           </span>
@@ -64,13 +68,13 @@ const RefinerPage = observer((): ReactElement => {
             <React.Fragment>
               <span className="header-variants-info">
                 {t('filter.transcribedVariants', {
-                  all: getNumberWithCommas(statAmount[1]),
+                  all: getNumberWithCommas(dnaVariantsCounts),
                 })}
               </span>
 
               <span className="header-variants-info">
                 {t('filter.transcripts', {
-                  all: getNumberWithCommas(statAmount[2]),
+                  all: getNumberWithCommas(transcriptsCounts),
                 })}
               </span>
             </React.Fragment>

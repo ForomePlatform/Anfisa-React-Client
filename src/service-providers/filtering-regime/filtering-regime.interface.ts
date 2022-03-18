@@ -31,8 +31,8 @@ export interface IDsStatCondSeq {
 
 export interface IDsStat {
   kind: DatasetKinds
-  'total-counts': TItemsCount[]
-  'filtered-counts': TItemsCount[]
+  'total-counts': TItemsCount
+  'filtered-counts': TItemsCount
   'stat-list': TPropertyStatus[]
   'cur-filter'?: null | string
   conditions: TCondition[]

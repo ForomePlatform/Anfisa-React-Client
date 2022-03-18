@@ -1,6 +1,5 @@
 import { Fragment, ReactElement } from 'react'
 import cn from 'classnames'
-import { get } from 'lodash'
 import { observer } from 'mobx-react-lite'
 import Tooltip from 'rc-tooltip'
 import styled from 'styled-components'
@@ -99,11 +98,9 @@ export function getNumberWithCommas(value: FilterCountsType) {
 
 export const NextStepRoute = observer(
   ({ isExpanded, index, isIncluded }: IProps): ReactElement => {
-    const [allVariants, transcribedVariants] = get(
-      datasetStore,
-      'statAmount',
-      [],
-    )
+    const { statAmount } = datasetStore
+    const variantCounts = statAmount?.[0] ?? null
+    const dnaVariantsCounts = statAmount?.[1] ?? null
 
     const startFilterCounts = dtreeStore.getStepData[index].startFilterCounts
     const currentStep = dtreeStore.getStepData[index]
@@ -112,13 +109,13 @@ export const NextStepRoute = observer(
       ? getNumberWithCommas(startFilterCounts)
       : startFilterCounts
 
-    const changedAllVariants = allVariants
-      ? getNumberWithCommas(allVariants)
-      : allVariants
+    const changedAllVariants = variantCounts
+      ? getNumberWithCommas(variantCounts)
+      : variantCounts
 
     const alternativeCounts = changedStartCounts || changedAllVariants
 
-    const firstStepValue = transcribedVariants
+    const firstStepValue = dnaVariantsCounts
       ? changedStartCounts
       : alternativeCounts
 

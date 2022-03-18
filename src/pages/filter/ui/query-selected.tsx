@@ -1,6 +1,5 @@
 import { ReactElement } from 'react'
 import { useHistory } from 'react-router'
-import get from 'lodash/get'
 import { observer } from 'mobx-react-lite'
 
 import { useParams } from '@core/hooks/use-params'
@@ -21,15 +20,15 @@ export const QuerySelected = observer((): ReactElement => {
 
   const variants: any = dirinfoStore.dsinfo.total || 0
 
-  const [allVariants, transcribedVariants, allTranscripts] = get(
-    datasetStore,
-    'statAmount',
-    [],
-  )
+  const { statAmount } = datasetStore
+
+  const variantCounts = statAmount?.[0] ?? null
+  const dnaVariantsCounts = statAmount?.[1] ?? null
+  const transcriptsCounts = statAmount?.[2] ?? null
 
   const selectedVariants =
     datasetStore.conditions.length === 0
-      ? allVariants
+      ? variantCounts
       : datasetStore.filteredNo.length
 
   const handleClick = () => {
@@ -43,7 +42,7 @@ export const QuerySelected = observer((): ReactElement => {
       })
     }
 
-    allVariants > 2600
+    variantCounts && variantCounts > 2600
       ? showToast(t('filter.tooMuchVariants'), 'error')
       : history.push(`${Routes.WS}?ds=${params.get('ds')}${conditionsUrl}`, {
           prevPage: 'refiner',
@@ -65,22 +64,22 @@ export const QuerySelected = observer((): ReactElement => {
 
           <span className="text-12 leading-14px text-white mt-2">
             {t('filter.variants', {
-              all: getNumberWithCommas(allVariants),
+              all: getNumberWithCommas(variantCounts),
             })}
           </span>
 
-          {transcribedVariants > 0 && (
+          {dnaVariantsCounts && dnaVariantsCounts > 0 && (
             <span className="text-12 leading-14px text-white border-l-2 border-grey-blue mt-2 ml-2 pl-2">
-              {t('filter.transcribedVariants', {
-                all: getNumberWithCommas(transcribedVariants),
+              {t('filter.dnaVariantsCounts', {
+                all: getNumberWithCommas(dnaVariantsCounts),
               })}
             </span>
           )}
 
-          {allTranscripts > 0 && (
+          {transcriptsCounts && transcriptsCounts > 0 && (
             <span className="text-12 leading-14px text-white border-l-2 border-grey-blue mt-2 ml-2 pl-2">
               {t('filter.transcripts', {
-                all: getNumberWithCommas(allTranscripts),
+                all: getNumberWithCommas(transcriptsCounts),
               })}
             </span>
           )}

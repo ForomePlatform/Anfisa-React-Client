@@ -1,7 +1,12 @@
 import { AxiosRequestConfig } from 'axios'
 
 import { ServiceProviderBase } from '../common'
-import { IStatunits, IStatunitsArguments } from './filtering-regime.interface'
+import {
+  IDsStat,
+  IDsStatArguments,
+  IStatunits,
+  IStatunitsArguments,
+} from './filtering-regime.interface'
 
 export class FilteringRegimeProvider extends ServiceProviderBase {
   constructor() {
@@ -17,7 +22,14 @@ export class FilteringRegimeProvider extends ServiceProviderBase {
     return response.data
   }
 
-  // TODO: ds_stat
+  public async getDsStat(
+    params: IDsStatArguments,
+    options: Partial<AxiosRequestConfig> = {},
+  ): Promise<IDsStat> {
+    const response = await this.post<IDsStat>('/ds_stat', params, options)
+    return response.data
+  }
+
   // TODO: statfunc
 }
 

@@ -20,7 +20,10 @@ import {
   IRecordDescriptor,
   TCondition,
   TFuncCondition,
+  TItemsCount,
 } from '@service-providers/common/common.interface'
+import { IDsStatArguments } from '@service-providers/filtering-regime'
+import filteringRegimeProvider from '@service-providers/filtering-regime/filtering-regime.provider'
 import { addToActionHistory } from '@utils/addToActionHistory'
 import { fetchStatunitsAsync } from '@utils/fetchStatunitsAsync'
 import { isConditionArgsTypeOf } from '@utils/function-panel/isConditionArgsTypeOf'
@@ -53,7 +56,7 @@ export class DatasetStore {
   conditions: TCondition[] = []
   startPresetConditions: TCondition[] = []
   zone: any[] = []
-  statAmount: number[] = []
+  statAmount: TItemsCount | null = null
   memorizedConditions:
     | { conditions: TCondition[]; activePreset: string; zone: any[] }
     | undefined = undefined
@@ -159,7 +162,10 @@ export class DatasetStore {
     this.zone = []
   }
 
-  async setConditionsAsync(conditions: TCondition[], conditionsType?: string) {
+  async setConditionsAsync(
+    conditions: TCondition[],
+    conditionsType?: string,
+  ): Promise<void> {
     if (!conditions[0]) {
       this.conditions = []
       await this.fetchDsStatAsync()
@@ -176,8 +182,6 @@ export class DatasetStore {
 
       await this.fetchDsStatAsync()
     }
-
-    return Array.from({ length: this.statAmount[0] })
   }
 
   async removeFunctionConditionAsync(functionName: string) {
@@ -252,7 +256,7 @@ export class DatasetStore {
     this.dsStat = {}
     this.startDsStat = {}
     this.variantsAmount = 0
-    this.statAmount = []
+    this.statAmount = null
     this.prevPreset = ''
     this.wsRecords = []
     this.tabReport = []
@@ -288,38 +292,34 @@ export class DatasetStore {
   ): Promise<DsStatType> {
     this.isLoadingDsStat = true
 
-    const localBody = new URLSearchParams({
+    const localBody: IDsStatArguments = {
       ds: this.datasetName,
-      tm: '0',
-    })
-
-    if (!this.isFilterDisabled) {
-      this.conditions.length > 0 &&
-        localBody.append('conditions', JSON.stringify(this.conditions))
+      tm: 0,
     }
 
-    this.activePreset &&
-      this.conditions.length === 0 &&
-      localBody.append('filter', this.activePreset)
-
-    if (shouldSaveInHistory) {
-      addToActionHistory(localBody, true)
+    if (!this.isFilterDisabled && this.conditions.length > 0) {
+      localBody.conditions = this.conditions
     }
 
-    const body = shouldSaveInHistory ? localBody : bodyFromHistory
+    if (this.activePreset && this.conditions.length === 0) {
+      localBody.filter = this.activePreset
+    }
 
-    const response = await fetch(getApiUrl('ds_stat'), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body,
-    })
+    // if (shouldSaveInHistory) {
+    //   addToActionHistory(localBody, true)
+    // }
 
-    const result = await response.json()
+    // const body = shouldSaveInHistory ? localBody : bodyFromHistory
+    const body = localBody
+
+    const result = await filteringRegimeProvider.getDsStat(body)
+    console.log('result', result)
 
     dtreeStore.setStatRequestId(result['rq-id'])
+
+    // TODO: look here
     result['stat-list'] = getFilteredAttrsList(result['stat-list'])
+    //
 
     const conditionFromHistory = bodyFromHistory?.get('conditions')
 
@@ -339,7 +339,7 @@ export class DatasetStore {
       }
 
       if (this.isXL) {
-        this.statAmount = get(result, 'filtered-counts', [])
+        this.statAmount = result['filtered-counts']
       }
 
       this.variantsAmount = result['total-counts']['0']

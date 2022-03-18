@@ -53,6 +53,12 @@ const FilterPage = observer((): ReactElement => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dsName, history])
 
+  const { statAmount } = datasetStore
+
+  const variantCounts = statAmount?.[0] ?? null
+  const dnaVariantsCounts = statAmount?.[1] ?? null
+  const transcriptsCounts = statAmount?.[2] ?? null
+
   const getFiltersValue = (type: string) => {
     if (type === 'all') {
       if (isXL) return toJS(dirinfoStore.dsinfo.total)
@@ -62,7 +68,7 @@ const FilterPage = observer((): ReactElement => {
       }
 
       if (filterStore.method === GlbPagesNames.Refiner) {
-        return getNumberWithCommas(toJS(datasetStore.statAmount[0]))
+        return getNumberWithCommas(variantCounts)
       }
     }
 
@@ -72,7 +78,7 @@ const FilterPage = observer((): ReactElement => {
       }
 
       if (filterStore.method === GlbPagesNames.Refiner) {
-        return getNumberWithCommas(toJS(datasetStore.statAmount[1]))
+        return getNumberWithCommas(dnaVariantsCounts)
       }
     }
 
@@ -82,7 +88,7 @@ const FilterPage = observer((): ReactElement => {
       }
 
       if (filterStore.method === GlbPagesNames.Refiner) {
-        return getNumberWithCommas(toJS(datasetStore.statAmount[2]))
+        return getNumberWithCommas(toJS(transcriptsCounts))
       }
     }
   }

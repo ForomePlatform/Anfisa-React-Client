@@ -1,7 +1,6 @@
 import { Fragment, ReactElement, useEffect } from 'react'
 import { withErrorBoundary } from 'react-error-boundary'
 import { useHistory } from 'react-router-dom'
-import get from 'lodash/get'
 import { observer } from 'mobx-react-lite'
 import {
   ArrayParam,
@@ -80,11 +79,11 @@ const WSPage = observer((): ReactElement => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const [allVariants, transcribedVariants, allTranscripts] = get(
-    datasetStore,
-    'statAmount',
-    [],
-  )
+  const { statAmount } = datasetStore
+
+  const variantCounts = statAmount?.[0] ?? null
+  const dnaVariantsCounts = statAmount?.[1] ?? null
+  const transcriptsCounts = statAmount?.[2] ?? null
 
   return (
     <Fragment>
@@ -100,19 +99,19 @@ const WSPage = observer((): ReactElement => {
               data-testid={MainTableDataCy.numVariants}
             >
               {t('filter.variants', {
-                all: getNumberWithCommas(allVariants),
+                all: getNumberWithCommas(variantCounts),
               })}
             </span>
 
             <span className="text-12 leading-14px text-white border-l-2 border-blue-lighter mt-2 ml-2 pl-2 font-bold">
-              {t('filter.transcribedVariants', {
-                all: getNumberWithCommas(transcribedVariants),
+              {t('filter.dnaVariantsCounts', {
+                all: getNumberWithCommas(dnaVariantsCounts),
               })}
             </span>
 
             <span className="text-12 leading-14px text-white border-l-2 border-blue-lighter mt-2 ml-2 pl-2 mr-6 font-bold">
               {t('filter.transcripts', {
-                all: getNumberWithCommas(allTranscripts),
+                all: getNumberWithCommas(transcriptsCounts),
               })}
             </span>
 
