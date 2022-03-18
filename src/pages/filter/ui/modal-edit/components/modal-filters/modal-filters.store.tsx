@@ -21,15 +21,15 @@ class ModalFiltersStore {
     makeAutoObservable(this)
   }
 
-  setSearchValue(value: string): void {
+  public setSearchValue(value: string) {
     this.searchValue = value
   }
 
-  setCurrentPage(value: number): void {
+  public setCurrentPage(value: number) {
     this.currentPage = value
   }
 
-  setIsAllFiltersChecked(value: boolean): void {
+  public setIsAllFiltersChecked(value: boolean) {
     this.isAllFiltersChecked = value
   }
 

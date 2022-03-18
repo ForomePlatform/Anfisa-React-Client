@@ -32,7 +32,8 @@ export const ModalFilters = observer((): ReactElement => {
 
   const { searchValue, currentPage, groupsPerPage } = modalFiltersStore
 
-  const originGroupList: any[] = toJS(dtreeStore.selectedGroups[2]) ?? []
+  const originGroupList: [string, number][] =
+    toJS(dtreeStore.selectedGroups[2]) ?? []
 
   const filteredGroupList = originGroupList.filter(
     (variant: [string, number]) =>
