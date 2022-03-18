@@ -19,7 +19,7 @@ export interface IDsStatArguments {
   ds: string
   tm?: number
   filter?: string
-  conditions: TCondition[]
+  conditions?: TCondition[]
   instr?: [option: DsStatArgumentsOptions, filterName: string]
 }
 

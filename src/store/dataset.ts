@@ -18,6 +18,7 @@ import {
   ICompoundRequestArgs,
   ICustomInheritanceModeArgs,
   IRecordDescriptor,
+  TCondition,
   TFuncCondition,
 } from '@service-providers/common/common.interface'
 import { addToActionHistory } from '@utils/addToActionHistory'
@@ -30,8 +31,6 @@ import dirinfoStore from './dirinfo'
 import operations from './operations'
 
 const INCREASE_INDEX = 50
-
-export type Condition = [string, string, unknown, string[]?, unknown?]
 
 export class DatasetStore {
   dsStat: DsStatType = {}
@@ -51,12 +50,12 @@ export class DatasetStore {
   datasetName = ''
   activePreset = ''
   prevPreset = ''
-  conditions: Condition[] = []
-  startPresetConditions: Condition[] = []
+  conditions: TCondition[] = []
+  startPresetConditions: TCondition[] = []
   zone: any[] = []
   statAmount: number[] = []
   memorizedConditions:
-    | { conditions: Condition[]; activePreset: string; zone: any[] }
+    | { conditions: TCondition[]; activePreset: string; zone: any[] }
     | undefined = undefined
 
   indexTabReport = 0
@@ -160,7 +159,7 @@ export class DatasetStore {
     this.zone = []
   }
 
-  async setConditionsAsync(conditions: Condition[], conditionsType?: string) {
+  async setConditionsAsync(conditions: TCondition[], conditionsType?: string) {
     if (!conditions[0]) {
       this.conditions = []
       await this.fetchDsStatAsync()
@@ -190,7 +189,7 @@ export class DatasetStore {
   }
 
   removeCondition({ subGroup, itemName }: IRemoveConditionItem) {
-    let cloneConditions: Condition[] = cloneDeep(this.conditions)
+    let cloneConditions: TCondition[] = cloneDeep(this.conditions)
 
     const subGroupIndex = cloneConditions.findIndex(
       item => item[1] === subGroup,

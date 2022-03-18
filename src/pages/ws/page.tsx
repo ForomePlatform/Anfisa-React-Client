@@ -14,7 +14,7 @@ import { HistoryLocationState } from '@declarations'
 import { useDatasetName } from '@core/hooks/use-dataset-name'
 import { useParams } from '@core/hooks/use-params'
 import { t } from '@i18n'
-import datasetStore, { Condition } from '@store/dataset'
+import datasetStore from '@store/dataset'
 import dtreeStore from '@store/dtree'
 import variantStore from '@store/variant'
 import { MainTableDataCy } from '@components/data-testid/main-table.cy'
@@ -54,7 +54,8 @@ const WSPage = observer((): ReactElement => {
 
   useEffect(() => {
     if (hasConditionsInSearchParamsOnly) {
-      const conditions: Condition[] = (refiner as string[]).map((c: string) => {
+      // TODO: need refactoring in FOROME-765
+      const conditions: any[] = (refiner as string[]).map((c: string) => {
         const item: string[] = c!.split(',')
         const [name, group, symbol, value] = item
 
