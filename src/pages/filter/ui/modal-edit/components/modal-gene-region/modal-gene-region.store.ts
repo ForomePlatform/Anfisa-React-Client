@@ -30,8 +30,8 @@ class ModalGeneRegionStore {
     dtreeStore.resetSelectedFilters()
   }
 
-  public fetchStatFunc(): void {
-    const { currentGroup, groupName } = modalEditStore
+  public fetchStatFunc(currentGroup: any[]): void {
+    const { groupName } = modalEditStore
 
     const defaultValue = get(currentGroup[currentGroup.length - 1], 'locus')
 

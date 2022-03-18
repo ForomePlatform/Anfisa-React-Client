@@ -310,11 +310,11 @@ class ModalCompoundRequestStore {
     dtreeStore.resetSelectedFilters()
   }
 
-  public checkExistedSelectedFilters() {
+  public checkExistedSelectedFilters(currentGroup: any[]) {
     const approx =
       this.approxCondition === 'transcript' ? null : `"${this.approxCondition}"`
 
-    const { currentGroup, groupName } = modalEditStore
+    const { groupName } = modalEditStore
 
     const requestString = getFuncParams(
       groupName,

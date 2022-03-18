@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite'
 
 import { ActionType } from '@declarations'
 import dtreeStore from '@store/dtree'
+import activeStepStore from '@pages/filter/active-step.store'
 import { SelectModalButtons } from '@pages/filter/ui/query-builder/ui/select-modal-buttons'
 import { validateLocusCondition } from '@utils/validation/validateLocusCondition'
 import dtreeModalStore from '../../../../modals.store'
@@ -17,10 +18,15 @@ export const ModalGeneRegion = observer((): ReactElement => {
   const {
     groupName,
     variants,
-    currentStepIndex,
-    currentGroup,
+
     currentStepGroups,
   } = modalEditStore
+
+  const currentStepIndex = activeStepStore.activeStepIndex
+  const currentGroupIndex = dtreeModalStore.groupIndexToChange
+
+  const currentGroup =
+    dtreeStore.stepData[currentStepIndex].groups[currentGroupIndex]
 
   const { locusCondition } = modalGeneRegionStore
 
@@ -45,7 +51,7 @@ export const ModalGeneRegion = observer((): ReactElement => {
 
   useEffect(() => {
     if (currentGroup) {
-      modalGeneRegionStore.fetchStatFunc()
+      modalGeneRegionStore.fetchStatFunc(currentGroup)
     }
 
     return () => dtreeStore.resetStatFuncData()

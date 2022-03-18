@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite'
 
 import { ActionType } from '@declarations'
 import dtreeStore from '@store/dtree'
+import activeStepStore from '@pages/filter/active-step.store'
 import { SelectModalButtons } from '@pages/filter/ui/query-builder/ui/select-modal-buttons'
 import dtreeModalStore from '../../../../modals.store'
 import { AllNotModalMods } from '../../../query-builder/ui/all-not-modal-mods'
@@ -17,7 +18,7 @@ import modalCompoundHetStore from './modal-compound-het.store'
 export const ModalCompoundHet = observer((): ReactElement => {
   const {
     variants,
-    currentGroup,
+
     approxValues,
     approxOptions,
     currentStepGroups,
@@ -25,6 +26,12 @@ export const ModalCompoundHet = observer((): ReactElement => {
 
   const { stateOptions, stateCondition, approxCondition } =
     modalCompoundHetStore
+
+  const currentStepIndex = activeStepStore.activeStepIndex
+  const currentGroupIndex = dtreeModalStore.groupIndexToChange
+
+  const currentGroup =
+    dtreeStore.stepData[currentStepIndex].groups[currentGroupIndex]
 
   useEffect(() => {
     modalCompoundHetStore.fetchStatFunc()

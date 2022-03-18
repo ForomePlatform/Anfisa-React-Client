@@ -181,10 +181,9 @@ class ModalCustomInheritanceModeStore {
     this.resetValue = ''
   }
 
-  public getSelectedValue(group: string): any {
+  public getSelectedValue(currentGroup: any[], group: string): any {
     const data: any[] = Object.entries(
-      modalEditStore.currentGroup[modalEditStore.currentGroup.length - 1]
-        .scenario,
+      currentGroup[currentGroup.length - 1].scenario,
     )
 
     let value = '--'
@@ -198,8 +197,8 @@ class ModalCustomInheritanceModeStore {
     return value
   }
 
-  public checkExistedSelectedFilters(): void {
-    const { currentGroup, groupName, problemGroups } = modalEditStore
+  public checkExistedSelectedFilters(currentGroup: any[]): void {
+    const { groupName, problemGroups } = modalEditStore
 
     const scenarioString = getFuncParams(
       groupName,
@@ -213,9 +212,9 @@ class ModalCustomInheritanceModeStore {
     )
 
     this.setComplexSelectValues({
-      first: this.getSelectedValue(problemGroups[0]),
-      second: this.getSelectedValue(problemGroups[1]),
-      third: this.getSelectedValue(problemGroups[2]),
+      first: this.getSelectedValue(currentGroup, problemGroups[0]),
+      second: this.getSelectedValue(currentGroup, problemGroups[1]),
+      third: this.getSelectedValue(currentGroup, problemGroups[2]),
     })
 
     const params = `{"scenario":${scenarioString}}`

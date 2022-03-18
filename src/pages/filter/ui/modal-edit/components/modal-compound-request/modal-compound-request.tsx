@@ -3,12 +3,14 @@ import { observer } from 'mobx-react-lite'
 
 import { ActionType } from '@declarations'
 import dtreeStore from '@store/dtree'
+import activeStepStore from '@pages/filter/active-step.store'
 import { AllNotModalMods } from '@pages/filter/ui/query-builder/ui/all-not-modal-mods'
 import { ApproxStateModalMods } from '@pages/filter/ui/query-builder/ui/approx-state-modal-mods'
 import { DisabledVariantsAmount } from '@pages/filter/ui/query-builder/ui/disabled-variants-amount'
 import { HeaderModal } from '@pages/filter/ui/query-builder/ui/header-modal'
 import { ModalBase } from '@pages/filter/ui/query-builder/ui/modal-base'
 import { SelectModalButtons } from '@pages/filter/ui/query-builder/ui/select-modal-buttons'
+import dtreeModalStore from '../../../../modals.store'
 import modalEditStore from '../../modal-edit.store'
 import { EditModalButtons } from '../edit-modal-buttons'
 import { RequestBlock } from './components/request-block'
@@ -17,7 +19,6 @@ import modalCompoundRequestStore from './modal-compound-request.store'
 
 export const ModalCompoundRequest = observer((): ReactElement => {
   const {
-    currentGroup,
     variants,
     approxValues,
     approxOptions,
@@ -33,13 +34,19 @@ export const ModalCompoundRequest = observer((): ReactElement => {
     activeRequestIndex,
   } = modalCompoundRequestStore
 
+  const currentStepIndex = activeStepStore.activeStepIndex
+  const currentGroupIndex = dtreeModalStore.groupIndexToChange
+
+  const currentGroup =
+    dtreeStore.stepData[currentStepIndex].groups[currentGroupIndex]
+
   const handleSetCondition = (value: string, type: string) => {
     modalCompoundRequestStore.setCondition(value, type)
   }
 
   useEffect(() => {
     if (currentGroup) {
-      modalCompoundRequestStore.checkExistedSelectedFilters()
+      modalCompoundRequestStore.checkExistedSelectedFilters(currentGroup)
     }
 
     return () => dtreeStore.resetStatFuncData()

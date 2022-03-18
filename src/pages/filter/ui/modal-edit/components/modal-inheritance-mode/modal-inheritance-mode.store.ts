@@ -3,7 +3,6 @@ import { makeAutoObservable } from 'mobx'
 
 import { ActionType } from '@declarations'
 import dtreeStore from '@store/dtree'
-import modalEditStore from '@pages/filter/ui/modal-edit/modal-edit.store'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { changeFunctionalStep } from '@utils/changeAttribute/changeFunctionalStep'
 import dtreeModalStore from '../../../../modals.store'
@@ -104,10 +103,8 @@ class ModalInheritanceModeStore {
     dtreeStore.fetchStatFuncAsync(groupName, params)
   }
 
-  public checkExistedSelectedFilters() {
-    dtreeStore.stepData[modalEditStore.currentStepIndex].groups[
-      modalEditStore.currentGroupIndex
-    ]
+  public checkExistedSelectedFilters(currentGroup: any[]) {
+    currentGroup
       .find((elem: any) => Array.isArray(elem))
       .map((item: string) => dtreeStore.addSelectedFilter(item))
   }

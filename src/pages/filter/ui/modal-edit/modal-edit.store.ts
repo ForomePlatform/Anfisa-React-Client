@@ -30,33 +30,13 @@ class ModalEditStore {
     return dtreeStore.statFuncData.variants
   }
 
-  public get currentStepIndex(): number {
-    return activeStepStore.activeStepIndex
-  }
-
-  public get currentGroupIndex(): number {
-    return dtreeModalStore.groupIndexToChange
-  }
-
-  public get currentGroup(): any[] {
-    return dtreeStore.stepData[activeStepStore.activeStepIndex].groups[
-      this.currentGroupIndex
-    ]
-  }
-
   public get groupName(): string {
     return dtreeModalStore.groupNameToChange
   }
 
-  public get selectedGroupsAmount(): string[] {
-    return this.currentGroup && this.currentGroup.length > 0
-      ? dtreeStore.selectedFilters
-      : []
-  }
-
   public get currentGroupLength(): number {
-    return dtreeStore.stepData[this.currentStepIndex].groups[
-      this.currentGroupIndex
+    return dtreeStore.stepData[activeStepStore.activeStepIndex].groups[
+      dtreeModalStore.groupIndexToChange
     ].length
   }
 

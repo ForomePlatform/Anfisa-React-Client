@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite'
 
 import { ActionType } from '@declarations'
 import dtreeStore from '@store/dtree'
+import activeStepStore from '@pages/filter/active-step.store'
 import { InheritanceModeContent } from '@pages/filter/ui/modal-edit/components/modal-inheritance-mode/components/inheritance-mode-content'
 import { HeaderModal } from '@pages/filter/ui/query-builder/ui/header-modal'
 import { ModalBase } from '@pages/filter/ui/query-builder/ui/modal-base'
@@ -13,13 +14,15 @@ import { EditModalButtons } from '../edit-modal-buttons'
 import modalInheritanceModeStore from './modal-inheritance-mode.store'
 
 export const ModalInheritanceMode = observer((): ReactElement => {
-  const {
-    currentGroup,
-    groupName,
-    selectedGroupsAmount,
-    problemGroups,
-    currentStepGroups,
-  } = modalEditStore
+  const { groupName, problemGroups, currentStepGroups } = modalEditStore
+
+  const currentStepIndex = activeStepStore.activeStepIndex
+  const currentGroupIndex = dtreeModalStore.groupIndexToChange
+
+  const currentGroup =
+    dtreeStore.stepData[currentStepIndex].groups[currentGroupIndex]
+
+  const selectedGroupsAmount = currentGroup ? dtreeStore.selectedFilters : []
 
   const [selectedProblemGroups, setSelectedProblemGroups] = useState<string[]>(
     currentGroup
@@ -29,7 +32,7 @@ export const ModalInheritanceMode = observer((): ReactElement => {
 
   useEffect(() => {
     if (currentGroup) {
-      modalInheritanceModeStore.checkExistedSelectedFilters()
+      modalInheritanceModeStore.checkExistedSelectedFilters(currentGroup)
     }
   }, [currentGroup])
 
