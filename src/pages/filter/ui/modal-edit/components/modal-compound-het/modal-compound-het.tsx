@@ -33,6 +33,8 @@ export const ModalCompoundHet = observer((): ReactElement => {
   const currentGroup =
     dtreeStore.stepData[currentStepIndex].groups[currentGroupIndex]
 
+  const currentGroupToModify = dtreeStore.stepData[currentStepIndex].groups
+
   useEffect(() => {
     modalCompoundHetStore.fetchStatFunc()
 
@@ -81,7 +83,7 @@ export const ModalCompoundHet = observer((): ReactElement => {
           handleModals={() => modalCompoundHetStore.openModalAttribute()}
           handleModalJoin={() => modalEditStore.openModalJoin()}
           disabled={!variants}
-          currentGroup={currentStepGroups}
+          currentGroup={currentGroupToModify ?? currentStepGroups}
           handleAddAttribute={handleAddAttribute}
         />
       )}

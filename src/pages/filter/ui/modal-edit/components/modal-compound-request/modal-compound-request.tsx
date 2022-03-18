@@ -40,6 +40,8 @@ export const ModalCompoundRequest = observer((): ReactElement => {
   const currentGroup =
     dtreeStore.stepData[currentStepIndex].groups[currentGroupIndex]
 
+  const currentGroupToModify = dtreeStore.stepData[currentStepIndex].groups
+
   const handleSetCondition = (value: string, type: string) => {
     modalCompoundRequestStore.setCondition(value, type)
   }
@@ -105,7 +107,7 @@ export const ModalCompoundRequest = observer((): ReactElement => {
           handleModals={() => modalCompoundRequestStore.openModalAttribute()}
           handleModalJoin={() => modalEditStore.openModalJoin()}
           disabled={!variants}
-          currentGroup={currentStepGroups}
+          currentGroup={currentGroupToModify ?? currentStepGroups}
           handleAddAttribute={handleAddAttribute}
         />
       )}

@@ -28,6 +28,8 @@ export const ModalGeneRegion = observer((): ReactElement => {
   const currentGroup =
     dtreeStore.stepData[currentStepIndex].groups[currentGroupIndex]
 
+  const currentGroupToModify = dtreeStore.stepData[currentStepIndex].groups
+
   const { locusCondition } = modalGeneRegionStore
 
   const [isErrorVisible, setIsErrorVisible] = useState(false)
@@ -87,7 +89,7 @@ export const ModalGeneRegion = observer((): ReactElement => {
           handleModalJoin={() => modalEditStore.openModalJoin()}
           handleAddAttribute={handleAddAttribute}
           disabled={isErrorVisible}
-          currentGroup={currentStepGroups}
+          currentGroup={currentGroupToModify ?? currentStepGroups}
         />
       )}
     </ModalBase>

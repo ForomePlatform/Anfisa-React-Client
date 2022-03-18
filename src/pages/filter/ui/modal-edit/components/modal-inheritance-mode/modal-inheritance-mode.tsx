@@ -22,6 +22,8 @@ export const ModalInheritanceMode = observer((): ReactElement => {
   const currentGroup =
     dtreeStore.stepData[currentStepIndex].groups[currentGroupIndex]
 
+  const currentGroupToModify = dtreeStore.stepData[currentStepIndex].groups
+
   const selectedGroupsAmount = currentGroup ? dtreeStore.selectedFilters : []
 
   const [selectedProblemGroups, setSelectedProblemGroups] = useState<string[]>(
@@ -102,7 +104,7 @@ export const ModalInheritanceMode = observer((): ReactElement => {
           handleModalJoin={() => modalEditStore.openModalJoin()}
           handleAddAttribute={addAttribute}
           disabled={dtreeStore.selectedFilters.length === 0}
-          currentGroup={currentStepGroups}
+          currentGroup={currentGroupToModify ?? currentStepGroups}
         />
       )}
     </ModalBase>
