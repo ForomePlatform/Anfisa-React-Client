@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite'
 import { ActionType } from '@declarations'
 import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
+import activeStepStore from '@store/dtree/active-step.store'
 import { Pagintaion } from '@components/pagintaion'
 import { SelectModalButtons } from '@pages/filter/ui/query-builder/ui/select-modal-buttons'
 import { createChunks } from '@utils/createChunks'
@@ -18,8 +19,15 @@ import { FiltersMods } from './components/filters-mods'
 import modalFiltersStore from './modal-filters.store'
 
 export const ModalFilters = observer((): ReactElement => {
-  const { currentGroupIndex, groupName, currentGroup, currentStepGroups } =
-    modalEditStore
+  const { groupName, currentStepGroups } = modalEditStore
+
+  const currentStepIndex = activeStepStore.activeStepIndex
+  const currentGroupIndex = dtreeStore.groupIndexToChange
+
+  const currentGroup =
+    dtreeStore.stepData[currentStepIndex].groups[currentGroupIndex]
+
+  const currentGroupToModify = dtreeStore.stepData[currentStepIndex].groups
 
   const { searchValue, currentPage, groupsPerPage } = modalFiltersStore
 
@@ -108,7 +116,7 @@ export const ModalFilters = observer((): ReactElement => {
           handleModals={() => modalFiltersStore.openModalAttribute()}
           handleModalJoin={() => modalEditStore.openModalJoin()}
           disabled={dtreeStore.selectedFilters.length === 0}
-          currentGroup={currentStepGroups}
+          currentGroup={currentGroupToModify ?? currentStepGroups}
           handleAddAttribute={handleAddAttribute}
         />
       )}
