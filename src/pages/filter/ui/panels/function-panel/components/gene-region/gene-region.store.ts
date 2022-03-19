@@ -6,7 +6,7 @@ import {
   TFuncCondition,
   TVariant,
 } from '@service-providers/common/common.interface'
-import { getModeType } from '@utils/getModeType'
+import { getConditionJoinMode } from '@utils/getConditionJoinMode'
 import functionPanelStore from '../../function-panel.store'
 import { IGeneRegionCachedValues } from './../../function-panel.interface'
 
@@ -49,7 +49,7 @@ class GeneRegionStore {
     const conditions: TFuncCondition = [
       'func',
       FuncStepTypesEnum.GeneRegion,
-      getModeType(this.currentMode),
+      getConditionJoinMode(this.currentMode),
       ['True'],
       { locus: this.locusValue },
     ]

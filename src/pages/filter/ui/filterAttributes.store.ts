@@ -5,7 +5,7 @@ import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import datasetStore, { DatasetStore } from '@store/dataset'
 import filterStore, { FilterStore } from '@store/filter'
-import { getModeType } from '@utils/getModeType'
+import { getConditionJoinMode } from '@utils/getConditionJoinMode'
 
 type FilterAttributesStoreParams = {
   datasetStore: DatasetStore
@@ -97,7 +97,12 @@ export class FilterAttributesStore {
     }
 
     this.datasetStore.setConditionsAsync([
-      [FilterKindEnum.Enum, groupName, getModeType(this.currentMode), values],
+      [
+        FilterKindEnum.Enum,
+        groupName,
+        getConditionJoinMode(this.currentMode),
+        values,
+      ],
     ])
 
     if (!this.datasetStore.isXL) {

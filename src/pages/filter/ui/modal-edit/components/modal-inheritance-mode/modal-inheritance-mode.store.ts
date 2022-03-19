@@ -2,10 +2,14 @@ import { Dispatch, SetStateAction } from 'react'
 import { makeAutoObservable } from 'mobx'
 
 import { ActionType } from '@declarations'
+import { ModeTypes } from '@core/enum/mode-types-enum'
 import dtreeStore from '@store/dtree'
+import activeStepStore from '@pages/filter/active-step.store'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { changeFunctionalStep } from '@utils/changeAttribute/changeFunctionalStep'
 import dtreeModalStore from '../../../../modals.store'
+import { getCurrentModeType } from './../../../../../../utils/getCurrentModeType'
+
 interface ISetProblemGroupsProps {
   checked: boolean
   value: string
@@ -13,8 +17,35 @@ interface ISetProblemGroupsProps {
   setSelectedProblemGroups: Dispatch<SetStateAction<string[]>>
 }
 class ModalInheritanceModeStore {
+  currentMode?: ModeTypes
+
   constructor() {
     makeAutoObservable(this)
+  }
+
+  public setCurrentMode(modeType: ModeTypes) {
+    this.currentMode = modeType
+  }
+
+  public resetCurrentMode() {
+    this.currentMode = undefined
+  }
+
+  public get variants(): [string, number][] {
+    const currentStepIndex = activeStepStore.activeStepIndex
+    const currentGroupIndex = dtreeModalStore.groupIndexToChange
+    const variants: [string, number][] = dtreeStore.statFuncData.variants
+
+    const currentGroup =
+      dtreeStore.stepData[currentStepIndex].groups[currentGroupIndex]
+
+    if (currentGroup) {
+      return variants
+    }
+
+    return variants
+      ? variants.filter(([, variantValue]) => variantValue > 0)
+      : []
   }
 
   public setProblemGroups = ({
@@ -60,6 +91,7 @@ class ModalInheritanceModeStore {
     setSelectedProblemGroups: Dispatch<SetStateAction<string[]>>,
   ): void => {
     setSelectedProblemGroups([])
+    this.resetCurrentMode()
 
     const params = `{"problem_group": ["${[]
       .toString()
@@ -72,9 +104,10 @@ class ModalInheritanceModeStore {
   public saveChanges = (selectedProblemGroups: string[]): void => {
     const params = { problem_group: selectedProblemGroups }
 
-    changeFunctionalStep(params, true)
+    changeFunctionalStep(params, this.currentMode, true)
     dtreeModalStore.closeModalInheritanceMode()
     dtreeStore.resetSelectedFilters()
+    this.resetCurrentMode()
   }
 
   public addAttribute = (
@@ -83,10 +116,11 @@ class ModalInheritanceModeStore {
   ): void => {
     const params = { problem_group: selectedProblemGroups }
 
-    addAttributeToStep(action, 'func', null, params)
+    addAttributeToStep(action, 'func', null, params, this.currentMode)
 
     dtreeStore.resetSelectedFilters()
     dtreeModalStore.closeModalInheritanceMode()
+    this.resetCurrentMode()
   }
 
   public openModalAttribute = (): void => {
@@ -97,6 +131,7 @@ class ModalInheritanceModeStore {
 
   public closeModal(): void {
     dtreeModalStore.closeModalInheritanceMode()
+    this.resetCurrentMode()
   }
 
   public fetchStatFunc(groupName: string, params: string): void {
@@ -107,6 +142,10 @@ class ModalInheritanceModeStore {
     currentGroup
       .find((elem: any) => Array.isArray(elem))
       .map((item: string) => dtreeStore.addSelectedFilter(item))
+
+    const conditionJoinType = currentGroup[2]
+
+    this.currentMode = getCurrentModeType(conditionJoinType)
   }
 }
 

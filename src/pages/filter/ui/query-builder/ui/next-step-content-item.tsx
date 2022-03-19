@@ -32,11 +32,18 @@ const JoinType = styled.div`
   height: 28px;
 `
 
-const NegateWrapper = styled(JoinType)`
+const NotModeWrapper = styled(JoinType)`
   padding: 2px 6px;
   margin: 2px 4px;
   color: ${theme('colors.red.light')};
   background-color: ${theme('colors.red.lighter')};
+`
+
+const AllModeWrapper = styled(JoinType)`
+  padding: 2px 6px;
+  margin: 2px 4px;
+  color: ${theme('colors.green.secondary')};
+  background-color: ${theme('colors.green.medium')};
 `
 
 interface IProps {
@@ -109,7 +116,8 @@ export const NextStepContentItem = observer(
     const currentGroup = currentStep.groups[currNo]
     const isNumeric = currentGroup[0] === 'numeric'
 
-    const isNegateAttribute = currentGroup[2] === 'NOT'
+    const isNotMode = currentGroup[2] === 'NOT'
+    const isAllMode = currentGroup[2] === 'AND'
     const isNegateStep = currentStep.negate
 
     return (
@@ -162,9 +170,9 @@ export const NextStepContentItem = observer(
             />
 
             {isNegateStep && (
-              <NegateWrapper className="flex items-center justify-center">
+              <NotModeWrapper className="flex items-center justify-center">
                 {'NOT'}
-              </NegateWrapper>
+              </NotModeWrapper>
             )}
 
             <div className="flex items-center text-14 font-medium mr-2">
@@ -180,11 +188,9 @@ export const NextStepContentItem = observer(
             {!isNumeric && (
               <label className="pl-4">
                 <Checkbox
-                  checked={isNegateAttribute}
+                  checked={isNotMode}
                   className="mr-1"
-                  onChange={() =>
-                    editStepAttribute(index, currNo, isNegateAttribute)
-                  }
+                  onChange={() => editStepAttribute(index, currNo, isNotMode)}
                 />
                 {t('dtree.negate')}
               </label>
@@ -192,10 +198,16 @@ export const NextStepContentItem = observer(
           </div>
 
           <div className="flex flex-row step-content-area">
-            {isNegateAttribute && (
-              <NegateWrapper className="flex items-center justify-center">
-                {'NOT'}
-              </NegateWrapper>
+            {isNotMode && (
+              <NotModeWrapper className="flex items-center justify-center">
+                {'not'}
+              </NotModeWrapper>
+            )}
+
+            {isAllMode && (
+              <AllModeWrapper className="flex items-center justify-center">
+                {'all'}
+              </AllModeWrapper>
             )}
 
             <div className="flex flex-col text-14 font-normal h-full flex-wrap mt-1">
