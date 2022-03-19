@@ -9,7 +9,7 @@ import {
   TFuncCondition,
   TVariant,
 } from '@service-providers/common/common.interface'
-import { getModeType } from '@utils/getModeType'
+import { getConditionJoinMode } from '@utils/getConditionJoinMode'
 import functionPanelStore from '../../function-panel.store'
 import { ICompoundHetCachedValues } from './../../function-panel.interface'
 
@@ -90,7 +90,7 @@ class CompoundHetStore {
     const conditions: TFuncCondition = [
       'func',
       FuncStepTypesEnum.CompoundHet,
-      getModeType(this.currentMode),
+      getConditionJoinMode(this.currentMode),
       ['Proband'],
       { approx: this.cachedValues?.conditions.approx || null, state: null },
     ]

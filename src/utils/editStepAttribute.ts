@@ -20,7 +20,7 @@ export const editStepAttribute = (
   const filteredAttribute = attribute.filter(
     (element: any) =>
       element !== 'OR' &&
-      element !== 'and' &&
+      element !== 'AND' &&
       element !== 'NOT' &&
       element !== 'or',
   )

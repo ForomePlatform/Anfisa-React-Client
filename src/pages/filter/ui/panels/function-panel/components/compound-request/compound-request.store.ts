@@ -8,8 +8,8 @@ import {
   TVariant,
 } from '@service-providers/common/common.interface'
 import { getFilteredRequestCondition } from '@utils/function-panel/getFilteredRequestCondition'
+import { getConditionJoinMode } from '@utils/getConditionJoinMode'
 import { getFuncParams } from '@utils/getFuncParams'
-import { getModeType } from '@utils/getModeType'
 import { getRequestData } from '@utils/getRequestData'
 import { getResetRequestData } from '@utils/getResetRequestData'
 import { getResetType } from '@utils/getResetType'
@@ -213,7 +213,7 @@ class CompoundRequestStore {
     const conditions: TFuncCondition = [
       'func',
       FuncStepTypesEnum.CompoundRequest,
-      getModeType(this.currentMode),
+      getConditionJoinMode(this.currentMode),
       ['True'],
       {
         approx: this.cachedValues?.conditions.approx || null,

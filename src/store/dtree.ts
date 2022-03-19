@@ -20,6 +20,7 @@ export type IStepData = {
   step: number
   groups: any[]
   negate?: boolean
+  all?: boolean
   excluded: boolean
   isActive: boolean
   isReturnedVariantsActive: boolean
@@ -355,16 +356,6 @@ class DtreeStore {
       this.stepData.length - 1,
       ActiveStepOptions.StartedVariants,
     )
-
-    this.resetLocalDtreeCode()
-  }
-
-  negateStep(index: number) {
-    if (!this.stepData[index].negate) {
-      this.stepData[index].negate = true
-    } else {
-      this.stepData[index].negate = !this.stepData[index].negate
-    }
 
     this.resetLocalDtreeCode()
   }

@@ -2,11 +2,15 @@ import { ChangeEvent, Fragment } from 'react'
 import Checkbox from 'react-three-state-checkbox'
 import { observer } from 'mobx-react-lite'
 
+import { ModeTypes } from '@core/enum/mode-types-enum'
+import { SubKinds } from '@core/enum/sub-kinds-enum'
 import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
 import { Button } from '@ui/button'
+import { AllNotMods } from '@pages/filter/ui/query-builder/ui/all-not-mods'
 import { DisabledVariantsAmount } from '../../../../query-builder/ui/disabled-variants-amount'
 import { ModsDivider } from '../../../../query-builder/ui/mods-divider'
+import modalInheritanceModeStore from '../modal-inheritance-mode.store'
 
 interface IProps {
   problemGroups: string[]
@@ -58,26 +62,48 @@ export const InheritanceModeContent = observer(
           />
         </div>
 
-        <div className="flex justify-between w-full mt-4">
+        <div className="flex justify-between w-full mt-4 -mb-5">
           <div className="text-14 text-grey-blue">
             {dtreeStore.selectedFilters.length} {t('dtree.selected')}
           </div>
 
-          <div className="flex">
-            <div
-              className="text-14 text-blue-bright cursor-pointer"
-              onClick={() => alert('This function is not ready yet')}
-            >
-              {t('general.selectAll')}
+          <div className="flex flex-col">
+            <div className="flex">
+              <div
+                className="text-14 text-blue-bright cursor-pointer"
+                onClick={() => alert('This function is not ready yet')}
+              >
+                {t('general.selectAll')}
+              </div>
+
+              <ModsDivider />
+
+              <div
+                className="text-14 text-blue-bright cursor-pointer"
+                onClick={() => alert('This function is not ready yet')}
+              >
+                {t('general.clearAll')}
+              </div>
             </div>
 
-            <ModsDivider />
-
-            <div
-              className="text-14 text-blue-bright cursor-pointer"
-              onClick={() => alert('This function is not ready yet')}
-            >
-              {t('general.clearAll')}
+            <div className="flex justify-end mt-2">
+              <AllNotMods
+                groupSubKind={SubKinds.InheritanceZ}
+                isAllModeDisabled={dtreeStore.selectedFilters.length < 2}
+                isNotModeDisabled={!variants}
+                isAllModeChecked={
+                  modalInheritanceModeStore.currentMode === ModeTypes.All
+                }
+                isNotModeChecked={
+                  modalInheritanceModeStore.currentMode === ModeTypes.Not
+                }
+                toggleAllMode={() =>
+                  modalInheritanceModeStore.setCurrentMode(ModeTypes.All)
+                }
+                toggleNotMode={() =>
+                  modalInheritanceModeStore.setCurrentMode(ModeTypes.Not)
+                }
+              />
             </div>
           </div>
         </div>

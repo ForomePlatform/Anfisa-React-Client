@@ -1,4 +1,5 @@
 import { ReactElement, useEffect, useState } from 'react'
+import { reaction } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
 import { ActionType } from '@declarations'
@@ -37,6 +38,19 @@ export const ModalInheritanceMode = observer((): ReactElement => {
       modalInheritanceModeStore.checkExistedSelectedFilters(currentGroup)
     }
   }, [currentGroup])
+
+  useEffect(() => {
+    const dispose = reaction(
+      () => dtreeStore.selectedFilters,
+      () => {
+        if (dtreeStore.selectedFilters.length < 2) {
+          modalInheritanceModeStore.resetCurrentMode()
+        }
+      },
+    )
+
+    return () => dispose()
+  }, [])
 
   useEffect(() => {
     const params = `{"problem_group":["${selectedProblemGroups
