@@ -288,7 +288,7 @@ export class DatasetStore {
 
   async fetchDsStatAsync(
     shouldSaveInHistory = true,
-    bodyFromHistory?: URLSearchParams,
+    bodyFromHistory?: IDsStatArguments,
   ): Promise<DsStatType> {
     this.isLoadingDsStat = true
 
@@ -305,15 +305,14 @@ export class DatasetStore {
       localBody.filter = this.activePreset
     }
 
-    // if (shouldSaveInHistory) {
-    //   addToActionHistory(localBody, true)
-    // }
+    if (shouldSaveInHistory) {
+      addToActionHistory(localBody, true)
+    }
 
-    // const body = shouldSaveInHistory ? localBody : bodyFromHistory
-    const body = localBody
+    const checkedBodyFromHistory = bodyFromHistory ?? localBody
+    const body = shouldSaveInHistory ? localBody : checkedBodyFromHistory
 
     const result = await filteringRegimeProvider.getDsStat(body)
-    console.log('result', result)
 
     dtreeStore.setStatRequestId(result['rq-id'])
 
@@ -321,10 +320,10 @@ export class DatasetStore {
     result['stat-list'] = getFilteredAttrsList(result['stat-list'])
     //
 
-    const conditionFromHistory = bodyFromHistory?.get('conditions')
+    const conditionFromHistory = checkedBodyFromHistory.conditions
 
     if (conditionFromHistory) {
-      this.conditions = JSON.parse(conditionFromHistory)
+      this.conditions = conditionFromHistory
     }
 
     const statList = result['stat-list']

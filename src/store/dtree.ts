@@ -6,6 +6,7 @@ import { makeAutoObservable, runInAction, toJS } from 'mobx'
 import { FilterCountsType } from '@declarations'
 import { getApiUrl } from '@core/get-api-url'
 import { TPropertyStatus } from '@service-providers/common/common.interface'
+import { IDsStatArguments } from '@service-providers/filtering-regime'
 import { addToActionHistory } from '@utils/addToActionHistory'
 import { calculateAcceptedVariants } from '@utils/calculateAcceptedVariants'
 import { getDataFromCode } from '@utils/getDataFromCode'
@@ -95,7 +96,7 @@ class DtreeStore {
 
   requestData: IRequestData[] = []
 
-  actionHistory: URLSearchParams[] = []
+  actionHistory: IDsStatArguments[] = []
   actionHistoryIndex = -1
 
   constructor() {
@@ -209,7 +210,8 @@ class DtreeStore {
     return stepIndexForApi
   }
 
-  async fetchDtreeSetAsync(body: URLSearchParams, shouldSaveInHistory = true) {
+  // TODO: change body type
+  async fetchDtreeSetAsync(body: any, shouldSaveInHistory = true) {
     if (shouldSaveInHistory) addToActionHistory(body)
 
     this.setIsCountsReceived(false)
@@ -273,7 +275,7 @@ class DtreeStore {
     })
   }
 
-  setActionHistory(updatedActionHistory: URLSearchParams[]) {
+  setActionHistory(updatedActionHistory: IDsStatArguments[]) {
     runInAction(() => {
       this.actionHistory = [...updatedActionHistory]
     })

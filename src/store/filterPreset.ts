@@ -3,6 +3,10 @@ import { makeAutoObservable, runInAction } from 'mobx'
 import { getApiUrl } from '@core/get-api-url'
 import { t } from '@i18n'
 import filterStore from '@store/filter'
+import {
+  DsStatArgumentsOptions,
+  IDsStatArguments,
+} from '@service-providers/filtering-regime'
 import { showToast } from '@utils/notifications/showToast'
 import datasetStore from './dataset'
 
@@ -58,14 +62,16 @@ class PresetStore {
   }
 
   async joinPresetAsync(presetName: string) {
-    const body = new URLSearchParams({
+    const body: IDsStatArguments = {
       ds: datasetStore.datasetName,
-      instr: JSON.stringify(['JOIN', presetName]),
-    })
+      instr: [DsStatArgumentsOptions.JOIN, presetName],
+    }
 
-    datasetStore.prevPreset
-      ? body.append('filter', datasetStore.prevPreset)
-      : body.append('conditions', JSON.stringify(datasetStore.conditions))
+    if (datasetStore.prevPreset) {
+      body.filter = datasetStore.prevPreset
+    } else {
+      body.conditions = datasetStore.conditions
+    }
 
     const result = await datasetStore.fetchDsStatAsync(false, body)
 

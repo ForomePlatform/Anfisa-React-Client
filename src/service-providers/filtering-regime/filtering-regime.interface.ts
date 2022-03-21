@@ -9,7 +9,7 @@ import {
   TPropertyStatus,
 } from 'service-providers/common/common.interface'
 
-enum DsStatArgumentsOptions {
+export enum DsStatArgumentsOptions {
   UPDATE = 'UPDATE',
   DELETE = 'DELETE',
   JOIN = 'JOIN',
