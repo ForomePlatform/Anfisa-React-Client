@@ -150,6 +150,8 @@ export interface IFuncPropertyStatus
   no?: string
   scenario?: [string, string[]]
   request?: [string, string[]][]
+  family?: string[]
+  'approx-modes'?: string[][]
 }
 
 export type TPropertyStatus =

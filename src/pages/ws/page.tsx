@@ -1,6 +1,5 @@
 import { Fragment, ReactElement, useEffect } from 'react'
 import { withErrorBoundary } from 'react-error-boundary'
-import { useHistory } from 'react-router-dom'
 import { observer } from 'mobx-react-lite'
 import {
   ArrayParam,
@@ -9,7 +8,7 @@ import {
   withDefault,
 } from 'use-query-params'
 
-import { HistoryLocationState } from '@declarations'
+import { formatNumber } from '@core/format-number'
 import { useDatasetName } from '@core/hooks/use-dataset-name'
 import { useParams } from '@core/hooks/use-params'
 import { t } from '@i18n'
@@ -24,7 +23,6 @@ import { PopperButton } from '@components/popper-button'
 import { VariantDrawer } from '@components/variant/drawer'
 import { ErrorPage } from '@pages/error/error'
 import { ModalSaveDataset } from '@pages/filter/ui/query-builder/ui/modal-save-dataset'
-import { getNumberWithCommas } from '@pages/filter/ui/query-builder/ui/next-step-route'
 import { ControlPanel } from './ui/control-panel'
 import { ModalNotes } from './ui/modal-notes'
 import { TableVariants } from './ui/table-variants'
@@ -33,11 +31,6 @@ const WSPage = observer((): ReactElement => {
   const params = useParams()
 
   useDatasetName()
-
-  const historyLocationState = useHistory().location
-    .state as HistoryLocationState
-
-  const prevPage = historyLocationState?.prevPage || ''
 
   const [query] = useQueryParams({
     variant: NumberParam,
@@ -71,7 +64,7 @@ const WSPage = observer((): ReactElement => {
         variantStore.setDsName(params.get('ds') ?? '')
       }
 
-      await datasetStore.initDatasetAsync(dsName, prevPage)
+      await datasetStore.initDatasetAsync(dsName)
     }
 
     initAsync()
@@ -99,19 +92,19 @@ const WSPage = observer((): ReactElement => {
               data-testid={MainTableDataCy.numVariants}
             >
               {t('filter.variants', {
-                all: getNumberWithCommas(variantCounts),
+                all: formatNumber(variantCounts),
               })}
             </span>
 
             <span className="text-12 leading-14px text-white border-l-2 border-blue-lighter mt-2 ml-2 pl-2 font-bold">
-              {t('filter.dnaVariantsCounts', {
-                all: getNumberWithCommas(dnaVariantsCounts),
+              {t('filter.transcribedVariants', {
+                all: formatNumber(dnaVariantsCounts),
               })}
             </span>
 
             <span className="text-12 leading-14px text-white border-l-2 border-blue-lighter mt-2 ml-2 pl-2 mr-6 font-bold">
               {t('filter.transcripts', {
-                all: getNumberWithCommas(transcriptsCounts),
+                all: formatNumber(transcriptsCounts),
               })}
             </span>
 
