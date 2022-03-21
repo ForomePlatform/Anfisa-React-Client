@@ -1,12 +1,12 @@
 import { makeAutoObservable, runInAction } from 'mobx'
 
-import { getApiUrl } from '@core/get-api-url'
 import { t } from '@i18n'
 import filterStore from '@store/filter'
 import {
   DsStatArgumentsOptions,
   IDsStatArguments,
 } from '@service-providers/filtering-regime'
+import filteringRegimeProvider from '@service-providers/filtering-regime/filtering-regime.provider'
 import { showToast } from '@utils/notifications/showToast'
 import datasetStore from './dataset'
 
@@ -18,20 +18,12 @@ class PresetStore {
   }
 
   async loadPresetAsync(filter: string, source?: string) {
-    const body = new URLSearchParams({
+    const body: IDsStatArguments = {
       ds: datasetStore.datasetName,
       filter,
-    })
+    }
 
-    const response = await fetch(getApiUrl('ds_stat'), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body,
-    })
-
-    const result = await response.json()
+    const result = await filteringRegimeProvider.getDsStat(body)
 
     filterStore.resetFilterCondition()
 
@@ -42,21 +34,13 @@ class PresetStore {
   }
 
   async deletePresetAsync(presetName: string) {
-    const body = new URLSearchParams({
+    const body: IDsStatArguments = {
       ds: datasetStore.datasetName,
-      conditions: JSON.stringify(datasetStore.conditions),
-      instr: JSON.stringify(['DELETE', presetName]),
-    })
+      conditions: datasetStore.conditions,
+      instr: [DsStatArgumentsOptions.DELETE, presetName],
+    }
 
-    const response = await fetch(getApiUrl('ds_stat'), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body,
-    })
-
-    const result = await response.json()
+    const result = await filteringRegimeProvider.getDsStat(body)
 
     datasetStore.dsStat = result
   }
@@ -79,21 +63,13 @@ class PresetStore {
   }
 
   async updatePresetAsync(presetName: string) {
-    const body = new URLSearchParams({
+    const body: IDsStatArguments = {
       ds: datasetStore.datasetName,
-      conditions: JSON.stringify(datasetStore.conditions),
-      instr: JSON.stringify(['UPDATE', presetName]),
-    })
+      conditions: datasetStore.conditions,
+      instr: [DsStatArgumentsOptions.UPDATE, presetName],
+    }
 
-    const response = await fetch(getApiUrl('ds_stat'), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body,
-    })
-
-    const result = await response.json()
+    const result = await filteringRegimeProvider.getDsStat(body)
 
     runInAction(() => {
       datasetStore.dsStat = result
