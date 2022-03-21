@@ -4,6 +4,8 @@ import { ServiceProviderBase } from '../common'
 import {
   IDsStat,
   IDsStatArguments,
+  IStatfunc,
+  IStatfuncArguments,
   IStatunits,
   IStatunitsArguments,
 } from './filtering-regime.interface'
@@ -30,7 +32,13 @@ export class FilteringRegimeProvider extends ServiceProviderBase {
     return response.data
   }
 
-  // TODO: statfunc
+  public async getStatFunc(
+    params: IStatfuncArguments,
+    options: Partial<AxiosRequestConfig> = {},
+  ) {
+    const response = await this.post<IStatfunc>('/statfunc', params, options)
+    return response.data
+  }
 }
 
 export default new FilteringRegimeProvider()

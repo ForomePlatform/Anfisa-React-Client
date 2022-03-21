@@ -3,12 +3,13 @@ import isEmpty from 'lodash/isEmpty'
 import { makeAutoObservable, runInAction, toJS } from 'mobx'
 import { TVariant } from 'service-providers/common/common.interface'
 
-import { IStatFuncData, StatListType } from '@declarations'
+import { StatListType } from '@declarations'
 import { ActionFilterEnum } from '@core/enum/action-filter.enum'
-import { getApiUrl } from '@core/get-api-url'
 import { GlbPagesNames } from '@glb/glb-names'
 import { FilterControlOptions } from '@pages/filter/ui/filter-control/filter-control.const'
 import datasetProvider from '@service-providers/dataset-level/dataset.provider'
+import { IStatfuncArguments } from '@service-providers/filtering-regime'
+import filteringRegimeProvider from '@service-providers/filtering-regime/filtering-regime.provider'
 import datasetStore from './dataset'
 
 export type SelectedFiltersType = Record<
@@ -128,27 +129,16 @@ export class FilterStore {
     return dsInfo.meta.samples
   }
 
-  async fetchStatFuncAsync(unit: string, param?: any) {
-    const conditions = JSON.stringify(datasetStore.conditions)
-
-    const body = new URLSearchParams({
+  async fetchStatFuncAsync(unit: string, param: any) {
+    const body: IStatfuncArguments = {
       ds: datasetStore.datasetName,
-      conditions,
+      conditions: datasetStore.conditions,
       rq_id: String(Date.now()),
       unit,
-    })
+      param,
+    }
 
-    param && body.append('param', param)
-
-    const response = await fetch(getApiUrl('statfunc'), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body,
-    })
-
-    const result: IStatFuncData = await response.json()
+    const result = await filteringRegimeProvider.getStatFunc(body)
 
     runInAction(() => {
       this.statFuncData = result

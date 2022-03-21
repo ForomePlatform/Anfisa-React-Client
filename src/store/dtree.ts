@@ -6,7 +6,11 @@ import { makeAutoObservable, runInAction, toJS } from 'mobx'
 import { FilterCountsType } from '@declarations'
 import { getApiUrl } from '@core/get-api-url'
 import { TPropertyStatus } from '@service-providers/common/common.interface'
-import { IDsStatArguments } from '@service-providers/filtering-regime'
+import {
+  IDsStatArguments,
+  IStatfuncArguments,
+} from '@service-providers/filtering-regime'
+import filteringRegimeProvider from '@service-providers/filtering-regime/filtering-regime.provider'
 import { addToActionHistory } from '@utils/addToActionHistory'
 import { calculateAcceptedVariants } from '@utils/calculateAcceptedVariants'
 import { getDataFromCode } from '@utils/getDataFromCode'
@@ -247,24 +251,16 @@ class DtreeStore {
   }
 
   async fetchStatFuncAsync(subGroupName: string, param: string) {
-    const body = new URLSearchParams({
+    const body: IStatfuncArguments = {
       ds: datasetStore.datasetName,
       no: activeStepStore.stepIndexForApi,
       code: this.dtreeCode,
       rq_id: Math.random().toString(),
       unit: subGroupName,
       param,
-    })
+    }
 
-    const response = await fetch(getApiUrl('statfunc'), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body,
-    })
-
-    const result = await response.json()
+    const result = await filteringRegimeProvider.getStatFunc(body)
 
     runInAction(() => {
       this.statFuncData = result

@@ -148,6 +148,8 @@ export interface IFuncPropertyStatus
   err?: string
   'rq-id': string
   no?: string
+  scenario?: [string, string[]]
+  request?: [string, string[]][]
 }
 
 export type TPropertyStatus =
