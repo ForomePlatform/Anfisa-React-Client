@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import cn from 'classnames'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
@@ -86,6 +86,12 @@ export const QueryBuilderSubgroupItem = observer(
           dtreeModalStore.openModalGeneRegion(group.name, undefined, source)
       }
     }
+
+    const { filterChangeIndicator } = dtreeStore
+
+    useEffect(() => {
+      if (filterChangeIndicator === -1) setIsVisibleSubGroupItem(true)
+    }, [filterChangeIndicator])
 
     const handleAttrClick = (group: StatList) => {
       const page = filterStore.method
