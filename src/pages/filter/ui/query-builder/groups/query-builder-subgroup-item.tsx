@@ -25,7 +25,7 @@ interface IProps {
 
 export const QueryBuilderSubgroupItem = observer(
   ({ subGroupItem, isModal, groupName }: IProps) => {
-    const [isVisibleSubGroupItem, setIsVisibleSubGroupItem] = useState(true)
+    const [isVisibleSubGroupItem, setIsVisibleSubGroupItem] = useState(false)
 
     const [, writeScrollPosition] = useScrollPosition({
       elem: '#attributes-container',
@@ -116,8 +116,7 @@ export const QueryBuilderSubgroupItem = observer(
             <span
               className={cn('text-14', {
                 'text-black': !isVisibleSubGroupItem,
-                'text-grey-blue': !isVisibleSubGroupItem && !isModal,
-                'text-white': isVisibleSubGroupItem && !isModal,
+                'text-white': !isModal,
                 'hover:text-white': !isModal,
                 'hover:text-blue-dark': isModal,
                 'text-blue-dark': isModal && isVisibleSubGroupItem,
