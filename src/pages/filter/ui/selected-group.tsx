@@ -16,7 +16,7 @@ export const SelectedGroup = observer((): ReactElement => {
 
   return (
     <div
-      className="border border-grey-blue pt-5 px-4 w-1/3 overflow-y-auto"
+      className="border border-grey-disabled pt-5 px-4 w-1/3 overflow-y-auto"
       style={{ height: 'calc(100vh - 203px)' }}
     >
       <SelectedGroupHeader />
