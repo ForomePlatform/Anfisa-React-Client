@@ -37,33 +37,10 @@ export class FilterStore {
   selectedFiltersHistory: SelectedFiltersType[] = []
 
   activeFilterId: string = ''
+  isRedactorMode = false
 
   constructor() {
     makeAutoObservable(this)
-  }
-
-  public setActiveFilterId(filterId: string) {
-    this.activeFilterId = filterId
-  }
-
-  public resetActiveFilterId() {
-    this.activeFilterId = ''
-  }
-
-  public setActionName(actionName?: ActionFilterEnum) {
-    this.actionName = actionName
-  }
-
-  public resetActionName() {
-    this.actionName = undefined
-  }
-
-  public setMethod(method: GlbPagesNames | FilterControlOptions) {
-    this.method = method
-  }
-
-  setSelectedGroupItem(item: StatListType) {
-    this.selectedGroupItem = item
   }
 
   public get selectedFiltersArray(): [string, TCondition][] {
@@ -72,6 +49,10 @@ export class FilterStore {
 
   public get conditions() {
     return Array.from(this._selectedFilters.values())
+  }
+
+  public get selectedFilter(): TCondition {
+    return this._selectedFilters.get(this.activeFilterId)!
   }
 
   public addFilterBlock(condition: TCondition): void {
@@ -89,9 +70,7 @@ export class FilterStore {
   }
 
   public addFilterToFilterBlock(condition: TCondition): void {
-    const filterId: string = nanoid()
-
-    this._selectedFilters.set(filterId, condition)
+    this._selectedFilters.set(this.activeFilterId, condition)
   }
 
   public removeFilterFromFilterBlock({
@@ -185,10 +164,44 @@ export class FilterStore {
     this.filterCondition = {}
   }
 
-  public clearFilterCondition(filterName: string, subFilterName?: string) {
-    subFilterName
-      ? delete this.filterCondition[filterName][subFilterName]
-      : delete this.filterCondition[filterName]
+  public clearFilterCondition(filterName: string) {
+    delete this.filterCondition[filterName]
+  }
+
+  public setActiveFilterId(filterId: string) {
+    this.activeFilterId = filterId
+  }
+
+  public resetActiveFilterId() {
+    this.activeFilterId = ''
+  }
+
+  public setActionName(actionName?: ActionFilterEnum) {
+    this.actionName = actionName
+  }
+
+  public resetActionName() {
+    this.actionName = undefined
+  }
+
+  public setMethod(method: GlbPagesNames | FilterControlOptions) {
+    this.method = method
+  }
+
+  public setSelectedGroupItem(item: StatListType) {
+    this.selectedGroupItem = item
+  }
+
+  public resetSelectedGroupItem() {
+    this.selectedGroupItem = {}
+  }
+
+  public setIsRedacorMode() {
+    this.isRedactorMode = true
+  }
+
+  public resetIsRedacorMode() {
+    this.isRedactorMode = false
   }
 
   public memorizeSelectedFilters() {

@@ -2,8 +2,10 @@ import { ReactElement } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
+import { StatListType } from '@declarations'
 import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { useToggle } from '@core/hooks/use-toggle'
+import datasetStore from '@store/dataset'
 import filterStore from '@store/filter'
 import { Icon } from '@ui/icon'
 import {
@@ -58,6 +60,20 @@ export const SelectedFilterCard = observer(
       isModalOptionsVisible ? hideModalOptions() : showModalOptions()
     }
 
+    const handleOpenFilter = () => {
+      filterStore.setActiveFilterId(filterId)
+
+      filterStore.setIsRedacorMode()
+
+      filterStore.resetSelectedGroupItem()
+
+      const selectedGroupItem = datasetStore.dsStat['stat-list'].find(
+        (filter: StatListType) => filter.name === filterName,
+      )
+
+      filterStore.setSelectedGroupItem(selectedGroupItem)
+    }
+
     return (
       <>
         <div
@@ -65,7 +81,7 @@ export const SelectedFilterCard = observer(
             'relative flex justify-between items-center border-b border-grey-light py-4 pl-3 pr-0.5 cursor-pointer',
             isFilterActive && 'bg-blue-light',
           )}
-          onClick={() => filterStore.setActiveFilterId(filterId)}
+          onClick={handleOpenFilter}
         >
           <div
             className="flex"
