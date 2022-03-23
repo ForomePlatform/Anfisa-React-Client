@@ -92,9 +92,7 @@ interface IProps {
 
 export const NextStepRoute = observer(
   ({ isExpanded, index, isIncluded }: IProps): ReactElement => {
-    const { statAmount } = datasetStore
-    const variantCounts = statAmount?.[0] ?? null
-    const dnaVariantsCounts = statAmount?.[1] ?? null
+    const { variantCounts, dnaVariantsCounts } = datasetStore.fixedStatAmount
 
     const startFilterCounts = dtreeStore.getStepData[index].startFilterCounts
     const currentStep = dtreeStore.getStepData[index]

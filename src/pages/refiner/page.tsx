@@ -22,11 +22,8 @@ import { TableModal } from '@pages/filter/ui/TableModal'
 const RefinerPage = observer((): ReactElement => {
   const isXL = datasetStore.isXL
 
-  const { statAmount } = datasetStore
-
-  const variantCounts = statAmount?.[0] ?? null
-  const dnaVariantsCounts = statAmount?.[1] ?? null
-  const transcriptsCounts = statAmount?.[2] ?? null
+  const { variantCounts, dnaVariantsCounts, transcriptsCounts } =
+    datasetStore.fixedStatAmount
 
   useDatasetName()
 

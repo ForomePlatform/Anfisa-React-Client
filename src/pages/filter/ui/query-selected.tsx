@@ -20,11 +20,8 @@ export const QuerySelected = observer((): ReactElement => {
 
   const variants: any = dirinfoStore.dsinfo.total || 0
 
-  const { statAmount } = datasetStore
-
-  const variantCounts = statAmount?.[0] ?? null
-  const dnaVariantsCounts = statAmount?.[1] ?? null
-  const transcriptsCounts = statAmount?.[2] ?? null
+  const { variantCounts, dnaVariantsCounts, transcriptsCounts } =
+    datasetStore.fixedStatAmount
 
   const selectedVariants =
     datasetStore.conditions.length === 0

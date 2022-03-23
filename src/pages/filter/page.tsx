@@ -53,11 +53,8 @@ const FilterPage = observer((): ReactElement => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dsName, history])
 
-  const { statAmount } = datasetStore
-
-  const variantCounts = statAmount?.[0] ?? null
-  const dnaVariantsCounts = statAmount?.[1] ?? null
-  const transcriptsCounts = statAmount?.[2] ?? null
+  const { variantCounts, dnaVariantsCounts, transcriptsCounts } =
+    datasetStore.fixedStatAmount
 
   const getFiltersValue = (type: string) => {
     if (type === 'all') {

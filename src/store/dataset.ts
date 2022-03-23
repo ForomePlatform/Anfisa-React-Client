@@ -706,6 +706,14 @@ export class DatasetStore {
       })
     }
   }
+
+  get fixedStatAmount() {
+    const variantCounts = this.statAmount?.[0] ?? null
+    const dnaVariantsCounts = this.statAmount?.[1] ?? null
+    const transcriptsCounts = this.statAmount?.[2] ?? null
+
+    return { variantCounts, dnaVariantsCounts, transcriptsCounts }
+  }
 }
 
 export default new DatasetStore()

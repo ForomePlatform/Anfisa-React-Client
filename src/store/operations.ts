@@ -137,7 +137,7 @@ class OperationsStore {
     const isRefiner = filterStore.method === GlbPagesNames.Refiner
     const isMainTable = pathName === Routes.WS
 
-    const variantCounts = datasetStore.statAmount?.[0] ?? null
+    const { variantCounts } = datasetStore.fixedStatAmount
 
     const compareValue =
       variantCounts && (isRefiner || isMainTable)

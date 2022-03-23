@@ -37,8 +37,7 @@ export const ModalSaveDataset = observer(() => {
   const isDone = operations.savingStatus[1] === 'Done'
 
   useEffect(() => {
-    const { statAmount } = datasetStore
-    const variantCounts = statAmount?.[0] ?? null
+    const { variantCounts } = datasetStore.fixedStatAmount
 
     if (
       pathName === PatnNameEnum.Filter &&

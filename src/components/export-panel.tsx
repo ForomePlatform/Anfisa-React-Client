@@ -15,9 +15,7 @@ interface Props {
 export const ExportPanel = ({ close }: Props): ReactElement => {
   const ref = useRef<any>(null)
 
-  const { statAmount } = datasetStore
-
-  const variantCounts = statAmount?.[0] ?? null
+  const { variantCounts } = datasetStore.fixedStatAmount
 
   const handleDownload = (type: ExportTypeEnum) => {
     if (typeof variantCounts === 'number' && variantCounts > 300) {
