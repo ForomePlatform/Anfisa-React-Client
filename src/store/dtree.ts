@@ -6,7 +6,6 @@ import { makeAutoObservable, runInAction, toJS } from 'mobx'
 import { FilterCountsType } from '@declarations'
 import { getApiUrl } from '@core/get-api-url'
 import { CreateEmptyStepPositions } from '@pages/filter/active-step.store'
-import { TPropertyStatus } from '@service-providers/common/common.interface'
 import {
   IDsStatArguments,
   IStatfuncArguments,
@@ -20,7 +19,6 @@ import { getStepDataAsync } from '@utils/getStepDataAsync'
 import activeStepStore, {
   ActiveStepOptions,
 } from '../pages/filter/active-step.store'
-import dtreeModalStore from '../pages/filter/modals.store'
 import datasetStore from './dataset'
 import { DtreeStatStore } from './dtree/dtree-stat.store'
 
@@ -168,30 +166,6 @@ class DtreeStore {
     const statList = this.stat.list ?? datasetStore.dsStat['stat-list']
 
     return getQueryBuilder(toJS(statList))
-  }
-
-  get attributeStatusToChange(): TPropertyStatus | undefined {
-    return dtreeModalStore.groupNameToChange
-      ? toJS(
-          this.stat.getAttributeStatusByName(dtreeModalStore.groupNameToChange),
-        )
-      : undefined
-  }
-
-  get currentStepGroups() {
-    return toJS(this.stepData[activeStepStore.activeStepIndex].groups)
-  }
-
-  get currentStepGroupToChange() {
-    if (dtreeModalStore.groupIndexToChange < 0) {
-      return undefined
-    }
-
-    return toJS(
-      this.stepData[activeStepStore.activeStepIndex].groups[
-        dtreeModalStore.groupIndexToChange
-      ],
-    )
   }
 
   getStepIndexForApi = (index: number) => {

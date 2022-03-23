@@ -10,7 +10,7 @@ import datasetStore from '@store/dataset'
 import filterStore from '@store/filter'
 import { InputSearch } from '@components/input-search'
 import { Loader } from '@components/loader'
-import { ConditionJoinMode, TEnumCondition } from '@service-providers/common'
+import { ConditionJoinMode } from '@service-providers/common'
 import { FilterRefinerGroupItem } from './filter-refiner-group-item'
 
 export const FilterRefinerGroups = observer((): ReactElement => {
