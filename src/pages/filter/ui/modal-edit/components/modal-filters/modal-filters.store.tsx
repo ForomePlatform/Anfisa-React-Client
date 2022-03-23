@@ -47,15 +47,15 @@ class ModalFiltersStore {
   ): void {
     if (checked && this.isAllFiltersChecked) return
 
-    groupList.forEach(([variantName]: [string, number]) => {
-      if (checked) {
-        dtreeStore.addSelectedFilter(variantName)
-      } else {
-        dtreeStore.removeSelectedFilter(variantName)
-      }
+    const groupNameList = groupList.map(([groupName]) => groupName)
 
-      this.setIsAllFiltersChecked(checked)
-    })
+    if (checked) {
+      dtreeStore.addSelectedFilterList(groupNameList)
+    } else {
+      dtreeStore.resetSelectedFilters()
+    }
+
+    this.setIsAllFiltersChecked(checked)
   }
 
   public saveChanges(): void {
