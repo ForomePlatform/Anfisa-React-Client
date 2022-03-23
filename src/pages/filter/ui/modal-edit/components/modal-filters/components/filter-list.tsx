@@ -7,15 +7,14 @@ import dtreeStore from '@store/dtree'
 import modalFiltersStore from '../modal-filters.store'
 
 interface IFiltersListProps {
-  chunks: any[]
-  currentPage: number
+  groupsPage: [string, number][]
 }
 
 export const FiltersList = observer(
-  ({ chunks, currentPage }: IFiltersListProps): ReactElement => (
+  ({ groupsPage }: IFiltersListProps): ReactElement => (
     <div className="flex-1 overflow-y-auto my-4 text-14">
-      {chunks[currentPage] ? (
-        chunks[currentPage].map((variant: [string, number]) => {
+      {groupsPage ? (
+        groupsPage.map((variant: [string, number]) => {
           const variantName = variant[0]
           const variantNumbers = variant[1]
 

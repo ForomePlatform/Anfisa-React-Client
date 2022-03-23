@@ -41,9 +41,13 @@ class ModalFiltersStore {
     }
   }
 
-  public selectAllGroupItems(checked: boolean, chunks: any[]): void {
+  public selectAllGroupItems(
+    checked: boolean,
+    groupList: [string, number][],
+  ): void {
     if (checked && this.isAllFiltersChecked) return
-    chunks[this.currentPage]?.forEach(([variantName]: [string, number]) => {
+
+    groupList.forEach(([variantName]: [string, number]) => {
       if (checked) {
         dtreeStore.addSelectedFilter(variantName)
       } else {

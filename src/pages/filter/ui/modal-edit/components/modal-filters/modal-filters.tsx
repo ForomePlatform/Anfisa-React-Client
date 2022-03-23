@@ -8,7 +8,6 @@ import dtreeStore from '@store/dtree'
 import { Pagintaion } from '@components/pagintaion'
 import activeStepStore from '@pages/filter/active-step.store'
 import { SelectModalButtons } from '@pages/filter/ui/query-builder/ui/select-modal-buttons'
-import { createChunks } from '@utils/createChunks'
 import dtreeModalStore from '../../../../modals.store'
 import { QueryBuilderSearch } from '../../../query-builder/query-builder-search'
 import { HeaderModal } from '../../../query-builder/ui/header-modal'
@@ -42,7 +41,12 @@ export const ModalFilters = observer((): ReactElement => {
         .includes(modalFiltersStore.searchValue.toLocaleLowerCase()),
   )
 
-  const chunks = createChunks(filteredGroupList, groupsPerPage)
+  const groupsPage = filteredGroupList.slice(
+    currentPage * groupsPerPage,
+    (currentPage + 1) * groupsPerPage,
+  )
+
+  const pagesNumbers = Math.ceil(filteredGroupList.length / groupsPerPage)
 
   useEffect(() => {
     if (currentGroup) {
@@ -93,14 +97,14 @@ export const ModalFilters = observer((): ReactElement => {
           {dtreeStore.selectedFilters.length || 0} {t('dtree.selected')}
         </div>
 
-        <FiltersMods chunks={chunks} />
+        <FiltersMods groupList={filteredGroupList} />
       </div>
 
-      <FiltersList chunks={chunks} currentPage={currentPage} />
+      <FiltersList groupsPage={groupsPage} />
 
       {filteredGroupList.length > groupsPerPage && (
         <Pagintaion
-          pagesNumbers={chunks.length}
+          pagesNumbers={pagesNumbers}
           currentPage={currentPage}
           setPageNumber={handlePageNumber}
         />
