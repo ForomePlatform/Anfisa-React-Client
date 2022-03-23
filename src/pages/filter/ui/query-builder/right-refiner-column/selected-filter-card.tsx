@@ -94,7 +94,11 @@ export const SelectedFilterCard = observer(
           />
 
           {isModalOptionsVisible && (
-            <ModalOptions closeModal={hideModalOptions} filterId={filterId} />
+            <ModalOptions
+              closeModal={hideModalOptions}
+              filterId={filterId}
+              filterName={filterName}
+            />
           )}
         </div>
 

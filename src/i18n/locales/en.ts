@@ -145,8 +145,8 @@ export const en = {
       total: 'Total',
       variants: 'variants',
     },
-    deleteAttriubute: 'Delete attribute',
-    copyData: 'Copy data',
+    delete: 'Delete',
+    copy: 'Copy',
   },
   dtree: {
     variants: 'variants',
