@@ -6,12 +6,10 @@ import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
 import modalFiltersStore from '../modal-filters.store'
 
-interface IFiltersListProps {
-  groupsPage: [string, number][]
-}
+export const FiltersList = observer((): ReactElement => {
+  const { groupsPage } = modalFiltersStore
 
-export const FiltersList = observer(
-  ({ groupsPage }: IFiltersListProps): ReactElement => (
+  return (
     <div className="flex-1 overflow-y-auto my-4 text-14">
       {groupsPage ? (
         groupsPage.map((variant: [string, number]) => {
@@ -47,5 +45,5 @@ export const FiltersList = observer(
         </div>
       )}
     </div>
-  ),
-)
+  )
+})

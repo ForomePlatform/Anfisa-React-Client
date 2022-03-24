@@ -41,13 +41,10 @@ class ModalFiltersStore {
     }
   }
 
-  public selectAllGroupItems(
-    checked: boolean,
-    groupList: [string, number][],
-  ): void {
+  public selectAllGroupItems(checked: boolean): void {
     if (checked && this.isAllFiltersChecked) return
 
-    const groupNameList = groupList.map(([groupName]) => groupName)
+    const groupNameList = this.filteredGroupList.map(([groupName]) => groupName)
 
     if (checked) {
       dtreeStore.addSelectedFilterList(groupNameList)
@@ -99,6 +96,28 @@ class ModalFiltersStore {
     this.isAllFiltersChecked = false
 
     this.originGroupList = toJS(dtreeStore.selectedGroups[2]) ?? []
+  }
+
+  get filteredGroupList(): [string, number][] {
+    const originGroupList: [string, number][] =
+      toJS(dtreeStore.selectedGroups[2]) ?? []
+
+    return originGroupList.filter((variant: [string, number]) =>
+      variant[0]
+        .toLocaleLowerCase()
+        .includes(this.searchValue.toLocaleLowerCase()),
+    )
+  }
+
+  get groupsPage(): [string, number][] {
+    return this.filteredGroupList.slice(
+      this.currentPage * this.groupsPerPage,
+      (this.currentPage + 1) * this.groupsPerPage,
+    )
+  }
+
+  get pagesNumbers(): number {
+    return Math.ceil(this.filteredGroupList.length / this.groupsPerPage)
   }
 }
 

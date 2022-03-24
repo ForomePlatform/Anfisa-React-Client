@@ -6,12 +6,8 @@ import { t } from '@i18n'
 import { ModsDivider } from '@pages/filter/ui/query-builder/ui/mods-divider'
 import modalFiltersStore from '../modal-filters.store'
 
-interface IFilterModsProps {
-  groupList: [string, number][]
-}
-
-export const FiltersMods = observer(
-  ({ groupList }: IFilterModsProps): ReactElement => (
+export const FiltersMods = observer((): ReactElement => {
+  return (
     <div className="flex">
       {/* Temporarily removed. Not yet implemented */}
       {/* <div className="flex items-center">
@@ -28,7 +24,7 @@ export const FiltersMods = observer(
 
       <div
         className="cursor-pointer text-blue-bright"
-        onClick={() => modalFiltersStore.selectAllGroupItems(true, groupList)}
+        onClick={() => modalFiltersStore.selectAllGroupItems(true)}
       >
         {t('general.selectAll')}
       </div>
@@ -37,10 +33,10 @@ export const FiltersMods = observer(
 
       <div
         className="cursor-pointer text-blue-bright"
-        onClick={() => modalFiltersStore.selectAllGroupItems(false, groupList)}
+        onClick={() => modalFiltersStore.selectAllGroupItems(false)}
       >
         {t('general.clearAll')}
       </div>
     </div>
-  ),
-)
+  )
+})

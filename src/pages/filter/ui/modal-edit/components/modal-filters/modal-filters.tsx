@@ -29,24 +29,16 @@ export const ModalFilters = observer((): ReactElement => {
 
   const currentGroupToModify = dtreeStore.stepData[currentStepIndex].groups
 
-  const { searchValue, currentPage, groupsPerPage } = modalFiltersStore
-
   const originGroupList: [string, number][] =
     toJS(dtreeStore.selectedGroups[2]) ?? []
 
-  const filteredGroupList = originGroupList.filter(
-    (variant: [string, number]) =>
-      variant[0]
-        .toLocaleLowerCase()
-        .includes(modalFiltersStore.searchValue.toLocaleLowerCase()),
-  )
-
-  const groupsPage = filteredGroupList.slice(
-    currentPage * groupsPerPage,
-    (currentPage + 1) * groupsPerPage,
-  )
-
-  const pagesNumbers = Math.ceil(filteredGroupList.length / groupsPerPage)
+  const {
+    filteredGroupList,
+    pagesNumbers,
+    searchValue,
+    currentPage,
+    groupsPerPage,
+  } = modalFiltersStore
 
   useEffect(() => {
     if (currentGroup) {
@@ -97,10 +89,10 @@ export const ModalFilters = observer((): ReactElement => {
           {dtreeStore.selectedFilters.length || 0} {t('dtree.selected')}
         </div>
 
-        <FiltersMods groupList={filteredGroupList} />
+        <FiltersMods />
       </div>
 
-      <FiltersList groupsPage={groupsPage} />
+      <FiltersList />
 
       {filteredGroupList.length > groupsPerPage && (
         <Pagintaion
