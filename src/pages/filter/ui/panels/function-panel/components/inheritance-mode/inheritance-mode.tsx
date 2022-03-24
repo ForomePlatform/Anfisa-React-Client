@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect } from 'react'
+import React, { ChangeEvent, useEffect, useMemo } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
@@ -11,7 +11,8 @@ import inheritanceModeStore from './inheritance-mode.store'
 import { ProblemGroups } from './problem-groups'
 
 export const InheritanceMode = observer(() => {
-  const { problemGroups, filteredComplexVariants } = functionPanelStore
+  const { problemGroups, filteredComplexVariants, complexVariants } =
+    functionPanelStore
 
   const problemGroupValues = inheritanceModeStore.problemGroupValues
 
@@ -52,7 +53,7 @@ export const InheritanceMode = observer(() => {
       inheritanceModeStore.setVariantValues([])
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isRedactorMode])
+  }, [isRedactorMode, selectedFilter])
 
   // update data
   useEffect(() => {
@@ -69,6 +70,12 @@ export const InheritanceMode = observer(() => {
     return () => filterStore.resetStatFuncData()
   }, [])
 
+  const variantsToDisplay = useMemo(() => {
+    return variantValues.length > filteredComplexVariants.length
+      ? complexVariants
+      : filteredComplexVariants
+  }, [complexVariants, filteredComplexVariants, variantValues.length])
+
   return (
     <React.Fragment>
       <ProblemGroups
@@ -81,7 +88,7 @@ export const InheritanceMode = observer(() => {
 
       <ComplexVariants
         variantValues={variantValues}
-        filteredComplexVariants={filteredComplexVariants}
+        variants={variantsToDisplay}
         handleChangeVariants={handleChangeVariants}
       />
 

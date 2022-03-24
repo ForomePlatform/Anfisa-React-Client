@@ -7,7 +7,7 @@ import inheritanceModeStore from './inheritance-mode.store'
 
 interface IComplexVariantsProps {
   variantValues: string[]
-  filteredComplexVariants: [string, number][]
+  variants: [string, number][]
   handleChangeVariants: (
     e: ChangeEvent<HTMLInputElement>,
     variantName: string,
@@ -17,7 +17,7 @@ interface IComplexVariantsProps {
 export const ComplexVariants = observer(
   ({
     variantValues,
-    filteredComplexVariants,
+    variants,
     handleChangeVariants,
   }: IComplexVariantsProps) => {
     return (
@@ -42,7 +42,7 @@ export const ComplexVariants = observer(
           </span>
         </div>
 
-        {filteredComplexVariants.map(([variantName, variantValue]) => {
+        {variants.map(([variantName, variantValue]) => {
           return (
             <div key={variantName} className="flex items-center mt-4">
               <Checkbox
@@ -57,7 +57,7 @@ export const ComplexVariants = observer(
           )
         })}
 
-        {filteredComplexVariants.length === 0 && (
+        {variants.length === 0 && (
           <div className="flex justify-center w-full mt-2 text-14 text-grey-blue">
             Out of choice. Select problem group.
           </div>

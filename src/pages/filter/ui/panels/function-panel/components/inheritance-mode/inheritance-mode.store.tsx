@@ -42,6 +42,8 @@ class InheritanceModeStore {
     e: ChangeEvent<HTMLInputElement>,
     problemGroup: string,
   ): void {
+    this.resetVariantValues()
+
     const problemGroups = e.target.checked
       ? [...this.problemGroupValues, problemGroup]
       : this.problemGroupValues.filter(

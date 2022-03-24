@@ -59,8 +59,6 @@ export class FilterStore {
     const filterId: string = nanoid()
 
     this._selectedFilters.set(filterId, condition)
-
-    this.setActiveFilterId(filterId)
   }
 
   public removeFilterBlock(filterId: string): void {

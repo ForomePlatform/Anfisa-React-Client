@@ -1,7 +1,8 @@
-import { makeAutoObservable, toJS } from 'mobx'
+import { makeAutoObservable } from 'mobx'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { InheritanceModeEnum } from '@core/enum/inheritance-mode-enum'
+import filterStore from '@store/filter'
 import {
   ConditionJoinMode,
   TFuncCondition,
@@ -9,16 +10,8 @@ import {
 import { getSelectValue } from '@utils/function-panel/getSelectValue'
 import { getStringScenario } from '@utils/function-panel/getStringScenario'
 import { getSortedArray } from '@utils/getSortedArray'
-import {
-  ICustomInheritanceModeCachedValues,
-  TScenario,
-} from '../../function-panel.interface'
+import { TScenario } from '../../function-panel.interface'
 import functionPanelStore from '../../function-panel.store'
-
-interface IConditions {
-  arrayScenario: TScenario[]
-  resetName?: string
-}
 
 interface ISendRequest {
   complexScenario?: [string, string][]
@@ -28,44 +21,47 @@ interface ISendRequest {
 }
 
 class CustomInheritanceModeStore {
+  scenario: TScenario[] = []
+  resetValue: string = ''
+
   constructor() {
     makeAutoObservable(this)
   }
 
-  public get cachedValues(): ICustomInheritanceModeCachedValues {
-    return toJS(
-      functionPanelStore.getCachedValues<ICustomInheritanceModeCachedValues>(
-        FuncStepTypesEnum.CustomInheritanceMode,
-      ),
-    )
+  public setScenario(scenario: TScenario[]) {
+    this.scenario = scenario
   }
 
-  public get scenario() {
-    return this.cachedValues?.conditions.scenario || {}
+  public setResetValue(resetValue: string) {
+    this.resetValue = resetValue
   }
 
-  public get reset() {
-    return this.cachedValues?.reset || ''
+  public clearScenario() {
+    this.scenario = []
+  }
+
+  public clearResetValue() {
+    this.resetValue = ''
   }
 
   public get stringScenario() {
-    return this.cachedValues ? getStringScenario(this.scenario) : ''
+    return this.scenario.length > 0 ? getStringScenario(this.scenario) : ''
   }
 
   public get firstSelectValue() {
-    return this.cachedValues
+    return this.scenario.length > 0
       ? getSelectValue(this.scenario, functionPanelStore.problemGroups[0])
       : ''
   }
 
   public get secondSelectValue() {
-    return this.cachedValues
+    return this.scenario.length > 0
       ? getSelectValue(this.scenario, functionPanelStore.problemGroups[1])
       : ''
   }
 
   public get thirdSelectValue() {
-    return this.cachedValues
+    return this.scenario.length > 0
       ? getSelectValue(this.scenario, functionPanelStore.problemGroups[2])
       : ''
   }
@@ -80,7 +76,7 @@ class CustomInheritanceModeStore {
 
   public get selectedFilterValue(): string {
     return `"scenario": ${
-      this.cachedValues ? `${getStringScenario(this.scenario)}` : '{}'
+      this.scenario.length > 0 ? `${getStringScenario(this.scenario)}` : '{}'
     }`
   }
 
@@ -111,6 +107,7 @@ class CustomInheritanceModeStore {
   // complex scenario creation
   public setComplexScenario(resetName: string): void {
     const problemGroups = functionPanelStore.problemGroups
+    this.setResetValue(resetName)
 
     if (resetName === InheritanceModeEnum.HomozygousRecessive_XLinked) {
       const complexScenario: any[] = [
@@ -165,23 +162,11 @@ class CustomInheritanceModeStore {
     }
   }
 
-  // cach values
-  public setConditions({ arrayScenario, resetName }: IConditions): void {
-    functionPanelStore.setCachedValues<ICustomInheritanceModeCachedValues>(
-      FuncStepTypesEnum.CustomInheritanceMode,
-      {
-        conditions: { scenario: arrayScenario },
-        reset: resetName || this.reset,
-      },
-    )
-  }
-
   // root function to update data
   public sendRequestAsync = async ({
     selectType,
     selectValue,
     complexScenario,
-    resetName,
   }: ISendRequest) => {
     let selectiveData: any[] = []
 
@@ -210,7 +195,7 @@ class CustomInheritanceModeStore {
 
     const params = `{"scenario":{${stringScenario}}}`
 
-    this.setConditions({ arrayScenario, resetName })
+    this.setScenario(arrayScenario)
 
     functionPanelStore.fetchStatFunc('Custom_Inheritance_Mode', params)
   }
@@ -225,6 +210,10 @@ class CustomInheritanceModeStore {
     ]
 
     functionPanelStore.sumbitConditions(custInhModeConditions)
+
+    filterStore.resetStatFuncData()
+    this.clearResetValue()
+    this.clearScenario()
   }
 }
 

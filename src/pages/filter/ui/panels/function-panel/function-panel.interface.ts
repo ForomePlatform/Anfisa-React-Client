@@ -27,8 +27,3 @@ export type TSelectValues = {
 }
 
 export type TScenario = [string, string[]]
-
-export interface ICustomInheritanceModeCachedValues {
-  conditions: { scenario: TScenario[] }
-  reset: string
-}
