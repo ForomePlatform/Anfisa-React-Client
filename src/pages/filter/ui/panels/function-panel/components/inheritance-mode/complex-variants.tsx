@@ -74,14 +74,18 @@ export const ComplexVariants = observer(
           <div className="mt-1">
             <AllNotMods
               isAllModeDisabled={variantsValues.length < 2}
-              isNotModeDisabled={problemGroupValues.length === 0}
-              isAllModeChecked={inheritanceModeStore.isAllMode}
-              isNotModeChecked={inheritanceModeStore.isNotMode}
+              isNotModeDisabled={variantsValues.length === 0}
+              isAllModeChecked={
+                inheritanceModeStore.currentMode === ModeTypes.All
+              }
+              isNotModeChecked={
+                inheritanceModeStore.currentMode === ModeTypes.Not
+              }
               toggleAllMode={() =>
-                inheritanceModeStore.toggleMode(ModeTypes.All)
+                inheritanceModeStore.setCurrentMode(ModeTypes.All)
               }
               toggleNotMode={() =>
-                inheritanceModeStore.toggleMode(ModeTypes.Not)
+                inheritanceModeStore.setCurrentMode(ModeTypes.Not)
               }
               groupSubKind={SubKindsEnum.InheritanceZ}
             />

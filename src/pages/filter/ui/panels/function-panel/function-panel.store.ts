@@ -2,6 +2,7 @@ import { cloneDeep } from 'lodash'
 import { makeAutoObservable, toJS } from 'mobx'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
+import { ModeTypes } from '@core/enum/mode-types-enum'
 import datasetStore from '@store/dataset'
 import filterStore from '@store/filter'
 import {
@@ -70,25 +71,25 @@ class FunctionPanelStore {
     await datasetStore.setConditionsAsync([conditions], 'func')
   }
 
-  public addSelectedFilters(variant: TVariant, modeTypes?: boolean[]): void {
+  public addSelectedFilters(variant: TVariant, modeType?: ModeTypes): void {
     filterStore.addSelectedFilters({
       group: this.filterGroup,
       groupItemName: this.filterName,
       variant,
-      modeTypes,
+      modeType,
     })
   }
 
   public sumbitConditions(
     conditions: TFuncCondition,
     variant: TVariant,
-    modeTypes?: boolean[],
+    modeType?: ModeTypes,
   ): void {
     if (datasetStore.activePreset) datasetStore.resetActivePreset()
 
     this.applyConditions(conditions)
 
-    this.addSelectedFilters(variant, modeTypes)
+    this.addSelectedFilters(variant, modeType)
 
     if (!datasetStore.isXL) {
       datasetStore.fetchWsListAsync()

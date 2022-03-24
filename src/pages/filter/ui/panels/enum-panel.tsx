@@ -28,7 +28,7 @@ export const EnumPanel = observer((): ReactElement => {
   useEffect(() => {
     setSearchValue('')
     setCurrentPage(0)
-    filterAttributesStore.resetModes()
+    filterAttributesStore.resetCurrentMode()
   }, [groupName])
 
   const preparedSearchValue = searchValue.toLocaleLowerCase()
@@ -61,7 +61,7 @@ export const EnumPanel = observer((): ReactElement => {
   const handleClear = () => {
     filterAttributesStore.clearCurrentGroupFilter()
     setSelectedVariants([])
-    filterAttributesStore.resetModes()
+    filterAttributesStore.resetCurrentMode()
 
     setCurrentPage(0)
   }
@@ -95,11 +95,16 @@ export const EnumPanel = observer((): ReactElement => {
       <div className="flex justify-end mt-2 -mb-4">
         <AllNotMods
           groupSubKind={groupSubKind}
-          isAllModeChecked={filterAttributesStore.isAllMode}
-          isNotModeChecked={filterAttributesStore.isNotMode}
+          isAllModeChecked={filterAttributesStore.currentMode === ModeTypes.All}
+          isNotModeChecked={filterAttributesStore.currentMode === ModeTypes.Not}
           isAllModeDisabled={selectedVariants.length < 2}
-          toggleAllMode={() => filterAttributesStore.toggleMode(ModeTypes.All)}
-          toggleNotMode={() => filterAttributesStore.toggleMode(ModeTypes.Not)}
+          isNotModeDisabled={selectedVariants.length === 0}
+          toggleAllMode={() =>
+            filterAttributesStore.setCurrentMode(ModeTypes.All)
+          }
+          toggleNotMode={() =>
+            filterAttributesStore.setCurrentMode(ModeTypes.Not)
+          }
         />
       </div>
 

@@ -16,9 +16,7 @@ interface IProps {
   selectStates: string[]
   handleReset: (e: string) => void
   resetValue?: string
-  isAllModeChecked?: boolean
   isNotModeChecked?: boolean
-  toggleAllMode?: () => void
   toggleNotMode?: () => void
 }
 
@@ -29,9 +27,7 @@ export const CustomInheritanceModeContent = observer(
     selectStates,
     handleReset,
     resetValue,
-    isAllModeChecked,
     isNotModeChecked,
-    toggleAllMode,
     toggleNotMode,
   }: IProps) => {
     const variants =
@@ -70,11 +66,8 @@ export const CustomInheritanceModeContent = observer(
           </div>
 
           <AllNotMods
-            isAllModeChecked={isAllModeChecked}
             isNotModeChecked={isNotModeChecked}
-            isAllModeDisabled={variants ? variants.length === 0 : true}
             isNotModeDisabled={variants ? variants.length === 0 : true}
-            toggleAllMode={toggleAllMode}
             toggleNotMode={toggleNotMode}
           />
         </div>

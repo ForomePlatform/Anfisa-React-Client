@@ -11,16 +11,18 @@ import functionPanelStore from '../../function-panel.store'
 import { IGeneRegionCachedValues } from './../../function-panel.interface'
 
 class GeneRegionStore {
-  isAllMode = false
-  isNotMode = false
+  currentMode?: ModeTypes
 
   constructor() {
     makeAutoObservable(this)
   }
 
-  public toggleMode(modeType: string): void {
-    this.isAllMode = modeType === ModeTypes.All
-    this.isNotMode = modeType === ModeTypes.Not
+  public setCurrentMode(modeType: ModeTypes): void {
+    this.currentMode = modeType
+  }
+
+  public resetCurrentMode(): void {
+    this.currentMode = undefined
   }
 
   public get cachedValues(): IGeneRegionCachedValues {
@@ -47,17 +49,14 @@ class GeneRegionStore {
     const conditions: TFuncCondition = [
       'func',
       FuncStepTypesEnum.GeneRegion,
-      getModeType(this.isAllMode, this.isNotMode),
+      getModeType(this.currentMode),
       ['True'],
       { locus: this.locusValue },
     ]
 
     const variant: TVariant = [`{"locus":"${this.locusValue}"}`, 0]
 
-    functionPanelStore.sumbitConditions(conditions, variant, [
-      this.isAllMode,
-      this.isNotMode,
-    ])
+    functionPanelStore.sumbitConditions(conditions, variant, this.currentMode)
   }
 }
 

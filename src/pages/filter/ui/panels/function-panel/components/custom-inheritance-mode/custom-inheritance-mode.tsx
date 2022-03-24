@@ -48,13 +48,11 @@ export const CustomInheritanceMode = observer(() => {
         selectStates={selectStates}
         handleReset={setComplexScenario}
         resetValue={reset}
-        isAllModeChecked={customInheritanceModeStore.isAllMode}
-        isNotModeChecked={customInheritanceModeStore.isNotMode}
-        toggleAllMode={() =>
-          customInheritanceModeStore.toggleMode(ModeTypes.All)
+        isNotModeChecked={
+          customInheritanceModeStore.currentMode === ModeTypes.Not
         }
         toggleNotMode={() =>
-          customInheritanceModeStore.toggleMode(ModeTypes.Not)
+          customInheritanceModeStore.setCurrentMode(ModeTypes.Not)
         }
       />
 

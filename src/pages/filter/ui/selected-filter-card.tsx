@@ -18,13 +18,13 @@ export const SelectedFilterCard = observer(
   ({ title, filters, onRemove }: Props): ReactElement => {
     const [isOpen, open, close] = useToggle(true)
 
-    const filtersEntries = useMemo(() => {
+    const filterContentWithoutModes = useMemo(() => {
       return Object.entries(filters).filter(
         filter => filter[0] !== 'All' && filter[0] !== 'Not',
       )
     }, [filters])
 
-    if (filtersEntries.length === 0) {
+    if (filterContentWithoutModes.length === 0) {
       return <Fragment />
     }
 
@@ -37,6 +37,14 @@ export const SelectedFilterCard = observer(
         : getNumericExpression(filterExp, filterName)
     }
 
+    const isAllMode: boolean = useMemo(() => {
+      return Object.keys(filters).includes('All')
+    }, [filters])
+
+    const isNotMode: boolean = useMemo(() => {
+      return Object.keys(filters).includes('Not')
+    }, [filters])
+
     return (
       <div>
         <div
@@ -44,7 +52,7 @@ export const SelectedFilterCard = observer(
           onClick={isOpen ? close : open}
         >
           <span className="leading-16px">{title}</span>
-          <AllNotModeView filters={filters} />
+          <AllNotModeView isAllMode={isAllMode} isNotMode={isNotMode} />
 
           <Icon
             name="Arrow"
@@ -57,7 +65,7 @@ export const SelectedFilterCard = observer(
 
         {isOpen && (
           <div>
-            {filtersEntries.map(([filterName, filterExpression]) => (
+            {filterContentWithoutModes.map(([filterName, filterExpression]) => (
               <div
                 key={filterName + filterExpression}
                 className="flex items-center pl-6 py-4"

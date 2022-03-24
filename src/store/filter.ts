@@ -21,7 +21,7 @@ interface AddSelectedFiltersI {
   group: string
   groupItemName: string
   variant: TVariant
-  modeTypes?: boolean[]
+  modeType?: ModeTypes | string
 }
 
 export class FilterStore {
@@ -60,7 +60,7 @@ export class FilterStore {
     group,
     groupItemName,
     variant,
-    modeTypes,
+    modeType,
   }: AddSelectedFiltersI) {
     if (!this.selectedFilters[group]) {
       this.selectedFilters[group] = {}
@@ -74,15 +74,8 @@ export class FilterStore {
       this.selectedFilters[group][groupItemName][variant[0]] = variant[1]
     }
 
-    // temporarilly, remove this agr begin required
-    if (modeTypes) {
-      if (modeTypes[0]) {
-        this.selectedFilters[group][groupItemName][ModeTypes.All] = 1
-      }
-
-      if (modeTypes[1]) {
-        this.selectedFilters[group][groupItemName][ModeTypes.Not] = 1
-      }
+    if (modeType) {
+      this.selectedFilters[group][groupItemName][modeType] = 1
     }
   }
 

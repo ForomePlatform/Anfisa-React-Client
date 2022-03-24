@@ -22,16 +22,18 @@ import {
 } from './../../function-panel.interface'
 
 class CompoundRequestStore {
-  isAllMode = false
-  isNotMode = false
+  currentMode?: ModeTypes
 
   constructor() {
     makeAutoObservable(this)
   }
 
-  public toggleMode(modeType: string): void {
-    this.isAllMode = modeType === ModeTypes.All
-    this.isNotMode = modeType === ModeTypes.Not
+  public setCurrentMode(modeType: ModeTypes): void {
+    this.currentMode = modeType
+  }
+
+  public resetCurrentMode(): void {
+    this.currentMode = undefined
   }
 
   public get cachedValues(): ICompoundRequestCachedValues {
@@ -211,7 +213,7 @@ class CompoundRequestStore {
     const conditions: TFuncCondition = [
       'func',
       FuncStepTypesEnum.CompoundRequest,
-      getModeType(this.isAllMode, this.isNotMode),
+      getModeType(this.currentMode),
       ['True'],
       {
         approx: this.cachedValues?.conditions.approx || null,
@@ -225,10 +227,7 @@ class CompoundRequestStore {
       0,
     ]
 
-    functionPanelStore.sumbitConditions(conditions, variant, [
-      this.isAllMode,
-      this.isNotMode,
-    ])
+    functionPanelStore.sumbitConditions(conditions, variant, this.currentMode)
   }
 }
 

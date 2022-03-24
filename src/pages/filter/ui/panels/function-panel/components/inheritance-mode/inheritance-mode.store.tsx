@@ -12,16 +12,18 @@ import { IInheritanceModeCachedValues } from '../../function-panel.interface'
 import functionPanelStore from '../../function-panel.store'
 
 class InheritanceModeStore {
-  isAllMode = false
-  isNotMode = false
+  currentMode?: ModeTypes
 
   constructor() {
     makeAutoObservable(this)
   }
 
-  public toggleMode(modeType: string): void {
-    this.isAllMode = modeType === ModeTypes.All
-    this.isNotMode = modeType === ModeTypes.Not
+  public setCurrentMode(modeType: ModeTypes): void {
+    this.currentMode = modeType
+  }
+
+  public resetCurrentMode(): void {
+    this.currentMode = undefined
   }
 
   public get cachedValues(): IInheritanceModeCachedValues {
@@ -89,9 +91,7 @@ class InheritanceModeStore {
     if (problemGroupValues.length === 0) return
 
     functionPanelStore.clearCachedValues(FuncStepTypesEnum.InheritanceMode)
-
-    this.isAllMode = false
-    this.isNotMode = false
+    this.resetCurrentMode()
   }
 
   public handleResetVariantsLocally(variantsValues: string[]): void {
@@ -135,7 +135,7 @@ class InheritanceModeStore {
     const conditions: TFuncCondition = [
       'func',
       FuncStepTypesEnum.InheritanceMode,
-      getModeType(this.isAllMode, this.isNotMode),
+      getModeType(this.currentMode),
       this.variantsValues,
       {
         problem_group:
@@ -145,10 +145,7 @@ class InheritanceModeStore {
 
     const variant: TVariant = [`${this.variantsValues}`, 0]
 
-    functionPanelStore.sumbitConditions(conditions, variant, [
-      this.isAllMode,
-      this.isNotMode,
-    ])
+    functionPanelStore.sumbitConditions(conditions, variant, this.currentMode)
 
     functionPanelStore.fetchStatFunc(
       FuncStepTypesEnum.InheritanceMode,

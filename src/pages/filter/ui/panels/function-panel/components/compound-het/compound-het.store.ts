@@ -21,16 +21,19 @@ export const CompoundHetSelectOptions = [
 
 class CompoundHetStore {
   statFuncStatus = ''
-  isAllMode = false
-  isNotMode = false
+
+  currentMode?: ModeTypes
 
   constructor() {
     makeAutoObservable(this)
   }
 
-  public toggleMode(modeType: string): void {
-    this.isAllMode = modeType === ModeTypes.All
-    this.isNotMode = modeType === ModeTypes.Not
+  public setCurrentMode(modeType: ModeTypes): void {
+    this.currentMode = modeType
+  }
+
+  public resetCurrentMode(): void {
+    this.currentMode = undefined
   }
 
   public get cachedValues(): ICompoundHetCachedValues {
@@ -87,17 +90,14 @@ class CompoundHetStore {
     const conditions: TFuncCondition = [
       'func',
       FuncStepTypesEnum.CompoundHet,
-      getModeType(this.isAllMode, this.isNotMode),
+      getModeType(this.currentMode),
       ['Proband'],
       { approx: this.cachedValues?.conditions.approx || null, state: null },
     ]
 
     const variant: TVariant = ['Proband', 0]
 
-    functionPanelStore.sumbitConditions(conditions, variant, [
-      this.isAllMode,
-      this.isNotMode,
-    ])
+    functionPanelStore.sumbitConditions(conditions, variant, this.currentMode)
   }
 
   public handleResetFields(): void {

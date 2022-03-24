@@ -45,16 +45,11 @@ export const CompundHet = observer((): ReactElement => {
         </div>
 
         <AllNotMods
-          isAllModeChecked={compoundHetStore.isAllMode}
-          isNotModeChecked={compoundHetStore.isNotMode}
-          isAllModeDisabled={
-            simpleVariants ? simpleVariants.length === 0 : true
-          }
+          isNotModeChecked={compoundHetStore.currentMode === ModeTypes.Not}
           isNotModeDisabled={
             simpleVariants ? simpleVariants.length === 0 : true
           }
-          toggleAllMode={() => compoundHetStore.toggleMode(ModeTypes.All)}
-          toggleNotMode={() => compoundHetStore.toggleMode(ModeTypes.Not)}
+          toggleNotMode={() => compoundHetStore.setCurrentMode(ModeTypes.Not)}
         />
       </div>
 
