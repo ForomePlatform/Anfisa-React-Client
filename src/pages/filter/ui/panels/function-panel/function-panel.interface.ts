@@ -4,13 +4,6 @@ export interface IGeneRegionCachedValues {
   }
 }
 
-export interface ICompoundHetCachedValues {
-  conditions: {
-    approx: string | null
-    state?: string | null
-  }
-  variants: string[]
-}
 export interface ICompoundRequestCachedValues {
   conditions: {
     approx: null

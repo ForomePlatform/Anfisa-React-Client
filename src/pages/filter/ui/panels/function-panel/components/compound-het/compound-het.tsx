@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite'
 import filterStore from '@store/filter'
 import { DropDown } from '@ui/dropdown'
 import { DisabledVariantsAmount } from '@pages/filter/ui/query-builder/ui/disabled-variants-amount'
+import { ICompoundHetArgs } from '@service-providers/common/common.interface'
 import functionPanelStore from '../../function-panel.store'
 import { PanelButtons } from '../panelButtons'
 import compoundHetStore, {
@@ -12,14 +13,30 @@ import compoundHetStore, {
 } from './compound-het.store'
 
 export const CompundHet = observer((): ReactElement => {
-  const { cachedValues, initialApprox } = compoundHetStore
-
+  const initialApprox = compoundHetStore.initialApprox
   const { simpleVariants } = functionPanelStore
+  const isRedactorMode = filterStore.isRedactorMode
+  const { selectedFilter } = filterStore
 
+  // set/reset data
+  useEffect(() => {
+    if (selectedFilter && isRedactorMode) {
+      const selectedFilterApprox = selectedFilter[4] as ICompoundHetArgs
+
+      compoundHetStore.setInitialApprox(selectedFilterApprox['approx'])
+    }
+
+    if (!isRedactorMode) {
+      compoundHetStore.resetInitialApprox()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isRedactorMode, selectedFilter])
+
+  // update data
   useEffect(() => {
     compoundHetStore.getStatFuncStatusAsync()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cachedValues])
+  }, [initialApprox])
 
   // to avoid displaying this data on the another func attr
   useEffect(() => {
@@ -35,7 +52,7 @@ export const CompundHet = observer((): ReactElement => {
         <span className="mr-2 text-18 leading-14px">Approx:</span>
 
         <DropDown
-          value={initialApprox}
+          value={initialApprox || 'shared transcript'}
           options={CompoundHetSelectOptions}
           onSelect={(arg: Option) => compoundHetStore.handleChangeApprox(arg)}
         />
