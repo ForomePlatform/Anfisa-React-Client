@@ -16,13 +16,10 @@ export const PanelButtons = observer(
     const handleClear = () => {
       filterStore.resetStatFuncData()
 
-      // TODO: this logic for deletion attr
-      // if (!datasetStore.isXL) {
-      //   datasetStore.fetchWsListAsync()
-      // }
-
       resetFields()
     }
+
+    const isRedactorMode = filterStore.isRedactorMode
 
     return (
       <div className="flex items-center justify-between mt-5">
@@ -34,7 +31,7 @@ export const PanelButtons = observer(
 
         <div className="flex justify-end">
           <Button
-            text={t('general.add')}
+            text={isRedactorMode ? t('general.apply') : t('general.add')}
             onClick={onSubmit}
             disabled={disabled}
           />

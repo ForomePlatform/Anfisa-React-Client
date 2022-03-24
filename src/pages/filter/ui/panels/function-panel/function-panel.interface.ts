@@ -4,11 +4,6 @@ export interface IGeneRegionCachedValues {
   }
 }
 
-export interface IInheritanceModeCachedValues {
-  conditions: { problem_group: string[] }
-  variants: string[]
-}
-
 export interface ICompoundHetCachedValues {
   conditions: {
     approx: string | null

@@ -65,7 +65,9 @@ class FunctionPanelStore {
   public sumbitConditions(condition: TFuncCondition): void {
     if (datasetStore.activePreset) datasetStore.resetActivePreset()
 
-    filterStore.addFilterBlock(condition)
+    filterStore.isRedactorMode
+      ? filterStore.addFilterToFilterBlock(condition)
+      : filterStore.addFilterBlock(condition)
 
     datasetStore.fetchDsStatAsync()
 

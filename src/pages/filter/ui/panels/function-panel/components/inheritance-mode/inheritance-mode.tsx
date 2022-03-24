@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import filterStore from '@store/filter'
+import { IInheritanceModeArgs } from '@service-providers/common/common.interface'
 import functionPanelStore from '../../function-panel.store'
 import { PanelButtons } from '../panelButtons'
 import { ComplexVariants } from './complex-variants'
@@ -12,24 +13,48 @@ import { ProblemGroups } from './problem-groups'
 export const InheritanceMode = observer(() => {
   const { problemGroups, filteredComplexVariants } = functionPanelStore
 
-  const { cachedValues, problemGroupValues, variantsValues } =
-    inheritanceModeStore
+  const problemGroupValues = inheritanceModeStore.problemGroupValues
+
+  const variantValues = inheritanceModeStore.variantValues
+
+  const { selectedFilter } = filterStore
+
+  const isRedactorMode = filterStore.isRedactorMode
 
   const handleChangeProblemGroups = (
     e: ChangeEvent<HTMLInputElement>,
     problemGroup: string,
   ) => {
-    inheritanceModeStore.handleChangeProblemGroups(e, problemGroup)
+    inheritanceModeStore.updateProblemGroupValues(e, problemGroup)
   }
 
   const handleChangeVariants = (
     e: ChangeEvent<HTMLInputElement>,
     variantName: string,
   ) => {
-    inheritanceModeStore.handleChangeVariants(e, variantName)
+    inheritanceModeStore.updateVariantValues(e, variantName)
   }
 
-  // check if there is some data in cachedValues from preset
+  // set/reset data
+  useEffect(() => {
+    if (selectedFilter && isRedactorMode) {
+      const selectedFilterProblemGroups =
+        selectedFilter[4] as IInheritanceModeArgs
+
+      inheritanceModeStore.setProblemGroupValues(
+        selectedFilterProblemGroups['problem_group']!,
+      )
+      inheritanceModeStore.setVariantValues(selectedFilter[3] as string[])
+    }
+
+    if (!isRedactorMode) {
+      inheritanceModeStore.setProblemGroupValues([])
+      inheritanceModeStore.setVariantValues([])
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isRedactorMode])
+
+  // update data
   useEffect(() => {
     functionPanelStore.fetchStatFunc(
       FuncStepTypesEnum.InheritanceMode,
@@ -37,8 +62,7 @@ export const InheritanceMode = observer(() => {
         problem_group: problemGroupValues || [],
       }),
     )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cachedValues])
+  }, [problemGroupValues])
 
   // to avoid displaying this data on the another func attr
   useEffect(() => {
@@ -56,18 +80,15 @@ export const InheritanceMode = observer(() => {
       <div className="h-px w-full bg-white my-4" />
 
       <ComplexVariants
-        variantsValues={variantsValues}
-        problemGroupValues={problemGroupValues}
+        variantValues={variantValues}
         filteredComplexVariants={filteredComplexVariants}
         handleChangeVariants={handleChangeVariants}
       />
 
       <PanelButtons
         onSubmit={inheritanceModeStore.handleSumbitCondtions}
-        resetFields={() =>
-          inheritanceModeStore.handleResetAllFieldsLocally(problemGroupValues)
-        }
-        disabled={variantsValues.length === 0}
+        resetFields={() => inheritanceModeStore.resetAllFields()}
+        disabled={variantValues.length === 0}
       />
     </React.Fragment>
   )

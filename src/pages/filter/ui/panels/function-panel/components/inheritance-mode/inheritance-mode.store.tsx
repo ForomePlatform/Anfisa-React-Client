@@ -1,38 +1,44 @@
 import { ChangeEvent } from 'react'
 import { makeAutoObservable } from 'mobx'
 
+import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
+import filterStore from '@store/filter'
 import {
   ConditionJoinMode,
   TFuncCondition,
 } from '@service-providers/common/common.interface'
-import { IInheritanceModeCachedValues } from '../../function-panel.interface'
 import functionPanelStore from '../../function-panel.store'
 
 class InheritanceModeStore {
+  problemGroupValues: string[] = []
+  variantValues: string[] = []
+
   constructor() {
     makeAutoObservable(this)
   }
 
-  public get cachedValues(): IInheritanceModeCachedValues {
-    return functionPanelStore.getCachedValues<IInheritanceModeCachedValues>(
-      FuncStepTypesEnum.InheritanceMode,
-    )
+  public setProblemGroupValues(problemGroupValues: string[]) {
+    this.problemGroupValues = problemGroupValues
   }
 
-  public get problemGroupValues(): string[] {
-    return this.cachedValues?.conditions.problem_group || []
+  public setVariantValues(variantValues: string[]) {
+    this.variantValues = variantValues
   }
 
-  public get variantsValues(): string[] {
-    return this.cachedValues?.variants || []
+  public resetVariantValues() {
+    this.variantValues = []
+  }
+
+  public resetProblemGroupValues() {
+    this.problemGroupValues = []
   }
 
   public get selectedFilterValue(): string {
-    return this.variantsValues.toString()
+    return this.variantValues.toString()
   }
 
-  public handleChangeProblemGroups(
+  public updateProblemGroupValues(
     e: ChangeEvent<HTMLInputElement>,
     problemGroup: string,
   ): void {
@@ -41,86 +47,49 @@ class InheritanceModeStore {
       : this.problemGroupValues.filter(
           (group: string) => group !== problemGroup,
         )
-
-    this.setConditions({ problemGroups })
+    this.setProblemGroupValues(problemGroups)
   }
 
-  public handleChangeVariants(
+  public updateVariantValues(
     e: ChangeEvent<HTMLInputElement>,
     variantName: string,
   ): void {
     const variants = e.target.checked
-      ? [...this.variantsValues, variantName]
-      : this.variantsValues.filter(
+      ? [...this.variantValues, variantName]
+      : this.variantValues.filter(
           (variantValue: string) => variantValue !== variantName,
         )
-    this.setConditions({
-      variants,
-    })
+
+    this.setVariantValues(variants)
   }
 
-  public handleSelectAllVariants(problemGroupValues: string[]): void {
+  public selectAllVariants(): void {
     if (functionPanelStore.filteredComplexVariants.length === 0) return
 
     const variantsGroup = functionPanelStore.filteredComplexVariants.map(
       variant => variant[0],
     )
 
-    functionPanelStore.setCachedValues<IInheritanceModeCachedValues>(
-      FuncStepTypesEnum.InheritanceMode,
-      {
-        conditions: { problem_group: problemGroupValues },
-        variants: variantsGroup,
-      },
-    )
+    this.setVariantValues(variantsGroup)
   }
 
-  public handleResetAllFieldsLocally(problemGroupValues: string[]): void {
-    if (problemGroupValues.length === 0) return
-
-    functionPanelStore.clearCachedValues(FuncStepTypesEnum.InheritanceMode)
+  public resetAllFields(): void {
+    this.resetProblemGroupValues()
+    this.resetVariantValues()
   }
 
-  public handleResetVariantsLocally(variantsValues: string[]): void {
+  public clearAllVariants(variantsValues: string[]): void {
     if (variantsValues.length === 0) return
 
-    functionPanelStore.clearCachedValues(FuncStepTypesEnum.InheritanceMode)
-  }
-
-  public setConditions({
-    problemGroups,
-    variants,
-  }: {
-    problemGroups?: string[]
-    variants?: string[]
-  }): void {
-    functionPanelStore.setCachedValues<IInheritanceModeCachedValues>(
-      FuncStepTypesEnum.InheritanceMode,
-      {
-        conditions: {
-          problem_group: problemGroups
-            ? problemGroups
-            : this.problemGroupValues,
-        },
-        variants: variants ? variants : [],
-      },
-    )
-
-    problemGroups &&
-      functionPanelStore.fetchStatFunc(
-        FuncStepTypesEnum.InheritanceMode,
-        JSON.stringify({
-          problem_group: problemGroups || this.problemGroupValues,
-        }),
-      )
+    this.resetVariantValues()
   }
 
   public handleSumbitCondtions = () => {
     const conditions: TFuncCondition = [
-      'func',
+      FilterKindEnum.Func,
       FuncStepTypesEnum.InheritanceMode,
       ConditionJoinMode.OR,
-      this.variantsValues,
+      this.variantValues,
       {
         problem_group:
           this.problemGroupValues.length > 0 ? this.problemGroupValues : null,
@@ -129,10 +98,8 @@ class InheritanceModeStore {
 
     functionPanelStore.sumbitConditions(conditions)
 
-    functionPanelStore.fetchStatFunc(
-      FuncStepTypesEnum.InheritanceMode,
-      JSON.stringify({ problem_group: this.problemGroupValues }),
-    )
+    filterStore.resetStatFuncData()
+    this.resetAllFields()
   }
 }
 

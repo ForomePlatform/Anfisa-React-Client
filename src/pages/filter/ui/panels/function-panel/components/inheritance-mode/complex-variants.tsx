@@ -6,8 +6,7 @@ import { t } from '@i18n'
 import inheritanceModeStore from './inheritance-mode.store'
 
 interface IComplexVariantsProps {
-  variantsValues: string[]
-  problemGroupValues: string[]
+  variantValues: string[]
   filteredComplexVariants: [string, number][]
   handleChangeVariants: (
     e: ChangeEvent<HTMLInputElement>,
@@ -17,8 +16,7 @@ interface IComplexVariantsProps {
 
 export const ComplexVariants = observer(
   ({
-    variantsValues,
-    problemGroupValues,
+    variantValues,
     filteredComplexVariants,
     handleChangeVariants,
   }: IComplexVariantsProps) => {
@@ -26,23 +24,19 @@ export const ComplexVariants = observer(
       <React.Fragment>
         <div className="flex items-center justify-between">
           <p className="text-14 leading-14px text-grey-blue">
-            {variantsValues.length} Selected
+            {variantValues.length} Selected
           </p>
 
           <span
             className="text-12 leading-14px text-blue-bright cursor-pointer ml-auto mr-2"
-            onClick={() =>
-              inheritanceModeStore.handleSelectAllVariants(problemGroupValues)
-            }
+            onClick={() => inheritanceModeStore.selectAllVariants()}
           >
             {t('general.selectAll')}
           </span>
 
           <span
             className="text-12 leading-14px text-blue-bright cursor-pointer"
-            onClick={() =>
-              inheritanceModeStore.handleResetVariantsLocally(variantsValues)
-            }
+            onClick={() => inheritanceModeStore.clearAllVariants(variantValues)}
           >
             {t('general.clearAll')}
           </span>
@@ -52,7 +46,7 @@ export const ComplexVariants = observer(
           return (
             <div key={variantName} className="flex items-center mt-4">
               <Checkbox
-                checked={variantsValues.includes(variantName)}
+                checked={variantValues.includes(variantName)}
                 onChange={e => {
                   handleChangeVariants(e, variantName)
                 }}
