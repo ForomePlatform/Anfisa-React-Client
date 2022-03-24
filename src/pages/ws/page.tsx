@@ -25,8 +25,8 @@ import { TableVariants } from './ui/table-variants'
 
 const WSPage = observer((): ReactElement => {
   const params = useParams()
-  const stringedConditions = params.get('conditions') ?? ''
-  const conditions: Condition[] = JSON.parse(stringedConditions)
+  const stringifyedConditions = params.get('conditions') ?? ''
+  const conditions: Condition[] = JSON.parse(stringifyedConditions)
 
   useDatasetName()
 
