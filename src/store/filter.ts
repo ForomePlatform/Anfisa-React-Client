@@ -70,19 +70,6 @@ export class FilterStore {
     this._selectedFilters.set(filterId, condition)
   }
 
-  // TODO: will be implemented after new UX/UI is ready
-  // public removeFilterBlock(filterBlockName: string): void {
-  //   // const id = this.selectedFiltersMapAsArray.reverse().map(filter => {
-  //   //   if (filter[1][1] === filterBlockName) return filter[0]
-  //   // })
-  // }
-
-  public addFilterToFilterBlock(condition: TCondition): void {
-    const filterId: string = nanoid()
-
-    this._selectedFilters.set(filterId, condition)
-  }
-
   public removeFilterFromFilterBlock({
     filterId,
     subFilterIdx,
@@ -90,11 +77,12 @@ export class FilterStore {
   }: IRemoveFilter): void {
     const currentCondition = this._selectedFilters.get(filterId)!
 
-    if (
-      filterType === FilterKindEnum.Numeric ||
-      currentCondition[3]?.length === 1
-    ) {
+    const isFilterReadyToBeDeleted =
+      filterType === FilterKindEnum.Numeric || currentCondition[3]?.length === 1
+
+    if (isFilterReadyToBeDeleted) {
       this._selectedFilters.delete(filterId)
+
       return
     }
 
