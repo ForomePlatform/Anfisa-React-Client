@@ -29,6 +29,7 @@ import {
   IDsListArguments,
   ITabReport,
 } from './../service-providers/dataset-level/dataset-level.interface'
+import { IZoneDescriptor } from './../service-providers/ws-dataset-support/ws-dataset-support.interface'
 import dirinfoStore from './dirinfo'
 import operations from './operations'
 
@@ -556,34 +557,25 @@ export class DatasetStore {
   async fetchTagSelectAsync() {
     if (this.isXL) return
 
-    const response = await fetch(
-      getApiUrl(`tag_select?ds=${this.datasetName}`),
-      {
-        method: 'POST',
-      },
-    )
-
-    const result = await response.json()
+    const tagSelect = await wsDatasetProvider.getTagSelect({
+      ds: this.datasetName,
+    })
 
     runInAction(() => {
-      this.tags = [...result['tag-list']].filter(item => item !== '_note')
+      this.tags = [...tagSelect['tag-list']].filter(item => item !== '_note')
     })
   }
 
   async fetchWsTagsAsync() {
     if (this.isXL) return
 
-    const response = await fetch(
-      getApiUrl(`ws_tags?ds=${this.datasetName}&rec=${variantStore.index}`),
-      {
-        method: 'POST',
-      },
-    )
-
-    const result = await response.json()
+    const wsTags = await wsDatasetProvider.getWsTags({
+      ds: this.datasetName,
+      rec: variantStore.index,
+    })
 
     runInAction(() => {
-      this.tags = [...result['op-tags'], ...result['check-tags']].filter(
+      this.tags = [...wsTags['op-tags'], ...wsTags['check-tags']].filter(
         item => item !== '_note',
       )
     })
@@ -635,43 +627,26 @@ export class DatasetStore {
   }
 
   async fetchZoneListAsync(zone: string) {
-    const body = new URLSearchParams({ ds: this.datasetName, zone })
-
-    const response = await fetch(getApiUrl('zone_list'), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body,
-    })
-
-    const result = await response.json()
+    const zoneList = (await wsDatasetProvider.getZoneList({
+      ds: this.datasetName,
+      zone,
+    })) as IZoneDescriptor
 
     runInAction(() => {
       zone === 'Symbol'
-        ? (this.genes = result.variants)
-        : (this.genesList = result.variants)
+        ? (this.genes = zoneList.variants)
+        : (this.genesList = zoneList.variants)
     })
   }
 
   async fetchSamplesZoneAsync() {
-    const body = new URLSearchParams({
+    const zoneList = (await wsDatasetProvider.getZoneList({
       ds: this.datasetName,
       zone: 'Has_Variant',
-    })
-
-    const response = await fetch(getApiUrl('zone_list'), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body,
-    })
-
-    const result = await response.json()
+    })) as IZoneDescriptor
 
     runInAction(() => {
-      this.samples = result.variants
+      this.samples = zoneList.variants
     })
   }
 
