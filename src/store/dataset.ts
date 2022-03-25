@@ -213,7 +213,10 @@ export class DatasetStore {
       } else {
         cloneConditions[subGroupIndex][3] = filteredItems
       }
-    } else if (conditionKind === FilterKindEnum.Func) {
+    } else if (
+      conditionKind === FilterKindEnum.Func &&
+      itemName.includes('locus')
+    ) {
       cloneConditions = cloneConditions.filter(
         (condition: any) =>
           JSON.stringify(condition[condition.length - 1]) !== itemName,
@@ -267,15 +270,16 @@ export class DatasetStore {
     this.startPresetConditions = []
   }
 
-  async initDatasetAsync(
-    datasetName: string = this.datasetName,
-    prevPage?: string,
-  ) {
+  async initDatasetAsync(datasetName: string = this.datasetName) {
     this.datasetName = datasetName
 
     await dirinfoStore.fetchDsinfoAsync(datasetName)
 
-    if (!prevPage) {
+    const isTabReportEmpty = this.tabReport.length === 0
+    const isWsRecordsEmpty = this.wsRecords.length === 0
+    const shouldDataBeUpdated = isTabReportEmpty && isWsRecordsEmpty
+
+    if (shouldDataBeUpdated) {
       await this.fetchWsListAsync(this.isXL, 'withoutTabReport')
 
       this.filteredNo.length === 0

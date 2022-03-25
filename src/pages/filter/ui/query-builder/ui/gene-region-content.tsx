@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
 import { Input } from '@ui/input'
-import { AllNotModalMods } from './all-not-modal-mods'
+import { AllNotMods } from './all-not-mods'
 import { DisabledVariantsAmount } from './disabled-variants-amount'
 
 interface IProps {
@@ -11,7 +11,7 @@ interface IProps {
   validateValue: (e: string) => void
   handleSetValue: (e: string) => void
   isErrorVisible: boolean
-  variants: [string, number]
+  variants: string[] | [string, number]
 }
 
 export const GeneRegionContent = observer(
@@ -46,7 +46,7 @@ export const GeneRegionContent = observer(
             </div>
           </div>
 
-          <AllNotModalMods />
+          <AllNotMods />
         </div>
 
         <DisabledVariantsAmount

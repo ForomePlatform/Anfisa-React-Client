@@ -150,6 +150,8 @@ export interface IFuncPropertyStatus
   err?: string
   'rq-id': string
   no?: string
+  family?: string[]
+  'approx-modes'?: string[][]
 }
 
 export type TPropertyStatus =

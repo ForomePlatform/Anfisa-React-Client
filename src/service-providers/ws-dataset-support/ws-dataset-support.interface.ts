@@ -1,6 +1,7 @@
 import {
   IRecordDescriptor,
   TCondition,
+  TItemsCount,
   TZoneSetting,
 } from 'service-providers/common/common.interface'
 
@@ -15,8 +16,8 @@ export interface IWsListArguments {
 
 export interface IWsList {
   ds: string
-  'total-counts': number[]
-  'filtered-counts': number[]
+  'total-counts': TItemsCount[]
+  'filtered-counts': TItemsCount[]
   records: IRecordDescriptor[]
   'active-samples?': string
 }

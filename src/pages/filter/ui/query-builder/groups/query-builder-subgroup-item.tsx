@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import cn from 'classnames'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
@@ -25,7 +25,7 @@ interface IProps {
 
 export const QueryBuilderSubgroupItem = observer(
   ({ subGroupItem, isModal, groupName }: IProps) => {
-    const [isVisibleSubGroupItem, setIsVisibleSubGroupItem] = useState(true)
+    const [isVisibleSubGroupItem, setIsVisibleSubGroupItem] = useState(false)
 
     const [, writeScrollPosition] = useScrollPosition({
       elem: '#attributes-container',
@@ -59,24 +59,39 @@ export const QueryBuilderSubgroupItem = observer(
 
       if (group.kind === FilterKindEnum.Func) {
         group.name === FuncStepTypesEnum.InheritanceMode &&
-          dtreeModalStore.openModalSelectInheritanceMode(group.name, source)
+          dtreeModalStore.openModalInheritanceMode(
+            group.name,
+            undefined,
+            source,
+          )
 
         group.name === FuncStepTypesEnum.CustomInheritanceMode &&
-          dtreeModalStore.openModalSelectCustomInheritanceMode(
+          dtreeModalStore.openModalCustomInheritanceMode(
             group.name,
+            undefined,
             source,
           )
 
         group.name === FuncStepTypesEnum.CompoundHet &&
-          dtreeModalStore.openModalSelectCompoundHet(group.name, source)
+          dtreeModalStore.openModalCompoundHet(group.name, undefined, source)
 
         group.name === FuncStepTypesEnum.CompoundRequest &&
-          dtreeModalStore.openModalSelectCompoundRequest(group.name, source)
+          dtreeModalStore.openModalCompoundRequest(
+            group.name,
+            undefined,
+            source,
+          )
 
         group.name === FuncStepTypesEnum.GeneRegion &&
-          dtreeModalStore.openModalSelectGeneRegion(group.name, source)
+          dtreeModalStore.openModalGeneRegion(group.name, undefined, source)
       }
     }
+
+    const { filterChangeIndicator } = dtreeStore
+
+    useEffect(() => {
+      if (filterChangeIndicator === -1) setIsVisibleSubGroupItem(true)
+    }, [filterChangeIndicator])
 
     const handleAttrClick = (group: StatList) => {
       const page = filterStore.method
@@ -107,8 +122,7 @@ export const QueryBuilderSubgroupItem = observer(
             <span
               className={cn('text-14', {
                 'text-black': !isVisibleSubGroupItem,
-                'text-grey-blue': !isVisibleSubGroupItem && !isModal,
-                'text-white': isVisibleSubGroupItem && !isModal,
+                'text-white': !isModal,
                 'hover:text-white': !isModal,
                 'hover:text-blue-dark': isModal,
                 'text-blue-dark': isModal && isVisibleSubGroupItem,
