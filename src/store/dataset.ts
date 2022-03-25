@@ -624,7 +624,7 @@ export class DatasetStore {
           ? wsList.records.map((variant: { no: number }) => variant.no)
           : []
 
-        this.statAmount = get(wsList, 'filtered-counts', [])
+        this.statAmount = get(wsList, 'filtered-counts', []) as number[]
         this.wsRecords = wsList.records
       })
     }
