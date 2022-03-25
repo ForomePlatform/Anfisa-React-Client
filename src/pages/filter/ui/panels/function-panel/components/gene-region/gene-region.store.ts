@@ -1,26 +1,26 @@
 import { makeAutoObservable } from 'mobx'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
+import filterStore from '@store/filter'
 import {
   ConditionJoinMode,
   TFuncCondition,
 } from '@service-providers/common/common.interface'
 import functionPanelStore from '../../function-panel.store'
-import { IGeneRegionCachedValues } from './../../function-panel.interface'
 
 class GeneRegionStore {
+  locusValue: string = ''
+
   constructor() {
     makeAutoObservable(this)
   }
 
-  public get cachedValues(): IGeneRegionCachedValues {
-    return functionPanelStore.getCachedValues<IGeneRegionCachedValues>(
-      FuncStepTypesEnum.GeneRegion,
-    )
+  public setLocusValue(locusValue: string) {
+    this.locusValue = locusValue
   }
 
-  public get locusValue(): string {
-    return this.cachedValues?.conditions.locus || ''
+  public resetLocusValue() {
+    this.locusValue = ''
   }
 
   public get selectedFilterValue(): string {
@@ -43,6 +43,9 @@ class GeneRegionStore {
     ]
 
     functionPanelStore.sumbitConditions(conditions)
+
+    this.resetLocusValue()
+    filterStore.resetStatFuncData()
   }
 }
 

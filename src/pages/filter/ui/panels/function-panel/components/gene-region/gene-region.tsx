@@ -5,6 +5,7 @@ import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { t } from '@i18n'
 import filterStore from '@store/filter'
 import { Input } from '@ui//input'
+import { IGeneRegionArgs } from '@service-providers/common/common.interface'
 import { validateLocusCondition } from '@utils/validation/validateLocusCondition'
 import { DisabledVariantsAmount } from '../../../../query-builder/ui/disabled-variants-amount'
 import functionPanelStore from '../../function-panel.store'
@@ -12,9 +13,12 @@ import { PanelButtons } from '../panelButtons'
 import geneRegionStore from './gene-region.store'
 
 export const GeneRegion = observer(() => {
-  const { locusValue, selectedFilterValue } = geneRegionStore
+  const { selectedFilter } = filterStore
+  const isRedactorMode = filterStore.isRedactorMode
 
   const { simpleVariants } = functionPanelStore
+
+  const { locusValue, selectedFilterValue } = geneRegionStore
 
   const [isErrorVisible, setIsErrorVisible] = useState<boolean>(false)
 
@@ -22,6 +26,22 @@ export const GeneRegion = observer(() => {
     validateLocusCondition({ value, setIsErrorVisible })
   }
 
+  // set/reset data
+  useEffect(() => {
+    if (selectedFilter && isRedactorMode) {
+      const selectedFilterConditions = selectedFilter[4] as IGeneRegionArgs
+
+      const selectedFilterLocusValue = selectedFilterConditions['locus']
+
+      geneRegionStore.setLocusValue(selectedFilterLocusValue)
+    }
+
+    if (!isRedactorMode) {
+      geneRegionStore.resetLocusValue()
+    }
+  }, [isRedactorMode, selectedFilter])
+
+  // update data
   useEffect(() => {
     functionPanelStore.fetchStatFunc(
       FuncStepTypesEnum.GeneRegion,
@@ -45,7 +65,7 @@ export const GeneRegion = observer(() => {
           <Input
             value={locusValue}
             onChange={e => {
-              geneRegionStore.setConditions(e.target.value)
+              geneRegionStore.setLocusValue(e.target.value)
               validateValue(e.target.value)
             }}
           />
