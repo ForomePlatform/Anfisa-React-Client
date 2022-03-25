@@ -4,15 +4,6 @@ export interface IGeneRegionCachedValues {
   }
 }
 
-export interface ICompoundRequestCachedValues {
-  conditions: {
-    approx: null
-    state: null
-    request: TRequestCondition[]
-  }
-  reset: string
-}
-
 export type TRequestCondition = [number, TSelectValues]
 
 export type TSelectValues = {

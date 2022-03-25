@@ -11,14 +11,14 @@ import { PanelButtons } from '../panelButtons'
 import customInheritanceModeStore from './custom-inheritance-mode.store'
 
 export const CustomInheritanceMode = observer(() => {
+  const { selectedFilter } = filterStore
+  const isRedactorMode = filterStore.isRedactorMode
+
   const { simpleVariants, problemGroups } = functionPanelStore
 
   const { selectStates } = customInheritanceModeStore
-  const { selectedFilter } = filterStore
-
   const scenario = customInheritanceModeStore.scenario
   const resetValue = customInheritanceModeStore.resetValue
-  const isRedactorMode = filterStore.isRedactorMode
 
   const setComplexScenario = (resetName: string): void => {
     customInheritanceModeStore.setComplexScenario(resetName)
@@ -27,17 +27,6 @@ export const CustomInheritanceMode = observer(() => {
   const setSingleScenario = (group: string, selectValue: string): void => {
     customInheritanceModeStore.setSingleScenario(group, selectValue)
   }
-
-  // update data
-  useEffect(() => {
-    const params = `{"scenario":${
-      scenario.length > 0 ? `{${getStringScenario(scenario)}}` : '{}'
-    }}`
-
-    functionPanelStore.fetchStatFunc('Custom_Inheritance_Mode', params)
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [scenario])
 
   // set/reset data
   useEffect(() => {
@@ -60,6 +49,17 @@ export const CustomInheritanceMode = observer(() => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRedactorMode, selectedFilter])
+
+  // update data
+  useEffect(() => {
+    const params = `{"scenario":${
+      scenario.length > 0 ? `{${getStringScenario(scenario)}}` : '{}'
+    }}`
+
+    functionPanelStore.fetchStatFunc('Custom_Inheritance_Mode', params)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [scenario])
 
   // to avoid displaying this data on the another func attr
   useEffect(() => {

@@ -11,16 +11,14 @@ import inheritanceModeStore from './inheritance-mode.store'
 import { ProblemGroups } from './problem-groups'
 
 export const InheritanceMode = observer(() => {
+  const { selectedFilter } = filterStore
+  const isRedactorMode = filterStore.isRedactorMode
+
   const { problemGroups, filteredComplexVariants, complexVariants } =
     functionPanelStore
 
   const problemGroupValues = inheritanceModeStore.problemGroupValues
-
   const variantValues = inheritanceModeStore.variantValues
-
-  const { selectedFilter } = filterStore
-
-  const isRedactorMode = filterStore.isRedactorMode
 
   const handleChangeProblemGroups = (
     e: ChangeEvent<HTMLInputElement>,

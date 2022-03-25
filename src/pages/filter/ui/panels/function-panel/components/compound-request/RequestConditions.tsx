@@ -18,29 +18,20 @@ export const resetOptions = [
 
 interface IRequestConditionsProps {
   activeRequestIndex: number
-  setActiveRequestIndex: (item: number) => void
 }
 
 export const RequestConditions = observer(
-  ({
-    activeRequestIndex,
-    setActiveRequestIndex,
-  }: IRequestConditionsProps): JSX.Element => (
+  ({ activeRequestIndex }: IRequestConditionsProps): JSX.Element => (
     <div className="flex flex-col w-full mt-4 text-14">
       {compoundRequestStore.requestCondition.map(
         (item: TRequestCondition, index: number) => (
           <div
             className={cn(
               'flex justify-between w-full shadow-dark py-2 my-2 px-2 cursor-pointer step-content-area',
-              index === activeRequestIndex ? ' bg-white' : 'bg-blue-medium',
+              index === activeRequestIndex ? 'bg-blue-medium' : 'bg-white',
             )}
             key={item.toString() + index}
-            onClick={() =>
-              compoundRequestStore.handleActiveRequest(
-                index,
-                setActiveRequestIndex,
-              )
-            }
+            onClick={() => compoundRequestStore.handleActiveRequest(index)}
           >
             <div className="flex cursor-pointer step-content-area">
               <InputNumber
@@ -62,10 +53,7 @@ export const RequestConditions = observer(
                     className="step-content-area"
                     key={group}
                     onClick={() =>
-                      compoundRequestStore.handleActiveRequest(
-                        index,
-                        setActiveRequestIndex,
-                      )
+                      compoundRequestStore.handleActiveRequest(index)
                     }
                   >
                     <span className="cursor-pointer step-content-area">

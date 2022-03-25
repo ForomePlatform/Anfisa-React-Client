@@ -13,10 +13,12 @@ import compoundHetStore, {
 } from './compound-het.store'
 
 export const CompundHet = observer((): ReactElement => {
-  const initialApprox = compoundHetStore.initialApprox
-  const { simpleVariants } = functionPanelStore
-  const isRedactorMode = filterStore.isRedactorMode
   const { selectedFilter } = filterStore
+  const isRedactorMode = filterStore.isRedactorMode
+
+  const { simpleVariants } = functionPanelStore
+
+  const initialApprox = compoundHetStore.initialApprox
 
   // set/reset data
   useEffect(() => {

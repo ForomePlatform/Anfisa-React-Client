@@ -1,3 +1,5 @@
+import { TRequestCondition } from '@pages/filter/ui/panels/function-panel/function-panel.interface'
+
 export enum DatasetKinds {
   WS = 'ws',
   XL = 'xl',
@@ -44,7 +46,7 @@ export interface ICompoundHetArgs {
 
 export interface ICompoundRequestArgs {
   approx: string | null
-  request: [number, { [key: string]: string[] }]
+  request: TRequestCondition[]
   state?: string | null
 }
 
