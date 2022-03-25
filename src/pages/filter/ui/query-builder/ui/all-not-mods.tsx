@@ -4,12 +4,13 @@ import { t } from '@i18n'
 import { ModsDivider } from './mods-divider'
 
 interface IAllNotModsProps {
-  isAllModeDisabled?: boolean
   isNotModeDisabled?: boolean
-  isAllModeChecked?: boolean
   isNotModeChecked?: boolean
-  toggleAllMode?: () => void
   toggleNotMode?: () => void
+  isAllModeDisabled?: boolean
+  isAllModeChecked?: boolean
+  toggleAllMode?: () => void
+  groupSubKind?: string
 }
 
 export const AllNotMods = ({

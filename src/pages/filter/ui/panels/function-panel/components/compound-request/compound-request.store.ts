@@ -3,13 +3,13 @@ import { makeAutoObservable } from 'mobx'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
-import modalEditStore from '@pages/filter/ui/modal-edit/modal-edit.store'
 import {
   TFuncCondition,
   TVariant,
 } from '@service-providers/common/common.interface'
 import { getFilteredRequestCondition } from '@utils/function-panel/getFilteredRequestCondition'
 import { getFuncParams } from '@utils/getFuncParams'
+import { getModeType } from '@utils/getModeType'
 import { getRequestData } from '@utils/getRequestData'
 import { getResetRequestData } from '@utils/getResetRequestData'
 import { getResetType } from '@utils/getResetType'
@@ -22,16 +22,18 @@ import {
 } from './../../function-panel.interface'
 
 class CompoundRequestStore {
-  isAllMode = false
-  isNotMode = false
+  currentMode?: ModeTypes
 
   constructor() {
     makeAutoObservable(this)
   }
 
-  public toggleMode(modeType: string): void {
-    this.isAllMode = modeType === ModeTypes.All
-    this.isNotMode = modeType === ModeTypes.Not
+  public setCurrentMode(modeType: ModeTypes): void {
+    this.currentMode = modeType
+  }
+
+  public resetCurrentMode(): void {
+    this.currentMode = undefined
   }
 
   public get cachedValues(): ICompoundRequestCachedValues {
@@ -211,7 +213,7 @@ class CompoundRequestStore {
     const conditions: TFuncCondition = [
       'func',
       FuncStepTypesEnum.CompoundRequest,
-      modalEditStore.getModeType(this.isAllMode, this.isNotMode),
+      getModeType(this.currentMode),
       ['True'],
       {
         approx: this.cachedValues?.conditions.approx || null,
@@ -225,7 +227,7 @@ class CompoundRequestStore {
       0,
     ]
 
-    functionPanelStore.sumbitConditions(conditions, variant)
+    functionPanelStore.sumbitConditions(conditions, variant, this.currentMode)
   }
 }
 

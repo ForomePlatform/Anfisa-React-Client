@@ -9,7 +9,7 @@ import { PanelButtons } from '../panelButtons'
 import { AprroxAndState } from './approx-state'
 import compoundRequestStore from './compound-request.store'
 import { ControlButtons } from './control-buttons'
-import { RequestConditions } from './RequestConditions'
+import { RequestConditions } from './request-conditions'
 import { ResetSelect } from './reset-select'
 
 export const resetOptions = [

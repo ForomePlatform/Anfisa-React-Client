@@ -2,25 +2,27 @@ import { makeAutoObservable } from 'mobx'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
-import modalEditStore from '@pages/filter/ui/modal-edit/modal-edit.store'
 import {
   TFuncCondition,
   TVariant,
 } from '@service-providers/common/common.interface'
+import { getModeType } from '@utils/getModeType'
 import functionPanelStore from '../../function-panel.store'
 import { IGeneRegionCachedValues } from './../../function-panel.interface'
 
 class GeneRegionStore {
-  isAllMode = false
-  isNotMode = false
+  currentMode?: ModeTypes
 
   constructor() {
     makeAutoObservable(this)
   }
 
-  public toggleMode(modeType: string): void {
-    this.isAllMode = modeType === ModeTypes.All
-    this.isNotMode = modeType === ModeTypes.Not
+  public setCurrentMode(modeType: ModeTypes): void {
+    this.currentMode = modeType
+  }
+
+  public resetCurrentMode(): void {
+    this.currentMode = undefined
   }
 
   public get cachedValues(): IGeneRegionCachedValues {
@@ -47,14 +49,14 @@ class GeneRegionStore {
     const conditions: TFuncCondition = [
       'func',
       FuncStepTypesEnum.GeneRegion,
-      modalEditStore.getModeType(this.isAllMode, this.isNotMode),
+      getModeType(this.currentMode),
       ['True'],
       { locus: this.locusValue },
     ]
 
     const variant: TVariant = [`{"locus":"${this.locusValue}"}`, 0]
 
-    functionPanelStore.sumbitConditions(conditions, variant)
+    functionPanelStore.sumbitConditions(conditions, variant, this.currentMode)
   }
 }
 

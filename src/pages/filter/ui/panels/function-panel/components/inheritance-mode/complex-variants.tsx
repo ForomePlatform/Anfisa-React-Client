@@ -3,6 +3,7 @@ import Checkbox from 'react-three-state-checkbox'
 import { observer } from 'mobx-react-lite'
 
 import { ModeTypes } from '@core/enum/mode-types-enum'
+import { SubKindsEnum } from '@core/enum/sub-kinds-enum'
 import { t } from '@i18n'
 import { AllNotMods } from '@pages/filter/ui/query-builder/ui/all-not-mods'
 import inheritanceModeStore from './inheritance-mode.store'
@@ -73,15 +74,20 @@ export const ComplexVariants = observer(
           <div className="mt-1">
             <AllNotMods
               isAllModeDisabled={variantsValues.length < 2}
-              isNotModeDisabled={problemGroupValues.length === 0}
-              isAllModeChecked={inheritanceModeStore.isAllMode}
-              isNotModeChecked={inheritanceModeStore.isNotMode}
+              isNotModeDisabled={variantsValues.length === 0}
+              isAllModeChecked={
+                inheritanceModeStore.currentMode === ModeTypes.All
+              }
+              isNotModeChecked={
+                inheritanceModeStore.currentMode === ModeTypes.Not
+              }
               toggleAllMode={() =>
-                inheritanceModeStore.toggleMode(ModeTypes.All)
+                inheritanceModeStore.setCurrentMode(ModeTypes.All)
               }
               toggleNotMode={() =>
-                inheritanceModeStore.toggleMode(ModeTypes.Not)
+                inheritanceModeStore.setCurrentMode(ModeTypes.Not)
               }
+              groupSubKind={SubKindsEnum.InheritanceZ}
             />
           </div>
         </div>

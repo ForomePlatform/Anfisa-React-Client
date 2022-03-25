@@ -50,12 +50,9 @@ export const AprroxAndState = ({
     </div>
 
     <AllNotMods
-      isAllModeChecked={compoundRequestStore.isAllMode}
-      isNotModeChecked={compoundRequestStore.isNotMode}
-      isAllModeDisabled={simpleVariants ? simpleVariants.length === 0 : true}
+      isNotModeChecked={compoundRequestStore.currentMode === ModeTypes.Not}
       isNotModeDisabled={simpleVariants ? simpleVariants.length === 0 : true}
-      toggleAllMode={() => compoundRequestStore.toggleMode(ModeTypes.All)}
-      toggleNotMode={() => compoundRequestStore.toggleMode(ModeTypes.Not)}
+      toggleNotMode={() => compoundRequestStore.setCurrentMode(ModeTypes.Not)}
     />
   </div>
 )

@@ -45,16 +45,11 @@ export const GeneRegion = observer(() => {
           </span>
 
           <AllNotMods
-            isAllModeChecked={geneRegionStore.isAllMode}
-            isNotModeChecked={geneRegionStore.isNotMode}
-            isAllModeDisabled={
-              simpleVariants ? simpleVariants.length === 0 : true
-            }
+            isNotModeChecked={geneRegionStore.currentMode === ModeTypes.Not}
             isNotModeDisabled={
               simpleVariants ? simpleVariants.length === 0 : true
             }
-            toggleAllMode={() => geneRegionStore.toggleMode(ModeTypes.All)}
-            toggleNotMode={() => geneRegionStore.toggleMode(ModeTypes.Not)}
+            toggleNotMode={() => geneRegionStore.setCurrentMode(ModeTypes.Not)}
           />
         </div>
 
@@ -83,9 +78,10 @@ export const GeneRegion = observer(() => {
 
       <PanelButtons
         onSubmit={() => geneRegionStore.handleSumbitCondtions()}
-        resetFields={() =>
+        resetFields={() => {
           functionPanelStore.clearCachedValues(FuncStepTypesEnum.GeneRegion)
-        }
+          geneRegionStore.resetCurrentMode()
+        }}
         disabled={!simpleVariants || isErrorVisible}
         selectedFilterValue={selectedFilterValue}
       />
