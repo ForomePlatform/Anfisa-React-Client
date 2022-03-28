@@ -10,4 +10,4 @@ export type TSelectValues = {
   [key: string]: string[]
 }
 
-export type TScenario = [string, string[]]
+export type TScenario = [string, string[] | string]

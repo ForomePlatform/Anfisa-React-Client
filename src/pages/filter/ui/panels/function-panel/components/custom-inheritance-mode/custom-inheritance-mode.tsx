@@ -5,7 +5,6 @@ import filterStore from '@store/filter'
 import { CustomInheritanceModeContent } from '@pages/filter/ui/query-builder/ui/custom-inheritance-mode-content'
 import { ICustomInheritanceModeArgs } from '@service-providers/common/common.interface'
 import { getStringScenario } from '@utils/function-panel/getStringScenario'
-import { TScenario } from '../../function-panel.interface'
 import functionPanelStore from '../../function-panel.store'
 import { PanelButtons } from '../panelButtons'
 import customInheritanceModeStore from './custom-inheritance-mode.store'
@@ -38,9 +37,7 @@ export const CustomInheritanceMode = observer(() => {
         selectedFilterScenario['scenario'],
       )
 
-      customInheritanceModeStore.setScenario(
-        selectedFilterScenarioArray as TScenario[],
-      )
+      customInheritanceModeStore.setScenario(selectedFilterScenarioArray)
     }
 
     if (!isRedactorMode) {

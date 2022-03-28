@@ -37,7 +37,7 @@ export interface IInheritanceModeArgs {
 }
 
 export interface ICustomInheritanceModeArgs {
-  scenario: [string, string[]]
+  scenario: [string, string[] | string]
 }
 
 export interface ICompoundHetArgs {
