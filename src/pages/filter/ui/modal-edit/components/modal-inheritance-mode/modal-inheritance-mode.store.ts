@@ -127,8 +127,6 @@ class ModalInheritanceModeStore {
     const conditionJoinType = currentGroup[2]
 
     this.currentMode = getCurrentModeType(conditionJoinType)
-
-    console.log(this.currentMode)
   }
 }
 
