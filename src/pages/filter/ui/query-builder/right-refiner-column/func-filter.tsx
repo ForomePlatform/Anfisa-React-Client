@@ -3,9 +3,9 @@ import Checkbox from 'react-three-state-checkbox'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { TFuncArgs } from '@service-providers/common/common.interface'
-import { IHandleRemoveFilter } from './query-results'
+import { IHandleRemoveFilterProps } from './query-results'
 
-interface Props {
+interface IFuncFilterProps {
   filterId: string
   filterName: string
   filterContent: string[]
@@ -14,7 +14,7 @@ interface Props {
     filterId,
     subFilterIdx,
     filterType,
-  }: IHandleRemoveFilter) => void
+  }: IHandleRemoveFilterProps) => void
   filterType: string
 }
 
@@ -25,7 +25,7 @@ export const FuncFilter = ({
   filterExpression,
   handleRemoveFilter,
   filterType,
-}: Props): ReactElement => (
+}: IFuncFilterProps): ReactElement => (
   <>
     {filterName === FuncStepTypesEnum.InheritanceMode ? (
       filterContent.map((subFilterName, subFilterIdx) => (

@@ -4,7 +4,7 @@ import Checkbox from 'react-three-state-checkbox'
 import { TNumericConditionBounds } from '@service-providers/common/common.interface'
 import { getNumericExpression } from '@utils/getNumericExpression'
 
-interface Props {
+interface INumericFilterProps {
   filterId: string
   filterName: string
   handleRemoveFilter: (filterId: string) => void
@@ -16,7 +16,7 @@ export const NumericFilter = ({
   filterName,
   numericExpression,
   handleRemoveFilter,
-}: Props): ReactElement => (
+}: INumericFilterProps): ReactElement => (
   <div className="flex items-center pl-6 py-4">
     <Checkbox checked onChange={() => handleRemoveFilter(filterId)} />
 

@@ -13,15 +13,16 @@ import {
 import { EnumFilter } from './enum-filter'
 import { FuncFilter } from './func-filter'
 import { NumericFilter } from './numeric-filter'
-import { IHandleRemoveFilter } from './query-results'
-interface SelectedFilterCardProps {
+import { IHandleRemoveFilterProps } from './query-results'
+
+interface ISelectedFilterCardProps {
   filterId: string
   filterCondition: TCondition
   handleRemoveFilter: ({
     filterId,
     subFilterIdx,
     filterType,
-  }: IHandleRemoveFilter) => void
+  }: IHandleRemoveFilterProps) => void
 }
 
 export const SelectedFilterCard = observer(
@@ -29,12 +30,12 @@ export const SelectedFilterCard = observer(
     filterId,
     filterCondition,
     handleRemoveFilter,
-  }: SelectedFilterCardProps): ReactElement => {
+  }: ISelectedFilterCardProps): ReactElement => {
     const [isOpen, open, close] = useToggle(true)
 
     const filterType: string = filterCondition[0]
     const filterName: string = filterCondition[1]
-    const filterContent: string[] = filterCondition[3]!
+    const filterContent: string[] = filterCondition[3] || []
     const filterExpression: TFuncArgs = filterCondition[4]!
 
     return (
