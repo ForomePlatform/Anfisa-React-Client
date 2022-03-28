@@ -1,2 +1,3 @@
-export * from './getChartConfig'
-export * from './useChartData'
+export * from './reduceVariantsData'
+export * from './scaling'
+export * from './useChartConfig'

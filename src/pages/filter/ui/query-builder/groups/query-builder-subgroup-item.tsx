@@ -16,7 +16,7 @@ import { FnLabel } from '@components/fn-label'
 import { GlbPagesNames } from '@glb/glb-names'
 import { TPropertyStatus } from '@service-providers/common'
 import dtreeModalStore from '../../../modals.store'
-import { QueryBuilderSubgroupChart } from './chart/query-builder-subgroup-chart'
+import { QueryBuilderSubgroupChart } from './chart'
 
 interface IProps {
   subGroupItem: StatList

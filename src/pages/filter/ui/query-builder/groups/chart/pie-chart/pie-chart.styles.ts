@@ -56,23 +56,24 @@ export const CollapseBtn = styled.span`
 `
 
 export const Total = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
   font-size: 10px;
   font-weight: 500;
   color: ${theme('colors.grey.blue')};
   line-height: 16px;
-  position: relative;
-  bottom: 70px;
-  display: flex;
-  flex-direction: column;
   text-align: center;
+  transform: translate(-50%, -50%);
 `
 
-export const TotalValue = styled.span`
+export const TotalValue = styled.div`
   color: ${theme('colors.white')};
-  cursor: pointer;
 `
 
 export const PieChartContainer = styled.div`
+  position: relative;
   height: 110px;
   width: 110px;
+  margin-left: 8px;
 `

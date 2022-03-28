@@ -1,11 +1,11 @@
-import { useEffect, useRef } from 'react'
-import { ChartData } from 'chart.js'
+import { ReactElement, ReactNode } from 'react'
 
-import { AttributeKinds, TPropertyStatus } from '@service-providers/common'
-import { ChartRenderModes } from './chart.interface'
-import Chart from './chart-register'
-import { PieChartWrapper } from './pie-chart-wrapper'
-import { getChartConfig, useChartData } from './utils'
+import { TPropertyStatus } from '@service-providers/common'
+import { BarChart } from './bar-chart'
+import { ChartType } from './chart.interface'
+import { HistogramChart } from './histogram-chart'
+import { PieChart } from './pie-chart'
+import { useChartConfig } from './utils'
 
 interface IQueryBuilderSubgroupChartProps {
   subGroupItem: TPropertyStatus
@@ -13,58 +13,35 @@ interface IQueryBuilderSubgroupChartProps {
 
 export const QueryBuilderSubgroupChart = ({
   subGroupItem,
-}: IQueryBuilderSubgroupChartProps) => {
-  const { 'render-mode': renderMode = ChartRenderModes.Linear } = subGroupItem
-  const isPieChart = renderMode === ChartRenderModes.Pie
+}: IQueryBuilderSubgroupChartProps): ReactElement | null => {
+  const chartConfig = useChartConfig(subGroupItem)
 
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const chartRef = useRef<Chart>()
-  const renderModeRef = useRef<string | undefined>()
+  if (!chartConfig) {
+    return null
+  }
 
-  const chartData = useChartData(subGroupItem)
+  let chart: ReactNode = null
+  switch (chartConfig.type) {
+    case ChartType.Bar:
+      chart = <BarChart data={chartConfig.data} height={150} />
+      break
+    case ChartType.Pie:
+      chart = <PieChart data={chartConfig.data} />
+      break
+    case ChartType.Histogram:
+      chart = (
+        <HistogramChart
+          data={chartConfig.data}
+          mode={chartConfig.mode}
+          height={150}
+        />
+      )
+      break
+  }
 
-  useEffect(() => {
-    if (!canvasRef.current) {
-      return
-    }
+  if (!chart) {
+    return null
+  }
 
-    if (chartData) {
-      const chart = chartRef.current
-
-      if (!chart || renderMode !== renderModeRef.current) {
-        chartRef.current?.destroy()
-        chartRef.current = new Chart(
-          canvasRef.current,
-          getChartConfig(chartData, renderMode),
-        )
-      } else {
-        chart.data = chartData
-        chart.update()
-      }
-    } else {
-      if (chartRef.current) {
-        chartRef.current.destroy()
-        chartRef.current = undefined
-      }
-    }
-    renderModeRef.current = renderMode
-  }, [chartData, renderMode])
-
-  useEffect(() => {
-    return () => {
-      chartRef.current?.destroy()
-    }
-  }, [])
-
-  return (
-    <div className="rounded-md bg-blue-secondary p-2 mr-5">
-      {subGroupItem.kind !== AttributeKinds.NUMERIC && isPieChart ? (
-        <PieChartWrapper chartData={chartData as ChartData<'doughnut'>}>
-          <canvas ref={canvasRef} />
-        </PieChartWrapper>
-      ) : (
-        <canvas ref={canvasRef} />
-      )}
-    </div>
-  )
+  return <div className="rounded-md bg-blue-secondary p-2 mr-5">{chart}</div>
 }

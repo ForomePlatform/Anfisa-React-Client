@@ -1,9 +1,9 @@
-import { FC, useState } from 'react'
-import { ChartData } from 'chart.js'
+import { ReactElement, useState } from 'react'
 
 import { formatNumber } from '@core/format-number'
 import { t } from '@i18n'
-import { theme } from '@theme'
+import { SvgChart } from '@components/svg-chart'
+import { TPieChartData } from '../chart.interface'
 import {
   CollapseBtn,
   LabelQuantity,
@@ -17,64 +17,59 @@ import {
   StyledIcon,
   Total,
   TotalValue,
-} from './pie-chart-wrapper.styles'
-import { getShortNumber } from './pie-chart-wrapper.utils'
+} from './pie-chart.styles'
+import {
+  drawPieChart,
+  getPieChartItemColor,
+  getShortNumber,
+} from './pie-chart.utils'
 
 interface IPieChartProps {
-  chartData: ChartData<'doughnut'>
-  children: any
+  data: TPieChartData
 }
 
 const labelsInCollapsedMode = 3
 
-export const PieChartWrapper: FC<IPieChartProps> = ({
-  chartData,
-  children,
-}) => {
+export const PieChart = ({ data }: IPieChartProps): ReactElement | null => {
   const [isListCollapsed, setIsListCollapsed] = useState(true)
-  const variants = (chartData.labels ?? []) as string[]
-  const { data, backgroundColor } = chartData.datasets[0]
 
   const totalCountsOnChart = data.reduce(
-    (previousValue, variant) => previousValue + variant,
+    (previousValue, variant) => previousValue + variant[1],
     0,
   )
+  const shouldShowCollapseBtn = data.length > labelsInCollapsedMode
 
-  const variantList = isListCollapsed
-    ? variants.slice(0, labelsInCollapsedMode)
-    : variants
-  const shouldShowCollapseBtn = variants.length > labelsInCollapsedMode
+  const variantList =
+    shouldShowCollapseBtn && isListCollapsed
+      ? data.slice(0, labelsInCollapsedMode)
+      : data
 
   return (
     <MainWrapper>
       <LabelsWrapper>
-        {variantList.map((variantName, index) => {
-          const optionPercentage = (
-            (data[index] / totalCountsOnChart) *
-            100
-          ).toFixed(2)
+        {variantList.map(([name, value], index) => {
+          const optionPercentage = ((value / totalCountsOnChart) * 100).toFixed(
+            2,
+          )
 
           return (
-            <LabelRow key={variantName}>
+            <LabelRow key={name}>
               <LabelRowLeft>
                 <LabelRowLeftName>
                   <StyledIcon
                     name="Circle"
-                    color={
-                      (backgroundColor as string[])[index] ??
-                      theme('colors.grey.blue')
-                    }
+                    color={getPieChartItemColor(index)}
                   />
-                  {variantName}
+                  {name}
                 </LabelRowLeftName>
 
                 <LabelQuantity>
                   {t('filter.chart.variants', {
-                    value: formatNumber(data[index]),
+                    value: formatNumber(value),
                   })}
                 </LabelQuantity>
               </LabelRowLeft>
-              <LabelRowRight> {optionPercentage}%</LabelRowRight>
+              <LabelRowRight>{optionPercentage}%</LabelRowRight>
             </LabelRow>
           )
         })}
@@ -89,11 +84,11 @@ export const PieChartWrapper: FC<IPieChartProps> = ({
       </LabelsWrapper>
 
       <PieChartContainer>
-        {children}
         <Total>
           <span>{t('filter.chart.total')}</span>
           <TotalValue>{getShortNumber(totalCountsOnChart)}</TotalValue>
         </Total>
+        <SvgChart data={data} render={drawPieChart} />
       </PieChartContainer>
     </MainWrapper>
   )
