@@ -24,6 +24,7 @@ export const AllNotMods = ({
 }: IAllNotModsProps) => {
   const isAllModeAvailable =
     groupSubKind === SubKinds.Multi || groupSubKind === SubKinds.InheritanceZ
+
   return (
     <div className="flex text-14 text-blue-bright">
       {isAllModeAvailable && (

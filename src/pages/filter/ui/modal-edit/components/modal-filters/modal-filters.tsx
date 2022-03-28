@@ -1,12 +1,14 @@
 import { ReactElement, useEffect } from 'react'
-import { toJS } from 'mobx'
+import { reaction } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
 import { ActionType } from '@declarations'
+import { ModeTypes } from '@core/enum/mode-types-enum'
 import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
 import { Pagintaion } from '@components/pagintaion'
 import activeStepStore from '@pages/filter/active-step.store'
+import { AllNotMods } from '@pages/filter/ui/query-builder/ui/all-not-mods'
 import { SelectModalButtons } from '@pages/filter/ui/query-builder/ui/select-modal-buttons'
 import dtreeModalStore from '../../../../modals.store'
 import { QueryBuilderSearch } from '../../../query-builder/query-builder-search'
@@ -15,7 +17,6 @@ import { ModalBase } from '../../../query-builder/ui/modal-base'
 import modalEditStore from '../../modal-edit.store'
 import { EditModalButtons } from '../edit-modal-buttons'
 import { FiltersList } from './components/filter-list'
-import { FiltersMods } from './components/filter-mods'
 import modalFiltersStore from './modal-filters.store'
 
 export const ModalFilters = observer((): ReactElement => {
@@ -29,20 +30,18 @@ export const ModalFilters = observer((): ReactElement => {
 
   const currentGroupToModify = dtreeStore.stepData[currentStepIndex].groups
 
-  const originGroupList: [string, number][] =
-    toJS(dtreeStore.selectedGroups[2]) ?? []
-
   const {
     filteredGroupList,
     pagesNumbers,
     searchValue,
     currentPage,
     groupsPerPage,
+    originGroupList,
   } = modalFiltersStore
 
   useEffect(() => {
     if (currentGroup) {
-      modalFiltersStore.checkIfSelectedFiltersExist()
+      modalFiltersStore.checkIfSelectedFiltersExist(currentGroup)
     }
 
     return () => {
@@ -50,6 +49,19 @@ export const ModalFilters = observer((): ReactElement => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentGroupIndex])
+
+  useEffect(() => {
+    const dispose = reaction(
+      () => dtreeStore.selectedFilters,
+      () => {
+        if (dtreeStore.selectedFilters.length < 2) {
+          modalFiltersStore.resetCurrentMode()
+        }
+      },
+    )
+
+    return () => dispose()
+  }, [currentGroup])
 
   const handleChange = (value: string) => {
     modalFiltersStore.setSearchValue(value)
@@ -89,7 +101,15 @@ export const ModalFilters = observer((): ReactElement => {
           {dtreeStore.selectedFilters.length || 0} {t('dtree.selected')}
         </div>
 
-        <FiltersMods />
+        <AllNotMods
+          isAllModeChecked={modalFiltersStore.currentMode === ModeTypes.All}
+          isNotModeChecked={modalFiltersStore.currentMode === ModeTypes.Not}
+          isAllModeDisabled={dtreeStore.selectedFilters.length < 2}
+          isNotModeDisabled={dtreeStore.selectedFilters.length === 0}
+          toggleAllMode={() => modalFiltersStore.setCurrentMode(ModeTypes.All)}
+          toggleNotMode={() => modalFiltersStore.setCurrentMode(ModeTypes.Not)}
+          groupSubKind={modalFiltersStore.currentGroupSubKind}
+        />
       </div>
 
       <FiltersList />
