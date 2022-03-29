@@ -84,7 +84,7 @@ class DrawerTagsStore {
     }
   }
 
-  async handleSaveTagsAsync(closeModal: () => void): Promise<void> {
+  async handleSaveTagsAsync(): Promise<void> {
     let params = ''
 
     this.localCheckedTags.forEach((tagName, index) => {
@@ -93,7 +93,6 @@ class DrawerTagsStore {
     })
 
     variantStore.fetchSelectedTagsAsync(params)
-    closeModal()
   }
 
   get tags(): string[] {

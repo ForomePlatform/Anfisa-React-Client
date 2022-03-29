@@ -46,6 +46,11 @@ const DrawerTagModal = observer(({ close }: any) => {
   //   // variantStore.setCurrentTag(tag)
   // }
 
+  const handleSaveTags = () => {
+    drawerTagsStore.handleSaveTagsAsync()
+    close()
+  }
+
   return (
     <div
       ref={ref}
@@ -127,7 +132,7 @@ const DrawerTagModal = observer(({ close }: any) => {
 
         <Button
           text="Save tags"
-          onClick={() => drawerTagsStore.handleSaveTagsAsync(close)}
+          onClick={handleSaveTags}
           dataTestId={VariantDrawerDataCy.saveTags}
         />
       </div>
