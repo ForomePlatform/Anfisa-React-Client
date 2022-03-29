@@ -26,10 +26,18 @@ export const ModalInheritanceMode = observer((): ReactElement => {
 
   const selectedGroupsAmount = currentGroup ? dtreeStore.selectedFilters : []
 
+  const getSelectedProblemGroups = (): string[] => {
+    if (currentGroup) {
+      return Object.values(currentGroup[currentGroup.length - 1]).length > 0
+        ? (Object.values(currentGroup[currentGroup.length - 1])[0] as string[])
+        : [problemGroups[0]]
+    } else {
+      return []
+    }
+  }
+
   const [selectedProblemGroups, setSelectedProblemGroups] = useState<string[]>(
-    currentGroup
-      ? (Object.values(currentGroup[currentGroup.length - 1])[0] as string[])
-      : [],
+    getSelectedProblemGroups(),
   )
 
   useEffect(() => {

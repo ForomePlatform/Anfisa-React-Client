@@ -66,11 +66,9 @@ export const fetchStatunitsAsync = async (
     return element
   })
 
-  const filteredStatList = getFilteredAttrsList(newStatList)
-
   isRefiner
-    ? datasetStore.setStatList(filteredStatList)
-    : dtreeStore.setStatList(filteredStatList)
+    ? datasetStore.setStatList(newStatList)
+    : dtreeStore.setStatList(getFilteredAttrsList(newStatList))
 
   fetchStatunitsAsync(newStatList, stepIndex)
 }

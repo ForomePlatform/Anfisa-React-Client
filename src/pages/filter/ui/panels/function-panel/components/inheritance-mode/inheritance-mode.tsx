@@ -41,7 +41,7 @@ export const InheritanceMode = observer(() => {
         selectedFilter[4] as IInheritanceModeArgs
 
       inheritanceModeStore.setProblemGroupValues(
-        selectedFilterProblemGroups['problem_group']!,
+        selectedFilterProblemGroups['problem_group'] || [problemGroups[0]],
       )
       inheritanceModeStore.setVariantValues(selectedFilter[3] as string[])
     }

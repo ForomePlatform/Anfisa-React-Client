@@ -44,22 +44,17 @@ export class FilterAttributesStore {
     }
   }
 
-  get allEnumVariants(): [string, number][] {
+  get filteredEnumVariants(): [string, number][] {
     return toJS(this.getAllEnumVariants(this.currentGroup))
   }
 
-  get datasetEnumValues(): string[] {
-    return toJS(this.getDatasetEnumValues(this.currentGroup))
-  }
+  get allEnumVariants(): [string, number][] {
+    const allEnumVariants: [string, number][] =
+      this.datasetStore.dsStat['stat-list']?.find(
+        (item: any) => item.name === this.currentGroup.groupName,
+      )?.variants ?? []
 
-  clearGroupFilter(): void {
-    // TODO: this logic for deletion attr
-    // if (!datasetStore.isXL) {
-    //   datasetStore.fetchWsListAsync()
-    // }
-    // if (!this.datasetStore.isXL) {
-    //   this.datasetStore.fetchWsListAsync()
-    // }
+    return toJS(allEnumVariants)
   }
 
   updateEnumFilter(group: FilterGroup, values: string[]): void {
@@ -71,7 +66,10 @@ export class FilterAttributesStore {
       ConditionJoinMode.OR,
       values,
     ]
-    this.filterStore.addFilterBlock(condition)
+
+    this.filterStore.isRedactorMode
+      ? this.filterStore.addFilterToFilterBlock(condition)
+      : this.filterStore.addFilterBlock(condition)
 
     if (this.datasetStore.activePreset) {
       this.datasetStore.resetActivePreset()
@@ -89,9 +87,7 @@ export class FilterAttributesStore {
   }
 
   addValuesToEnumFilter(group: FilterGroup, values: string[]): void {
-    const datasetValues = this.getDatasetEnumValues(group)
-
-    this.updateEnumFilter(group, [...datasetValues, ...values])
+    this.updateEnumFilter(group, values)
   }
 
   addValuesToCurrentGroupEnumFilter(values: string[]): void {
@@ -101,20 +97,15 @@ export class FilterAttributesStore {
   private getAllEnumVariants(group: FilterGroup): [string, number][] {
     const { groupName } = group
 
-    return (
+    const selectedFiltersWithoutFiltration: [string, number][] =
       this.datasetStore.dsStat['stat-list']?.find(
         (item: any) => item.name === groupName,
       )?.variants ?? []
-    )
-  }
 
-  private getDatasetEnumValues(group: FilterGroup): string[] {
-    const { groupName } = group
-    const { conditions } = filterStore
-
-    return (
-      conditions.find((element: any[]) => element[1] === groupName)?.[3] ?? []
+    const filteredSelectedFilters = selectedFiltersWithoutFiltration.filter(
+      ([, filterValue]) => filterValue > 0,
     )
+    return filteredSelectedFilters
   }
 }
 

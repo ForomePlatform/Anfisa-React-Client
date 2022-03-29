@@ -13,7 +13,6 @@ import {
 } from '@service-providers/common/common.interface'
 import { addToActionHistory } from '@utils/addToActionHistory'
 import { fetchStatunitsAsync } from '@utils/fetchStatunitsAsync'
-import { getFilteredAttrsList } from '@utils/getFilteredAttrsList'
 import dirinfoStore from './dirinfo'
 import operations from './operations'
 
@@ -232,7 +231,6 @@ export class DatasetStore {
     const result = await response.json()
 
     dtreeStore.setStatRequestId(result['rq-id'])
-    result['stat-list'] = getFilteredAttrsList(result['stat-list'])
 
     const statList = result['stat-list']
 

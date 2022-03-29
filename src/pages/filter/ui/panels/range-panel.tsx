@@ -18,8 +18,8 @@ const getFilterValue = (arg: string): string | number => {
   if (selectedFilter) {
     const selectedFilterExpression = selectedFilter[2]
 
-    if (arg === 'min' && typeof selectedFilterExpression[1] === 'number') {
-      return selectedFilterExpression[1]
+    if (arg === 'min' && typeof selectedFilterExpression[0] === 'number') {
+      return selectedFilterExpression[0]
     }
 
     if (arg === 'max' && typeof selectedFilterExpression[2] === 'number') {
@@ -135,7 +135,6 @@ export const RangePanel = observer((): ReactElement => {
     )
 
     return () => dispose()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (

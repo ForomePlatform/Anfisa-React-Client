@@ -2,6 +2,7 @@ import { ReactElement, useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
+import filterStore from '@store/filter'
 import { Button } from '@ui/button'
 import { Pagintaion } from '@components/pagintaion'
 import filterAttributesStore from '../filterAttributes.store'
@@ -13,14 +14,32 @@ const variantsPerPage = 12
 export const EnumPanel = observer((): ReactElement => {
   const {
     currentGroup: { groupName },
-    allEnumVariants: variants,
-    datasetEnumValues: datasetVariants,
+    filteredEnumVariants,
+    allEnumVariants,
   } = filterAttributesStore
+
+  const isRedactorMode = filterStore.isRedactorMode
+  const { selectedFilter } = filterStore
 
   const [selectedVariants, setSelectedVariants] = useState<string[]>([])
 
   const [searchValue, setSearchValue] = useState('')
   const [currentPage, setCurrentPage] = useState(0)
+
+  // set/reset data
+  useEffect(() => {
+    if (selectedFilter && isRedactorMode) {
+      const selectedFilters = selectedFilter[3] || []
+
+      setSelectedVariants(selectedFilters)
+    }
+
+    if (!isRedactorMode) {
+      setSelectedVariants([])
+      setCurrentPage(0)
+      setSearchValue('')
+    }
+  }, [isRedactorMode, selectedFilter])
 
   useEffect(() => {
     setSearchValue('')
@@ -28,7 +47,12 @@ export const EnumPanel = observer((): ReactElement => {
   }, [groupName])
 
   const preparedSearchValue = searchValue.toLocaleLowerCase()
-  const filteredVariants = variants.filter(variant =>
+
+  const filteredVariants = (
+    selectedVariants.length > filteredEnumVariants.length
+      ? allEnumVariants
+      : filteredEnumVariants
+  ).filter(variant =>
     variant[0].toLocaleLowerCase().includes(preparedSearchValue),
   )
 
@@ -55,13 +79,7 @@ export const EnumPanel = observer((): ReactElement => {
   }
 
   const handleClear = () => {
-    filterAttributesStore.clearGroupFilter()
     setSelectedVariants([])
-
-    // TODO: this logic for deletion attr
-    // if (!datasetStore.isXL) {
-    //   datasetStore.fetchWsListAsync()
-    // }
 
     setCurrentPage(0)
   }
@@ -95,18 +113,14 @@ export const EnumPanel = observer((): ReactElement => {
       <div className="mt-4">
         <div className="flex-1 mt-4 overflow-y-auto">
           {variantsPage.length > 0 ? (
-            variantsPage.map(
-              variant =>
-                variant[1] !== 0 && (
-                  <SelectedGroupItem
-                    key={variant[0]}
-                    isSelected={selectedVariants.includes(variant[0])}
-                    isInDataset={datasetVariants.includes(variant[0])}
-                    variant={variant}
-                    handleCheckGroupItem={handleCheckGroupItem}
-                  />
-                ),
-            )
+            variantsPage.map(variant => (
+              <SelectedGroupItem
+                key={variant[0]}
+                isSelected={selectedVariants.includes(variant[0])}
+                variant={variant}
+                handleCheckGroupItem={handleCheckGroupItem}
+              />
+            ))
           ) : (
             <div className="flex justify-center items-center text-14 text-grey-blue">
               {t('dtree.noFilters')}
@@ -130,7 +144,7 @@ export const EnumPanel = observer((): ReactElement => {
         />
 
         <Button
-          text={t('general.add')}
+          text={isRedactorMode ? t('general.apply') : t('general.add')}
           onClick={handleAddConditions}
           disabled={isBlockAddBtn}
         />
