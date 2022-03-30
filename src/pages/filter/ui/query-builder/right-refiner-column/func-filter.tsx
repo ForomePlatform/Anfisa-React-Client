@@ -32,10 +32,9 @@ export const FuncFilter = ({
     {filterName === FuncStepTypesEnum.InheritanceMode ? (
       filterContent.map((subFilterName, subFilterIdx) => (
         <div
-          className={cn(
-            'flex items-center pl-4 py-4',
-            isFilterActive && 'bg-blue-light',
-          )}
+          className={cn('flex items-center pl-4 py-4', {
+            'bg-blue-tertiary': isFilterActive,
+          })}
           key={filterId + subFilterName}
         >
           <Checkbox

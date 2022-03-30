@@ -79,8 +79,8 @@ export const SelectedFilterCard = observer(
       <>
         <div
           className={cn(
-            'relative flex justify-between items-center border-b border-grey-light py-4 pl-3 pr-0.5 cursor-pointer',
-            isFilterActive && 'bg-blue-light',
+            'relative flex justify-between items-center border-b border-grey-light py-4 px-3 cursor-pointer',
+            { 'bg-blue-tertiary': isFilterActive },
           )}
           onClick={handleOpenFilter}
         >
@@ -98,7 +98,7 @@ export const SelectedFilterCard = observer(
               )}
             />
 
-            <div className="leading-16px">{filterName}</div>
+            <div className="leading-16px font-bold">{filterName}</div>
           </div>
 
           <Icon
@@ -140,8 +140,6 @@ export const SelectedFilterCard = observer(
             filterId={filterId}
             isFilterActive={isFilterActive}
             filterContent={filterContent}
-            handleRemoveFilter={handleRemoveFilter}
-            filterType={filterType}
           />
         )}
 

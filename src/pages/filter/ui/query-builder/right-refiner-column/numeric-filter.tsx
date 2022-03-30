@@ -21,14 +21,13 @@ export const NumericFilter = ({
   handleRemoveFilter,
 }: Props): ReactElement => (
   <div
-    className={cn(
-      'flex items-center pl-4 py-4',
-      isFilterActive && 'bg-blue-light',
-    )}
+    className={cn('flex items-center pl-4 py-4', {
+      'bg-blue-tertiary': isFilterActive,
+    })}
   >
     <Checkbox checked onChange={() => handleRemoveFilter(filterId)} />
 
-    <span className="text-14 leading-16px font-bold ml-2">
+    <span className="text-14 leading-16px ml-2">
       {getNumericExpression(numericExpression, filterName)}
     </span>
   </div>

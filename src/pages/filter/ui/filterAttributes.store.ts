@@ -1,3 +1,4 @@
+import { difference } from 'lodash'
 import { makeAutoObservable, toJS } from 'mobx'
 
 import { FilterKindEnum } from '@core/enum/filter-kind.enum'
@@ -97,12 +98,31 @@ export class FilterAttributesStore {
   private getAllEnumVariants(group: FilterGroup): [string, number][] {
     const { groupName } = group
 
-    const selectedFiltersWithoutFiltration: [string, number][] =
+    const { selectedFilter } = filterStore
+
+    const allSelectedFilters: [string, number][] =
       this.datasetStore.dsStat['stat-list']?.find(
         (item: any) => item.name === groupName,
       )?.variants ?? []
 
-    const filteredSelectedFilters = selectedFiltersWithoutFiltration.filter(
+    if (selectedFilter) {
+      const selectedFiltersNames = selectedFilter[3]
+
+      const allSelectedFiltersNames = allSelectedFilters.map(item => item[0])
+
+      const thirdPartyFilters = difference(
+        selectedFiltersNames,
+        allSelectedFiltersNames,
+      )
+
+      thirdPartyFilters.forEach(filterName =>
+        allSelectedFilters.push([filterName, 0]),
+      )
+
+      return allSelectedFilters
+    }
+
+    const filteredSelectedFilters = allSelectedFilters.filter(
       ([, filterValue]) => filterValue > 0,
     )
     return filteredSelectedFilters

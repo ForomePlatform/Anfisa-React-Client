@@ -1,4 +1,5 @@
 import { ReactElement, useEffect, useState } from 'react'
+import cn from 'classnames'
 import { reaction } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
@@ -73,6 +74,12 @@ export const RangePanel = observer((): ReactElement => {
       : filterStore.addFilterBlock(condition as TNumericCondition)
 
     datasetStore.fetchDsStatAsync()
+
+    setMin('')
+    setMax('')
+    filterStore.resetIsRedacorMode()
+    filterStore.resetActiveFilterId()
+    filterStore.resetSelectedGroupItem()
 
     if (!datasetStore.isXL) {
       datasetStore.fetchWsListAsync()
@@ -184,15 +191,18 @@ export const RangePanel = observer((): ReactElement => {
         )}
       </div>
 
-      <div className="flex items-center justify-between mt-1">
+      <div className="flex items-center justify-end mt-1">
         <Button
           variant={'secondary'}
           text={t('general.clear')}
           onClick={handleClear}
+          className="px-5 mr-2"
         />
 
         <Button
-          text={isRedactorMode ? t('general.apply') : t('general.add')}
+          text={
+            isRedactorMode ? t('dtree.saveChanges') : t('dtree.addAttribute')
+          }
           onClick={handleSetConditionsAsync}
           disabled={
             isVisibleMinError ||
@@ -200,6 +210,7 @@ export const RangePanel = observer((): ReactElement => {
             isVisibleMixedError ||
             (!max && !min)
           }
+          className={cn(isRedactorMode ? 'px-5' : 'px-6')}
         />
       </div>
     </div>

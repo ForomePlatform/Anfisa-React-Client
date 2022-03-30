@@ -88,6 +88,8 @@ export const EnumPanel = observer((): ReactElement => {
     filterAttributesStore.addValuesToCurrentGroupEnumFilter(selectedVariants)
     setCurrentPage(0)
     setSelectedVariants([])
+    filterStore.resetSelectedGroupItem()
+    filterStore.resetActiveFilterId()
   }
 
   const handleChange = (value: string) => {
@@ -136,15 +138,18 @@ export const EnumPanel = observer((): ReactElement => {
           setPageNumber={setCurrentPage}
         />
       )}
-      <div className="flex items-center justify-between mt-1 pb-2">
+      <div className="flex items-center justify-end mt-2">
         <Button
           variant="secondary"
           text={t('general.clear')}
           onClick={handleClear}
+          className="px-5 mr-2"
         />
 
         <Button
-          text={isRedactorMode ? t('general.apply') : t('general.add')}
+          text={
+            isRedactorMode ? t('dtree.saveChanges') : t('dtree.addAttribute')
+          }
           onClick={handleAddConditions}
           disabled={isBlockAddBtn}
         />

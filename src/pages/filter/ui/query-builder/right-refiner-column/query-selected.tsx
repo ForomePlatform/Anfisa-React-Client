@@ -50,7 +50,7 @@ export const QuerySelected = observer((): ReactElement => {
 
   return (
     <div className="w-1/3 ">
-      <div className="flex items-center px-4 py-3 border-b border-grey-disabled bg-grey-light">
+      <div className="flex items-center px-4 py-3 border-b border-grey-disabled bg-grey-tertiary">
         <div className="flex flex-wrap">
           <span className="font-bold text-20 w-full">{t('dtree.results')}</span>
 

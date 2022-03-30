@@ -1,4 +1,5 @@
 import { ReactElement } from 'react'
+import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
@@ -21,19 +22,29 @@ export const PanelButtons = observer(
 
     const isRedactorMode = filterStore.isRedactorMode
 
+    const handleAddConditions = () => {
+      onSubmit()
+      filterStore.resetSelectedGroupItem()
+      filterStore.resetActiveFilterId()
+    }
+
     return (
-      <div className="flex items-center justify-between mt-5">
+      <div className="flex items-center justify-end mt-5">
         <Button
           text={t('general.clear')}
           variant={'secondary'}
           onClick={handleClear}
+          className="px-5 mr-2"
         />
 
         <div className="flex justify-end">
           <Button
-            text={isRedactorMode ? t('general.apply') : t('general.add')}
-            onClick={onSubmit}
+            text={
+              isRedactorMode ? t('dtree.saveChanges') : t('dtree.addAttribute')
+            }
+            onClick={handleAddConditions}
             disabled={disabled}
+            className={cn(isRedactorMode ? 'px-5' : 'px-6')}
           />
         </div>
       </div>

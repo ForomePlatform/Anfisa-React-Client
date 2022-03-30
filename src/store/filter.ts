@@ -41,6 +41,7 @@ export class FilterStore {
 
   constructor() {
     makeAutoObservable(this)
+    // TODO: add reaction for cond changing
   }
 
   public get selectedFiltersArray(): [string, TCondition][] {
@@ -63,7 +64,7 @@ export class FilterStore {
 
   public removeFilterBlock(filterId: string): void {
     this._selectedFilters.delete(filterId)
-
+    this.resetIsRedacorMode()
     datasetStore.fetchDsStatAsync()
   }
 
@@ -86,9 +87,12 @@ export class FilterStore {
       return
     }
 
-    currentCondition[3] = currentCondition[3]?.filter(
-      (_filter, idx) => idx !== subFilterIdx,
-    )
+    // currentCondition[3] = currentCondition[3]?.filter(
+    //   (_filter, idx) => idx !== subFilterIdx,
+    // )
+
+    //TODO: check
+    currentCondition[3]?.splice(subFilterIdx, 1)
   }
 
   public async fetchDsInfoAsync() {
