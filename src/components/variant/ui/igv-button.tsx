@@ -32,12 +32,14 @@ export const IgvButton = observer((): ReactElement => {
 
   const fixedLocus = locus.split(' ')[0]
 
-  const igvUrls = JSON.stringify(dirinfoStore.dsinfo['igv-urls'])
+  const igvUrls = dirinfoStore.dsinfo['igv-urls'] as string[] | undefined
+  const checkedIgvUrls = igvUrls ?? []
+  const stringifiedIgvUrls = JSON.stringify(checkedIgvUrls)
 
   return (
     <Link
       target="_blank"
-      to={`${Routes.IGV}?locus=${fixedLocus}&names=${fixedSampleList}&igvUrls=${igvUrls}`}
+      to={`${Routes.IGV}?locus=${fixedLocus}&names=${fixedSampleList}&igvUrls=${stringifiedIgvUrls}`}
     >
       <Button
         className="mx-2 whitespace-nowrap"
