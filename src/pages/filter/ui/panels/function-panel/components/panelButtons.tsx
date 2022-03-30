@@ -1,5 +1,4 @@
 import { ReactElement } from 'react'
-import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
@@ -44,7 +43,6 @@ export const PanelButtons = observer(
             }
             onClick={handleAddConditions}
             disabled={disabled}
-            className={cn(isRedactorMode ? 'px-5' : 'px-6')}
           />
         </div>
       </div>

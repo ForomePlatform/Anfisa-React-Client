@@ -1,5 +1,4 @@
 import { ReactElement, useEffect, useState } from 'react'
-import cn from 'classnames'
 import { reaction } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
@@ -72,8 +71,6 @@ export const RangePanel = observer((): ReactElement => {
     isRedactorMode
       ? filterStore.addFilterToFilterBlock(condition as TNumericCondition)
       : filterStore.addFilterBlock(condition as TNumericCondition)
-
-    datasetStore.fetchDsStatAsync()
 
     setMin('')
     setMax('')
@@ -210,7 +207,6 @@ export const RangePanel = observer((): ReactElement => {
             isVisibleMixedError ||
             (!max && !min)
           }
-          className={cn(isRedactorMode ? 'px-5' : 'px-6')}
         />
       </div>
     </div>

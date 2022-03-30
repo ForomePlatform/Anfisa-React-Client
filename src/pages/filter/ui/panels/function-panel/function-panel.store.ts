@@ -69,8 +69,6 @@ class FunctionPanelStore {
       ? filterStore.addFilterToFilterBlock(condition)
       : filterStore.addFilterBlock(condition)
 
-    datasetStore.fetchDsStatAsync()
-
     if (!datasetStore.isXL) {
       datasetStore.fetchWsListAsync()
     }

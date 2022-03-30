@@ -76,8 +76,6 @@ export class FilterAttributesStore {
       this.datasetStore.resetActivePreset()
     }
 
-    datasetStore.fetchDsStatAsync()
-
     if (!this.datasetStore.isXL) {
       this.datasetStore.fetchWsListAsync()
     }

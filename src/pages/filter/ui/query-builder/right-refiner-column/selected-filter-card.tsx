@@ -17,24 +17,14 @@ import { EnumFilter } from './enum-filter'
 import { FuncFilter } from './func-filter'
 import { ModalOptions } from './modal-options'
 import { NumericFilter } from './numeric-filter'
-import { IHandleRemoveFilter } from './query-results'
 
 interface SelectedFilterCardProps {
   filterId: string
   filterCondition: TCondition
-  handleRemoveFilter: ({
-    filterId,
-    subFilterIdx,
-    filterType,
-  }: IHandleRemoveFilter) => void
 }
 
 export const SelectedFilterCard = observer(
-  ({
-    filterId,
-    filterCondition,
-    handleRemoveFilter,
-  }: SelectedFilterCardProps): ReactElement => {
+  ({ filterId, filterCondition }: SelectedFilterCardProps): ReactElement => {
     const filterType: string = filterCondition[0]
     const filterName: string = filterCondition[1]
     const filterContent: string[] = filterCondition[3]!
@@ -93,7 +83,7 @@ export const SelectedFilterCard = observer(
             <Icon
               name="Arrow"
               className={cn(
-                'text-grey-blue transform transition-transform mr-1',
+                'text-grey-blue transform transition-transform mr-2',
                 isFilterContentVisible ? 'rotate-90' : '-rotate-90',
               )}
             />
@@ -121,17 +111,9 @@ export const SelectedFilterCard = observer(
 
         {isFilterContentVisible && filterType === FilterKindEnum.Numeric && (
           <NumericFilter
-            filterId={filterId}
             filterName={filterName}
             isFilterActive={isFilterActive}
             numericExpression={filterCondition[2] as TNumericConditionBounds}
-            handleRemoveFilter={() =>
-              handleRemoveFilter({
-                filterId,
-                subFilterIdx: 0,
-                filterType,
-              })
-            }
           />
         )}
 
@@ -150,8 +132,6 @@ export const SelectedFilterCard = observer(
             isFilterActive={isFilterActive}
             filterContent={filterContent}
             filterExpression={filterExpression}
-            handleRemoveFilter={handleRemoveFilter}
-            filterType={filterType}
           />
         )}
       </>

@@ -1,5 +1,10 @@
 import cloneDeep from 'lodash/cloneDeep'
-import { makeAutoObservable, runInAction } from 'mobx'
+import {
+  IReactionDisposer,
+  makeAutoObservable,
+  reaction,
+  runInAction,
+} from 'mobx'
 import { nanoid } from 'nanoid'
 
 import { IStatFuncData, StatListType } from '@declarations'
@@ -39,9 +44,21 @@ export class FilterStore {
   activeFilterId: string = ''
   isRedactorMode = false
 
+  loadConditions: IReactionDisposer
+
   constructor() {
     makeAutoObservable(this)
-    // TODO: add reaction for cond changing
+
+    this.loadConditions = reaction(
+      () => this.conditions,
+      () => {
+        datasetStore.fetchDsStatAsync()
+      },
+    )
+  }
+
+  public dispose() {
+    this.loadConditions()
   }
 
   public get selectedFiltersArray(): [string, TCondition][] {
@@ -65,7 +82,6 @@ export class FilterStore {
   public removeFilterBlock(filterId: string): void {
     this._selectedFilters.delete(filterId)
     this.resetIsRedacorMode()
-    datasetStore.fetchDsStatAsync()
   }
 
   public addFilterToFilterBlock(condition: TCondition): void {
@@ -87,11 +103,6 @@ export class FilterStore {
       return
     }
 
-    // currentCondition[3] = currentCondition[3]?.filter(
-    //   (_filter, idx) => idx !== subFilterIdx,
-    // )
-
-    //TODO: check
     currentCondition[3]?.splice(subFilterIdx, 1)
   }
 
