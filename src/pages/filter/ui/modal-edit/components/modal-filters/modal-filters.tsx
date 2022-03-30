@@ -105,7 +105,7 @@ export const ModalFilters = observer((): ReactElement => {
           isAllModeChecked={modalFiltersStore.currentMode === ModeTypes.All}
           isNotModeChecked={modalFiltersStore.currentMode === ModeTypes.Not}
           isAllModeDisabled={dtreeStore.selectedFilters.length < 2}
-          isNotModeDisabled={dtreeStore.selectedFilters.length === 0}
+          isNotModeDisabled={!dtreeStore.selectedFilters.length}
           toggleAllMode={() => modalFiltersStore.setCurrentMode(ModeTypes.All)}
           toggleNotMode={() => modalFiltersStore.setCurrentMode(ModeTypes.Not)}
           groupSubKind={modalFiltersStore.currentGroupSubKind}

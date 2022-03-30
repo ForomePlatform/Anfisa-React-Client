@@ -142,7 +142,7 @@ class ModalFiltersStore {
         .find(subGroup => subGroup.find(element => element.name === groupName))
         ?.find(element => element.name === groupName)
 
-      this.currentGroupSubKind = selectedGroup?.['sub-kind'] as SubKinds
+      this.currentGroupSubKind = selectedGroup?.['sub-kind']
 
       return selectedGroup?.variants ?? []
     } else {
