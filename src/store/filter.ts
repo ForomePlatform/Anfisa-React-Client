@@ -32,7 +32,8 @@ export class FilterStore {
   actionName?: ActionFilterEnum
   statFuncData: any = []
   filterCondition: Record<string, any> = {}
-  memorizedSelectedFilters: SelectedFiltersType | undefined | any = undefined
+
+  memorizedSelectedFilters: Map<string, TCondition> | undefined = undefined
 
   selectedFiltersHistory: SelectedFiltersType[] = []
 
@@ -145,6 +146,7 @@ export class FilterStore {
   }
 
   setSelectedFiltersHistory(history: SelectedFiltersType[]) {
+    // TODO: waiting for fix
     this.selectedFiltersHistory = JSON.parse(JSON.stringify(history))
   }
 

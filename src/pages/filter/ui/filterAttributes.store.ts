@@ -5,6 +5,7 @@ import datasetStore, { DatasetStore } from '@store/dataset'
 import filterStore, { FilterStore } from '@store/filter'
 import {
   ConditionJoinMode,
+  TCondition,
   TEnumCondition,
 } from '@service-providers/common/common.interface'
 
@@ -50,16 +51,6 @@ export class FilterAttributesStore {
 
   get datasetEnumValues(): string[] {
     return toJS(this.getDatasetEnumValues(this.currentGroup))
-  }
-
-  clearGroupFilter(): void {
-    // TODO: this logic for deletion attr
-    // if (!datasetStore.isXL) {
-    //   datasetStore.fetchWsListAsync()
-    // }
-    // if (!this.datasetStore.isXL) {
-    //   this.datasetStore.fetchWsListAsync()
-    // }
   }
 
   updateEnumFilter(group: FilterGroup, values: string[]): void {
@@ -113,7 +104,8 @@ export class FilterAttributesStore {
     const { conditions } = filterStore
 
     return (
-      conditions.find((element: any[]) => element[1] === groupName)?.[3] ?? []
+      conditions.find((element: TCondition) => element[1] === groupName)?.[3] ??
+      []
     )
   }
 }
