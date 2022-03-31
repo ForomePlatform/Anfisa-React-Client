@@ -45,39 +45,45 @@ export const ComplexVariants = observer(
           </span>
         </div>
 
-        {variants.map(([variantName, variantValue]) => {
-          return (
-            <div key={variantName} className="flex items-center mt-4">
-              <Checkbox
-                checked={variantValues.includes(variantName)}
-                onChange={e => {
-                  handleChangeVariants(e, variantName)
-                }}
-              />
-              <span className="text-14 leading-16px ml-2">{variantName}</span>
-              <span className="text-14 leading-16px text-grey-blue ml-1">{`(${variantValue})`}</span>
-            </div>
-          )
-        })}
+        <div className="flex justify-between">
+          <div>
+            {variants.map(([variantName, variantValue]) => {
+              return (
+                <div key={variantName} className="flex items-center mt-4">
+                  <Checkbox
+                    checked={variantValues.includes(variantName)}
+                    onChange={e => {
+                      handleChangeVariants(e, variantName)
+                    }}
+                  />
+                  <span className="text-14 leading-16px ml-2">
+                    {variantName}
+                  </span>
+                  <span className="text-14 leading-16px text-grey-blue ml-1">{`(${variantValue})`}</span>
+                </div>
+              )
+            })}
+          </div>
 
-        <div className="mt-1">
-          <AllNotMods
-            isAllModeDisabled={variantValues.length < 2}
-            isNotModeDisabled={variantValues.length === 0}
-            isAllModeChecked={
-              inheritanceModeStore.currentMode === ModeTypes.All
-            }
-            isNotModeChecked={
-              inheritanceModeStore.currentMode === ModeTypes.Not
-            }
-            toggleAllMode={() =>
-              inheritanceModeStore.setCurrentMode(ModeTypes.All)
-            }
-            toggleNotMode={() =>
-              inheritanceModeStore.setCurrentMode(ModeTypes.Not)
-            }
-            groupSubKind={SubKindsEnum.InheritanceZ}
-          />
+          <div className="mt-2">
+            <AllNotMods
+              isAllModeDisabled={variantValues.length < 2}
+              isNotModeDisabled={variantValues.length === 0}
+              isAllModeChecked={
+                inheritanceModeStore.currentMode === ModeTypes.All
+              }
+              isNotModeChecked={
+                inheritanceModeStore.currentMode === ModeTypes.Not
+              }
+              toggleAllMode={() =>
+                inheritanceModeStore.setCurrentMode(ModeTypes.All)
+              }
+              toggleNotMode={() =>
+                inheritanceModeStore.setCurrentMode(ModeTypes.Not)
+              }
+              groupSubKind={SubKindsEnum.InheritanceZ}
+            />
+          </div>
         </div>
 
         {variants.length === 0 && (

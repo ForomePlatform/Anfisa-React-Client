@@ -7,7 +7,7 @@ import filterStore from '@store/filter'
 import { TFuncCondition } from '@service-providers/common/common.interface'
 import { getSelectValue } from '@utils/function-panel/getSelectValue'
 import { getStringScenario } from '@utils/function-panel/getStringScenario'
-import { getModeType } from '@utils/getModeType'
+import { getConditionJoinMode } from '@utils/getConditionJoinMode'
 import { getSortedArray } from '@utils/getSortedArray'
 import { TScenario } from '../../function-panel.interface'
 import functionPanelStore from '../../function-panel.store'
@@ -212,7 +212,7 @@ class CustomInheritanceModeStore {
     const custInhModeConditions: TFuncCondition = [
       'func',
       FuncStepTypesEnum.CustomInheritanceMode,
-      getModeType(this.currentMode),
+      getConditionJoinMode(this.currentMode),
       ['True'],
       JSON.parse(`{"scenario":{${this.stringScenario}}}`),
     ]

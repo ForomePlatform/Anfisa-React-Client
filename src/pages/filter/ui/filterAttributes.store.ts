@@ -5,10 +5,8 @@ import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import datasetStore, { DatasetStore } from '@store/dataset'
 import filterStore, { FilterStore } from '@store/filter'
-import {
-  ConditionJoinMode,
-  TEnumCondition,
-} from '@service-providers/common/common.interface'
+import { TEnumCondition } from '@service-providers/common/common.interface'
+import { getConditionJoinMode } from '@utils/getConditionJoinMode'
 
 type FilterAttributesStoreParams = {
   datasetStore: DatasetStore
@@ -41,6 +39,14 @@ export class FilterAttributesStore {
     makeAutoObservable(this)
   }
 
+  public setCurrentMode(modeType?: ModeTypes): void {
+    this.currentMode = modeType ?? undefined
+  }
+
+  public resetCurrentMode(): void {
+    this.currentMode = undefined
+  }
+
   public get currentGroup(): FilterGroup {
     return {
       vgroup: this.filterStore.selectedGroupItem.vgroup,
@@ -71,7 +77,7 @@ export class FilterAttributesStore {
     const condition: TEnumCondition = [
       FilterKindEnum.Enum,
       groupName,
-      ConditionJoinMode.OR,
+      getConditionJoinMode(this.currentMode),
       values,
     ]
 
@@ -83,9 +89,7 @@ export class FilterAttributesStore {
       this.datasetStore.resetActivePreset()
     }
 
-    if (!this.datasetStore.isXL) {
-      this.datasetStore.fetchWsListAsync()
-    }
+    this.resetCurrentMode()
   }
 
   public updateCurrentGroupEnumFilter(values: string[]): void {

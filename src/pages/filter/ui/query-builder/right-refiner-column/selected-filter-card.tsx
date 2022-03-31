@@ -8,11 +8,13 @@ import { useToggle } from '@core/hooks/use-toggle'
 import datasetStore from '@store/dataset'
 import filterStore from '@store/filter'
 import { Icon } from '@ui/icon'
+import { ConditionJoinMode } from '@service-providers/common'
 import {
   TCondition,
   TFuncArgs,
   TNumericConditionBounds,
 } from '@service-providers/common/common.interface'
+import { AllNotModeLabel } from '../../all-not-mode-label'
 import { EnumFilter } from './enum-filter'
 import { FuncFilter } from './func-filter'
 import { ModalOptions } from './modal-options'
@@ -27,6 +29,10 @@ export const SelectedFilterCard = observer(
   ({ filterId, filterCondition }: ISelectedFilterCardProps): ReactElement => {
     const filterType: string = filterCondition[0]
     const filterName: string = filterCondition[1]
+    const filterMode: ConditionJoinMode | undefined =
+      filterType !== FilterKindEnum.Numeric
+        ? (filterCondition[2] as ConditionJoinMode)
+        : undefined
     const filterContent: string[] = filterCondition[3] || []
     const filterExpression: TFuncArgs = filterCondition[4]!
 
@@ -88,6 +94,11 @@ export const SelectedFilterCard = observer(
             />
 
             <div className="leading-16px font-bold">{filterName}</div>
+
+            <AllNotModeLabel
+              isAllMode={filterMode === ConditionJoinMode.AND}
+              isNotMode={filterMode === ConditionJoinMode.NOT}
+            />
           </div>
 
           <Icon

@@ -6,7 +6,7 @@ import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import filterStore from '@store/filter'
 import { TFuncCondition } from '@service-providers/common/common.interface'
-import { getModeType } from '@utils/getModeType'
+import { getConditionJoinMode } from '@utils/getConditionJoinMode'
 import functionPanelStore from '../../function-panel.store'
 
 class InheritanceModeStore {
@@ -98,7 +98,7 @@ class InheritanceModeStore {
     const conditions: TFuncCondition = [
       FilterKindEnum.Func,
       FuncStepTypesEnum.InheritanceMode,
-      getModeType(this.currentMode),
+      getConditionJoinMode(this.currentMode),
       this.variantValues,
       {
         problem_group:

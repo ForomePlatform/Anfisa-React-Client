@@ -1,13 +1,16 @@
 import { ReactElement, useEffect, useState } from 'react'
-import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
+import { ModeTypes } from '@core/enum/mode-types-enum'
 import { t } from '@i18n'
 import filterStore from '@store/filter'
 import { Button } from '@ui/button'
 import { Pagintaion } from '@components/pagintaion'
+import { ConditionJoinMode } from '@service-providers/common'
+import { getCurrentModeType } from '@utils/getCurrentModeType'
 import filterAttributesStore from '../filterAttributes.store'
 import { QueryBuilderSearch } from '../query-builder/query-builder-search'
+import { AllNotMods } from '../query-builder/ui/all-not-mods'
 import { SelectedGroupItem } from '../selected-group-item'
 
 const variantsPerPage = 12
@@ -17,6 +20,7 @@ export const EnumPanel = observer((): ReactElement => {
     currentGroup: { groupName },
     filteredEnumVariants,
     allEnumVariants,
+    groupSubKind,
   } = filterAttributesStore
 
   const isRedactorMode = filterStore.isRedactorMode
@@ -32,6 +36,12 @@ export const EnumPanel = observer((): ReactElement => {
     if (selectedFilter && isRedactorMode) {
       const selectedFilters = selectedFilter[3] || []
 
+      const conditionJoinType = selectedFilter[2] as ConditionJoinMode
+
+      filterAttributesStore.setCurrentMode(
+        getCurrentModeType(conditionJoinType),
+      )
+
       setSelectedVariants(selectedFilters)
     }
 
@@ -40,6 +50,8 @@ export const EnumPanel = observer((): ReactElement => {
       setCurrentPage(0)
       setSearchValue('')
     }
+
+    return () => filterAttributesStore.resetCurrentMode()
   }, [isRedactorMode, selectedFilter])
 
   useEffect(() => {
@@ -83,6 +95,8 @@ export const EnumPanel = observer((): ReactElement => {
     setSelectedVariants([])
 
     setCurrentPage(0)
+
+    filterAttributesStore.resetCurrentMode()
   }
 
   const handleAddConditions = () => {
@@ -110,6 +124,22 @@ export const EnumPanel = observer((): ReactElement => {
           value={searchValue}
           onChange={handleChange}
           isSubgroupItemSearch
+        />
+      </div>
+
+      <div className="flex justify-end mt-2 -mb-4">
+        <AllNotMods
+          groupSubKind={groupSubKind}
+          isAllModeChecked={filterAttributesStore.currentMode === ModeTypes.All}
+          isNotModeChecked={filterAttributesStore.currentMode === ModeTypes.Not}
+          isAllModeDisabled={selectedVariants.length < 2}
+          isNotModeDisabled={selectedVariants.length === 0}
+          toggleAllMode={() =>
+            filterAttributesStore.setCurrentMode(ModeTypes.All)
+          }
+          toggleNotMode={() =>
+            filterAttributesStore.setCurrentMode(ModeTypes.Not)
+          }
         />
       </div>
 

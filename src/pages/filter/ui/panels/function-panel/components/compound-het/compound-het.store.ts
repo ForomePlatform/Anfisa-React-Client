@@ -6,7 +6,7 @@ import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import filterStore from '@store/filter'
 import { TFuncCondition } from '@service-providers/common/common.interface'
-import { getModeType } from '@utils/getModeType'
+import { getConditionJoinMode } from '@utils/getConditionJoinMode'
 import functionPanelStore from '../../function-panel.store'
 
 export const CompoundHetSelectOptions = [
@@ -73,7 +73,7 @@ class CompoundHetStore {
     const conditions: TFuncCondition = [
       'func',
       FuncStepTypesEnum.CompoundHet,
-      getModeType(this.currentMode),
+      getConditionJoinMode(this.currentMode),
       ['Proband'],
       { approx: this.initialApprox ?? null, state: null },
     ]
