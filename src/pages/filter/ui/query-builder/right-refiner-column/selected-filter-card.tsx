@@ -57,7 +57,6 @@ export const SelectedFilterCard = observer(
 
       filterStore.resetSelectedGroupItem()
 
-      // TODO: probably should be changed
       const selectedGroupItem = datasetStore.startDsStat['stat-list'].find(
         (filter: StatListType) => filter.name === filterName,
       )
