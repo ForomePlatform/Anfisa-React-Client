@@ -18,11 +18,22 @@ export const getBounds = <T>(
   return [min, max]
 }
 
-export const getYScaleAndAxis = (
-  min: number,
-  max: number,
-  height: number,
-): [d3.ScaleContinuousNumeric<number, number>, d3.Axis<number>] => {
+type TGetYScaleAndAxisParams = {
+  min: number
+  max: number
+  height: number
+  minTickDistance?: number
+}
+
+export const getYScaleAndAxis = ({
+  min,
+  max,
+  height,
+  minTickDistance = 36,
+}: TGetYScaleAndAxisParams): [
+  d3.ScaleContinuousNumeric<number, number>,
+  d3.Axis<number>,
+] => {
   const logMin = Math.max(Math.floor(Math.log10(min)), 0)
   const logMax = Math.ceil(Math.log10(max))
 
@@ -36,9 +47,14 @@ export const getYScaleAndAxis = (
     scale.domain([0, max])
   }
 
+  const ticksCount = Math.min(
+    Math.floor(height / minTickDistance) + 1,
+    isLogScale ? logMax - logMin - 1 : 4,
+  )
+
   const axis = d3
     .axisLeft<number>(scale)
-    .ticks(isLogScale ? logMax - logMin - 1 : 4)
+    .ticks(ticksCount)
     .tickFormat(formatNumber)
 
   return [scale, axis]
