@@ -59,7 +59,6 @@ export const CompoundRequest = observer((): ReactElement => {
 
   const handleResetFields = () => {
     compoundRequestStore.setActiveRequestIndex(0)
-    filterStore.clearFilterCondition(FuncStepTypesEnum.CompoundRequest)
   }
 
   return (

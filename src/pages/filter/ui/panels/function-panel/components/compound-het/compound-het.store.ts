@@ -77,8 +77,6 @@ class CompoundHetStore {
 
   public handleResetFields(): void {
     this.setInitialApprox('shared transcript')
-
-    functionPanelStore.clearCachedValues(FuncStepTypesEnum.CompoundHet)
   }
 }
 

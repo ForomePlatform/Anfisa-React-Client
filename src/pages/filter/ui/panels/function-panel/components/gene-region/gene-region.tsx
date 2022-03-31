@@ -26,6 +26,11 @@ export const GeneRegion = observer(() => {
     validateLocusCondition({ value, setIsErrorVisible })
   }
 
+  const handleResetFields = () => {
+    geneRegionStore.resetLocusValue()
+    setIsErrorVisible(false)
+  }
+
   // set/reset data
   useEffect(() => {
     if (selectedFilter && isRedactorMode) {
@@ -86,9 +91,7 @@ export const GeneRegion = observer(() => {
 
       <PanelButtons
         onSubmit={() => geneRegionStore.handleSumbitCondtions()}
-        resetFields={() =>
-          functionPanelStore.clearCachedValues(FuncStepTypesEnum.GeneRegion)
-        }
+        resetFields={handleResetFields}
         disabled={!simpleVariants || isErrorVisible}
       />
     </React.Fragment>

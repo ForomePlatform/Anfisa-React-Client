@@ -50,18 +50,6 @@ class FunctionPanelStore {
     return attrData.family
   }
 
-  public getCachedValues<T>(componentName: string): T {
-    return filterStore.readFilterCondition(componentName) as T
-  }
-
-  public setCachedValues<T>(componentName: string, cachedValues: T): void {
-    filterStore.setFilterCondition<T>(componentName, cachedValues)
-  }
-
-  public clearCachedValues(filterName: string): void {
-    filterStore.clearFilterCondition(filterName)
-  }
-
   public sumbitConditions(condition: TFuncCondition): void {
     if (datasetStore.activePreset) datasetStore.resetActivePreset()
 

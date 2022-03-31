@@ -254,15 +254,13 @@ export class DatasetStore {
     return result
   }
 
-  updatePresetLoad(dsStatData: any, source?: string) {
+  updatePresetLoad(dsStatData: any) {
     filterStore.resetSelectedFilters()
     this.startPresetConditions = dsStatData.conditions
 
     dsStatData.conditions?.forEach((condition: TCondition) => {
       filterStore.addFilterBlock(condition as TCondition)
     })
-
-    !source || (this.isXL && this.fetchDsStatAsync())
   }
 
   async fetchTabReportAsync() {

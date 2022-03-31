@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from 'mobx'
+import { makeAutoObservable, runInAction, toJS } from 'mobx'
 
 import { getApiUrl } from '@core/get-api-url'
 import { t } from '@i18n'
@@ -13,7 +13,7 @@ class PresetStore {
     makeAutoObservable(this)
   }
 
-  async loadPresetAsync(filter: string, source?: string) {
+  async loadPresetAsync(filter: string) {
     const body = new URLSearchParams({
       ds: datasetStore.datasetName,
       filter,
@@ -29,10 +29,8 @@ class PresetStore {
 
     const result = await response.json()
 
-    filterStore.resetFilterCondition()
-
     runInAction(() => {
-      datasetStore.updatePresetLoad(result, source)
+      datasetStore.updatePresetLoad(result)
       datasetStore.dsStat = result
     })
   }
@@ -61,6 +59,7 @@ class PresetStore {
 
   async joinPresetAsync(presetName: string) {
     const { conditions } = filterStore
+    console.log(toJS(conditions), presetName)
 
     const body = new URLSearchParams({
       ds: datasetStore.datasetName,
@@ -72,6 +71,7 @@ class PresetStore {
       : body.append('conditions', JSON.stringify(conditions))
 
     const result = await datasetStore.fetchDsStatAsync(false, body)
+    console.log(toJS(result))
 
     await datasetStore.updatePresetLoad(result)
   }
@@ -157,7 +157,7 @@ class PresetStore {
     if (filterStore.actionName) return
 
     if (datasetStore.prevPreset !== datasetStore.activePreset) {
-      this.loadPresetAsync(preset, 'refiner')
+      this.loadPresetAsync(preset)
     }
   }
 }

@@ -1,9 +1,3 @@
-export interface IGeneRegionCachedValues {
-  conditions: {
-    locus: string
-  }
-}
-
 export type TRequestCondition = [number, TSelectValues]
 
 export type TSelectValues = {

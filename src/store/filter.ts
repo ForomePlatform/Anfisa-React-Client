@@ -1,4 +1,3 @@
-import cloneDeep from 'lodash/cloneDeep'
 import {
   IReactionDisposer,
   makeAutoObservable,
@@ -36,7 +35,6 @@ export class FilterStore {
 
   actionName?: ActionFilterEnum
   statFuncData: any = []
-  filterCondition: Record<string, any> = {}
   memorizedSelectedFilters: SelectedFiltersType | undefined | any = undefined
 
   selectedFiltersHistory: SelectedFiltersType[] = []
@@ -52,10 +50,12 @@ export class FilterStore {
     this.loadConditions = reaction(
       () => this.conditions,
       () => {
-        datasetStore.fetchDsStatAsync()
+        if (this.conditions.length > 0 && this.method !== GlbPagesNames.Table) {
+          datasetStore.fetchDsStatAsync()
 
-        if (!datasetStore.isXL) {
-          datasetStore.fetchWsListAsync()
+          if (!datasetStore.isXL) {
+            datasetStore.fetchWsListAsync()
+          }
         }
       },
     )
@@ -157,6 +157,8 @@ export class FilterStore {
 
   public resetSelectedFilters() {
     this._selectedFilters = new Map()
+    this.resetIsRedacorMode()
+    this.resetActiveFilterId()
   }
 
   public resetStatFuncData() {
@@ -165,24 +167,6 @@ export class FilterStore {
 
   public setSelectedFiltersHistory(history: SelectedFiltersType[]) {
     this.selectedFiltersHistory = JSON.parse(JSON.stringify(history))
-  }
-
-  public setFilterCondition<T = any>(filterName: string, values: T) {
-    this.filterCondition[filterName] = cloneDeep(values)
-  }
-
-  public readFilterCondition<T = any>(filterName: string) {
-    return this.filterCondition[filterName]
-      ? (this.filterCondition[filterName] as T)
-      : undefined
-  }
-
-  public resetFilterCondition() {
-    this.filterCondition = {}
-  }
-
-  public clearFilterCondition(filterName: string) {
-    delete this.filterCondition[filterName]
   }
 
   public setActiveFilterId(filterId: string) {

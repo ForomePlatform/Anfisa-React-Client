@@ -27,12 +27,6 @@ class GeneRegionStore {
     return `{"locus":"${this.locusValue}"}`
   }
 
-  public setConditions = (value: string): void => {
-    functionPanelStore.setCachedValues(FuncStepTypesEnum.GeneRegion, {
-      conditions: { locus: value },
-    })
-  }
-
   public handleSumbitCondtions(): void {
     const conditions: TFuncCondition = [
       'func',
