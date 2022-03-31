@@ -2,13 +2,12 @@ import { makeAutoObservable } from 'mobx'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { InheritanceModeEnum } from '@core/enum/inheritance-mode-enum'
+import { ModeTypes } from '@core/enum/mode-types-enum'
 import filterStore from '@store/filter'
-import {
-  ConditionJoinMode,
-  TFuncCondition,
-} from '@service-providers/common/common.interface'
+import { TFuncCondition } from '@service-providers/common/common.interface'
 import { getSelectValue } from '@utils/function-panel/getSelectValue'
 import { getStringScenario } from '@utils/function-panel/getStringScenario'
+import { getModeType } from '@utils/getModeType'
 import { getSortedArray } from '@utils/getSortedArray'
 import { TScenario } from '../../function-panel.interface'
 import functionPanelStore from '../../function-panel.store'
@@ -23,6 +22,7 @@ interface ISendRequest {
 class CustomInheritanceModeStore {
   scenario: TScenario[] = []
   resetValue: string = ''
+  currentMode?: ModeTypes
 
   constructor() {
     makeAutoObservable(this)
@@ -34,6 +34,14 @@ class CustomInheritanceModeStore {
 
   public setResetValue(resetValue: string) {
     this.resetValue = resetValue
+  }
+
+  public setCurrentMode(modeType: ModeTypes): void {
+    this.currentMode = modeType
+  }
+
+  public resetCurrentMode(): void {
+    this.currentMode = undefined
   }
 
   public clearScenario() {
@@ -204,7 +212,7 @@ class CustomInheritanceModeStore {
     const custInhModeConditions: TFuncCondition = [
       'func',
       FuncStepTypesEnum.CustomInheritanceMode,
-      ConditionJoinMode.OR,
+      getModeType(this.currentMode),
       ['True'],
       JSON.parse(`{"scenario":{${this.stringScenario}}}`),
     ]

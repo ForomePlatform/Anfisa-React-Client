@@ -2,8 +2,10 @@ import React, { ReactElement, useEffect } from 'react'
 import { Option } from 'react-dropdown'
 import { observer } from 'mobx-react-lite'
 
+import { ModeTypes } from '@core/enum/mode-types-enum'
 import filterStore from '@store/filter'
 import { DropDown } from '@ui/dropdown'
+import { AllNotMods } from '@pages/filter/ui/query-builder/ui/all-not-mods'
 import { DisabledVariantsAmount } from '@pages/filter/ui/query-builder/ui/disabled-variants-amount'
 import { ICompoundHetArgs } from '@service-providers/common/common.interface'
 import functionPanelStore from '../../function-panel.store'
@@ -50,14 +52,24 @@ export const CompundHet = observer((): ReactElement => {
       <div className="text-red-secondary">
         {compoundHetStore.statFuncStatus}
       </div>
-      <div className="flex items-center mt-4">
-        <span className="mr-2 text-18 leading-14px">Approx:</span>
+      <div className="flex justify-between items-center mt-4">
+        <div className="flex items-center">
+          <span className="mr-2 text-18 leading-14px">Approx:</span>
 
-        <DropDown
-          value={initialApprox || 'shared transcript'}
-          options={CompoundHetSelectOptions}
-          onSelect={(arg: Option) => compoundHetStore.handleChangeApprox(arg)}
-        />
+          <DropDown
+            value={initialApprox || 'shared transcript'}
+            options={CompoundHetSelectOptions}
+            onSelect={(arg: Option) => compoundHetStore.handleChangeApprox(arg)}
+          />
+
+          <AllNotMods
+            isNotModeChecked={compoundHetStore.currentMode === ModeTypes.Not}
+            isNotModeDisabled={
+              simpleVariants ? simpleVariants.length === 0 : true
+            }
+            toggleNotMode={() => compoundHetStore.setCurrentMode(ModeTypes.Not)}
+          />
+        </div>
       </div>
 
       <div className="mt-4">

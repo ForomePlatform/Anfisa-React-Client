@@ -2,6 +2,7 @@ import cloneDeep from 'lodash/cloneDeep'
 import { makeAutoObservable } from 'mobx'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
+import { ModeTypes } from '@core/enum/mode-types-enum'
 import filterStore from '@store/filter'
 import {
   ConditionJoinMode,
@@ -9,6 +10,7 @@ import {
 } from '@service-providers/common/common.interface'
 import { getFilteredRequestCondition } from '@utils/function-panel/getFilteredRequestCondition'
 import { getFuncParams } from '@utils/getFuncParams'
+import { getModeType } from '@utils/getModeType'
 import { getRequestData } from '@utils/getRequestData'
 import { getResetRequestData } from '@utils/getResetRequestData'
 import { getResetType } from '@utils/getResetType'
@@ -21,6 +23,7 @@ class CompoundRequestStore {
   requestCondition: TRequestCondition[] = [[1, {}] as TRequestCondition]
   resetValue: string = ''
   activeRequestIndex = this.requestCondition.length - 1
+  currentMode?: ModeTypes
 
   constructor() {
     makeAutoObservable(this)
@@ -32,6 +35,14 @@ class CompoundRequestStore {
 
   public resetActiveRequestIndex() {
     this.activeRequestIndex = this.requestCondition.length - 1
+  }
+
+  public setCurrentMode(modeType: ModeTypes): void {
+    this.currentMode = modeType
+  }
+
+  public resetCurrentMode(): void {
+    this.currentMode = undefined
   }
 
   public setRequestCondition(requestCondition: TRequestCondition[]) {
@@ -179,7 +190,7 @@ class CompoundRequestStore {
     const conditions: TFuncCondition = [
       'func',
       FuncStepTypesEnum.CompoundRequest,
-      ConditionJoinMode.OR,
+      getModeType(this.currentMode),
       ['True'],
       {
         approx: null,

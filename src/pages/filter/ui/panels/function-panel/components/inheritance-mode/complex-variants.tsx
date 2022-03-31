@@ -2,7 +2,10 @@ import React, { ChangeEvent } from 'react'
 import Checkbox from 'react-three-state-checkbox'
 import { observer } from 'mobx-react-lite'
 
+import { ModeTypes } from '@core/enum/mode-types-enum'
+import { SubKindsEnum } from '@core/enum/sub-kinds-enum'
 import { t } from '@i18n'
+import { AllNotMods } from '@pages/filter/ui/query-builder/ui/all-not-mods'
 import inheritanceModeStore from './inheritance-mode.store'
 
 interface IComplexVariantsProps {
@@ -56,6 +59,26 @@ export const ComplexVariants = observer(
             </div>
           )
         })}
+
+        <div className="mt-1">
+          <AllNotMods
+            isAllModeDisabled={variantValues.length < 2}
+            isNotModeDisabled={variantValues.length === 0}
+            isAllModeChecked={
+              inheritanceModeStore.currentMode === ModeTypes.All
+            }
+            isNotModeChecked={
+              inheritanceModeStore.currentMode === ModeTypes.Not
+            }
+            toggleAllMode={() =>
+              inheritanceModeStore.setCurrentMode(ModeTypes.All)
+            }
+            toggleNotMode={() =>
+              inheritanceModeStore.setCurrentMode(ModeTypes.Not)
+            }
+            groupSubKind={SubKindsEnum.InheritanceZ}
+          />
+        </div>
 
         {variants.length === 0 && (
           <div className="flex justify-center w-full mt-2 text-14 text-grey-blue">

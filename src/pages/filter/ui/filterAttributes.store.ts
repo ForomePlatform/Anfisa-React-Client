@@ -2,6 +2,7 @@ import { difference } from 'lodash'
 import { makeAutoObservable, toJS } from 'mobx'
 
 import { FilterKindEnum } from '@core/enum/filter-kind.enum'
+import { ModeTypes } from '@core/enum/mode-types-enum'
 import datasetStore, { DatasetStore } from '@store/dataset'
 import filterStore, { FilterStore } from '@store/filter'
 import {
@@ -29,6 +30,8 @@ export class FilterAttributesStore {
   private datasetStore: DatasetStore
   private filterStore: FilterStore
 
+  currentMode?: ModeTypes
+
   constructor(params: FilterAttributesStoreParams) {
     const { datasetStore, filterStore } = params
 
@@ -38,7 +41,7 @@ export class FilterAttributesStore {
     makeAutoObservable(this)
   }
 
-  get currentGroup(): FilterGroup {
+  public get currentGroup(): FilterGroup {
     return {
       vgroup: this.filterStore.selectedGroupItem.vgroup,
       groupName: this.filterStore.selectedGroupItem.name,
@@ -56,6 +59,10 @@ export class FilterAttributesStore {
       )?.variants ?? []
 
     return toJS(allEnumVariants)
+  }
+
+  public get groupSubKind(): string {
+    return this.filterStore.selectedGroupItem['sub-kind']
   }
 
   updateEnumFilter(group: FilterGroup, values: string[]): void {
@@ -81,7 +88,7 @@ export class FilterAttributesStore {
     }
   }
 
-  updateCurrentGroupEnumFilter(values: string[]): void {
+  public updateCurrentGroupEnumFilter(values: string[]): void {
     this.updateEnumFilter(this.currentGroup, values)
   }
 
@@ -89,7 +96,7 @@ export class FilterAttributesStore {
     this.updateEnumFilter(group, values)
   }
 
-  addValuesToCurrentGroupEnumFilter(values: string[]): void {
+  public addValuesToCurrentGroupEnumFilter(values: string[]): void {
     this.addValuesToEnumFilter(this.currentGroup, values)
   }
 

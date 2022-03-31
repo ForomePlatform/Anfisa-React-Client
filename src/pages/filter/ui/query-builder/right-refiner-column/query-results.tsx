@@ -1,16 +1,9 @@
 import { ReactElement } from 'react'
-import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
 import filterStore from '@store/filter'
 import { SelectedFilterCard } from './selected-filter-card'
-
-export interface IHandleRemoveFilter {
-  filterId: string
-  subFilterIdx: number
-  filterType: string
-}
 
 export const QueryResults = observer((): ReactElement => {
   const selectedFilters = filterStore.selectedFiltersArray

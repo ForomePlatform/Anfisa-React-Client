@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction, toJS } from 'mobx'
+import { makeAutoObservable, runInAction } from 'mobx'
 
 import { getApiUrl } from '@core/get-api-url'
 import { t } from '@i18n'
@@ -59,7 +59,6 @@ class PresetStore {
 
   async joinPresetAsync(presetName: string) {
     const { conditions } = filterStore
-    console.log(toJS(conditions), presetName)
 
     const body = new URLSearchParams({
       ds: datasetStore.datasetName,
@@ -71,7 +70,6 @@ class PresetStore {
       : body.append('conditions', JSON.stringify(conditions))
 
     const result = await datasetStore.fetchDsStatAsync(false, body)
-    console.log(toJS(result))
 
     await datasetStore.updatePresetLoad(result)
   }

@@ -3,11 +3,13 @@ import { makeAutoObservable, runInAction } from 'mobx'
 
 import { IStatFuncData } from '@declarations'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
+import { ModeTypes } from '@core/enum/mode-types-enum'
 import filterStore from '@store/filter'
 import {
   ConditionJoinMode,
   TFuncCondition,
 } from '@service-providers/common/common.interface'
+import { getModeType } from '@utils/getModeType'
 import functionPanelStore from '../../function-panel.store'
 
 export const CompoundHetSelectOptions = [
@@ -20,6 +22,8 @@ class CompoundHetStore {
   statFuncStatus = ''
   initialApprox: string | null = ''
 
+  currentMode?: ModeTypes
+
   constructor() {
     makeAutoObservable(this)
   }
@@ -30,6 +34,14 @@ class CompoundHetStore {
 
   public resetInitialApprox() {
     this.initialApprox = ''
+  }
+
+  public setCurrentMode(modeType: ModeTypes): void {
+    this.currentMode = modeType
+  }
+
+  public resetCurrentMode(): void {
+    this.currentMode = undefined
   }
 
   public async getStatFuncStatusAsync(): Promise<void> {
@@ -64,7 +76,7 @@ class CompoundHetStore {
     const conditions: TFuncCondition = [
       'func',
       FuncStepTypesEnum.CompoundHet,
-      ConditionJoinMode.OR,
+      getModeType(this.currentMode),
       ['Proband'],
       { approx: this.initialApprox ?? null, state: null },
     ]

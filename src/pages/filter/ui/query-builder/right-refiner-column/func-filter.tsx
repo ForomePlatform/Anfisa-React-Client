@@ -3,7 +3,7 @@ import cn from 'classnames'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { TFuncArgs } from '@service-providers/common/common.interface'
-interface Props {
+interface IFuncFilterProps {
   filterId: string
   filterName: string
   isFilterActive: boolean
@@ -17,7 +17,7 @@ export const FuncFilter = ({
   isFilterActive,
   filterContent,
   filterExpression,
-}: Props): ReactElement => (
+}: IFuncFilterProps): ReactElement => (
   <>
     {filterName === FuncStepTypesEnum.InheritanceMode ? (
       filterContent.map(subFilterName => (

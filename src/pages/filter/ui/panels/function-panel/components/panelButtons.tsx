@@ -7,7 +7,7 @@ import { Button } from '@ui/button'
 
 interface IPanelButtons {
   onSubmit: () => void
-  resetFields?: () => void
+  resetFields: () => void
   disabled?: boolean
 }
 
@@ -16,7 +16,7 @@ export const PanelButtons = observer(
     const handleClear = () => {
       filterStore.resetStatFuncData()
 
-      resetFields && resetFields()
+      resetFields()
     }
 
     const isRedactorMode = filterStore.isRedactorMode

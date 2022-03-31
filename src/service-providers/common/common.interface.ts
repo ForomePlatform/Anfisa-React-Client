@@ -1,3 +1,4 @@
+import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { TRequestCondition } from '@pages/filter/ui/panels/function-panel/function-panel.interface'
 
 export enum DatasetKinds {
@@ -5,10 +6,10 @@ export enum DatasetKinds {
   XL = 'xl',
 }
 
-export type TCount = [
-  variantCounts: [number],
-  dnaVariantsCounts?: [number],
-  transcriptsCounts?: [number],
+export type TItemsCount = [
+  variantCounts: number,
+  dnaVariantsCounts: number,
+  transcriptsCounts: number,
 ]
 
 export type TDateISOString = string
@@ -55,7 +56,7 @@ export interface IGeneRegionArgs {
 }
 
 export type TEnumCondition = [
-  conditionType: 'enum',
+  conditionType: FilterKindEnum.Enum,
   propertyName: string,
   joinMode: ConditionJoinMode,
   valueVariants: string[],
@@ -126,7 +127,7 @@ export interface INumericPropertyStatus
   extends IBasePropertyStatus<AttributeKinds.NUMERIC> {
   min?: number
   max?: number
-  counts?: TCount[]
+  counts?: TItemsCount[]
   histogram?: TNumericPropertyHistogram
   'sub-kind': NumericPropertyStatusSubKinds
 }
@@ -150,6 +151,8 @@ export interface IFuncPropertyStatus
   err?: string
   'rq-id': string
   no?: string
+  family?: string[]
+  'approx-modes'?: string[][]
 }
 
 export type TPropertyStatus =

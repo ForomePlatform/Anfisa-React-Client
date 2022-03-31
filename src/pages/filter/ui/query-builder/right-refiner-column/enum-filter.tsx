@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import cn from 'classnames'
 
-interface Props {
+interface IEnumFilterProps {
   filterId: string
   isFilterActive: boolean
   filterContent: string[]
@@ -11,7 +11,7 @@ export const EnumFilter = ({
   filterId,
   isFilterActive,
   filterContent,
-}: Props): ReactElement => (
+}: IEnumFilterProps): ReactElement => (
   <div>
     {filterContent.map((subFilterName, idx) => (
       <div

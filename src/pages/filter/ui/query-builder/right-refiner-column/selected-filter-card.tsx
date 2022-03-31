@@ -18,16 +18,16 @@ import { FuncFilter } from './func-filter'
 import { ModalOptions } from './modal-options'
 import { NumericFilter } from './numeric-filter'
 
-interface SelectedFilterCardProps {
+interface ISelectedFilterCardProps {
   filterId: string
   filterCondition: TCondition
 }
 
 export const SelectedFilterCard = observer(
-  ({ filterId, filterCondition }: SelectedFilterCardProps): ReactElement => {
+  ({ filterId, filterCondition }: ISelectedFilterCardProps): ReactElement => {
     const filterType: string = filterCondition[0]
     const filterName: string = filterCondition[1]
-    const filterContent: string[] = filterCondition[3]!
+    const filterContent: string[] = filterCondition[3] || []
     const filterExpression: TFuncArgs = filterCondition[4]!
 
     const isFilterActive = filterId === filterStore.activeFilterId

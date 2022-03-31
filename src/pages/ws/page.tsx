@@ -2,18 +2,13 @@ import { Fragment, ReactElement, useEffect } from 'react'
 import { withErrorBoundary } from 'react-error-boundary'
 import get from 'lodash/get'
 import { observer } from 'mobx-react-lite'
-import {
-  ArrayParam,
-  NumberParam,
-  useQueryParams,
-  withDefault,
-} from 'use-query-params'
+import { NumberParam, useQueryParams } from 'use-query-params'
 
 import { formatNumber } from '@core/format-number'
 import { useDatasetName } from '@core/hooks/use-dataset-name'
 import { useParams } from '@core/hooks/use-params'
 import { t } from '@i18n'
-import datasetStore, { Condition } from '@store/dataset'
+import datasetStore from '@store/dataset'
 import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
 import variantStore from '@store/variant'
@@ -32,36 +27,24 @@ import { TableVariants } from './ui/table-variants'
 
 const WSPage = observer((): ReactElement => {
   const params = useParams()
+  const stringifyedConditions = params.get('conditions')
+  const { conditions } = filterStore
 
   useDatasetName()
 
-  const { conditions } = filterStore
-
   const [query] = useQueryParams({
     variant: NumberParam,
-    refiner: withDefault(ArrayParam, []),
   })
 
-  const { variant, refiner } = query
-
-  const hasConditionsInSearchParamsOnly =
-    refiner.length > 0 && conditions.length === 0
+  const { variant } = query
 
   Number.isInteger(variant) && variantStore.setIndex(variant as number)
 
   useEffect(() => {
-    if (hasConditionsInSearchParamsOnly) {
-      const conditions: Condition[] = (refiner as string[]).map((c: string) => {
-        const item: string[] = c!.split(',')
-        const [name, group, symbol, value] = item
+    if (stringifyedConditions && !conditions.length) {
+      const conditions: TCondition[] = JSON.parse(stringifyedConditions)
 
-        return [name, group, symbol, [value]]
-      })
-
-      // TODO: remove "as Type" afrer refactoring
-      conditions.forEach(condition =>
-        filterStore.addFilterBlock(condition as TCondition),
-      )
+      conditions.forEach(condtion => filterStore.addFilterBlock(condtion))
     }
 
     const initAsync = async () => {

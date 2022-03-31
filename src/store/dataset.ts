@@ -2,7 +2,7 @@
 import get from 'lodash/get'
 import { makeAutoObservable, runInAction, toJS } from 'mobx'
 
-import { DsStatType, StatListType, TabReportType } from '@declarations'
+import { DsStatType, StatListType } from '@declarations'
 import { getApiUrl } from '@core/get-api-url'
 import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
@@ -11,8 +11,16 @@ import {
   IRecordDescriptor,
   TCondition,
 } from '@service-providers/common/common.interface'
+import datasetProvider from '@service-providers/dataset-level/dataset.provider'
+import { IWsListArguments } from '@service-providers/ws-dataset-support/ws-dataset-support.interface'
+import wsDatasetProvider from '@service-providers/ws-dataset-support/ws-dataset-support.provider'
 import { addToActionHistory } from '@utils/addToActionHistory'
 import { fetchStatunitsAsync } from '@utils/fetchStatunitsAsync'
+import {
+  IDsListArguments,
+  ITabReport,
+} from './../service-providers/dataset-level/dataset-level.interface'
+import { IZoneDescriptor } from './../service-providers/ws-dataset-support/ws-dataset-support.interface'
 import dirinfoStore from './dirinfo'
 import operations from './operations'
 
@@ -24,7 +32,7 @@ export class DatasetStore {
   dsStat: DsStatType = {}
   startDsStat: DsStatType = {}
   variantsAmount = 0
-  tabReport: TabReportType[] = []
+  tabReport: ITabReport[] = []
   genes: string[] = []
   genesList: string[] = []
   tags: string[] = []
@@ -298,22 +306,14 @@ export class DatasetStore {
       return
     }
 
-    const response = await fetch(getApiUrl('tab_report'), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body: new URLSearchParams({
-        ds: String(dsName),
-        schema: 'xbr',
-        seq: JSON.stringify(seq),
-      }),
+    const tabReport = await datasetProvider.getTabReport({
+      ds: dsName,
+      schema: 'xbr',
+      seq,
     })
 
-    const result = await response.json()
-
     runInAction(() => {
-      this.tabReport = [...this.tabReport, ...result]
+      this.tabReport = [...this.tabReport, ...tabReport]
       this.reportsLoaded = this.tabReport.length === this.filteredNo.length
       this.isFetchingMore = false
     })
@@ -362,34 +362,25 @@ export class DatasetStore {
   async fetchTagSelectAsync() {
     if (this.isXL) return
 
-    const response = await fetch(
-      getApiUrl(`tag_select?ds=${this.datasetName}`),
-      {
-        method: 'POST',
-      },
-    )
-
-    const result = await response.json()
+    const tagSelect = await wsDatasetProvider.getTagSelect({
+      ds: this.datasetName,
+    })
 
     runInAction(() => {
-      this.tags = [...result['tag-list']].filter(item => item !== '_note')
+      this.tags = [...tagSelect['tag-list']].filter(item => item !== '_note')
     })
   }
 
   async fetchWsTagsAsync() {
     if (this.isXL) return
 
-    const response = await fetch(
-      getApiUrl(`ws_tags?ds=${this.datasetName}&rec=${variantStore.index}`),
-      {
-        method: 'POST',
-      },
-    )
-
-    const result = await response.json()
+    const wsTags = await wsDatasetProvider.getWsTags({
+      ds: this.datasetName,
+      rec: variantStore.index,
+    })
 
     runInAction(() => {
-      this.tags = [...result['op-tags'], ...result['check-tags']].filter(
+      this.tags = [...wsTags['op-tags'], ...wsTags['check-tags']].filter(
         item => item !== '_note',
       )
     })
@@ -398,36 +389,25 @@ export class DatasetStore {
   async fetchWsListAsync(isXL?: boolean, kind?: string) {
     this.setIsLoadingTabReport(true)
 
-    const body = new URLSearchParams({
+    const params: IWsListArguments | IDsListArguments = {
       ds: this.datasetName,
-    })
+      filter: this.activePreset,
+    }
 
     const { conditions } = filterStore
 
     if (!this.isFilterDisabled) {
-      body.append(
-        'conditions',
-        kind === 'reset' ? '[]' : JSON.stringify(conditions),
-      )
-      body.append('zone', JSON.stringify(this.zone))
+      params.conditions = kind === 'reset' ? [] : conditions
+      if (!isXL) {
+        ;(params as IWsListArguments).zone = this.zone
+      }
     }
-
-    body.append('filter', this.activePreset)
-
-    const response = await fetch(getApiUrl(isXL ? 'ds_list' : 'ws_list'), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body,
-    })
-
-    const result = await response.json()
 
     this.indexFilteredNo = 0
 
     if (isXL) {
-      const taskResult = await operations.getJobStatusAsync(result.task_id)
+      const dsList = await datasetProvider.getDsList(params)
+      const taskResult = await operations.getJobStatusAsync(dsList.task_id)
 
       runInAction(() => {
         this.filteredNo = taskResult?.data?.[0].samples
@@ -437,13 +417,14 @@ export class DatasetStore {
           : []
       })
     } else {
+      const wsList = await wsDatasetProvider.getWsList(params)
       runInAction(() => {
-        this.filteredNo = result.records
-          ? result.records.map((variant: { no: number }) => variant.no)
+        this.filteredNo = wsList.records
+          ? wsList.records.map((variant: { no: number }) => variant.no)
           : []
 
-        this.statAmount = get(result, 'filtered-counts', [])
-        this.wsRecords = result.records
+        this.statAmount = get(wsList, 'filtered-counts', []) as number[]
+        this.wsRecords = wsList.records
       })
     }
 
@@ -453,43 +434,26 @@ export class DatasetStore {
   }
 
   async fetchZoneListAsync(zone: string) {
-    const body = new URLSearchParams({ ds: this.datasetName, zone })
-
-    const response = await fetch(getApiUrl('zone_list'), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body,
-    })
-
-    const result = await response.json()
+    const zoneList = (await wsDatasetProvider.getZoneList({
+      ds: this.datasetName,
+      zone,
+    })) as IZoneDescriptor
 
     runInAction(() => {
       zone === 'Symbol'
-        ? (this.genes = result.variants)
-        : (this.genesList = result.variants)
+        ? (this.genes = zoneList.variants)
+        : (this.genesList = zoneList.variants)
     })
   }
 
   async fetchSamplesZoneAsync() {
-    const body = new URLSearchParams({
+    const zoneList = (await wsDatasetProvider.getZoneList({
       ds: this.datasetName,
       zone: 'Has_Variant',
-    })
-
-    const response = await fetch(getApiUrl('zone_list'), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body,
-    })
-
-    const result = await response.json()
+    })) as IZoneDescriptor
 
     runInAction(() => {
-      this.samples = result.variants
+      this.samples = zoneList.variants
     })
   }
 

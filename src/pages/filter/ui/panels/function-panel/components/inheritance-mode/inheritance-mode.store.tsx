@@ -3,16 +3,16 @@ import { makeAutoObservable } from 'mobx'
 
 import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
+import { ModeTypes } from '@core/enum/mode-types-enum'
 import filterStore from '@store/filter'
-import {
-  ConditionJoinMode,
-  TFuncCondition,
-} from '@service-providers/common/common.interface'
+import { TFuncCondition } from '@service-providers/common/common.interface'
+import { getModeType } from '@utils/getModeType'
 import functionPanelStore from '../../function-panel.store'
 
 class InheritanceModeStore {
   problemGroupValues: string[] = []
   variantValues: string[] = []
+  currentMode?: ModeTypes
 
   constructor() {
     makeAutoObservable(this)
@@ -28,6 +28,14 @@ class InheritanceModeStore {
 
   public resetVariantValues() {
     this.variantValues = []
+  }
+
+  public setCurrentMode(modeType: ModeTypes): void {
+    this.currentMode = modeType
+  }
+
+  public resetCurrentMode(): void {
+    this.currentMode = undefined
   }
 
   public resetProblemGroupValues() {
@@ -90,7 +98,7 @@ class InheritanceModeStore {
     const conditions: TFuncCondition = [
       FilterKindEnum.Func,
       FuncStepTypesEnum.InheritanceMode,
-      ConditionJoinMode.OR,
+      getModeType(this.currentMode),
       this.variantValues,
       {
         problem_group:

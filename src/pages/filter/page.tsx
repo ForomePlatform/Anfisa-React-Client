@@ -46,6 +46,7 @@ const FilterPage = observer((): ReactElement => {
     return () => {
       dtreeStore.resetFilterValue()
       dtreeStore.resetAlgorithmFilterValue()
+      dtreeStore.resetCurrentDtreeName()
       dtreeStore.resetData()
       dirinfoStore.resetData()
       datasetStore.resetData()
@@ -55,7 +56,7 @@ const FilterPage = observer((): ReactElement => {
 
   const getFiltersValue = (type: string) => {
     if (type === 'all') {
-      if (isXL) return toJS(dirinfoStore.dsinfo.total)
+      if (isXL) return formatNumber(toJS(dirinfoStore.dsinfo.total))
 
       if (filterStore.method === GlbPagesNames.Filter) {
         return formatNumber(toJS(dtreeStore.statAmount[0]))
