@@ -28,6 +28,7 @@ import { TableVariants } from './ui/table-variants'
 const WSPage = observer((): ReactElement => {
   const params = useParams()
   const stringifyedConditions = params.get('conditions')
+  const { conditions } = filterStore
 
   useDatasetName()
 
@@ -40,7 +41,7 @@ const WSPage = observer((): ReactElement => {
   Number.isInteger(variant) && variantStore.setIndex(variant as number)
 
   useEffect(() => {
-    if (stringifyedConditions) {
+    if (stringifyedConditions && !conditions.length) {
       const conditions: TCondition[] = JSON.parse(stringifyedConditions)
 
       conditions.forEach(condtion => filterStore.addFilterBlock(condtion))
