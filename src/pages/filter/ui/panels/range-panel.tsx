@@ -9,6 +9,7 @@ import datasetStore from '@store/dataset'
 import filterStore from '@store/filter'
 import { Button } from '@ui/button'
 import { InputNumber } from '@ui/input-number'
+import { TNumericCondition } from '@service-providers/common/common.interface'
 import { createNumericExpression } from '@utils/createNumericExpression'
 
 type TNumericExpression = [null | number, boolean, null | number, boolean]
@@ -48,32 +49,18 @@ export const RangePanel = observer((): ReactElement => {
   const handleAddConditionsAsync = async () => {
     if (datasetStore.activePreset) datasetStore.resetActivePreset()
 
-    await datasetStore.setConditionsAsync([
-      [
-        FilterKindEnum.Numeric,
-        selectedFilter.name,
-        createNumericExpression({
-          expType: NumericExpressionTypes.GreaterThan,
-          minValue: min,
-          maxValue: max,
-        }),
-      ],
-    ])
-
-    filterStore.addSelectedFilterGroup(
-      selectedFilter.vgroup,
+    const condition: TNumericCondition = [
+      FilterKindEnum.Numeric,
       selectedFilter.name,
-      [
-        [
-          selectedFilter.name,
-          createNumericExpression({
-            expType: NumericExpressionTypes.GreaterThan,
-            minValue: min,
-            maxValue: max,
-          }),
-        ],
-      ],
-    )
+      createNumericExpression({
+        expType: NumericExpressionTypes.GreaterThan,
+        minValue: min,
+        maxValue: max,
+      }),
+    ]
+
+    filterStore.addFilterBlock(condition as TNumericCondition)
+    datasetStore.fetchDsStatAsync()
 
     if (!datasetStore.isXL) {
       datasetStore.fetchWsListAsync()
@@ -81,33 +68,14 @@ export const RangePanel = observer((): ReactElement => {
   }
 
   const handleClear = () => {
-    datasetStore.removeFunctionConditionAsync(selectedFilter.name)
+    const filterName = filterStore.selectedGroupItem.vgroup
 
-    const group = filterStore.selectedGroupItem.vgroup
-    const groupItemName = filterStore.selectedGroupItem.name
-    const localSelectedFilters = filterStore.selectedFilters
-
-    if (
-      localSelectedFilters[group]?.[groupItemName] &&
-      datasetStore.activePreset
-    ) {
-      datasetStore.resetActivePreset()
-    }
-
-    filterStore.removeSelectedFilters({
-      group: selectedFilter.vgroup,
-      groupItemName: selectedFilter.name,
-      variant: [selectedFilter.name, 0],
-    })
     setIsVisibleMinError(false)
     setIsVisibleMaxError(false)
     setIsVisibleMixedError(false)
     setMin('')
     setMax('')
-
-    if (!datasetStore.isXL) {
-      datasetStore.fetchWsListAsync()
-    }
+    filterStore.clearFilterCondition(filterName)
   }
 
   const validateMin = (value: string) => {
@@ -181,7 +149,7 @@ export const RangePanel = observer((): ReactElement => {
       </div>
 
       <InputNumber
-        className="w-full"
+        className="w-full border border-grey-blue"
         value={min}
         onChange={e => {
           setMin(e.target.value)
@@ -201,7 +169,7 @@ export const RangePanel = observer((): ReactElement => {
 
       <div className="relative h-14">
         <InputNumber
-          className="w-full"
+          className="w-full border border-grey-blue"
           value={max}
           onChange={e => {
             setMax(e.target.value)

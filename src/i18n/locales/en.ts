@@ -145,6 +145,8 @@ export const en = {
       total: 'Total',
       variants: '{value} variants',
     },
+    delete: 'Delete',
+    copy: 'Copy',
   },
   dtree: {
     variants: 'variants',
