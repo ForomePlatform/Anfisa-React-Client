@@ -68,10 +68,6 @@ class FunctionPanelStore {
     filterStore.isRedactorMode
       ? filterStore.addFilterToFilterBlock(condition)
       : filterStore.addFilterBlock(condition)
-
-    if (!datasetStore.isXL) {
-      datasetStore.fetchWsListAsync()
-    }
   }
 
   public fetchStatFunc(componentName: string, params: string) {

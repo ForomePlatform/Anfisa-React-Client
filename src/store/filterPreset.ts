@@ -158,8 +158,6 @@ class PresetStore {
 
     if (datasetStore.prevPreset !== datasetStore.activePreset) {
       this.loadPresetAsync(preset, 'refiner')
-
-      if (!datasetStore.isXL) datasetStore.fetchWsListAsync()
     }
   }
 }

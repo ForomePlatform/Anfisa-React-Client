@@ -53,13 +53,11 @@ export const QuerySelected = observer((): ReactElement => {
   const clearAlSelectedFilters = () => {
     if (selectedFiltersAmount === 0) return
 
-    if (datasetStore.activePreset) datasetStore.resetActivePreset()
+    if (datasetStore.activePreset) {
+      datasetStore.resetActivePreset()
+    }
 
     filterStore.resetSelectedFilters()
-
-    datasetStore.fetchDsStatAsync()
-
-    if (!datasetStore.isXL) datasetStore.fetchWsListAsync()
   }
 
   return (

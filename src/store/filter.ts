@@ -53,6 +53,10 @@ export class FilterStore {
       () => this.conditions,
       () => {
         datasetStore.fetchDsStatAsync()
+
+        if (!datasetStore.isXL) {
+          datasetStore.fetchWsListAsync()
+        }
       },
     )
   }

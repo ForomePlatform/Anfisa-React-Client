@@ -77,10 +77,6 @@ export const RangePanel = observer((): ReactElement => {
     filterStore.resetIsRedacorMode()
     filterStore.resetActiveFilterId()
     filterStore.resetSelectedGroupItem()
-
-    if (!datasetStore.isXL) {
-      datasetStore.fetchWsListAsync()
-    }
   }
 
   const handleClear = () => {
