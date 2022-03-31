@@ -4,8 +4,9 @@ import cn from 'classnames'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { TFuncArgs } from '@service-providers/common/common.interface'
-import { IHandleRemoveFilter } from './query-results'
-interface Props {
+import { IHandleRemoveFilterProps } from './query-results'
+
+interface IFuncFilterProps {
   filterId: string
   filterName: string
   isFilterActive: boolean
@@ -15,7 +16,7 @@ interface Props {
     filterId,
     subFilterIdx,
     filterType,
-  }: IHandleRemoveFilter) => void
+  }: IHandleRemoveFilterProps) => void
   filterType: string
 }
 
@@ -27,7 +28,7 @@ export const FuncFilter = ({
   filterExpression,
   handleRemoveFilter,
   filterType,
-}: Props): ReactElement => (
+}: IFuncFilterProps): ReactElement => (
   <>
     {filterName === FuncStepTypesEnum.InheritanceMode ? (
       filterContent.map((subFilterName, subFilterIdx) => (

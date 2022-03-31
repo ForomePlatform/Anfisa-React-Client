@@ -6,7 +6,7 @@ import datasetStore from '@store/dataset'
 import filterStore from '@store/filter'
 import { SelectedFilterCard } from './selected-filter-card'
 
-export interface IHandleRemoveFilter {
+export interface IHandleRemoveFilterProps {
   filterId: string
   subFilterIdx: number
   filterType: string
@@ -19,7 +19,7 @@ export const QueryResults = observer((): ReactElement => {
     filterId,
     subFilterIdx,
     filterType,
-  }: IHandleRemoveFilter) => {
+  }: IHandleRemoveFilterProps) => {
     datasetStore.resetActivePreset()
 
     filterStore.removeFilterFromFilterBlock({

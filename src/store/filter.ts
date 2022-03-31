@@ -32,7 +32,8 @@ export class FilterStore {
   actionName?: ActionFilterEnum
   statFuncData: any = []
   filterCondition: Record<string, any> = {}
-  memorizedSelectedFilters: SelectedFiltersType | undefined | any = undefined
+
+  memorizedSelectedFilters: Map<string, TCondition> | undefined = undefined
 
   selectedFiltersHistory: SelectedFiltersType[] = []
 
@@ -101,11 +102,12 @@ export class FilterStore {
   }: IRemoveFilter): void {
     const currentCondition = this._selectedFilters.get(filterId)!
 
-    if (
-      filterType === FilterKindEnum.Numeric ||
-      currentCondition[3]?.length === 1
-    ) {
+    const isFilterReadyToBeDeleted =
+      filterType === FilterKindEnum.Numeric || currentCondition[3]?.length === 1
+
+    if (isFilterReadyToBeDeleted) {
       this._selectedFilters.delete(filterId)
+
       return
     }
 

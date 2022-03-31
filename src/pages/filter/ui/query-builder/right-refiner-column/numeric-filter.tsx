@@ -5,7 +5,7 @@ import cn from 'classnames'
 import { TNumericConditionBounds } from '@service-providers/common/common.interface'
 import { getNumericExpression } from '@utils/getNumericExpression'
 
-interface Props {
+interface INumericFilterProps {
   filterId: string
   filterName: string
   isFilterActive: boolean
@@ -19,7 +19,7 @@ export const NumericFilter = ({
   isFilterActive,
   numericExpression,
   handleRemoveFilter,
-}: Props): ReactElement => (
+}: INumericFilterProps): ReactElement => (
   <div
     className={cn(
       'flex items-center pl-4 py-4',

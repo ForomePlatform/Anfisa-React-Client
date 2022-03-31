@@ -55,13 +55,7 @@ export const EnumPanel = observer((): ReactElement => {
   }
 
   const handleClear = () => {
-    filterAttributesStore.clearGroupFilter()
     setSelectedVariants([])
-
-    // TODO: this logic for deletion attr
-    // if (!datasetStore.isXL) {
-    //   datasetStore.fetchWsListAsync()
-    // }
 
     setCurrentPage(0)
   }

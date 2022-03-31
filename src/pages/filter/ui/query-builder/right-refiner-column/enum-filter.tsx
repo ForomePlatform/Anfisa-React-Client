@@ -2,8 +2,9 @@ import { ReactElement } from 'react'
 import Checkbox from 'react-three-state-checkbox'
 import cn from 'classnames'
 
-import { IHandleRemoveFilter } from './query-results'
-interface Props {
+import { IHandleRemoveFilterProps } from './query-results'
+
+interface IEnumFilterProps {
   filterId: string
   isFilterActive: boolean
   filterContent: string[]
@@ -12,7 +13,7 @@ interface Props {
     filterId,
     filterType,
     subFilterIdx,
-  }: IHandleRemoveFilter) => void
+  }: IHandleRemoveFilterProps) => void
 }
 
 export const EnumFilter = ({
@@ -21,7 +22,7 @@ export const EnumFilter = ({
   filterContent,
   filterType,
   handleRemoveFilter,
-}: Props): ReactElement => (
+}: IEnumFilterProps): ReactElement => (
   <>
     {filterContent.map((subFilterName, subFilterIdx) => (
       <div
