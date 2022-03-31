@@ -1,9 +1,12 @@
-import React, { ChangeEvent, useEffect, useMemo } from 'react'
+import React, { ChangeEvent, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
+import { ModeTypes } from '@core/enum/mode-types-enum'
 import filterStore from '@store/filter'
+import { ConditionJoinMode } from '@service-providers/common'
 import { IInheritanceModeArgs } from '@service-providers/common/common.interface'
+import { getCurrentModeType } from '@utils/getCurrentModeType'
 import functionPanelStore from '../../function-panel.store'
 import { PanelButtons } from '../panelButtons'
 import { ComplexVariants } from './complex-variants'
@@ -40,16 +43,23 @@ export const InheritanceMode = observer(() => {
       const selectedFilterProblemGroups =
         selectedFilter[4] as IInheritanceModeArgs
 
+      const conditionJoinType = selectedFilter[2] as ConditionJoinMode
+
+      inheritanceModeStore.setCurrentMode(getCurrentModeType(conditionJoinType))
+
       inheritanceModeStore.setProblemGroupValues(
         selectedFilterProblemGroups['problem_group'] || [problemGroups[0]],
       )
+
       inheritanceModeStore.setVariantValues(selectedFilter[3] as string[])
     }
 
     if (!isRedactorMode) {
       inheritanceModeStore.setProblemGroupValues([])
       inheritanceModeStore.setVariantValues([])
+      inheritanceModeStore.resetCurrentMode()
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRedactorMode, selectedFilter])
 
@@ -68,12 +78,6 @@ export const InheritanceMode = observer(() => {
     return () => filterStore.resetStatFuncData()
   }, [])
 
-  const variantsToDisplay = useMemo(() => {
-    return variantValues.length > filteredComplexVariants.length
-      ? complexVariants
-      : filteredComplexVariants
-  }, [complexVariants, filteredComplexVariants, variantValues.length])
-
   return (
     <React.Fragment>
       <ProblemGroups
@@ -86,7 +90,11 @@ export const InheritanceMode = observer(() => {
 
       <ComplexVariants
         variantValues={variantValues}
-        variants={variantsToDisplay}
+        variants={
+          inheritanceModeStore.currentMode === ModeTypes.Not
+            ? complexVariants
+            : filteredComplexVariants
+        }
         handleChangeVariants={handleChangeVariants}
       />
 

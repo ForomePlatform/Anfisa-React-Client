@@ -7,7 +7,9 @@ import filterStore from '@store/filter'
 import { DropDown } from '@ui/dropdown'
 import { AllNotMods } from '@pages/filter/ui/query-builder/ui/all-not-mods'
 import { DisabledVariantsAmount } from '@pages/filter/ui/query-builder/ui/disabled-variants-amount'
+import { ConditionJoinMode } from '@service-providers/common'
 import { ICompoundHetArgs } from '@service-providers/common/common.interface'
+import { getCurrentModeType } from '@utils/getCurrentModeType'
 import functionPanelStore from '../../function-panel.store'
 import { PanelButtons } from '../panelButtons'
 import compoundHetStore, {
@@ -27,11 +29,16 @@ export const CompundHet = observer((): ReactElement => {
     if (selectedFilter && isRedactorMode) {
       const selectedFilterApprox = selectedFilter[4] as ICompoundHetArgs
 
+      const conditionJoinType = selectedFilter[2] as ConditionJoinMode
+
+      compoundHetStore.setCurrentMode(getCurrentModeType(conditionJoinType))
+
       compoundHetStore.setInitialApprox(selectedFilterApprox['approx'])
     }
 
     if (!isRedactorMode) {
       compoundHetStore.resetInitialApprox()
+      compoundHetStore.resetCurrentMode()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRedactorMode, selectedFilter])

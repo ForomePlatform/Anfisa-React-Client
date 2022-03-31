@@ -4,7 +4,9 @@ import { observer } from 'mobx-react-lite'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import filterStore from '@store/filter'
 import { DisabledVariantsAmount } from '@pages/filter/ui/query-builder/ui/disabled-variants-amount'
+import { ConditionJoinMode } from '@service-providers/common'
 import { ICompoundRequestArgs } from '@service-providers/common/common.interface'
+import { getCurrentModeType } from '@utils/getCurrentModeType'
 import functionPanelStore from '../../function-panel.store'
 import { PanelButtons } from '../panelButtons'
 import { AprroxAndState } from './approx-state'
@@ -34,6 +36,10 @@ export const CompoundRequest = observer((): ReactElement => {
     if (selectedFilter && isRedactorMode) {
       const selectedFilterConditions = selectedFilter[4] as ICompoundRequestArgs
 
+      const conditionJoinType = selectedFilter[2] as ConditionJoinMode
+
+      compoundRequestStore.setCurrentMode(getCurrentModeType(conditionJoinType))
+
       const selectedFilterRequest = selectedFilterConditions['request']
 
       compoundRequestStore.setRequestCondition(selectedFilterRequest)
@@ -42,6 +48,7 @@ export const CompoundRequest = observer((): ReactElement => {
     if (!isRedactorMode) {
       compoundRequestStore.clearResetValue()
       compoundRequestStore.clearRequestCondition()
+      compoundRequestStore.resetCurrentMode()
     }
   }, [isRedactorMode, selectedFilter])
 

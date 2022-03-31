@@ -33,8 +33,8 @@ class CompoundHetStore {
     this.initialApprox = ''
   }
 
-  public setCurrentMode(modeType: ModeTypes): void {
-    this.currentMode = modeType
+  public setCurrentMode(modeType?: ModeTypes): void {
+    this.currentMode = modeType ?? undefined
   }
 
   public resetCurrentMode(): void {

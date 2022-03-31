@@ -4,8 +4,10 @@ import { observer } from 'mobx-react-lite'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import filterStore from '@store/filter'
 import { CustomInheritanceModeContent } from '@pages/filter/ui/query-builder/ui/custom-inheritance-mode-content'
+import { ConditionJoinMode } from '@service-providers/common'
 import { ICustomInheritanceModeArgs } from '@service-providers/common/common.interface'
 import { getStringScenario } from '@utils/function-panel/getStringScenario'
+import { getCurrentModeType } from '@utils/getCurrentModeType'
 import functionPanelStore from '../../function-panel.store'
 import { PanelButtons } from '../panelButtons'
 import customInheritanceModeStore from './custom-inheritance-mode.store'
@@ -34,6 +36,12 @@ export const CustomInheritanceMode = observer(() => {
       const selectedFilterScenario =
         selectedFilter[4] as ICustomInheritanceModeArgs
 
+      const conditionJoinType = selectedFilter[2] as ConditionJoinMode
+
+      customInheritanceModeStore.setCurrentMode(
+        getCurrentModeType(conditionJoinType),
+      )
+
       const selectedFilterScenarioArray = Object.entries(
         selectedFilterScenario['scenario'],
       )
@@ -44,6 +52,7 @@ export const CustomInheritanceMode = observer(() => {
     if (!isRedactorMode) {
       customInheritanceModeStore.clearScenario()
       customInheritanceModeStore.clearResetValue()
+      customInheritanceModeStore.resetCurrentMode()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRedactorMode, selectedFilter])

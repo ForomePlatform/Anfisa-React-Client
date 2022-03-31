@@ -7,7 +7,9 @@ import { t } from '@i18n'
 import filterStore from '@store/filter'
 import { Input } from '@ui//input'
 import { AllNotMods } from '@pages/filter/ui/query-builder/ui/all-not-mods'
+import { ConditionJoinMode } from '@service-providers/common'
 import { IGeneRegionArgs } from '@service-providers/common/common.interface'
+import { getCurrentModeType } from '@utils/getCurrentModeType'
 import { validateLocusCondition } from '@utils/validation/validateLocusCondition'
 import { DisabledVariantsAmount } from '../../../../query-builder/ui/disabled-variants-amount'
 import functionPanelStore from '../../function-panel.store'
@@ -38,6 +40,10 @@ export const GeneRegion = observer(() => {
     if (selectedFilter && isRedactorMode) {
       const selectedFilterConditions = selectedFilter[4] as IGeneRegionArgs
 
+      const conditionJoinType = selectedFilter[2] as ConditionJoinMode
+
+      geneRegionStore.setCurrentMode(getCurrentModeType(conditionJoinType))
+
       const selectedFilterLocusValue = selectedFilterConditions['locus']
 
       geneRegionStore.setLocusValue(selectedFilterLocusValue)
@@ -45,6 +51,7 @@ export const GeneRegion = observer(() => {
 
     if (!isRedactorMode) {
       geneRegionStore.resetLocusValue()
+      geneRegionStore.resetCurrentMode()
     }
   }, [isRedactorMode, selectedFilter])
 

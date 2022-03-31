@@ -34,8 +34,8 @@ class CompoundRequestStore {
     this.activeRequestIndex = this.requestCondition.length - 1
   }
 
-  public setCurrentMode(modeType: ModeTypes): void {
-    this.currentMode = modeType
+  public setCurrentMode(modeType?: ModeTypes): void {
+    this.currentMode = modeType ?? undefined
   }
 
   public resetCurrentMode(): void {
