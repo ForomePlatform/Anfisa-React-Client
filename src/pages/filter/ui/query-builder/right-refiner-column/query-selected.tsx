@@ -53,6 +53,7 @@ export const QuerySelected = observer((): ReactElement => {
     }
 
     filterStore.resetSelectedFilters()
+    datasetStore.fetchDsStatAsync()
   }
 
   return (

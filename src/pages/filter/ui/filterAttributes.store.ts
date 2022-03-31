@@ -110,7 +110,14 @@ export class FilterAttributesStore {
         (item: any) => item.name === groupName,
       )?.variants ?? []
 
+    const filteredSelectedFilters = allSelectedFilters.filter(
+      ([, filterValue]) => filterValue > 0,
+    )
+
     if (selectedFilter) {
+      // There are some cases when preset contains third party filters with 0 variants
+      // Thats why we have to insert them in order to show
+
       const selectedFiltersNames = selectedFilter[3]
 
       const allSelectedFiltersNames = allSelectedFilters.map(item => item[0])
@@ -121,15 +128,12 @@ export class FilterAttributesStore {
       )
 
       thirdPartyFilters.forEach(filterName =>
-        allSelectedFilters.push([filterName, 0]),
+        filteredSelectedFilters.push([filterName, 0]),
       )
 
-      return allSelectedFilters
+      return filteredSelectedFilters
     }
 
-    const filteredSelectedFilters = allSelectedFilters.filter(
-      ([, filterValue]) => filterValue > 0,
-    )
     return filteredSelectedFilters
   }
 }
