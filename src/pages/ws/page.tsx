@@ -1,12 +1,7 @@
 import { Fragment, ReactElement, useEffect } from 'react'
 import { withErrorBoundary } from 'react-error-boundary'
 import { observer } from 'mobx-react-lite'
-import {
-  ArrayParam,
-  NumberParam,
-  useQueryParams,
-  withDefault,
-} from 'use-query-params'
+import { NumberParam, useQueryParams } from 'use-query-params'
 
 import { formatNumber } from '@core/format-number'
 import { useDatasetName } from '@core/hooks/use-dataset-name'
@@ -23,37 +18,28 @@ import { PopperButton } from '@components/popper-button'
 import { VariantDrawer } from '@components/variant/drawer'
 import { ErrorPage } from '@pages/error/error'
 import { ModalSaveDataset } from '@pages/filter/ui/query-builder/ui/modal-save-dataset'
+import { TCondition } from '@service-providers/common'
 import { ControlPanel } from './ui/control-panel'
 import { ModalNotes } from './ui/modal-notes'
 import { TableVariants } from './ui/table-variants'
 
 const WSPage = observer((): ReactElement => {
   const params = useParams()
+  const stringifyedConditions = params.get('conditions')
 
   useDatasetName()
 
   const [query] = useQueryParams({
     variant: NumberParam,
-    refiner: withDefault(ArrayParam, []),
   })
 
-  const { variant, refiner } = query
-
-  const hasConditionsInSearchParamsOnly =
-    refiner.length > 0 && datasetStore.conditions.length === 0
+  const { variant } = query
 
   Number.isInteger(variant) && variantStore.setIndex(variant as number)
 
   useEffect(() => {
-    if (hasConditionsInSearchParamsOnly) {
-      // TODO: need refactoring in FOROME-765
-      const conditions: any[] = (refiner as string[]).map((c: string) => {
-        const item: string[] = c!.split(',')
-        const [name, group, symbol, value] = item
-
-        return [name, group, symbol, [value]]
-      })
-
+    if (stringifyedConditions) {
+      const conditions: TCondition[] = JSON.parse(stringifyedConditions)
       datasetStore.setConditionsAsync(conditions)
     }
 
