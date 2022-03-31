@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 
 import { theme } from '@theme'
-import { Icon } from '@ui/icon'
 
 export const MainWrapper = styled.div`
   display: flex;
@@ -15,7 +14,6 @@ export const LabelsWrapper = styled.div`
   font-size: 12px;
   line-height: 16px;
   width: 67%;
-  margin-left: 16px;
 `
 
 export const LabelRow = styled.div`
@@ -24,9 +22,9 @@ export const LabelRow = styled.div`
   justify-content: space-between;
 `
 
-export const LabelRowLeft = styled.div`
+export const LabelRowLeft = styled.div<{ isLongInfo: boolean }>`
   display: flex;
-  flex-direction: column;
+  flex-direction: ${({ isLongInfo }) => (isLongInfo ? 'column' : 'row')};
 `
 
 export const LabelRowLeftName = styled.div`
@@ -34,12 +32,16 @@ export const LabelRowLeftName = styled.div`
   align-items: center;
 `
 
-export const StyledIcon = styled(Icon)<{ color: string | undefined }>`
+export const StyledIcon = styled.div<{ color: string | undefined }>`
   margin-right: 8px;
-  color: ${({ color }) => color};
+  background-color: ${({ color }) => color};
+  border-radius: 5px;
+  width: 5px;
+  height: 5px;
 `
 
-export const LabelQuantity = styled.span`
+export const LabelQuantity = styled.span<{ isLongInfo: boolean }>`
+  padding-left: ${({ isLongInfo }) => (isLongInfo ? '12px' : '8px')};
   color: ${theme('colors.grey.blue')};
 `
 

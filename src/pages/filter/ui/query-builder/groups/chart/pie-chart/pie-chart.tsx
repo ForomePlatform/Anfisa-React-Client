@@ -28,10 +28,14 @@ interface IPieChartProps {
   data: TPieChartData
 }
 
-const labelsInCollapsedMode = 3
+const defaultLabelsInCollapseMode = 3
+const extendedLabelsInCollapseMode = 4
 
 export const PieChart = ({ data }: IPieChartProps): ReactElement | null => {
   const [isListCollapsed, setIsListCollapsed] = useState(true)
+  const [labelsInCollapsedMode, setLabelsInCollapsedMode] = useState(
+    defaultLabelsInCollapseMode,
+  )
 
   const totalCountsOnChart = data.reduce(
     (previousValue, variant) => previousValue + variant[1],
@@ -51,22 +55,30 @@ export const PieChart = ({ data }: IPieChartProps): ReactElement | null => {
           const optionPercentage = ((value / totalCountsOnChart) * 100).toFixed(
             2,
           )
+          const varaintsQuantityContent = t('filter.chart.variants', {
+            value: formatNumber(value),
+          })
+
+          const isLongInfo = (name + varaintsQuantityContent).length > 30
+
+          if (
+            !isLongInfo &&
+            labelsInCollapsedMode !== extendedLabelsInCollapseMode
+          ) {
+            setLabelsInCollapsedMode(extendedLabelsInCollapseMode)
+          }
 
           return (
             <LabelRow key={name}>
-              <LabelRowLeft>
+              <LabelRowLeft isLongInfo={isLongInfo}>
                 <LabelRowLeftName>
-                  <StyledIcon
-                    name="Circle"
-                    color={getPieChartItemColor(index)}
-                  />
+                  <StyledIcon color={getPieChartItemColor(index)} />
+                  <div />
                   {name}
                 </LabelRowLeftName>
 
-                <LabelQuantity>
-                  {t('filter.chart.variants', {
-                    value: formatNumber(value),
-                  })}
+                <LabelQuantity isLongInfo={isLongInfo}>
+                  {varaintsQuantityContent}
                 </LabelQuantity>
               </LabelRowLeft>
               <LabelRowRight>{optionPercentage}%</LabelRowRight>
