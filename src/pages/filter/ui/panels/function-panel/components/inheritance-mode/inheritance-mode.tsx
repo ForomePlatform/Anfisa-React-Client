@@ -98,7 +98,7 @@ export const InheritanceMode = observer(() => {
         handleChangeProblemGroups={handleChangeProblemGroups}
       />
 
-      <div className="h-px w-full bg-white my-4" />
+      <div className="h-px w-full bg-white my-3" />
 
       <ComplexVariants
         variantValues={variantValues}

@@ -88,7 +88,7 @@ export const ComplexVariants = observer(
 
         {variants.length === 0 && (
           <div className="flex justify-center w-full mt-2 text-14 text-grey-blue">
-            Out of choice. Select problem group.
+            {t('dtree.noFilters')}
           </div>
         )}
       </React.Fragment>
