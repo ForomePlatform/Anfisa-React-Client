@@ -8,13 +8,30 @@ import { showToast } from '@utils/notifications/showToast'
 import { noFirstSymbolsPattern } from '@utils/validation/validationPatterns'
 
 class DrawerTagsStore {
-  constructor() {
-    makeAutoObservable(this)
-  }
-
   localCheckedTags: string[] = []
   customTag: string = ''
   errorMessage: string = ''
+
+  get tags(): string[] {
+    return [...variantStore.generalTags, ...variantStore.optionalTags]
+  }
+
+  get genes(): string {
+    const firstVariant = variantStore.variant[0] as ITableAspectDescriptor
+    const { rows } = firstVariant
+
+    return findElementInRow(rows, 'genes')
+  }
+  get hg19locus(): string {
+    const firstVariant = variantStore.variant[0] as ITableAspectDescriptor
+    const { rows } = firstVariant
+
+    return findElementInRow(rows, 'hg19')
+  }
+
+  constructor() {
+    makeAutoObservable(this)
+  }
 
   setLocalCheckedTagList(tagNameList: string[]): void {
     this.localCheckedTags = [...tagNameList]
@@ -93,23 +110,6 @@ class DrawerTagsStore {
     })
 
     variantStore.fetchSelectedTagsAsync(params)
-  }
-
-  get tags(): string[] {
-    return [...variantStore.generalTags, ...variantStore.optionalTags]
-  }
-
-  get genes(): string {
-    const firstVariant = variantStore.variant[0] as ITableAspectDescriptor
-    const { rows } = firstVariant
-
-    return findElementInRow(rows, 'genes')
-  }
-  get hg19locus(): string {
-    const firstVariant = variantStore.variant[0] as ITableAspectDescriptor
-    const { rows } = firstVariant
-
-    return findElementInRow(rows, 'hg19')
   }
 }
 
