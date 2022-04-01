@@ -2,7 +2,6 @@ import React, { ChangeEvent, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
-import { ModeTypes } from '@core/enum/mode-types-enum'
 import filterStore from '@store/filter'
 import { ConditionJoinMode } from '@service-providers/common'
 import { IInheritanceModeArgs } from '@service-providers/common/common.interface'
@@ -90,11 +89,7 @@ export const InheritanceMode = observer(() => {
 
       <ComplexVariants
         variantValues={variantValues}
-        variants={
-          inheritanceModeStore.currentMode === ModeTypes.Not
-            ? complexVariants
-            : filteredComplexVariants
-        }
+        variants={selectedFilter ? complexVariants : filteredComplexVariants}
         handleChangeVariants={handleChangeVariants}
       />
 
