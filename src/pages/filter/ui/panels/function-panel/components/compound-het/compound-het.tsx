@@ -40,19 +40,22 @@ export const CompundHet = observer((): ReactElement => {
       compoundHetStore.resetInitialApprox()
       compoundHetStore.resetCurrentMode()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRedactorMode, selectedFilter])
 
   // update data
   useEffect(() => {
     compoundHetStore.getStatFuncStatusAsync()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [initialApprox])
 
   // to avoid displaying this data on the another func attr
   useEffect(() => {
     return () => filterStore.resetStatFuncData()
   }, [])
+
+  const handleClear = () => {
+    compoundHetStore.handleResetFields()
+    compoundHetStore.resetCurrentMode()
+  }
 
   return (
     <React.Fragment>
@@ -68,15 +71,15 @@ export const CompundHet = observer((): ReactElement => {
             options={CompoundHetSelectOptions}
             onSelect={(arg: Option) => compoundHetStore.handleChangeApprox(arg)}
           />
-
-          <AllNotMods
-            isNotModeChecked={compoundHetStore.currentMode === ModeTypes.Not}
-            isNotModeDisabled={
-              simpleVariants ? simpleVariants.length === 0 : true
-            }
-            toggleNotMode={() => compoundHetStore.setCurrentMode(ModeTypes.Not)}
-          />
         </div>
+
+        <AllNotMods
+          isNotModeChecked={compoundHetStore.currentMode === ModeTypes.Not}
+          isNotModeDisabled={
+            simpleVariants ? simpleVariants.length === 0 : true
+          }
+          toggleNotMode={() => compoundHetStore.setCurrentMode(ModeTypes.Not)}
+        />
       </div>
 
       <div className="mt-4">
@@ -85,7 +88,7 @@ export const CompundHet = observer((): ReactElement => {
 
       <PanelButtons
         onSubmit={() => compoundHetStore.handleSumbitCondtions()}
-        resetFields={() => compoundHetStore.handleResetFields()}
+        resetFields={handleClear}
         disabled={!simpleVariants}
       />
     </React.Fragment>

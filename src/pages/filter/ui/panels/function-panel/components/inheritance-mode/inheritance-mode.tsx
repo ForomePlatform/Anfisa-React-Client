@@ -2,6 +2,7 @@ import React, { ChangeEvent, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
+import { ModeTypes } from '@core/enum/mode-types-enum'
 import filterStore from '@store/filter'
 import { ConditionJoinMode } from '@service-providers/common'
 import { IInheritanceModeArgs } from '@service-providers/common/common.interface'
@@ -71,6 +72,18 @@ export const InheritanceMode = observer(() => {
       }),
     )
   }, [problemGroupValues])
+
+  // listener for curr mode reseting
+  useEffect(() => {
+    if (variantValues.length < 2) {
+      inheritanceModeStore.currentMode === ModeTypes.All &&
+        inheritanceModeStore.resetCurrentMode()
+    }
+
+    if (variantValues.length < 1) {
+      inheritanceModeStore.resetCurrentMode()
+    }
+  }, [variantValues])
 
   // to avoid displaying this data on the another func attr
   useEffect(() => {

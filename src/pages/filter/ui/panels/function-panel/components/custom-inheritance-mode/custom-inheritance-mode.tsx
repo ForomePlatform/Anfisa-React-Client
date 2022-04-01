@@ -54,7 +54,6 @@ export const CustomInheritanceMode = observer(() => {
       customInheritanceModeStore.clearResetValue()
       customInheritanceModeStore.resetCurrentMode()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRedactorMode, selectedFilter])
 
   // update data
@@ -64,14 +63,18 @@ export const CustomInheritanceMode = observer(() => {
     }}`
 
     functionPanelStore.fetchStatFunc('Custom_Inheritance_Mode', params)
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [scenario])
 
   // to avoid displaying this data on the another func attr
   useEffect(() => {
     return () => filterStore.resetStatFuncData()
   }, [])
+
+  const handleClear = () => {
+    customInheritanceModeStore.clearResetValue()
+    customInheritanceModeStore.clearScenario()
+    customInheritanceModeStore.resetCurrentMode()
+  }
 
   return (
     <React.Fragment>
@@ -91,10 +94,7 @@ export const CustomInheritanceMode = observer(() => {
 
       <PanelButtons
         onSubmit={() => customInheritanceModeStore.handleSumbitCondtions()}
-        resetFields={() => {
-          customInheritanceModeStore.clearResetValue()
-          customInheritanceModeStore.clearScenario()
-        }}
+        resetFields={handleClear}
         disabled={!simpleVariants}
       />
     </React.Fragment>

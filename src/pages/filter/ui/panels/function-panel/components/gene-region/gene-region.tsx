@@ -33,6 +33,7 @@ export const GeneRegion = observer(() => {
   const handleResetFields = () => {
     geneRegionStore.resetLocusValue()
     setIsErrorVisible(false)
+    geneRegionStore.resetCurrentMode()
   }
 
   // set/reset data

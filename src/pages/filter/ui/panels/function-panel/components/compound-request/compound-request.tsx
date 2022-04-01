@@ -66,6 +66,9 @@ export const CompoundRequest = observer((): ReactElement => {
 
   const handleResetFields = () => {
     compoundRequestStore.setActiveRequestIndex(0)
+    compoundRequestStore.resetCurrentMode()
+    compoundRequestStore.clearResetValue()
+    compoundRequestStore.clearRequestCondition()
   }
 
   return (
