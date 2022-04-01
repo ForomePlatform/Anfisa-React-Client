@@ -39,7 +39,7 @@ const NegateWrapper = styled(JoinType)`
   background-color: ${theme('colors.red.lighter')};
 `
 
-interface IProps {
+interface INextStepContentItemProps {
   group: any
   index: number
   currNo: number
@@ -54,7 +54,7 @@ export const NextStepContentItem = observer(
     currNo,
     expanded,
     setExpandOnClick,
-  }: IProps): ReactElement => {
+  }: INextStepContentItemProps): ReactElement => {
     // const [isChecked, setIsChecked] = useState(true)
 
     // const toggleChecked = () => {
@@ -118,7 +118,7 @@ export const NextStepContentItem = observer(
           <div
             className={cn(
               'flex w-full h-2/5 py-2 text-14 font-normal items-center relative step-content-area',
-              currentStep.isActive ? 'bg-green-light' : 'bg-blue-light',
+              currentStep.isActive && 'bg-blue-tertiary',
             )}
             data-testId={DecisionTreeModalDataCy.joinByLabel}
           >
@@ -145,12 +145,7 @@ export const NextStepContentItem = observer(
           </div>
         )}
 
-        <ContentControl
-          className={cn(
-            'w-full h-auto flex rounded-md mr-2 pl-2 py-3 step-content-area',
-            currentStep.isActive ? ' bg-green-medium' : 'bg-blue-medium',
-          )}
-        >
+        <ContentControl className="w-full h-auto flex rounded-md mr-2 pl-2 py-3 border border-grey-light step-content-area">
           <div className="flex items-center h-auto w-full pr-2 ">
             <Icon
               name="SettingsFat"
@@ -178,7 +173,7 @@ export const NextStepContentItem = observer(
               <Switch isChecked={isChecked} onChange={toggleChecked} />
             </div> */}
             {!isNumeric && (
-              <label className="pl-4">
+              <label className="flex items-center pl-4 text-14">
                 <Checkbox
                   checked={isNegateAttribute}
                   className="mr-1"

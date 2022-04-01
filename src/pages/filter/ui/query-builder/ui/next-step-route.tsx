@@ -48,6 +48,7 @@ const ExcludeTurn = styled.div<{ isIncluded: boolean }>`
   position: absolute;
   top: 29px;
   margin-right: 14px;
+  margin-top: 4px;
   display: flex;
   width: 20px;
   height: 60px;
@@ -85,14 +86,14 @@ const DifferenceCounts = styled.span<{
         : theme('colors.purple.bright')};
 `
 
-interface IProps {
+interface INextStepRouteProps {
   isExpanded: boolean
   index: number
   isIncluded: boolean
 }
 
 export const NextStepRoute = observer(
-  ({ isExpanded, index, isIncluded }: IProps): ReactElement => {
+  ({ isExpanded, index, isIncluded }: INextStepRouteProps): ReactElement => {
     const [allVariants, transcribedVariants] = get(
       datasetStore,
       'statAmount',
@@ -142,12 +143,16 @@ export const NextStepRoute = observer(
         </StartAmount>
 
         <div className="flex flex-col items-center w-1/6">
-          <CircleStartThread className="bg-blue-bright">
+          <CircleStartThread
+            className={cn('bg-blue-bright mt-1', { '-mt-px': isFinalStep })}
+          >
             <SubCircleThread />
           </CircleStartThread>
 
           <LineThread
-            className={cn('bg-blue-bright', { 'mt-4': index === 0 })}
+            className={cn('bg-blue-bright', {
+              'mt-5': index === 0,
+            })}
           />
 
           {isExpanded && currentStep.groups && currentStep.groups.length > 0 && (
