@@ -127,7 +127,7 @@ class ModalFiltersStore {
     this.currentGroupSubKind = undefined
   }
 
-  get originGroupList(): [string, number][] {
+  public get originGroupList(): [string, number][] {
     const currentStepIndex = activeStepStore.activeStepIndex
     const currentGroupIndex = dtreeModalStore.groupIndexToChange
 
@@ -150,7 +150,7 @@ class ModalFiltersStore {
     }
   }
 
-  get filteredGroupList(): [string, number][] {
+  public get filteredGroupList(): [string, number][] {
     return this.originGroupList.filter((variant: [string, number]) =>
       variant[0]
         .toLocaleLowerCase()
@@ -158,14 +158,14 @@ class ModalFiltersStore {
     )
   }
 
-  get groupsPage(): [string, number][] {
+  public get groupsPage(): [string, number][] {
     return this.filteredGroupList.slice(
       this.currentPage * this.groupsPerPage,
       (this.currentPage + 1) * this.groupsPerPage,
     )
   }
 
-  get pagesNumbers(): number {
+  public get pagesNumbers(): number {
     return Math.ceil(this.filteredGroupList.length / this.groupsPerPage)
   }
 

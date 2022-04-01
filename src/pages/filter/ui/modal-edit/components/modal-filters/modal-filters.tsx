@@ -55,13 +55,18 @@ export const ModalFilters = observer((): ReactElement => {
       () => dtreeStore.selectedFilters,
       () => {
         if (dtreeStore.selectedFilters.length < 2) {
+          modalFiltersStore.currentMode === ModeTypes.All &&
+            modalFiltersStore.resetCurrentMode()
+        }
+
+        if (dtreeStore.selectedFilters.length < 1) {
           modalFiltersStore.resetCurrentMode()
         }
       },
     )
 
     return () => dispose()
-  }, [currentGroup])
+  }, [])
 
   const handleChange = (value: string) => {
     modalFiltersStore.setSearchValue(value)
