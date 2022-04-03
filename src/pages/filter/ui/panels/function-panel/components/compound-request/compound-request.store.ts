@@ -17,45 +17,63 @@ import { getPureRequestString } from './../../../../../../../utils/function-pane
 import { TRequestCondition } from './../../function-panel.interface'
 
 class CompoundRequestStore {
-  requestCondition: TRequestCondition[] = [[1, {}] as TRequestCondition]
-  resetValue: string = ''
-  activeRequestIndex = this.requestCondition.length - 1
-  currentMode?: ModeTypes
+  private _requestCondition: TRequestCondition[] = [
+    [1, {}] as TRequestCondition,
+  ]
+  private _resetValue: string = ''
+  private _activeRequestIndex = this.requestCondition.length - 1
+  private _currentMode?: ModeTypes
 
   constructor() {
     makeAutoObservable(this)
   }
 
+  public get requestCondition(): TRequestCondition[] {
+    return this._requestCondition
+  }
+
+  public get resetValue(): string {
+    return this._resetValue
+  }
+
+  public get activeRequestIndex(): number {
+    return this._activeRequestIndex
+  }
+
+  public get currentMode(): ModeTypes | undefined {
+    return this._currentMode
+  }
+
   public setActiveRequestIndex(idx: number) {
-    this.activeRequestIndex = idx
+    this._activeRequestIndex = idx
   }
 
   public resetActiveRequestIndex() {
-    this.activeRequestIndex = this.requestCondition.length - 1
+    this._activeRequestIndex = this.requestCondition.length - 1
   }
 
   public setCurrentMode(modeType?: ModeTypes): void {
-    this.currentMode = modeType ?? undefined
+    this._currentMode = modeType
   }
 
   public resetCurrentMode(): void {
-    this.currentMode = undefined
+    this._currentMode = undefined
   }
 
   public setRequestCondition(requestCondition: TRequestCondition[]) {
-    this.requestCondition = requestCondition
+    this._requestCondition = requestCondition
   }
 
   public setResetValue(resetValue: string) {
-    this.resetValue = resetValue
+    this._resetValue = resetValue
   }
 
   public clearRequestCondition() {
-    this.requestCondition = [[1, {}] as TRequestCondition]
+    this._requestCondition = [[1, {}] as TRequestCondition]
   }
 
   public clearResetValue() {
-    this.resetValue = ''
+    this._resetValue = ''
   }
 
   public get selectedFilterValue(): string {
@@ -198,9 +216,15 @@ class CompoundRequestStore {
 
     functionPanelStore.sumbitConditions(conditions)
 
-    this.clearRequestCondition()
-    this.clearResetValue()
+    this.clearData()
     filterStore.resetStatFuncData()
+  }
+
+  public clearData(): void {
+    this.setActiveRequestIndex(0)
+    this.resetCurrentMode()
+    this.clearResetValue()
+    this.clearRequestCondition()
   }
 }
 

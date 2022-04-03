@@ -23,8 +23,7 @@ export const EnumPanel = observer((): ReactElement => {
     groupSubKind,
   } = filterAttributesStore
 
-  const isRedactorMode = filterStore.isRedactorMode
-  const { selectedFilter } = filterStore
+  const { selectedFilter, isRedactorMode } = filterStore
 
   const [selectedVariants, setSelectedVariants] = useState<string[]>([])
 

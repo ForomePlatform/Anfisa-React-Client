@@ -1,17 +1,12 @@
-import { difference } from 'lodash'
+import difference from 'lodash/difference'
 import { makeAutoObservable, toJS } from 'mobx'
 
 import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
-import datasetStore, { DatasetStore } from '@store/dataset'
-import filterStore, { FilterStore } from '@store/filter'
+import datasetStore from '@store/dataset'
+import filterStore from '@store/filter'
 import { TEnumCondition } from '@service-providers/common/common.interface'
 import { getConditionJoinMode } from '@utils/getConditionJoinMode'
-
-type FilterAttributesStoreParams = {
-  datasetStore: DatasetStore
-  filterStore: FilterStore
-}
 
 type FilterGroup = {
   vgroup: string
@@ -25,17 +20,9 @@ type FilterGroup = {
  */
 
 export class FilterAttributesStore {
-  private datasetStore: DatasetStore
-  private filterStore: FilterStore
-
   currentMode?: ModeTypes
 
-  constructor(params: FilterAttributesStoreParams) {
-    const { datasetStore, filterStore } = params
-
-    this.datasetStore = datasetStore
-    this.filterStore = filterStore
-
+  constructor() {
     makeAutoObservable(this)
   }
 
@@ -49,8 +36,8 @@ export class FilterAttributesStore {
 
   public get currentGroup(): FilterGroup {
     return {
-      vgroup: this.filterStore.selectedGroupItem.vgroup,
-      groupName: this.filterStore.selectedGroupItem.name,
+      vgroup: filterStore.selectedGroupItem.vgroup,
+      groupName: filterStore.selectedGroupItem.name,
     }
   }
 
@@ -58,9 +45,9 @@ export class FilterAttributesStore {
     return toJS(this.getAllEnumVariants(this.currentGroup))
   }
 
-  get allEnumVariants(): [string, number][] {
+  public get allEnumVariants(): [string, number][] {
     const allEnumVariants: [string, number][] =
-      this.datasetStore.dsStat['stat-list']?.find(
+      datasetStore.dsStat['stat-list']?.find(
         (item: any) => item.name === this.currentGroup.groupName,
       )?.variants ?? []
 
@@ -68,10 +55,10 @@ export class FilterAttributesStore {
   }
 
   public get groupSubKind(): string {
-    return this.filterStore.selectedGroupItem['sub-kind']
+    return filterStore.selectedGroupItem['sub-kind']
   }
 
-  updateEnumFilter(group: FilterGroup, values: string[]): void {
+  public updateEnumFilter(group: FilterGroup, values: string[]): void {
     const { groupName } = group
 
     const condition: TEnumCondition = [
@@ -81,12 +68,12 @@ export class FilterAttributesStore {
       values,
     ]
 
-    this.filterStore.isRedactorMode
-      ? this.filterStore.addFilterToFilterBlock(condition)
-      : this.filterStore.addFilterBlock(condition)
+    filterStore.isRedactorMode
+      ? filterStore.addFilterToFilterBlock(condition)
+      : filterStore.addFilterBlock(condition)
 
-    if (this.datasetStore.activePreset) {
-      this.datasetStore.resetActivePreset()
+    if (datasetStore.activePreset) {
+      datasetStore.resetActivePreset()
     }
 
     this.resetCurrentMode()
@@ -96,7 +83,7 @@ export class FilterAttributesStore {
     this.updateEnumFilter(this.currentGroup, values)
   }
 
-  addValuesToEnumFilter(group: FilterGroup, values: string[]): void {
+  public addValuesToEnumFilter(group: FilterGroup, values: string[]): void {
     this.updateEnumFilter(group, values)
   }
 
@@ -110,7 +97,7 @@ export class FilterAttributesStore {
     const { selectedFilter } = filterStore
 
     const allSelectedFilters: [string, number][] =
-      this.datasetStore.dsStat['stat-list']?.find(
+      datasetStore.dsStat['stat-list']?.find(
         (item: any) => item.name === groupName,
       )?.variants ?? []
 
@@ -142,7 +129,4 @@ export class FilterAttributesStore {
   }
 }
 
-export default new FilterAttributesStore({
-  datasetStore,
-  filterStore,
-})
+export default new FilterAttributesStore()

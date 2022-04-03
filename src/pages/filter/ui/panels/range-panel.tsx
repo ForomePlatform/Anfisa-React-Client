@@ -32,7 +32,7 @@ const getFilterValue = (arg: string): string | number => {
 
 export const RangePanel = observer((): ReactElement => {
   const selectedFilter = filterStore.selectedGroupItem
-  const isRedactorMode = filterStore.isRedactorMode
+  const { isRedactorMode } = filterStore
 
   const [min, setMin] = useState<string | number>(getFilterValue('min'))
   const [max, setMax] = useState<string | number>(getFilterValue('max'))
@@ -49,7 +49,7 @@ export const RangePanel = observer((): ReactElement => {
     )
 
     return () => dispose()
-  })
+  }, [])
 
   const [isVisibleMinError, setIsVisibleMinError] = useState(false)
   const [isVisibleMaxError, setIsVisibleMaxError] = useState(false)

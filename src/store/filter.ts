@@ -10,11 +10,11 @@ import { IStatFuncData, StatListType } from '@declarations'
 import { ActionFilterEnum } from '@core/enum/action-filter.enum'
 import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { getApiUrl } from '@core/get-api-url'
+import datasetStore from '@store/dataset'
 import { GlbPagesNames } from '@glb/glb-names'
 import { FilterControlOptions } from '@pages/filter/ui/filter-control/filter-control.const'
 import datasetProvider from '@service-providers/dataset-level/dataset.provider'
 import { TCondition } from './../service-providers/common/common.interface'
-import datasetStore from './dataset'
 
 export type SelectedFiltersType = Record<
   string,
@@ -35,7 +35,7 @@ export class FilterStore {
 
   actionName?: ActionFilterEnum
   statFuncData: any = []
-  memorizedSelectedFilters: SelectedFiltersType | undefined | any = undefined
+  memorizedSelectedFilters: Map<string, TCondition> | undefined = undefined
 
   selectedFiltersHistory: SelectedFiltersType[] = []
 
@@ -50,7 +50,7 @@ export class FilterStore {
     this.loadConditions = reaction(
       () => this.conditions,
       () => {
-        if (this.conditions.length > 0 && this.method !== GlbPagesNames.Table) {
+        if (this.method !== GlbPagesNames.Table && datasetStore.datasetName) {
           datasetStore.fetchDsStatAsync()
 
           if (!datasetStore.isXL) {

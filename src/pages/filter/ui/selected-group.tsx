@@ -15,7 +15,7 @@ export const SelectedGroup = observer((): ReactElement => {
     return <EmptySelectedGroup />
   }
 
-  const isRedactorMode = filterStore.isRedactorMode
+  const { isRedactorMode } = filterStore
 
   return (
     <div

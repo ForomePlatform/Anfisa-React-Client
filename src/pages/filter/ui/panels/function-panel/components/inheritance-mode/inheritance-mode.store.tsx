@@ -10,36 +10,48 @@ import { getConditionJoinMode } from '@utils/getConditionJoinMode'
 import functionPanelStore from '../../function-panel.store'
 
 class InheritanceModeStore {
-  problemGroupValues: string[] = []
-  variantValues: string[] = []
-  currentMode?: ModeTypes
+  private _problemGroupValues: string[] = []
+  private _variantValues: string[] = []
+  private _currentMode?: ModeTypes
 
   constructor() {
     makeAutoObservable(this)
   }
 
+  public get problemGroupValues(): string[] {
+    return this._problemGroupValues
+  }
+
+  public get variantValues(): string[] {
+    return this._variantValues
+  }
+
+  public get currentMode(): ModeTypes | undefined {
+    return this._currentMode
+  }
+
   public setProblemGroupValues(problemGroupValues: string[]) {
-    this.problemGroupValues = problemGroupValues
+    this._problemGroupValues = problemGroupValues
   }
 
   public setVariantValues(variantValues: string[]) {
-    this.variantValues = variantValues
+    this._variantValues = variantValues
   }
 
   public resetVariantValues() {
-    this.variantValues = []
+    this._variantValues = []
   }
 
   public setCurrentMode(modeType?: ModeTypes): void {
-    this.currentMode = modeType ?? undefined
+    this._currentMode = modeType
   }
 
   public resetCurrentMode(): void {
-    this.currentMode = undefined
+    this._currentMode = undefined
   }
 
   public resetProblemGroupValues() {
-    this.problemGroupValues = []
+    this._problemGroupValues = []
   }
 
   public get selectedFilterValue(): string {

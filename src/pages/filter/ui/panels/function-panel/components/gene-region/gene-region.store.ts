@@ -8,27 +8,35 @@ import { getConditionJoinMode } from '@utils/getConditionJoinMode'
 import functionPanelStore from '../../function-panel.store'
 
 class GeneRegionStore {
-  locusValue: string = ''
-  currentMode?: ModeTypes
+  private _locusValue: string = ''
+  private _currentMode?: ModeTypes
 
   constructor() {
     makeAutoObservable(this)
   }
 
+  public get locusValue(): string {
+    return this._locusValue
+  }
+
+  public get currentMode(): ModeTypes | undefined {
+    return this._currentMode
+  }
+
   public setLocusValue(locusValue: string) {
-    this.locusValue = locusValue
+    this._locusValue = locusValue
   }
 
   public resetLocusValue() {
-    this.locusValue = ''
+    this._locusValue = ''
   }
 
   public setCurrentMode(modeType?: ModeTypes): void {
-    this.currentMode = modeType ?? undefined
+    this._currentMode = modeType
   }
 
   public resetCurrentMode(): void {
-    this.currentMode = undefined
+    this._currentMode = undefined
   }
 
   public get selectedFilterValue(): string {

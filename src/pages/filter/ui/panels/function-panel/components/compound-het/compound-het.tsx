@@ -10,29 +10,26 @@ import { DisabledVariantsAmount } from '@pages/filter/ui/query-builder/ui/disabl
 import { ConditionJoinMode } from '@service-providers/common'
 import { ICompoundHetArgs } from '@service-providers/common/common.interface'
 import { getCurrentModeType } from '@utils/getCurrentModeType'
-import functionPanelStore from '../../function-panel.store'
+import functionPanelStore, { approxOptions } from '../../function-panel.store'
 import { PanelButtons } from '../panelButtons'
 import compoundHetStore, {
   CompoundHetSelectOptions,
 } from './compound-het.store'
 
 export const CompundHet = observer((): ReactElement => {
-  const { selectedFilter } = filterStore
-  const isRedactorMode = filterStore.isRedactorMode
+  const { selectedFilter, isRedactorMode } = filterStore
 
   const { simpleVariants } = functionPanelStore
 
-  const initialApprox = compoundHetStore.initialApprox
+  const { initialApprox } = compoundHetStore
 
   // set/reset data
   useEffect(() => {
     if (selectedFilter && isRedactorMode) {
       const selectedFilterApprox = selectedFilter[4] as ICompoundHetArgs
-
       const conditionJoinType = selectedFilter[2] as ConditionJoinMode
 
       compoundHetStore.setCurrentMode(getCurrentModeType(conditionJoinType))
-
       compoundHetStore.setInitialApprox(selectedFilterApprox['approx'])
     }
 
@@ -67,7 +64,7 @@ export const CompundHet = observer((): ReactElement => {
           <span className="mr-2 text-18 leading-14px">Approx:</span>
 
           <DropDown
-            value={initialApprox || 'shared transcript'}
+            value={initialApprox || approxOptions[0]}
             options={CompoundHetSelectOptions}
             onSelect={(arg: Option) => compoundHetStore.handleChangeApprox(arg)}
           />

@@ -22,26 +22,21 @@ export const resetOptions = [
 ]
 
 export const CompoundRequest = observer((): ReactElement => {
-  const { selectedFilter } = filterStore
-  const isRedactorMode = filterStore.isRedactorMode
+  const { selectedFilter, isRedactorMode } = filterStore
 
   const { simpleVariants } = functionPanelStore
 
-  const { selectedFilterValue } = compoundRequestStore
-  const requestCondition = compoundRequestStore.requestCondition
-  const activeRequestIndex = compoundRequestStore.activeRequestIndex
+  const { selectedFilterValue, requestCondition, activeRequestIndex } =
+    compoundRequestStore
 
   // set/reset data
   useEffect(() => {
     if (selectedFilter && isRedactorMode) {
       const selectedFilterConditions = selectedFilter[4] as ICompoundRequestArgs
-
+      const selectedFilterRequest = selectedFilterConditions['request']
       const conditionJoinType = selectedFilter[2] as ConditionJoinMode
 
       compoundRequestStore.setCurrentMode(getCurrentModeType(conditionJoinType))
-
-      const selectedFilterRequest = selectedFilterConditions['request']
-
       compoundRequestStore.setRequestCondition(selectedFilterRequest)
     }
 
@@ -64,13 +59,6 @@ export const CompoundRequest = observer((): ReactElement => {
     return () => filterStore.resetStatFuncData()
   }, [])
 
-  const handleResetFields = () => {
-    compoundRequestStore.setActiveRequestIndex(0)
-    compoundRequestStore.resetCurrentMode()
-    compoundRequestStore.clearResetValue()
-    compoundRequestStore.clearRequestCondition()
-  }
-
   return (
     <React.Fragment>
       <AprroxAndState simpleVariants={simpleVariants} />
@@ -87,7 +75,7 @@ export const CompoundRequest = observer((): ReactElement => {
 
       <PanelButtons
         onSubmit={() => compoundRequestStore.handleSumbitCondtions()}
-        resetFields={handleResetFields}
+        resetFields={() => compoundRequestStore.clearData()}
         disabled={!simpleVariants}
       />
     </React.Fragment>

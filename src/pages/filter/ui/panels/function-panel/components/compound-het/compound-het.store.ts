@@ -7,7 +7,7 @@ import { ModeTypes } from '@core/enum/mode-types-enum'
 import filterStore from '@store/filter'
 import { TFuncCondition } from '@service-providers/common/common.interface'
 import { getConditionJoinMode } from '@utils/getConditionJoinMode'
-import functionPanelStore from '../../function-panel.store'
+import functionPanelStore, { approxOptions } from '../../function-panel.store'
 
 export const CompoundHetSelectOptions = [
   { label: 'shared transcript', value: '' },
@@ -16,29 +16,38 @@ export const CompoundHetSelectOptions = [
 ]
 
 class CompoundHetStore {
-  statFuncStatus = ''
-  initialApprox: string | null = ''
-
-  currentMode?: ModeTypes
+  private _statFuncStatus = ''
+  private _initialApprox: string | null = ''
+  private _currentMode?: ModeTypes
 
   constructor() {
     makeAutoObservable(this)
   }
 
+  public get statFuncStatus(): string {
+    return this._statFuncStatus
+  }
+  public get initialApprox(): string | null {
+    return this._initialApprox
+  }
+  public get currentMode(): ModeTypes | undefined {
+    return this._currentMode
+  }
+
   public setInitialApprox(initialApprox: string | null) {
-    this.initialApprox = initialApprox
+    this._initialApprox = initialApprox
   }
 
   public resetInitialApprox() {
-    this.initialApprox = ''
+    this._initialApprox = ''
   }
 
   public setCurrentMode(modeType?: ModeTypes): void {
-    this.currentMode = modeType ?? undefined
+    this._currentMode = modeType
   }
 
   public resetCurrentMode(): void {
-    this.currentMode = undefined
+    this._currentMode = undefined
   }
 
   public async getStatFuncStatusAsync(): Promise<void> {
@@ -51,7 +60,7 @@ class CompoundHetStore {
     )
 
     runInAction(() => {
-      this.statFuncStatus = statFuncData.err || ''
+      this._statFuncStatus = statFuncData.err || ''
     })
   }
 
@@ -85,7 +94,7 @@ class CompoundHetStore {
   }
 
   public handleResetFields(): void {
-    this.setInitialApprox('shared transcript')
+    this.setInitialApprox(approxOptions[0])
   }
 }
 

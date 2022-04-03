@@ -6,6 +6,12 @@ import filterStore from '@store/filter'
 import { TFuncCondition } from '@service-providers/common/common.interface'
 import { getQueryBuilder } from '@utils/getQueryBuilder'
 
+export const approxOptions = [
+  'shared transcript',
+  'shared gene',
+  'non-intersecting transcripts',
+]
+
 class FunctionPanelStore {
   constructor() {
     makeAutoObservable(this)

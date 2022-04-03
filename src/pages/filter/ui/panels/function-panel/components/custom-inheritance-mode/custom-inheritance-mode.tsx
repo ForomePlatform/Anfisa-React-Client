@@ -13,14 +13,11 @@ import { PanelButtons } from '../panelButtons'
 import customInheritanceModeStore from './custom-inheritance-mode.store'
 
 export const CustomInheritanceMode = observer(() => {
-  const { selectedFilter } = filterStore
-  const isRedactorMode = filterStore.isRedactorMode
+  const { selectedFilter, isRedactorMode } = filterStore
 
   const { simpleVariants, problemGroups } = functionPanelStore
 
-  const { selectStates } = customInheritanceModeStore
-  const scenario = customInheritanceModeStore.scenario
-  const resetValue = customInheritanceModeStore.resetValue
+  const { selectStates, scenario, resetValue } = customInheritanceModeStore
 
   const setComplexScenario = (resetName: string): void => {
     customInheritanceModeStore.setComplexScenario(resetName)
@@ -35,17 +32,14 @@ export const CustomInheritanceMode = observer(() => {
     if (selectedFilter && isRedactorMode) {
       const selectedFilterScenario =
         selectedFilter[4] as ICustomInheritanceModeArgs
-
+      const selectedFilterScenarioArray = Object.entries(
+        selectedFilterScenario['scenario'],
+      )
       const conditionJoinType = selectedFilter[2] as ConditionJoinMode
 
       customInheritanceModeStore.setCurrentMode(
         getCurrentModeType(conditionJoinType),
       )
-
-      const selectedFilterScenarioArray = Object.entries(
-        selectedFilterScenario['scenario'],
-      )
-
       customInheritanceModeStore.setScenario(selectedFilterScenarioArray)
     }
 
@@ -70,12 +64,6 @@ export const CustomInheritanceMode = observer(() => {
     return () => filterStore.resetStatFuncData()
   }, [])
 
-  const handleClear = () => {
-    customInheritanceModeStore.clearResetValue()
-    customInheritanceModeStore.clearScenario()
-    customInheritanceModeStore.resetCurrentMode()
-  }
-
   return (
     <React.Fragment>
       <CustomInheritanceModeContent
@@ -94,7 +82,7 @@ export const CustomInheritanceMode = observer(() => {
 
       <PanelButtons
         onSubmit={() => customInheritanceModeStore.handleSumbitCondtions()}
-        resetFields={handleClear}
+        resetFields={() => customInheritanceModeStore.clearData()}
         disabled={!simpleVariants}
       />
     </React.Fragment>

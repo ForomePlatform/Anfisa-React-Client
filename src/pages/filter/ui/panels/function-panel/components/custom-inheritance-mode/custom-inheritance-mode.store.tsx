@@ -20,36 +20,48 @@ interface ISendRequest {
 }
 
 class CustomInheritanceModeStore {
-  scenario: TScenario[] = []
-  resetValue: string = ''
-  currentMode?: ModeTypes
+  private _scenario: TScenario[] = []
+  private _resetValue: string = ''
+  private _currentMode?: ModeTypes
 
   constructor() {
     makeAutoObservable(this)
   }
 
+  public get scenario() {
+    return this._scenario
+  }
+
+  public get resetValue(): string {
+    return this._resetValue
+  }
+
+  public get currentMode(): ModeTypes | undefined {
+    return this._currentMode
+  }
+
   public setScenario(scenario: TScenario[]) {
-    this.scenario = scenario
+    this._scenario = scenario
   }
 
   public setResetValue(resetValue: string) {
-    this.resetValue = resetValue
+    this._resetValue = resetValue
   }
 
   public setCurrentMode(modeType?: ModeTypes): void {
-    this.currentMode = modeType ?? undefined
+    this._currentMode = modeType
   }
 
   public resetCurrentMode(): void {
-    this.currentMode = undefined
+    this._currentMode = undefined
   }
 
   public clearScenario() {
-    this.scenario = []
+    this._scenario = []
   }
 
   public clearResetValue() {
-    this.resetValue = ''
+    this._resetValue = ''
   }
 
   public get stringScenario() {
@@ -220,8 +232,13 @@ class CustomInheritanceModeStore {
     functionPanelStore.sumbitConditions(custInhModeConditions)
 
     filterStore.resetStatFuncData()
+    this.clearData()
+  }
+
+  public clearData(): void {
     this.clearResetValue()
     this.clearScenario()
+    this.resetCurrentMode()
   }
 }
 
