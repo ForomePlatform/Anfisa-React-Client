@@ -9,9 +9,10 @@ import {
   LabelQuantity,
   LabelRow,
   LabelRowLeft,
-  LabelRowLeftName,
   LabelRowRight,
   LabelsWrapper,
+  LavelInfo,
+  ListWrapper,
   MainWrapper,
   PieChartContainer,
   StyledIcon,
@@ -28,14 +29,10 @@ interface IPieChartProps {
   data: TPieChartData
 }
 
-const defaultLabelsInCollapseMode = 3
-const extendedLabelsInCollapseMode = 4
+const labelsInCollapsedMode = 4
 
 export const PieChart = ({ data }: IPieChartProps): ReactElement | null => {
   const [isListCollapsed, setIsListCollapsed] = useState(true)
-  const [labelsInCollapsedMode, setLabelsInCollapsedMode] = useState(
-    defaultLabelsInCollapseMode,
-  )
 
   const totalCountsOnChart = data.reduce(
     (previousValue, variant) => previousValue + variant[1],
@@ -50,42 +47,31 @@ export const PieChart = ({ data }: IPieChartProps): ReactElement | null => {
 
   return (
     <MainWrapper>
-      <LabelsWrapper>
-        {variantList.map(([name, value], index) => {
-          const optionPercentage = ((value / totalCountsOnChart) * 100).toFixed(
-            2,
-          )
-          const varaintsQuantityContent = t('filter.chart.variants', {
-            value: formatNumber(value),
-          })
+      <ListWrapper>
+        <LabelsWrapper isListCollapsed={isListCollapsed}>
+          {variantList.map(([name, value], index) => {
+            const optionPercentage = (
+              (value / totalCountsOnChart) *
+              100
+            ).toFixed(2)
+            const varaintsQuantityContent = t('filter.chart.variants', {
+              value: formatNumber(value),
+            })
 
-          const isLongInfo = (name + varaintsQuantityContent).length > 30
-
-          if (
-            !isLongInfo &&
-            labelsInCollapsedMode !== extendedLabelsInCollapseMode
-          ) {
-            setLabelsInCollapsedMode(extendedLabelsInCollapseMode)
-          }
-
-          return (
-            <LabelRow key={name}>
-              <LabelRowLeft isLongInfo={isLongInfo}>
-                <LabelRowLeftName>
+            return (
+              <LabelRow key={name}>
+                <LabelRowLeft>
                   <StyledIcon color={getPieChartItemColor(index)} />
-                  <div />
-                  {name}
-                </LabelRowLeftName>
-
-                <LabelQuantity isLongInfo={isLongInfo}>
-                  {varaintsQuantityContent}
-                </LabelQuantity>
-              </LabelRowLeft>
-              <LabelRowRight>{optionPercentage}%</LabelRowRight>
-            </LabelRow>
-          )
-        })}
-
+                  <LavelInfo>
+                    <span>{name}</span>
+                    <LabelQuantity>{varaintsQuantityContent}</LabelQuantity>
+                  </LavelInfo>
+                </LabelRowLeft>
+                <LabelRowRight>{optionPercentage}%</LabelRowRight>
+              </LabelRow>
+            )
+          })}
+        </LabelsWrapper>
         {shouldShowCollapseBtn && (
           <CollapseBtn onClick={() => setIsListCollapsed(!isListCollapsed)}>
             {isListCollapsed
@@ -93,7 +79,7 @@ export const PieChart = ({ data }: IPieChartProps): ReactElement | null => {
               : t('filter.chart.hide')}
           </CollapseBtn>
         )}
-      </LabelsWrapper>
+      </ListWrapper>
 
       <PieChartContainer>
         <Total>

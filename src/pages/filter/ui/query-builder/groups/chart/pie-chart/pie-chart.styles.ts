@@ -8,12 +8,17 @@ export const MainWrapper = styled.div`
   align-items: start;
 `
 
-export const LabelsWrapper = styled.div`
+export const ListWrapper = styled.div`
+  width: 67%;
+`
+
+export const LabelsWrapper = styled.div<{ isListCollapsed: boolean }>`
   color: ${theme('colors.white')};
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
-  width: 67%;
+  max-height: ${({ isListCollapsed }) => (isListCollapsed ? '120px' : 'none')};
+  overflow: hidden;
 `
 
 export const LabelRow = styled.div`
@@ -22,12 +27,7 @@ export const LabelRow = styled.div`
   justify-content: space-between;
 `
 
-export const LabelRowLeft = styled.div<{ isLongInfo: boolean }>`
-  display: flex;
-  flex-direction: ${({ isLongInfo }) => (isLongInfo ? 'column' : 'row')};
-`
-
-export const LabelRowLeftName = styled.div`
+export const LabelRowLeft = styled.div`
   display: flex;
   align-items: center;
 `
@@ -40,14 +40,23 @@ export const StyledIcon = styled.div<{ color: string | undefined }>`
   height: 5px;
 `
 
-export const LabelQuantity = styled.span<{ isLongInfo: boolean }>`
-  padding-left: ${({ isLongInfo }) => (isLongInfo ? '12px' : '8px')};
+export const LavelInfo = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  width: 165px;
+  margin-right: 16px;
+`
+
+export const LabelQuantity = styled.span`
   color: ${theme('colors.grey.blue')};
+  flex-wrap: nowrap;
 `
 
 export const LabelRowRight = styled.div`
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 `
 
 export const CollapseBtn = styled.span`
