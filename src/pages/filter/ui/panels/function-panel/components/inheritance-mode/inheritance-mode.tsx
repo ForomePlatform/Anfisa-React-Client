@@ -35,6 +35,28 @@ export const InheritanceMode = observer(() => {
     inheritanceModeStore.updateVariantValues(e, variantName)
   }
 
+  // update data
+  useEffect(() => {
+    functionPanelStore.fetchStatFunc(
+      FuncStepTypesEnum.InheritanceMode,
+      JSON.stringify({
+        problem_group: problemGroupValues || [],
+      }),
+    )
+  }, [problemGroupValues])
+
+  // listener for curr mode reseting
+  useEffect(() => {
+    if (variantValues.length < 2) {
+      inheritanceModeStore.currentMode === ModeTypes.All &&
+        inheritanceModeStore.resetCurrentMode()
+    }
+
+    if (variantValues.length < 1) {
+      inheritanceModeStore.resetCurrentMode()
+    }
+  }, [variantValues])
+
   // set/reset data
   useEffect(() => {
     if (selectedFilter && isRedactorMode) {
@@ -58,28 +80,6 @@ export const InheritanceMode = observer(() => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRedactorMode, selectedFilter])
-
-  // update data
-  useEffect(() => {
-    functionPanelStore.fetchStatFunc(
-      FuncStepTypesEnum.InheritanceMode,
-      JSON.stringify({
-        problem_group: problemGroupValues || [],
-      }),
-    )
-  }, [problemGroupValues])
-
-  // listener for curr mode reseting
-  useEffect(() => {
-    if (variantValues.length < 2) {
-      inheritanceModeStore.currentMode === ModeTypes.All &&
-        inheritanceModeStore.resetCurrentMode()
-    }
-
-    if (variantValues.length < 1) {
-      inheritanceModeStore.resetCurrentMode()
-    }
-  }, [variantValues])
 
   // to avoid displaying this data on the another func attr
   useEffect(() => {
