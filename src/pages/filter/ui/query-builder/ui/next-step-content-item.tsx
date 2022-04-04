@@ -19,6 +19,7 @@ import activeStepStore, {
 import { editStepAttribute } from '@utils/editStepAttribute'
 import { getNumericExpression } from '@utils/getNumericExpression'
 import dtreeModalStore from '../../../modals.store'
+import modalFiltersStore from '../../modal-edit/components/modal-enum/modal-enum.store'
 import { DropDownJoin } from './dropdown-join'
 
 const ContentControl = styled.div`
@@ -32,11 +33,22 @@ const JoinType = styled.div`
   height: 28px;
 `
 
-const NegateWrapper = styled(JoinType)`
-  padding: 2px 6px;
-  margin: 2px 4px;
+const NotModeWrapper = styled.div`
+  margin: 8px 4px;
+  width: 25px;
+  height: 20px;
   color: ${theme('colors.red.light')};
   background-color: ${theme('colors.red.lighter')};
+  font-size: 12px;
+`
+
+const AllModeWrapper = styled.div`
+  margin: 8px 4px;
+  width: 25px;
+  height: 20px;
+  color: ${theme('colors.green.secondary')};
+  background-color: ${theme('colors.green.medium')};
+  font-size: 12px;
 `
 
 interface INextStepContentItemProps {
@@ -83,7 +95,8 @@ export const NextStepContentItem = observer(
       activeStepStore.makeStepActive(index, ActiveStepOptions.StartedVariants)
 
       group[0] === StepTypeEnum.Enum &&
-        dtreeModalStore.openModalFilters(group[1], currNo)
+        dtreeModalStore.openModalEnum(group[1], currNo) &&
+        modalFiltersStore.setCurrentGroupSubKind(group['sub-kind'])
 
       group[0] === StepTypeEnum.Numeric &&
         dtreeModalStore.openModalNumbers(group[1], currNo)
@@ -109,7 +122,8 @@ export const NextStepContentItem = observer(
     const currentGroup = currentStep.groups[currNo]
     const isNumeric = currentGroup[0] === 'numeric'
 
-    const isNegateAttribute = currentGroup[2] === 'NOT'
+    const isNotMode = currentGroup[2] === 'NOT'
+    const isAllMode = currentGroup[2] === 'AND'
     const isNegateStep = currentStep.negate
 
     return (
@@ -157,9 +171,9 @@ export const NextStepContentItem = observer(
             />
 
             {isNegateStep && (
-              <NegateWrapper className="flex items-center justify-center">
+              <NotModeWrapper className="flex items-center justify-center">
                 {'NOT'}
-              </NegateWrapper>
+              </NotModeWrapper>
             )}
 
             <div className="flex items-center text-14 font-medium mr-2">
@@ -175,11 +189,9 @@ export const NextStepContentItem = observer(
             {!isNumeric && (
               <label className="flex items-center pl-4 text-14">
                 <Checkbox
-                  checked={isNegateAttribute}
+                  checked={isNotMode}
                   className="mr-1"
-                  onChange={() =>
-                    editStepAttribute(index, currNo, isNegateAttribute)
-                  }
+                  onChange={() => editStepAttribute(index, currNo, isNotMode)}
                 />
                 {t('dtree.negate')}
               </label>
@@ -187,10 +199,16 @@ export const NextStepContentItem = observer(
           </div>
 
           <div className="flex flex-row step-content-area">
-            {isNegateAttribute && (
-              <NegateWrapper className="flex items-center justify-center">
-                {'NOT'}
-              </NegateWrapper>
+            {isNotMode && (
+              <NotModeWrapper className="flex items-center justify-center">
+                {'not'}
+              </NotModeWrapper>
+            )}
+
+            {isAllMode && (
+              <AllModeWrapper className="flex items-center justify-center rounded-sm">
+                {'all'}
+              </AllModeWrapper>
             )}
 
             <div className="flex flex-col text-14 font-normal h-full flex-wrap mt-1">

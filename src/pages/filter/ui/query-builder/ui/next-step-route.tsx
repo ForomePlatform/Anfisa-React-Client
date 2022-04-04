@@ -1,6 +1,5 @@
 import { Fragment, ReactElement } from 'react'
 import cn from 'classnames'
-import { get } from 'lodash'
 import { observer } from 'mobx-react-lite'
 import Tooltip from 'rc-tooltip'
 import styled from 'styled-components'
@@ -94,11 +93,7 @@ interface INextStepRouteProps {
 
 export const NextStepRoute = observer(
   ({ isExpanded, index, isIncluded }: INextStepRouteProps): ReactElement => {
-    const [allVariants, transcribedVariants] = get(
-      datasetStore,
-      'statAmount',
-      [],
-    )
+    const { variantCounts, dnaVariantsCounts } = datasetStore.fixedStatAmount
 
     const currentStep = dtreeStore.getStepData[index]
     const startFilterCounts = currentStep.startFilterCounts
@@ -107,13 +102,13 @@ export const NextStepRoute = observer(
       ? formatNumber(startFilterCounts)
       : startFilterCounts
 
-    const changedAllVariants = allVariants
-      ? formatNumber(allVariants)
-      : allVariants
+    const changedAllVariants = variantCounts
+      ? formatNumber(variantCounts)
+      : variantCounts
 
     const alternativeCounts = changedStartCounts || changedAllVariants
 
-    const firstStepValue = transcribedVariants
+    const firstStepValue = dnaVariantsCounts
       ? changedStartCounts
       : alternativeCounts
 
