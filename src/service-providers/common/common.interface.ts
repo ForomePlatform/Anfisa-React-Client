@@ -1,3 +1,5 @@
+import { SubKinds } from '@core/enum/sub-kinds-enum'
+
 export enum DatasetKinds {
   WS = 'ws',
   XL = 'xl',
@@ -139,7 +141,7 @@ export enum EnumPropertyStatusSubKinds {
 export interface IEnumPropertyStatus
   extends IBasePropertyStatus<AttributeKinds.ENUM> {
   variants?: TVariant[]
-  'sub-kind': EnumPropertyStatusSubKinds
+  'sub-kind': SubKinds
 }
 
 export interface IFuncPropertyStatus

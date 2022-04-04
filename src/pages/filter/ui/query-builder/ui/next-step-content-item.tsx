@@ -19,7 +19,7 @@ import activeStepStore, {
 import { editStepAttribute } from '@utils/editStepAttribute'
 import { getNumericExpression } from '@utils/getNumericExpression'
 import dtreeModalStore from '../../../modals.store'
-import modalFiltersStore from '../../modal-edit/components/modal-filters/modal-filters.store'
+import modalFiltersStore from '../../modal-edit/components/modal-enum/modal-enum.store'
 import { DropDownJoin } from './dropdown-join'
 
 const ContentControl = styled.div`
@@ -91,7 +91,7 @@ export const NextStepContentItem = observer(
       activeStepStore.makeStepActive(index, ActiveStepOptions.StartedVariants)
 
       group[0] === StepTypeEnum.Enum &&
-        dtreeModalStore.openModalFilters(group[1], currNo) &&
+        dtreeModalStore.openModalEnum(group[1], currNo) &&
         modalFiltersStore.setCurrentGroupSubKind(group['sub-kind'])
 
       group[0] === StepTypeEnum.Numeric &&

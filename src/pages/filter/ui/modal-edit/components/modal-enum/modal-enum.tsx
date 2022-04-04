@@ -16,10 +16,10 @@ import { HeaderModal } from '../../../query-builder/ui/header-modal'
 import { ModalBase } from '../../../query-builder/ui/modal-base'
 import modalEditStore from '../../modal-edit.store'
 import { EditModalButtons } from '../edit-modal-buttons'
-import { FiltersList } from './components/filter-list'
-import modalFiltersStore from './modal-filters.store'
+import { EnumList } from './components/enum-list'
+import modalFiltersStore from './modal-enum.store'
 
-export const ModalFilters = observer((): ReactElement => {
+export const ModalEnum = observer((): ReactElement => {
   const { groupName, currentStepGroups } = modalEditStore
 
   const currentStepIndex = activeStepStore.activeStepIndex
@@ -117,7 +117,7 @@ export const ModalFilters = observer((): ReactElement => {
         />
       </div>
 
-      <FiltersList />
+      <EnumList />
 
       {filteredGroupList.length > groupsPerPage && (
         <Pagintaion

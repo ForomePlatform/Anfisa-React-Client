@@ -13,7 +13,7 @@ import { changeEnumAttribute } from '@utils/changeAttribute/changeEnumAttribute'
 import { getCurrentModeType } from '@utils/getCurrentModeType'
 import dtreeModalStore from '../../../../modals.store'
 
-class ModalFiltersStore {
+class ModalEnumStore {
   searchValue = ''
   currentPage = 0
   isAllFiltersChecked = false
@@ -79,7 +79,7 @@ class ModalFiltersStore {
 
   public saveChanges(): void {
     changeEnumAttribute(this.currentMode)
-    dtreeModalStore.closeModalFilters()
+    dtreeModalStore.closeModalEnum()
     this.resetData()
   }
 
@@ -87,7 +87,7 @@ class ModalFiltersStore {
     addAttributeToStep(action, 'enum', null, null, this.currentMode)
 
     dtreeStore.resetSelectedFilters()
-    dtreeModalStore.closeModalFilters()
+    dtreeModalStore.closeModalEnum()
     this.resetData()
   }
 
@@ -106,14 +106,14 @@ class ModalFiltersStore {
   }
 
   public closeModal(): void {
-    dtreeModalStore.closeModalFilters()
+    dtreeModalStore.closeModalEnum()
 
     dtreeStore.resetSelectedFilters()
     this.resetData()
   }
 
   public openModalAttribute(): void {
-    dtreeModalStore.closeModalFilters()
+    dtreeModalStore.closeModalEnum()
     dtreeModalStore.openModalAttribute()
     dtreeStore.resetSelectedFilters()
   }
@@ -135,12 +135,7 @@ class ModalFiltersStore {
       dtreeStore.stepData[currentStepIndex].groups[currentGroupIndex]
 
     if (currentGroup) {
-      const subGroups = Object.values(dtreeStore.getQueryBuilder)
-      const { groupName } = modalEditStore
-
-      const selectedGroup: StatList | undefined = subGroups
-        .find(subGroup => subGroup.find(element => element.name === groupName))
-        ?.find(element => element.name === groupName)
+      const selectedGroup = modalEditStore.attributeStatusToChange as StatList
 
       this.currentGroupSubKind = selectedGroup?.['sub-kind']
 
@@ -174,4 +169,4 @@ class ModalFiltersStore {
   }
 }
 
-export default new ModalFiltersStore()
+export default new ModalEnumStore()

@@ -16,7 +16,7 @@ import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tre
 import { FnLabel } from '@components/fn-label'
 import { GlbPagesNames } from '@glb/glb-names'
 import dtreeModalStore from '../../../modals.store'
-import modalFiltersStore from '../../modal-edit/components/modal-filters/modal-filters.store'
+import modalFiltersStore from '../../modal-edit/components/modal-enum/modal-enum.store'
 import { QueryBuilderSubgroupChart } from './chart/query-builder-subgroup-chart'
 
 interface IProps {
@@ -52,7 +52,7 @@ export const QueryBuilderSubgroupItem = observer(
       dtreeModalStore.closeModalAttribute()
 
       if (group.kind === FilterKindEnum.Enum) {
-        dtreeModalStore.openModalFilters(group.name, undefined, source)
+        dtreeModalStore.openModalEnum(group.name, undefined, source)
         modalFiltersStore.setCurrentGroupSubKind(group['sub-kind'] as SubKinds)
       }
 
