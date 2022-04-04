@@ -70,5 +70,5 @@ export const createNumericExpression = ({
     }
   }
 
-  return getValue(expType)
+  return getValue(expType) as TNumericConditionBounds
 }

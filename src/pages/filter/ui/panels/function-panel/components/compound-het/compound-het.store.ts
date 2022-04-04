@@ -4,10 +4,7 @@ import { makeAutoObservable, runInAction } from 'mobx'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import filterStore from '@store/filter'
-import {
-  TFuncCondition,
-  TVariant,
-} from '@service-providers/common/common.interface'
+import { TFuncCondition } from '@service-providers/common/common.interface'
 import { getModeType } from '@utils/getModeType'
 import functionPanelStore from '../../function-panel.store'
 import { ICompoundHetCachedValues } from './../../function-panel.interface'
@@ -94,9 +91,7 @@ class CompoundHetStore {
       { approx: this.cachedValues?.conditions.approx || null, state: null },
     ]
 
-    const variant: TVariant = ['Proband', 0]
-
-    functionPanelStore.sumbitConditions(conditions, variant, this.currentMode)
+    functionPanelStore.sumbitConditions(conditions)
   }
 
   public handleResetFields(): void {

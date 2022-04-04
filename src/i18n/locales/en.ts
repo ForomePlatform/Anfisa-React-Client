@@ -143,8 +143,10 @@ export const en = {
       seeAll: 'See all',
       hide: 'Hide',
       total: 'Total',
-      variants: 'variants',
+      variants: '{value} variants',
     },
+    delete: 'Delete',
+    copy: 'Copy',
   },
   dtree: {
     variants: 'variants',
