@@ -1,6 +1,5 @@
 import { Fragment, ReactElement } from 'react'
 import cn from 'classnames'
-import { get } from 'lodash'
 import { observer } from 'mobx-react-lite'
 import Tooltip from 'rc-tooltip'
 import styled from 'styled-components'
@@ -93,26 +92,22 @@ interface IProps {
 
 export const NextStepRoute = observer(
   ({ isExpanded, index, isIncluded }: IProps): ReactElement => {
-    const [allVariants, transcribedVariants] = get(
-      datasetStore,
-      'statAmount',
-      [],
-    )
+    const { variantCounts, dnaVariantsCounts } = datasetStore.fixedStatAmount
 
-    const startFilterCounts = dtreeStore.getStepData[index].startFilterCounts
     const currentStep = dtreeStore.getStepData[index]
+    const startFilterCounts = currentStep.startFilterCounts
 
     const changedStartCounts = startFilterCounts
       ? formatNumber(startFilterCounts)
       : startFilterCounts
 
-    const changedAllVariants = allVariants
-      ? formatNumber(allVariants)
-      : allVariants
+    const changedAllVariants = variantCounts
+      ? formatNumber(variantCounts)
+      : variantCounts
 
     const alternativeCounts = changedStartCounts || changedAllVariants
 
-    const firstStepValue = transcribedVariants
+    const firstStepValue = dnaVariantsCounts
       ? changedStartCounts
       : alternativeCounts
 
@@ -126,12 +121,19 @@ export const NextStepRoute = observer(
 
     const differenceWithCommas = formatNumber(currentStep.difference)
 
+    const defaultStartCounts =
+      index === 0 ? firstStepValue : formatNumber(startFilterCounts)
+
+    const isFinalStep = index === dtreeStore.stepData.length - 1
+
+    const currentStartCounts = isFinalStep
+      ? differenceWithCommas
+      : defaultStartCounts
+
     return (
       <div style={{ minHeight: 53 }} className="relative flex h-full w-full">
         <StartAmount className="w-5/6 flex flex-col justify-between items-end mt-2 text-blue-bright mr-1 pt-1">
-          <div>
-            {index === 0 ? firstStepValue : formatNumber(startFilterCounts)}
-          </div>
+          <div>{currentStartCounts}</div>
         </StartAmount>
 
         <div className="flex flex-col items-center w-1/6">

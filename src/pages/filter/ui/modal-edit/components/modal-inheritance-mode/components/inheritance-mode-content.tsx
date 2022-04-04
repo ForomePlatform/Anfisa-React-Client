@@ -72,7 +72,7 @@ export const InheritanceModeContent = observer(
             <div className="flex">
               <div
                 className="text-14 text-blue-bright cursor-pointer"
-                onClick={() => alert('This function is not ready yet')}
+                onClick={() => modalInheritanceModeStore.setAllGroupVariants()}
               >
                 {t('general.selectAll')}
               </div>
@@ -81,7 +81,9 @@ export const InheritanceModeContent = observer(
 
               <div
                 className="text-14 text-blue-bright cursor-pointer"
-                onClick={() => alert('This function is not ready yet')}
+                onClick={() =>
+                  modalInheritanceModeStore.clearAllGroupVariants()
+                }
               >
                 {t('general.clearAll')}
               </div>

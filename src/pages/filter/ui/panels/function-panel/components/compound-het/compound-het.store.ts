@@ -1,14 +1,10 @@
 import { Option } from 'react-dropdown'
 import { makeAutoObservable, runInAction } from 'mobx'
 
-import { IStatFuncData } from '@declarations'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import filterStore from '@store/filter'
-import {
-  TFuncCondition,
-  TVariant,
-} from '@service-providers/common/common.interface'
+import { TFuncCondition } from '@service-providers/common/common.interface'
 import { getConditionJoinMode } from '@utils/getConditionJoinMode'
 import functionPanelStore from '../../function-panel.store'
 import { ICompoundHetCachedValues } from './../../function-panel.interface'
@@ -49,7 +45,7 @@ class CompoundHetStore {
   }
 
   public async getStatFuncStatusAsync(): Promise<void> {
-    const statFuncData: IStatFuncData = await filterStore.fetchStatFuncAsync(
+    const statFuncData = await filterStore.fetchStatFuncAsync(
       FuncStepTypesEnum.CompoundHet,
       JSON.stringify({
         approx: this.cachedValues?.conditions.approx || null,
@@ -64,7 +60,7 @@ class CompoundHetStore {
 
   public setConditions(approx: string | null, variants?: string[]): void {
     functionPanelStore.setCachedValues<ICompoundHetCachedValues>(
-      FuncStepTypesEnum.GeneRegion,
+      FuncStepTypesEnum.CompoundHet,
       {
         conditions: { approx: approx, state: null },
         variants: variants || ['Proband'],
@@ -95,9 +91,7 @@ class CompoundHetStore {
       { approx: this.cachedValues?.conditions.approx || null, state: null },
     ]
 
-    const variant: TVariant = ['Proband', 0]
-
-    functionPanelStore.sumbitConditions(conditions, variant, this.currentMode)
+    functionPanelStore.sumbitConditions(conditions)
   }
 
   public handleResetFields(): void {

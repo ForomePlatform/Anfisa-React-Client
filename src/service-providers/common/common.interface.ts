@@ -1,3 +1,4 @@
+import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { SubKinds } from '@core/enum/sub-kinds-enum'
 
 export enum DatasetKinds {
@@ -55,7 +56,7 @@ export interface IGeneRegionArgs {
 }
 
 export type TEnumCondition = [
-  conditionType: 'enum',
+  conditionType: FilterKindEnum.Enum,
   propertyName: string,
   joinMode: ConditionJoinMode,
   valueVariants: string[],
@@ -103,12 +104,31 @@ export enum AttributeKinds {
   FUNC = 'func',
 }
 
+export enum AttributeChartRenderModes {
+  Pie = 'pie',
+  Bar = 'bar',
+  Linear = 'linear',
+  Log = 'log',
+  Neighborhood = 'neighborhood',
+}
+
+export enum AttributeNumericRenderModes {
+  Less = '<',
+  Greater = '>',
+  Equal = '=',
+}
+
+export type TAttributeRenderMode =
+  | AttributeChartRenderModes
+  | `${AttributeChartRenderModes.Linear},${AttributeNumericRenderModes}`
+  | `${AttributeChartRenderModes.Log},${AttributeNumericRenderModes}`
+
 export interface IBasePropertyStatus<Kind extends AttributeKinds> {
   name: string
   kind: Kind
   vgroup: string
   title?: string
-  'render-mode'?: string
+  'render-mode'?: AttributeChartRenderModes
   tooltip?: string
   incomplete?: true
   detailed?: true
@@ -150,6 +170,8 @@ export interface IFuncPropertyStatus
   err?: string
   'rq-id': string
   no?: string
+  scenario?: [string, string[]]
+  request?: [string, string[]][]
   family?: string[]
   'approx-modes'?: string[][]
 }

@@ -15,6 +15,7 @@ import { Icon } from '@ui/icon'
 import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
 import { FnLabel } from '@components/fn-label'
 import { GlbPagesNames } from '@glb/glb-names'
+import { TPropertyStatus } from '@service-providers/common'
 import dtreeModalStore from '../../../modals.store'
 import modalFiltersStore from '../../modal-edit/components/modal-enum/modal-enum.store'
 import { QueryBuilderSubgroupChart } from './chart/query-builder-subgroup-chart'
@@ -103,8 +104,19 @@ export const QueryBuilderSubgroupItem = observer(
         openAttrListForDtree(group)
       } else if (page === GlbPagesNames.Refiner) {
         filterStore.setSelectedGroupItem(group)
+
+        filterStore.setActiveFilterId('')
       }
     }
+
+    /* TODO: if variants length > 100  add another visualisation */
+    const isChartVisible =
+      isVisibleSubGroupItem &&
+      !isModal &&
+      ((subGroupItem.variants &&
+        subGroupItem.variants.length > 0 &&
+        subGroupItem.variants.length < 100) ||
+        (subGroupItem.histogram && subGroupItem.histogram.length > 0))
 
     return (
       <div className="pl-2 mb-2">
@@ -139,17 +151,11 @@ export const QueryBuilderSubgroupItem = observer(
             </span>
           </div>
         </div>
-
-        {/* TODO: if varaintas length > 100  add antoher visualisation*/}
-        {isVisibleSubGroupItem &&
-          !isModal &&
-          subGroupItem.variants &&
-          subGroupItem.variants.length > 0 &&
-          subGroupItem.variants.length < 100 && (
-            <QueryBuilderSubgroupChart subGroupItem={toJS(subGroupItem)} />
-          )}
-        {isVisibleSubGroupItem && !isModal && subGroupItem.max > 0 && (
-          <QueryBuilderSubgroupChart subGroupItem={toJS(subGroupItem)} />
+        {isChartVisible && (
+          <QueryBuilderSubgroupChart
+            // TODO: StatList -> TPropertyStatus refactoring
+            subGroupItem={toJS(subGroupItem) as TPropertyStatus}
+          />
         )}
       </div>
     )

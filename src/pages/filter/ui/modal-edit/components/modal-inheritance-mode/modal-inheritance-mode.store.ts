@@ -4,7 +4,6 @@ import { makeAutoObservable } from 'mobx'
 import { ActionType } from '@declarations'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import dtreeStore from '@store/dtree'
-import activeStepStore from '@pages/filter/active-step.store'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { changeFunctionalStep } from '@utils/changeAttribute/changeFunctionalStep'
 import dtreeModalStore from '../../../../modals.store'
@@ -32,16 +31,7 @@ class ModalInheritanceModeStore {
   }
 
   public get variants(): [string, number][] {
-    const currentStepIndex = activeStepStore.activeStepIndex
-    const currentGroupIndex = dtreeModalStore.groupIndexToChange
     const variants: [string, number][] = dtreeStore.statFuncData.variants
-
-    const currentGroup =
-      dtreeStore.stepData[currentStepIndex].groups[currentGroupIndex]
-
-    if (currentGroup) {
-      return variants
-    }
 
     return variants
       ? variants.filter(([, variantValue]) => variantValue > 0)
@@ -99,6 +89,7 @@ class ModalInheritanceModeStore {
       .join('", "')}"]}`
 
     dtreeStore.fetchStatFuncAsync(groupName, params)
+    this.clearAllGroupVariants()
   }
 
   public saveChanges = (selectedProblemGroups: string[]): void => {
@@ -108,6 +99,27 @@ class ModalInheritanceModeStore {
     dtreeModalStore.closeModalInheritanceMode()
     dtreeStore.resetSelectedFilters()
     this.resetCurrentMode()
+  }
+
+  public handleCheckGroupVariantItem(checked: boolean, name: string): void {
+    if (checked) {
+      dtreeStore.addSelectedFilter(name)
+      return
+    }
+
+    dtreeStore.removeSelectedFilter(name)
+  }
+
+  public clearAllGroupVariants(): void {
+    this.variants.forEach((variant: any[]) =>
+      dtreeStore.removeSelectedFilter(variant[0]),
+    )
+  }
+
+  public setAllGroupVariants(): void {
+    this.variants.forEach((variant: any[]) =>
+      dtreeStore.addSelectedFilter(variant[0]),
+    )
   }
 
   public addAttribute = (

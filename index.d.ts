@@ -106,6 +106,7 @@ export interface DsinfoI {
   meta: Meta
   cohorts: any[]
   'unit-groups': any[][]
+  'igv-urls'?: string[]
 }
 
 export type StatHistogram = [
@@ -306,11 +307,6 @@ export interface IStatFuncData {
 export interface IColumns {
   title: string
   hidden: boolean
-}
-
-export interface IRemoveConditionItem {
-  subGroup: string
-  itemName: string
 }
 
 export interface IGridLayout {

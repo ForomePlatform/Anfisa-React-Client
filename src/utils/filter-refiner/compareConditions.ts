@@ -1,9 +1,9 @@
 import difference from 'lodash/difference'
 
-import { Condition } from '@store/dataset'
+import { TCondition } from '@service-providers/common'
 
 interface ICompareConditionsProps {
-  currentConditions: Condition[]
+  currentConditions: TCondition[]
   startConditions: any[]
   currentPreset?: string
   prevPreset?: string
@@ -22,6 +22,6 @@ export const compareConditions = ({
   if (prevPreset && currentPreset !== prevPreset) return true
 
   return currentConditions.some((condition: any[], index) => {
-    return difference(condition, startConditions[index]).length !== 0
+    return difference(condition, startConditions[index]).length === 0
   })
 }
