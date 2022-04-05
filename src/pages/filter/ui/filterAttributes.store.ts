@@ -27,7 +27,17 @@ export class FilterAttributesStore {
   }
 
   public setCurrentMode(modeType?: ModeTypes): void {
-    this.currentMode = modeType ?? undefined
+    if (!modeType) {
+      this.currentMode = undefined
+    }
+
+    if (this.currentMode === modeType) {
+      this.resetCurrentMode()
+
+      return
+    }
+
+    this.currentMode = modeType
   }
 
   public resetCurrentMode(): void {
