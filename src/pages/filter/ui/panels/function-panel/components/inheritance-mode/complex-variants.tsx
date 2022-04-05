@@ -32,7 +32,7 @@ export const ComplexVariants = observer(
 
           <span
             className="text-12 leading-14px text-blue-bright cursor-pointer ml-auto mr-2"
-            onClick={() => inheritanceModeStore.selectAllVariants()}
+            onClick={inheritanceModeStore.selectAllVariants}
           >
             {t('general.selectAll')}
           </span>

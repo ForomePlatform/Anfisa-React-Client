@@ -1,6 +1,5 @@
-import difference from 'lodash/difference'
-
 import { Condition } from '@store/dataset'
+import presetStore from '@store/filterPreset'
 
 interface ICompareConditionsProps {
   currentConditions: Condition[]
@@ -21,7 +20,5 @@ export const compareConditions = ({
 
   if (prevPreset && currentPreset !== prevPreset) return true
 
-  return currentConditions.some((condition: any[], index) => {
-    return difference(condition, startConditions[index]).length === 0
-  })
+  return presetStore.isPresetDataModified
 }

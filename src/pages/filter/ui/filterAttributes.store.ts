@@ -79,16 +79,8 @@ export class FilterAttributesStore {
     this.resetCurrentMode()
   }
 
-  public updateCurrentGroupEnumFilter(values: string[]): void {
-    this.updateEnumFilter(this.currentGroup, values)
-  }
-
-  public addValuesToEnumFilter(group: FilterGroup, values: string[]): void {
-    this.updateEnumFilter(group, values)
-  }
-
   public addValuesToCurrentGroupEnumFilter(values: string[]): void {
-    this.addValuesToEnumFilter(this.currentGroup, values)
+    this.updateEnumFilter(this.currentGroup, values)
   }
 
   private getAllEnumVariants(group: FilterGroup): [string, number][] {

@@ -9,11 +9,27 @@ import datasetStore from './dataset'
 export const DEFAULT_PRESET_LABEL = '⏚'
 
 class PresetStore {
+  private _isPresetDataModified = false
+
   constructor() {
     makeAutoObservable(this)
   }
 
+  public get isPresetDataModified() {
+    return this._isPresetDataModified
+  }
+
+  public setIsPresetDataModified() {
+    this._isPresetDataModified = true
+  }
+
+  public resetIsPresetDataModified() {
+    this._isPresetDataModified = false
+  }
+
   async loadPresetAsync(filter: string) {
+    this.resetIsPresetDataModified()
+
     const body = new URLSearchParams({
       ds: datasetStore.datasetName,
       filter,
@@ -36,6 +52,8 @@ class PresetStore {
   }
 
   async deletePresetAsync(presetName: string) {
+    this.resetIsPresetDataModified()
+
     const { conditions } = filterStore
 
     const body = new URLSearchParams({
@@ -58,6 +76,8 @@ class PresetStore {
   }
 
   async joinPresetAsync(presetName: string) {
+    this.resetIsPresetDataModified()
+
     const { conditions } = filterStore
 
     const body = new URLSearchParams({
@@ -65,9 +85,7 @@ class PresetStore {
       instr: JSON.stringify(['JOIN', presetName]),
     })
 
-    datasetStore.prevPreset
-      ? body.append('filter', datasetStore.prevPreset)
-      : body.append('conditions', JSON.stringify(conditions))
+    body.append('conditions', JSON.stringify(conditions))
 
     const result = await datasetStore.fetchDsStatAsync(false, body)
 
@@ -135,6 +153,8 @@ class PresetStore {
   }
 
   modifyPreset(preset: string): void {
+    this.resetIsPresetDataModified()
+
     this.updatePresetAsync(preset)
 
     filterStore.resetActionName()

@@ -1,9 +1,4 @@
-import {
-  IReactionDisposer,
-  makeAutoObservable,
-  reaction,
-  runInAction,
-} from 'mobx'
+import { makeAutoObservable, runInAction } from 'mobx'
 import { nanoid } from 'nanoid'
 
 import { IStatFuncData, StatListType } from '@declarations'
@@ -42,27 +37,16 @@ export class FilterStore {
   activeFilterId: string = ''
   isRedactorMode = false
 
-  loadConditions: IReactionDisposer
-
   constructor() {
     makeAutoObservable(this)
-
-    this.loadConditions = reaction(
-      () => this.conditions,
-      () => {
-        if (this.method !== GlbPagesNames.Table && datasetStore.datasetName) {
-          datasetStore.fetchDsStatAsync()
-
-          if (!datasetStore.isXL) {
-            datasetStore.fetchWsListAsync()
-          }
-        }
-      },
-    )
   }
 
-  public dispose() {
-    this.loadConditions()
+  public fetchConditions() {
+    datasetStore.fetchDsStatAsync()
+
+    if (!datasetStore.isXL) {
+      datasetStore.fetchWsListAsync()
+    }
   }
 
   public get selectedFiltersArray(): [string, TCondition][] {
@@ -77,19 +61,32 @@ export class FilterStore {
     return this._selectedFilters.get(this.activeFilterId)!
   }
 
+  public setConditionsFromPreset(conditions: TCondition[]): void {
+    conditions.forEach(condition =>
+      this._selectedFilters.set(nanoid(), condition),
+    )
+
+    this.fetchConditions()
+  }
+
   public addFilterBlock(condition: TCondition): void {
     const filterId: string = nanoid()
 
     this._selectedFilters.set(filterId, condition)
+
+    this.fetchConditions()
   }
 
   public removeFilterBlock(filterId: string): void {
     this._selectedFilters.delete(filterId)
     this.resetIsRedacorMode()
+    datasetStore.resetActivePreset()
+    this.fetchConditions()
   }
 
   public addFilterToFilterBlock(condition: TCondition): void {
     this._selectedFilters.set(this.activeFilterId, condition)
+    this.fetchConditions()
   }
 
   public removeFilterFromFilterBlock({
@@ -108,6 +105,8 @@ export class FilterStore {
     }
 
     currentCondition[3]?.splice(subFilterIdx, 1)
+    datasetStore.resetActivePreset()
+    this.fetchConditions()
   }
 
   public async fetchDsInfoAsync() {

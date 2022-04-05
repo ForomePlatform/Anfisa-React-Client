@@ -85,7 +85,7 @@ class InheritanceModeStore {
     this.setVariantValues(variants)
   }
 
-  public selectAllVariants(): void {
+  public selectAllVariants = (): void => {
     if (functionPanelStore.filteredComplexVariants.length === 0) return
 
     const { selectedFilter } = filterStore
@@ -97,7 +97,7 @@ class InheritanceModeStore {
     this.setVariantValues(variantsValues)
   }
 
-  public resetAllFields(): void {
+  public resetAllFields = (): void => {
     this.resetProblemGroupValues()
     this.resetVariantValues()
   }

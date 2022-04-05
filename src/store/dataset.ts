@@ -6,11 +6,9 @@ import { DsStatType, StatListType } from '@declarations'
 import { getApiUrl } from '@core/get-api-url'
 import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
+import presetStore from '@store/filterPreset'
 import variantStore from '@store/variant'
-import {
-  IRecordDescriptor,
-  TCondition,
-} from '@service-providers/common/common.interface'
+import { IRecordDescriptor } from '@service-providers/common/common.interface'
 import datasetProvider from '@service-providers/dataset-level/dataset.provider'
 import { IWsListArguments } from '@service-providers/ws-dataset-support/ws-dataset-support.interface'
 import wsDatasetProvider from '@service-providers/ws-dataset-support/ws-dataset-support.provider'
@@ -106,6 +104,7 @@ export class DatasetStore {
 
   resetActivePreset() {
     this.activePreset = ''
+    presetStore.setIsPresetDataModified()
   }
 
   setIsLoadingTabReport(value: boolean) {
@@ -266,9 +265,7 @@ export class DatasetStore {
     filterStore.resetSelectedFilters()
     this.startPresetConditions = dsStatData.conditions
 
-    dsStatData.conditions?.forEach((condition: TCondition) => {
-      filterStore.addFilterBlock(condition as TCondition)
-    })
+    filterStore.setConditionsFromPreset(dsStatData.conditions)
   }
 
   async fetchTabReportAsync() {

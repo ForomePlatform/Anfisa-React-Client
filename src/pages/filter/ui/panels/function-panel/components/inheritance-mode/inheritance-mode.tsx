@@ -104,7 +104,7 @@ export const InheritanceMode = observer(() => {
 
       <PanelButtons
         onSubmit={inheritanceModeStore.handleSumbitCondtions}
-        resetFields={() => inheritanceModeStore.resetAllFields()}
+        resetFields={inheritanceModeStore.resetAllFields}
         disabled={variantValues.length === 0}
       />
     </React.Fragment>
