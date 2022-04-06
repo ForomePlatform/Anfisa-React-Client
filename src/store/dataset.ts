@@ -268,6 +268,8 @@ export class DatasetStore {
     this.startPresetConditions = dsStatData.conditions
 
     filterStore.setConditionsFromPreset(dsStatData.conditions)
+
+    if (!this.isXL) this.fetchWsListAsync()
   }
 
   async fetchTabReportAsync() {

@@ -147,6 +147,8 @@ class PresetStore {
 
     if (datasetStore.prevPreset !== datasetStore.activePreset) {
       this.loadPresetAsync(preset)
+
+      if (!datasetStore.isXL) datasetStore.fetchWsListAsync()
     }
   }
 }

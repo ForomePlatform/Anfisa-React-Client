@@ -12,15 +12,25 @@ import { showToast } from '@utils/notifications/showToast'
 import { validatePresetName } from '@utils/validation/validatePresetName'
 
 class FilterControlRefinerStore {
+  private _createPresetName = ''
+
   constructor() {
     makeAutoObservable(this)
   }
 
-  get activePreset(): string {
+  public get createPresetName(): string {
+    return this._createPresetName
+  }
+
+  public setCreatePresetName(presetName: string) {
+    this._createPresetName = presetName
+  }
+
+  public get activePreset(): string {
     return datasetStore.activePreset
   }
 
-  get presets(): string[] {
+  public get presets(): string[] {
     return get(datasetStore, 'dsStat.filter-list', [])
       .filter(this.isPresetAbleToBeModified)
       .map((preset: FilterList) => preset.name)
@@ -90,6 +100,7 @@ class FilterControlRefinerStore {
       }
 
       presetStore.createPreset(createPresetName)
+      this.setCreatePresetName('')
     }
 
     if (filterStore.actionName === ActionFilterEnum.Modify) {
