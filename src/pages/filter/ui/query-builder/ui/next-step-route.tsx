@@ -1,6 +1,5 @@
 import { Fragment, ReactElement } from 'react'
 import cn from 'classnames'
-import { get } from 'lodash'
 import { observer } from 'mobx-react-lite'
 import Tooltip from 'rc-tooltip'
 import styled from 'styled-components'
@@ -48,6 +47,7 @@ const ExcludeTurn = styled.div<{ isIncluded: boolean }>`
   position: absolute;
   top: 29px;
   margin-right: 14px;
+  margin-top: 4px;
   display: flex;
   width: 20px;
   height: 60px;
@@ -85,19 +85,15 @@ const DifferenceCounts = styled.span<{
         : theme('colors.purple.bright')};
 `
 
-interface IProps {
+interface INextStepRouteProps {
   isExpanded: boolean
   index: number
   isIncluded: boolean
 }
 
 export const NextStepRoute = observer(
-  ({ isExpanded, index, isIncluded }: IProps): ReactElement => {
-    const [allVariants, transcribedVariants] = get(
-      datasetStore,
-      'statAmount',
-      [],
-    )
+  ({ isExpanded, index, isIncluded }: INextStepRouteProps): ReactElement => {
+    const { variantCounts, dnaVariantsCounts } = datasetStore.fixedStatAmount
 
     const currentStep = dtreeStore.getStepData[index]
     const startFilterCounts = currentStep.startFilterCounts
@@ -106,13 +102,13 @@ export const NextStepRoute = observer(
       ? formatNumber(startFilterCounts)
       : startFilterCounts
 
-    const changedAllVariants = allVariants
-      ? formatNumber(allVariants)
-      : allVariants
+    const changedAllVariants = variantCounts
+      ? formatNumber(variantCounts)
+      : variantCounts
 
     const alternativeCounts = changedStartCounts || changedAllVariants
 
-    const firstStepValue = transcribedVariants
+    const firstStepValue = dnaVariantsCounts
       ? changedStartCounts
       : alternativeCounts
 
@@ -142,12 +138,16 @@ export const NextStepRoute = observer(
         </StartAmount>
 
         <div className="flex flex-col items-center w-1/6">
-          <CircleStartThread className="bg-blue-bright">
+          <CircleStartThread
+            className={cn('bg-blue-bright mt-1', { '-mt-px': isFinalStep })}
+          >
             <SubCircleThread />
           </CircleStartThread>
 
           <LineThread
-            className={cn('bg-blue-bright', { 'mt-4': index === 0 })}
+            className={cn('bg-blue-bright', {
+              'mt-5': index === 0,
+            })}
           />
 
           {isExpanded && currentStep.groups && currentStep.groups.length > 0 && (

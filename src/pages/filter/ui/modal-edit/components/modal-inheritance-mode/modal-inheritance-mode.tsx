@@ -1,7 +1,9 @@
 import { ReactElement, useEffect, useState } from 'react'
+import { reaction } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
 import { ActionType } from '@declarations'
+import { ModeTypes } from '@core/enum/mode-types-enum'
 import dtreeStore from '@store/dtree'
 import activeStepStore from '@pages/filter/active-step.store'
 import { InheritanceModeContent } from '@pages/filter/ui/modal-edit/components/modal-inheritance-mode/components/inheritance-mode-content'
@@ -35,6 +37,24 @@ export const ModalInheritanceMode = observer((): ReactElement => {
       modalInheritanceModeStore.checkExistedSelectedFilters(currentGroup)
     }
   }, [currentGroup])
+
+  useEffect(() => {
+    const dispose = reaction(
+      () => dtreeStore.selectedFilters,
+      () => {
+        if (dtreeStore.selectedFilters.length < 2) {
+          modalInheritanceModeStore.currentMode === ModeTypes.All &&
+            modalInheritanceModeStore.resetCurrentMode()
+        }
+
+        if (dtreeStore.selectedFilters.length < 1) {
+          modalInheritanceModeStore.resetCurrentMode()
+        }
+      },
+    )
+
+    return () => dispose()
+  }, [])
 
   useEffect(() => {
     const params = `{"problem_group":["${selectedProblemGroups
@@ -82,6 +102,7 @@ export const ModalInheritanceMode = observer((): ReactElement => {
             setSelectedProblemGroups,
           )
         }
+        currentGroup={currentGroup}
       />
 
       {currentGroup ? (

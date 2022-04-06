@@ -1,4 +1,5 @@
 import { FilterKindEnum } from '@core/enum/filter-kind.enum'
+import { SubKinds } from '@core/enum/sub-kinds-enum'
 
 export enum DatasetKinds {
   WS = 'ws',
@@ -109,12 +110,31 @@ export enum AttributeKinds {
   FUNC = 'func',
 }
 
+export enum AttributeChartRenderModes {
+  Pie = 'pie',
+  Bar = 'bar',
+  Linear = 'linear',
+  Log = 'log',
+  Neighborhood = 'neighborhood',
+}
+
+export enum AttributeNumericRenderModes {
+  Less = '<',
+  Greater = '>',
+  Equal = '=',
+}
+
+export type TAttributeRenderMode =
+  | AttributeChartRenderModes
+  | `${AttributeChartRenderModes.Linear},${AttributeNumericRenderModes}`
+  | `${AttributeChartRenderModes.Log},${AttributeNumericRenderModes}`
+
 export interface IBasePropertyStatus<Kind extends AttributeKinds> {
   name: string
   kind: Kind
   vgroup: string
   title?: string
-  'render-mode'?: string
+  'render-mode'?: AttributeChartRenderModes
   tooltip?: string
   incomplete?: true
   detailed?: true
@@ -147,7 +167,7 @@ export enum EnumPropertyStatusSubKinds {
 export interface IEnumPropertyStatus
   extends IBasePropertyStatus<AttributeKinds.ENUM> {
   variants?: TVariant[]
-  'sub-kind': EnumPropertyStatusSubKinds
+  'sub-kind': SubKinds
 }
 
 export interface IFuncPropertyStatus
@@ -156,6 +176,8 @@ export interface IFuncPropertyStatus
   err?: string
   'rq-id': string
   no?: string
+  scenario?: [string, string[]]
+  request?: [string, string[]][]
   family?: string[]
   'approx-modes'?: string[][]
 }

@@ -106,6 +106,7 @@ export interface DsinfoI {
   meta: Meta
   cohorts: any[]
   'unit-groups': any[][]
+  'igv-urls'?: string[]
 }
 
 export type StatHistogram = [
@@ -119,7 +120,7 @@ export interface StatList {
   kind: string
   name: string
   vgroup: string
-  'sub-kind': string
+  'sub-kind': SubKinds
   detailed: boolean
   variants: [string, number][]
   title: string

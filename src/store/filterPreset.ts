@@ -2,6 +2,10 @@ import { makeAutoObservable } from 'mobx'
 
 import { t } from '@i18n'
 import filterStore from '@store/filter'
+import {
+  DsStatArgumentsOptions,
+  IDsStatArguments,
+} from '@service-providers/filtering-regime'
 import { showToast } from '@utils/notifications/showToast'
 import datasetStore from './dataset'
 
@@ -29,10 +33,10 @@ class PresetStore {
   async loadPresetAsync(filter: string) {
     this.resetIsPresetDataModified()
 
-    const body = new URLSearchParams({
+    const body: IDsStatArguments = {
       ds: datasetStore.datasetName,
       filter,
-    })
+    }
 
     const result = await datasetStore.fetchDsStatAsync(false, body)
 
@@ -44,11 +48,11 @@ class PresetStore {
 
     const { conditions } = filterStore
 
-    const body = new URLSearchParams({
+    const body: IDsStatArguments = {
       ds: datasetStore.datasetName,
-      conditions: JSON.stringify(conditions),
-      instr: JSON.stringify(['DELETE', presetName]),
-    })
+      conditions: conditions,
+      instr: [DsStatArgumentsOptions.DELETE, presetName],
+    }
 
     const result = await datasetStore.fetchDsStatAsync(false, body)
 
@@ -60,12 +64,11 @@ class PresetStore {
 
     const { conditions } = filterStore
 
-    const body = new URLSearchParams({
+    const body: IDsStatArguments = {
       ds: datasetStore.datasetName,
-      instr: JSON.stringify(['JOIN', presetName]),
-    })
-
-    body.append('conditions', JSON.stringify(conditions))
+      instr: [DsStatArgumentsOptions.JOIN, presetName],
+      conditions: conditions,
+    }
 
     const result = await datasetStore.fetchDsStatAsync(false, body)
 
@@ -75,11 +78,11 @@ class PresetStore {
   async updatePresetAsync(presetName: string) {
     const { conditions } = filterStore
 
-    const body = new URLSearchParams({
+    const body: IDsStatArguments = {
       ds: datasetStore.datasetName,
-      conditions: JSON.stringify(conditions),
-      instr: JSON.stringify(['UPDATE', presetName]),
-    })
+      conditions: conditions,
+      instr: [DsStatArgumentsOptions.UPDATE, presetName],
+    }
 
     const result = await datasetStore.fetchDsStatAsync(false, body)
 

@@ -5,6 +5,11 @@ import { makeAutoObservable, runInAction, toJS } from 'mobx'
 import { FilterCountsType } from '@declarations'
 import { getApiUrl } from '@core/get-api-url'
 import { CreateEmptyStepPositions } from '@pages/filter/active-step.store'
+import {
+  IDsStatArguments,
+  IStatfuncArguments,
+} from '@service-providers/filtering-regime'
+import filteringRegimeProvider from '@service-providers/filtering-regime/filtering-regime.provider'
 import { addToActionHistory } from '@utils/addToActionHistory'
 import { calculateAcceptedVariants } from '@utils/calculateAcceptedVariants'
 import { getDataFromCode } from '@utils/getDataFromCode'
@@ -20,6 +25,7 @@ export type IStepData = {
   step: number
   groups: any[]
   negate?: boolean
+  all?: boolean
   excluded: boolean
   isActive: boolean
   isReturnedVariantsActive: boolean
@@ -92,7 +98,7 @@ class DtreeStore {
 
   requestData: IRequestData[] = []
 
-  actionHistory: URLSearchParams[] = []
+  actionHistory: IDsStatArguments[] = []
   actionHistoryIndex = -1
 
   constructor() {
@@ -157,9 +163,9 @@ class DtreeStore {
   }
 
   get getQueryBuilder() {
-    const statList = this.stat.list ?? datasetStore.dsStat['stat-list']
+    const statList = this.stat.list ?? toJS(datasetStore.dsStat['stat-list'])
 
-    return getQueryBuilder(toJS(statList))
+    return getQueryBuilder(statList)
   }
 
   getStepIndexForApi = (index: number) => {
@@ -180,7 +186,8 @@ class DtreeStore {
     return stepIndexForApi
   }
 
-  async fetchDtreeSetAsync(body: URLSearchParams, shouldSaveInHistory = true) {
+  // TODO: change body type
+  async fetchDtreeSetAsync(body: any, shouldSaveInHistory = true) {
     if (shouldSaveInHistory) addToActionHistory(body)
 
     this.setIsCountsReceived(false)
@@ -216,24 +223,16 @@ class DtreeStore {
   }
 
   async fetchStatFuncAsync(subGroupName: string, param: string) {
-    const body = new URLSearchParams({
+    const body: IStatfuncArguments = {
       ds: datasetStore.datasetName,
       no: activeStepStore.stepIndexForApi,
       code: this.dtreeCode,
       rq_id: Math.random().toString(),
       unit: subGroupName,
       param,
-    })
+    }
 
-    const response = await fetch(getApiUrl('statfunc'), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body,
-    })
-
-    const result = await response.json()
+    const result = await filteringRegimeProvider.getStatFunc(body)
 
     runInAction(() => {
       this.statFuncData = result
@@ -244,7 +243,7 @@ class DtreeStore {
     })
   }
 
-  setActionHistory(updatedActionHistory: URLSearchParams[]) {
+  setActionHistory(updatedActionHistory: IDsStatArguments[]) {
     runInAction(() => {
       this.actionHistory = [...updatedActionHistory]
     })
@@ -355,16 +354,6 @@ class DtreeStore {
       this.stepData.length - 1,
       ActiveStepOptions.StartedVariants,
     )
-
-    this.resetLocalDtreeCode()
-  }
-
-  negateStep(index: number) {
-    if (!this.stepData[index].negate) {
-      this.stepData[index].negate = true
-    } else {
-      this.stepData[index].negate = !this.stepData[index].negate
-    }
 
     this.resetLocalDtreeCode()
   }

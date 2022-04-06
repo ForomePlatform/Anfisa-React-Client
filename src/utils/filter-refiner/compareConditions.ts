@@ -1,8 +1,8 @@
-import { Condition } from '@store/dataset'
 import presetStore from '@store/filterPreset'
+import { TCondition } from '@service-providers/common'
 
 interface ICompareConditionsProps {
-  currentConditions: Condition[]
+  currentConditions: TCondition[]
   startConditions: any[]
   currentPreset?: string
   prevPreset?: string

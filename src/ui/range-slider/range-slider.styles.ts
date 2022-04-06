@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 
 import { theme } from '@theme'
-import { RangeSliderHistogramRoot } from './range-slider-histogram/styles'
-import { RangeSliderColor } from './types'
+import { RangeSliderColor } from './range-slider.interface'
+import { RangeSliderHistogramRoot } from './range-slider-histogram/range-slider-histogram.styles'
 
 const disabledColor = theme('colors.grey.disabled')
 const controlDisabledColor = theme('colors.grey.blue')
@@ -20,7 +20,7 @@ interface IRangeSliderRootProps {
 
 export const RangeSliderRoot = styled.div<IRangeSliderRootProps>`
   ${props => props.isVertical && 'height: 100%;'}
-  margin-left: ${props => (props.hasHistogram ? '40px' : '0')};
+  margin-left: ${props => (props.hasHistogram ? '48px' : '0')};
   cursor: ${props =>
     props.isDisabled ? 'default' : props.isActive ? 'grabbing' : 'pointer'};
 `
