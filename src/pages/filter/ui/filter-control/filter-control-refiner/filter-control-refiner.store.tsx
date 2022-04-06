@@ -40,6 +40,12 @@ class FilterControlRefinerStore {
     const { conditions } = filterStore
 
     if (filterStore.actionName === ActionFilterEnum.Delete) {
+      if (!datasetStore.activePreset) {
+        showToast(t('error.choosePresetFirst'), 'error')
+
+        return
+      }
+
       presetStore.deletePreset()
       filterStore.resetSelectedFilters()
       datasetStore.fetchDsStatAsync()

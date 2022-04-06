@@ -65,8 +65,6 @@ export class FilterStore {
     conditions.forEach(condition =>
       this._selectedFilters.set(nanoid(), condition),
     )
-
-    this.fetchConditions()
   }
 
   public addFilterBlock(condition: TCondition): void {

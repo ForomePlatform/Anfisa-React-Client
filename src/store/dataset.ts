@@ -261,7 +261,7 @@ export class DatasetStore {
     return result
   }
 
-  updatePresetLoad(dsStatData: any) {
+  updatePresetLoad(dsStatData: DsStatType) {
     filterStore.resetSelectedFilters()
     this.startPresetConditions = dsStatData.conditions
 

@@ -1,6 +1,5 @@
-import { makeAutoObservable, runInAction } from 'mobx'
+import { makeAutoObservable } from 'mobx'
 
-import { getApiUrl } from '@core/get-api-url'
 import { t } from '@i18n'
 import filterStore from '@store/filter'
 import { showToast } from '@utils/notifications/showToast'
@@ -35,20 +34,9 @@ class PresetStore {
       filter,
     })
 
-    const response = await fetch(getApiUrl('ds_stat'), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body,
-    })
+    const result = await datasetStore.fetchDsStatAsync(false, body)
 
-    const result = await response.json()
-
-    runInAction(() => {
-      datasetStore.updatePresetLoad(result)
-      datasetStore.dsStat = result
-    })
+    datasetStore.updatePresetLoad(result)
   }
 
   async deletePresetAsync(presetName: string) {
@@ -62,17 +50,9 @@ class PresetStore {
       instr: JSON.stringify(['DELETE', presetName]),
     })
 
-    const response = await fetch(getApiUrl('ds_stat'), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body,
-    })
+    const result = await datasetStore.fetchDsStatAsync(false, body)
 
-    const result = await response.json()
-
-    datasetStore.dsStat = result
+    datasetStore.updatePresetLoad(result)
   }
 
   async joinPresetAsync(presetName: string) {
@@ -89,7 +69,7 @@ class PresetStore {
 
     const result = await datasetStore.fetchDsStatAsync(false, body)
 
-    await datasetStore.updatePresetLoad(result)
+    datasetStore.updatePresetLoad(result)
   }
 
   async updatePresetAsync(presetName: string) {
@@ -101,21 +81,9 @@ class PresetStore {
       instr: JSON.stringify(['UPDATE', presetName]),
     })
 
-    const response = await fetch(getApiUrl('ds_stat'), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body,
-    })
+    const result = await datasetStore.fetchDsStatAsync(false, body)
 
-    const result = await response.json()
-
-    runInAction(() => {
-      datasetStore.dsStat = result
-    })
-
-    await datasetStore.updatePresetLoad(result)
+    datasetStore.updatePresetLoad(result)
   }
 
   deletePreset(): void {
