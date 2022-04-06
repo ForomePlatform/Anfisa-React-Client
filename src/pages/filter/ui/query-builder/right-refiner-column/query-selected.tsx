@@ -50,6 +50,10 @@ export const QuerySelected = observer((): ReactElement => {
 
     filterStore.resetSelectedFilters()
     datasetStore.fetchDsStatAsync()
+
+    if (!datasetStore.isXL) {
+      datasetStore.fetchWsListAsync()
+    }
   }
 
   return (
