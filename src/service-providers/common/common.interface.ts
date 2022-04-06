@@ -1,5 +1,4 @@
 import { FilterKindEnum } from '@core/enum/filter-kind.enum'
-import { TRequestCondition } from '@pages/filter/ui/panels/function-panel/function-panel.interface'
 
 export enum DatasetKinds {
   WS = 'ws',
@@ -31,6 +30,12 @@ export enum ConditionJoinMode {
   OR = 'OR',
   AND = 'AND',
   NOT = 'NOT',
+}
+
+export type TRequestCondition = [number, TSelectValues]
+
+export type TSelectValues = {
+  [key: string]: string[]
 }
 
 export interface IInheritanceModeArgs {

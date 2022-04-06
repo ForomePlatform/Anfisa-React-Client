@@ -4,6 +4,7 @@ import { makeAutoObservable } from 'mobx'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import filterStore from '@store/filter'
+import { TRequestCondition } from '@service-providers/common'
 import { TFuncCondition } from '@service-providers/common/common.interface'
 import { getFilteredRequestCondition } from '@utils/function-panel/getFilteredRequestCondition'
 import { getConditionJoinMode } from '@utils/getConditionJoinMode'
@@ -14,7 +15,6 @@ import { getResetType } from '@utils/getResetType'
 import { getSortedArray } from '@utils/getSortedArray'
 import functionPanelStore from '../../function-panel.store'
 import { getPureRequestString } from './../../../../../../../utils/function-panel/getPureRequestString'
-import { TRequestCondition } from './../../function-panel.interface'
 
 class CompoundRequestStore {
   private _requestCondition: TRequestCondition[] = [
