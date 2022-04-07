@@ -26,9 +26,6 @@ module.exports = {
       backgroundOpacity: {
         2: '0.02',
       },
-      // boxShadow: {
-      //
-      // },
     },
     colors: {
       transparent: 'transparent',
