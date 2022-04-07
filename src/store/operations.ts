@@ -11,7 +11,7 @@ import {
   ICsvExportArguments,
   IDs2WsArguments,
 } from '@service-providers/operations/operations.interface'
-import operationsProvider from '@service-providers/operations/opertaions.provider'
+import operationsProvider from '@service-providers/operations/operations.provider'
 import wsDatasetProvider from '@service-providers/ws-dataset-support/ws-dataset-support.provider'
 import datasetStore from './dataset'
 import dirinfoStore from './dirinfo'
