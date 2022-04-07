@@ -27,6 +27,7 @@ export const NumericPanel = observer((): ReactElement => {
 
   return (
     <NumericCondition
+      className="mt-4"
       key={`${attrData.name}_${activeFilterId}`}
       attrData={attrData as INumericPropertyStatus}
       initialValue={initialValue}
