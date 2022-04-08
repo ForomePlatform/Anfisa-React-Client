@@ -17,6 +17,17 @@ export const SelectedGroup = observer((): ReactElement => {
 
   const { isRedactorMode } = filterStore
 
+  const getGroup = () => {
+    switch (filterStore.selectedGroupItem.kind) {
+      case FilterKindEnum.Enum:
+        return <EnumPanel />
+      case FilterKindEnum.Func:
+        return <FunctionPanel />
+      case FilterKindEnum.Numeric:
+        return <RangePanel />
+    }
+  }
+
   return (
     <div
       className={cn(
@@ -29,15 +40,7 @@ export const SelectedGroup = observer((): ReactElement => {
 
       <div className="bg-grey-light h-px w-full mt-4" />
 
-      {filterStore.selectedGroupItem.kind === FilterKindEnum.Enum && (
-        <EnumPanel />
-      )}
-      {filterStore.selectedGroupItem.kind === FilterKindEnum.Func && (
-        <FunctionPanel />
-      )}
-      {filterStore.selectedGroupItem.kind === FilterKindEnum.Numeric && (
-        <RangePanel />
-      )}
+      {getGroup()}
     </div>
   )
 })

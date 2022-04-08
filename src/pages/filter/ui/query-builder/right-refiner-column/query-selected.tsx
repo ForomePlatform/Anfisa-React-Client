@@ -56,6 +56,10 @@ export const QuerySelected = observer((): ReactElement => {
     }
   }
 
+  const disableApplyButton =
+    selectedFiltersAmount <= 0 ||
+    (filterStore.isRedactorMode && filterStore.changedInEditMode)
+
   return (
     <div className="w-1/3 ">
       <div className="flex items-center px-4 py-3 border-b border-grey-disabled bg-grey-tertiary">
@@ -97,6 +101,7 @@ export const QuerySelected = observer((): ReactElement => {
             text={t('general.apply', {
               amount: formatNumber(selectedVariants),
             })}
+            disabled={disableApplyButton}
             onClick={handleClick}
           />
         )}

@@ -37,6 +37,7 @@ export class FilterStore {
 
   activeFilterId: string = ''
   isRedactorMode = false
+  changedInEditMode = false
 
   constructor() {
     makeAutoObservable(this)
@@ -60,6 +61,10 @@ export class FilterStore {
 
   public get selectedFilter(): TCondition {
     return this._selectedFilters.get(this.activeFilterId)!
+  }
+
+  public get isSaveDisabled(): boolean {
+    return this.isRedactorMode && !this.changedInEditMode
   }
 
   public setConditionsFromPreset(conditions: TCondition[]): void {
@@ -184,8 +189,17 @@ export class FilterStore {
     this.selectedGroupItem = {}
   }
 
+  public setIsChanged() {
+    this.changedInEditMode = true
+  }
+
+  public setIsNotChanged() {
+    this.changedInEditMode = false
+  }
+
   public setIsRedacorMode() {
     this.isRedactorMode = true
+    this.changedInEditMode = false
   }
 
   public resetIsRedacorMode() {

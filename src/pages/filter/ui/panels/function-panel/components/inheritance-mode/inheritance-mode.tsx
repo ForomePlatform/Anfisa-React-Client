@@ -26,6 +26,7 @@ export const InheritanceMode = observer(() => {
     problemGroup: string,
   ) => {
     inheritanceModeStore.updateProblemGroupValues(e, problemGroup)
+    filterStore.setIsChanged()
   }
 
   const handleChangeVariants = (
@@ -33,6 +34,7 @@ export const InheritanceMode = observer(() => {
     variantName: string,
   ) => {
     inheritanceModeStore.updateVariantValues(e, variantName)
+    filterStore.setIsChanged()
   }
 
   // update data
@@ -103,9 +105,15 @@ export const InheritanceMode = observer(() => {
       />
 
       <PanelButtons
-        onSubmit={inheritanceModeStore.handleSumbitCondtions}
+        onSubmit={() => {
+          inheritanceModeStore.handleSumbitCondtions()
+          filterStore.setIsNotChanged()
+        }}
         resetFields={inheritanceModeStore.resetAllFields}
-        disabled={variantValues.length === 0}
+        disabled={
+          variantValues.length === 0 ||
+          (filterStore.isRedactorMode && !filterStore.changedInEditMode)
+        }
       />
     </React.Fragment>
   )

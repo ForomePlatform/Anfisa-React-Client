@@ -74,9 +74,12 @@ export const CompoundRequest = observer((): ReactElement => {
       <DisabledVariantsAmount variants={simpleVariants} disabled={true} />
 
       <PanelButtons
-        onSubmit={() => compoundRequestStore.handleSumbitCondtions()}
+        onSubmit={() => {
+          compoundRequestStore.handleSumbitCondtions()
+          filterStore.setIsNotChanged()
+        }}
         resetFields={() => compoundRequestStore.clearData()}
-        disabled={!simpleVariants}
+        disabled={!simpleVariants || filterStore.isSaveDisabled}
       />
     </React.Fragment>
   )

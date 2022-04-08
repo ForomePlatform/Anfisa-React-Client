@@ -43,7 +43,10 @@ export const CustomInheritanceModeContent = observer(
               <span>{group}</span>
 
               <Select
-                onChange={(e: any) => handleSetScenario(group, e.target.value)}
+                onChange={(e: any) => {
+                  handleSetScenario(group, e.target.value)
+                  filterStore.setIsChanged()
+                }}
                 className="w-auto ml-1"
                 options={selectOptions}
                 value={selectStates[index]}
@@ -57,7 +60,10 @@ export const CustomInheritanceModeContent = observer(
             <span>{t('dtree.reset')}</span>
 
             <Select
-              onChange={(e: any) => handleReset(e.target.value)}
+              onChange={(e: any) => {
+                handleReset(e.target.value)
+                filterStore.setIsChanged()
+              }}
               className="w-full ml-2"
               options={resetOptions}
               value={resetValue}

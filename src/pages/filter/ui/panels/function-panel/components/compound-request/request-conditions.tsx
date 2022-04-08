@@ -2,6 +2,7 @@ import { ChangeEvent, MouseEvent } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
+import filterStore from '@store/filter'
 import { InputNumber } from '@ui/input-number'
 import { Select } from '@ui/select'
 import { selectOptions } from '@pages/filter/ui/modal-edit/modal-edit.store'
@@ -36,12 +37,13 @@ export const RequestConditions = observer(
             <div className="flex cursor-pointer step-content-area">
               <InputNumber
                 value={item[0]}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                onChange={(e: ChangeEvent<HTMLInputElement>) => {
                   compoundRequestStore.handleRequestConditionNumber(
                     index,
                     e.target.value,
                   )
-                }
+                  filterStore.setIsChanged()
+                }}
                 className="shadow-dark w-1/3 h-5 bg-blue-medium"
               />
             </div>
@@ -68,6 +70,7 @@ export const RequestConditions = observer(
                           currNo,
                           e.target,
                         )
+                        filterStore.setIsChanged()
                       }}
                       className="w-auto ml-1"
                       options={selectOptions}

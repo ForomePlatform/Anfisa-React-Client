@@ -66,7 +66,10 @@ export const CompundHet = observer((): ReactElement => {
           <DropDown
             value={initialApprox || approxOptions[0]}
             options={CompoundHetSelectOptions}
-            onSelect={(arg: Option) => compoundHetStore.handleChangeApprox(arg)}
+            onSelect={(arg: Option) => {
+              compoundHetStore.handleChangeApprox(arg)
+              filterStore.setIsChanged()
+            }}
           />
         </div>
 
@@ -75,7 +78,10 @@ export const CompundHet = observer((): ReactElement => {
           isNotModeDisabled={
             simpleVariants ? simpleVariants.length === 0 : true
           }
-          toggleNotMode={() => compoundHetStore.setCurrentMode(ModeTypes.Not)}
+          toggleNotMode={() => {
+            compoundHetStore.setCurrentMode(ModeTypes.Not)
+            filterStore.setIsChanged()
+          }}
         />
       </div>
 
@@ -84,9 +90,12 @@ export const CompundHet = observer((): ReactElement => {
       </div>
 
       <PanelButtons
-        onSubmit={() => compoundHetStore.handleSumbitCondtions()}
+        onSubmit={() => {
+          compoundHetStore.handleSumbitCondtions()
+          filterStore.setIsNotChanged()
+        }}
         resetFields={handleClear}
-        disabled={!simpleVariants}
+        disabled={!simpleVariants || filterStore.isSaveDisabled}
       />
     </React.Fragment>
   )

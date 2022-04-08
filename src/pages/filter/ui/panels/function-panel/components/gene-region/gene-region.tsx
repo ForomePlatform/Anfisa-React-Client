@@ -86,6 +86,7 @@ export const GeneRegion = observer(() => {
           <Input
             value={locusValue}
             onChange={e => {
+              filterStore.setIsChanged()
               geneRegionStore.setLocusValue(e.target.value)
               validateValue(e.target.value)
             }}
@@ -106,9 +107,16 @@ export const GeneRegion = observer(() => {
       </div>
 
       <PanelButtons
-        onSubmit={() => geneRegionStore.handleSumbitCondtions()}
+        onSubmit={() => {
+          geneRegionStore.handleSumbitCondtions()
+          filterStore.setIsNotChanged()
+        }}
         resetFields={handleResetFields}
-        disabled={!simpleVariants || isErrorVisible}
+        disabled={
+          !simpleVariants ||
+          isErrorVisible ||
+          (filterStore.isRedactorMode && !filterStore.changedInEditMode)
+        }
       />
     </React.Fragment>
   )

@@ -153,6 +153,7 @@ export const RangePanel = observer((): ReactElement => {
         className="w-full border border-grey-blue"
         value={min}
         onChange={e => {
+          filterStore.setIsChanged()
           setMin(e.target.value)
           validateMin(e.target.value)
         }}
@@ -173,6 +174,7 @@ export const RangePanel = observer((): ReactElement => {
           className="w-full border border-grey-blue"
           value={max}
           onChange={e => {
+            filterStore.setIsChanged()
             setMax(e.target.value)
             validateMax(e.target.value)
           }}
@@ -201,7 +203,8 @@ export const RangePanel = observer((): ReactElement => {
             isVisibleMinError ||
             isVisibleMaxError ||
             isVisibleMixedError ||
-            (!max && !min)
+            (!max && !min) ||
+            filterStore.isSaveDisabled
           }
         />
       </div>

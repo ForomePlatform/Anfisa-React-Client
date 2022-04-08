@@ -80,7 +80,7 @@ export const EnumPanel = observer((): ReactElement => {
     variant: [string, number],
   ) => {
     const variantName = variant[0]
-
+    filterStore.setIsChanged()
     if (checked) {
       setSelectedVariants([...selectedVariants, variantName])
     } else {
@@ -104,6 +104,7 @@ export const EnumPanel = observer((): ReactElement => {
     setSelectedVariants([])
     filterStore.resetSelectedGroupItem()
     filterStore.resetActiveFilterId()
+    filterStore.setIsNotChanged()
   }
 
   const handleChange = (value: string) => {
@@ -114,7 +115,8 @@ export const EnumPanel = observer((): ReactElement => {
     }
   }
 
-  const isBlockAddBtn = selectedVariants.length === 0
+  const isBlockAddBtn =
+    selectedVariants.length === 0 || filterStore.isSaveDisabled
 
   return (
     <div>

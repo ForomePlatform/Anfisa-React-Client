@@ -75,15 +75,19 @@ export const CustomInheritanceMode = observer(() => {
         isNotModeChecked={
           customInheritanceModeStore.currentMode === ModeTypes.Not
         }
-        toggleNotMode={() =>
+        toggleNotMode={() => {
           customInheritanceModeStore.setCurrentMode(ModeTypes.Not)
-        }
+          filterStore.setIsChanged()
+        }}
       />
 
       <PanelButtons
-        onSubmit={() => customInheritanceModeStore.handleSumbitCondtions()}
+        onSubmit={() => {
+          customInheritanceModeStore.handleSumbitCondtions()
+          filterStore.setIsNotChanged()
+        }}
         resetFields={() => customInheritanceModeStore.clearData()}
-        disabled={!simpleVariants}
+        disabled={!simpleVariants || filterStore.isSaveDisabled}
       />
     </React.Fragment>
   )
