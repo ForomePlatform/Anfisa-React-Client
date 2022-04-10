@@ -244,3 +244,9 @@ export interface IRecordDescriptor {
   no: number
   dt?: string
 }
+
+export type TFilteringStat = {
+  list: TPropertyStatus[]
+  filteredCounts: TItemsCount
+  totalCounts: TItemsCount
+}

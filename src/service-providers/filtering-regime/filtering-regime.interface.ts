@@ -5,9 +5,10 @@ import {
   IFuncPropertyStatus,
   ISolutionEntryDescription,
   TCondition,
+  TFilteringStat,
   TItemsCount,
   TPropertyStatus,
-} from 'service-providers/common/common.interface'
+} from 'service-providers/common'
 
 export enum DsStatArgumentsOptions {
   UPDATE = 'UPDATE',
@@ -77,3 +78,19 @@ export interface IStatfuncArguments {
 }
 
 export type IStatfunc = IFuncPropertyStatus
+
+export type TDsStat = TFilteringStat
+
+export type TGetFullDsStatParams = {
+  ds: string
+  conditions: TCondition[]
+}
+
+export type TGetFullStatUnitsOptions<
+  Response extends TFilteringStat = TFilteringStat,
+> = {
+  abortSignal?: AbortSignal
+  onPartialResponse?: (response: Response) => void
+}
+
+export type TGetFullDsStatOptions = TGetFullStatUnitsOptions<TDsStat>

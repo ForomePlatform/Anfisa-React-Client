@@ -569,11 +569,11 @@ class DtreeStore {
       this.stepData[index].isReturnedVariantsActive = true
     }
 
-    this.stat.setSource({
+    this.stat.request = {
       datasetName: datasetStore.datasetName,
       code: this.dtreeCode,
       stepIndex: indexForApi,
-    })
+    }
   }
 
   resetStatFuncData() {
