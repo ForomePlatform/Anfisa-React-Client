@@ -195,9 +195,7 @@ export class DatasetStore {
     if (shouldDataBeUpdated) {
       await this.fetchWsListAsync(this.isXL, 'withoutTabReport')
 
-      this.filteredNo.length === 0
-        ? await this.fetchTabReportAsync()
-        : await this.fetchFilteredTabReportAsync()
+      await this.fetchFilteredTabReportAsync()
 
       this.fetchDsStatAsync()
     }
@@ -467,16 +465,6 @@ export class DatasetStore {
       conditions: toJS(filterStore.conditions),
       activePreset: this.activePreset,
       zone: toJS(this.zone),
-    }
-  }
-
-  applyMemorizedConditions() {
-    const { memorizedConditions } = this
-
-    if (memorizedConditions) {
-      Object.keys(memorizedConditions).forEach((key: string) => {
-        ;(this as any)[key] = (memorizedConditions as any)[key]
-      })
     }
   }
 
