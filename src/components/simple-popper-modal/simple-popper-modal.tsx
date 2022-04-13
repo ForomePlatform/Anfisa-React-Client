@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
+import cn, { Argument } from 'classnames'
 
 import { useOutsideClick } from '@core/hooks/use-outside-click'
-import cn, { Argument } from 'classnames'
 
 export interface ISimplePopperModalProps {
   close: () => void
@@ -13,7 +13,7 @@ export const SimplePopperModal = ({
   children,
   className,
 }: React.PropsWithChildren<ISimplePopperModalProps>) => {
-  const ref = useRef<any>(null)
+  const ref = useRef<HTMLDivElement>(null)
   useOutsideClick(ref, close)
 
   return (

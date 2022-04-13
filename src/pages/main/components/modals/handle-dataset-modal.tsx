@@ -4,8 +4,8 @@ import { observer } from 'mobx-react-lite'
 import {
   ISimplePopperModalProps,
   SimplePopperModal,
-} from '@components/simple-popper-modal/SimplePopperModal'
-import { SimplePopperModalItem } from '@components/simple-popper-modal/SimplePopperModalItem'
+} from '@components/simple-popper-modal/simple-popper-modal'
+import { SimplePopperModalItem } from '@components/simple-popper-modal/simple-popper-modal-item'
 import handleDatasetStore from '../handle-dataset.store'
 
 export const HandleDatasetModal = observer(

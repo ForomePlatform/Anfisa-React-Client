@@ -15,8 +15,8 @@ import { PopperButton } from '@components/popper-button'
 import {
   ISimplePopperModalProps,
   SimplePopperModal,
-} from '@components/simple-popper-modal/SimplePopperModal'
-import { SimplePopperModalItem } from '@components/simple-popper-modal/SimplePopperModalItem'
+} from '@components/simple-popper-modal/simple-popper-modal'
+import { SimplePopperModalItem } from '@components/simple-popper-modal/simple-popper-modal-item'
 import { GlbPagesNames } from '@glb/glb-names'
 
 interface PropsButton {

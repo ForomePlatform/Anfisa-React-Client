@@ -9,8 +9,8 @@ import { MainTableDataCy } from './data-testid/main-table.cy'
 import {
   ISimplePopperModalProps,
   SimplePopperModal,
-} from './simple-popper-modal/SimplePopperModal'
-import { SimplePopperModalItem } from './simple-popper-modal/SimplePopperModalItem'
+} from './simple-popper-modal/simple-popper-modal'
+import { SimplePopperModalItem } from './simple-popper-modal/simple-popper-modal-item'
 
 export const ExportPanel = ({
   close,
