@@ -1,7 +1,7 @@
 import Checkbox from 'react-three-state-checkbox'
 import { observer } from 'mobx-react-lite'
 
-import { PopperModal } from '@components/popper-modal/PopperModal'
+import { PopperModal } from '@components/popper-modal/popper-modal'
 import { Portal } from '@components/portal/portal'
 import handleDatasetStore from '../handle-dataset.store'
 import { useEffect } from 'react'

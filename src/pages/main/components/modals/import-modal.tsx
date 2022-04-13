@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { Input } from '@ui/input'
-import { PopperModal } from '@components/popper-modal/PopperModal'
+import { PopperModal } from '@components/popper-modal/popper-modal'
 import { Portal } from '@components/portal/portal'
 import { Upload } from '@components/upload/upload'
 import handleDatasetStore from '../handle-dataset.store'

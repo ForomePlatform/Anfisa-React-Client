@@ -12,7 +12,7 @@ import {
 } from './simple-popper-modal/simple-popper-modal'
 import { SimplePopperModalItem } from './simple-popper-modal/simple-popper-modal-item'
 
-export const ExportPanel = ({
+export const ExportPanelModal = ({
   close,
 }: ISimplePopperModalProps): ReactElement => {
   const { variantCounts } = datasetStore.fixedStatAmount

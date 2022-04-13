@@ -122,7 +122,7 @@ class HandleDatasetStore {
         this.isImportModalShown = false
       }
     } catch (e) {
-      console.log('Import failed')
+      toast.error('Import failed')
     } finally {
       this.isImporting = false
     }
