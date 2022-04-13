@@ -91,22 +91,15 @@ class HandleDatasetStore {
 
     if (!this.isUniqueDsName(this.importDatasetName)) {
       toast.error('Dataset name is not unique')
+      return
     }
 
     this.isImporting = true
-    const reader = new FileReader()
-    reader.onload = e => {
-      if (e.target?.result) {
-        this.uploadDataset(e.target.result)
-      }
-    }
-    reader.onerror = function (e) {
-      toast.error('Error : ' + e.type)
-    }
-    reader.readAsBinaryString(this.uploadedFiles[0])
+    await this.uploadDataset(this.uploadedFiles[0])
+    this.isImporting = false
   }
 
-  private async uploadDataset(file: string | ArrayBuffer) {
+  private async uploadDataset(file: Blob) {
     try {
       const response = await operationsProvider.importDataset({
         file,
@@ -123,8 +116,6 @@ class HandleDatasetStore {
       }
     } catch (e) {
       toast.error('Import failed')
-    } finally {
-      this.isImporting = false
     }
   }
 
