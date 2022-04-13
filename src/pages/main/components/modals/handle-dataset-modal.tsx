@@ -18,7 +18,6 @@ export const HandleDatasetModal = observer(
             close()
           }}
           iconName="Import"
-          className="flex justify-between"
         >
           Import
         </SimplePopperModalItem>
@@ -33,7 +32,6 @@ export const HandleDatasetModal = observer(
               : noop
           }
           iconName="Export"
-          className="flex justify-between"
         >
           Export
         </SimplePopperModalItem>

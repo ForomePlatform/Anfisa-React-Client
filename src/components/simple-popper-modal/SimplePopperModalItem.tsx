@@ -26,6 +26,7 @@ export const SimplePopperModalItem = ({
         {
           'hover:bg-blue-light': !isDisabled,
           'cursor-default pointer-events-none opacity-50': isDisabled,
+          'flex justify-between': !!iconName,
         },
         className,
       )}

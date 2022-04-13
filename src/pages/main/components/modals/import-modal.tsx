@@ -19,6 +19,8 @@ export const ImportModal = observer(() => {
         applyText="Import"
         className="w-96"
         isApplyDisabled={handleDatasetStore.isImportDisabled}
+        onApply={handleDatasetStore.importDataset}
+        isLoading={handleDatasetStore.isImporting}
       >
         <div className="mb-4">
           <Input
@@ -31,7 +33,10 @@ export const ImportModal = observer(() => {
           />
         </div>
         <div className="flex items-center mb-4">
-          <Upload onUpload={handleDatasetStore.setUploadedFiles} />
+          <Upload
+            onUpload={handleDatasetStore.setUploadedFiles}
+            supportedFormats=".tgz, .gz"
+          />
         </div>
       </PopperModal>
     </Portal>

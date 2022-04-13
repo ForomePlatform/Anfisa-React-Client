@@ -3,10 +3,11 @@ import React, { useRef, useState } from 'react'
 import { Icon } from '@ui/icon'
 
 export interface IUploadProps {
-  onUpload?: (files: FileList) => void
+  onUpload?: (files: FileList, fileName: string) => void
+  supportedFormats?: string
 }
 
-export const Upload = ({ onUpload }: IUploadProps) => {
+export const Upload = ({ onUpload, supportedFormats }: IUploadProps) => {
   const [uploadedFileName, setUploadedFileName] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -21,7 +22,7 @@ export const Upload = ({ onUpload }: IUploadProps) => {
     const fileList = inputRef.current?.files
 
     if (fileList && onUpload) {
-      onUpload(fileList)
+      onUpload(fileList, fileName)
     }
   }
 
@@ -42,6 +43,7 @@ export const Upload = ({ onUpload }: IUploadProps) => {
       </div>
       <input
         ref={inputRef}
+        accept={supportedFormats}
         className="invisible"
         style={{ width: '0.1px', height: '0.1px' }}
         type="file"

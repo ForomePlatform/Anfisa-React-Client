@@ -1,3 +1,4 @@
+/* eslint-disable react/display-name */
 import React from 'react'
 import cn, { Argument } from 'classnames'
 import styled, { css } from 'styled-components'
@@ -6,6 +7,7 @@ import { t } from '@i18n'
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
 import { MainTableDataCy } from '@components/data-testid/main-table.cy'
+import { Loader } from '@components/loader'
 
 export interface IPopperModalProps {
   title: string
@@ -16,6 +18,7 @@ export interface IPopperModalProps {
   onApply?: () => void
   position?: 'default' | 'absolute'
   isApplyDisabled?: boolean
+  isLoading?: boolean
 }
 
 const Wrapper = styled.div<{ isAbsolute: boolean }>`
@@ -43,6 +46,7 @@ export const PopperModal = ({
   className,
   onClose,
   onApply,
+  isLoading,
   position = 'default',
   isApplyDisabled = false,
 }: React.PropsWithChildren<IPopperModalProps>) => {
@@ -75,8 +79,14 @@ export const PopperModal = ({
           />
 
           <Button
-            disabled={isApplyDisabled}
-            text={applyText || t('general.apply')}
+            disabled={isApplyDisabled || isLoading}
+            text={
+              isLoading ? (
+                <Loader size="xs" color="white" />
+              ) : (
+                applyText || t('general.apply')
+              )
+            }
             className="ml-3"
             onClick={onApply}
             dataTestId={MainTableDataCy.applyButton}

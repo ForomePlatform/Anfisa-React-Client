@@ -4,8 +4,11 @@ import { observer } from 'mobx-react-lite'
 import { PopperModal } from '@components/popper-modal/PopperModal'
 import { Portal } from '@components/portal/portal'
 import handleDatasetStore from '../handle-dataset.store'
+import { useEffect } from 'react'
 
 export const ExportModal = observer(() => {
+  useEffect(() => () => handleDatasetStore.resetExportData(), [])
+
   return (
     <Portal>
       <PopperModal
@@ -14,6 +17,8 @@ export const ExportModal = observer(() => {
         position={'absolute'}
         applyText="Export"
         className="w-80"
+        onApply={handleDatasetStore.exportDataset}
+        isLoading={handleDatasetStore.isExporting}
       >
         <div className="flex items-center mb-4">
           <Checkbox

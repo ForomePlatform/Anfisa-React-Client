@@ -56,7 +56,7 @@ export interface IExportWs {
 
 export interface IImportWsArguments {
   name: string
-  file: Blob
+  file: string | ArrayBuffer
 }
 
 export interface IImportWs {
