@@ -1,10 +1,10 @@
+import { useEffect } from 'react'
 import Checkbox from 'react-three-state-checkbox'
 import { observer } from 'mobx-react-lite'
 
 import { PopperModal } from '@components/popper-modal/popper-modal'
 import { Portal } from '@components/portal/portal'
 import handleDatasetStore from '../handle-dataset.store'
-import { useEffect } from 'react'
 
 export const ExportModal = observer(() => {
   useEffect(() => () => handleDatasetStore.resetExportData(), [])
