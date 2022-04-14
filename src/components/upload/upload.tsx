@@ -31,7 +31,7 @@ export const Upload = ({ onUpload, supportedFormats }: IUploadProps) => {
       <div className="flex items-center">
         <label
           htmlFor="file-input"
-          className="flex rounded px-2 py-1 text-sm mr-2"
+          className="flex rounded px-2 py-1 text-sm mr-2 cursor-pointer"
           style={{ border: '1px solid #9FB1C0' }}
         >
           <div className="pr-2 mr-2 border-grey-blue border-r">

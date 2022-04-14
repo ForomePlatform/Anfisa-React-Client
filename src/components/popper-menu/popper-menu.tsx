@@ -3,16 +3,16 @@ import cn, { Argument } from 'classnames'
 
 import { useOutsideClick } from '@core/hooks/use-outside-click'
 
-export interface ISimplePopperModalProps {
+export interface IPopperMenuProps {
   close: () => void
   className?: Argument
 }
 
-export const SimplePopperModal = ({
+export const PopperMenu = ({
   close,
   children,
   className,
-}: React.PropsWithChildren<ISimplePopperModalProps>) => {
+}: React.PropsWithChildren<IPopperMenuProps>) => {
   const ref = useRef<HTMLDivElement>(null)
   useOutsideClick(ref, close)
 

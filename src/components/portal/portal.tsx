@@ -1,17 +1,18 @@
 import { useEffect } from 'react'
 import { createPortal } from 'react-dom'
 
-const mount = document.getElementById('portal-root')!
-const el = document.createElement('div')
+const portalRoot = document.getElementById('portal-root')!
+const backdrop = document.createElement('div')
+backdrop.classList.add('backdrop')
 
 export const Portal = ({ children }: React.PropsWithChildren<{}>) => {
   useEffect(() => {
-    mount.appendChild(el)
+    portalRoot.appendChild(backdrop)
 
     return () => {
-      mount.removeChild(el)
+      portalRoot.removeChild(backdrop)
     }
   }, [])
 
-  return createPortal(children, el)
+  return createPortal(children, backdrop)
 }

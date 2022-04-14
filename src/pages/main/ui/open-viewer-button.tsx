@@ -13,10 +13,10 @@ import { Icon } from '@ui/icon'
 import { DatasetInfoDataCy } from '@components/data-testid/dataset-info.cy'
 import { PopperButton } from '@components/popper-button'
 import {
-  ISimplePopperModalProps,
-  SimplePopperModal,
-} from '@components/simple-popper-modal/simple-popper-modal'
-import { SimplePopperModalItem } from '@components/simple-popper-modal/simple-popper-modal-item'
+  IPopperMenuProps,
+  PopperMenu,
+} from '@components/popper-menu/popper-menu'
+import { PopperMenuItem } from '@components/popper-menu/popper-menu-item'
 import { GlbPagesNames } from '@glb/glb-names'
 
 interface PropsButton {
@@ -44,7 +44,7 @@ const ButtonBase = ({ isOpen, refEl, ...rest }: PropsButton): ReactElement => (
   />
 )
 
-const Panel = ({ close }: ISimplePopperModalProps): ReactElement => {
+const Panel = ({ close }: IPopperMenuProps): ReactElement => {
   const history = useHistory()
 
   let pages = Object.values(GlbPagesNames).filter(
@@ -63,14 +63,14 @@ const Panel = ({ close }: ISimplePopperModalProps): ReactElement => {
   }
 
   return (
-    <SimplePopperModal close={close}>
+    <PopperMenu close={close}>
       {pages.map((pageName, index) => {
         const shouldRenderOption = pageName !== GlbPagesNames.IGV
 
         if (!shouldRenderOption) return
 
         return (
-          <SimplePopperModalItem
+          <PopperMenuItem
             key={index}
             data-testid={DatasetInfoDataCy.viewerOption}
             onClick={() => {
@@ -79,10 +79,10 @@ const Panel = ({ close }: ISimplePopperModalProps): ReactElement => {
             }}
           >
             {t(`home.${pageName}`)}
-          </SimplePopperModalItem>
+          </PopperMenuItem>
         )
       })}
-    </SimplePopperModal>
+    </PopperMenu>
   )
 }
 

@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import Checkbox from 'react-three-state-checkbox'
 import { observer } from 'mobx-react-lite'
 
-import { PopperModal } from '@components/popper-modal/popper-modal'
+import { PopupCard } from '@components/popup-card/popup-card'
 import { Portal } from '@components/portal/portal'
 import handleDatasetStore from '../handle-dataset.store'
 
@@ -11,10 +11,9 @@ export const ExportModal = observer(() => {
 
   return (
     <Portal>
-      <PopperModal
+      <PopupCard
         title="Export Dataset"
         onClose={() => handleDatasetStore.toggleExportModal(false)}
-        position={'absolute'}
         applyText="Export"
         className="w-80"
         onApply={handleDatasetStore.exportDataset}
@@ -40,7 +39,7 @@ export const ExportModal = observer(() => {
 
           <span className="text-12 ml-1">with documentation</span>
         </div>
-      </PopperModal>
+      </PopupCard>
     </Portal>
   )
 })

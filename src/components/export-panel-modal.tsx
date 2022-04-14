@@ -6,15 +6,10 @@ import datasetStore from '@store/dataset'
 import operationsStore from '@store/operations'
 import { showToast } from '@utils/notifications/showToast'
 import { MainTableDataCy } from './data-testid/main-table.cy'
-import {
-  ISimplePopperModalProps,
-  SimplePopperModal,
-} from './simple-popper-modal/simple-popper-modal'
-import { SimplePopperModalItem } from './simple-popper-modal/simple-popper-modal-item'
+import { IPopperMenuProps, PopperMenu } from './popper-menu/popper-menu'
+import { PopperMenuItem } from './popper-menu/popper-menu-item'
 
-export const ExportPanelModal = ({
-  close,
-}: ISimplePopperModalProps): ReactElement => {
+export const ExportPanelModal = ({ close }: IPopperMenuProps): ReactElement => {
   const { variantCounts } = datasetStore.fixedStatAmount
 
   const handleDownload = (type: ExportTypeEnum) => {
@@ -31,20 +26,20 @@ export const ExportPanelModal = ({
   }
 
   return (
-    <SimplePopperModal close={close} className="w-32">
-      <SimplePopperModalItem
+    <PopperMenu close={close} className="w-32">
+      <PopperMenuItem
         onClick={() => handleDownload(ExportTypeEnum.Excel)}
         data-testid={MainTableDataCy.exportExcel}
       >
         {t('general.excel')}
-      </SimplePopperModalItem>
+      </PopperMenuItem>
 
-      <SimplePopperModalItem
+      <PopperMenuItem
         onClick={() => handleDownload(ExportTypeEnum.CSV)}
         data-testid={MainTableDataCy.exportCsv}
       >
         {t('general.csv')}
-      </SimplePopperModalItem>
-    </SimplePopperModal>
+      </PopperMenuItem>
+    </PopperMenu>
   )
 }

@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { Input } from '@ui/input'
-import { PopperModal } from '@components/popper-modal/popper-modal'
+import { PopupCard } from '@components/popup-card/popup-card'
 import { Portal } from '@components/portal/portal'
 import { Upload } from '@components/upload/upload'
 import handleDatasetStore from '../handle-dataset.store'
@@ -12,10 +12,9 @@ export const ImportModal = observer(() => {
 
   return (
     <Portal>
-      <PopperModal
+      <PopupCard
         title="Import Dataset"
         onClose={() => handleDatasetStore.toggleImportModal(false)}
-        position={'absolute'}
         applyText="Import"
         className="w-96"
         isApplyDisabled={handleDatasetStore.isImportDisabled}
@@ -38,7 +37,7 @@ export const ImportModal = observer(() => {
             supportedFormats=".tgz, .gz"
           />
         </div>
-      </PopperModal>
+      </PopupCard>
     </Portal>
   )
 })

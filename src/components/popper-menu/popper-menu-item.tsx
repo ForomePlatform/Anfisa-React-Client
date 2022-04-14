@@ -3,20 +3,20 @@ import cn, { Argument } from 'classnames'
 
 import { Icon, TIcons } from '@ui/icon'
 
-export interface ISimplePopperModalItemProps {
+export interface IPopperMenuItemProps {
   iconName?: TIcons
   className?: Argument
   onClick?: () => void
   isDisabled?: boolean
 }
 
-export const SimplePopperModalItem = ({
+export const PopperMenuItem = ({
   children,
   iconName,
   className,
   onClick,
   isDisabled = false,
-}: React.PropsWithChildren<ISimplePopperModalItemProps>) => {
+}: React.PropsWithChildren<IPopperMenuItemProps>) => {
   return (
     <span
       className={cn(
