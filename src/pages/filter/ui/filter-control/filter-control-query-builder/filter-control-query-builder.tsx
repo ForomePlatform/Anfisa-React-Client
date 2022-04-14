@@ -148,7 +148,13 @@ export const FilterControlQueryBuilder = observer((): ReactElement => {
         {actionName !== ActionFilterEnum.Create && (
           <PopperButton
             ButtonElement={FilterButton}
+            ButtonProps={{ text: actionName }}
             ModalElement={DtreePresetActionModal}
+            ModalProps={{
+              onSelect: (action: ActionFilterEnum) => {
+                dtreeStore.setActionName(action)
+              },
+            }}
           />
         )}
 
