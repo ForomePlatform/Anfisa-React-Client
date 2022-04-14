@@ -3,16 +3,20 @@ import { AxiosRequestConfig } from 'axios'
 import { adaptDsStatResponse } from '@service-providers/filtering-regime/filtering-regime.adapters'
 import { ServiceProviderBase, TFilteringStat } from '../common'
 import {
+  DsStatArgumentsOptions,
   IDsStat,
   IDsStatArguments,
   IStatfunc,
   IStatfuncArguments,
   IStatunits,
   IStatunitsArguments,
+  TDeleteFilterPresetParams,
   TDsStat,
   TGetFullDsStatOptions,
   TGetFullDsStatParams,
   TGetFullStatUnitsOptions,
+  TJoinFilterPresetParams,
+  TUpdateFilterPresetParams,
 } from './filtering-regime.interface'
 import { getIncompleteProps } from './filtering-regime.utils'
 
@@ -36,6 +40,48 @@ export class FilteringRegimeProvider extends ServiceProviderBase {
   ): Promise<IDsStat> {
     const response = await this.post<IDsStat>('/ds_stat', params, options)
     return response.data
+  }
+
+  public updateFilterPreset(
+    params: TUpdateFilterPresetParams,
+    options?: Partial<AxiosRequestConfig>,
+  ): Promise<IDsStat> {
+    return this.getDsStat(
+      {
+        ds: params.ds,
+        conditions: params.conditions,
+        instr: [DsStatArgumentsOptions.UPDATE, params.presetName],
+      },
+      options,
+    )
+  }
+
+  public joinFilterPreset(
+    params: TJoinFilterPresetParams,
+    options?: Partial<AxiosRequestConfig>,
+  ): Promise<IDsStat> {
+    return this.getDsStat(
+      {
+        ds: params.ds,
+        conditions: params.conditions,
+        instr: [DsStatArgumentsOptions.JOIN, params.presetName],
+        tm: 0,
+      },
+      options,
+    )
+  }
+
+  public deleteFilterPreset(
+    params: TDeleteFilterPresetParams,
+    options?: Partial<AxiosRequestConfig>,
+  ): Promise<IDsStat> {
+    return this.getDsStat(
+      {
+        ds: params.ds,
+        instr: [DsStatArgumentsOptions.DELETE, params.presetName],
+      },
+      options,
+    )
   }
 
   public async getStatFunc(
@@ -76,7 +122,7 @@ export class FilteringRegimeProvider extends ServiceProviderBase {
       response: Response
       unitsRequest: Omit<IStatunitsArguments, 'units'>
     }>,
-    options: TGetFullStatUnitsOptions = {},
+    options: TGetFullStatUnitsOptions<Response> = {},
   ): Promise<Response> {
     const { abortSignal, onPartialResponse } = options
 

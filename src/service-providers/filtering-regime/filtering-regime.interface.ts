@@ -20,7 +20,7 @@ export interface IDsStatArguments {
   ds: string
   tm?: number
   filter?: string
-  conditions?: TCondition[]
+  conditions?: ReadonlyArray<TCondition>
   instr?: [option: DsStatArgumentsOptions, filterName: string]
 }
 
@@ -51,7 +51,7 @@ export interface IStatunitsArguments {
   tm?: string
   rq_id: string
   filter?: string
-  conditions?: TCondition[]
+  conditions?: ReadonlyArray<TCondition>
   dtree?: string
   code?: string
   no?: string
@@ -69,7 +69,7 @@ export interface IStatfuncArguments {
   ds: string
   rq_id: string
   filter?: string
-  conditions?: TCondition[]
+  conditions?: ReadonlyArray<TCondition>
   dtree?: string
   code?: string
   no?: string
@@ -83,7 +83,8 @@ export type TDsStat = TFilteringStat
 
 export type TGetFullDsStatParams = {
   ds: string
-  conditions: TCondition[]
+  conditions?: ReadonlyArray<TCondition>
+  filter?: string
 }
 
 export type TGetFullStatUnitsOptions<
@@ -94,3 +95,20 @@ export type TGetFullStatUnitsOptions<
 }
 
 export type TGetFullDsStatOptions = TGetFullStatUnitsOptions<TDsStat>
+
+export type TUpdateFilterPresetParams = {
+  ds: string
+  presetName: string
+  conditions?: ReadonlyArray<TCondition>
+}
+
+export type TJoinFilterPresetParams = {
+  ds: string
+  presetName: string
+  conditions?: ReadonlyArray<TCondition>
+}
+
+export type TDeleteFilterPresetParams = {
+  ds: string
+  presetName: string
+}

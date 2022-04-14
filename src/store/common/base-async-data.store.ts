@@ -21,60 +21,67 @@ export type TBaseDataStoreFetchOptions = {
 
 // TODO: automatic data and cache invalidation with timeout
 // TODO: automatic refetch in background
+// TODO: error handling (may be show error toast for all)
 
 const defaultOptions: TBaseDataStoreOptions = {
   keepPreviousData: false,
 }
 
-export abstract class BaseAsyncDataStore<Data, Request> {
+export abstract class BaseAsyncDataStore<Data, Query> {
   private _lastUpdate = 0
   private _didInvalidate = false
   private _isFetching = false
   private _error: Error | null = null
-  private _request: Request | undefined
+  private _query: Query | undefined
   private _data: Data | undefined
 
-  private readonly keepPreviousData: boolean
   private abortController: AbortController | null = null
   private readonly cache: Map<string, { lastUpdate: number; data: Data }> =
     new Map()
 
   protected constructor(options: TBaseDataStoreOptions = {}) {
     makeObservable<
-      BaseAsyncDataStore<Data, Request>,
+      BaseAsyncDataStore<Data, Query>,
       | '_lastUpdate'
       | '_didInvalidate'
       | '_isFetching'
       | '_error'
-      | '_request'
+      | '_query'
       | '_data'
+      | 'setData'
+      | 'resetState'
     >(this, {
       _lastUpdate: observable,
       _didInvalidate: observable,
       _isFetching: observable,
       _error: observable,
-      _request: observable,
+      _query: observable,
       _data: observable,
       isFetching: computed,
       lastUpdate: computed,
       isLoading: computed,
       error: computed,
-      request: computed.struct,
+      query: computed.struct,
       data: computed,
+      setQuery: action,
+      setData: action,
       invalidate: action,
       reset: action,
+      resetState: action,
     })
 
     const { keepPreviousData } = { ...defaultOptions, ...options }
-    this.keepPreviousData = keepPreviousData ?? false
 
     let disposeObserver: () => void
 
     onBecomeObserved(this, 'data', () => {
       const disposeInvalidator = reaction(
-        () => this.request,
+        () => this.query,
         () => {
-          this._didInvalidate = true
+          this.reconcile(keepPreviousData ?? false)
+        },
+        {
+          fireImmediately: !this.lastUpdate,
         },
       )
 
@@ -82,11 +89,8 @@ export abstract class BaseAsyncDataStore<Data, Request> {
         () => this._didInvalidate,
         didInvalidate => {
           if (didInvalidate) {
-            this.doFetch()
+            this.reconcile(true)
           }
-        },
-        {
-          fireImmediately: true,
         },
       )
 
@@ -117,17 +121,21 @@ export abstract class BaseAsyncDataStore<Data, Request> {
     return this._error
   }
 
-  public get request(): Readonly<Request> | undefined {
-    return toJS(this._request)
+  public get query(): Readonly<Query> | undefined {
+    return toJS(this._query)
   }
 
-  public set request(request) {
-    this._request = request
+  public setQuery(query: Query) {
+    this._query = query
   }
 
   public invalidate(): void {
-    if (this.request) {
-      const cacheKey = this.getCacheKey(this.request)
+    if (this._isFetching) {
+      return
+    }
+
+    if (this.query) {
+      const cacheKey = this.getCacheKey(this.query)
 
       if (cacheKey) {
         this.cache.delete(cacheKey)
@@ -138,13 +146,7 @@ export abstract class BaseAsyncDataStore<Data, Request> {
   }
 
   public reset(): void {
-    this._lastUpdate = 0
-    this._didInvalidate = false
-    this._isFetching = false
-    this._error = null
-    this._request = undefined
-    this._data = undefined
-
+    this.resetState()
     this.cache.clear()
   }
 
@@ -154,7 +156,7 @@ export abstract class BaseAsyncDataStore<Data, Request> {
 
   // usually you don't want to set data manually
   // but, it can be useful when you have partial response
-  protected set data(data: Data | undefined) {
+  protected setData(data: Data | undefined): void {
     runInAction(() => {
       this._data = data
       this._lastUpdate = Date.now()
@@ -166,18 +168,18 @@ export abstract class BaseAsyncDataStore<Data, Request> {
   }
 
   protected abstract fetch(
-    request: Request,
+    query: Query,
     options: TBaseDataStoreFetchOptions,
   ): Promise<Data>
 
   // by default cache is disabled with `undefined` key
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  protected getCacheKey(request: Request): string | undefined {
+  protected getCacheKey(query: Query): string | undefined {
     return undefined
   }
 
-  private fetchFromCache(request: Request): boolean {
-    const cacheKey = this.getCacheKey(request)
+  private reconcileFromCache(query: Query): boolean {
+    const cacheKey = this.getCacheKey(query)
 
     if (cacheKey) {
       const cached = this.cache.get(cacheKey)
@@ -198,56 +200,72 @@ export abstract class BaseAsyncDataStore<Data, Request> {
     return false
   }
 
-  private doFetch(): void {
+  private resetState(): void {
+    this._lastUpdate = 0
+    this._didInvalidate = false
+    this._isFetching = false
+    this._error = null
+    this._query = undefined
+    this._data = undefined
+  }
+
+  private reconcile(keepData: boolean): void {
     if (this._isFetching && this.abortController) {
       this.abortController.abort()
     }
-    const request = this.request
+    const query = this.query
 
-    if (request !== undefined) {
-      if (this.fetchFromCache(request)) {
-        return
-      }
+    if (query === undefined) {
+      this.resetState()
 
-      this.abortController = new AbortController()
-
-      runInAction(() => {
-        this._didInvalidate = false
-        this._isFetching = true
-        this._error = null
-
-        if (!this.keepPreviousData) {
-          this._data = undefined
-        }
-      })
-
-      this.fetch(request, { abortSignal: this.abortController.signal }).then(
-        data => {
-          const lastUpdate = Date.now()
-
-          if (comparer.structural(request, this.request)) {
-            runInAction(() => {
-              this._data = data
-              this._lastUpdate = lastUpdate
-              this._isFetching = false
-            })
-          }
-
-          const cacheKey = this.getCacheKey(request)
-
-          if (cacheKey) {
-            this.cache.set(cacheKey, { lastUpdate, data })
-          }
-        },
-        error => {
-          if (!(error instanceof DOMException) || error.name !== 'AbortError') {
-            runInAction(() => {
-              this._isFetching = false
-              this._error = error
-            })
-          }
-        },
-      )
+      return
     }
+
+    if (this.reconcileFromCache(query)) {
+      return
+    }
+
+    this.abortController = new AbortController()
+
+    runInAction(() => {
+      this._didInvalidate = false
+      this._isFetching = true
+      this._error = null
+
+      if (!keepData) {
+        this._data = undefined
+      }
+    })
+
+    this.fetch(query, { abortSignal: this.abortController.signal }).then(
+      data => {
+        const lastUpdate = Date.now()
+
+        if (comparer.structural(query, this.query)) {
+          runInAction(() => {
+            this._data = data
+            this._lastUpdate = lastUpdate
+            this._isFetching = false
+          })
+        }
+
+        const cacheKey = this.getCacheKey(query)
+
+        if (cacheKey) {
+          this.cache.set(cacheKey, { lastUpdate, data })
+        }
+      },
+      error => {
+        if (!(error instanceof DOMException) || error.name !== 'AbortError') {
+          runInAction(() => {
+            this._isFetching = false
+            this._error = error
+          })
+        }
+      },
+    )
   }
 }
+
+export type TSafeAsyncDataStore<Store extends BaseAsyncDataStore<any, any>> =
+  Omit<Store, 'setQuery' | 'setData' | 'reset' | 'invalidate' | 'fetch'>

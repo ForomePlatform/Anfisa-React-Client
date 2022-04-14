@@ -2,32 +2,33 @@ import { BaseStatUnitsStore, TBaseDataStoreFetchOptions } from '@store/common'
 import { TCondition } from '@service-providers/common'
 import { filteringProvider, TDsStat } from '@service-providers/filtering-regime'
 
-export type TFilterRefinerStatRequest = {
+export type TFilterStatQuery = {
   datasetName: string
-  conditions: TCondition[]
+  conditions?: ReadonlyArray<TCondition>
+  preset?: string
 }
 
-export class FilterRefinerStatStore extends BaseStatUnitsStore<
+export class FilterStatStore extends BaseStatUnitsStore<
   TDsStat,
-  TFilterRefinerStatRequest
+  TFilterStatQuery
 > {
   constructor() {
     super()
   }
 
   protected fetch(
-    request: TFilterRefinerStatRequest,
+    query: TFilterStatQuery,
     { abortSignal }: TBaseDataStoreFetchOptions,
   ): Promise<TDsStat> {
     return filteringProvider.getFullDsStat(
       {
-        ds: request.datasetName,
-        conditions: request.conditions,
+        ds: query.datasetName,
+        conditions: query.conditions,
       },
       {
         abortSignal,
         onPartialResponse: data => {
-          this.data = data
+          this.setData(data)
         },
       },
     )

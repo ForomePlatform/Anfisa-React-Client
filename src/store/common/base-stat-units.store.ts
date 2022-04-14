@@ -6,10 +6,11 @@ import {
 } from '@store/common/base-async-data.store'
 import {
   TFilteringStat,
-  TItemsCount,
+  TFilteringStatCounts,
   TPropertyStatus,
 } from '@service-providers/common'
-import { getFilteredAttrsList } from '@utils/getFilteredAttrsList'
+
+export type TStatUnitsQueryBuilder = Record<string, TPropertyStatus[]>
 
 export abstract class BaseStatUnitsStore<
   Data extends TFilteringStat,
@@ -30,16 +31,29 @@ export abstract class BaseStatUnitsStore<
   }
 
   get list(): TPropertyStatus[] | undefined {
-    const { data } = this
-
-    return data?.list && getFilteredAttrsList(toJS(data.list))
+    return toJS(this.data?.list)
   }
 
-  get totalCounts(): TItemsCount | undefined {
-    return this.data?.totalCounts
+  get totalCounts(): TFilteringStatCounts | undefined {
+    return toJS(this.data?.totalCounts)
   }
 
-  get filteredCounts(): TItemsCount | undefined {
-    return this.data?.filteredCounts
+  get filteredCounts(): TFilteringStatCounts | undefined {
+    return toJS(this.data?.filteredCounts)
+  }
+
+  get queryBuilder(): TStatUnitsQueryBuilder {
+    const groups: TStatUnitsQueryBuilder = {}
+
+    if (this.list) {
+      for (const item of this.list) {
+        if (groups[item.vgroup]) {
+          groups[item.vgroup].push(item)
+        } else {
+          groups[item.vgroup] = [item]
+        }
+      }
+    }
+    return groups
   }
 }

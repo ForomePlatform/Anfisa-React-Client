@@ -3,7 +3,7 @@ import { computed, IReactionDisposer, makeObservable, reaction } from 'mobx'
 import { BaseStatUnitsStore, TBaseDataStoreFetchOptions } from '@store/common'
 import { dtreeProvider, TDtreeStat } from '@service-providers/decision-trees'
 
-type TDtreeStatRequest = {
+type TDtreeStatQuery = {
   datasetName: string
   code: string
   stepIndex: string
@@ -11,7 +11,7 @@ type TDtreeStatRequest = {
 
 export class DtreeStatStore extends BaseStatUnitsStore<
   TDtreeStat,
-  TDtreeStatRequest
+  TDtreeStatQuery
 > {
   private readonly disposeCacheCleaner: IReactionDisposer
 
@@ -35,33 +35,33 @@ export class DtreeStatStore extends BaseStatUnitsStore<
   }
 
   protected fetch(
-    request: TDtreeStatRequest,
+    query: TDtreeStatQuery,
     { abortSignal }: TBaseDataStoreFetchOptions,
   ): Promise<TDtreeStat> {
     return dtreeProvider.getFullDtreeStat(
       {
-        ds: request.datasetName,
-        code: request.code,
-        no: request.stepIndex,
+        ds: query.datasetName,
+        code: query.code,
+        no: query.stepIndex,
       },
       {
         abortSignal,
         onPartialResponse: data => {
-          this.data = data
+          this.setData(data)
         },
       },
     )
   }
 
-  protected getCacheKey(request: TDtreeStatRequest): string | undefined {
+  protected getCacheKey(request: TDtreeStatQuery): string | undefined {
     return request.stepIndex
   }
 
   private get cacheClearKey(): string {
-    if (!this.request) {
+    if (!this.query) {
       return ''
     }
 
-    return this.request?.datasetName + '_' + this.request?.code
+    return this.query?.datasetName + '_' + this.query?.code
   }
 }

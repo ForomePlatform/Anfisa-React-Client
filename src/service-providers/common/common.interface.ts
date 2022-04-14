@@ -1,5 +1,4 @@
 import { FilterKindEnum } from '@core/enum/filter-kind.enum'
-import { SubKinds } from '@core/enum/sub-kinds-enum'
 
 export enum DatasetKinds {
   WS = 'ws',
@@ -168,7 +167,7 @@ export enum EnumPropertyStatusSubKinds {
 export interface IEnumPropertyStatus
   extends IBasePropertyStatus<AttributeKinds.ENUM> {
   variants?: TVariant[]
-  'sub-kind': SubKinds
+  'sub-kind': EnumPropertyStatusSubKinds
 }
 
 export interface IFuncPropertyStatus
@@ -246,8 +245,14 @@ export interface IRecordDescriptor {
   dt?: string
 }
 
+export type TFilteringStatCounts = {
+  variants: number
+  transcribedVariants: number
+  transcripts: number
+}
+
 export type TFilteringStat = {
   list: TPropertyStatus[]
-  filteredCounts: TItemsCount
-  totalCounts: TItemsCount
+  filteredCounts: TFilteringStatCounts
+  totalCounts: TFilteringStatCounts
 }
