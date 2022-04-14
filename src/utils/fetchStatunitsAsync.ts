@@ -1,24 +1,15 @@
 import datasetStore from '@store/dataset'
 import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
-import { GlbPagesNames } from '@glb/glb-names'
 import {
   filteringProvider,
   IStatunitsArguments,
 } from '@service-providers/filtering-regime'
-import { getFilteredAttrsList } from './getFilteredAttrsList'
 
 export const fetchStatunitsAsync = async (
   statList: any[],
   stepIndex?: string,
 ) => {
-  const isRefiner = filterStore.method === GlbPagesNames.Refiner
-
-  if (!isRefiner) {
-    // Dtree has own fetch mechanism
-    return
-  }
-
   const incompletePropertyList: string[] = []
 
   statList.forEach(element => {
@@ -40,7 +31,7 @@ export const fetchStatunitsAsync = async (
     rq_id: requestId,
     tm: '1',
     units: incompletePropertyList,
-    conditions: datasetStore.conditions,
+    conditions: filterStore.conditions,
   }
 
   const result = await filteringProvider.getStatUnits(body)
@@ -59,9 +50,7 @@ export const fetchStatunitsAsync = async (
     return element
   })
 
-  const filteredStatList = getFilteredAttrsList(newStatList)
-
-  datasetStore.setStatList(filteredStatList)
+  datasetStore.setStatList(newStatList)
 
   fetchStatunitsAsync(newStatList, stepIndex)
 }
