@@ -29,11 +29,7 @@ export const AttributeHeader = ({
       </span>
 
       {tooltip && (
-        <Tooltip
-          overlay={tooltip}
-          placement="left"
-          trigger={tooltip ? ['click'] : []}
-        >
+        <Tooltip overlay={tooltip} placement="left" trigger={['click']}>
           <Icon name="Info" className="ml-1 text-grey-blue cursor-pointer" />
         </Tooltip>
       )}
