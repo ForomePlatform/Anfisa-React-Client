@@ -1,7 +1,6 @@
 import { makeAutoObservable, reaction, toJS } from 'mobx'
 
 import { t } from '@i18n'
-import { BaseAsyncDataStore, TBaseDataStoreFetchOptions } from '@store/common'
 import {
   ISolutionEntryDescription,
   TCondition,
@@ -9,42 +8,13 @@ import {
 import { filteringProvider } from '@service-providers/filtering-regime'
 import { showToast } from '@utils/notifications/showToast'
 import { validatePresetName } from '@utils/validation/validatePresetName'
-import datasetStore from './dataset'
+import datasetStore from '../dataset'
+import { AvailablePresetsAsyncStore } from './available-presets.async.store'
 
-type TFilterPresetStoreQuery = {
-  datasetName: string
-}
-
-class AvailablePresetsStore extends BaseAsyncDataStore<
-  ISolutionEntryDescription[],
-  TFilterPresetStoreQuery
-> {
-  constructor() {
-    super()
-  }
-
-  protected fetch(
-    query: TFilterPresetStoreQuery,
-    options: TBaseDataStoreFetchOptions,
-  ): Promise<ISolutionEntryDescription[]> {
-    return filteringProvider
-      .getDsStat(
-        {
-          ds: query.datasetName,
-          tm: 0,
-        },
-        {
-          signal: options.abortSignal,
-        },
-      )
-      .then(response => response['filter-list'])
-  }
-}
-
-class FilterPresetsStore {
+export class FilterPresetsStore {
   private _activePreset: string = ''
 
-  private readonly presets = new AvailablePresetsStore()
+  private readonly presets = new AvailablePresetsAsyncStore()
 
   constructor() {
     makeAutoObservable(this)
@@ -171,5 +141,3 @@ class FilterPresetsStore {
       )
   }
 }
-
-export default new FilterPresetsStore()

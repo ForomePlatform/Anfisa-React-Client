@@ -10,7 +10,7 @@ import { DecisionTreesMenuDataCy } from '@components/data-testid/decision-tree-m
 import { showToast } from '@utils/notifications/showToast'
 import dtreeModalStore from '../modals.store'
 
-interface IDtreePresetActionModal {
+interface IDtreePresetActionModalProps {
   close: () => void
   onSelect: (action: ActionFilterEnum) => void
 }
@@ -20,7 +20,7 @@ const actions = [ActionFilterEnum.Modify, ActionFilterEnum.Delete]
 export const DtreePresetActionModal = ({
   close,
   onSelect,
-}: IDtreePresetActionModal): ReactElement => {
+}: IDtreePresetActionModalProps): ReactElement => {
   const ref = useRef(null)
 
   const handleClick = (action: ActionFilterEnum) => {

@@ -3,7 +3,7 @@ import { makeAutoObservable, reaction, runInAction, toJS } from 'mobx'
 
 import { t } from '@i18n'
 import datasetStore from '@store/dataset'
-import filterPresetsStore from '@store/filter-presets.store'
+import filterPresetsStore from '@store/filter-presets'
 import { GlbPagesNames } from '@glb/glb-names'
 import { FilterControlOptions } from '@pages/filter/ui/filter-control/filter-control.const'
 import { TCondition, TPropertyStatus } from '@service-providers/common'

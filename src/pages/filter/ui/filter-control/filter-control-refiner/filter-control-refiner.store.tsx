@@ -2,7 +2,7 @@ import { makeAutoObservable } from 'mobx'
 
 import { ActionFilterEnum } from '@core/enum/action-filter.enum'
 import filterStore from '@store/filter'
-import filterPresetsStore from '@store/filter-presets.store'
+import filterPresetsStore from '@store/filter-presets'
 
 class FilterControlRefinerStore {
   private _presetNameForAction = ''

@@ -6,7 +6,7 @@ import { Icon } from '@ui/icon'
 import { FnLabel } from '@components/fn-label'
 import { AttributeKinds, TPropertyStatus } from '@service-providers/common'
 
-interface IAttributeHeader {
+interface IAttributeHeaderProps {
   className?: string
   attrStatus: TPropertyStatus
 }
@@ -15,7 +15,7 @@ interface IAttributeHeader {
 export const AttributeHeader = ({
   attrStatus,
   className,
-}: IAttributeHeader): ReactElement => {
+}: IAttributeHeaderProps): ReactElement => {
   const { tooltip, name, title, kind } = attrStatus
 
   const isFunc = kind === AttributeKinds.FUNC
@@ -29,11 +29,7 @@ export const AttributeHeader = ({
       </span>
 
       {tooltip && (
-        <Tooltip
-          overlay={tooltip}
-          placement="left"
-          trigger={tooltip ? ['click'] : []}
-        >
+        <Tooltip overlay={tooltip} placement="left" trigger={['click']}>
           <Icon name="Info" className="ml-1 text-grey-blue cursor-pointer" />
         </Tooltip>
       )}
