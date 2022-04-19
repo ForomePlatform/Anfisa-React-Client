@@ -66,17 +66,4 @@ Scenario: Clear button
 	Then the filter should be cleared
 	And the number of variants should be equal to "5628753".
 
-Scenario: The "All" mode
-	Given The "Custom_Inheritance_Mode" filter is selected
-	When user chooses the "Autosomal Dominant" of the "Reset" parameter
-	And chooses the "All" checkbox
-	And clicks the "Add" button
-	Then number of variants should be equal to "80695".
 
-Scenario Outline: The "All" and "Not" modes cannot be selected at the same time
-	Given The "Custom_Inheritance_Mode" filter is selected
-	When user chooses the "Autosomal Dominant" of the "Reset" parameter
-	And chooses the "All" checkbox
-	And clicks the "Not" checkbox
-	Then only the "Not" checkbox should be selected
-	And "All" mode should be automatically unchecked
