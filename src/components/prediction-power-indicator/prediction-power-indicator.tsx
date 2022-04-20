@@ -14,6 +14,7 @@ interface IPredictionPowerIndicatorProps {
 }
 
 export const PredictionPowerIndicator = ({
+  className,
   value,
   comment,
   size = 'md',
@@ -36,6 +37,7 @@ export const PredictionPowerIndicator = ({
       placement="topLeft"
     >
       <PredictionPowerPoint
+        className={className}
         colorIndex={getColorByValue(value)}
         size={size}
         onClick={() => setCommentShown(!isCommentShown)}

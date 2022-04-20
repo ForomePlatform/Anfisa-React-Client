@@ -53,10 +53,11 @@ export const ModalSelectAttribute = observer((): ReactElement => {
             {t('dtree.loading')}
           </div>
         ) : (
-          filteredQueryBuilder.map(({ name, attributes }) => (
+          filteredQueryBuilder.map(({ name, attributes, power }) => (
             <QueryBuilderSubgroup
               key={name}
               groupName={name}
+              predictionPower={power}
               subGroupData={attributes}
               changeIndicator={dtreeStore.filterModalChangeIndicator}
               isContentExpanded={dtreeStore.isFilterModalContentExpanded}

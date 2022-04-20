@@ -67,10 +67,11 @@ export const QueryBuilderGroups = observer((): ReactElement => {
         style={{ maxHeight: `calc(100vh - ${additionalHeight}px)` }}
       >
         <DeferRender chunkSize={chunkSize}>
-          {filteredQueryBuilder.map(({ name, attributes }) => (
+          {filteredQueryBuilder.map(({ name, attributes, power }) => (
             <QueryBuilderSubgroup
               key={name}
               groupName={name}
+              predictionPower={power}
               subGroupData={attributes}
               changeIndicator={dtreeStore.filterChangeIndicator}
               isContentExpanded={dtreeStore.isFilterContentExpanded}
