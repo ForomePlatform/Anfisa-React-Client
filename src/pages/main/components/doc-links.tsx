@@ -1,7 +1,5 @@
-import { observer } from 'mobx-react-lite'
-
-export const DocLinks = observer(() => (
-  <>
+export const DocLinks = () => (
+  <div style={{ height: 69 }}>
     <div className="mb-4 pr-4">
       <div className="h-px bg-blue-secondary"></div>
     </div>
@@ -23,5 +21,5 @@ export const DocLinks = observer(() => (
         Anfisa Installation&Administration Documentation
       </a>
     </div>
-  </>
-))
+  </div>
+)

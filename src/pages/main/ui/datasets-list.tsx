@@ -1,14 +1,30 @@
-import { ReactElement } from 'react'
+import { ReactElement, useEffect, useRef, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 
+import useWindowDimensions from '@core/hooks/use-window-dimensions'
 import dirinfoStore from '@store/dirinfo'
 import { IDirInfoDatasetDescriptor } from '@service-providers/vault-level/vault-level.interface'
 import { DatasetsListItem } from './datasets-list-item'
 
-export const DatasetsList = observer(
-  (): ReactElement => (
+export const DatasetsList = observer((): ReactElement => {
+  const { height } = useWindowDimensions()
+
+  const [offsetTop, setOffsetTop] = useState<number>(0)
+
+  const newRef = useRef<HTMLDivElement>(null)
+
+  const docLinksHeight = 69
+
+  useEffect(() => {
+    if (newRef.current) {
+      setOffsetTop(newRef.current?.offsetTop)
+    }
+  }, [])
+
+  return (
     <div
-      style={{ height: 'calc(100vh - 260px)' }}
+      ref={newRef}
+      style={{ height: height - offsetTop - docLinksHeight }}
       className="overflow-y-auto overflow-x-hidden"
     >
       {dirinfoStore.dsDistKeys.map(key => {
@@ -25,5 +41,5 @@ export const DatasetsList = observer(
         return null
       })}
     </div>
-  ),
-)
+  )
+})
