@@ -72,6 +72,7 @@ class DtreeStore {
   pointCounts: [number | null][] = []
   acceptedVariants = 0
 
+  evalStatus = undefined
   savingStatus: any = []
   shouldLoadTableModal = false
 
@@ -211,6 +212,7 @@ class DtreeStore {
       this.dtree = result
       this.dtreeCode = newCode
       this.dtreeList = result['dtree-list']
+      this.evalStatus = result['eval-status']
     })
 
     const isLoadingNewTree = !body.has('code')
@@ -253,25 +255,30 @@ class DtreeStore {
 
   // 2. UI functions to display adding / deleting / editing steps
 
-  get getStepData() {
-    let stepData = cloneDeep(this.stepData)
-    let data: IStepData[] = []
+  get filteredStepData(): IStepData[] {
+    const searchValue = this.algorithmFilterValue.toLowerCase()
 
-    if (stepData[0] && stepData[0].groups && this.algorithmFilterValue) {
-      stepData = stepData.filter((item, currNo: number) =>
-        item.groups.find((subItem: any[]) => {
-          if (
-            subItem[1]
-              .toLocaleLowerCase()
-              .includes(this.algorithmFilterValue.toLocaleLowerCase())
-          ) {
-            return (data = [...data, stepData[currNo]])
-          }
-        }),
-      )
-    }
+    if (!searchValue) return this.stepData
 
-    return this.algorithmFilterValue ? data : stepData
+    const filteredStepData = this.stepData.filter(({ groups }) => {
+      return groups.some(condition => {
+        const name = condition[1].toLowerCase()
+        if (name.includes(searchValue)) return true
+
+        const valueVariants = condition[3]
+        if (!valueVariants) return false
+
+        const valueVariantList = Object.values(valueVariants)
+
+        return valueVariantList.some(varaintName => {
+          if (typeof varaintName !== 'string') return false
+
+          return varaintName?.toLowerCase().includes(searchValue)
+        })
+      })
+    })
+
+    return filteredStepData
   }
 
   insertStep(position: CreateEmptyStepPositions, index: number) {
