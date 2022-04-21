@@ -3,28 +3,22 @@ import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import datasetStore from '@store/dataset'
-import zoneStore from '@store/filterZone'
 import { Icon } from '@ui/icon'
 
-type Props = {
-  data?: string[]
-  isGenes?: boolean
-  isGenesList?: boolean
-  isSamples?: boolean
-  isTags?: boolean
+interface IZoneTagsProps {
+  selectedTagsList: string[]
+  title: string
+  removeZoneTag: (geneName: string, type: string) => void
 }
 
-export const FilterTags = observer(
-  ({ data, isGenes, isGenesList, isSamples, isTags }: Props) => {
+export const ZoneTags = observer(
+  ({ selectedTagsList, removeZoneTag }: IZoneTagsProps) => {
     const deleteTag = (item: string) => {
-      isGenes && zoneStore.removeGene(item, 'fast')
-      isGenesList && zoneStore.removeGenesList(item, 'fast')
-      isSamples && zoneStore.removeSample(item, 'fast')
-      isTags && zoneStore.removeLocalTag(item, 'fast')
+      removeZoneTag(item, 'fast')
       datasetStore.fetchWsListAsync()
     }
 
-    const visibleTagsData = data?.slice(0, 1)
+    const visibleTagsData = selectedTagsList?.slice(0, 1)
 
     return (
       <Fragment>
@@ -49,12 +43,14 @@ export const FilterTags = observer(
           <div>
             <div
               className={cn(
-                'items-center justify-between px-2 text-12 mx-0.5 text-white bg-blue-bright rounded-lg flex-nowrap',
-                data && data.length > 1 ? 'inline-flex' : 'hidden',
+                'items-center justify-between px-2 text-12 mx-0.5 text-white bg-blue-secondary rounded-lg flex-nowrap',
+                selectedTagsList && selectedTagsList.length > 1
+                  ? 'inline-flex'
+                  : 'hidden',
               )}
             >
-              {'+ '}
-              {data && data.length - 1}
+              {'+'}
+              {selectedTagsList && selectedTagsList.length - 1}
             </div>
           </div>
         </div>

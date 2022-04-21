@@ -4,20 +4,29 @@ import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
 import { Icon } from '@ui/icon'
-import { MainTableDataCy } from '@components/data-testid/main-table.cy'
 import { PopperButton } from '@components/popper-button'
 import { ControlPanelDivider } from '../control-panel-divider'
-import { FilterTags } from './components/filter-tags'
 import { HeaderTableButton } from './components/header-table-button'
+import { ZoneTags } from './components/zone-tags'
 
 interface IZoneItemProps {
   title: string
   modalElement: any
-  data: string[]
+  selectedTagsList: string[]
+  removeZoneTag: (geneName: string, type: string) => void
+  dataTestId?: string
+  isLast?: boolean
 }
 
 export const ZoneItem = observer(
-  ({ title, modalElement, data }: IZoneItemProps): ReactElement => {
+  ({
+    title,
+    modalElement,
+    selectedTagsList,
+    removeZoneTag,
+    dataTestId,
+    isLast,
+  }: IZoneItemProps): ReactElement => {
     const ButtonElementEdit = ({ refEl, onClick }: any) => (
       <HeaderTableButton
         refEl={refEl}
@@ -34,7 +43,7 @@ export const ZoneItem = observer(
         onClick={onClick}
         noIcon={true}
         className="flex items-center text-14 text-blue-bright"
-        dataTestId={MainTableDataCy.addGene}
+        dataTestId={dataTestId}
       />
     )
 
@@ -44,15 +53,19 @@ export const ZoneItem = observer(
           title={title}
           ButtonElement={ButtonElementAdd}
           ModalElement={modalElement}
-          data={data}
+          data={selectedTagsList}
           type="add"
         />
 
         <div className="flex justify-between">
-          <FilterTags data={data} isGenes />
+          <ZoneTags
+            selectedTagsList={selectedTagsList}
+            title={title}
+            removeZoneTag={removeZoneTag}
+          />
         </div>
 
-        {toJS(data).length > 0 && (
+        {toJS(selectedTagsList).length > 0 && (
           <PopperButton
             title={title}
             ButtonElement={ButtonElementEdit}
@@ -60,7 +73,7 @@ export const ZoneItem = observer(
           />
         )}
 
-        <ControlPanelDivider className="bg-blue-lighter h-2/3" />
+        {!isLast && <ControlPanelDivider className="bg-blue-lighter h-2/3" />}
       </div>
     )
   },

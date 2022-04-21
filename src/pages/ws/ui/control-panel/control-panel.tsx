@@ -2,6 +2,7 @@ import { ReactElement } from 'react'
 
 import { t } from '@i18n'
 import zoneStore from '@store/filterZone'
+import { MainTableDataCy } from '@components/data-testid/main-table.cy'
 import { ControlPanelDivider } from './control-panel-divider'
 import { EditFilter } from './control-panel-edit-filter'
 import { ControlPanelPreset } from './control-panel-preset'
@@ -15,7 +16,7 @@ import { ZoneItem } from './zone-modals/zone-item'
 
 export const ControlPanel = (): ReactElement => (
   <div className="w-auto flex px-4 bg-blue-dark">
-    <div className="rounded flex pt-2 pb-4">
+    <div className="flex items-center pt-2 pb-4 rounded">
       <ControlPanelPreset />
 
       <ControlPanelDivider />
@@ -26,29 +27,39 @@ export const ControlPanel = (): ReactElement => (
 
       <CustomizeTable />
 
-      <div className="flex ml-5 bg-blue-darkHover rounded-sm px-3">
+      <ControlPanelDivider />
+
+      <div className="flex items-center bg-blue-darkHover rounded-sm px-3 h-8">
         <ZoneItem
           title={t('ds.gene')}
           modalElement={GenesModal}
-          data={zoneStore.selectedGenes}
+          selectedTagsList={zoneStore.selectedGenes}
+          removeZoneTag={zoneStore.removeGene}
+          dataTestId={MainTableDataCy.addGene}
         />
 
         <ZoneItem
           title={t('ds.geneList')}
           modalElement={GenesListModal}
-          data={zoneStore.selectedGenesList}
+          selectedTagsList={zoneStore.selectedGenesList}
+          removeZoneTag={zoneStore.removeGenesList}
         />
 
         <ZoneItem
           title={t('ds.sample')}
           modalElement={SamplesModal}
-          data={zoneStore.selectedSamples}
+          selectedTagsList={zoneStore.selectedSamples}
+          removeZoneTag={zoneStore.removeSample}
+          dataTestId={MainTableDataCy.addSample}
         />
 
         <ZoneItem
           title={t('ds.tags')}
           modalElement={TagsModal}
-          data={zoneStore.selectedTags}
+          selectedTagsList={zoneStore.selectedTags}
+          removeZoneTag={zoneStore.removeLocalTag}
+          dataTestId={MainTableDataCy.addTag}
+          isLast
         />
       </div>
 

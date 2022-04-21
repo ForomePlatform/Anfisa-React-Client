@@ -17,9 +17,9 @@ export const DatasetCreationButton = () => {
 
       <div className="self-stretch">
         <Button
-          text={t('dsCreation.saveDataset')}
+          text={t('dsCreation.createDeriveDS')}
           size="md"
-          variant="secondary-dark"
+          variant="primary"
           className="w-full"
           onClick={handleClick}
           dataTestId={DecisionTreesMenuDataCy.saveDataset}

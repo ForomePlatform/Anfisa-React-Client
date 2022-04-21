@@ -91,7 +91,7 @@ export const en = {
       'There are too many variants to export. The number of variants should be less than 300',
   },
   dsCreation: {
-    saveDataset: 'Save dataset',
+    createDeriveDS: 'Create Derive DS',
     datasetCreation: 'Dataset Creation',
     addDatasetTitle: 'Add new dataset',
     label: 'Dataset Name:',
