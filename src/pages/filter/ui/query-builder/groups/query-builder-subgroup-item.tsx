@@ -133,7 +133,7 @@ export const QueryBuilderSubgroupItem = observer(
               onClick={() => handleAttrClick(subGroupItem)}
             />
 
-            {subGroupItem.kind === FilterKindEnum.Func && (
+            {subGroupItem.kind === AttributeKinds.FUNC && (
               <FnLabel subGroup={true} />
             )}
             {subGroupItem.power && (
