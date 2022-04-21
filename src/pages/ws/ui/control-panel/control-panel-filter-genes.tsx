@@ -1,4 +1,5 @@
 import { Fragment, ReactElement, useEffect, useState } from 'react'
+import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
@@ -8,7 +9,6 @@ import { MainTableDataCy } from '@components/data-testid/main-table.cy'
 import { PopperButton } from '@components/popper-button'
 import { PopperTableModal } from '@components/popper-table-modal'
 import { FilterItemList } from './control-panel-filter-item-list'
-import { ControlPanelTitle } from './control-panel-title'
 import { FilterTags } from './filter-tags'
 import { HeaderTableButton } from './header-table-button'
 
@@ -23,7 +23,7 @@ type ModalProps = {
 
 const ButtonElementEdit = ({ refEl, onClick }: any) => (
   <HeaderTableButton
-    text={t('ds.edit')}
+    text="+"
     refEl={refEl}
     onClick={onClick}
     noIcon={true}
@@ -38,9 +38,8 @@ const ButtonElementAdd = ({ refEl, onClick }: any) => (
       refEl={refEl}
       onClick={onClick}
       noIcon={true}
-      specialIcon={true}
       className="inline-flex items-center justify-between px-2 text-12 mx-0.5 text-white bg-blue-bright rounded-lg"
-      dataTestId={MainTableDataCy.addSample}
+      dataTestId={MainTableDataCy.addGene}
     />
   </Fragment>
 )
@@ -49,10 +48,10 @@ const ModalElement = observer(({ close, title }: ModalProps) => {
   const [searchValue, setSearchValue] = useState('')
 
   useEffect(() => {
-    datasetStore.samples.length <= 0 && datasetStore.fetchSamplesZoneAsync()
+    datasetStore.genes.length <= 0 && datasetStore.fetchZoneListAsync('Symbol')
 
-    if (zoneStore.selectedSamples.length > 0) {
-      zoneStore.syncSelectedAndLocalFilters('isSamples')
+    if (zoneStore.selectedGenes.length > 0) {
+      zoneStore.syncSelectedAndLocalFilters('isGenes')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -60,16 +59,13 @@ const ModalElement = observer(({ close, title }: ModalProps) => {
   const handleApplyAsync = async () => {
     close()
 
-    zoneStore.createSelectedZoneFilter('isSamples')
-    datasetStore.addZone(['Has_Variant', zoneStore.selectedSamples])
+    zoneStore.createSelectedZoneFilter('isGenes')
+    datasetStore.addZone(['Symbol', zoneStore.selectedGenes])
     await datasetStore.fetchWsListAsync(datasetStore.isXL)
-
-    datasetStore.fetchFilteredTabReportAsync()
-    zoneStore.paintSelectedSamples()
   }
 
   const onClearAll = () => {
-    zoneStore.unselectAllSamples('clearAll')
+    zoneStore.unselectAllGenes()
   }
 
   return (
@@ -79,40 +75,38 @@ const ModalElement = observer(({ close, title }: ModalProps) => {
       onClose={close}
       searchValue={searchValue}
       onApply={handleApplyAsync}
-      onChange={setSearchValue}
       onClearAll={onClearAll}
+      onChange={setSearchValue}
       className="mt-7"
-      isSamples={true}
+      isGenes={true}
     >
       <FilterItemList
-        items={datasetStore.samples.filter(item =>
+        items={datasetStore.genes.filter(item =>
           item.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
         )}
-        isSamples={true}
+        isGenes={true}
       />
     </PopperTableModal>
   )
 })
 
-export const FilterItemSamples = observer(
+export const FilterItemGenes = observer(
   ({ title }: FilterItemProps): ReactElement => {
     return (
       <div style={{ minWidth: 75 }}>
-        <ControlPanelTitle title={title}>
-          {zoneStore.selectedSamples.length > 0 && (
-            <PopperButton
-              title={title}
-              ButtonElement={ButtonElementEdit}
-              ModalElement={ModalElement}
-            />
-          )}
-        </ControlPanelTitle>
+        {toJS(zoneStore.selectedGenes).length > 0 && (
+          <PopperButton
+            title={title}
+            ButtonElement={ButtonElementEdit}
+            ModalElement={ModalElement}
+          />
+        )}
 
         <PopperButton
           title={title}
           ButtonElement={ButtonElementAdd}
           ModalElement={ModalElement}
-          data={zoneStore.selectedSamples}
+          data={zoneStore.selectedGenes}
           type="add"
         />
 
@@ -125,7 +119,7 @@ export const FilterItemSamples = observer(
           }}
           className="flex justify-between mt-0.4"
         >
-          <FilterTags data={zoneStore.selectedSamples} isSamples />
+          <FilterTags data={zoneStore.selectedGenes} isGenes />
         </div>
       </div>
     )

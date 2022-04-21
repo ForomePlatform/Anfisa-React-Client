@@ -34,6 +34,7 @@ const StyledDropDown = styled(DropdownBase)<{
     border-radius: 4px;
     width: 209px;
     padding-right: 20px;
+    height: 32px;
 
     :hover {
       box-shadow: none;

@@ -16,10 +16,6 @@ export const DatasetCreationButton = () => {
       <ControlPanelDivider />
 
       <div className="self-stretch">
-        <div className="text-grey-blue text-14 font-bold mb-2 whitespace-nowrap">
-          {t('dsCreation.datasetCreation')}
-        </div>
-
         <Button
           text={t('dsCreation.saveDataset')}
           size="md"

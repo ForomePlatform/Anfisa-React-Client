@@ -38,7 +38,6 @@ const ButtonElementAdd = ({ refEl, onClick }: any) => (
       refEl={refEl}
       onClick={onClick}
       noIcon={true}
-      specialIcon={true}
       className="inline-flex items-center justify-between px-2 text-12 mx-0.5 text-white bg-blue-bright rounded-lg"
       dataTestId={MainTableDataCy.addTag}
     />

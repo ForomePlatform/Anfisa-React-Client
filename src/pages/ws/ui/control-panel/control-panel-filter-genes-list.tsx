@@ -1,11 +1,9 @@
 import { Fragment, ReactElement, useEffect, useState } from 'react'
-import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
 import datasetStore from '@store/dataset'
 import zoneStore from '@store/filterZone'
-import { MainTableDataCy } from '@components/data-testid/main-table.cy'
 import { PopperButton } from '@components/popper-button'
 import { PopperTableModal } from '@components/popper-table-modal'
 import { FilterItemList } from './control-panel-filter-item-list'
@@ -39,9 +37,7 @@ const ButtonElementAdd = ({ refEl, onClick }: any) => (
       refEl={refEl}
       onClick={onClick}
       noIcon={true}
-      specialIcon={true}
       className="inline-flex items-center justify-between px-2 text-12 mx-0.5 text-white bg-blue-bright rounded-lg"
-      dataTestId={MainTableDataCy.addGene}
     />
   </Fragment>
 )
@@ -50,10 +46,11 @@ const ModalElement = observer(({ close, title }: ModalProps) => {
   const [searchValue, setSearchValue] = useState('')
 
   useEffect(() => {
-    datasetStore.genes.length <= 0 && datasetStore.fetchZoneListAsync('Symbol')
+    datasetStore.genesList.length <= 0 &&
+      datasetStore.fetchZoneListAsync('Panels')
 
-    if (zoneStore.selectedGenes.length > 0) {
-      zoneStore.syncSelectedAndLocalFilters('isGenes')
+    if (zoneStore.selectedGenesList.length > 0) {
+      zoneStore.syncSelectedAndLocalFilters('isGenesList')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -61,13 +58,13 @@ const ModalElement = observer(({ close, title }: ModalProps) => {
   const handleApplyAsync = async () => {
     close()
 
-    zoneStore.createSelectedZoneFilter('isGenes')
-    datasetStore.addZone(['Symbol', zoneStore.selectedGenes])
+    zoneStore.createSelectedZoneFilter('isGenesList')
+    datasetStore.addZone(['Panels', zoneStore.selectedGenesList])
     await datasetStore.fetchWsListAsync(datasetStore.isXL)
   }
 
   const onClearAll = () => {
-    zoneStore.unselectAllGenes()
+    zoneStore.unselectAllGenesList()
   }
 
   return (
@@ -80,24 +77,24 @@ const ModalElement = observer(({ close, title }: ModalProps) => {
       onClearAll={onClearAll}
       onChange={setSearchValue}
       className="mt-7"
-      isGenes={true}
+      isGenesList={true}
     >
       <FilterItemList
-        items={datasetStore.genes.filter(item =>
+        items={datasetStore.genesList.filter(item =>
           item.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
         )}
-        isGenes={true}
+        isGenesList={true}
       />
     </PopperTableModal>
   )
 })
 
-export const FilterItemGenes = observer(
+export const FilterItemGenesList = observer(
   ({ title }: FilterItemProps): ReactElement => {
     return (
       <div style={{ minWidth: 75 }}>
         <ControlPanelTitle title={title}>
-          {toJS(zoneStore.selectedGenes).length > 0 && (
+          {zoneStore.selectedGenesList.length > 0 && (
             <PopperButton
               title={title}
               ButtonElement={ButtonElementEdit}
@@ -110,7 +107,7 @@ export const FilterItemGenes = observer(
           title={title}
           ButtonElement={ButtonElementAdd}
           ModalElement={ModalElement}
-          data={zoneStore.selectedGenes}
+          data={zoneStore.selectedGenesList}
           type="add"
         />
 
@@ -123,7 +120,7 @@ export const FilterItemGenes = observer(
           }}
           className="flex justify-between mt-0.4"
         >
-          <FilterTags data={zoneStore.selectedGenes} isGenes />
+          <FilterTags data={zoneStore.selectedGenesList} isGenesList />
         </div>
       </div>
     )
