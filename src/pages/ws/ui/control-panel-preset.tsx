@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
 import datasetStore from '@store/dataset'
-import filterPresetsStore from '@store/filter-presets.store'
+import filterPresetsStore from '@store/filter-presets'
 import { DropDown } from '@ui/dropdown'
 import { MainTableDataCy } from '@components/data-testid/main-table.cy'
 import { ControlPanelTitle } from './control-panel-title'

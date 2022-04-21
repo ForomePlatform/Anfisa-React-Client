@@ -6,7 +6,6 @@ import filterStore from '@store/filter'
 import {
   AttributeKinds,
   TCondition,
-  TEnumCondition,
   TNumericConditionBounds,
   TPropertyStatus,
   TVariant,
@@ -68,11 +67,32 @@ export class CurrentFilterStore {
     if (this.attributeStatus?.kind !== AttributeKinds.ENUM) {
       return []
     }
-    const condition = this.initialCondition as TEnumCondition | undefined
+    const variants: TVariant[] = []
+    const conditionVariants = this.initialEnumVariants
+    const statusVariants = this.attributeStatus.variants ?? []
+    const conditionIncludes = new Array<boolean>(
+      conditionVariants?.length ?? 0,
+    ).fill(false)
 
-    return (this.attributeStatus.variants ?? []).filter(
-      variant => variant[1] > 0 || condition?.includes(variant[0]),
-    )
+    for (const variant of statusVariants) {
+      const conditionIndex = conditionVariants?.indexOf(variant[0]) ?? -1
+      if (variant[1] > 0 || conditionIndex > -1) {
+        variants.push(variant)
+      }
+      if (conditionIndex > -1) {
+        conditionIncludes[conditionIndex] = true
+      }
+    }
+
+    if (conditionVariants) {
+      for (let i = 0; i < conditionIncludes.length; ++i) {
+        if (!conditionIncludes[i]) {
+          variants.push([conditionVariants[i], 0])
+        }
+      }
+    }
+
+    return variants
   }
 
   public saveEnum(variants: string[], mode: ModeTypes | undefined): void {

@@ -45,14 +45,17 @@ export const QueryBuilderSubgroup = observer(
       <div>
         <div
           onClick={onClick}
-          className={cn('flex items-center mb-3 text-16 cursor-pointer', {
-            'text-black': !isVisibleSubGroup,
-            'text-grey-blue': !isVisibleSubGroup && !isModal,
-            'text-white': isVisibleSubGroup && !isModal,
-            'hover:text-white': !isModal,
-            'hover:text-blue-dark': isModal,
-            'text-blue-dark': isModal && isVisibleSubGroup,
-          })}
+          className={cn(
+            'flex items-center justify-between mb-3 text-16 cursor-pointer',
+            {
+              'text-black': isModal && !isVisibleSubGroup,
+              'text-blue-dark': isModal && isVisibleSubGroup,
+              'text-grey-blue': !isModal && !isVisibleSubGroup,
+              'text-white': !isModal && isVisibleSubGroup,
+              'hover:text-white': !isModal,
+              'hover:text-blue-dark': isModal,
+            },
+          )}
         >
           {predictionPower !== undefined && (
             <PredictionPowerIndicator

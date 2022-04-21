@@ -133,7 +133,7 @@ export const QueryBuilderSubgroupItem = observer(
               onClick={() => handleAttrClick(subGroupItem)}
             />
 
-            {subGroupItem.kind === AttributeKinds.FUNC && (
+            {subGroupItem.kind === FilterKindEnum.Func && (
               <FnLabel subGroup={true} />
             )}
             {subGroupItem.power && (
@@ -147,11 +147,11 @@ export const QueryBuilderSubgroupItem = observer(
 
             <span
               className={cn('text-14', {
-                'text-black': !isVisibleSubGroupItem,
+                'text-black': isModal && !isVisibleSubGroupItem,
+                'text-blue-dark': isModal && isVisibleSubGroupItem,
                 'text-white': !isModal,
                 'hover:text-white': !isModal,
                 'hover:text-blue-dark': isModal,
-                'text-blue-dark': isModal && isVisibleSubGroupItem,
               })}
               onClick={() => {
                 isModal ? handleAttrClick(subGroupItem) : expandContent()
