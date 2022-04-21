@@ -5,48 +5,35 @@ import { t } from '@i18n'
 import datasetStore from '@store/dataset'
 import zoneStore from '@store/filterZone'
 import { PopperTableModal } from '@components/popper-table-modal'
-import { FilterItemList } from './control-panel-filter-item-list'
+import { ZoneModalList } from './components/zone-modal-list'
 
-interface ITagsModalProps {
+interface IGenesModalProps {
   close: () => void
   title?: string
 }
 
-export const TagsModal = observer(({ close, title }: ITagsModalProps) => {
+export const GenesModal = observer(({ close, title }: IGenesModalProps) => {
   const [searchValue, setSearchValue] = useState('')
 
   useEffect(() => {
-    datasetStore.fetchTagSelectAsync()
+    datasetStore.genes.length <= 0 && datasetStore.fetchZoneListAsync('Symbol')
 
-    if (zoneStore.selectedTags.length > 0) {
-      zoneStore.syncSelectedAndLocalFilters('isTags')
+    if (zoneStore.selectedGenes.length > 0) {
+      zoneStore.syncSelectedAndLocalFilters('isGenes')
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleApplyAsync = async () => {
     close()
 
-    zoneStore.createSelectedZoneFilter('isTags')
-
-    if (zoneStore.isModeNOT) {
-      datasetStore.addZone(['_tags', zoneStore.selectedTags, false])
-    } else {
-      datasetStore.addZone(['_tags', zoneStore.selectedTags])
-    }
-
-    if (zoneStore.isModeWithNotes) {
-      datasetStore.addZone(['_tags', [...zoneStore.selectedTags, '_note']])
-    }
-
+    zoneStore.createSelectedZoneFilter('isGenes')
+    datasetStore.addZone(['Symbol', zoneStore.selectedGenes])
     await datasetStore.fetchWsListAsync(datasetStore.isXL)
-
-    datasetStore.fetchFilteredTabReportAsync()
   }
 
   const onClearAll = () => {
-    zoneStore.unselectAllTags()
+    zoneStore.unselectAllGenes()
   }
 
   return (
@@ -56,16 +43,16 @@ export const TagsModal = observer(({ close, title }: ITagsModalProps) => {
       onClose={close}
       searchValue={searchValue}
       onApply={handleApplyAsync}
-      onChange={setSearchValue}
       onClearAll={onClearAll}
+      onChange={setSearchValue}
       className="mt-7"
-      isTags={true}
+      isGenes={true}
     >
-      <FilterItemList
-        items={datasetStore.tags.filter(item =>
+      <ZoneModalList
+        items={datasetStore.genes.filter(item =>
           item.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
         )}
-        isTags={true}
+        isGenes={true}
       />
     </PopperTableModal>
   )

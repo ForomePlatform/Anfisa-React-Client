@@ -5,7 +5,7 @@ import { t } from '@i18n'
 import datasetStore from '@store/dataset'
 import zoneStore from '@store/filterZone'
 import { PopperTableModal } from '@components/popper-table-modal'
-import { FilterItemList } from './control-panel-filter-item-list'
+import { ZoneModalList } from './components/zone-modal-list'
 
 interface IGenesListModalProps {
   close: () => void
@@ -50,7 +50,7 @@ export const GenesListModal = observer(
         className="mt-7"
         isGenesList={true}
       >
-        <FilterItemList
+        <ZoneModalList
           items={datasetStore.genesList.filter(item =>
             item.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
           )}

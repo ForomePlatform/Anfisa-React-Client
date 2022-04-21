@@ -37,7 +37,7 @@ export const ControlPanelPreset = observer((): ReactElement => {
           options={options}
           value={activePreset}
           onSelect={onSelectAsync}
-          placeholder={t('general.selectAnOption')}
+          placeholder={t('general.selectPreset')}
         />
       </div>
     </div>

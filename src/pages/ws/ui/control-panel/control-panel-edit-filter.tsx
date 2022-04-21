@@ -19,11 +19,11 @@ export const EditFilter = observer((): ReactElement => {
   }
 
   return (
-    <div style={{ minWidth: '144px' }}>
+    <div style={{ minWidth: '114px' }}>
       <Button
         text={t('ds.editFilters')}
         size="md"
-        className="w-full justify-around"
+        className="w-full justify-around text-14"
         onClick={handleClick}
       />
     </div>

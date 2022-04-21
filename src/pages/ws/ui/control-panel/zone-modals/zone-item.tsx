@@ -6,9 +6,9 @@ import { t } from '@i18n'
 import { Icon } from '@ui/icon'
 import { MainTableDataCy } from '@components/data-testid/main-table.cy'
 import { PopperButton } from '@components/popper-button'
-import { ControlPanelDivider } from './control-panel-divider'
-import { FilterTags } from './filter-tags'
-import { HeaderTableButton } from './header-table-button'
+import { ControlPanelDivider } from '../control-panel-divider'
+import { FilterTags } from './components/filter-tags'
+import { HeaderTableButton } from './components/header-table-button'
 
 interface IZoneItemProps {
   title: string

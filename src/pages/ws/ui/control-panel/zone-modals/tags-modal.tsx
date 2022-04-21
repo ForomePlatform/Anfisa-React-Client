@@ -5,38 +5,48 @@ import { t } from '@i18n'
 import datasetStore from '@store/dataset'
 import zoneStore from '@store/filterZone'
 import { PopperTableModal } from '@components/popper-table-modal'
-import { FilterItemList } from './control-panel-filter-item-list'
+import { ZoneModalList } from './components/zone-modal-list'
 
-interface ISamplesModalProps {
+interface ITagsModalProps {
   close: () => void
   title?: string
 }
 
-export const SamplesModal = observer(({ close, title }: ISamplesModalProps) => {
+export const TagsModal = observer(({ close, title }: ITagsModalProps) => {
   const [searchValue, setSearchValue] = useState('')
 
   useEffect(() => {
-    datasetStore.samples.length <= 0 && datasetStore.fetchSamplesZoneAsync()
+    datasetStore.fetchTagSelectAsync()
 
-    if (zoneStore.selectedSamples.length > 0) {
-      zoneStore.syncSelectedAndLocalFilters('isSamples')
+    if (zoneStore.selectedTags.length > 0) {
+      zoneStore.syncSelectedAndLocalFilters('isTags')
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const handleApplyAsync = async () => {
     close()
 
-    zoneStore.createSelectedZoneFilter('isSamples')
-    datasetStore.addZone(['Has_Variant', zoneStore.selectedSamples])
+    zoneStore.createSelectedZoneFilter('isTags')
+
+    if (zoneStore.isModeNOT) {
+      datasetStore.addZone(['_tags', zoneStore.selectedTags, false])
+    } else {
+      datasetStore.addZone(['_tags', zoneStore.selectedTags])
+    }
+
+    if (zoneStore.isModeWithNotes) {
+      datasetStore.addZone(['_tags', [...zoneStore.selectedTags, '_note']])
+    }
+
     await datasetStore.fetchWsListAsync(datasetStore.isXL)
 
     datasetStore.fetchFilteredTabReportAsync()
-    zoneStore.paintSelectedSamples()
   }
 
   const onClearAll = () => {
-    zoneStore.unselectAllSamples('clearAll')
+    zoneStore.unselectAllTags()
   }
 
   return (
@@ -49,13 +59,13 @@ export const SamplesModal = observer(({ close, title }: ISamplesModalProps) => {
       onChange={setSearchValue}
       onClearAll={onClearAll}
       className="mt-7"
-      isSamples={true}
+      isTags={true}
     >
-      <FilterItemList
-        items={datasetStore.samples.filter(item =>
+      <ZoneModalList
+        items={datasetStore.tags.filter(item =>
           item.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
         )}
-        isSamples={true}
+        isTags={true}
       />
     </PopperTableModal>
   )

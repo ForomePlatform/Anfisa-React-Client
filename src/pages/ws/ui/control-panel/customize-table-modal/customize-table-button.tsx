@@ -14,7 +14,7 @@ interface Props {
   dataTestId?: string
 }
 
-export const TableProperiesButton = ({
+export const CustomizeTableButton = ({
   refEl,
   isOpen,
   onClick,

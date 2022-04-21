@@ -1,8 +1,6 @@
 import { ReactElement } from 'react'
 import cn, { Argument } from 'classnames'
 
-import { Icon } from '@ui/icon'
-
 interface Props {
   refEl: any
   text?: string

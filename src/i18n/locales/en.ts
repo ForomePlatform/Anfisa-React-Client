@@ -15,7 +15,6 @@ export const en = {
     clear: 'Clear',
     replace: 'Replace',
     add: '+ Add',
-    selectAnOption: 'Select...',
     filter: '+ Filter',
     presetCreated: 'Preset has been created',
     showLess: 'Show less',
@@ -23,6 +22,7 @@ export const en = {
     total: 'Total',
     closeWindow: 'Close window',
     creaitionIsInProcess: 'Dataset creation has not been finished yet',
+    selectPreset: 'Select Preset',
   },
   header: {
     version: {
