@@ -3,7 +3,6 @@ import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
-import { Icon } from '@ui/icon'
 import { PopperButton } from '@components/popper-button'
 import { ControlPanelDivider } from '../control-panel-divider'
 import { HeaderTableButton } from './components/header-table-button'
@@ -29,9 +28,9 @@ export const ZoneItem = observer(
   }: IZoneItemProps): ReactElement => {
     const ButtonElementEdit = ({ refEl, onClick }: any) => (
       <HeaderTableButton
+        text="+"
         refEl={refEl}
         onClick={onClick}
-        icon={<Icon name="Plus" />}
         className="text-blue-bright mt-px ml-1"
       />
     )

@@ -31,7 +31,7 @@ export const ControlPanel = (): ReactElement => (
 
         <ControlPanelDivider />
 
-        <div className="flex items-center bg-blue-darkHover rounded-sm px-3 min-h-32">
+        <div className="flex bg-blue-darkHover rounded-sm px-3 min-h-32">
           <ZoneItem
             title={t('ds.gene')}
             modalElement={GenesModal}
