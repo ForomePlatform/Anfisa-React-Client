@@ -24,7 +24,7 @@ export const QueryResults = observer((): ReactElement => {
   return (
     <div
       className="overflow-y-scroll"
-      style={{ height: 'calc(100vh - 316px)' }}
+      style={{ height: 'calc(100vh - 314px)' }}
     >
       {conditions.map((condition, index) => (
         <div key={`${condition[1]}_${index}`} className="flex flex-col">
