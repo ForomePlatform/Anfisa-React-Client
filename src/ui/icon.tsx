@@ -25,7 +25,6 @@ import Info from '@icons/info'
 import Lines from '@icons/lines'
 import Loupe from '@icons/loupe'
 import Options from '@icons/options'
-import Plus from '@icons/plus'
 import Rect from '@icons/rect'
 import Redo from '@icons/redo'
 import Settings from '@icons/settings'
@@ -68,7 +67,6 @@ export type TIcons =
   | 'Lines'
   | 'Loupe'
   | 'Options'
-  | 'Plus'
   | 'Rect'
   | 'Redo'
   | 'Settings'
@@ -103,7 +101,6 @@ const iconItems: Record<TIcons, IconItem> = {
   Lines,
   Loupe,
   Options,
-  Plus,
   Rect,
   Redo,
   Settings,
