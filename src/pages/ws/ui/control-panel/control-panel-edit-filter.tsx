@@ -23,7 +23,7 @@ export const EditFilter = observer((): ReactElement => {
       <Button
         text={t('ds.editFilters')}
         size="md"
-        className="w-full justify-around text-14"
+        className="w-full justify-around text-14 min-h-32"
         onClick={handleClick}
       />
     </div>
