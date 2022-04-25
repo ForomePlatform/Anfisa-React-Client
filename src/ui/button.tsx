@@ -12,6 +12,7 @@ export interface ButtonProps {
     | 'secondary-dark'
     | 'primary-dark'
     | 'diestruction'
+    | 'cancel'
   className?: Argument
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void
   onMouseUp?: (event: MouseEvent<HTMLButtonElement>) => void
@@ -47,6 +48,7 @@ export const Button = ({
   const isPrimaryDark = variant === 'primary-dark'
   const isSecondaryDark = variant === 'secondary-dark'
   const isDiestruction = variant === 'diestruction'
+  const isCancel = variant === 'cancel'
 
   const isDefaultBackground: boolean =
     /bg-blue-bright/.test(classNameString) || !/bg-[\w-]*/.test(classNameString)
@@ -89,6 +91,8 @@ export const Button = ({
       //hover diestruction
       'hover:border-red-hover': isDiestruction,
       'active:border-red-active': isDiestruction,
+      //default cancel
+      'border-2 border-grey-disabled': isCancel,
       //disabled general
       'cursor-not-allowed': disabled,
       'text-grey-blue': disabled,

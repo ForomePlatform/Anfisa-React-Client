@@ -11,10 +11,10 @@ import zoneStore from '@store/filterZone'
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
 import { InputSearch } from '@components/input-search'
-import { FilterMods } from '@pages/ws/ui/table/filter-mods'
+import { ZoneModalMods } from '@pages/ws/ui/control-panel/zone-modals/components/zone-modal-mods'
 import { MainTableDataCy } from './data-testid/main-table.cy'
 
-interface Props {
+interface IPopperTableModalProps {
   title?: string
   selectedAmount?: number
   searchValue: string
@@ -56,16 +56,8 @@ export const PopperTableModal = observer(
     isNotSearchable,
     notShowSelectedPanel,
     className,
-  }: Props) => {
+  }: IPopperTableModalProps) => {
     const ref = useRef(null)
-
-    const onOutsideClick = () => {
-      isTags && zoneStore.unselectAllTags()
-
-      onClose && onClose()
-    }
-
-    useOutsideClick(ref, onOutsideClick ?? noop)
 
     const defineClearFilter = () => {
       isGenes && zoneStore.unselectAllGenes()
@@ -73,6 +65,14 @@ export const PopperTableModal = observer(
       isSamples && zoneStore.unselectAllSamples()
       isTags && zoneStore.unselectAllTags()
     }
+
+    const onOutsideClick = () => {
+      defineClearFilter()
+
+      onClose && onClose()
+    }
+
+    useOutsideClick(ref, onOutsideClick ?? noop)
 
     const defintSelectedAmount = () => {
       if (isGenes) return toJS(zoneStore.localGenes).length
@@ -97,10 +97,14 @@ export const PopperTableModal = observer(
     }
 
     return (
-      <div className={cn('bg-white shadow-card rounded', className)} ref={ref}>
+      <div
+        style={{ minWidth: 342 }}
+        className={cn('bg-white shadow-card rounded-lg', className)}
+        ref={ref}
+      >
         <div className="px-4 pt-4">
           <div className="flex justify-between mb-5 items-center">
-            <p className="text-blue-dark  font-medium ">{title}</p>
+            <span className="text-blue-dark font-medium">{title}</span>
             <Icon
               name="Close"
               onClick={handleClose}
@@ -114,44 +118,51 @@ export const PopperTableModal = observer(
               value={searchValue}
               placeholder={searchInputPlaceholder}
               onChange={e => onChange && onChange(e.target.value)}
+              isModal
             />
           )}
           {!notShowSelectedPanel && (
-            <div className="flex justify-between mt-5">
+            <div className="flex justify-between items-center mt-5">
               {viewType ? (
-                <span className="text-14 text-grey-blue">
+                <span className="text-12 text-grey-blue">
                   {selectedAmount} {'Selected'}
                 </span>
               ) : (
-                <span className="text-14 text-grey-blue">
+                <span className="text-12 text-grey-blue">
                   {defintSelectedAmount() || 0} {'Selected'}
                 </span>
               )}
 
-              <span className="text-12 text-blue-bright leading-14">
+              <span className="text-blue-bright text-14 leading-5">
                 {onSelectAll && (
                   <span className="cursor-pointer mr-3" onClick={onSelectAll}>
                     {t('general.selectAll')}
                   </span>
                 )}
+
                 <span className="cursor-pointer" onClick={onClearAll}>
                   {t('general.clearAll')}
                 </span>
               </span>
             </div>
           )}
-          {isTags && <FilterMods />}
+          {isTags && <ZoneModalMods />}
+
+          <div className="h-px w-full bg-blue-light mt-4" />
         </div>
+
         <div className="w-full pl-4">{children}</div>
-        <div className="flex justify-end pb-4 px-4 mt-4">
+
+        <div className="flex justify-end pb-4 px-4 mt-3">
           <Button
             text={t('general.cancel')}
-            variant="secondary"
+            variant="cancel"
             onClick={handleClose}
           />
 
           <Button
-            text={t('general.apply')}
+            text={t('general.applyFilters')}
+            variant="secondary"
             className="ml-3"
             onClick={handleApply}
             dataTestId={MainTableDataCy.applyButton}

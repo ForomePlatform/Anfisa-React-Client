@@ -1,8 +1,8 @@
-import Checkbox from 'react-three-state-checkbox'
 import { observer } from 'mobx-react-lite'
 
 import zoneStore from '@store/filterZone'
 import { MainTableDataCy } from '@components/data-testid/main-table.cy'
+import { StyledCheckboxContainer } from '@components/styled-checkbox-container'
 
 interface IZoneModalListProps {
   items: string[]
@@ -29,44 +29,52 @@ export const ZoneModalList = observer(
     }
 
     return (
-      <div className="mt-5 h-60 overflow-y-scroll">
-        {items.map(item => (
-          <div key={item} className="flex items-center mb-4">
+      <div
+        className="mt-5 overflow-y-auto"
+        style={{ height: 'auto', maxHeight: 240 }}
+      >
+        {items.map((itemName, index) => (
+          <div key={itemName} className="flex items-center mb-4">
             {isGenes && (
-              <Checkbox
-                checked={zoneStore.localGenes.includes(item)}
+              <StyledCheckboxContainer
+                checked={zoneStore.localGenes.includes(itemName)}
                 className="w-4 h-4"
-                onChange={e => handleCheck(e.target.checked, item)}
+                onChange={e => handleCheck(e.target.checked, itemName)}
+                id={index}
+                label={itemName}
+                datatestId={MainTableDataCy.checkboxListElement}
               />
             )}
             {isGenesList && (
-              <Checkbox
-                checked={zoneStore.localGenesList.includes(item)}
+              <StyledCheckboxContainer
+                checked={zoneStore.localGenesList.includes(itemName)}
                 className="w-4 h-4"
-                onChange={e => handleCheck(e.target.checked, item)}
+                onChange={e => handleCheck(e.target.checked, itemName)}
+                id={index}
+                label={itemName}
+                datatestId={MainTableDataCy.checkboxListElement}
               />
             )}
             {isSamples && (
-              <Checkbox
-                checked={zoneStore.localSamples.includes(item)}
+              <StyledCheckboxContainer
+                checked={zoneStore.localSamples.includes(itemName)}
                 className="w-4 h-4"
-                onChange={e => handleCheck(e.target.checked, item)}
+                onChange={e => handleCheck(e.target.checked, itemName)}
+                id={index}
+                label={itemName}
+                datatestId={MainTableDataCy.checkboxListElement}
               />
             )}
             {isTags && (
-              <Checkbox
-                checked={zoneStore.localTags.includes(item)}
+              <StyledCheckboxContainer
+                checked={zoneStore.localTags.includes(itemName)}
                 className="w-4 h-4"
-                onChange={e => handleCheck(e.target.checked, item)}
+                onChange={e => handleCheck(e.target.checked, itemName)}
+                id={index}
+                label={itemName}
+                datatestId={MainTableDataCy.checkboxListElement}
               />
             )}
-
-            <span
-              className="text-12 ml-1"
-              data-testid={MainTableDataCy.checkboxListElement}
-            >
-              {item}
-            </span>
           </div>
         ))}
       </div>

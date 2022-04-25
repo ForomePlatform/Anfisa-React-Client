@@ -1,16 +1,14 @@
-import React, { Fragment, ReactElement } from 'react'
-import Checkbox from 'react-three-state-checkbox'
+import { Fragment, ReactElement } from 'react'
+import { observer } from 'mobx-react-lite'
 
 import { FilterModsEnum } from '@core/enum/filter-mods-enum'
 import { t } from '@i18n'
 import zoneStore from '@store/filterZone'
+import { StyledCheckboxContainer } from '@components/styled-checkbox-container'
 
-export const FilterMods = (): ReactElement => {
-  const handleCheck = (
-    target: EventTarget & HTMLInputElement,
-    name: string,
-  ) => {
-    if (target.checked && name) {
+export const ZoneModalMods = observer((): ReactElement => {
+  const handleCheck = (checked: boolean, name: string) => {
+    if (checked && name) {
       name === FilterModsEnum.NOTMode && zoneStore.setModeNOT(true)
       name === FilterModsEnum.VariantsWithNotesOnly &&
         zoneStore.setModeWithNotes(true)
@@ -23,34 +21,35 @@ export const FilterMods = (): ReactElement => {
 
   return (
     <Fragment>
-      <div className="flex my-2">
+      <div className="flex mt-3">
         <div className="mr-6 flex items-center">
-          <Checkbox
+          <StyledCheckboxContainer
             onChange={e =>
-              handleCheck(e.target, (e.target.name = FilterModsEnum.NOTMode))
+              handleCheck(
+                e.target.checked,
+                (e.target.name = FilterModsEnum.NOTMode),
+              )
             }
             checked={zoneStore.isModeNOT}
-            className="mb-0.5"
+            id={t('ds.notMode')}
+            label={t('ds.notMode')}
           />
-          <span className="ml-1 text-12">{t('ds.notMode')}</span>
         </div>
 
         <div className="mr-6 flex items-center">
-          <Checkbox
+          <StyledCheckboxContainer
             onChange={e =>
               handleCheck(
-                e.target,
+                e.target.checked,
                 (e.target.name = FilterModsEnum.VariantsWithNotesOnly),
               )
             }
             checked={zoneStore.isModeWithNotes}
-            className="mb-0.5"
+            id={t('ds.variantsWithNotesOnly')}
+            label={t('ds.variantsWithNotesOnly')}
           />
-          <span className="ml-1 text-12">{t('ds.variantsWithNotesOnly')}</span>
         </div>
       </div>
-
-      <div className="border border-blue-light -mb-1.5" />
     </Fragment>
   )
-}
+})

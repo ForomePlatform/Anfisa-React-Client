@@ -101,6 +101,7 @@ const DrawerTagModal = observer(({ close }: any) => {
           onChange={(e: any) =>
             drawerTagsStore.handleChangeCustomTag(e.target.value)
           }
+          isModal
         />
 
         <div className="flex justify-between">
