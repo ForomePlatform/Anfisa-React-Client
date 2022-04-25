@@ -3,7 +3,6 @@ import { ReactElement } from 'react'
 import { t } from '@i18n'
 import zoneStore from '@store/filterZone'
 import { MainTableDataCy } from '@components/data-testid/main-table.cy'
-import { UndoRedoButtons } from '@components/undo-redo-buttons'
 import { ControlPanelDivider } from './control-panel-divider'
 import { EditFilter } from './control-panel-edit-filter'
 import { ControlPanelPreset } from './control-panel-preset'
@@ -68,7 +67,7 @@ export const ControlPanel = (): ReactElement => (
         <DatasetCreationButton />
       </div>
 
-      <UndoRedoButtons />
+      {/* TODO: need a functional <UndoRedoButtons /> */}
     </div>
   </div>
 )
