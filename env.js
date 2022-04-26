@@ -9,14 +9,13 @@ const envConfigPath = path.resolve(__dirname, './public/env-config.js')
 const publicDir = fs.readdirSync(path.resolve(__dirname, './public'))
 
 const getVariablesString = () => {
-  let result = ''
+  let result = {}
 
-  for (key in envDev) {
-    const value = envDev[key]
-    result += `${key}: "${process.env[key] || value}",\n`
+  for (const key in envDev) {
+    result[key] = process.env[key] || envDev[key]
   }
 
-  return result
+  return JSON.stringify(result)
 }
 
 if (publicDir.includes('env-config.js')) {
@@ -27,8 +26,6 @@ if (publicDir.includes('env-config.js')) {
   })
 }
 
-const content = `window._env_ = {
-    ${getVariablesString()}
-}`
+const content = `window._env_ = ${getVariablesString()}`
 
 fs.writeFileSync(envConfigPath, content)
