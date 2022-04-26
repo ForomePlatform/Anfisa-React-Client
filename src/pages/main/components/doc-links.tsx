@@ -1,5 +1,7 @@
+import { docLinksHeight } from '@pages/ws/constants'
+
 export const DocLinks = () => (
-  <div style={{ height: 69 }}>
+  <div style={{ height: docLinksHeight }}>
     <div className="mb-4 pr-4">
       <div className="h-px bg-blue-secondary"></div>
     </div>
