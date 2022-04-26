@@ -6,8 +6,6 @@ const envDev = require('dotenv').config({
 
 const envConfigPath = path.resolve(__dirname, './public/env-config.js')
 
-const publicDir = fs.readdirSync(path.resolve(__dirname, './public'))
-
 const getVariablesString = () => {
   let result = {}
 
@@ -16,14 +14,6 @@ const getVariablesString = () => {
   }
 
   return JSON.stringify(result)
-}
-
-if (publicDir.includes('env-config.js')) {
-  fs.unlink(envConfigPath, err => {
-    if (err) {
-      console.error(err)
-    }
-  })
 }
 
 const content = `window._env_ = ${getVariablesString()}`
