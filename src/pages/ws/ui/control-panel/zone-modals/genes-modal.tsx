@@ -25,11 +25,11 @@ export const GenesModal = observer(({ close, title }: IGenesModalProps) => {
   }, [])
 
   const handleApplyAsync = async () => {
-    close()
-
     zoneStore.createSelectedZoneFilter('isGenes')
     datasetStore.addZone(['Symbol', zoneStore.selectedGenes])
     await datasetStore.fetchWsListAsync(datasetStore.isXL)
+
+    close()
   }
 
   const onClearAll = () => {

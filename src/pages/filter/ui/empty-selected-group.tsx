@@ -4,10 +4,12 @@ import cn, { Argument } from 'classnames'
 import useClientHeight from '@core/hooks/use-client-height'
 import { t } from '@i18n'
 
-type Props = {
+type IEmptySelectedGroupProps = {
   className?: Argument
 }
-export const EmptySelectedGroup = ({ className }: Props): ReactElement => {
+export const EmptySelectedGroup = ({
+  className,
+}: IEmptySelectedGroupProps): ReactElement => {
   const emptyDivkRef = useRef<any>()
 
   const emptyBlockHeight = useClientHeight(emptyDivkRef)

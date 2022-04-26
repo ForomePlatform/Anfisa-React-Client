@@ -25,14 +25,14 @@ export const SamplesModal = observer(({ close, title }: ISamplesModalProps) => {
   }, [])
 
   const handleApplyAsync = async () => {
-    close()
-
     zoneStore.createSelectedZoneFilter('isSamples')
     datasetStore.addZone(['Has_Variant', zoneStore.selectedSamples])
     await datasetStore.fetchWsListAsync(datasetStore.isXL)
 
     datasetStore.fetchFilteredTabReportAsync()
     zoneStore.paintSelectedSamples()
+
+    close()
   }
 
   const onClearAll = () => {

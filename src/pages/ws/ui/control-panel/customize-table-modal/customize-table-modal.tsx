@@ -23,6 +23,18 @@ export const CustomizeTableModal = observer(
 
     const columnListStore = new ColumnListStore()
 
+    const handleClose = () => {
+      columnsStore.resetSearchColumnValue()
+      columnsStore.resetColumns()
+      close()
+    }
+
+    const handleApply = () => {
+      columnsStore.filterColumns()
+      columnsStore.setViewType(viewType)
+      close()
+    }
+
     return (
       <PopperTableModal
         title={t('ds.columns')}
@@ -32,16 +44,8 @@ export const CustomizeTableModal = observer(
         onChange={v => columnsStore.setSearchColumnValue(v)}
         onSelectAll={() => columnsStore.selectAllColumns()}
         onClearAll={() => columnsStore.clearAllColumns()}
-        onApply={() => {
-          columnsStore.filterColumns()
-          columnsStore.setViewType(viewType)
-          close()
-        }}
-        onClose={() => {
-          columnsStore.resetSearchColumnValue()
-          columnsStore.resetColumns()
-          close()
-        }}
+        onApply={handleApply}
+        onClose={handleClose}
         setViewType={setViewType}
         viewType={viewType}
         isNotSearchable

@@ -26,8 +26,6 @@ export const TagsModal = observer(({ close, title }: ITagsModalProps) => {
   }, [])
 
   const handleApplyAsync = async () => {
-    close()
-
     zoneStore.createSelectedZoneFilter('isTags')
 
     if (zoneStore.isModeNOT) {
@@ -43,6 +41,8 @@ export const TagsModal = observer(({ close, title }: ITagsModalProps) => {
     await datasetStore.fetchWsListAsync(datasetStore.isXL)
 
     datasetStore.fetchFilteredTabReportAsync()
+
+    close()
   }
 
   const onClearAll = () => {
