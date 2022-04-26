@@ -29,7 +29,7 @@ export const GenesListModal = observer(
     const handleApplyAsync = async () => {
       zoneStore.createSelectedZoneFilter('isGenesList')
       datasetStore.addZone(['Panels', zoneStore.selectedGenesList])
-      await datasetStore.fetchWsListAsync(datasetStore.isXL)
+      await datasetStore.fetchWsListAsync()
 
       close()
     }

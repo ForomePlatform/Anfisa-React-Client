@@ -38,7 +38,7 @@ export const TagsModal = observer(({ close, title }: ITagsModalProps) => {
       datasetStore.addZone(['_tags', [...zoneStore.selectedTags, '_note']])
     }
 
-    await datasetStore.fetchWsListAsync(datasetStore.isXL)
+    await datasetStore.fetchWsListAsync()
 
     datasetStore.fetchFilteredTabReportAsync()
 
