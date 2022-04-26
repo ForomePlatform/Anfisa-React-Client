@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import cn, { Argument } from 'classnames'
 
-interface Props {
+interface IHeaderTableButtonProps {
   refEl: any
   text?: string
   onClick: () => void
@@ -18,7 +18,7 @@ export const HeaderTableButton = ({
   className,
   dataTestId,
   icon,
-}: Props) => (
+}: IHeaderTableButtonProps) => (
   <div
     ref={refEl}
     onClick={onClick}
