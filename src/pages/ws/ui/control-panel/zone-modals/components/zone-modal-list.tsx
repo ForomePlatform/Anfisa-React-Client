@@ -45,7 +45,7 @@ export const ZoneModalList = observer(
               key={item}
               checked={checked}
               onChange={e => handleCheck(e.target.checked, item)}
-              className="flex items-center mb-4 text-12 font-medium"
+              className="flex items-center mb-4 text-12"
             >
               <span data-testid={MainTableDataCy.checkboxListElement}>
                 {item}
