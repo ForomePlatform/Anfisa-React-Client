@@ -1,10 +1,10 @@
-import { Fragment, ReactElement } from 'react'
+import React, { Fragment, ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { FilterModsEnum } from '@core/enum/filter-mods-enum'
 import { t } from '@i18n'
 import zoneStore from '@store/filterZone'
-import { StyledCheckboxContainer } from '@components/styled-checkbox-container'
+import { Checkbox } from '@ui/checkbox/checkbox'
 
 export const ZoneModalMods = observer((): ReactElement => {
   const handleCheck = (checked: boolean, name: string) => {
@@ -21,34 +21,32 @@ export const ZoneModalMods = observer((): ReactElement => {
 
   return (
     <Fragment>
-      <div className="flex mt-3">
-        <div className="mr-6 flex items-center">
-          <StyledCheckboxContainer
-            onChange={e =>
-              handleCheck(
-                e.target.checked,
-                (e.target.name = FilterModsEnum.NOTMode),
-              )
-            }
-            checked={zoneStore.isModeNOT}
-            id={t('ds.notMode')}
-            label={t('ds.notMode')}
-          />
-        </div>
+      <div className="flex my-2">
+        <Checkbox
+          className="mr-6 flex items-center text-12"
+          checked={zoneStore.isModeNOT}
+          onChange={e =>
+            handleCheck(
+              e.target.checked,
+              (e.target.name = FilterModsEnum.NOTMode),
+            )
+          }
+        >
+          {t('ds.notMode')}
+        </Checkbox>
 
-        <div className="mr-6 flex items-center">
-          <StyledCheckboxContainer
-            onChange={e =>
-              handleCheck(
-                e.target.checked,
-                (e.target.name = FilterModsEnum.VariantsWithNotesOnly),
-              )
-            }
-            checked={zoneStore.isModeWithNotes}
-            id={t('ds.variantsWithNotesOnly')}
-            label={t('ds.variantsWithNotesOnly')}
-          />
-        </div>
+        <Checkbox
+          className="mr-6 flex items-center text-12"
+          checked={zoneStore.isModeWithNotes}
+          onChange={e =>
+            handleCheck(
+              e.target.checked,
+              (e.target.name = FilterModsEnum.VariantsWithNotesOnly),
+            )
+          }
+        >
+          {t('ds.variantsWithNotesOnly')}
+        </Checkbox>
       </div>
     </Fragment>
   )
