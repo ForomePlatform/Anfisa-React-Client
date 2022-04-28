@@ -5,7 +5,7 @@ import { t } from '@i18n'
 import datasetStore from '@store/dataset'
 import filterPresetsStore from '@store/filter-presets'
 import { GlbPagesNames } from '@glb/glb-names'
-import { FilterControlOptions } from '@pages/filter/ui/filter-control/filter-control.const'
+import { FilterControlOptions } from '@pages/filter/common/filter-control/filter-control.const'
 import { TCondition, TPropertyStatus } from '@service-providers/common'
 import { IStatfuncArguments } from '@service-providers/filtering-regime'
 import filteringRegimeProvider from '@service-providers/filtering-regime/filtering-regime.provider'
@@ -80,7 +80,7 @@ export class FilterStore {
         if (presetName) {
           this.loadPreset(presetName)
         } else {
-          this.setPresetModifiedState(PresetModifiedState.NotPreset)
+          this.resetPreset()
         }
       },
     )
@@ -291,5 +291,13 @@ export class FilterStore {
           }),
       t('filter.errors.loadPreset', { presetName }),
     )
+  }
+
+  private resetPreset(): void {
+    if (this._presetModifiedState !== PresetModifiedState.Modified) {
+      this.clearConditions()
+    }
+
+    this.setPresetModifiedState(PresetModifiedState.NotPreset)
   }
 }
