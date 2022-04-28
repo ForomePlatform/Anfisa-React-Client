@@ -23,7 +23,8 @@ export const ZoneModalMods = observer((): ReactElement => {
     <Fragment>
       <div className="flex my-2">
         <Checkbox
-          className="mr-6 flex items-center text-12"
+          id={Math.random()}
+          className="mr-6 text-12"
           checked={zoneStore.isModeNOT}
           onChange={e =>
             handleCheck(
@@ -36,7 +37,8 @@ export const ZoneModalMods = observer((): ReactElement => {
         </Checkbox>
 
         <Checkbox
-          className="mr-6 flex items-center text-12"
+          id={Math.random()}
+          className="mr-6 text-12"
           checked={zoneStore.isModeWithNotes}
           onChange={e =>
             handleCheck(

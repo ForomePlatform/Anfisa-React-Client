@@ -26,7 +26,8 @@ export const FilterMods = observer((): ReactElement => {
     <Fragment>
       <div className="flex my-2">
         <Checkbox
-          className="mr-6 flex items-center text-12"
+          id={Math.random()}
+          className="mr-6 text-12"
           checked={zoneStore.isModeNOT}
           onChange={e =>
             handleCheck(e.target, (e.target.name = FilterModsEnum.NOTMode))
@@ -36,7 +37,8 @@ export const FilterMods = observer((): ReactElement => {
         </Checkbox>
 
         <Checkbox
-          className="mr-6 flex items-center text-12"
+          id={Math.random()}
+          className="mr-6 text-12"
           checked={zoneStore.isModeWithNotes}
           onChange={e =>
             handleCheck(

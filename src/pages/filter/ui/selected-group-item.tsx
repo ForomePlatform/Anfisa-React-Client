@@ -20,11 +20,12 @@ export const SelectedGroupItem = ({
 
   return (
     <Checkbox
+      id={Math.random()}
       checked={isSelected}
-      className="flex items-center mb-2 text-14"
       onChange={handleCheck}
+      className="mb-2 text-14"
     >
-      <span className="text-black">{variant[0]}</span>
+      <span>{variant[0]}</span>
 
       <span className="text-grey-blue ml-2">({variant[1]})</span>
     </Checkbox>
