@@ -2,11 +2,9 @@ import { toast } from 'react-toastify'
 import { makeAutoObservable } from 'mobx'
 
 import { getApiUrl } from '@core/get-api-url'
-import datasetStore from '@store/dataset'
 import dirInfoStore from '@store/dirinfo'
 import operationsProvider from '@service-providers/operations/operations.provider'
 import { downloadFile } from '@utils/download-file/download-file'
-
 class HandleDatasetStore {
   public isImportModalShown = false
   public isExportModalShown = false
@@ -22,7 +20,7 @@ class HandleDatasetStore {
   }
 
   public get isExportDisabled() {
-    return !Object.keys(dirInfoStore.dsinfo).length || datasetStore.isXL
+    return !Object.keys(dirInfoStore.dsinfo).length || dirInfoStore.isXL
   }
 
   public get selectedDatasetName() {

@@ -16,7 +16,7 @@ export const GenesModal = observer(({ close, title }: IGenesModalProps) => {
   const [searchValue, setSearchValue] = useState('')
 
   useEffect(() => {
-    datasetStore.genes.length <= 0 && datasetStore.fetchZoneListAsync('Symbol')
+    zoneStore.genes.length <= 0 && zoneStore.fetchZoneListAsync('Symbol')
 
     if (zoneStore.selectedGenes.length > 0) {
       zoneStore.syncSelectedAndLocalFilters('isGenes')
@@ -26,7 +26,7 @@ export const GenesModal = observer(({ close, title }: IGenesModalProps) => {
 
   const handleApplyAsync = async () => {
     zoneStore.createSelectedZoneFilter('isGenes')
-    datasetStore.addZone(['Symbol', zoneStore.selectedGenes])
+    zoneStore.addZone(['Symbol', zoneStore.selectedGenes])
     await datasetStore.fetchWsListAsync()
 
     close()
@@ -49,7 +49,7 @@ export const GenesModal = observer(({ close, title }: IGenesModalProps) => {
       isGenes={true}
     >
       <ZoneModalList
-        items={datasetStore.genes.filter(item =>
+        items={zoneStore.genes.filter(item =>
           item.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
         )}
         isGenes={true}

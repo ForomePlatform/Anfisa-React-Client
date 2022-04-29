@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite'
 
 import { ApproxNameTypes } from '@core/enum/approxNameTypes'
 import { ModeTypes } from '@core/enum/mode-types-enum'
-import datasetStore from '@store/dataset'
+import dirInfoStore from '@store/dirinfo'
 import filterStore from '@store/filter'
 import { AllNotMods } from '@pages/filter/dtree/components/query-builder/ui/all-not-mods'
 import { DisabledVariantsAmount } from '@pages/filter/dtree/components/query-builder/ui/disabled-variants-amount'
@@ -30,7 +30,7 @@ export const CompundHet = observer((): ReactElement => {
 
       compoundHetStore.setCurrentMode(getCurrentModeType(conditionJoinType))
 
-      if (!datasetStore.isXL) {
+      if (!dirInfoStore.isXL) {
         const selectedFilterApprox = selectedCondition[4] as ICompoundHetArgs
         const approxName = getApproxName(
           selectedFilterApprox['approx'] || undefined,

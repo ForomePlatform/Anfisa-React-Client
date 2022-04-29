@@ -5,6 +5,7 @@ import { ExportTypeEnum } from '@core/enum/export-type.enum'
 import { getApiUrl } from '@core/get-api-url'
 import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
+import zoneStore from '@store/ws/zone'
 import { Routes } from '@router/routes.enum'
 import {
   ICsvExportArguments,
@@ -12,7 +13,6 @@ import {
 } from '@service-providers/operations/operations.interface'
 import operationsProvider from '@service-providers/operations/operations.provider'
 import datasetStore from './dataset'
-
 class OperationsStore {
   savingStatus: [boolean, string] = [false, '']
   isCreationOver = true
@@ -50,8 +50,8 @@ class OperationsStore {
       params.conditions = conditions
     }
 
-    if (datasetStore.zone.length > 0) {
-      params.zone = datasetStore.zone
+    if (zoneStore.zone.length > 0) {
+      params.zone = zoneStore.zone
     }
 
     try {

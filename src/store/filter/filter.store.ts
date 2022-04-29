@@ -3,6 +3,7 @@ import { makeAutoObservable, reaction, runInAction, toJS } from 'mobx'
 
 import { t } from '@i18n'
 import datasetStore from '@store/dataset'
+import dirInfoStore from '@store/dirinfo'
 import filterPresetsStore from '@store/filter-presets'
 import { GlbPagesNames } from '@glb/glb-names'
 import { FilterControlOptions } from '@pages/filter/common/filter-control/filter-control.const'
@@ -66,7 +67,7 @@ export class FilterStore {
 
         // TODO: refactoring: remove it (main table store should control ws_list data)
         if (
-          !datasetStore.isXL &&
+          !dirInfoStore.isXL &&
           query.datasetName &&
           this.method === GlbPagesNames.Refiner
         ) {

@@ -1,7 +1,9 @@
 /* eslint-disable max-lines */
 import { makeAutoObservable, runInAction, toJS } from 'mobx'
 
+import dirInfoStore from '@store/dirinfo'
 import variantStore from '@store/ws/variant'
+import zoneStore from '@store/ws/zone'
 import {
   IRecordDescriptor,
   TCondition,
@@ -12,31 +14,29 @@ import {
   IDsListArguments,
   ITabReport,
 } from '@service-providers/dataset-level/dataset-level.interface'
-import {
-  IWsListArguments,
-  IZoneDescriptor,
-} from '@service-providers/ws-dataset-support/ws-dataset-support.interface'
+import { IWsListArguments } from '@service-providers/ws-dataset-support/ws-dataset-support.interface'
 import wsDatasetProvider from '@service-providers/ws-dataset-support/ws-dataset-support.provider'
-import dirinfoStore from './dirinfo'
 
 const INCREASE_INDEX = 50
 
 export class DatasetStore {
-  variantsAmount = 0
-  tabReport: ITabReport[] = []
-  genes: string[] = []
-  genesList: string[] = []
-  tags: string[] = []
-  samples: string[] = []
-  selectedVariantNumber?: number
-
   wsRecords: IRecordDescriptor[] = []
-  offset = 0
-  filteredNo: number[] = []
-
+  tabReport: ITabReport[] = []
   datasetName = ''
-  zone: any[] = []
+
+  selectedVariantNumber?: number
+  filteredNo: number[] = []
+  variantsAmount = 0
+  offset = 0
   statAmount: TItemsCount | null = null
+  indexTabReport = 0
+  indexFilteredNo = 0
+
+  isLoadingTabReport = false
+  isFetchingMore = false
+  isFilterDisabled = false
+  reportsLoaded = false
+
   memorizedConditions:
     | {
         conditions: ReadonlyArray<TCondition>
@@ -44,16 +44,6 @@ export class DatasetStore {
         zone: any[]
       }
     | undefined = undefined
-
-  indexTabReport = 0
-  indexFilteredNo = 0
-
-  isXL?: boolean = undefined
-  isLoadingTabReport = false
-  isFetchingMore = false
-  isFilterDisabled = false
-
-  reportsLoaded = false
 
   // TODO: temporary for avoid circular dependencies
   getConditions = (): ReadonlyArray<TCondition> => []
@@ -63,10 +53,6 @@ export class DatasetStore {
 
   constructor() {
     makeAutoObservable(this)
-  }
-
-  setIsXL(value: boolean) {
-    this.isXL = value
   }
 
   setIndexTabReport(value: number): void {
@@ -97,54 +83,12 @@ export class DatasetStore {
     this.isLoadingTabReport = value
   }
 
-  setZoneIndex(zone: [string, string[]], index: number): void {
-    this.zone[index] = zone
-  }
-
   setDatasetName(datasetName: string) {
     this.datasetName = datasetName
   }
 
-  addZone(zone: [string, string[], false?]) {
-    if (zone[1].length === 0) {
-      this.zone = this.zone.filter(item => item[0] !== zone[0])
-
-      return
-    }
-
-    if (this.zone.length === 0) {
-      this.zone = [...this.zone, zone]
-
-      return
-    }
-
-    const indexOfExistingZone = this.zone.findIndex(elem => elem[0] === zone[0])
-
-    indexOfExistingZone !== -1
-      ? (this.zone[indexOfExistingZone] = zone)
-      : (this.zone = [...this.zone, zone])
-  }
-
-  removeZone(zone: [string, string[]]) {
-    this.zone.map((item, index) => {
-      if (item[0] === zone[0]) {
-        this.setZoneIndex(zone, index)
-      }
-    })
-
-    this.zone = this.zone.filter(item => item[1].length > 0)
-  }
-
-  clearZone() {
-    this.zone = []
-  }
-
   resetData() {
     this.datasetName = ''
-    this.genes = []
-    this.genesList = []
-    this.samples = []
-    this.tags = []
     this.variantsAmount = 0
     this.statAmount = null
     this.wsRecords = []
@@ -154,7 +98,7 @@ export class DatasetStore {
   async initDatasetAsync(datasetName: string = this.datasetName) {
     this.datasetName = datasetName
 
-    await dirinfoStore.fetchDsinfoAsync(datasetName)
+    await dirInfoStore.fetchDsinfoAsync(datasetName)
     await this.fetchWsListAsync('withoutTabReport')
     await this.fetchFilteredTabReportAsync()
   }
@@ -247,33 +191,6 @@ export class DatasetStore {
     this.setSelectedVariantNumber(undefined)
   }
 
-  async fetchTagSelectAsync() {
-    if (this.isXL) return
-
-    const tagSelect = await wsDatasetProvider.getTagSelect({
-      ds: this.datasetName,
-    })
-
-    runInAction(() => {
-      this.tags = [...tagSelect['tag-list']].filter(item => item !== '_note')
-    })
-  }
-
-  async fetchWsTagsAsync() {
-    if (this.isXL) return
-
-    const wsTags = await wsDatasetProvider.getWsTags({
-      ds: this.datasetName,
-      rec: variantStore.index,
-    })
-
-    runInAction(() => {
-      this.tags = [...wsTags['op-tags'], ...wsTags['check-tags']].filter(
-        item => item !== '_note',
-      )
-    })
-  }
-
   async fetchWsListAsync(kind?: string) {
     this.setIsLoadingTabReport(true)
 
@@ -284,7 +201,7 @@ export class DatasetStore {
 
     if (!this.isFilterDisabled) {
       params.conditions = kind === 'reset' ? [] : this.getConditions()
-      ;(params as IWsListArguments).zone = this.zone
+      ;(params as IWsListArguments).zone = zoneStore.zone
     }
 
     this.indexFilteredNo = 0
@@ -304,27 +221,18 @@ export class DatasetStore {
     return this.filteredNo
   }
 
-  async fetchZoneListAsync(zone: string) {
-    const zoneList = (await wsDatasetProvider.getZoneList({
-      ds: this.datasetName,
-      zone,
-    })) as IZoneDescriptor
+  async fetchWsTagsAsync() {
+    if (dirInfoStore.isXL) return
 
-    runInAction(() => {
-      zone === 'Symbol'
-        ? (this.genes = zoneList.variants)
-        : (this.genesList = zoneList.variants)
+    const wsTags = await wsDatasetProvider.getWsTags({
+      ds: this.datasetName,
+      rec: variantStore.index,
     })
-  }
-
-  async fetchSamplesZoneAsync() {
-    const zoneList = (await wsDatasetProvider.getZoneList({
-      ds: this.datasetName,
-      zone: 'Has_Variant',
-    })) as IZoneDescriptor
 
     runInAction(() => {
-      this.samples = zoneList.variants
+      zoneStore.tags = [...wsTags['op-tags'], ...wsTags['check-tags']].filter(
+        item => item !== '_note',
+      )
     })
   }
 
@@ -332,7 +240,7 @@ export class DatasetStore {
     this.memorizedConditions = {
       conditions: toJS(this.getConditions()),
       activePreset: this.getActivePreset(),
-      zone: toJS(this.zone),
+      zone: toJS(zoneStore.zone),
     }
   }
 

@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite'
 
 import { useDatasetName } from '@core/hooks/use-dataset-name'
 import datasetStore from '@store/dataset'
-import dirinfoStore from '@store/dirinfo'
+import dirInfoStore from '@store/dirinfo'
 import dtreeStore from '@store/dtree'
 import { ExportPanelModal } from '@components/export-panel-modal'
 import { ExportReportButton } from '@components/export-report-button'
@@ -19,7 +19,7 @@ import { ModalViewVariants } from '@pages/filter/dtree/components/modals/compone
 import { FilterRefiner } from '@pages/filter/refiner/components/filter-refiner'
 
 const RefinerPage = observer((): ReactElement => {
-  const isXL = datasetStore.isXL
+  const isXL = dirInfoStore.isXL
 
   const { variantCounts, dnaVariantsCounts, transcriptsCounts } =
     datasetStore.fixedStatAmount
@@ -28,15 +28,15 @@ const RefinerPage = observer((): ReactElement => {
 
   useEffect(() => {
     const initAsync = async () => {
-      await dirinfoStore.fetchDsinfoAsync(datasetStore.datasetName)
+      await dirInfoStore.fetchDsinfoAsync(datasetStore.datasetName)
 
-      if (!datasetStore.isXL) datasetStore.fetchWsListAsync()
+      if (!dirInfoStore.isXL) datasetStore.fetchWsListAsync()
     }
 
     initAsync()
 
     return () => {
-      dirinfoStore.resetData()
+      dirInfoStore.resetData()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -48,7 +48,7 @@ const RefinerPage = observer((): ReactElement => {
       <Header>
         <VariantsCount
           variantCounts={
-            isXL ? (toJS(dirinfoStore.dsinfo).total as number) : variantCounts
+            isXL ? (toJS(dirInfoStore.dsinfo).total as number) : variantCounts
           }
           transcriptsCounts={transcriptsCounts}
           dnaVariantsCounts={dnaVariantsCounts}

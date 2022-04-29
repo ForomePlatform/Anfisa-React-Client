@@ -2,6 +2,7 @@ import { get } from 'lodash'
 import { makeAutoObservable, runInAction, toJS } from 'mobx'
 
 import { IGridLayout, ReccntDisplayItem } from '@declarations'
+import dirInfoStore from '@store/dirinfo'
 import datasetProvider from '@service-providers/dataset-level/dataset.provider'
 import {
   IReccntArguments,
@@ -124,7 +125,7 @@ export class VariantStore {
   }
 
   async fetchVarinatInfoAsync() {
-    if (datasetStore.isXL) return
+    if (dirInfoStore.isXL) return
 
     const details = toJS(
       datasetStore.wsRecords.find(record => record.no === this.index),
@@ -180,7 +181,7 @@ export class VariantStore {
   }
 
   async fetchSelectedTagsAsync(tagList: TTagsDescriptor) {
-    if (datasetStore.isXL) return
+    if (dirInfoStore.isXL) return
 
     const wsTags = await wsDatasetProvider.getWsTags({
       ds: this.dsName,

@@ -3,7 +3,7 @@ import { ChangeEvent, ReactElement } from 'react'
 import { approxOptions } from '@core/approxOptions'
 import { ApproxNameTypes } from '@core/enum/approxNameTypes'
 import { t } from '@i18n'
-import datasetStore from '@store/dataset'
+import dirInfoStore from '@store/dirinfo'
 import { Select } from '@ui/select'
 
 interface IAprroxAndStateProps {
@@ -22,7 +22,7 @@ export const AprroxAndState = ({
       <Select
         value={approx}
         options={approxOptions}
-        disabled={datasetStore.isXL}
+        disabled={dirInfoStore.isXL}
         onChange={(e: ChangeEvent<HTMLSelectElement>) =>
           setApprox(e.target.value as ApproxNameTypes)
         }

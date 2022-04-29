@@ -118,7 +118,7 @@ export const ModalSaveDataset = observer(() => {
     operations.resetSavingStatus()
 
     datasetStore.resetData()
-    datasetStore.clearZone()
+    zoneStore.clearZone()
     filterStore.reset()
     dtreeStore.resetData()
     zoneStore.resetAllSelectedItems()

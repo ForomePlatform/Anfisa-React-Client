@@ -13,7 +13,6 @@ import {
   IDirInfoDatasetDescriptor,
 } from '@service-providers/vault-level/vault-level.interface'
 import vaultProvider from '@service-providers/vault-level/vault-level.provider'
-import datasetStore from './dataset'
 
 type SortDirectionsType = Record<SortDatasets, SortDirection>
 
@@ -30,6 +29,8 @@ class DirInfoStore {
   infoFrameLink: string | string[] = ''
   iframeInfoFullscreen = false
   activeInfoName = ''
+
+  isXL?: boolean = undefined
 
   constructor() {
     makeAutoObservable(this)
@@ -78,6 +79,10 @@ class DirInfoStore {
 
   setDsInfo(dsinfo: IDirInfoDatasetDescriptor) {
     this.dsinfo = dsinfo as any
+  }
+
+  setIsXL(value: boolean) {
+    this.isXL = value
   }
 
   get dsDistKeys() {
@@ -164,7 +169,7 @@ class DirInfoStore {
       this.dsinfo = result
     })
 
-    datasetStore.setIsXL(result?.kind === 'xl')
+    this.setIsXL(result?.kind === 'xl')
   }
 
   resetData() {

@@ -16,6 +16,7 @@ import { useScrollPosition } from '@core/hooks/use-scroll-position'
 import { tableColumnMap } from '@core/table-column-map'
 import { t } from '@i18n'
 import datasetStore from '@store/dataset'
+import dirInfoStore from '@store/dirinfo'
 import filterStore from '@store/filter'
 import columnsStore from '@store/ws/columns'
 import variantStore from '@store/ws/variant'
@@ -101,7 +102,7 @@ export const Table = observer(({ columns, data }: Props): ReactElement => {
 
   const handleOpenVariant = useCallback(
     ({ index }: PropsRow) => {
-      if (window.getSelection()?.toString() || datasetStore.isXL) return
+      if (window.getSelection()?.toString() || dirInfoStore.isXL) return
 
       if (!variantStore.drawerVisible) {
         columnsStore.setColumns(columnsStore.getColumnsForOpenDrawer())
@@ -134,7 +135,7 @@ export const Table = observer(({ columns, data }: Props): ReactElement => {
   const resetTableToInitial = () => {
     filterStore.reset()
     zoneStore.resetAllSelectedItems()
-    datasetStore.clearZone()
+    zoneStore.clearZone()
     datasetStore.fetchWsListAsync('reset')
   }
 

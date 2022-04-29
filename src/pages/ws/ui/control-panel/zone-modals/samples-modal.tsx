@@ -16,7 +16,7 @@ export const SamplesModal = observer(({ close, title }: ISamplesModalProps) => {
   const [searchValue, setSearchValue] = useState('')
 
   useEffect(() => {
-    datasetStore.samples.length <= 0 && datasetStore.fetchSamplesZoneAsync()
+    zoneStore.samples.length <= 0 && zoneStore.fetchZoneSamplesAsync()
 
     if (zoneStore.selectedSamples.length > 0) {
       zoneStore.syncSelectedAndLocalFilters('isSamples')
@@ -26,7 +26,7 @@ export const SamplesModal = observer(({ close, title }: ISamplesModalProps) => {
 
   const handleApplyAsync = async () => {
     zoneStore.createSelectedZoneFilter('isSamples')
-    datasetStore.addZone(['Has_Variant', zoneStore.selectedSamples])
+    zoneStore.addZone(['Has_Variant', zoneStore.selectedSamples])
     await datasetStore.fetchWsListAsync()
 
     datasetStore.fetchFilteredTabReportAsync()
@@ -52,7 +52,7 @@ export const SamplesModal = observer(({ close, title }: ISamplesModalProps) => {
       isSamples={true}
     >
       <ZoneModalList
-        items={datasetStore.samples.filter(item =>
+        items={zoneStore.samples.filter(item =>
           item.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
         )}
         isSamples={true}

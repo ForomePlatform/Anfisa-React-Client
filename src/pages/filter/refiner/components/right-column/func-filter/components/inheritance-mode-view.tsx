@@ -2,7 +2,7 @@ import { ReactElement } from 'react'
 import cn from 'classnames'
 
 import { DefaultProblemGroup } from '@core/enum/default-problem-group-enum'
-import datasetStore from '@store/dataset'
+import dirInfoStore from '@store/dirinfo'
 import { IInheritanceModeArgs } from '@service-providers/common/common.interface'
 
 interface IInheritanceModeViewProps {
@@ -40,7 +40,7 @@ export const InheritanceModeView = ({
           ))
         ) : (
           <div className="pl-4 py-1 pt-2">
-            {datasetStore.isXL
+            {dirInfoStore.isXL
               ? DefaultProblemGroup.HG002
               : DefaultProblemGroup.NA24385}
           </div>

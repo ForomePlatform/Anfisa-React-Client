@@ -16,7 +16,7 @@ export const TagsModal = observer(({ close, title }: ITagsModalProps) => {
   const [searchValue, setSearchValue] = useState('')
 
   useEffect(() => {
-    datasetStore.fetchTagSelectAsync()
+    zoneStore.fetchTagSelectAsync()
 
     if (zoneStore.selectedTags.length > 0) {
       zoneStore.syncSelectedAndLocalFilters('isTags')
@@ -29,13 +29,13 @@ export const TagsModal = observer(({ close, title }: ITagsModalProps) => {
     zoneStore.createSelectedZoneFilter('isTags')
 
     if (zoneStore.isModeNOT) {
-      datasetStore.addZone(['_tags', zoneStore.selectedTags, false])
+      zoneStore.addZone(['_tags', zoneStore.selectedTags, false])
     } else {
-      datasetStore.addZone(['_tags', zoneStore.selectedTags])
+      zoneStore.addZone(['_tags', zoneStore.selectedTags])
     }
 
     if (zoneStore.isModeWithNotes) {
-      datasetStore.addZone(['_tags', [...zoneStore.selectedTags, '_note']])
+      zoneStore.addZone(['_tags', [...zoneStore.selectedTags, '_note']])
     }
 
     await datasetStore.fetchWsListAsync()
@@ -62,7 +62,7 @@ export const TagsModal = observer(({ close, title }: ITagsModalProps) => {
       isTags={true}
     >
       <ZoneModalList
-        items={datasetStore.tags.filter(item =>
+        items={zoneStore.tags.filter(item =>
           item.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
         )}
         isTags={true}

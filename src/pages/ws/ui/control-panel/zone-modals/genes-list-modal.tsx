@@ -17,8 +17,7 @@ export const GenesListModal = observer(
     const [searchValue, setSearchValue] = useState('')
 
     useEffect(() => {
-      datasetStore.genesList.length <= 0 &&
-        datasetStore.fetchZoneListAsync('Panels')
+      zoneStore.genesList.length <= 0 && zoneStore.fetchZoneListAsync('Panels')
 
       if (zoneStore.selectedGenesList.length > 0) {
         zoneStore.syncSelectedAndLocalFilters('isGenesList')
@@ -28,7 +27,7 @@ export const GenesListModal = observer(
 
     const handleApplyAsync = async () => {
       zoneStore.createSelectedZoneFilter('isGenesList')
-      datasetStore.addZone(['Panels', zoneStore.selectedGenesList])
+      zoneStore.addZone(['Panels', zoneStore.selectedGenesList])
       await datasetStore.fetchWsListAsync()
 
       close()
@@ -51,7 +50,7 @@ export const GenesListModal = observer(
         isGenesList={true}
       >
         <ZoneModalList
-          items={datasetStore.genesList.filter(item =>
+          items={zoneStore.genesList.filter(item =>
             item.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
           )}
           isGenesList={true}

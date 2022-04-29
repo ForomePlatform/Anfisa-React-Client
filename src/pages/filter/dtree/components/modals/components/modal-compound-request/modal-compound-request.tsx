@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite'
 import { ActionType } from '@declarations'
 import { ApproxNameTypes } from '@core/enum/approxNameTypes'
 import { ModeTypes } from '@core/enum/mode-types-enum'
-import datasetStore from '@store/dataset'
+import dirInfoStore from '@store/dirinfo'
 import dtreeStore from '@store/dtree'
 import activeStepStore from '@pages/filter/dtree/components/active-step.store'
 import { AllNotMods } from '@pages/filter/dtree/components/query-builder/ui/all-not-mods'
@@ -46,7 +46,7 @@ export const ModalCompoundRequest = observer((): ReactElement => {
     }
 
     modalCompoundRequestStore.setApprox(
-      datasetStore.isXL
+      dirInfoStore.isXL
         ? ApproxNameTypes.Non_Intersecting_Transcript
         : ApproxNameTypes.Shared_Gene,
     )
