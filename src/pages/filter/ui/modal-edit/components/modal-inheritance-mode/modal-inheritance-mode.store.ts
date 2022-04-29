@@ -24,13 +24,9 @@ class ModalInheritanceModeStore {
     makeAutoObservable(this)
   }
 
-  public setCurrentMode(modeType: ModeTypes) {
-    if (!modeType) {
+  public setCurrentMode(modeType?: ModeTypes) {
+    if (!modeType || this.currentMode === modeType) {
       this.currentMode = undefined
-    }
-
-    if (this.currentMode === modeType) {
-      this.resetCurrentMode()
 
       return
     }

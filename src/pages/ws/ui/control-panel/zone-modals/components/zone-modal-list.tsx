@@ -42,7 +42,7 @@ export const ZoneModalList = observer(
           return (
             <Checkbox
               key={itemName + index}
-              checked={checked || false}
+              checked={!!checked}
               onChange={e => handleCheck(e.target.checked, itemName)}
               id={itemName + index}
               datatestId={MainTableDataCy.checkboxListElement}

@@ -18,8 +18,7 @@ export const SelectedGroupItem = ({
     handleCheckGroupItem(event.target.checked, variant)
   }
 
-  const variantName = variant[0]
-  const variantValue = variant[1]
+  const [variantName, variantValue] = variant
 
   return (
     <Checkbox
