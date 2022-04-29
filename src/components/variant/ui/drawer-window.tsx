@@ -139,7 +139,7 @@ export const DrawerWindow = observer(
                 onClick={(event: MouseEvent) => event.stopPropagation()}
               >
                 <Checkbox
-                  id={Math.random()}
+                  id={'drawer-window-checkbox'}
                   checked={isChecked}
                   onChange={(event: ChangeEvent<HTMLInputElement>) => {
                     handleSelection(event.target.checked)

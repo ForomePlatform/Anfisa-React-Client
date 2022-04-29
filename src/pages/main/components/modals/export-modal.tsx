@@ -20,7 +20,7 @@ export const ExportModal = observer(() => {
         isLoading={handleDatasetStore.isExporting}
       >
         <Checkbox
-          id={Math.random()}
+          id={'with-support-checkbox'}
           checked={handleDatasetStore.isSupportSelected}
           className="mb-4 text-12"
           onChange={e => handleDatasetStore.toggleSupport(e.target.checked)}
@@ -29,7 +29,7 @@ export const ExportModal = observer(() => {
         </Checkbox>
 
         <Checkbox
-          id={Math.random()}
+          id={'with-documentation-checkbox'}
           checked={handleDatasetStore.isDocumentationSelected}
           className="mb-4 text-12"
           onChange={e =>
