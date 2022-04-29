@@ -46,10 +46,7 @@ export const CheckInput: FC<ICheckInputProps> = ({
         disabled={disabled}
       />
 
-      <label
-        className={styles.checkmark}
-        htmlFor={`${'checkbox'} + ${id}`}
-      ></label>
+      <label className={styles.checkmark} htmlFor={`${'checkbox'} + ${id}`} />
 
       <label
         className={styles.label}

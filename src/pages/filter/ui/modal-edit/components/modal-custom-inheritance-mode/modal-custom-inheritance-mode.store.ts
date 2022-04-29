@@ -41,6 +41,16 @@ class ModalCustomInheritanceModeStore {
   }
 
   public setCurrentMode(modeType: ModeTypes) {
+    if (!modeType) {
+      this.currentMode = undefined
+    }
+
+    if (this.currentMode === modeType) {
+      this.resetCurrentMode()
+
+      return
+    }
+
     this.currentMode = modeType
   }
 
