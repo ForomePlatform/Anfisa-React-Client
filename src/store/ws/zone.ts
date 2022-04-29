@@ -2,7 +2,7 @@ import { difference } from 'lodash'
 import { makeAutoObservable } from 'mobx'
 
 import wsDatasetProvider from '@service-providers/ws-dataset-support/ws-dataset-support.provider'
-import datasetStore from './dataset'
+import datasetStore from '../dataset'
 
 class ZoneStore {
   selectedGenes: string[] = []

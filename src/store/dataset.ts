@@ -1,7 +1,7 @@
 /* eslint-disable max-lines */
 import { makeAutoObservable, runInAction, toJS } from 'mobx'
 
-import variantStore from '@store/variant'
+import variantStore from '@store/ws/variant'
 import {
   IRecordDescriptor,
   TCondition,

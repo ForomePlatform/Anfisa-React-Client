@@ -16,7 +16,7 @@ import { IGridLayout } from '@declarations'
 import { t } from '@i18n'
 import { theme } from '@theme'
 import dirinfoStore from '@store/dirinfo'
-import variantStore from '@store/variant'
+import variantStore from '@store/ws/variant'
 import { Checkbox } from '@ui/checkbox/checkbox'
 import { Icon } from '@ui/icon'
 import {

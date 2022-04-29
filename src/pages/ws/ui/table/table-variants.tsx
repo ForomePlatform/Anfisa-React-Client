@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { theme } from '@theme'
 import datasetStore from '@store/dataset'
-import columnsStore from '@store/wsColumns'
+import columnsStore from '@store/ws/columns'
 import { Loader } from '@components/loader'
 import { Table } from './table'
 

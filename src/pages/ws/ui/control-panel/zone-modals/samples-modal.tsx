@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
 import datasetStore from '@store/dataset'
-import zoneStore from '@store/filterZone'
+import zoneStore from '@store/ws/zone'
 import { PopperTableModal } from '@components/popper-table-modal'
 import { ZoneModalList } from './components/zone-modal-list'
 
