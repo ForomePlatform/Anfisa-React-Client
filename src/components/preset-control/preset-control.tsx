@@ -1,4 +1,4 @@
-import { Fragment, ReactElement, useEffect, useMemo, useState } from 'react'
+import { ReactElement, useEffect, useMemo, useState } from 'react'
 
 import { useModal } from '@core/hooks/use-modal'
 import { PresetControlPopover } from '@components/preset-control/preset-control-popover'
@@ -57,7 +57,7 @@ export const PresetControl = ({
   }, [isPopoverOpen, selectedProp])
 
   return (
-    <Fragment>
+    <>
       <PresetControlButton
         className={className}
         presetName={selectedProp}
@@ -103,6 +103,6 @@ export const PresetControl = ({
           onCreate(presetName)
         }}
       />
-    </Fragment>
+    </>
   )
 }

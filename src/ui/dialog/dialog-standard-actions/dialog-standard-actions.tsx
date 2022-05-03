@@ -1,4 +1,4 @@
-import React, { Fragment, ReactElement } from 'react'
+import React, { ReactElement } from 'react'
 
 import { t } from '@i18n'
 import { Button } from '@ui/button'
@@ -22,7 +22,7 @@ export const DialogStandardActions = ({
   isLoading,
 }: IDialogStandardActionsProps): ReactElement => {
   return (
-    <Fragment>
+    <>
       <Button
         text={cancelText || t('general.cancel')}
         variant="tertiary"
@@ -39,6 +39,6 @@ export const DialogStandardActions = ({
         }
         onClick={onApply}
       />
-    </Fragment>
+    </>
   )
 }

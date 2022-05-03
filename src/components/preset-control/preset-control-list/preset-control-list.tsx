@@ -1,6 +1,6 @@
 import styles from './preset-control-list.module.css'
 
-import { Fragment, ReactElement, useState } from 'react'
+import { ReactElement, useState } from 'react'
 
 import { t } from '@i18n'
 import { Icon } from '@ui/icon'
@@ -35,7 +35,7 @@ export const PresetControlList = ({
   }
 
   return (
-    <Fragment>
+    <>
       <MenuList className={className} wrap="nowrap">
         {presets?.map(({ name, standard }) => (
           <MenuListItem
@@ -87,6 +87,6 @@ export const PresetControlList = ({
           </MenuList>
         </div>
       </Popover>
-    </Fragment>
+    </>
   )
 }
