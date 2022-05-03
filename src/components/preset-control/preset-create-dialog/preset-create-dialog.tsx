@@ -1,7 +1,6 @@
 import { ReactElement, useState } from 'react'
 
 import { t } from '@i18n'
-import { Button } from '@ui/button'
 import { Dialog } from '@ui/dialog'
 import { Input } from '@ui/input'
 
@@ -23,23 +22,9 @@ export const PresetCreateDialog = ({
       isOpen={isOpen}
       onClose={onClose}
       title={t('presetControl.createDialog.title')}
-      actions={
-        <>
-          <Button
-            variant="tertiary"
-            onClick={onClose}
-            text={t('general.cancel')}
-          />
-          <Button
-            variant="primary"
-            disabled={!presetName}
-            onClick={() => {
-              onCreate(presetName)
-            }}
-            text={t('general.create')}
-          />
-        </>
-      }
+      applyText={t('general.create')}
+      isApplyDisabled={!presetName}
+      onApply={() => onCreate(presetName)}
     >
       <Input
         value={presetName}

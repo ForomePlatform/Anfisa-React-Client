@@ -1,14 +1,13 @@
 import { ReactElement } from 'react'
 
 import { t } from '@i18n'
-import { Button } from '@ui/button'
 import { Dialog } from '@ui/dialog'
 
 interface IPresetDeleteDialog {
   isOpen?: boolean
   onClose: () => void
   onDelete: () => void
-  presetName: string
+  presetName?: string
 }
 
 export const PresetDeleteDialog = ({
@@ -22,20 +21,9 @@ export const PresetDeleteDialog = ({
       isOpen={isOpen}
       onClose={onClose}
       title={t('presetControl.deleteDialog.title')}
-      actions={
-        <>
-          <Button
-            variant="secondary"
-            onClick={onClose}
-            text={t('presetControl.deleteDialog.cancel')}
-          />
-          <Button
-            variant="primary"
-            onClick={onDelete}
-            text={t('presetControl.deleteDialog.confirm')}
-          />
-        </>
-      }
+      cancelText={t('presetControl.deleteDialog.cancel')}
+      applyText={t('presetControl.deleteDialog.confirm')}
+      onApply={onDelete}
     >
       <p>{t('presetControl.deleteDialog.message', { presetName })}</p>
     </Dialog>

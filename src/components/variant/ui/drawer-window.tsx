@@ -3,7 +3,6 @@ import {
   Dispatch,
   MouseEvent,
   SetStateAction,
-  useEffect,
   useRef,
   useState,
 } from 'react'
@@ -42,27 +41,10 @@ export const DrawerWindow = observer(
     setLayout: Dispatch<SetStateAction<IGridLayout[]>>
   }) => {
     const ref = useRef<HTMLDivElement>(null)
-    const scrollableRef = useRef<HTMLDivElement>(null)
-    const shadowsRef = useRef<HTMLDivElement>(null)
 
     const [filterSelection, setFilterSelection] = useState(
       DrawerClass.normClass,
     )
-
-    useEffect(() => {
-      if (scrollableRef.current) {
-        const observer = new ResizeObserver(entries => {
-          if (shadowsRef.current) {
-            const { width, height } = entries[0].contentRect
-            shadowsRef.current.style.width = `${width}px`
-            shadowsRef.current.style.height = `${height}px`
-          }
-        })
-        observer.observe(scrollableRef.current)
-
-        return () => observer.disconnect()
-      }
-    }, [])
 
     const { shouldAddShadow, handleScroll, handleStartScroll } =
       useScrollShadow(ref.current)
@@ -183,32 +165,11 @@ export const DrawerWindow = observer(
             />
           </div>
         </div>
-        <div
-          ref={shadowsRef}
-          style={{
-            position: 'absolute',
-            left: 0,
-            top: 0,
-          }}
-        >
-          <div
-            style={{
-              position: 'absolute',
-              right: 0,
-              width: '30px',
-              top: 0,
-              bottom: 0,
-              background: 'lime',
-              zIndex: 60,
-            }}
-          />
-        </div>
         <ScrollContainer
-          innerRef={scrollableRef}
           hideScrollbars={false}
           onScroll={handleScroll}
           onStartScroll={handleStartScroll}
-          className="cursor-grab z-50"
+          className="cursor-grab"
         >
           <div
             className={cn('py-3 pr-3   content-child')}

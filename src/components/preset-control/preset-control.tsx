@@ -1,17 +1,11 @@
-import styles from './preset-control.module.css'
-
 import { Fragment, ReactElement, useEffect, useMemo, useState } from 'react'
-import cn from 'classnames'
 
 import { useModal } from '@core/hooks/use-modal'
-import { t } from '@i18n'
-import { Button } from '@ui/button'
-import { Icon } from '@ui/icon'
-import { Popover } from '@ui/popover'
-import { PresetControlList } from '@components/preset-control/preset-control-list'
-import { PresetCreateDialog } from '@components/preset-control/preset-create-dialog'
-import { PresetDeleteDialog } from '@components/preset-control/preset-delete-dialog'
+import { PresetControlPopover } from '@components/preset-control/preset-control-popover'
 import { ISolutionEntryDescription } from '@service-providers/common'
+import { PresetControlButton } from './preset-control-button'
+import { PresetCreateDialog } from './preset-create-dialog'
+import { PresetDeleteDialog } from './preset-delete-dialog'
 
 interface IPresetControlProps {
   className?: string
@@ -64,111 +58,33 @@ export const PresetControl = ({
 
   return (
     <Fragment>
-      <button
-        className={cn(styles.presetControlButton, className)}
+      <PresetControlButton
+        className={className}
+        presetName={selectedProp}
+        isOpen={isPopoverOpen}
+        isDeleteShown={isSelectedPresetNonStandard}
+        onDeleteClick={() => {
+          openDeleteDialog({ presetName: selectedProp })
+        }}
         onClick={event =>
           isPopoverOpen ? closePopover() : setPopoverAnchor(event.currentTarget)
         }
         onMouseUp={event => event.stopPropagation()}
-      >
-        <span className={styles.presetControlButton__label}>
-          {selectedProp || t('presetControl.selectPreset')}
-        </span>
-        <span
-          className={cn(
-            styles.presetControlButton__icon,
-            isSelectedPresetNonStandard &&
-              styles.presetControlButton__icon_delete,
-          )}
-        >
-          {isSelectedPresetNonStandard ? (
-            <Icon
-              name="Delete"
-              size={16}
-              onClick={event => {
-                event.stopPropagation()
-                openDeleteDialog({ presetName: selectedProp })
-              }}
-            />
-          ) : (
-            <span
-              className={cn(
-                styles.presetControlButton__arrow,
-                isPopoverOpen && styles.presetControlButton_open,
-              )}
-            />
-          )}
-        </span>
-      </button>
-      <Popover
+      />
+      <PresetControlPopover
         isOpen={isPopoverOpen}
+        isCreateDisabled={isCreateDisabled}
         onClose={closePopover}
         anchorEl={popoverAnchor}
-      >
-        <section className={styles.presetControlCard}>
-          <header className={styles.presetControlCard__header}>
-            <button
-              disabled={isCreateDisabled}
-              className={cn(
-                styles.presetControlCard__createButton,
-                isCreateDisabled &&
-                  styles.presetControlCard__createButton_disabled,
-              )}
-              onClick={() => {
-                closePopover()
-                openCreateDialog()
-              }}
-            >
-              {t('presetControl.createNewPreset')}
-            </button>
-          </header>
-          {presets && (
-            <PresetControlList
-              className={styles.presetControlCard__list}
-              presets={presets}
-              selected={selected}
-              onSelect={setSelected}
-              onModify={presetName => {
-                closePopover()
-                onModify(presetName)
-              }}
-              onDelete={presetName => {
-                closePopover()
-                openDeleteDialog({ presetName })
-              }}
-            />
-          )}
-          <footer className={styles.presetControlCard__actions}>
-            <Button
-              className={styles.presetControlCard__button}
-              variant="tertiary"
-              text={t('general.cancel')}
-              onClick={closePopover}
-            />
-            {onJoin && (
-              <Button
-                className={styles.presetControlCard__button}
-                variant="secondary"
-                text={t('presetControl.join')}
-                disabled={!selected}
-                onClick={() => {
-                  onJoin(selected)
-                  closePopover()
-                }}
-              />
-            )}
-            <Button
-              className={styles.presetControlCard__button}
-              text={t('presetControl.apply')}
-              disabled={!selected}
-              onClick={() => {
-                onApply(selected)
-                closePopover()
-              }}
-            />
-          </footer>
-        </section>
-      </Popover>
+        presets={presets}
+        selected={selected}
+        onCreate={() => openCreateDialog()}
+        onSelect={setSelected}
+        onJoin={onJoin}
+        onApply={onApply}
+        onModify={onModify}
+        onDelete={presetName => openDeleteDialog({ presetName })}
+      />
       <PresetDeleteDialog
         {...deleteDialog}
         onClose={closeDeleteDialog}
@@ -178,7 +94,6 @@ export const PresetControl = ({
             onDelete(deleteDialog.presetName)
           }
         }}
-        presetName={selected}
       />
       <PresetCreateDialog
         {...createDialog}
