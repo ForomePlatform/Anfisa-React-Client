@@ -1,4 +1,4 @@
-import { Fragment, ReactElement } from 'react'
+import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import filterStore from '@store/filter'
@@ -17,7 +17,7 @@ export const FilterControlRefiner = observer((): ReactElement => {
   const { activePreset, availablePresets } = filterPresetsStore
 
   return (
-    <Fragment>
+    <>
       <PresetControl
         selected={activePreset}
         presets={availablePresets}
@@ -29,6 +29,6 @@ export const FilterControlRefiner = observer((): ReactElement => {
         onDelete={deletePreset}
       />
       <DatasetCreationButton />
-    </Fragment>
+    </>
   )
 })
