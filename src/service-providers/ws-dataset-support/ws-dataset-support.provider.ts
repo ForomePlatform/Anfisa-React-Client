@@ -1,3 +1,5 @@
+import { AxiosRequestConfig } from 'axios'
+
 import { ServiceProviderBase } from './../common/service-provider-base'
 import {
   IMacroTagging,
@@ -17,8 +19,11 @@ class WsDatasetSupportProvider extends ServiceProviderBase {
     super()
   }
 
-  public getWsList(params: IWsListArguments): Promise<IWsList> {
-    return this.post<IWsList>('/ws_list', params).then(res => res.data)
+  public getWsList(
+    params: IWsListArguments,
+    options: Partial<AxiosRequestConfig> = {},
+  ): Promise<IWsList> {
+    return this.post<IWsList>('/ws_list', params, options).then(res => res.data)
   }
 
   public getZoneList(params: IZoneListArguments): Promise<TZoneList> {

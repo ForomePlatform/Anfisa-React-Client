@@ -8,6 +8,7 @@ import { useParams } from '@core/hooks/use-params'
 import datasetStore from '@store/dataset'
 import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
+import mainTableStore from '@store/ws/main-table'
 import variantStore from '@store/ws/variant'
 import { ExportPanelModal } from '@components/export-panel-modal'
 import { ExportReportButton } from '@components/export-report-button'
@@ -60,7 +61,7 @@ const WSPage = observer((): ReactElement => {
   }, [])
 
   const { variantCounts, dnaVariantsCounts, transcriptsCounts } =
-    datasetStore.fixedStatAmount
+    mainTableStore.fixedStatAmount
 
   return (
     <Fragment>

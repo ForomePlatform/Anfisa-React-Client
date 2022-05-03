@@ -5,7 +5,7 @@ import { ActionType } from '@declarations'
 import { ApproxNameTypes } from '@core/enum/approxNameTypes'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
-import dirInfoStore from '@store/dirinfo'
+import datasetStore from '@store/dataset'
 import dtreeStore from '@store/dtree'
 import modalsControlStore, {
   IParams,
@@ -216,7 +216,7 @@ class ModalCompoundRequestStore {
 
   public addAttribute(action: ActionType): void {
     const params: IParams = {
-      approx: dirInfoStore.isXL ? null : getApproxValue(this.approx),
+      approx: datasetStore.isXL ? null : getApproxValue(this.approx),
     }
 
     params.request = this.requestCondition
@@ -232,7 +232,7 @@ class ModalCompoundRequestStore {
 
   public saveChanges(): void {
     const params: IParams = {
-      approx: dirInfoStore.isXL ? null : getApproxValue(this.approx),
+      approx: datasetStore.isXL ? null : getApproxValue(this.approx),
     }
 
     params.request = this.requestCondition
@@ -275,7 +275,7 @@ class ModalCompoundRequestStore {
 
     this.setCurrentMode(getCurrentModeType(conditionJoinType))
 
-    if (!dirInfoStore.isXL) {
+    if (!datasetStore.isXL) {
       const selectedFilterApprox = currentGroup[4] as ICompoundRequestArgs
 
       const approxName = getApproxName(
@@ -300,7 +300,7 @@ class ModalCompoundRequestStore {
 
   public getParams(requestString: string) {
     return JSON.stringify({
-      approx: dirInfoStore.isXL ? null : getApproxValue(this.approx),
+      approx: datasetStore.isXL ? null : getApproxValue(this.approx),
       state: null,
       request: JSON.parse(requestString),
     })

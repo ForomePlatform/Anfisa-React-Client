@@ -12,6 +12,7 @@ import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
 import filterPresetsStore from '@store/filter-presets'
 import operations from '@store/operations'
+import mainTableStore from '@store/ws/main-table'
 import zoneStore from '@store/ws/zone'
 import { Routes } from '@router/routes.enum'
 import { Button } from '@ui/button'
@@ -38,7 +39,7 @@ export const ModalSaveDataset = observer(() => {
   const isDone = operations.savingStatus[1] === 'Done'
 
   useEffect(() => {
-    const { variantCounts } = datasetStore.fixedStatAmount
+    const { variantCounts } = mainTableStore.fixedStatAmount
     const { conditions } = filterStore
 
     if (

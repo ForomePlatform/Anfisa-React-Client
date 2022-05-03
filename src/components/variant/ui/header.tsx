@@ -7,8 +7,8 @@ import { observer } from 'mobx-react-lite'
 import { useKeydown } from '@core/hooks/use-keydown'
 import { useVariantIndex } from '@core/hooks/use-variant-index'
 import datasetStore from '@store/dataset'
-import dirinfoStore from '@store/dirinfo'
 import columnsStore from '@store/ws/columns'
+import mainTableStore from '@store/ws/main-table'
 import variantStore from '@store/ws/variant'
 import { Routes } from '@router/routes.enum'
 import { Button } from '@ui/button'
@@ -38,10 +38,10 @@ export const VariantHeader = observer(({ setLayout }: Props): ReactElement => {
   const hg19locus = findElementInRow(rows, 'hg19')
   const hg38locus = findElementInRow(rows, 'hg38')
 
-  const { locusMode } = dirinfoStore
+  const { locusMode } = datasetStore
   const currentLocus = locusMode === HgModes.HG19 ? hg19locus : hg38locus
 
-  const filteredNo = toJS(datasetStore.filteredNo)
+  const filteredNo = toJS(mainTableStore.filteredNo)
 
   const canGetPrevVariant = (): boolean => {
     return !(filteredNo[filteredNo.indexOf(variantStore.index) - 1] >= 0)
@@ -70,8 +70,9 @@ export const VariantHeader = observer(({ setLayout }: Props): ReactElement => {
 
   const handleCloseDrawer = () => {
     // TODO: add this requests to "Apply" btn in modals for change tags and notes in another task
-    datasetStore.fetchWsListAsync()
-    datasetStore.fetchWsTagsAsync()
+
+    mainTableStore.fetchFilteredTabReportAsync()
+    mainTableStore.fetchWsTagsAsync()
 
     columnsStore.closeDrawer()
 

@@ -1,7 +1,5 @@
-import { difference } from 'lodash'
 import { makeAutoObservable, runInAction } from 'mobx'
 
-import dirInfoStore from '@store/dirinfo'
 import { IZoneDescriptor } from '@service-providers/ws-dataset-support/ws-dataset-support.interface'
 import wsDatasetProvider from '@service-providers/ws-dataset-support/ws-dataset-support.provider'
 import datasetStore from '../dataset'
@@ -99,8 +97,6 @@ class ZoneStore {
   }
 
   async fetchZoneTagsAsync() {
-    if (dirInfoStore.isXL) return
-
     const tagSelect = await wsDatasetProvider.getTagSelect({
       ds: datasetStore.datasetName,
     })
@@ -262,44 +258,6 @@ class ZoneStore {
     this.setModeWithNotes(false)
     this.modeNotSubmitted = false
     this.modeWithNotesSubmitted = false
-  }
-
-  async fetchTagSelectAsync() {
-    if (this.selectedTags.length === 0 && !this.isModeWithNotes) {
-      datasetStore.indexTabReport = 0
-      await datasetStore.fetchTabReportAsync()
-
-      return
-    }
-
-    this.isModeWithNotes && this.selectedTags.push('_note')
-
-    if (!this.isModeWithNotes && this.selectedTags.includes('_note')) {
-      this.selectedTags = this.selectedTags.filter(item => item !== '_note')
-    }
-
-    const filteredData = await Promise.all(
-      (this.isModeNOT
-        ? difference(this.tags, this.selectedTags)
-        : this.selectedTags
-      ).map(async tag => {
-        const tagSelect = await wsDatasetProvider.getTagSelect({
-          ds: datasetStore.datasetName,
-          tag,
-        })
-
-        const currentNo = tagSelect['tag-rec-list']
-
-        return currentNo
-      }),
-    )
-
-    const uniqueNo = Array.from(new Set(filteredData.flat()))
-
-    datasetStore.indexFilteredNo = 0
-    datasetStore.filteredNo = uniqueNo as number[]
-
-    await datasetStore.fetchFilteredTabReportAsync()
   }
 
   setModeNOT(value: boolean) {

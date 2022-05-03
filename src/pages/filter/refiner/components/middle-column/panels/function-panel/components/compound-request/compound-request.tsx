@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite'
 import { ApproxNameTypes } from '@core/enum/approxNameTypes'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
-import dirInfoStore from '@store/dirinfo'
+import datasetStore from '@store/dataset'
 import filterStore from '@store/filter'
 import { AllNotMods } from '@pages/filter/dtree/components/query-builder/ui/all-not-mods'
 import { DisabledVariantsAmount } from '@pages/filter/dtree/components/query-builder/ui/disabled-variants-amount'
@@ -40,7 +40,7 @@ export const CompoundRequest = observer((): ReactElement => {
       compoundRequestStore.setCurrentMode(getCurrentModeType(conditionJoinType))
       compoundRequestStore.setRequestCondition(selectedFilterRequest)
 
-      if (!dirInfoStore.isXL) {
+      if (!datasetStore.isXL) {
         const selectedFilterApprox =
           selectedCondition[4] as ICompoundRequestArgs
 
@@ -62,7 +62,7 @@ export const CompoundRequest = observer((): ReactElement => {
     filterStore.fetchStatFuncAsync(
       FuncStepTypesEnum.CompoundRequest,
       JSON.stringify({
-        approx: dirInfoStore.isXL ? null : getApproxValue(approx),
+        approx: datasetStore.isXL ? null : getApproxValue(approx),
         state: null,
         request: JSON.parse(selectedFilterValue),
       }),

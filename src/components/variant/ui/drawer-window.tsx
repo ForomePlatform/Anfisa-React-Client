@@ -15,7 +15,7 @@ import { observer } from 'mobx-react-lite'
 import { IGridLayout } from '@declarations'
 import { t } from '@i18n'
 import { theme } from '@theme'
-import dirinfoStore from '@store/dirinfo'
+import datasetStore from '@store/dataset'
 import variantStore from '@store/ws/variant'
 import { Checkbox } from '@ui/checkbox/checkbox'
 import { Icon } from '@ui/icon'
@@ -64,7 +64,7 @@ export const DrawerWindow = observer(
 
     const isChecked = filterSelection !== DrawerClass.normClass
 
-    const igvUrls = dirinfoStore.dsinfo['igv-urls'] as string[] | undefined
+    const igvUrls = datasetStore.dsinfo['igv-urls'] as string[] | undefined
     const shouldShowIgvBtn = igvUrls && aspect.name === 'view_gen'
 
     return (

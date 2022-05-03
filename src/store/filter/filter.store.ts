@@ -3,7 +3,6 @@ import { makeAutoObservable, reaction, runInAction, toJS } from 'mobx'
 
 import { t } from '@i18n'
 import datasetStore from '@store/dataset'
-import dirInfoStore from '@store/dirinfo'
 import filterPresetsStore from '@store/filter-presets'
 import { GlbPagesNames } from '@glb/glb-names'
 import { FilterControlOptions } from '@pages/filter/common/filter-control/filter-control.const'
@@ -39,9 +38,6 @@ export class FilterStore {
   constructor() {
     makeAutoObservable(this)
 
-    // TODO: temporary for avoid circular references
-    datasetStore.getConditions = () => this.conditions
-
     reaction(
       () => this.datasetName,
       datasetName => {
@@ -63,15 +59,6 @@ export class FilterStore {
           this.filteredStat.setQuery(query)
         } else {
           this.filteredStat.reset()
-        }
-
-        // TODO: refactoring: remove it (main table store should control ws_list data)
-        if (
-          !dirInfoStore.isXL &&
-          query.datasetName &&
-          this.method === GlbPagesNames.Refiner
-        ) {
-          datasetStore.fetchWsListAsync()
         }
       },
     )

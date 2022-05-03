@@ -7,6 +7,7 @@ import { useDatasetName } from '@core/hooks/use-dataset-name'
 import datasetStore from '@store/dataset'
 import dirInfoStore from '@store/dirinfo'
 import dtreeStore from '@store/dtree'
+import mainTableStore from '@store/ws/main-table'
 import { ExportPanelModal } from '@components/export-panel-modal'
 import { ExportReportButton } from '@components/export-report-button'
 import { Header } from '@components/header'
@@ -17,20 +18,17 @@ import { FilterControl } from '@pages/filter/common/filter-control/filter-contro
 import { ModalSaveDataset } from '@pages/filter/dtree/components/modals/components/modal-save-dataset'
 import { ModalViewVariants } from '@pages/filter/dtree/components/modals/components/modal-view-variants'
 import { FilterRefiner } from '@pages/filter/refiner/components/filter-refiner'
-
 const RefinerPage = observer((): ReactElement => {
-  const isXL = dirInfoStore.isXL
+  const isXL = datasetStore.isXL
 
   const { variantCounts, dnaVariantsCounts, transcriptsCounts } =
-    datasetStore.fixedStatAmount
+    mainTableStore.fixedStatAmount
 
   useDatasetName()
 
   useEffect(() => {
     const initAsync = async () => {
-      await dirInfoStore.fetchDsinfoAsync(datasetStore.datasetName)
-
-      if (!dirInfoStore.isXL) datasetStore.fetchWsListAsync()
+      await datasetStore.fetchDsinfoAsync(datasetStore.datasetName)
     }
 
     initAsync()
@@ -48,7 +46,7 @@ const RefinerPage = observer((): ReactElement => {
       <Header>
         <VariantsCount
           variantCounts={
-            isXL ? (toJS(dirInfoStore.dsinfo).total as number) : variantCounts
+            isXL ? (toJS(datasetStore.dsinfo).total as number) : variantCounts
           }
           transcriptsCounts={transcriptsCounts}
           dnaVariantsCounts={dnaVariantsCounts}

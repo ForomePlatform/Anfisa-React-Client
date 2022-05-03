@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite'
 import { formatNumber } from '@core/format-number'
 import { useParams } from '@core/hooks/use-params'
 import { t } from '@i18n'
-import dirInfoStore from '@store/dirinfo'
+import datasetStore from '@store/dataset'
 import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
 import { Routes } from '@router/routes.enum'
@@ -62,7 +62,7 @@ export const QuerySelected = observer((): ReactElement => {
           />
         </div>
 
-        {dirInfoStore.isXL ? (
+        {datasetStore.isXL ? (
           <Button
             className="ml-auto"
             onClick={() => dtreeStore.openModalViewVariants()}

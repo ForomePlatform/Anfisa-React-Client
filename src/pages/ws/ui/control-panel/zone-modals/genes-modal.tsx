@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
-import datasetStore from '@store/dataset'
 import zoneStore from '@store/ws/zone'
 import { PopperTableModal } from '@components/popper-table-modal'
 import { ZoneModalList } from './components/zone-modal-list'
@@ -27,7 +26,6 @@ export const GenesModal = observer(({ close, title }: IGenesModalProps) => {
   const handleApplyAsync = async () => {
     zoneStore.createSelectedZoneFilter('isGenes')
     zoneStore.addZone(['Symbol', zoneStore.selectedGenes])
-    await datasetStore.fetchWsListAsync()
 
     close()
   }

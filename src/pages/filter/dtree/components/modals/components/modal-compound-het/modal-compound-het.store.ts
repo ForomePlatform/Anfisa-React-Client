@@ -3,7 +3,7 @@ import { makeAutoObservable } from 'mobx'
 import { ActionType } from '@declarations'
 import { ApproxNameTypes } from '@core/enum/approxNameTypes'
 import { ModeTypes } from '@core/enum/mode-types-enum'
-import dirInfoStore from '@store/dirinfo'
+import datasetStore from '@store/dataset'
 import dtreeStore from '@store/dtree'
 import {
   ICompoundHetArgs,
@@ -49,7 +49,7 @@ class ModalCompoundHetStore {
     dtreeStore.addSelectedFilter(modalsControlStore.variants[0][0])
 
     const params: IParams = {
-      approx: dirInfoStore.isXL ? null : getApproxValue(this.approx),
+      approx: datasetStore.isXL ? null : getApproxValue(this.approx),
     }
 
     addAttributeToStep(action, 'func', null, params, this.currentMode)
@@ -70,7 +70,7 @@ class ModalCompoundHetStore {
 
   public saveChanges = () => {
     const params: IParams = {
-      approx: dirInfoStore.isXL ? null : getApproxValue(this.approx),
+      approx: datasetStore.isXL ? null : getApproxValue(this.approx),
     }
 
     changeFunctionalStep(params, this.currentMode)
@@ -80,7 +80,7 @@ class ModalCompoundHetStore {
 
   public fetchStatFunc(currentGroup?: TFuncCondition): void {
     const params = JSON.stringify({
-      approx: dirInfoStore.isXL ? null : getApproxValue(this.approx),
+      approx: datasetStore.isXL ? null : getApproxValue(this.approx),
       state: null,
     })
 
@@ -89,7 +89,7 @@ class ModalCompoundHetStore {
 
       this.currentMode = getCurrentModeType(conditionJoinType)
 
-      if (!dirInfoStore.isXL) {
+      if (!datasetStore.isXL) {
         const currentGroupApprox = currentGroup[4] as ICompoundHetArgs
         const approxName = getApproxName(
           currentGroupApprox['approx'] || undefined,

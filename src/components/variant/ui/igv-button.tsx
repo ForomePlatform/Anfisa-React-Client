@@ -5,7 +5,7 @@ import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
-import dirinfoStore from '@store/dirinfo'
+import datasetStore from '@store/dataset'
 import variantStore from '@store/ws/variant'
 import { Routes } from '@router/routes.enum'
 import { Button } from '@ui/button'
@@ -32,7 +32,7 @@ export const IgvButton = observer((): ReactElement => {
 
   const fixedLocus = locus.split(' ')[0]
 
-  const igvUrls = dirinfoStore.dsinfo['igv-urls'] as string[] | undefined
+  const igvUrls = datasetStore.dsinfo['igv-urls'] as string[] | undefined
   const checkedIgvUrls = igvUrls ?? []
   const stringifiedIgvUrls = JSON.stringify(checkedIgvUrls)
 

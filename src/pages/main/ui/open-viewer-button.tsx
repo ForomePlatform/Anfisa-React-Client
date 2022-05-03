@@ -4,6 +4,7 @@ import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
+import datasetStore from '@store/dataset'
 import dirInfoStore from '@store/dirinfo'
 import filterStore from '@store/filter'
 import { getPageRoute } from '@router/router.const'
@@ -50,7 +51,7 @@ const Panel = ({ close }: IPopperMenuProps): ReactElement => {
     name => name !== GlbPagesNames.Root,
   )
 
-  if (dirInfoStore.isXL) {
+  if (datasetStore.isXL) {
     pages = pages.filter(p => p !== GlbPagesNames.Table)
   }
 
@@ -73,7 +74,7 @@ const Panel = ({ close }: IPopperMenuProps): ReactElement => {
             key={index}
             data-testid={DatasetInfoDataCy.viewerOption}
             onClick={() => {
-              dirInfoStore.setIsXL(dirInfoStore.dsinfo.kind === 'xl')
+              datasetStore.setIsXL(datasetStore.dsinfo.kind === 'xl')
               goToPage(pageName)
             }}
           >

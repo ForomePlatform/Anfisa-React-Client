@@ -3,7 +3,7 @@ import { ChangeEvent, Fragment } from 'react'
 import { approxOptions } from '@core/approxOptions'
 import { ApproxNameTypes } from '@core/enum/approxNameTypes'
 import { t } from '@i18n'
-import dirInfoStore from '@store/dirinfo'
+import datasetStore from '@store/dataset'
 import { Select } from '@ui/select'
 
 interface IProps {
@@ -22,7 +22,7 @@ export const ApproxStateModalMods = ({
       <Select
         value={approx}
         options={approxOptions}
-        disabled={dirInfoStore.isXL}
+        disabled={datasetStore.isXL}
         onChange={(e: ChangeEvent<HTMLSelectElement>) =>
           handleSetCondition(e.target.value as ApproxNameTypes)
         }

@@ -3,7 +3,7 @@ import { makeAutoObservable, runInAction } from 'mobx'
 import { ApproxNameTypes } from '@core/enum/approxNameTypes'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
-import dirInfoStore from '@store/dirinfo'
+import datasetStore from '@store/dataset'
 import filterStore from '@store/filter'
 import { TFuncCondition } from '@service-providers/common/common.interface'
 import { getApproxValue } from '@utils/getApproxValue'
@@ -12,7 +12,7 @@ import functionPanelStore from '../../function-panel.store'
 
 class CompoundHetStore {
   public statFuncStatus = ''
-  public approx = dirInfoStore.isXL
+  public approx = datasetStore.isXL
     ? ApproxNameTypes.Non_Intersecting_Transcript
     : ApproxNameTypes.Shared_Gene
   public currentMode?: ModeTypes
@@ -26,7 +26,7 @@ class CompoundHetStore {
   }
 
   public resetApprox() {
-    this.approx = dirInfoStore.isXL
+    this.approx = datasetStore.isXL
       ? ApproxNameTypes.Non_Intersecting_Transcript
       : ApproxNameTypes.Shared_Gene
   }
@@ -53,7 +53,7 @@ class CompoundHetStore {
     const statFuncData = await filterStore.fetchStatFuncAsync(
       FuncStepTypesEnum.CompoundHet,
       JSON.stringify({
-        approx: dirInfoStore.isXL ? null : getApproxValue(this.approx),
+        approx: datasetStore.isXL ? null : getApproxValue(this.approx),
         state: null,
       }),
     )
@@ -69,7 +69,7 @@ class CompoundHetStore {
       FuncStepTypesEnum.CompoundHet,
       getConditionJoinMode(this.currentMode),
       ['Proband'],
-      { approx: dirInfoStore.isXL ? null : getApproxValue(this.approx) },
+      { approx: datasetStore.isXL ? null : getApproxValue(this.approx) },
     ]
 
     functionPanelStore.submitConditions(conditions)

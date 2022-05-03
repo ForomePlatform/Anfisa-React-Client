@@ -4,7 +4,7 @@ import { makeAutoObservable } from 'mobx'
 import { ApproxNameTypes } from '@core/enum/approxNameTypes'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
-import dirInfoStore from '@store/dirinfo'
+import datasetStore from '@store/dataset'
 import filterStore from '@store/filter'
 import { TRequestCondition } from '@service-providers/common'
 import { TFuncCondition } from '@service-providers/common/common.interface'
@@ -24,7 +24,7 @@ class CompoundRequestStore {
   public resetValue: string = ''
   public activeRequestIndex = this.requestCondition.length - 1
   public currentMode?: ModeTypes
-  public approx = dirInfoStore.isXL
+  public approx = datasetStore.isXL
     ? ApproxNameTypes.Non_Intersecting_Transcript
     : ApproxNameTypes.Shared_Gene
 
@@ -79,7 +79,7 @@ class CompoundRequestStore {
   }
 
   public clearApprox() {
-    this.approx = dirInfoStore.isXL
+    this.approx = datasetStore.isXL
       ? ApproxNameTypes.Non_Intersecting_Transcript
       : ApproxNameTypes.Shared_Gene
   }
@@ -216,7 +216,7 @@ class CompoundRequestStore {
       getConditionJoinMode(this.currentMode),
       ['True'],
       {
-        approx: dirInfoStore.isXL ? null : getApproxValue(this.approx),
+        approx: datasetStore.isXL ? null : getApproxValue(this.approx),
         state: null,
         request: JSON.parse(`${getPureRequestString(requestString)}`),
       },

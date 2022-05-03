@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
-import datasetStore from '@store/dataset'
+import mainTableStore from '@store/ws/main-table'
 import zoneStore from '@store/ws/zone'
 import { PopperTableModal } from '@components/popper-table-modal'
 import { ZoneModalList } from './components/zone-modal-list'
@@ -27,9 +27,7 @@ export const SamplesModal = observer(({ close, title }: ISamplesModalProps) => {
   const handleApplyAsync = async () => {
     zoneStore.createSelectedZoneFilter('isSamples')
     zoneStore.addZone(['Has_Variant', zoneStore.selectedSamples])
-    await datasetStore.fetchWsListAsync()
-
-    datasetStore.fetchFilteredTabReportAsync()
+    mainTableStore.fetchFilteredTabReportAsync()
     zoneStore.paintSelectedSamples()
 
     close()
