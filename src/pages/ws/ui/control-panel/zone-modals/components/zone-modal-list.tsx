@@ -33,23 +33,22 @@ export const ZoneModalList = observer(
         className="mt-5 overflow-y-auto"
         style={{ height: 'auto', maxHeight: 240 }}
       >
-        {items.map(item => {
+        {items.map((itemName, index) => {
           const checked =
-            (isGenes && zoneStore.localGenes.includes(item)) ||
-            (isGenesList && zoneStore.localGenesList.includes(item)) ||
-            (isSamples && zoneStore.localSamples.includes(item)) ||
-            (isTags && zoneStore.localTags.includes(item))
-
+            (isGenes && zoneStore.localGenes.includes(itemName)) ||
+            (isGenesList && zoneStore.localGenesList.includes(itemName)) ||
+            (isSamples && zoneStore.localSamples.includes(itemName)) ||
+            (isTags && zoneStore.localTags.includes(itemName))
           return (
             <Checkbox
-              key={item}
-              checked={checked}
-              onChange={e => handleCheck(e.target.checked, item)}
-              className="flex items-center mb-4 text-12"
+              key={itemName + index}
+              checked={!!checked}
+              onChange={e => handleCheck(e.target.checked, itemName)}
+              id={itemName + index}
+              datatestId={MainTableDataCy.checkboxListElement}
+              className="mb-2 text-12"
             >
-              <span data-testid={MainTableDataCy.checkboxListElement}>
-                {item}
-              </span>
+              {itemName}
             </Checkbox>
           )
         })}
