@@ -64,9 +64,13 @@ export class MainTable {
   }
 
   private get wsListQuery(): IWsListQuery {
+    const conditions = !filterPresetsStore.activePreset
+      ? filterStore.conditions
+      : []
     return {
       datasetName: datasetStore.datasetName,
-      conditions: filterStore.conditions,
+      filter: filterPresetsStore.activePreset,
+      conditions,
       zone: zoneStore.zone,
     }
   }
