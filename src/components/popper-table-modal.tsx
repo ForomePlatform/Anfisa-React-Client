@@ -7,7 +7,6 @@ import { ViewTypeEnum } from '@core/enum/view-type-enum'
 import { t } from '@i18n'
 import zoneStore from '@store/filterZone'
 import { InputSearch } from '@components/input-search'
-import { ControlPanelDivider } from '@pages/ws/ui/control-panel/control-panel-divider'
 import { ZoneModalMods } from '@pages/ws/ui/control-panel/zone-modals/components/zone-modal-mods'
 import { PopupCard } from './popup-card/popup-card'
 
