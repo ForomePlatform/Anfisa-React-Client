@@ -21,11 +21,11 @@ class HandleDatasetStore {
   }
 
   public get isExportDisabled() {
-    return !Object.keys(datasetStore.dsinfo).length || datasetStore.isXL
+    return !Object.keys(datasetStore.dsInfo).length || datasetStore.isXL
   }
 
   public get selectedDatasetName() {
-    return datasetStore.dsinfo.name as string
+    return datasetStore.dsInfo.name as string
   }
 
   constructor() {

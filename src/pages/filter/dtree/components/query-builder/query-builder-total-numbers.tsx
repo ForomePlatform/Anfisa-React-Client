@@ -10,7 +10,7 @@ import { Button } from '@ui/button'
 import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
 
 export const QueryBuilderTotalNumbers = observer((): ReactElement => {
-  const variants = toJS(datasetStore.dsinfo).total
+  const variants = toJS(datasetStore.dsInfo).total
 
   const { stepData, isTreeEmpty } = dtreeStore
 

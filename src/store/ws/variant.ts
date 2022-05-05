@@ -2,7 +2,7 @@ import { get } from 'lodash'
 import { makeAutoObservable, runInAction, toJS } from 'mobx'
 
 import { IGridLayout, ReccntDisplayItem } from '@declarations'
-import mainTableStore from '@store/ws/main-table'
+import mainTableStore from '@store/ws/main-table.store'
 import datasetProvider from '@service-providers/dataset-level/dataset.provider'
 import {
   IReccntArguments,

@@ -7,7 +7,7 @@ import { useDatasetName } from '@core/hooks/use-dataset-name'
 import datasetStore from '@store/dataset'
 import dirInfoStore from '@store/dirinfo'
 import dtreeStore from '@store/dtree'
-import mainTableStore from '@store/ws/main-table'
+import mainTableStore from '@store/ws/main-table.store'
 import { ExportPanelModal } from '@components/export-panel-modal'
 import { ExportReportButton } from '@components/export-report-button'
 import { Header } from '@components/header'
@@ -46,7 +46,7 @@ const RefinerPage = observer((): ReactElement => {
       <Header>
         <VariantsCount
           variantCounts={
-            isXL ? (toJS(datasetStore.dsinfo).total as number) : variantCounts
+            isXL ? (toJS(datasetStore.dsInfo).total as number) : variantCounts
           }
           transcriptsCounts={transcriptsCounts}
           dnaVariantsCounts={dnaVariantsCounts}

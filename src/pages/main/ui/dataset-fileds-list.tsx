@@ -100,7 +100,7 @@ const InfoDetails = observer((): ReactElement => {
 })
 
 export const DatasetsFieldsList = observer((): ReactElement => {
-  const versions: Versions = get(datasetStore, 'dsinfo.meta.versions')
+  const versions: Versions = get(datasetStore, 'dsInfo.meta.versions')
   const hasInfoDetails = !!dirinfoStore.infoFrameLink
 
   return (

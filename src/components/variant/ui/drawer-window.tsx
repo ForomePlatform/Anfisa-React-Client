@@ -64,7 +64,7 @@ export const DrawerWindow = observer(
 
     const isChecked = filterSelection !== DrawerClass.normClass
 
-    const igvUrls = datasetStore.dsinfo['igv-urls'] as string[] | undefined
+    const igvUrls = datasetStore.dsInfo['igv-urls'] as string[] | undefined
     const shouldShowIgvBtn = igvUrls && aspect.name === 'view_gen'
 
     return (

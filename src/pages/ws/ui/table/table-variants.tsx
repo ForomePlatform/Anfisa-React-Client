@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { theme } from '@theme'
 import columnsStore from '@store/ws/columns'
-import mainTableStore from '@store/ws/main-table'
+import mainTableStore from '@store/ws/main-table.store'
 import { Loader } from '@components/loader'
 import { Table } from './table'
 

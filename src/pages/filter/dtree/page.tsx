@@ -52,7 +52,7 @@ const FilterPage = observer((): ReactElement => {
 
   const getFiltersValue = (type: string) => {
     if (type === 'all') {
-      if (isXL) return toJS(datasetStore.dsinfo.total) as number
+      if (isXL) return toJS(datasetStore.dsInfo.total) as number
 
       if (filterStore.method === GlbPagesNames.Dtree) {
         return dtreeStore.statAmount?.variants

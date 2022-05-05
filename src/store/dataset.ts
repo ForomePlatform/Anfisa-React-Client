@@ -1,13 +1,13 @@
 import { makeAutoObservable, runInAction } from 'mobx'
 
-import { DsInfoType } from '@declarations'
-import { getApiUrl } from '@core/get-api-url'
+import datasetProvider from '@service-providers/dataset-level/dataset.provider'
 import { HgModes } from '@service-providers/dataset-level/dataset-level.interface'
 import { IDirInfoDatasetDescriptor } from '@service-providers/vault-level/vault-level.interface'
+import { IDsInfo } from './../service-providers/dataset-level/dataset-level.interface'
 
 export class DatasetStore {
   datasetName = ''
-  dsinfo: DsInfoType = {}
+  dsInfo: IDsInfo | Record<string, unknown> = {}
   isXL?: boolean = undefined
 
   constructor() {
@@ -18,8 +18,8 @@ export class DatasetStore {
     this.datasetName = datasetName
   }
 
-  setDsInfo(dsinfo: IDirInfoDatasetDescriptor) {
-    this.dsinfo = dsinfo as any
+  setDsInfo(dsInfo: IDirInfoDatasetDescriptor) {
+    this.dsInfo = dsInfo as any
   }
 
   setIsXL(value: boolean) {
@@ -28,7 +28,7 @@ export class DatasetStore {
 
   resetData() {
     this.datasetName = ''
-    this.dsinfo = {}
+    this.dsInfo = {}
   }
 
   async initDatasetAsync(datasetName: string = this.datasetName) {
@@ -38,22 +38,18 @@ export class DatasetStore {
   }
 
   async fetchDsinfoAsync(name: string) {
-    const response = await fetch(getApiUrl(`dsinfo?ds=${name}`), {
-      method: 'POST',
-    })
-
-    const result = await response.json()
+    const dsInfo = await datasetProvider.getDsInfo({ ds: name })
 
     runInAction(() => {
-      this.dsinfo = result
+      this.dsInfo = dsInfo
     })
 
-    this.setIsXL(result?.kind === 'xl')
+    this.setIsXL(dsInfo?.kind === 'xl')
   }
 
   // TODO: update type after implantion IDsInfo interface
   get locusMode(): HgModes {
-    const meta: any = this.dsinfo.meta
+    const meta: any = this.dsInfo.meta
     const hgModeValue: HgModes = meta?.modes?.[0]
     return hgModeValue
   }

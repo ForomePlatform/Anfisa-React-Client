@@ -32,7 +32,7 @@ export const IgvButton = observer((): ReactElement => {
 
   const fixedLocus = locus.split(' ')[0]
 
-  const igvUrls = datasetStore.dsinfo['igv-urls'] as string[] | undefined
+  const igvUrls = datasetStore.dsInfo['igv-urls'] as string[] | undefined
   const checkedIgvUrls = igvUrls ?? []
   const stringifiedIgvUrls = JSON.stringify(checkedIgvUrls)
 

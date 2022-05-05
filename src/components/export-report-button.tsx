@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
 import operationsStore from '@store/operations'
-import mainTableStore from '@store/ws/main-table'
+import mainTableStore from '@store/ws/main-table.store'
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
 import { MainTableDataCy } from './data-testid/main-table.cy'

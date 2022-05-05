@@ -74,7 +74,7 @@ const Panel = ({ close }: IPopperMenuProps): ReactElement => {
             key={index}
             data-testid={DatasetInfoDataCy.viewerOption}
             onClick={() => {
-              datasetStore.setIsXL(datasetStore.dsinfo.kind === 'xl')
+              datasetStore.setIsXL(datasetStore.dsInfo.kind === 'xl')
               goToPage(pageName)
             }}
           >
