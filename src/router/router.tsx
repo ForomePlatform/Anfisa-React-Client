@@ -5,6 +5,7 @@ import { QueryParamProvider } from 'use-query-params'
 
 import { GlobalStyle } from '@theme'
 import { Routes } from '@router/routes.enum'
+import { DemoPage } from '@pages/demo-page'
 import FilterPage from '@pages/filter/dtree/page'
 import RefinerPage from '@pages/filter/refiner/page'
 import IgvPage from '@pages/igv/igv.page'
@@ -27,6 +28,7 @@ export const RouterBase = (): ReactElement => {
         <ToastContainer />
 
         <Switch>
+          <Route path="/demo" exact component={DemoPage} />
           <Route path={Routes.Root} exact component={MainPage} />
           <Route path={Routes.WS} exact component={WSPage} />
           <Route path={Routes.Dtree} exact component={FilterPage} />
