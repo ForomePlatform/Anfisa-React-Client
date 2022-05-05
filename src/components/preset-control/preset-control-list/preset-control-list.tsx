@@ -8,7 +8,7 @@ import { MenuList, MenuListItem } from '@ui/menu-list'
 import { Popover } from '@ui/popover'
 import { ISolutionEntryDescription } from '@service-providers/common'
 
-interface IPresetControlList {
+interface IPresetControlListProps {
   className?: string
   presets: ISolutionEntryDescription[]
   selected?: string
@@ -24,7 +24,7 @@ export const PresetControlList = ({
   onSelect,
   onModify,
   onDelete,
-}: IPresetControlList): ReactElement => {
+}: IPresetControlListProps): ReactElement => {
   const [contextMenuItem, setContextMenuItem] = useState<{
     name: string
     element: HTMLElement

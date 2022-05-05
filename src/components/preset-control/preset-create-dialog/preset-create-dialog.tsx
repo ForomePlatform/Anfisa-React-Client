@@ -4,7 +4,7 @@ import { t } from '@i18n'
 import { Dialog } from '@ui/dialog'
 import { Input } from '@ui/input'
 
-interface IPresetCreateDialog {
+interface IPresetCreateDialogProps {
   isOpen?: boolean
   onClose: () => void
   onCreate: (presetName: string) => void
@@ -14,7 +14,7 @@ export const PresetCreateDialog = ({
   isOpen,
   onClose,
   onCreate,
-}: IPresetCreateDialog): ReactElement => {
+}: IPresetCreateDialogProps): ReactElement => {
   const [presetName, setPresetName] = useState('')
 
   return (

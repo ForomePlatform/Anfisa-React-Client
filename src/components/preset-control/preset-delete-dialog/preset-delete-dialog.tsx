@@ -3,7 +3,7 @@ import { ReactElement } from 'react'
 import { t } from '@i18n'
 import { Dialog } from '@ui/dialog'
 
-interface IPresetDeleteDialog {
+interface IPresetDeleteDialogProps {
   isOpen?: boolean
   onClose: () => void
   onDelete: () => void
@@ -15,7 +15,7 @@ export const PresetDeleteDialog = ({
   onClose,
   onDelete,
   presetName,
-}: IPresetDeleteDialog): ReactElement => {
+}: IPresetDeleteDialogProps): ReactElement => {
   return (
     <Dialog
       isOpen={isOpen}
