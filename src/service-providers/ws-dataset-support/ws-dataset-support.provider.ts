@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from 'axios'
 
-import { getCamelizedData } from '@utils/mian-table/getCamelizedData'
 import { ServiceProviderBase } from './../common/service-provider-base'
+import { adaptWsListResponse } from './ws-dataset-support.adapters'
 import {
   IMacroTagging,
   IMacroTaggingArguments,
@@ -24,11 +24,9 @@ class WsDatasetSupportProvider extends ServiceProviderBase {
     params: IWsListArguments,
     options: Partial<AxiosRequestConfig> = {},
   ): Promise<IWsList> {
-    const data = await this.post<IWsList>('/ws_list', params, options).then(
-      res => res.data,
+    return this.post<IWsList>('/ws_list', params, options).then(res =>
+      adaptWsListResponse(res.data),
     )
-
-    return getCamelizedData<IWsList>(data)
   }
 
   public getZoneList(params: IZoneListArguments): Promise<TZoneList> {
