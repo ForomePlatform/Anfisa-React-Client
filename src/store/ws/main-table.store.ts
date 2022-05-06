@@ -87,8 +87,8 @@ export class MainTable {
 
   public get statAmount(): TItemsCount | undefined {
     return filterStore.conditions.length || zoneStore.zone.length
-      ? this.wsList.data?.['filtered-counts']
-      : this.wsList.data?.['total-counts']
+      ? this.wsList.data?.filteredCounts
+      : this.wsList.data?.totalCounts
   }
 
   setSelectedVariantNumber(index: number | undefined) {
