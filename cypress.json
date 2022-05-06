@@ -1,6 +1,7 @@
 {
-    "supportFile": "cypress/support/commands.js",
-    "trashAssetsBeforeRuns": true,
-    "viewportWidth": 1280,
-    "viewportHeight": 720
+  "supportFile": "cypress/support/index.ts",
+  "trashAssetsBeforeRuns": true,
+  "viewportWidth": 1280,
+  "viewportHeight": 720,
+  "watchForFileChanges": false
 }

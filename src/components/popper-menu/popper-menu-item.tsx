@@ -8,6 +8,7 @@ export interface IPopperMenuItemProps {
   className?: Argument
   onClick?: () => void
   isDisabled?: boolean
+  dataTestId?: string
 }
 
 export const PopperMenuItem = ({
@@ -15,10 +16,12 @@ export const PopperMenuItem = ({
   iconName,
   className,
   onClick,
+  dataTestId,
   isDisabled = false,
 }: React.PropsWithChildren<IPopperMenuItemProps>) => {
   return (
     <span
+      data-testid={dataTestId}
       className={cn(
         'py-1',
         'px-2',
