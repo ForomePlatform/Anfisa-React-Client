@@ -6,7 +6,7 @@ import datasetStore from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
 import { DocsList } from './docs-list'
 
-export const InfoList = observer((): ReactElement => {
+export const InfoList = observer((): ReactElement | null => {
   const docs = get(datasetStore, 'dsInfo.doc', [])
   const baseDatasetName = dirinfoStore.ancestorsDsInfo[0][0]
 
