@@ -3,5 +3,6 @@
   "trashAssetsBeforeRuns": true,
   "viewportWidth": 1280,
   "viewportHeight": 720,
-  "watchForFileChanges": false
+  "watchForFileChanges": false,
+  "videoUploadOnPasses": false
 }
