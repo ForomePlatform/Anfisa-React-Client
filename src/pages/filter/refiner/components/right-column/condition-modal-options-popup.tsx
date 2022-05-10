@@ -43,7 +43,7 @@ export const ConditionModalOptionsPopup = ({
         <div
           onClick={handleDeleteFilterBlock}
           className="flex items-center justify-between py-2 px-2 rounded-br-none rounded-bl-none rounded-l-md rounded-r-md cursor-pointer hover:bg-blue-bright hover:text-white"
-          data-testId={DecisionTreeModalDataCy.joinByAnd}
+          data-testid={DecisionTreeModalDataCy.joinByAnd}
         >
           <div className="mr-2">{t('filter.delete')}</div>
 
@@ -53,7 +53,7 @@ export const ConditionModalOptionsPopup = ({
         <div
           onClick={handleCopyFilterName}
           className="flex items-center justify-between py-2 px-2 rounded-bl-md rounded-br-md cursor-pointer hover:bg-blue-bright hover:text-white"
-          data-testId={DecisionTreeModalDataCy.joinByOr}
+          data-testid={DecisionTreeModalDataCy.joinByOr}
         >
           <div>{t('filter.copy')}</div>
 

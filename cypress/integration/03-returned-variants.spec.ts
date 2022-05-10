@@ -6,11 +6,12 @@ import { TestData } from '../shared/test-data'
 import { Timeouts } from '../shared/timeouts'
 
 describe('Test on table of returned variants', () => {
-  const datasetName = 'xl_PGP3140_wgs_NIST-4_2'
+  const datasetName = 'PGP3140_wgs_NIST-4_2'
+  const xlDatasetName = 'xl_' + datasetName
   const filterName = '⏚Hearing Loss, v.5'
 
   it('should show returned variants correctly | test #4', () => {
-    datasetPage.visit(`${Paths.dtree}?ds=${datasetName}`)
+    datasetPage.visit(`${Paths.dtree}?ds=${xlDatasetName}`)
     cy.intercept('POST', ApiEndpoints.dtreeSet).as('selectList')
     decisionTreesPage.decisionTreeMenu.selectDecision.first().click()
     cy.wait('@selectList')
@@ -43,7 +44,7 @@ describe('Test on table of returned variants', () => {
   })
 
   it('should add a new dataset correctly | test #5', () => {
-    datasetPage.visit(`${Paths.dtree}?ds=${datasetName}`)
+    datasetPage.visit(`${Paths.dtree}?ds=${xlDatasetName}`)
     cy.intercept('POST', ApiEndpoints.dtreeSet).as('selectList')
     decisionTreesPage.decisionTreeMenu.selectDecision.first().click()
     cy.wait('@selectList', {
@@ -70,7 +71,7 @@ describe('Test on table of returned variants', () => {
     datasetPage.leftPanel.leftPanelHeader.checkLabelText('Datasets')
     datasetPage.leftPanel.datasetsListElem.getButtonByText(datasetName).click()
 
-    datasetPage.datasetInfo.datasetHeader.haveText(datasetName)
+    datasetPage.datasetInfo.datasetHeader.haveText(xlDatasetName)
     datasetPage.leftPanel.datasetsListElem.contains(derivedDataset)
   })
 })
