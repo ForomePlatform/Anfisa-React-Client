@@ -8,8 +8,8 @@ export enum DatasetKinds {
 
 export type TItemsCount = [
   variantCounts: number,
-  dnaVariantsCounts: number,
-  transcriptsCounts: number,
+  dnaVariantsCounts?: number,
+  transcriptsCounts?: number,
 ]
 
 export type TDateISOString = string
@@ -247,8 +247,8 @@ export interface IRecordDescriptor {
 
 export type TFilteringStatCounts = {
   variants: number
-  transcribedVariants: number
-  transcripts: number
+  transcribedVariants: number | null
+  transcripts: number | null
 }
 
 export type TFilteringStat = {

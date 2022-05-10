@@ -105,9 +105,7 @@ export interface IDtreeSet {
   'point-counts': PointCount[]
   code: string
   points: IDtreeSetPoint[]
-  'cond-atoms': {
-    [pointNumber: number]: TCondition[]
-  }
+  'cond-atoms': Record<string, TCondition[]>
   labels: string[]
   error?: string
   line?: number
