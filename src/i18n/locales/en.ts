@@ -13,6 +13,7 @@ export const en = {
     cancel: 'Cancel',
     create: 'Create',
     apply: 'Apply',
+    applyFilters: 'Apply Filters',
     clear: 'Clear',
     replace: 'Replace',
     add: '+ Add',
@@ -180,6 +181,7 @@ export const en = {
       hide: 'Hide',
       total: 'Total',
       variants: '{value} variants',
+      shownSignificantItems: 'Shown {items} significant items (total: {total})',
     },
     delete: 'Delete',
     copy: 'Copy',
@@ -237,7 +239,6 @@ export const en = {
     approx: 'Approx',
     state: 'State',
     locus: 'Locus',
-    chromosomeNameIsNotCorrect: 'Chromosome name is incorrect',
     minimalCountsOfEventsOnCompoundRequest:
       'Minimal count of events should be more than 0',
     fullList: 'Full list',
@@ -268,6 +269,7 @@ export const en = {
     viewReturnedVariants: 'View returned variants',
     showReturnedVariantsForStep: 'Show {returnValue} variants for step {index}',
     dtreeDeleteConfirmation: 'Do you really want to delete this tree?',
+    inactiveField: 'Inactive field',
   },
   error: {
     getBack: 'Back to home',
