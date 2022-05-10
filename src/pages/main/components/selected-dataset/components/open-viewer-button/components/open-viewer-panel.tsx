@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom'
 
 import { t } from '@i18n'
 import datasetStore from '@store/dataset'
-import dirinfoStore from '@store/dirinfo'
+import dirInfoStore from '@store/dirinfo'
 import filterStore from '@store/filter'
 import { getPageRoute } from '@router/router.const'
 import { DatasetInfoDataCy } from '@components/data-testid/dataset-info.cy'
@@ -28,7 +28,7 @@ export const OpenViewerPanel = ({ close }: IPopperMenuProps): ReactElement => {
   const goToPage = (name: GlbPagesNames) => {
     const route = getPageRoute(name)
 
-    history.push(`${route}?ds=${dirinfoStore.selectedDirinfoName}`)
+    history.push(`${route}?ds=${dirInfoStore.selectedDirinfoName}`)
     filterStore.setMethod(name)
   }
 
@@ -44,7 +44,7 @@ export const OpenViewerPanel = ({ close }: IPopperMenuProps): ReactElement => {
             key={index}
             data-testid={DatasetInfoDataCy.viewerOption}
             onClick={() => {
-              datasetStore.setIsXL(dirinfoStore.dsinfo.kind === 'xl')
+              datasetStore.setIsXL(datasetStore.dsInfo.kind === 'xl')
               goToPage(pageName)
             }}
           >
