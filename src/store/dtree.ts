@@ -4,13 +4,10 @@ import { makeAutoObservable, runInAction, toJS } from 'mobx'
 
 import { FilterCountsType } from '@declarations'
 import { ActionFilterEnum } from '@core/enum/action-filter.enum'
-import { getApiUrl } from '@core/get-api-url'
 import { CreateEmptyStepPositions } from '@pages/filter/dtree/components/active-step.store'
 import { TFilteringStatCounts } from '@service-providers/common'
-import {
-  IDsStatArguments,
-  IStatfuncArguments,
-} from '@service-providers/filtering-regime'
+import decisionTreesProvider from '@service-providers/decision-trees/decision-trees.provider'
+import { IStatfuncArguments } from '@service-providers/filtering-regime'
 import filteringRegimeProvider from '@service-providers/filtering-regime/filtering-regime.provider'
 import { addToActionHistory } from '@utils/addToActionHistory'
 import { calculateAcceptedVariants } from '@utils/calculateAcceptedVariants'
@@ -19,6 +16,7 @@ import { getStepDataAsync } from '@utils/getStepDataAsync'
 import activeStepStore, {
   ActiveStepOptions,
 } from '../pages/filter/dtree/components/active-step.store'
+import { IDtreeSetArguments } from './../service-providers/decision-trees/decision-trees.interface'
 import datasetStore from './dataset'
 import { DtreeStatStore } from './dtree/dtree-stat.store'
 
@@ -72,7 +70,7 @@ class DtreeStore {
   pointCounts: [number | null][] = []
   acceptedVariants = 0
 
-  evalStatus = undefined
+  evalStatus = ''
   savingStatus: any = []
   shouldLoadTableModal = false
 
@@ -101,7 +99,7 @@ class DtreeStore {
 
   requestData: IRequestData[] = []
 
-  actionHistory: IDsStatArguments[] = []
+  actionHistory: IDtreeSetArguments[] = []
   actionHistoryIndex = -1
 
   constructor() {
@@ -183,21 +181,16 @@ class DtreeStore {
     return stepIndexForApi
   }
 
-  // TODO: change body type
-  async fetchDtreeSetAsync(body: any, shouldSaveInHistory = true) {
+  async fetchDtreeSetAsync(
+    body: IDtreeSetArguments,
+    shouldSaveInHistory = true,
+  ) {
     if (shouldSaveInHistory) addToActionHistory(body)
 
     this.setIsCountsReceived(false)
 
-    const response = await fetch(getApiUrl('dtree_set'), {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-      body,
-    })
+    const result = await decisionTreesProvider.getDtreeSet(body)
 
-    const result = await response.json()
     const newCode = result.code
 
     runInAction(() => {
@@ -215,7 +208,7 @@ class DtreeStore {
       this.evalStatus = result['eval-status']
     })
 
-    const isLoadingNewTree = !body.has('code')
+    const isLoadingNewTree = !body.code
 
     this.drawDecesionTreeAsync(isLoadingNewTree)
   }
@@ -243,7 +236,7 @@ class DtreeStore {
     return result
   }
 
-  setActionHistory(updatedActionHistory: IDsStatArguments[]) {
+  setActionHistory(updatedActionHistory: IDtreeSetArguments[]) {
     runInAction(() => {
       this.actionHistory = [...updatedActionHistory]
     })
