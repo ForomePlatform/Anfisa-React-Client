@@ -4,7 +4,7 @@ import { DecisionTreesMenuDataCy } from '../../../src/components/data-testid/dec
 import { DecisionTreeModalDataCy } from '../../../src/components/data-testid/decision-tree-modal.cy'
 import { DecisionTreesResultsDataCy } from '../../../src/components/data-testid/decision-tree-results.cy'
 import { BasePage } from '../lib/base-page'
-import { Helper } from '../lib/helpers'
+import { Helper } from '../../shared/helpers'
 import { AttributesListWidget } from './widgets/attributes-list.widget'
 import { DecisionTreeChartWidget } from './widgets/decision-tree-chart.widget'
 import { DecisionTreeWidget } from './widgets/decision-tree-menu.widget'

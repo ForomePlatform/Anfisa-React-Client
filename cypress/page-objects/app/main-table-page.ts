@@ -2,7 +2,7 @@ import { CommonSelectors } from '../../../src/components/data-testid/common-sele
 import { MainTableDataCy } from '../../../src/components/data-testid/main-table.cy'
 import { BasePage } from '../lib/base-page'
 import { Button } from '../lib/button'
-import { Helper } from '../lib/helpers'
+import { Helper } from '../../shared/helpers'
 import { Input } from '../lib/input'
 import { Label } from '../lib/label'
 import { MainTableCheckbox } from '../lib/main-table-checkbox'
