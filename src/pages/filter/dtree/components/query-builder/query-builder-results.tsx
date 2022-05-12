@@ -36,13 +36,10 @@ export const QueryBuilderResults = observer((): ReactElement => {
   }
 
   return (
-    <div className="flex items-center p-4 border-b border-grey-light bg-blue-dark justify-between">
+    <div className="flex items-center p-4 border-b border-grey-light justify-between">
       <div>
-        <div className="font-bold text-white">{t('dtree.results')}</div>
-
-        <div className="text-12 leading-14px text-grey-blue mt-2">
-          <QueryBuilderResultsNumbers />
-        </div>
+        <div className="font-bold text-2xl w-full">{t('dtree.results')}</div>
+        <QueryBuilderResultsNumbers className="mt-1" />
       </div>
       <div className="flex">
         {shouldShowReturnedVariants && (
@@ -50,8 +47,8 @@ export const QueryBuilderResults = observer((): ReactElement => {
             dataTestId={DecisionTreesResultsDataCy.viewReturnedVariants}
             onClick={() => openTableModal(true)}
             text={t('dtree.viewReturnedVariants')}
-            variant="secondary-dark"
-            className="ml-auto"
+            variant="secondary"
+            className="ml-auto  min-h-32"
           />
         )}
 
@@ -59,8 +56,8 @@ export const QueryBuilderResults = observer((): ReactElement => {
           <Button
             onClick={() => openTableModal(false)}
             text={t('dtree.viewVariants')}
-            variant="secondary-dark"
-            className="ml-5"
+            variant="secondary"
+            className="ml-5 min-h-32"
           />
         )}
       </div>
