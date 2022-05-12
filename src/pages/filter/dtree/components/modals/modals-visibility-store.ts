@@ -36,7 +36,7 @@ class ModalsVisibilityStore {
     this.isModalAttributeVisible = false
   }
 
-  public openModalJoin() {
+  public openModalJoin = () => {
     this.isModalJoinVisible = true
   }
 
@@ -76,7 +76,7 @@ class ModalsVisibilityStore {
     this.groupIndexToChange = groupIndex ?? -1
   }
 
-  public closeModalEnum() {
+  public closeModalEnum = () => {
     this.isModalEnumVisible = false
     dtreeStore.resetSelectedFilters()
   }

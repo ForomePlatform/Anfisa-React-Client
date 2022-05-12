@@ -15,18 +15,17 @@ import { PredictionPowerIndicator } from '@components/prediction-power-indicator
 import { GlbPagesNames } from '@glb/glb-names'
 import { AttributeKinds, TPropertyStatus } from '@service-providers/common'
 import { TQueryBuilderAttribute } from '@utils/query-builder'
-import modalFiltersStore from '../../dtree/components/modals/components/modal-enum/modal-enum.store'
 import modalsVisibilityStore from '../../dtree/components/modals/modals-visibility-store'
 import { QueryBuilderSubgroupChart } from './chart/query-builder-subgroup-chart'
 
-interface IProps {
+interface IQueryBuilderSubgroupItemProps {
   subGroupItem: TQueryBuilderAttribute
   isModal?: boolean
   groupName: string
 }
 
 export const QueryBuilderSubgroupItem = observer(
-  ({ subGroupItem, isModal, groupName }: IProps) => {
+  ({ subGroupItem, isModal, groupName }: IQueryBuilderSubgroupItemProps) => {
     const [isVisibleSubGroupItem, setIsVisibleSubGroupItem] = useState(false)
 
     const [, writeScrollPosition] = useScrollPosition({
@@ -56,7 +55,6 @@ export const QueryBuilderSubgroupItem = observer(
 
       if (group.kind === AttributeKinds.ENUM) {
         modalsVisibilityStore.openModalEnum(group.name, undefined, source)
-        modalFiltersStore.setCurrentGroupSubKind(group['sub-kind'])
       }
 
       if (group.kind === AttributeKinds.NUMERIC) {
