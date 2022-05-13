@@ -4,10 +4,8 @@ import styled from 'styled-components'
 
 import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
-import { t } from '@i18n'
 import { theme } from '@theme'
 import { IStepData } from '@store/dtree'
-import { Checkbox } from '@ui/checkbox/checkbox'
 import { Icon } from '@ui/icon'
 import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
 import { FnLabel } from '@components/fn-label'
@@ -15,11 +13,7 @@ import activeStepStore, {
   ActiveStepOptions,
 } from '@pages/filter/dtree/components/active-step.store'
 import modalFiltersStore from '@pages/filter/dtree/components/modals/components/modal-enum/modal-enum.store'
-import {
-  EnumPropertyStatusSubKinds,
-  TCondition,
-} from '@service-providers/common'
-import { negateStep } from '@utils/negateStep'
+import { EnumPropertyStatusSubKinds } from '@service-providers/common'
 import modalsVisibilityStore from '../../../modals/modals-visibility-store'
 import { InactiveFieldLabel } from '../inactive-field-label'
 
@@ -33,7 +27,6 @@ const NotModeWrapper = styled.div`
 `
 
 interface IContentItemHeaderProps {
-  currentGroup: TCondition
   currentStep: IStepData
   stepType: FilterKindEnum
   groupName: string
@@ -44,7 +37,6 @@ interface IContentItemHeaderProps {
 
 export const ContentItemHeader = observer(
   ({
-    currentGroup,
     currentStep,
     stepType,
     groupName,
@@ -52,7 +44,6 @@ export const ContentItemHeader = observer(
     index,
     currNo,
   }: IContentItemHeaderProps): ReactElement => {
-    const isNumeric: boolean = currentGroup[0] === FilterKindEnum.Numeric
     const isNegateStep: boolean = currentStep.negate || false
     const isStepInvalid: boolean =
       typeof groupName !== 'string' ||
@@ -123,17 +114,6 @@ export const ContentItemHeader = observer(
           {/* <div className="pt-1.5">
               <Switch isChecked={isChecked} onChange={toggleChecked} />
             </div> */}
-
-          {!isNumeric && (
-            <Checkbox
-              id={currNo + index}
-              checked={isNegateStep}
-              className="ml-2 text-14"
-              onChange={() => negateStep(index)}
-            >
-              {t('dtree.negate')}
-            </Checkbox>
-          )}
         </div>
       </div>
     )

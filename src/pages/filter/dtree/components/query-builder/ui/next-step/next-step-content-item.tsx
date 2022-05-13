@@ -75,7 +75,6 @@ export const NextStepContentItem = observer(
 
         <div className="flex flex-col w-full h-auto mr-2 px-2 py-3 rounded-md border border-grey-light step-content-area">
           <ContentItemHeader
-            currentGroup={currentGroup}
             currentStep={currentStep}
             stepType={stepType}
             groupName={groupName}
