@@ -16,8 +16,9 @@ The following software must be installed:
 ## Installing dependencies
 Run command `yarn install` in terminal.
 
-## Configuration variables
+## Configuration variables (optional)
 
+For fast automatic authorization you can do the following:
 In the project root create a file named `.env.development.local`
 This file should contain following content:
 
