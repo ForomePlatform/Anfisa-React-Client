@@ -19,10 +19,6 @@ const defaultOptions: TBaseAsyncPaginatedDataStoreOptions = {
   initialPagesCounts: 1,
 }
 
-const defer = (fn: () => void): void => {
-  Promise.resolve().then(fn)
-}
-
 export abstract class BaseAsyncPaginatedDataStore<
   AsyncDataStore extends BaseAsyncDataStore<any, any>,
 > {
@@ -55,9 +51,7 @@ export abstract class BaseAsyncPaginatedDataStore<
       },
     )
 
-    defer(() => {
-      this.reset()
-    })
+    window.queueMicrotask(() => this.reset())
   }
 
   public get pages(): ReadonlyArray<AsyncDataStore> {
