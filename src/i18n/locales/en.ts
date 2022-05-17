@@ -166,6 +166,9 @@ export const en = {
     center: 'Center',
     distance: 'Distance',
   },
+  unitsList: {
+    functionalUnits: 'Functional Units',
+  },
   filter: {
     method: 'Filtering method',
     results: 'Results',
