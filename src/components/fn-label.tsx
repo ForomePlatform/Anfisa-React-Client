@@ -3,12 +3,15 @@ import cn, { Argument } from 'classnames'
 
 import { t } from '@i18n'
 
-interface IProps {
+interface IFnLabelProps {
   className?: Argument
   isActive?: boolean
 }
 
-export const FnLabel = ({ isActive, className }: IProps): ReactElement => {
+export const FnLabel = ({
+  isActive,
+  className,
+}: IFnLabelProps): ReactElement => {
   return (
     <div
       style={{ width: 18, height: 18 }}
