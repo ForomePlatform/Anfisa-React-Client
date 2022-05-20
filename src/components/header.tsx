@@ -16,13 +16,13 @@ import { Logo } from '@components/logo'
 import { GlbPagesNames } from '@glb/glb-names'
 import userIcon from '@images/thomas-hunt.jpg'
 
-interface Props {
+interface IHeaderProps {
   children?: ReactElement | ReactNode
 }
 
 const allowedXlDatasetRotes: PageRoute[] = [Routes.Refiner, Routes.Dtree]
 
-export const Header = observer(({ children }: Props): ReactElement => {
+export const Header = observer(({ children }: IHeaderProps): ReactElement => {
   const params = useParams()
   const ds = params.get('ds') || ''
   const history = useHistory()
@@ -72,6 +72,7 @@ export const Header = observer(({ children }: Props): ReactElement => {
         {!isHomepage && (
           <>
             <Divider orientation="vertical" />
+
             <Breadcrumbs
               datasetName={ds}
               onChangeDataset={handleChangeDataset}

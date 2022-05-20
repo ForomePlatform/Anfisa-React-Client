@@ -16,8 +16,9 @@ import { ErrorPage } from '../../error/error'
 import { FilterControl } from '../common/filter-control/filter-control'
 import { ModalsContainer } from './components/modals/modals-container'
 import { QueryBuilder } from './components/query-builder/query-builder'
+import { SolutionControlDtree } from './components/solution-control-dtree/solution-control-dtree'
 
-const FilterPage = observer((): ReactElement => {
+const DtreePage = observer((): ReactElement => {
   const { isXL } = datasetStore
 
   const history = useHistory()
@@ -95,13 +96,14 @@ const FilterPage = observer((): ReactElement => {
           />
         </Header>
 
-        <FilterControl />
+        <FilterControl SolutionControl={SolutionControlDtree} />
+
         <QueryBuilder />
       </div>
     </>
   )
 })
 
-export default withErrorBoundary(FilterPage, {
+export default withErrorBoundary(DtreePage, {
   fallback: <ErrorPage />,
 })

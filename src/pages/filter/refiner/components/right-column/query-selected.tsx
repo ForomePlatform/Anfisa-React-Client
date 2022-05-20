@@ -64,12 +64,14 @@ export const QuerySelected = observer((): ReactElement => {
         {datasetStore.isXL ? (
           <Button
             className="ml-auto"
+            size="md"
             onClick={() => dtreeStore.openModalViewVariants()}
             text={t('dtree.viewVariants')}
           />
         ) : (
           <Button
             className="ml-auto"
+            size="md"
             text={t('general.apply', {
               amount: formatNumber(filteredVariantsCount),
             })}

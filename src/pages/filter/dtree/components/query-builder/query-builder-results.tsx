@@ -48,7 +48,8 @@ export const QueryBuilderResults = observer((): ReactElement => {
             onClick={() => openTableModal(true)}
             text={t('dtree.viewReturnedVariants')}
             variant="secondary"
-            className="ml-auto  min-h-32"
+            size="md"
+            className="ml-auto"
           />
         )}
 
@@ -57,7 +58,8 @@ export const QueryBuilderResults = observer((): ReactElement => {
             onClick={() => openTableModal(false)}
             text={t('dtree.viewVariants')}
             variant="secondary"
-            className="ml-5 min-h-32"
+            size="md"
+            className="ml-5"
           />
         )}
       </div>

@@ -18,6 +18,7 @@ import { FilterControl } from '@pages/filter/common/filter-control/filter-contro
 import { ModalSaveDataset } from '@pages/filter/dtree/components/modals/components/modal-save-dataset'
 import { ModalViewVariants } from '@pages/filter/dtree/components/modals/components/modal-view-variants'
 import { FilterRefiner } from '@pages/filter/refiner/components/filter-refiner'
+import { SolutionControlRefiner } from './components/solution-control-refiner'
 
 const RefinerPage = observer((): ReactElement => {
   const { isXL } = datasetStore
@@ -38,6 +39,7 @@ const RefinerPage = observer((): ReactElement => {
     <>
       {dtreeStore.isModalViewVariantsVisible && <ModalViewVariants />}
       {dtreeStore.isModalSaveDatasetVisible && <ModalSaveDataset />}
+
       <Header>
         <VariantsCount
           variantCounts={
@@ -54,7 +56,9 @@ const RefinerPage = observer((): ReactElement => {
           />
         </VariantsCount>
       </Header>
-      <FilterControl />
+
+      <FilterControl SolutionControl={SolutionControlRefiner} />
+
       <FilterRefiner />
     </>
   )

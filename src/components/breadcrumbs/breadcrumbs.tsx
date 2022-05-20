@@ -1,5 +1,4 @@
 import { Fragment, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
@@ -52,17 +51,10 @@ export const Breadcrumbs = observer<IBreadcrumbsProps>(
           className,
         )}
       >
-        <Link
-          to="/"
-          className="font-bold uppercase shrink-0 grow-0 hover:text-blue-bright"
-        >
-          {t('home.title')}
-        </Link>
         {ancestors?.map(({ name, isXl }) => {
           const changeAllowed = isXlDatasetAllowed || !isXl
           return (
             <Fragment key={name}>
-              <span className="mx-2">/</span>
               <div
                 onClick={
                   changeAllowed ? () => onChangeDataset(name) : undefined
@@ -81,7 +73,8 @@ export const Breadcrumbs = observer<IBreadcrumbsProps>(
         })}
         {(!isDatasetInSecondary || isCurrentSingleOption) && (
           <Fragment>
-            <span className="mx-2">/</span>
+            {!hasSecondarySelect && <span className="mx-2">/</span>}
+
             <div className={hasSecondarySelect ? 'shrink-1 min-w-0' : ''}>
               <div className="whitespace-nowrap overflow-hidden text-ellipsis">
                 {datasetName}
