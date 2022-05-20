@@ -58,7 +58,7 @@ export const QueryBuilderSubgroupItem = observer(
       }
 
       if (group.kind === AttributeKinds.NUMERIC) {
-        modalsVisibilityStore.openModalNumbers(group.name, undefined, source)
+        modalsVisibilityStore.openModalNumeric(group.name, undefined, source)
       }
 
       if (group.kind === AttributeKinds.FUNC) {

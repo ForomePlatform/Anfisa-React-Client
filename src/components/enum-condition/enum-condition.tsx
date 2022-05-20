@@ -26,7 +26,11 @@ interface IEnumCondition {
   currentStepGroups?: string[] | undefined
   isRefiner?: boolean
   isFilterTouched?: boolean
-  saveEnum: (selectedVariants: string[], mode: ModeTypes | undefined) => void
+  saveEnum: (
+    selectedVariants: string[],
+    mode: ModeTypes | undefined,
+    isRefiner?: boolean,
+  ) => void
   addEnum?: (
     action: ActionType,
     mode: ModeTypes | undefined,
@@ -184,7 +188,7 @@ export const EnumCondition = observer(
         {isRefiner ? (
           <RefinerAttributeButtons
             handleClear={handleClear}
-            handleSave={() => saveEnum(selectedVariants, mode)}
+            handleSave={() => saveEnum(selectedVariants, mode, isRefiner)}
             isBlockAddBtn={isBlockAddBtn}
             initialEnumVariants={initialEnumVariants}
           />

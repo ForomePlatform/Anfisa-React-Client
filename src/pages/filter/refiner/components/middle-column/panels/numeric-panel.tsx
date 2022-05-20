@@ -1,48 +1,26 @@
 import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { t } from '@i18n'
 import filterStore from '@store/filter'
 import { Button } from '@ui/button'
 import { NumericCondition } from '@components/numeric-condition'
-import { BaseAttributeStore } from '@pages/filter/common/attributes/base-attribute.store'
-import {
-  AttributeKinds,
-  TNumericConditionBounds,
-} from '@service-providers/common/common.interface'
+import { AttributeKinds } from '@service-providers/common/common.interface'
+import { refinerAttributeStore } from '../../attributes/refiner-attributes.store'
 
 export const NumericPanel = observer((): ReactElement | null => {
-  const attrData = filterStore.selectedAttributeStatus
-
-  const baseAttributeStore = new BaseAttributeStore(attrData)
-
-  const { attributeName, initialNumericValue } = baseAttributeStore
+  const { initialNumericValue, attributeStatus } = refinerAttributeStore
 
   const { isFilterTouched } = filterStore
 
-  if (!attrData || attrData.kind !== AttributeKinds.NUMERIC) {
+  if (!attributeStatus || attributeStatus.kind !== AttributeKinds.NUMERIC) {
     return null
-  }
-
-  const saveCondition = (value: TNumericConditionBounds) => {
-    if (!attributeName) {
-      return
-    }
-
-    filterStore.saveCurrentCondition([
-      FilterKindEnum.Numeric,
-      attributeName,
-      value,
-    ])
-
-    filterStore.setTouched(false)
   }
 
   return (
     <NumericCondition
       className="mt-4"
-      attrData={attrData}
+      attrData={attributeStatus}
       initialValue={initialNumericValue}
       controls={({ value, hasErrors, clearValue }) => (
         <div className="flex items-center justify-end mt-1">
@@ -58,7 +36,7 @@ export const NumericPanel = observer((): ReactElement | null => {
                 ? t('dtree.saveChanges')
                 : t('dtree.addAttribute')
             }
-            onClick={() => saveCondition(value)}
+            onClick={() => refinerAttributeStore.saveNumeric(value)}
             disabled={
               hasErrors ||
               (value[0] === null && value[2] === null) ||
