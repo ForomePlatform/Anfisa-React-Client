@@ -1,1 +1,1 @@
-export * from './refiner-page'
+export * from './refiner.page'

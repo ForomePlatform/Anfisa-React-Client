@@ -1,4 +1,6 @@
-import { ReactElement, useEffect, useRef } from 'react'
+import styles from './filter-refiner.module.css'
+
+import { ReactElement, useEffect } from 'react'
 import cn from 'classnames'
 
 import mainTableStore from '@store/ws/main-table.store'
@@ -17,18 +19,13 @@ export const FilterRefiner = ({
     mainTableStore.memorizeFilterConditions()
   }, [])
 
-  const nonEmptyDivRef = useRef<any>()
-
   return (
-    <div
-      ref={nonEmptyDivRef}
-      className={cn('flex overflow-y-hidden', className)}
-    >
-      <FilterRefinerUnits />
+    <div className={cn(styles.filterRefiner, className)}>
+      <FilterRefinerUnits className={styles.filterRefiner__units} />
 
-      <SelectedGroup />
+      <SelectedGroup className={styles.filterRefiner__currentAttribute} />
 
-      <QuerySelected />
+      <QuerySelected className={styles.filterRefiner__results} />
     </div>
   )
 }
