@@ -11,13 +11,13 @@ import columnsStore from '@store/ws/columns'
 import mainTableStore from '@store/ws/main-table.store'
 import variantStore from '@store/ws/variant'
 import { Routes } from '@router/routes.enum'
-import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
 import {
   HgModes,
   IAttributeDescriptors,
 } from '@service-providers/dataset-level/dataset-level.interface'
 import { findElementInRow } from '@utils/mian-table/find-element-in-row'
+import { ChangeVariantButton } from './change-variant-button'
 import { DrawerNote } from './drawer-note/drawer-note'
 import { DrawerTags } from './drawer-tags'
 
@@ -44,23 +44,23 @@ export const VariantHeader = observer(
 
     const filteredNo = toJS(mainTableStore.filteredNo)
 
-    const canGetPrevVariant = (): boolean => {
-      return !(filteredNo[filteredNo.indexOf(variantStore.index) - 1] >= 0)
-    }
+    const canGetPrevVariant = !(
+      filteredNo[filteredNo.indexOf(variantStore.index) - 1] >= 0
+    )
 
-    const canGetNextVariant = (): boolean => {
-      return !(filteredNo[filteredNo.indexOf(variantStore.index) + 1] >= 0)
-    }
+    const canGetNextVariant = !(
+      filteredNo[filteredNo.indexOf(variantStore.index) + 1] >= 0
+    )
 
     const { setVariantIndex } = useVariantIndex()
 
     const handlePrevVariant = () => {
-      if (!variantStore.drawerVisible || canGetPrevVariant()) return
+      if (!variantStore.drawerVisible || canGetPrevVariant) return
       variantStore.prevVariant()
     }
 
     const handleNextVariant = () => {
-      if (!variantStore.drawerVisible || canGetNextVariant()) return
+      if (!variantStore.drawerVisible || canGetNextVariant) return
       variantStore.nextVariant()
     }
 
@@ -89,19 +89,16 @@ export const VariantHeader = observer(
         <div className="flex justify-between">
           <div className="flex items-center">
             <div className="flex items-center">
-              <Button
-                size="sm"
-                icon={<Icon name="Arrow" className="transform rotate-90" />}
-                className="bg-blue-lighter"
-                disabled={canGetPrevVariant()}
+              <ChangeVariantButton
+                className="mr-2"
+                direction="up"
+                disabled={canGetPrevVariant}
                 onClick={handlePrevVariant}
               />
-
-              <Button
-                size="sm"
-                icon={<Icon name="Arrow" className="transform -rotate-90" />}
-                className="bg-blue-lighter mx-2"
-                disabled={canGetNextVariant()}
+              <ChangeVariantButton
+                className="mr-3"
+                direction="down"
+                disabled={canGetNextVariant}
                 onClick={handleNextVariant}
               />
             </div>
