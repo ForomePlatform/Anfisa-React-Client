@@ -7,7 +7,7 @@ Scenario: The "Open IGV" button is not present
 	And Drawer is open
 	And user looks at the header of the "General" section
 	Then the "Open IGV" button should not be present.
-	And "Back to Home" button should return on the Main Page
+	And "X" button should return on the Main Page
 ​
 Scenario: The "Open IGV" button is present
 	Given Main Table was opened
