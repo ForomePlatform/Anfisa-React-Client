@@ -11,13 +11,13 @@ import columnsStore from '@store/ws/columns'
 import mainTableStore from '@store/ws/main-table.store'
 import variantStore from '@store/ws/variant'
 import { Routes } from '@router/routes.enum'
+import { ArrowButton } from '@ui/arrow-button'
 import { Icon } from '@ui/icon'
 import {
   HgModes,
   IAttributeDescriptors,
 } from '@service-providers/dataset-level/dataset-level.interface'
 import { findElementInRow } from '@utils/mian-table/find-element-in-row'
-import { ChangeVariantButton } from './change-variant-button'
 import { DrawerNote } from './drawer-note/drawer-note'
 import { DrawerTags } from './drawer-tags'
 
@@ -83,13 +83,15 @@ export const VariantHeader = observer(
         <div className="flex justify-between">
           <div className="flex items-center">
             <div className="flex items-center">
-              <ChangeVariantButton
+              <ArrowButton
+                size="md"
                 className="mr-2"
                 direction="up"
                 disabled={isNoPrevVariant}
                 onClick={handlePrevVariant}
               />
-              <ChangeVariantButton
+              <ArrowButton
+                size="md"
                 className="mr-3"
                 direction="down"
                 disabled={isNoNextVariant}

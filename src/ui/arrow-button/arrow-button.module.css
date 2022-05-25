@@ -1,13 +1,21 @@
-.change-variant-button {
+.arrow-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
   color: theme("colors.white");
   background: theme("colors.blue.lighter");
   border-radius: theme("borderRadius.DEFAULT");
   cursor: pointer;
+
+  &_md {
+    width: 24px;
+    height: 24px;
+  }
+
+  &_sm {
+    width: 18px;
+    height: 18px;
+  }
 
   &:hover {
     background: theme("colors.blue.hover");
