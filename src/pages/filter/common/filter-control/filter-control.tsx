@@ -16,7 +16,7 @@ import { SolutionDropDown } from './solution-dropdown'
 export const FilterControl = observer(
   ({
     SolutionControl,
-    TextEditor,
+    TextEditorButton,
     className,
     isForwardAllowed,
     isBackwardAllowed,
@@ -55,7 +55,13 @@ export const FilterControl = observer(
 
             <DatasetCreationButton />
 
-            {TextEditor && <TextEditor />}
+            {TextEditorButton && (
+              <>
+                <Divider orientation="vertical" className="h-[75%]" />
+
+                <TextEditorButton />
+              </>
+            )}
           </div>
 
           <div className="flex items-center">

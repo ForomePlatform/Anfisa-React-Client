@@ -15,10 +15,10 @@ import { VariantsCount } from '@components/variants-count'
 import { GlbPagesNames } from '@glb/glb-names'
 import { FilterControl } from '../common/filter-control/filter-control'
 import { FilterControlOptionsNames } from '../common/filter-control/filter-control.const'
+import { SolutionControlDtree } from './components/control-panel/solution-control-dtree'
+import { TextEditorButton } from './components/control-panel/text-editor-button'
 import { ModalsContainer } from './components/modals/modals-container'
 import { QueryBuilder } from './components/query-builder/query-builder'
-import { SolutionControlDtree } from './components/solution-control-dtree/solution-control-dtree'
-import { TextEditor } from './components/text-editor'
 
 export const DtreePage = observer((): ReactElement => {
   const { isXL } = datasetStore
@@ -108,7 +108,7 @@ export const DtreePage = observer((): ReactElement => {
           goForward={dtreeStore.actionHistory.goForward}
           goBackward={dtreeStore.actionHistory.goBackward}
           className={styles.dtreePage__controls}
-          TextEditor={TextEditor}
+          TextEditorButton={TextEditorButton}
         />
 
         <QueryBuilder className={styles.dtreePage__queryBuilder} />
