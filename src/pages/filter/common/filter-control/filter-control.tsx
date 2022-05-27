@@ -1,6 +1,7 @@
 import { ReactElement } from 'react'
 import { useHistory } from 'react-router'
 import { Link } from 'react-router-dom'
+import cn from 'classnames'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
@@ -27,10 +28,11 @@ import { SolutionDropDown } from './solution-dropdown'
 
 interface IFilterControlProps {
   SolutionControl: React.ElementType
+  className?: string
 }
 
 export const FilterControl = observer(
-  ({ SolutionControl }: IFilterControlProps): ReactElement => {
+  ({ SolutionControl, className }: IFilterControlProps): ReactElement => {
     const isFirstActionHistoryIndex = dtreeStore.actionHistoryIndex === 0
 
     const isLastActionHistoryIndex =
@@ -56,8 +58,13 @@ export const FilterControl = observer(
     }
 
     return (
-      <div className="flex flex-wrap justify-end bg-blue-dark pr-4 pb-4 pl-4">
-        <div className="flex justify-between w-full mt-1.5">
+      <div
+        className={cn(
+          'flex flex-wrap justify-end bg-blue-dark pr-6 pb-4 pl-6',
+          className,
+        )}
+      >
+        <div className="flex items-center justify-between w-full mt-3">
           <div className="flex items-center">
             <SolutionDropDown pageName={pageName} goToPage={goToPage} />
 
