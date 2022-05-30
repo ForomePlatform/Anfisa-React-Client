@@ -1,8 +1,9 @@
 import { FC, memo } from 'react'
+import cn, { Argument } from 'classnames'
 import Tooltip from 'rc-tooltip'
 
 export interface IUnitsListUnitNameProps {
-  className: string
+  className: Argument
   name: string
   tooltip?: string
   onClick: () => void
@@ -12,7 +13,7 @@ export interface IUnitsListUnitNameProps {
 export const UnitsListUnitName: FC<IUnitsListUnitNameProps> = memo(
   ({ tooltip, name, className, onClick }) => {
     const nameElement = (
-      <span className={className} onClick={onClick}>
+      <span className={cn(className)} onClick={onClick}>
         {name}
       </span>
     )

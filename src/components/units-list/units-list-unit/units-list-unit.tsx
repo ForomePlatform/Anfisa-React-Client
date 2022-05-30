@@ -1,16 +1,16 @@
 import styles from './units-list-unit.module.css'
 
 import { ReactElement, useCallback, useState } from 'react'
-import cn from 'classnames'
+import cn, { Argument } from 'classnames'
 
 import { TUnit } from '@store/stat-units'
 import { PredictionPowerIndicator } from '@components/prediction-power-indicator'
 import { AttributeKinds } from '@service-providers/common'
 import { UnitChart } from '../unit-chart'
-import { UnitsListUnitName } from './components/units-list-utnit-name'
+import { UnitsListUnitName } from './components/units-list-unit-name'
 
 interface IUnitsListUnitProps {
-  className?: string
+  className?: Argument
   isDark: boolean
   withChart: boolean
   unit: TUnit
