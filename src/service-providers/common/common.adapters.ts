@@ -30,7 +30,7 @@ export const adaptDataToCamelizedType = <T>(
     } else {
       let subCamelizedData = response[key as keyof T]
       if (skipFields && !skipFields.includes(key)) {
-        subCamelizedData = adaptDataToCamelizedType(response[key])
+        subCamelizedData = adaptDataToCamelizedType(response[key], skipFields)
       }
       const camelizedKey = key.replace(/-./g, x => x[1].toUpperCase())
 
