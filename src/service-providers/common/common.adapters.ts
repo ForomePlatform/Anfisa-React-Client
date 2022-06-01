@@ -10,7 +10,10 @@ export const adaptFilteringStatsCounts = (
   }
 }
 
-export const adaptDataToCamelizedType = <T>(response: T): T => {
+export const adaptDataToCamelizedType = <T>(
+  response: T,
+  skipFiels?: string[],
+): T => {
   const camelizedData = {}
 
   const isObject = (value: any) => {
@@ -25,7 +28,10 @@ export const adaptDataToCamelizedType = <T>(response: T): T => {
         value: response[key as keyof T],
       }) as T
     } else {
-      const subCamelizedData = adaptDataToCamelizedType(response[key])
+      let subCamelizedData = response[key as keyof T]
+      if (skipFiels && !skipFiels.includes(key)) {
+        subCamelizedData = adaptDataToCamelizedType(response[key])
+      }
       const camelizedKey = key.replace(/-./g, x => x[1].toUpperCase())
 
       Object.defineProperty(camelizedData, camelizedKey, {
