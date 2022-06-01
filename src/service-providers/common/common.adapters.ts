@@ -12,7 +12,7 @@ export const adaptFilteringStatsCounts = (
 
 export const adaptDataToCamelizedType = <T>(
   response: T,
-  skipFiels?: string[],
+  skipFields?: string[],
 ): T => {
   const camelizedData = {}
 
@@ -29,7 +29,7 @@ export const adaptDataToCamelizedType = <T>(
       }) as T
     } else {
       let subCamelizedData = response[key as keyof T]
-      if (skipFiels && !skipFiels.includes(key)) {
+      if (skipFields && !skipFields.includes(key)) {
         subCamelizedData = adaptDataToCamelizedType(response[key])
       }
       const camelizedKey = key.replace(/-./g, x => x[1].toUpperCase())
