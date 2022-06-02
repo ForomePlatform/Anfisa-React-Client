@@ -9,7 +9,7 @@ export const filterPresetsData = <T extends ISolutionEntryDescription>(
 
   const [standard, custom] = orderedPresets.reduce(
     (acc, preset) => {
-      preset.standard ? acc[0].push(preset) : acc[1].push(preset)
+      acc[preset.standard ? 0 : 1].push(preset)
 
       return acc
     },
