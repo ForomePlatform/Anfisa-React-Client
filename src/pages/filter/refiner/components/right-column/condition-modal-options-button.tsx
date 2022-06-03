@@ -1,10 +1,9 @@
-import { ReactElement } from 'react'
+import { ReactElement, RefObject } from 'react'
 
-import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
 
 interface IConditionModalOptionsButtonProps {
-  refEl: HTMLElement
+  refEl: RefObject<HTMLButtonElement>
   onClick?: () => void
 }
 
@@ -13,17 +12,12 @@ export const ConditionModalOptionsButton = ({
   ...rest
 }: IConditionModalOptionsButtonProps): ReactElement => {
   return (
-    <Button
-      refEl={refEl}
-      onClick={rest.onClick}
-      className="bg-transparent hover:bg-transparent  active:bg-transparent"
-      append={
-        <Icon
-          name="Options"
-          className="cursor-pointer text-blue-bright"
-          stroke={false}
-        />
-      }
-    />
+    <button ref={refEl} className="rounded-full p-0.5" {...rest}>
+      <Icon
+        name="Options"
+        className="cursor-pointer text-blue-bright"
+        stroke={false}
+      />
+    </button>
   )
 }
