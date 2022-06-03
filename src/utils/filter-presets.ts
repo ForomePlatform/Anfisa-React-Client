@@ -1,19 +1,16 @@
-import orderBy from 'lodash/orderBy'
-
 import { ISolutionEntryDescription } from '@service-providers/common'
 
 export const filterPresetsData = <T extends ISolutionEntryDescription>(
   presets: T[],
 ): T[] => {
-  const orderedPresets = orderBy(presets, ['name'])
+  const presetComparator = (a: T, b: T): number => {
+    if (a.standard !== b.standard) {
+      return a.standard ? -1 : 1
+    }
 
-  const [standard, custom] = orderedPresets.reduce(
-    (acc, preset) => {
-      acc[preset.standard ? 0 : 1].push(preset)
+    return a.name.localeCompare(b.name)
+  }
+  presets.sort(presetComparator)
 
-      return acc
-    },
-    [[], []] as [T[], T[]],
-  )
-  return [...standard, ...custom]
+  return presets
 }
