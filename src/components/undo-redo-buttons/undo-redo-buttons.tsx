@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { Routes } from '@router/routes.enum'
 import { Icon } from '@ui/icon'
-import { UndoRedoButton } from '@components/undo-redo-buttons/undo-redo-button'
+import { UndoRedoButton } from '@components/undo-redo-buttons/components/undo-redo-button'
 
 interface IUndoRedoButtons {
   onUndo: () => void
