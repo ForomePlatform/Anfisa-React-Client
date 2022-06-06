@@ -1,0 +1,36 @@
+.content-code {
+  display: flex;
+  height: auto;
+  width: 33.333%;
+  margin-left: 8px;
+
+  &_wrapper {
+    width: 100%;
+    height: auto;
+    padding: theme('spacing.2');
+    background: theme('colors.blue.secondary');
+    color: theme('colors.white');
+    font-size: theme('spacing.3');
+    font-family: "IBM Plex Mono";
+    font-weight: 400;
+    border-radius: 6px;
+    overflow: auto;
+  }
+
+  /* Style for python code result class */
+  &_result {
+      margin-left: 8px;
+  }
+
+  :global {
+  /* Styles for python comment class */
+    .c1 {
+      display: flex;
+      margin-bottom: 7px;
+    }
+  /* Style for python code condition classes */
+    .n, .o, .mi, .s2, .mf, .s1 {
+      color: theme("colors.orange.secondary");
+    }
+  }
+}
