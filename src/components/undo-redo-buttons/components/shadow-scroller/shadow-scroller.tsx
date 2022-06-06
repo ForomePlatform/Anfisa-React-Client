@@ -4,7 +4,7 @@ import { FC, useRef } from 'react'
 import cn, { Argument } from 'classnames'
 
 import { ScrollDirection, useGrabScroll } from '@core/hooks/use-grab-scroll'
-import { useScrollShadows } from '@ui/shadow-scroller/shadow-scroller.hook'
+import { useScrollShadows } from '@components/undo-redo-buttons/components/shadow-scroller/shadow-scroller.hook'
 
 interface IScrollerProp {
   direction?: ScrollDirection
