@@ -78,7 +78,7 @@ export const EnumCondition = observer(
       setCurrentPage(0)
     }, [attributeName])
 
-    useEffect(
+    /*useEffect(
       () => {
         const element = ref.current as Element
 
@@ -100,7 +100,7 @@ export const EnumCondition = observer(
         }
       }, // eslint-disable-next-line react-hooks/exhaustive-deps
       [ref.current],
-    )
+    )*/
 
     const preparedSearchValue = searchValue.toLocaleLowerCase()
 
