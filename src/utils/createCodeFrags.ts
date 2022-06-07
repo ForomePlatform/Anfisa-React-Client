@@ -5,7 +5,7 @@ export const createCodeFrags = (points: IDtreeSetPoint[]): ICodeFrags[] => {
 
   points.forEach(
     (point, index) =>
-      index % 2 === 0 &&
+      point.kind === 'If' &&
       codeFrags.push({
         condition: point['code-frag'],
         result: points[index + 1]?.['code-frag'],
