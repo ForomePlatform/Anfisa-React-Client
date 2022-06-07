@@ -3,7 +3,9 @@ import { observer } from 'mobx-react-lite'
 import { t } from '@i18n'
 import { Icon } from '@ui/icon'
 import { deleteAttribute } from '@utils/changeAttribute/deleteAttribute'
-import activeStepStore, { ActiveStepOptions } from '../../active-step.store'
+import stepStore, {
+  ActiveStepOptions,
+} from '../../../../../../store/dtree/step.store'
 
 interface IInactiveFieldProps {
   stepNo: number
@@ -13,10 +15,7 @@ interface IInactiveFieldProps {
 export const InactiveFieldLabel = observer(
   ({ stepNo, groupIndex }: IInactiveFieldProps) => {
     const handleDeleteAttribute = () => {
-      activeStepStore.makeStepActive(
-        stepNo - 1,
-        ActiveStepOptions.StartedVariants,
-      )
+      stepStore.makeStepActive(stepNo - 1, ActiveStepOptions.StartedVariants)
 
       deleteAttribute(groupIndex)
     }

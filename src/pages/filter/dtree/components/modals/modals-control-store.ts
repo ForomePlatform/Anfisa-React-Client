@@ -1,7 +1,7 @@
 import { makeAutoObservable, toJS } from 'mobx'
 
 import dtreeStore from '@store/dtree'
-import activeStepStore from '@pages/filter/dtree/components/active-step.store'
+import stepStore from '@store/dtree/step.store'
 import {
   AttributeKinds,
   IFuncPropertyStatus,
@@ -25,7 +25,7 @@ class ModalsControlStore {
 
   public get location(): [number, number] {
     const locationIndex = modalsVisibilityStore.groupIndexToChange
-    const { stepIndexForApi } = activeStepStore
+    const { stepIndexForApi } = stepStore
 
     return [+stepIndexForApi, locationIndex]
   }
@@ -44,18 +44,13 @@ class ModalsControlStore {
     }
 
     const group = toJS(
-      dtreeStore.stepData[activeStepStore.activeStepIndex].groups[
+      stepStore.steps[stepStore.activeStepIndex].groups[
         modalsVisibilityStore.groupIndexToChange
       ],
     )
 
-    /**
-     * TODO: see getStepDataAsync.ts:57
-     *       The join type added on the 3rd index of group
-     *       for second and next groups in step.
-     *       It's terrible! And should be fixed
-     */
     const mayBeJoin = group[group.length - 2]
+
     if (mayBeJoin === 'or' || mayBeJoin === 'and') {
       group.splice(group.length - 2, 1)
     }
@@ -68,7 +63,7 @@ class ModalsControlStore {
   }
 
   public get currentStepGroups(): string[] {
-    return toJS(dtreeStore.stepData[activeStepStore.activeStepIndex].groups)
+    return toJS(stepStore.steps[stepStore.activeStepIndex].groups)
   }
 
   public get statList(): TPropertyStatus[] {

@@ -1,3 +1,4 @@
+import { IStepData } from '@store/dtree/dtree.store'
 import {
   DatasetKinds,
   IFuncPropertyStatus,
@@ -126,7 +127,11 @@ export interface IDtreeSetResponse {
   'eval-status': 'ok' | string
   hash: string
   'dtree-list': ISolutionEntryDescription[]
-  rq_id: string
+  'rq-id': string
+}
+
+export interface IDtreeSet extends IDtreeSetResponse {
+  steps: IStepData[]
 }
 
 // dtree_counts
@@ -140,9 +145,14 @@ export interface IDtreeCountsArguments {
   points: number[]
 }
 
-export interface IDtreeCounts {
+export interface IDtreeCountsResponse {
   'rq-id': string
   'point-counts': PointCount[]
+}
+
+export interface IGetFullDreeCountsOptions {
+  abortSignal?: AbortSignal
+  onPartialResponse?: (response: IDtreeCountsResponse) => void
 }
 
 // dtree_stat

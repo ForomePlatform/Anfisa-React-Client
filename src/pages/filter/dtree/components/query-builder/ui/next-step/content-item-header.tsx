@@ -6,12 +6,10 @@ import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { theme } from '@theme'
 import { IStepData } from '@store/dtree/dtree.store'
+import stepStore, { ActiveStepOptions } from '@store/dtree/step.store'
 import { Icon } from '@ui/icon'
 import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
 import { FnLabel } from '@components/fn-label'
-import activeStepStore, {
-  ActiveStepOptions,
-} from '@pages/filter/dtree/components/active-step.store'
 import modalsVisibilityStore from '../../../modals/modals-visibility-store'
 import { InactiveFieldLabel } from '../inactive-field-label'
 
@@ -47,10 +45,7 @@ export const ContentItemHeader = observer(
       !stepType
 
     const handleModals = () => {
-      activeStepStore.makeStepActive(
-        stepNo - 1,
-        ActiveStepOptions.StartedVariants,
-      )
+      stepStore.makeStepActive(stepNo - 1, ActiveStepOptions.StartedVariants)
 
       stepType === FilterKindEnum.Enum &&
         modalsVisibilityStore.openModalEnum(groupName, groupNo)

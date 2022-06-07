@@ -2,7 +2,7 @@ import { ActionType, AttributeType } from '@declarations'
 import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import dtreeStore from '@store/dtree'
-import activeStepStore from '@pages/filter/dtree/components/active-step.store'
+import stepStore from '@store/dtree/step.store'
 import { TFuncArgs, TNumericConditionBounds } from '@service-providers/common'
 import {
   ActionTypes,
@@ -34,7 +34,7 @@ export const addAttributeToStep = (
 
   if (param) attribute.push(param)
 
-  const { stepIndexForApi } = activeStepStore
+  const { stepIndexForApi } = stepStore
 
   dtreeStore.fetchDtreeSetAsync({
     ds: datasetStore.datasetName,

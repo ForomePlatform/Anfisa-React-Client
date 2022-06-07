@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite'
 import { ActionType } from '@declarations'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import dtreeStore from '@store/dtree'
-import activeStepStore from '@pages/filter/dtree/components/active-step.store'
+import stepStore from '@store/dtree/step.store'
 import { CustomInheritanceModeContent } from '../../../query-builder/ui/custom-inheritance-mode-content'
 import modalsControlStore from '../../modals-control-store'
 import modalsVisibilityStore from '../../modals-visibility-store'
@@ -19,13 +19,13 @@ export const ModalCustomInheritanceMode = observer((): ReactElement => {
 
   const selectValues = modalCustomInheritanceModeStore.selectValues
 
-  const currentStepIndex = activeStepStore.activeStepIndex
+  const currentStepIndex = stepStore.activeStepIndex
   const currentGroupIndex = modalsVisibilityStore.groupIndexToChange
 
   const currentGroup =
-    dtreeStore.stepData[currentStepIndex].groups[currentGroupIndex]
+    stepStore.steps[currentStepIndex].groups[currentGroupIndex]
 
-  const currentGroupToModify = dtreeStore.stepData[currentStepIndex].groups
+  const currentGroupToModify = stepStore.steps[currentStepIndex].groups
 
   useEffect(() => {
     if (currentGroup) {
