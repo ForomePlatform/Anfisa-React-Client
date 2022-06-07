@@ -64,7 +64,7 @@ export const adaptDtreeSetResponse = (
   const finalStep: IStepData = {
     step: newSteps.length,
     groups: [],
-    excluded: !stepCodes[stepCodes.length - 1]?.result,
+    excluded: !stepCodes[stepCodes.length - 1]?.decision,
     isActive: false,
     isReturnedVariantsActive: false,
     conditionPointIndex: null,
