@@ -2,12 +2,13 @@ import { AxiosRequestConfig } from 'axios'
 
 import { adaptDsStatResponse } from '@service-providers/filtering-regime/filtering-regime.adapters'
 import { ServiceProviderBase, TFilteringStat } from '../common'
+import { adaptDataToCamelizedType } from './../common/common.adapters'
 import {
   DsStatArgumentsOptions,
   IDsStat,
   IDsStatArguments,
-  IStatfunc,
-  IStatfuncArguments,
+  IStatFunc,
+  IStatFuncArguments,
   IStatunits,
   IStatunitsArguments,
   TDeleteFilterPresetParams,
@@ -85,11 +86,12 @@ export class FilteringRegimeProvider extends ServiceProviderBase {
   }
 
   public async getStatFunc(
-    params: IStatfuncArguments,
-    options: Partial<AxiosRequestConfig> = {},
-  ) {
-    const response = await this.post<IStatfunc>('/statfunc', params, options)
-    return response.data
+    params: IStatFuncArguments,
+    options: Partial<AxiosRequestConfig<string>> = {},
+  ): Promise<IStatFunc> {
+    const response = await this.post<IStatFunc>('/statfunc', params, options)
+
+    return adaptDataToCamelizedType(response.data)
   }
 
   public getFullDsStat(
@@ -129,7 +131,7 @@ export class FilteringRegimeProvider extends ServiceProviderBase {
     const { response, unitsRequest } = await baseRequest()
 
     let result = response
-    let incompleteProps = getIncompleteProps(response.list)
+    let incompleteProps = getIncompleteProps(response.units)
 
     while (incompleteProps.length > 0) {
       if (abortSignal && abortSignal.aborted) {
@@ -153,14 +155,14 @@ export class FilteringRegimeProvider extends ServiceProviderBase {
 
       result = {
         ...result,
-        list: result.list.map(prop => {
+        units: result.units.map(prop => {
           const { name } = prop
 
           return units.find(item => item.name === name) ?? prop
         }),
       }
 
-      incompleteProps = getIncompleteProps(result.list)
+      incompleteProps = getIncompleteProps(result.units)
     }
 
     return result
