@@ -62,7 +62,7 @@ class ModalCompoundHetStore {
     addAttributeToStep(
       action,
       FilterKindEnum.Func,
-      null,
+      ['True'],
       params,
       this.currentMode,
     )

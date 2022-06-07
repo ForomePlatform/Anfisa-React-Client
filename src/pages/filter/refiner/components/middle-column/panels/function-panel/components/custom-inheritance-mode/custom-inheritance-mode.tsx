@@ -1,108 +1,62 @@
-import React, { useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 
-import { ModeTypes } from '@core/enum/mode-types-enum'
+import { FilterKindEnum } from '@core/enum/filter-kind.enum'
+import { t } from '@i18n'
 import filterStore from '@store/filter'
-import { CustomInheritanceModeContent } from '@pages/filter/dtree/components/query-builder/ui/custom-inheritance-mode-content'
-import { ConditionJoinMode } from '@service-providers/common'
-import { ICustomInheritanceModeArgs } from '@service-providers/common/common.interface'
-import { getStringScenario } from '@utils/function-panel/getStringScenario'
-import { getCurrentModeType } from '@utils/getCurrentModeType'
-import functionPanelStore from '../../function-panel.store'
-import { PanelButtons } from '../panelButtons'
-import customInheritanceModeStore from './custom-inheritance-mode.store'
+import { Button } from '@ui/button'
+import { CustomInheritanceModeCondition } from '@components/custom-inheritance-mode-condition/custom-inheritance-mode-condition'
+import { refinerFunctionsStore } from '@pages/filter/refiner/components/attributes/refiner-functions.store'
+import { refinerStatFuncStore } from '@pages/filter/refiner/components/attributes/refiner-stat-func.store'
+import { savePanelAttribute } from '../../../utils/save-pannel-attribute'
 
 export const CustomInheritanceMode = observer(() => {
-  const { selectedCondition, isRedactorMode, isFilterTouched } = filterStore
+  const {
+    attributeName,
+    problemGroups,
+    initialScenario,
+    initialMode,
+    initialCondition,
+    attributeSubKind,
+  } = refinerFunctionsStore
 
-  const { simpleVariants, problemGroups } = functionPanelStore
-
-  const { selectStates, scenario, resetValue } = customInheritanceModeStore
-
-  const setComplexScenario = (resetName: string): void => {
-    if (resetValue !== resetName) filterStore.setTouched(true)
-    customInheritanceModeStore.setComplexScenario(resetName)
-  }
-
-  const setSingleScenario = (group: string, selectValue: string): void => {
-    problemGroups.forEach((gName, index) => {
-      if (gName === group && selectStates[index] !== selectValue) {
-        filterStore.setTouched(true)
-      }
-    })
-    customInheritanceModeStore.setSingleScenario(group, selectValue)
-  }
-
-  // set/reset data
-  useEffect(() => {
-    if (selectedCondition && isRedactorMode) {
-      const selectedFilterScenario =
-        selectedCondition[4] as ICustomInheritanceModeArgs
-      const selectedFilterScenarioArray = Object.entries(
-        selectedFilterScenario['scenario'],
-      )
-      const conditionJoinType = selectedCondition[2] as ConditionJoinMode
-
-      customInheritanceModeStore.setCurrentMode(
-        getCurrentModeType(conditionJoinType),
-      )
-      customInheritanceModeStore.setScenario(selectedFilterScenarioArray)
-    }
-
-    if (!isRedactorMode) {
-      customInheritanceModeStore.clearScenario()
-      customInheritanceModeStore.clearResetValue()
-      customInheritanceModeStore.resetCurrentMode()
-    }
-  }, [isRedactorMode, selectedCondition])
-
-  // update data
-  useEffect(() => {
-    const params = `{"scenario":${
-      scenario.length > 0 ? `{${getStringScenario(scenario)}}` : '{}'
-    }}`
-
-    functionPanelStore.fetchStatFunc('Custom_Inheritance_Mode', params)
-  }, [scenario])
-
-  // to avoid displaying this data on the another func attr
-  useEffect(() => {
-    return () => filterStore.resetStatFuncData()
-  }, [])
-
-  const onSubmit = () => {
-    customInheritanceModeStore.handleSumbitCondtions()
-    filterStore.setTouched(false)
-  }
-
-  const resetFields = () => {
-    customInheritanceModeStore.clearData()
-    filterStore.setTouched(true)
-  }
-
-  const toggleNotMode = () => {
-    customInheritanceModeStore.setCurrentMode(ModeTypes.Not)
-    filterStore.setTouched(true)
-  }
+  const { isFilterTouched } = filterStore
 
   return (
     <>
-      <CustomInheritanceModeContent
+      <CustomInheritanceModeCondition
         problemGroups={problemGroups}
-        handleSetScenario={setSingleScenario}
-        selectStates={selectStates}
-        handleReset={setComplexScenario}
-        resetValue={resetValue}
-        isNotModeChecked={
-          customInheritanceModeStore.currentMode === ModeTypes.Not
-        }
-        toggleNotMode={toggleNotMode}
-      />
-
-      <PanelButtons
-        onSubmit={onSubmit}
-        resetFields={resetFields}
-        disabled={!simpleVariants || !isFilterTouched}
+        initialScenario={initialScenario}
+        initialMode={initialMode}
+        attributeSubKind={attributeSubKind}
+        statFuncStore={refinerStatFuncStore}
+        controls={({ mode, hasErrors, param, clearValue }) => {
+          return (
+            <div className="flex-1 flex items-end justify-end mt-1 pb-[40px]">
+              <Button
+                variant={'secondary'}
+                text={t('general.clear')}
+                onClick={clearValue}
+                className="px-5 mr-2"
+              />
+              <Button
+                text={
+                  initialCondition
+                    ? t('dtree.saveChanges')
+                    : t('dtree.addAttribute')
+                }
+                onClick={() =>
+                  savePanelAttribute({
+                    filterKind: FilterKindEnum.Func,
+                    attributeName,
+                    mode,
+                    param,
+                  })
+                }
+                disabled={hasErrors || !isFilterTouched}
+              />
+            </div>
+          )
+        }}
       />
     </>
   )

@@ -17,11 +17,6 @@ class FunctionPanelStore {
     return variants
   }
 
-  public get complexVariants(): [string, number][] {
-    const { variants } = filterStore.statFuncData
-    return variants || []
-  }
-
   public get problemGroups(): string[] {
     return (
       (

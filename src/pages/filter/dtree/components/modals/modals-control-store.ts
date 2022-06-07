@@ -49,12 +49,6 @@ class ModalsControlStore {
       ],
     )
 
-    /**
-     * TODO: see getStepDataAsync.ts:57
-     *       The join type added on the 3rd index of group
-     *       for second and next groups in step.
-     *       It's terrible! And should be fixed
-     */
     if (group[3] === 'or' || group[3] === 'and') {
       group.splice(3, 1)
     }
@@ -62,16 +56,8 @@ class ModalsControlStore {
     return group
   }
 
-  public get currentGroupLength(): number {
-    return this.currentGroupToChange?.length ?? 0
-  }
-
   public get currentStepGroups(): string[] {
     return toJS(dtreeStore.stepData[activeStepStore.activeStepIndex].groups)
-  }
-
-  public get statList(): TPropertyStatus[] {
-    return dtreeStore.stat.units || []
   }
 
   get attributeStatusToChange(): TPropertyStatus | undefined {
@@ -92,26 +78,6 @@ class ModalsControlStore {
 
   public get approxModes(): string[][] {
     return this.funcAttributeStatusToChange?.['approx-modes'] ?? []
-  }
-
-  public get approxOptions(): string[] {
-    const approxOptions: string[] = []
-
-    this.approxModes.map((mode: string[]) => {
-      approxOptions.push(mode[1])
-    })
-
-    return approxOptions
-  }
-
-  public get approxValues(): string[] {
-    const approxValues: string[] = []
-
-    this.approxModes.map((mode: string[]) => {
-      approxValues.push(mode[0])
-    })
-
-    return approxValues
   }
 
   public openModalJoin(): void {

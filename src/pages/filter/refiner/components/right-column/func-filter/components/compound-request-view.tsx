@@ -3,8 +3,8 @@ import cn from 'classnames'
 
 import { approxOptions } from '@core/approxOptions'
 import functionPanelStore from '@pages/filter/refiner/components/middle-column/panels/function-panel/function-panel.store'
+import { getScenarioValue } from '@pages/filter/refiner/components/right-column/func-filter/utils/getScenarioValue'
 import { ICompoundRequestArgs } from '@service-providers/common/common.interface'
-import { getScenarioValue } from '@utils/filter-refiner/getScenarioValue'
 
 interface ICompoundRequestViewProps {
   isFilterActive: boolean
@@ -58,7 +58,7 @@ export const CompoundRequestView = ({
                 <span>{group}</span>
 
                 <span className="ml-1 text-grey-blue">
-                  {getScenarioValue(group, Object.entries(reqCondition))}
+                  {getScenarioValue(group, reqCondition)}
                 </span>
               </div>
             ))}
