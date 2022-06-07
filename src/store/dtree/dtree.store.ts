@@ -24,15 +24,15 @@ import stepStore, { ActiveStepOptions } from './step.store'
 export type IStepData = {
   step: number
   groups: any[]
-  negate?: boolean
-  all?: boolean
   excluded: boolean
+  isNegate?: boolean
   isActive: boolean
   isReturnedVariantsActive: boolean
   conditionPointIndex: number | null
   returnPointIndex: number | null
   comment?: string
   condition?: string
+  result?: string
   isFinalStep?: boolean
 }
 

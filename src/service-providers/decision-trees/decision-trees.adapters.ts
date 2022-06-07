@@ -1,7 +1,8 @@
 import { IStepData } from '@store/dtree/dtree.store'
 import { adaptFilteringStatsCounts } from '@service-providers/common'
 import { IDtreeSetResponse } from '@service-providers/decision-trees'
-import { getDataFromCode } from '@utils/getDataFromCode'
+import { createCodeFrags } from './../../utils/createCodeFrags'
+import { getDataFromFrags } from './../../utils/getDataFromFrags'
 import {
   IDtreeSet,
   IDtreeStatResponse,
@@ -32,7 +33,9 @@ export const adaptDtreeSetResponse = (
     returnPointIndex: null,
   }
 
-  const stepCodes = getDataFromCode(response.code)
+  const codeFrags = createCodeFrags(response.points)
+
+  const stepCodes = getDataFromFrags(codeFrags)
 
   const localSteps: IStepData[] = []
   const atomsEntries = Object.entries(response['cond-atoms'] ?? {})
@@ -43,24 +46,15 @@ export const adaptDtreeSetResponse = (
     localSteps.push({
       step: index + 1,
       groups: atom.filter((elem: any[]) => elem.length > 0),
-      excluded: !stepCodes[index].result,
+      excluded: !stepCodes[index].decision,
       isActive: false,
       isReturnedVariantsActive: false,
       conditionPointIndex,
       returnPointIndex: conditionPointIndex + 1,
-      comment: stepCodes[index].comment,
-      negate: stepCodes[index].isNegate,
-      all: stepCodes[index].isAll,
       condition: stepCodes[index].condition,
+      result: stepCodes[index].result,
+      isNegate: stepCodes[index].isNegate,
     })
-  })
-
-  localSteps.forEach((step: IStepData, index: number) => {
-    if (step.groups.length > 1) {
-      step.groups.forEach((group: any[], currNo: number) => {
-        currNo !== 0 && group.splice(-1, 0, stepCodes[index].types[currNo - 1])
-      })
-    }
   })
 
   const newSteps = localSteps.length === 0 ? [initialStep] : localSteps
