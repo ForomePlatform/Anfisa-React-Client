@@ -7,7 +7,7 @@ import {
   DisplayValue,
   hide,
   Placement,
-} from '@components/undo-redo-buttons/components/shadow-scroller/shadow-scroller.utils'
+} from '@components/shadow-scroller/shadow-scroller.utils'
 
 export const useScrollShadows = (
   ref: RefObject<HTMLDivElement>,

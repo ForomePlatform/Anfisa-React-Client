@@ -1,4 +1,4 @@
-import { ShadowScroller } from '@components/undo-redo-buttons/components/shadow-scroller/shadow-scroller'
+import { ShadowScroller } from '@components/shadow-scroller/shadow-scroller'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 export default {
