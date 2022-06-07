@@ -69,6 +69,7 @@ export const EnumCondition = observer(
     )
     const [searchValue, setSearchValue] = useState('')
     const [currentPage, setCurrentPage] = useState(0)
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [variantsPerPage, setVariantsPerPage] = useState<number>(initialCount)
 
     const isBlockAddBtn = !selectedVariants.length || !isFilterTouched
