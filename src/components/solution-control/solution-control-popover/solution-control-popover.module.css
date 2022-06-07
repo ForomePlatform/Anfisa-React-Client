@@ -1,7 +1,7 @@
 .solution-control-card {
   @apply popup-card;
 
-  width: 343px;
+  width: 300px;
   margin-top: theme("spacing.3");
 
   &__header {
