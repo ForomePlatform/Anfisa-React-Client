@@ -1,7 +1,8 @@
-import { ReactElement } from 'react'
+import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
+import filterStore from '@store/filter'
 import { Button } from '@ui/button'
 import { CompoundHetCondition } from '@components/conditions/compound-het-condition/compound-het-condition'
 import { refinerFunctionsStore } from '@pages/filter/refiner/components/attributes/refiner-functions.store'
@@ -18,12 +19,25 @@ export const CompundHet = observer((): ReactElement => {
     attributeSubKind,
   } = refinerFunctionsStore
 
+  const handleSaveChanges = useCallback(
+    (mode, param) => {
+      savePanelAttribute({
+        filterKind: AttributeKinds.FUNC,
+        attributeName,
+        mode,
+        param,
+      })
+    },
+    [attributeName],
+  )
+
   return (
     <CompoundHetCondition
       initialMode={initialMode}
       initialApprox={initialApprox}
       attributeSubKind={attributeSubKind}
       statFuncStore={refinerStatFuncStore}
+      onTouch={() => filterStore.setTouched(true)}
       controls={({ mode, hasErrors, param, clearValue }) => {
         return (
           <div className="flex-1 flex items-end justify-end mt-1 pb-[40px]">
@@ -39,15 +53,7 @@ export const CompundHet = observer((): ReactElement => {
                   ? t('dtree.saveChanges')
                   : t('dtree.addAttribute')
               }
-              onClick={() =>
-                savePanelAttribute({
-                  filterKind: AttributeKinds.FUNC,
-                  attributeName,
-                  mode,
-                  selectedVariants: ['Proband'],
-                  param,
-                })
-              }
+              onClick={() => handleSaveChanges(mode, param)}
               disabled={hasErrors}
             />
           </div>

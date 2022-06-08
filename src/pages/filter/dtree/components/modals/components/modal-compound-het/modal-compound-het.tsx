@@ -1,4 +1,4 @@
-import { ReactElement } from 'react'
+import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
@@ -31,6 +31,28 @@ export const ModalCompoundHet = observer((): ReactElement => {
     modalsVisibilityStore.openModalAttribute()
   }
 
+  const handleSaveChanges = useCallback((mode, param) => {
+    saveAttribute({
+      filterKind: AttributeKinds.FUNC,
+      filterName: FuncStepTypesEnum.CompoundHet,
+      values: ['Proband'],
+      mode,
+      param,
+    })
+    modalsVisibilityStore.closeModalCompoundHet()
+  }, [])
+
+  const handleAddAttribute = useCallback((action, mode, param) => {
+    addAttributeToStep({
+      action,
+      attributeType: AttributeKinds.FUNC,
+      filters: ['True'],
+      param,
+      mode,
+    })
+    modalsVisibilityStore.closeModalCompoundHet()
+  }, [])
+
   return (
     <ModalBase minHeight={340}>
       <HeaderModal
@@ -47,16 +69,7 @@ export const ModalCompoundHet = observer((): ReactElement => {
           return initialCondition ? (
             <EditModalButtons
               handleClose={modalsVisibilityStore.closeModalCompoundHet}
-              handleSaveChanges={() => {
-                saveAttribute({
-                  filterKind: AttributeKinds.FUNC,
-                  filterName: FuncStepTypesEnum.CompoundHet,
-                  values: ['Proband'],
-                  mode,
-                  param,
-                })
-                modalsVisibilityStore.closeModalCompoundHet()
-              }}
+              handleSaveChanges={() => handleSaveChanges(mode, param)}
               disabled={hasErrors}
             />
           ) : (
@@ -66,16 +79,9 @@ export const ModalCompoundHet = observer((): ReactElement => {
               handleModals={handleModals}
               handleModalJoin={modalsVisibilityStore.openModalJoin}
               disabled={hasErrors}
-              handleAddAttribute={action => {
-                addAttributeToStep({
-                  action,
-                  attributeType: AttributeKinds.FUNC,
-                  filters: ['Proband'],
-                  param,
-                  mode,
-                })
-                modalsVisibilityStore.closeModalCompoundHet()
-              }}
+              handleAddAttribute={action =>
+                handleAddAttribute(action, mode, param)
+              }
             />
           )
         }}

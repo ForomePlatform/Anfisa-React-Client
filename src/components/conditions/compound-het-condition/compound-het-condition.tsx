@@ -4,7 +4,6 @@ import { observer } from 'mobx-react-lite'
 import { ApproxNameTypes } from '@core/enum/approxNameTypes'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
-import filterStore from '@store/filter'
 import { AllNotMods } from '@pages/filter/dtree/components/query-builder/ui/all-not-mods'
 import { AprroxAndState } from '@pages/filter/refiner/components/middle-column/panels/function-panel/components/compound-request/components/approx-state'
 import { getApproxValue } from '@utils/getApproxValue'
@@ -17,6 +16,7 @@ export const CompoundHetCondition = observer(
     initialMode,
     attributeSubKind,
     statFuncStore,
+    onTouch,
     controls,
   }: ICompoundHetConditionProps): ReactElement => {
     const { variants, status, isFetching } = statFuncStore
@@ -27,7 +27,7 @@ export const CompoundHetCondition = observer(
 
     const toggleMode = (mode: ModeTypes) => {
       setMode(currentMode => (currentMode === mode ? undefined : mode))
-      filterStore.setTouched(true)
+      onTouch?.()
     }
 
     const handleReset = () => {
