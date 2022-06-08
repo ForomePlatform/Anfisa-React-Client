@@ -3,7 +3,6 @@ import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
-import filterStore from '@store/filter'
 import { InheritanceModeProblemGroups } from './components/inheritance-mode-problem-groups'
 import { InheritanceModeVariants } from './components/inheritance-mode-variants'
 import { InheritanceModeVariantsControls } from './components/inheritance-mode-variants-controls'
@@ -17,6 +16,7 @@ export const InheritanceModeCondition = observer(
     initialMode,
     attributeSubKind,
     statFuncStore,
+    onTouch,
     controls,
   }: IInheritanceModeConditionProps): ReactElement => {
     const [mode, setMode] = useState(initialMode)
@@ -48,7 +48,7 @@ export const InheritanceModeCondition = observer(
           ),
         )
       }
-      filterStore.setTouched(true)
+      onTouch && onTouch()
     }
 
     const handleSetVariants = (checked: boolean, variant: string) => {
@@ -61,12 +61,12 @@ export const InheritanceModeCondition = observer(
           ),
         )
       }
-      filterStore.setTouched(true)
+      onTouch && onTouch()
     }
 
     const toggleMode = (mode: ModeTypes) => {
       setMode(currentMode => (currentMode === mode ? undefined : mode))
-      filterStore.setTouched(true)
+      onTouch && onTouch()
     }
 
     const selectAllVariants = () => {
@@ -74,7 +74,7 @@ export const InheritanceModeCondition = observer(
         ([variantName]) => variantName,
       )
       setSelectedVariants(allVariantsNames)
-      filterStore.setTouched(true)
+      onTouch && onTouch()
     }
 
     const clearAllVariants = () => {

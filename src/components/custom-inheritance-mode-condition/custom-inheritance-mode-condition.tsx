@@ -3,7 +3,6 @@ import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
-import filterStore from '@store/filter'
 import { InheritanceModeSelect } from '@pages/filter/dtree/components/query-builder/components/inheritance-mode-select'
 import { DividerHorizontal } from '@pages/filter/refiner/components/middle-column/components/divider-horizontal'
 import { IScenario } from '@service-providers/common'
@@ -23,6 +22,7 @@ export const CustomInheritanceModeCondition = observer(
     initialMode,
     attributeSubKind,
     statFuncStore,
+    onTouch,
     controls,
   }: ICustomInheritanceModeConditionProps): ReactElement => {
     const { variants } = statFuncStore
@@ -38,7 +38,7 @@ export const CustomInheritanceModeCondition = observer(
     const toggleMode = (mode: ModeTypes) => {
       setMode(currentMode => (currentMode === mode ? undefined : mode))
 
-      filterStore.setTouched(true)
+      onTouch && onTouch()
     }
 
     const handleSetPreparedValue = (preparedValue: string) => {
@@ -50,10 +50,10 @@ export const CustomInheritanceModeCondition = observer(
         setScenario,
       })
 
-      filterStore.setTouched(true)
+      onTouch && onTouch()
     }
 
-    const handleSetSingleScenario = (index: number, value: string) => {
+    const onChangeScenario = (index: number, value: string) => {
       const clonedSelectValues = [...selectValues]
       clonedSelectValues[index] = value
 
@@ -63,7 +63,7 @@ export const CustomInheritanceModeCondition = observer(
 
       setPreparedValue('')
 
-      filterStore.setTouched(true)
+      onTouch && onTouch()
     }
 
     const handleClearScenario = () => {
@@ -76,8 +76,7 @@ export const CustomInheritanceModeCondition = observer(
         unit: FuncStepTypesEnum.CustomInheritanceMode,
         param: JSON.stringify({ scenario }),
       })
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [scenario])
+    }, [scenario, statFuncStore])
 
     useEffect(() => {
       setSelectValues(getSelectValues(scenario, problemGroups))
@@ -88,7 +87,7 @@ export const CustomInheritanceModeCondition = observer(
         <CustomInheritanceModeScenario
           problemGroups={problemGroups}
           selectValues={selectValues}
-          handleSetSingleScenario={handleSetSingleScenario}
+          onChangeScenario={onChangeScenario}
         />
 
         <DividerHorizontal />

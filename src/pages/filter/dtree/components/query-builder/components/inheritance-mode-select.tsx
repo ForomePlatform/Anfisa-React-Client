@@ -16,7 +16,7 @@ export const InheritanceModeSelect: FC<IInheritanceModeSelectProp> = ({
   <>
     <div className="flex justify-between">
       <span className="text-14 leading-16px font-medium text-grey-blue mt-0.5 mb-2.5">
-        {t('filter.inheritanceMode')}
+        {t('funcCondition.inheritanceMode')}
       </span>
 
       <span

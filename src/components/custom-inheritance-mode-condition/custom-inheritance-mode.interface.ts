@@ -17,6 +17,7 @@ export interface ICustomInheritanceModeConditionProps {
   initialScenario: IScenario
   initialMode: ModeTypes | undefined
   attributeSubKind: string | undefined
+  onTouch?: () => void
   controls?: (props: IControlProps) => ReactElement | null
   statFuncStore: DtreeStatFuncStore | FilterStatFuncStore
 }
@@ -29,7 +30,7 @@ export interface IHandleSetComplexScenarioProps {
 export interface ICustomInheritanceModeScenarioProps {
   problemGroups: string[]
   selectValues: string[]
-  handleSetSingleScenario: (index: number, value: string) => void
+  onChangeScenario: (index: number, value: string) => void
 }
 
 export interface ICustomInheritanceModeVariantsProps {

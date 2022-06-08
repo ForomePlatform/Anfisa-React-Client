@@ -30,6 +30,7 @@ export const InheritanceMode = observer(() => {
       initialMode={initialMode}
       attributeSubKind={attributeSubKind}
       statFuncStore={refinerStatFuncStore}
+      onTouch={() => filterStore.setTouched(true)}
       controls={({ values, mode, hasErrors, param, clearValue }) => {
         return (
           <div className="flex-1 flex items-end justify-end mt-1 pb-[40px]">
