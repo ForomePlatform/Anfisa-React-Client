@@ -23,7 +23,7 @@ Default.args = {
       {input.name}
     </label>
   ),
-  elements: [...new Array(256)].map(i => ({
+  elements: [...new Array(256)].map(() => ({
     id: faker.database.mongodbObjectId(),
     name: faker.name.firstName(),
   })),
