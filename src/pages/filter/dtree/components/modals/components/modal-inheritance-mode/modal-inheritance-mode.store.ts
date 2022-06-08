@@ -144,7 +144,7 @@ class ModalInheritanceModeStore {
     addAttributeToStep(
       action,
       FilterKindEnum.Func,
-      null,
+      dtreeStore.selectedFilters,
       params,
       this.currentMode,
     )
