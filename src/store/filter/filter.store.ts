@@ -12,6 +12,7 @@ import {
   TCondition,
   TPropertyStatus,
 } from '@service-providers/common'
+import { IDsListArguments } from '@service-providers/dataset-level'
 import { IStatFuncArguments } from '@service-providers/filtering-regime'
 import filteringRegimeProvider from '@service-providers/filtering-regime/filtering-regime.provider'
 import { showToast } from '@utils/notifications'
@@ -149,6 +150,17 @@ export class FilterStore {
 
   public get isPresetModified(): boolean {
     return this._presetModifiedState === PresetModifiedState.Modified
+  }
+
+  public get viewVariantsQuery(): IDsListArguments | undefined {
+    if (this.datasetName) {
+      return {
+        ds: this.datasetName,
+        conditions: toJS(this.conditions),
+      }
+    }
+
+    return undefined
   }
 
   private get filterQuery(): TFilterStatQuery {
