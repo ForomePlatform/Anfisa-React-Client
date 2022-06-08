@@ -8,13 +8,13 @@ import {
   RangeSliderOrientation,
   RangeSliderSide,
 } from '@ui/range-slider'
-import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-modal.cy'
 import {
   parseNumeric,
   prepareCenterDistanceValue,
   useCenterDistanceValue,
-} from '@components/numeric-condition/numeric-condition.utils'
-import { NumericConditionValue } from '@components/numeric-condition/numeric-condition-value'
+} from '@components/conditions/numeric-condition/numeric-condition.utils'
+import { NumericConditionValue } from '@components/conditions/numeric-condition/numeric-condition-value'
+import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-modal.cy'
 import { NumericPropertyStatusSubKinds } from '@service-providers/common/common.interface'
 import { INumericConditionProps } from './numeric-condition.interface'
 import { NumericConditionDistanceChart } from './numeric-condition-distance-chart'

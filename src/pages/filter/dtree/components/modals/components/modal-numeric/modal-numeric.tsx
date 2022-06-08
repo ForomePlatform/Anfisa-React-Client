@@ -1,8 +1,9 @@
 import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
-import { NumericCondition } from '@components/numeric-condition'
+import { NumericCondition } from '@components/conditions/numeric-condition'
 import { EditModalButtons } from '@pages/filter/dtree/components/modals/components/ui/edit-modal-buttons'
+import { AttributeKinds } from '@service-providers/common'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { changeNumericAttribute } from '@utils/changeAttribute/changeNumericAttribute'
 import { dtreeAttributeStore } from '../../../attributes/dtree-attributes.store'
@@ -61,7 +62,11 @@ export const ModalNumeric = observer((): ReactElement | null => {
               handleModalJoin={modalsVisibilityStore.openModalJoin}
               disabled={disabled}
               handleAddAttribute={action => {
-                addAttributeToStep(action, 'numeric', value)
+                addAttributeToStep({
+                  action,
+                  attributeType: AttributeKinds.NUMERIC,
+                  filters: value,
+                })
                 modalsVisibilityStore.closeModalNumeric()
               }}
             />

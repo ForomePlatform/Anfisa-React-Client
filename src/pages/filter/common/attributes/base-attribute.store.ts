@@ -1,7 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 
 import { ActionType } from '@declarations'
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import modalsVisibilityStore from '@pages/filter/dtree/components/modals/modals-visibility-store'
 import { savePanelAttribute } from '@pages/filter/refiner/components/middle-column/panels/utils/save-pannel-attribute'
@@ -53,7 +52,7 @@ export class BaseAttributeStore {
   }
 
   public get initialEnumVariants(): string[] | undefined {
-    if (this.initialCondition?.[0] === FilterKindEnum.Enum) {
+    if (this.initialCondition?.[0] === AttributeKinds.ENUM) {
       return this.initialCondition[3]
     }
 
@@ -61,7 +60,7 @@ export class BaseAttributeStore {
   }
 
   public get initialEnumMode(): ModeTypes | undefined {
-    if (this.initialCondition?.[0] === FilterKindEnum.Enum) {
+    if (this.initialCondition?.[0] === AttributeKinds.ENUM) {
       return getCurrentModeType(this.initialCondition[2])
     }
 
@@ -101,7 +100,7 @@ export class BaseAttributeStore {
   }
 
   public get initialNumericValue(): TNumericConditionBounds | undefined {
-    if (this.initialCondition?.[0] === FilterKindEnum.Numeric) {
+    if (this.initialCondition?.[0] === AttributeKinds.NUMERIC) {
       return this.initialCondition[2]
     }
 
@@ -120,7 +119,7 @@ export class BaseAttributeStore {
     // TODO: will be fixed after enum condition is fixed
     if (isRefiner) {
       savePanelAttribute({
-        filterKind: FilterKindEnum.Enum,
+        filterKind: AttributeKinds.ENUM,
         attributeName: this.attributeName,
         mode,
         selectedVariants,
@@ -136,13 +135,12 @@ export class BaseAttributeStore {
     mode: ModeTypes | undefined,
     selectedVariants: string[],
   ) => {
-    addAttributeToStep(
+    addAttributeToStep({
       action,
-      FilterKindEnum.Enum,
-      selectedVariants,
-      null,
+      attributeType: AttributeKinds.ENUM,
+      filters: selectedVariants,
       mode,
-    )
+    })
 
     modalsVisibilityStore.closeModalEnum()
   }

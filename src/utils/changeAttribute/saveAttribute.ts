@@ -1,9 +1,8 @@
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import datasetStore from '@store/dataset/dataset'
 import dtreeStore from '@store/dtree'
 import modalsControlStore from '@pages/filter/dtree/components/modals/modals-control-store'
-import { TFuncArgs } from '@service-providers/common'
+import { AttributeKinds, TFuncArgs } from '@service-providers/common'
 import {
   ActionTypes,
   AtomModifyingActionName,
@@ -11,7 +10,7 @@ import {
 import { getConditionJoinMode } from '@utils/getConditionJoinMode'
 
 interface ISaveAttributeProps {
-  filterKind: FilterKindEnum
+  filterKind: AttributeKinds
   filterName: string
   values: string[]
   mode?: ModeTypes
@@ -19,7 +18,7 @@ interface ISaveAttributeProps {
 }
 
 type TAttribute = [
-  filterKind: FilterKindEnum,
+  filterKind: AttributeKinds,
   filterName: string,
   values: string[],
   mode?: ModeTypes | undefined,
