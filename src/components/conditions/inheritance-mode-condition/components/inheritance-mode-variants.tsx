@@ -10,6 +10,7 @@ export const InheritanceModeVariants = ({
   filteredVariants,
   selectedVariants,
   isFetching,
+  status,
   handleSetVariants,
 }: IInheritanceModeVariantsProps): ReactElement => (
   <div className="flex flex-col text-14">
@@ -37,7 +38,7 @@ export const InheritanceModeVariants = ({
         ))
       ) : (
         <div className="flex justify-center items-center text-grey-blue my-2">
-          {t('dtree.noFilters')}
+          {status || t('dtree.noFilters')}
         </div>
       )}
     </>

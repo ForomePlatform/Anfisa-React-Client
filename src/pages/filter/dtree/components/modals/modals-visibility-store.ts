@@ -124,7 +124,7 @@ class ModalsVisibilityStore {
     this.groupIndexToChange = groupIndex ?? -1
   }
 
-  public closeModalCompoundHet() {
+  public closeModalCompoundHet = () => {
     this.isModalCompoundHetVisible = false
   }
 

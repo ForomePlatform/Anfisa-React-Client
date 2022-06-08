@@ -20,7 +20,7 @@ export const InheritanceModeCondition = observer(
     controls,
   }: IInheritanceModeConditionProps): ReactElement => {
     const [mode, setMode] = useState(initialMode)
-    const { variants } = statFuncStore
+    const { variants, status } = statFuncStore
     const [selectedVariants, setSelectedVariants] = useState(
       initialVariants ?? [],
     )
@@ -121,6 +121,7 @@ export const InheritanceModeCondition = observer(
           selectedVariants={selectedVariants}
           handleSetVariants={handleSetVariants}
           isFetching={statFuncStore.isFetching}
+          status={status}
         />
 
         {controls &&

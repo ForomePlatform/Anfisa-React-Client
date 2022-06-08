@@ -78,10 +78,6 @@ class ModalsControlStore {
     return this.funcAttributeStatusToChange?.family ?? []
   }
 
-  public get approxModes(): string[][] {
-    return this.funcAttributeStatusToChange?.['approx-modes'] ?? []
-  }
-
   public openModalJoin(): void {
     modalsVisibilityStore.openModalJoin()
   }

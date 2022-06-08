@@ -2,7 +2,7 @@ import { ApproxNameTypes } from '@core/enum/approxNameTypes'
 import { ApproxValueTypes } from '@core/enum/approxValueTypes'
 
 export const getApproxName = (
-  approxValue?: ApproxValueTypes,
+  approxValue?: ApproxValueTypes | null,
 ): ApproxNameTypes => {
   if (approxValue === ApproxValueTypes.Gene) return ApproxNameTypes.Shared_Gene
 
