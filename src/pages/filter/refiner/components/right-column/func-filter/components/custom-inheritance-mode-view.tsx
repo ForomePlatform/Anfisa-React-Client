@@ -2,7 +2,7 @@ import { ReactElement } from 'react'
 import cn from 'classnames'
 
 import functionPanelStore from '@pages/filter/refiner/components/middle-column/panels/function-panel/function-panel.store'
-import { getScenarioValue } from '@pages/filter/refiner/components/right-column/func-filter/utils/getScenarioValue'
+import { getScenarioValue } from '@pages/filter/refiner/components/right-column/func-filter/utils/get-scenario-value'
 import { ICustomInheritanceModeArgs } from '@service-providers/common/common.interface'
 
 interface ICustomInheritanceModeViewProps {

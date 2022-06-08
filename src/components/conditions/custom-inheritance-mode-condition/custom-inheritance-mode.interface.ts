@@ -3,7 +3,7 @@ import { ReactElement } from 'react'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import { DtreeStatFuncStore } from '@store/dtree/dtree-stat-func.store'
 import { FilterStatFuncStore } from '@store/filter/filter-stat-func.store'
-import { IScenario, TVariant } from '@service-providers/common'
+import { IScenario } from '@service-providers/common'
 
 export interface IControlProps {
   hasErrors: boolean
@@ -31,12 +31,4 @@ export interface ICustomInheritanceModeScenarioProps {
   problemGroups: string[]
   selectValues: string[]
   onChangeScenario: (index: number, value: string) => void
-}
-
-export interface ICustomInheritanceModeVariantsProps {
-  isFetching: boolean
-  attributeSubKind: string | undefined
-  variants: TVariant[] | undefined
-  mode: ModeTypes | undefined
-  toggleMode: (mode: ModeTypes) => void
 }

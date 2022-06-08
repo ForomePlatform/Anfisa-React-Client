@@ -1,8 +1,8 @@
-import { ReactElement } from 'react'
+import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
-import { CustomInheritanceModeCondition } from '@components/custom-inheritance-mode-condition/custom-inheritance-mode-condition'
+import { CustomInheritanceModeCondition } from '@components/conditions/custom-inheritance-mode-condition/custom-inheritance-mode-condition'
 import { AttributeKinds } from '@service-providers/common'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { saveAttribute } from '@utils/changeAttribute/saveAttribute'
@@ -32,6 +32,28 @@ export const ModalCustomInheritanceMode = observer((): ReactElement => {
     modalsVisibilityStore.openModalAttribute()
   }
 
+  const handleSaveChanges = useCallback((mode, param) => {
+    saveAttribute({
+      filterKind: AttributeKinds.FUNC,
+      filterName: FuncStepTypesEnum.CustomInheritanceMode,
+      values: ['True'],
+      mode,
+      param,
+    })
+    modalsVisibilityStore.closeModalCustomInheritanceMode()
+  }, [])
+
+  const handleAddAttribute = useCallback((action, mode, param) => {
+    addAttributeToStep({
+      action,
+      attributeType: AttributeKinds.FUNC,
+      filters: ['True'],
+      param,
+      mode,
+    })
+    modalsVisibilityStore.closeModalCustomInheritanceMode()
+  }, [])
+
   return (
     <ModalBase minHeight={340}>
       <HeaderModal
@@ -51,16 +73,7 @@ export const ModalCustomInheritanceMode = observer((): ReactElement => {
               handleClose={
                 modalsVisibilityStore.closeModalCustomInheritanceMode
               }
-              handleSaveChanges={() => {
-                saveAttribute({
-                  filterKind: AttributeKinds.FUNC,
-                  filterName: FuncStepTypesEnum.CustomInheritanceMode,
-                  values: ['True'],
-                  mode,
-                  param,
-                })
-                modalsVisibilityStore.closeModalCustomInheritanceMode()
-              }}
+              handleSaveChanges={() => handleSaveChanges(mode, param)}
               disabled={hasErrors}
             />
           ) : (
@@ -72,16 +85,9 @@ export const ModalCustomInheritanceMode = observer((): ReactElement => {
               handleModals={handleModals}
               handleModalJoin={modalsVisibilityStore.openModalJoin}
               disabled={hasErrors}
-              handleAddAttribute={action => {
-                addAttributeToStep({
-                  action,
-                  attributeType: AttributeKinds.FUNC,
-                  filters: ['True'],
-                  param,
-                  mode,
-                })
-                modalsVisibilityStore.closeModalCustomInheritanceMode()
-              }}
+              handleAddAttribute={action =>
+                handleAddAttribute(action, mode, param)
+              }
             />
           )
         }}

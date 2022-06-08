@@ -4,10 +4,11 @@ import { observer } from 'mobx-react-lite'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import { InheritanceModeSelect } from '@pages/filter/dtree/components/query-builder/components/inheritance-mode-select'
+import { AllNotMods } from '@pages/filter/dtree/components/query-builder/ui/all-not-mods'
 import { DividerHorizontal } from '@pages/filter/refiner/components/middle-column/components/divider-horizontal'
 import { IScenario } from '@service-providers/common'
+import { DisabledVariants } from '../components/disabled-variants'
 import { CustomInheritanceModeScenario } from './components/custom-inheritance-mode-scenario'
-import { CustomInheritanceModeVariants } from './components/custom-inheritance-mode-variants'
 import { ICustomInheritanceModeConditionProps } from './custom-inheritance-mode.interface'
 import {
   getNewScenario,
@@ -25,7 +26,8 @@ export const CustomInheritanceModeCondition = observer(
     onTouch,
     controls,
   }: ICustomInheritanceModeConditionProps): ReactElement => {
-    const { variants } = statFuncStore
+    const { variants, isFetching, status } = statFuncStore
+    const variantsValue = variants && variants[0][1]
 
     const [mode, setMode] = useState<ModeTypes | undefined>(initialMode)
 
@@ -38,7 +40,7 @@ export const CustomInheritanceModeCondition = observer(
     const toggleMode = (mode: ModeTypes) => {
       setMode(currentMode => (currentMode === mode ? undefined : mode))
 
-      onTouch && onTouch()
+      onTouch?.()
     }
 
     const handleSetPreparedValue = (preparedValue: string) => {
@@ -50,7 +52,7 @@ export const CustomInheritanceModeCondition = observer(
         setScenario,
       })
 
-      onTouch && onTouch()
+      onTouch?.()
     }
 
     const onChangeScenario = (index: number, value: string) => {
@@ -63,7 +65,7 @@ export const CustomInheritanceModeCondition = observer(
 
       setPreparedValue('')
 
-      onTouch && onTouch()
+      onTouch?.()
     }
 
     const handleClearScenario = () => {
@@ -99,13 +101,21 @@ export const CustomInheritanceModeCondition = observer(
 
         <DividerHorizontal />
 
-        <CustomInheritanceModeVariants
-          isFetching={statFuncStore.isFetching}
-          toggleMode={toggleMode}
-          mode={mode}
-          attributeSubKind={attributeSubKind}
-          variants={variants}
-        />
+        <div className="flex justify-between items-center mb-2 text-14">
+          <DisabledVariants
+            isFetching={isFetching}
+            variantsValue={variantsValue}
+            variantsType={'True'}
+            status={status}
+          />
+
+          <AllNotMods
+            groupSubKind={attributeSubKind}
+            isNotModeChecked={mode === ModeTypes.Not}
+            isNotModeDisabled={!variants?.length}
+            toggleNotMode={() => toggleMode(ModeTypes.Not)}
+          />
+        </div>
 
         {controls &&
           controls({

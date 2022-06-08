@@ -3,7 +3,7 @@ import cn from 'classnames'
 
 import { approxOptions } from '@core/approxOptions'
 import functionPanelStore from '@pages/filter/refiner/components/middle-column/panels/function-panel/function-panel.store'
-import { getScenarioValue } from '@pages/filter/refiner/components/right-column/func-filter/utils/getScenarioValue'
+import { getScenarioValue } from '@pages/filter/refiner/components/right-column/func-filter/utils/get-scenario-value'
 import { ICompoundRequestArgs } from '@service-providers/common/common.interface'
 
 interface ICompoundRequestViewProps {

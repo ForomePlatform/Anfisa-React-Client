@@ -48,7 +48,7 @@ export const InheritanceModeCondition = observer(
           ),
         )
       }
-      onTouch && onTouch()
+      onTouch?.()
     }
 
     const handleSetVariants = (checked: boolean, variant: string) => {
@@ -61,12 +61,12 @@ export const InheritanceModeCondition = observer(
           ),
         )
       }
-      onTouch && onTouch()
+      onTouch?.()
     }
 
     const toggleMode = (mode: ModeTypes) => {
       setMode(currentMode => (currentMode === mode ? undefined : mode))
-      onTouch && onTouch()
+      onTouch?.()
     }
 
     const selectAllVariants = () => {
@@ -74,7 +74,7 @@ export const InheritanceModeCondition = observer(
         ([variantName]) => variantName,
       )
       setSelectedVariants(allVariantsNames)
-      onTouch && onTouch()
+      onTouch?.()
     }
 
     const clearAllVariants = () => {
