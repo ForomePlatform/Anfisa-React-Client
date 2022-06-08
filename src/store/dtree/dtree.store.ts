@@ -7,6 +7,7 @@ import { t } from '@i18n'
 import { ActionsHistoryStore } from '@store/actions-history'
 import filterDtreesStore from '@store/filter-dtrees'
 import { TFilteringStatCounts } from '@service-providers/common'
+import { IDsListArguments } from '@service-providers/dataset-level'
 import {
   DtreeSetPointKinds,
   IDtreeSetArguments,
@@ -53,6 +54,7 @@ export class DtreeStore {
   get dtreeList() {
     return this.dtreeSetData?.['dtree-list']
   }
+
   get dtreeSetData() {
     return this.dtreeSet.data
   }
@@ -60,6 +62,7 @@ export class DtreeStore {
   get dtreeCode(): string {
     return this.dtreeSetData?.code ?? ''
   }
+
   startDtreeCode = ''
   localDtreeCode = ''
   // TODO: get dtree name from this.dtreeSetData
@@ -86,6 +89,7 @@ export class DtreeStore {
   get evalStatus(): string {
     return this.dtreeSetData?.['eval-status'] ?? ''
   }
+
   savingStatus: any = []
   shouldLoadTableModal = false
 
@@ -388,7 +392,21 @@ export class DtreeStore {
 
   closeModalViewVariants = () => {
     this.isModalViewVariantsVisible = false
-    this.tableModalIndexNumber = null
+  }
+
+  get variantsModalQuery(): IDsListArguments | undefined {
+    const ds = datasetStore.datasetName
+    const no = this.tableModalIndexNumber
+
+    if (!ds || no === null) {
+      return undefined
+    }
+
+    return {
+      ds,
+      no,
+      code: this.dtreeCode,
+    }
   }
 
   // 4. Other UI control functions
