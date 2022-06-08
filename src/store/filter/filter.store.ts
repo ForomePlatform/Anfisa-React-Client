@@ -1,6 +1,7 @@
 import cloneDeep from 'lodash/cloneDeep'
 import { makeAutoObservable, reaction, runInAction, toJS } from 'mobx'
 
+import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { t } from '@i18n'
 import { ActionsHistoryStore } from '@store/actions-history'
 import datasetStore from '@store/dataset/dataset'
@@ -117,7 +118,9 @@ export class FilterStore {
     const activeFilter = this._conditions[this._selectedConditionIndex]
 
     if (activeFilter) {
-      return this.filterStatUnit.data?.units[0]
+      return activeFilter[0] === FilterKindEnum.Func
+        ? this.stat.getAttributeStatusByName(activeFilter[1])
+        : this.filterStatUnit.data?.units[0]
     } else if (this.attributeNameToAdd) {
       return this.stat.getAttributeStatusByName(this.attributeNameToAdd)
     }
@@ -153,20 +156,11 @@ export class FilterStore {
   }
 
   private get selectedAttributeQuery() {
-    if (this.attributeNameToAdd) {
-      return toJS({
-        datasetName: this.datasetName,
-        conditions: this._conditions,
-        units: [this.attributeNameToAdd],
-      })
-    } else if (this._selectedConditionIndex >= 0) {
-      return toJS({
-        datasetName: this.datasetName,
-        conditions: this._conditions.slice(0, this._selectedConditionIndex),
-        units: [this._conditions[this._selectedConditionIndex][1]],
-      })
-    }
-    return undefined
+    return toJS({
+      datasetName: this.datasetName,
+      conditions: this._conditions.slice(0, this._selectedConditionIndex),
+      units: [this._conditions[this._selectedConditionIndex][1]],
+    })
   }
 
   public addCondition(condition: TCondition): number {
