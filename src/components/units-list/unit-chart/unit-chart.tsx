@@ -2,6 +2,7 @@ import { ReactElement, ReactNode } from 'react'
 import cn from 'classnames'
 
 import { TPropertyStatus } from '@service-providers/common'
+import { DecisionTreesResultsDataCy } from '../../data-testid/decision-tree-results.cy'
 import { BarChart } from './bar-chart'
 import { HistogramChart } from './histogram-chart'
 import { PieChart } from './pie-chart'
@@ -28,6 +29,7 @@ export const UnitChart = ({
     case ChartType.Bar:
       chart = (
         <BarChart
+          dataTestId={DecisionTreesResultsDataCy.unitChart}
           data={chartConfig.data}
           totalItems={chartConfig.totalItems}
           height={150}

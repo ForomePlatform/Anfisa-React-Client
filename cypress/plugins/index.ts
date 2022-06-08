@@ -1,8 +1,6 @@
-/// <reference types="cypress" />
+import dotenv from 'dotenv'
 
-const dotenv = require('dotenv')
-
-export default (on, config) => {
+export default (on: any, config: any) => {
   dotenv.config({
     path: process.env.NODE_ENV ? `.env.${process.env.NODE_ENV}` : '.env',
   })

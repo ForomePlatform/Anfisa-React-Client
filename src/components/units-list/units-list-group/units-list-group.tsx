@@ -7,6 +7,7 @@ import { TUnitGroup } from '@store/stat-units'
 import { DropdownArrow } from '@ui/dropdown-arrow'
 import { PredictionPowerIndicator } from '@components/prediction-power-indicator'
 import { TPropertyStatus } from '@service-providers/common'
+import { DecisionTreesResultsDataCy } from '../../data-testid/decision-tree-results.cy'
 import { UnitsListUnit } from '../units-list-unit'
 
 interface IUnitsListGroupProps {
@@ -33,6 +34,7 @@ export const UnitsListGroup = ({
   return (
     <div className={className}>
       <div
+        data-testid={DecisionTreesResultsDataCy.unitGroupName}
         onClick={() => onCollapsedChange(!isCollapsed, name)}
         className={cn(
           styles.groupHeader,

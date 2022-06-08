@@ -5,6 +5,7 @@ import cn from 'classnames'
 
 import { t } from '@i18n'
 import { Icon } from '@ui/icon'
+import { DecisionTreesMenuDataCy } from '../../data-testid/decision-tree-menu.cy'
 
 interface ISolutionControlButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
@@ -26,6 +27,7 @@ export const SolutionControlButton = ({
 }: ISolutionControlButtonProps): ReactElement => {
   return (
     <button
+      data-testid={DecisionTreesMenuDataCy.selectDecisionTree}
       className={cn(styles.solutionControlButton, className)}
       {...buttonProps}
     >

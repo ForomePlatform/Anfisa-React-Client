@@ -1,6 +1,7 @@
 import { ReactElement, useState } from 'react'
 import Tooltip from 'rc-tooltip'
 
+import { DecisionTreesResultsDataCy } from '../data-testid/decision-tree-results.cy'
 import {
   getColorByValue,
   PredictionPowerPoint,
@@ -37,6 +38,7 @@ export const PredictionPowerIndicator = ({
       placement="topLeft"
     >
       <PredictionPowerPoint
+        data-testid={DecisionTreesResultsDataCy.unitPredictionPower}
         className={className}
         colorIndex={getColorByValue(value)}
         size={size}

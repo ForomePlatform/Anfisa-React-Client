@@ -4,7 +4,8 @@ import { Input } from '../../lib/input'
 import { UIWidget } from '../../lib/ui-widget'
 
 export interface DecisionTreeMenuSelectors {
-  selectDecision: string
+  selectDecisionTree: string
+  applyFilter: string
   decisionActions: string
   loadDecision: string
   selectDropdownElem: string
@@ -21,7 +22,8 @@ export interface DecisionTreeMenuSelectors {
 export interface DecisionTreeLabels {}
 
 export class DecisionTreeWidget extends UIWidget {
-  readonly selectDecision: Button
+  readonly selectDecisionTree: Button
+  readonly applyFilter: Button
   readonly decisionActions: Button
   readonly loadDecision: Button
   readonly selectDropdownElem: Button
@@ -42,7 +44,8 @@ export class DecisionTreeWidget extends UIWidget {
 
     const selectors = options.selectors
 
-    this.selectDecision = new Button(selectors.selectDecision)
+    this.selectDecisionTree = new Button(selectors.selectDecisionTree)
+    this.applyFilter = new Button(selectors.applyFilter)
     this.decisionActions = new Button(selectors.decisionActions)
     this.loadDecision = new Button(selectors.loadDecision)
     this.selectDropdownElem = new Button(selectors.selectDropdownElem)

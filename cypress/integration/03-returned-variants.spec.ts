@@ -13,11 +13,11 @@ describe('Test on table of returned variants', () => {
   it('should show returned variants correctly | test #4', () => {
     datasetPage.visit(`${Paths.dtree}?ds=${xlDatasetName}`)
     cy.intercept('POST', ApiEndpoints.dtreeSet).as('selectList')
-    decisionTreesPage.decisionTreeMenu.selectDecision.first().click()
+    decisionTreesPage.decisionTreeMenu.selectDecisionTree.first().click()
     cy.wait('@selectList')
 
     cy.intercept('POST', ApiEndpoints.statUnits).as('decTreeUpload')
-    decisionTreesPage.decisionTreeMenu.selectDecision.getFilter(filterName)
+    decisionTreesPage.decisionTreeMenu.selectDecisionTree.getFilter(filterName)
     cy.wait('@decTreeUpload')
 
     decisionTreesPage.decisionTreeResults.stepCard.findStepAndExclude('Step 5')
@@ -46,13 +46,13 @@ describe('Test on table of returned variants', () => {
   it('should add a new dataset correctly | test #5', () => {
     datasetPage.visit(`${Paths.dtree}?ds=${xlDatasetName}`)
     cy.intercept('POST', ApiEndpoints.dtreeSet).as('selectList')
-    decisionTreesPage.decisionTreeMenu.selectDecision.first().click()
+    decisionTreesPage.decisionTreeMenu.selectDecisionTree.first().click()
     cy.wait('@selectList', {
       timeout: Timeouts.TenSecondsTimeout,
     })
 
     cy.intercept('POST', ApiEndpoints.statUnits).as('decTreeUpload')
-    decisionTreesPage.decisionTreeMenu.selectDecision.getFilter(filterName)
+    decisionTreesPage.decisionTreeMenu.selectDecisionTree.getFilter(filterName)
     cy.wait('@decTreeUpload', {
       timeout: Timeouts.TenSecondsTimeout,
     })

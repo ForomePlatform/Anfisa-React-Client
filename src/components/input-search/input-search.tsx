@@ -4,7 +4,6 @@ import { ChangeEvent, memo, ReactElement, useCallback } from 'react'
 import cn, { Argument } from 'classnames'
 
 import { Icon } from '@ui/icon'
-import { DecisionTreesResultsDataCy } from '../data-testid/decision-tree-results.cy'
 
 interface IInputSearchProps {
   placeholder?: string
@@ -13,12 +12,19 @@ interface IInputSearchProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
   big?: boolean
   canClearInput?: boolean
+  dataTestId?: string
 }
 
 // eslint-disable-next-line react/display-name
 export const InputSearch = memo(
   ({ ...rest }: IInputSearchProps): ReactElement => {
-    const { className, big = false, canClearInput = true, ...tempRest } = rest
+    const {
+      className,
+      big = false,
+      canClearInput = true,
+      dataTestId,
+      ...tempRest
+    } = rest
 
     const onClickClearButton = useCallback(
       (event: ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +38,7 @@ export const InputSearch = memo(
       <div className={cn('relative', className)}>
         <input
           type="text"
-          data-testid={DecisionTreesResultsDataCy.searchGraphResults}
+          data-testid={dataTestId}
           className={cn(styles.inputSearch, big && styles.inputSearch_big)}
           {...tempRest}
         />

@@ -16,6 +16,6 @@ export class Button extends UIElement {
   }
 
   getFilter(text: string) {
-    return cy.get(CommonSelectors.preset).contains(text).click()
+    cy.get(CommonSelectors.menuItem).contains(text).click()
   }
 }

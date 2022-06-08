@@ -10,6 +10,7 @@ import stepStore from '@store/dtree/step.store'
 import { UnitsList } from '@components/units-list'
 import modalsVisibilityStore from '@pages/filter/dtree/components/modals/modals-visibility-store'
 import { AttributeKinds, TPropertyStatus } from '@service-providers/common'
+import { DecisionTreesResultsDataCy } from '../../../../components/data-testid/decision-tree-results.cy'
 
 interface IDtreeUnitsList {
   className?: string
@@ -33,7 +34,10 @@ const DtreeUnitsListSubHeader = observer(() => {
   )
 
   return (
-    <div className="text-blue-bright font-medium">
+    <div
+      className="text-blue-bright font-medium"
+      data-testid={DecisionTreesResultsDataCy.resultsTitle}
+    >
       {activeStep &&
         (activeStep.isFinalStep
           ? t('dtree.showingResultsForFinalStep')
