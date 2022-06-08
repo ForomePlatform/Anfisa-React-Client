@@ -14,36 +14,41 @@ export const CustomInheritanceModeVariants = ({
   variants,
   mode,
   toggleMode,
-}: ICustomInheritanceModeVariantsProps): ReactElement => (
-  <div className="flex justify-between items-cente text-14">
-    {isFetching ? (
-      <Loader size="s" className="h-6 mb-4" />
-    ) : variants?.length ? (
-      <Checkbox
-        id={variants[0][1]}
-        className="mb-4"
-        disabled={true}
-        checked={true}
-      >
-        <span data-testid={DecisionTreesResultsDataCy.variantsList}>True</span>
+}: ICustomInheritanceModeVariantsProps): ReactElement => {
+  const variantsValue = variants && variants[0][1]
+  return (
+    <div className="flex justify-between items-cente text-14">
+      {isFetching ? (
+        <Loader size="s" className="h-6 mb-4" />
+      ) : variants?.length ? (
+        <Checkbox
+          id={variantsValue}
+          className="mb-4"
+          disabled={true}
+          checked={true}
+        >
+          <span data-testid={DecisionTreesResultsDataCy.variantsList}>
+            True
+          </span>
 
-        <span className="text-grey-blue ml-2">
-          {variants[0][1]} {t('dtree.variants')}
-        </span>
-      </Checkbox>
-    ) : (
-      <div className="flex justify-center mb-4 items-center text-grey-blue">
-        {t('dtree.noFilters')}
+          <span className="text-grey-blue ml-2">
+            {variantsValue} {t('dtree.variants')}
+          </span>
+        </Checkbox>
+      ) : (
+        <div className="flex justify-center mb-4 items-center text-grey-blue">
+          {t('dtree.noFilters')}
+        </div>
+      )}
+
+      <div className="mb-4">
+        <AllNotMods
+          groupSubKind={attributeSubKind}
+          isNotModeChecked={mode === ModeTypes.Not}
+          isNotModeDisabled={!variants?.length}
+          toggleNotMode={() => toggleMode(ModeTypes.Not)}
+        />
       </div>
-    )}
-
-    <div className="mb-4">
-      <AllNotMods
-        groupSubKind={attributeSubKind}
-        isNotModeChecked={mode === ModeTypes.Not}
-        isNotModeDisabled={!variants?.length}
-        toggleNotMode={() => toggleMode(ModeTypes.Not)}
-      />
     </div>
-  </div>
-)
+  )
+}

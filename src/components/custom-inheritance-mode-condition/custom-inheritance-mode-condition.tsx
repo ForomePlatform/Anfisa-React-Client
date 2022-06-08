@@ -66,6 +66,11 @@ export const CustomInheritanceModeCondition = observer(
       filterStore.setTouched(true)
     }
 
+    const handleClearScenario = () => {
+      setPreparedValue('')
+      setScenario({})
+    }
+
     useEffect(() => {
       statFuncStore.setQuery({
         unit: FuncStepTypesEnum.CustomInheritanceMode,
@@ -106,7 +111,7 @@ export const CustomInheritanceModeCondition = observer(
         {controls &&
           controls({
             hasErrors: !variants?.length,
-            clearValue: () => setPreparedValue(''),
+            clearValue: handleClearScenario,
             param: { scenario },
             mode,
           })}
