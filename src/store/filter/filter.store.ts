@@ -1,14 +1,17 @@
 import cloneDeep from 'lodash/cloneDeep'
 import { makeAutoObservable, reaction, runInAction, toJS } from 'mobx'
 
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { t } from '@i18n'
 import { ActionsHistoryStore } from '@store/actions-history'
 import datasetStore from '@store/dataset/dataset'
 import filterPresetsStore from '@store/filter-presets'
 import { GlbPagesNames } from '@glb/glb-names'
 import { FilterControlOptions } from '@pages/filter/common/filter-control/filter-control.const'
-import { TCondition, TPropertyStatus } from '@service-providers/common'
+import {
+  AttributeKinds,
+  TCondition,
+  TPropertyStatus,
+} from '@service-providers/common'
 import { IStatFuncArguments } from '@service-providers/filtering-regime'
 import filteringRegimeProvider from '@service-providers/filtering-regime/filtering-regime.provider'
 import { showToast } from '@utils/notifications'
@@ -118,7 +121,7 @@ export class FilterStore {
     const activeFilter = this._conditions[this._selectedConditionIndex]
 
     if (activeFilter) {
-      return activeFilter[0] === FilterKindEnum.Func
+      return activeFilter[0] === AttributeKinds.FUNC
         ? this.stat.getAttributeStatusByName(activeFilter[1])
         : this.filterStatUnit.data?.units[0]
     } else if (this.attributeNameToAdd) {
@@ -156,11 +159,20 @@ export class FilterStore {
   }
 
   private get selectedAttributeQuery() {
-    return toJS({
-      datasetName: this.datasetName,
-      conditions: this._conditions.slice(0, this._selectedConditionIndex),
-      units: [this._conditions[this._selectedConditionIndex][1]],
-    })
+    if (this.attributeNameToAdd) {
+      return toJS({
+        datasetName: this.datasetName,
+        conditions: this._conditions,
+        units: [this.attributeNameToAdd],
+      })
+    } else if (this._selectedConditionIndex >= 0) {
+      return toJS({
+        datasetName: this.datasetName,
+        conditions: this._conditions.slice(0, this._selectedConditionIndex),
+        units: [this._conditions[this._selectedConditionIndex][1]],
+      })
+    }
+    return undefined
   }
 
   public addCondition(condition: TCondition): number {

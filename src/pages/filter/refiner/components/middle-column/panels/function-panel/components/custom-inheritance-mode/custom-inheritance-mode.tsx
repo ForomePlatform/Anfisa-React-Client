@@ -1,12 +1,12 @@
 import { observer } from 'mobx-react-lite'
 
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { t } from '@i18n'
 import filterStore from '@store/filter'
 import { Button } from '@ui/button'
 import { CustomInheritanceModeCondition } from '@components/custom-inheritance-mode-condition/custom-inheritance-mode-condition'
 import { refinerFunctionsStore } from '@pages/filter/refiner/components/attributes/refiner-functions.store'
 import { refinerStatFuncStore } from '@pages/filter/refiner/components/attributes/refiner-stat-func.store'
+import { AttributeKinds } from '@service-providers/common'
 import { savePanelAttribute } from '../../../utils/save-pannel-attribute'
 
 export const CustomInheritanceMode = observer(() => {
@@ -46,7 +46,7 @@ export const CustomInheritanceMode = observer(() => {
                 }
                 onClick={() =>
                   savePanelAttribute({
-                    filterKind: FilterKindEnum.Func,
+                    filterKind: AttributeKinds.FUNC,
                     attributeName,
                     mode,
                     param,

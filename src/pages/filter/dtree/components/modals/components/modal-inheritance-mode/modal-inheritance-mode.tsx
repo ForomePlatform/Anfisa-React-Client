@@ -1,7 +1,6 @@
 import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { InheritanceModeCondition } from '@components/inheritance-mode-condition/inheritance-mode-condition'
 import { AttributeKinds } from '@service-providers/common'
@@ -54,7 +53,7 @@ export const ModalInheritanceMode = observer((): ReactElement => {
               handleClose={modalsVisibilityStore.closeModalInheritanceMode}
               handleSaveChanges={() => {
                 saveAttribute({
-                  filterKind: FilterKindEnum.Func,
+                  filterKind: AttributeKinds.FUNC,
                   filterName: FuncStepTypesEnum.InheritanceMode,
                   values,
                   mode,
@@ -72,13 +71,13 @@ export const ModalInheritanceMode = observer((): ReactElement => {
               handleModalJoin={modalsVisibilityStore.openModalJoin}
               disabled={hasErrors}
               handleAddAttribute={action => {
-                addAttributeToStep(
+                addAttributeToStep({
                   action,
-                  AttributeKinds.FUNC,
-                  values,
+                  attributeType: AttributeKinds.FUNC,
+                  filters: values,
                   param,
                   mode,
-                )
+                })
                 modalsVisibilityStore.closeModalInheritanceMode()
               }}
             />

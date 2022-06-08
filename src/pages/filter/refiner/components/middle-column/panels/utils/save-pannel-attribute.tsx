@@ -1,11 +1,14 @@
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import filterStore from '@store/filter'
-import { TFuncArgs, TNumericConditionBounds } from '@service-providers/common'
+import {
+  AttributeKinds,
+  TFuncArgs,
+  TNumericConditionBounds,
+} from '@service-providers/common'
 import { getConditionJoinMode } from '@utils/getConditionJoinMode'
 
 interface IsavePanelAttributeProps {
-  filterKind: FilterKindEnum
+  filterKind: AttributeKinds
   attributeName?: string
   selectedVariants?: string[]
   value?: TNumericConditionBounds
@@ -26,7 +29,7 @@ export const savePanelAttribute = ({
   }
 
   switch (filterKind) {
-    case FilterKindEnum.Func:
+    case AttributeKinds.FUNC:
       filterStore.saveCurrentCondition([
         filterKind,
         attributeName,
@@ -36,11 +39,11 @@ export const savePanelAttribute = ({
       ])
       break
 
-    case FilterKindEnum.Numeric:
+    case AttributeKinds.NUMERIC:
       filterStore.saveCurrentCondition([filterKind, attributeName, value!])
       break
 
-    case FilterKindEnum.Enum:
+    case AttributeKinds.ENUM:
       filterStore.saveCurrentCondition([
         filterKind,
         attributeName,

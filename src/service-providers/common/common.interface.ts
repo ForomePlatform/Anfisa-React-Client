@@ -1,5 +1,4 @@
 import { ApproxValueTypes } from '@core/enum/approxValueTypes'
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 
 export enum DatasetKinds {
   WS = 'ws',
@@ -22,7 +21,7 @@ export type TNumericConditionBounds = [
 ]
 
 export type TNumericCondition = [
-  conditionType: FilterKindEnum.Numeric | FilterKindEnum.Error,
+  conditionType: AttributeKinds.NUMERIC | AttributeKinds.ERROR,
   propertyName: string,
   bounds: TNumericConditionBounds,
 ]
@@ -65,7 +64,7 @@ export interface IGeneRegionArgs {
 }
 
 export type TEnumCondition = [
-  conditionType: FilterKindEnum.Enum | FilterKindEnum.Error,
+  conditionType: AttributeKinds.ENUM | AttributeKinds.ERROR,
   propertyName: string,
   joinMode: ConditionJoinMode,
   valueVariants: string[],
@@ -79,7 +78,7 @@ export type TFuncArgs =
   | IGeneRegionArgs
 
 export type TFuncCondition = [
-  conditionType: FilterKindEnum.Func | FilterKindEnum.Error,
+  conditionType: AttributeKinds.FUNC | AttributeKinds.ERROR,
   propertyName: string,
   joinMode: ConditionJoinMode,
   valueVariants: string[],
@@ -111,6 +110,7 @@ export enum AttributeKinds {
   NUMERIC = 'numeric',
   ENUM = 'enum',
   FUNC = 'func',
+  ERROR = 'error',
 }
 
 export enum AttributeChartRenderModes {

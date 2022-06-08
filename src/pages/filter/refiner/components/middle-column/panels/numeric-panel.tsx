@@ -1,7 +1,6 @@
 import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { t } from '@i18n'
 import filterStore from '@store/filter'
 import { Button } from '@ui/button'
@@ -54,7 +53,7 @@ export const NumericPanel = observer((): ReactElement | null => {
                 }
                 onClick={() =>
                   savePanelAttribute({
-                    filterKind: FilterKindEnum.Numeric,
+                    filterKind: AttributeKinds.NUMERIC,
                     attributeName,
                     value,
                   })
