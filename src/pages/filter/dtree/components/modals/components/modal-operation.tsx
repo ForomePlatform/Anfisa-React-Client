@@ -4,11 +4,8 @@ import { observer } from 'mobx-react-lite'
 import { ChangeStepActionType } from '@declarations'
 import { useOutsideClick } from '@core/hooks/use-outside-click'
 import { t } from '@i18n'
-import dtreeStore from '@store/dtree'
+import stepStore, { CreateEmptyStepPositions } from '@store/dtree/step.store'
 import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
-import activeStepStore, {
-  CreateEmptyStepPositions,
-} from '@pages/filter/dtree/components/active-step.store'
 import { InstrModifyingActionNames } from '@service-providers/decision-trees'
 import { changeStep } from '@utils/changeStep'
 
@@ -27,19 +24,19 @@ export const ModalOperation = observer(
       stepIndex: number,
       position: CreateEmptyStepPositions,
     ) => {
-      activeStepStore.createEmptyStep(stepIndex, position)
+      stepStore.createEmptyStep(stepIndex, position)
 
       hideModal()
     }
 
     const deleteStep = (stepIndex: number) => {
-      const currentStep = dtreeStore.stepData[stepIndex]
+      const currentStep = stepStore.steps[stepIndex]
 
       const stepHasAttribute = currentStep.groups.length > 0
 
       stepHasAttribute
         ? changeStep(stepIndex, InstrModifyingActionNames.DELETE)
-        : dtreeStore.removeStep(stepIndex)
+        : stepStore.removeStep(stepIndex)
 
       hideModal()
     }
@@ -49,12 +46,12 @@ export const ModalOperation = observer(
       hideModal()
     }
 
-    const currentStep = dtreeStore.stepData[index]
+    const currentStep = stepStore.steps[index]
 
     const isFirstStep = index === 0
 
     const hasMoreThanOneAttribute = currentStep.groups?.length > 1
-    const isNegateStep = currentStep.negate
+    const isNegateStep = currentStep.isNegate
     const isSplitPossible = hasMoreThanOneAttribute && !isNegateStep
 
     return (
