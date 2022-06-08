@@ -128,15 +128,11 @@ export const useFindRightAmountOfElements = (
     const range = pageElements[page]
     const lastElementOut = lastChildBottom > containerBottom
     const shouldShowPagination =
-      range.from !== 0 || range.to < length || lastElementOut
+      page !== 0 || range.to < length || lastElementOut
 
     if (!shouldShowPagination) return
 
-    const lastIndex = findIndexOfLastElement(
-      current,
-      children,
-      shouldShowPagination,
-    )
+    const lastIndex = findIndexOfLastElement(current, children)
 
     setPage({
       index: pageElements.length - 1,

@@ -15,7 +15,7 @@
 
   &_footer {
     display: flex;
-    justify-items: center;
+    justify-content: center;
     align-items: center;
     margin-top: 24px;
     max-width: 100%;
