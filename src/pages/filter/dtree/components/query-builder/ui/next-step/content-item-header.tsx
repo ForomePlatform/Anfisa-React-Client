@@ -6,12 +6,10 @@ import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { theme } from '@theme'
 import { IStepData } from '@store/dtree/dtree.store'
+import stepStore, { ActiveStepOptions } from '@store/dtree/step.store'
 import { Icon } from '@ui/icon'
 import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
 import { FnLabel } from '@components/fn-label'
-import activeStepStore, {
-  ActiveStepOptions,
-} from '@pages/filter/dtree/components/active-step.store'
 import modalsVisibilityStore from '../../../modals/modals-visibility-store'
 import { InactiveFieldLabel } from '../inactive-field-label'
 
@@ -40,17 +38,14 @@ export const ContentItemHeader = observer(
     stepNo,
     groupNo,
   }: IContentItemHeaderProps): ReactElement => {
-    const isNegateStep: boolean = currentStep.negate || false
+    const isNegateStep: boolean = currentStep.isNegate || false
     const isStepInvalid: boolean =
       typeof groupName !== 'string' ||
       stepType === FilterKindEnum.Error ||
       !stepType
 
     const handleModals = () => {
-      activeStepStore.makeStepActive(
-        stepNo - 1,
-        ActiveStepOptions.StartedVariants,
-      )
+      stepStore.makeStepActive(stepNo - 1, ActiveStepOptions.StartedVariants)
 
       stepType === FilterKindEnum.Enum &&
         modalsVisibilityStore.openModalEnum(groupName, groupNo)
@@ -97,11 +92,11 @@ export const ContentItemHeader = observer(
             </NotModeWrapper>
           )}
 
-          <div className="flex items-center text-14 mr-2">
+          <div className="flex items-center text-14">
             {stepType === FilterKindEnum.Func && (
               <FnLabel
                 isActive={currentStep && currentStep.isActive}
-                className="shadow-dark"
+                className="shadow-dark mr-1"
               />
             )}
             {isStepInvalid ? (

@@ -2,7 +2,7 @@ import { ActionType, AttributeType } from '@declarations'
 import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import dtreeStore from '@store/dtree'
-import activeStepStore from '@pages/filter/dtree/components/active-step.store'
+import stepStore from '@store/dtree/step.store'
 import { TFuncArgs, TNumericConditionBounds } from '@service-providers/common'
 import {
   ActionTypes,
@@ -15,7 +15,7 @@ export const addAttributeToStep = (
   action: ActionType,
   attributeType: AttributeType,
   filters: string[] | TNumericConditionBounds | null = null,
-  params: TFuncArgs | null = null,
+  param: TFuncArgs | null = null,
   currentMode?: ModeTypes,
   // eslint-disable-next-line max-params
 ): void => {
@@ -32,9 +32,9 @@ export const addAttributeToStep = (
     attribute.splice(2, 0, conditionsJoinMode)
   }
 
-  if (params) attribute.push(params)
+  if (param) attribute.push(param)
 
-  const { stepIndexForApi } = activeStepStore
+  const { stepIndexForApi } = stepStore
 
   dtreeStore.fetchDtreeSetAsync({
     ds: datasetStore.datasetName,

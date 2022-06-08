@@ -1,4 +1,4 @@
-import { Fragment, MouseEvent, ReactElement } from 'react'
+import { MouseEvent, ReactElement } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
@@ -7,6 +7,7 @@ import { formatNumber } from '@core/format-number'
 import { useToggle } from '@core/hooks/use-toggle'
 import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
+import stepStore from '@store/dtree/step.store'
 import { Icon } from '@ui/icon'
 import { Radio } from '@ui/radio'
 import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
@@ -41,7 +42,7 @@ export const NextStepHeader = observer(
   }: INextStepHeaderProps): ReactElement => {
     const [isVisibleModal, showModal, hideModal] = useToggle(false)
 
-    const currentStep = dtreeStore.filteredStepData[index]
+    const currentStep = stepStore.filteredSteps[index]
     const { returnPointIndex } = currentStep
 
     const difference =
@@ -62,7 +63,7 @@ export const NextStepHeader = observer(
     const isEmptyFirstStep = isEmptyStep && isFirstStep
 
     return (
-      <Fragment>
+      <>
         <div
           style={{ minHeight: 43 }}
           className="flex w-full justify-between items-center mt-1 step-content-area"
@@ -83,9 +84,7 @@ export const NextStepHeader = observer(
 
             <Step>
               {t('dtree.step')}{' '}
-              {dtreeStore.algorithmFilterValue
-                ? dtreeStore.filteredStepData[index].step
-                : index + 1}
+              {dtreeStore.algorithmFilterValue ? currentStep.step : index + 1}
             </Step>
 
             <div className="absolute">
@@ -136,7 +135,7 @@ export const NextStepHeader = observer(
           </div>
         </div>
         {isExpanded && <StepDivider />}
-      </Fragment>
+      </>
     )
   },
 )

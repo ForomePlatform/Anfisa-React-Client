@@ -36,6 +36,9 @@ module.exports = {
       backgroundOpacity: {
         2: '0.02',
       },
+      flex: {
+        'stretch-fill': '1 0 1px',
+      },
     },
     colors: {
       transparent: 'transparent',
