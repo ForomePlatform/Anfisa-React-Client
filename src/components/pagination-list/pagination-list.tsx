@@ -6,16 +6,14 @@ import {
   useEffect,
   useLayoutEffect,
   useRef,
-  useState,
 } from 'react'
 import cn, { Argument } from 'classnames'
 
 import { PaginationFooter } from '@components/pagination-list/components/pagination-footer'
-import { PageElements } from '@components/pagination-list/pagination-list.interfaces'
 import {
-  findIndexOfLastElement,
-  getBottomPosition,
-} from '@components/pagination-list/pagination-list.utils'
+  useFindRightAmountOfElements,
+  usePagination,
+} from '@components/pagination-list/pagination-list.hook'
 
 interface IPaginationListProps<T> {
   defaultCount?: number
@@ -27,95 +25,61 @@ interface IPaginationListProps<T> {
 export const PaginationList = <T,>({
   elements,
   render,
-  defaultCount = Math.round(window.innerHeight / 20),
   className,
 }: PropsWithChildren<IPaginationListProps<T>>) => {
   const ref = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
 
-  const [pagesElements, setPagesElements] = useState<PageElements[]>([
-    { from: 0, to: defaultCount },
-  ])
-  const [page, setPage] = useState<number>(0)
+  const [
+    { page, pageElements },
+    hasNext,
+    hasPrev,
+    nextPage,
+    prevPage,
+    reset,
+    setPage,
+  ] = usePagination(elements.length)
+
+  const findRightAmountPerPage = useFindRightAmountOfElements(
+    page,
+    pageElements,
+    ref,
+    containerRef,
+    elements.length,
+    setPage,
+  )
 
   useEffect(() => {
     const current = ref.current
-    const container = containerRef.current
 
-    if (!current || !container) return
+    if (!current) return
 
-    const observer = new ResizeObserver(() => {
-      setPage(0)
-      setPagesElements([{ from: 0, to: defaultCount }])
+    let height = current.clientHeight
+
+    const observer = new ResizeObserver(entries => {
+      if (entries[0].target.clientHeight !== height) {
+        reset()
+        findRightAmountPerPage()
+
+        height = entries[0].target.clientHeight
+      }
     })
+
     observer.observe(current)
-    observer.observe(container)
 
     return () => {
       observer.unobserve(current)
-      observer.unobserve(container)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ref.current, containerRef.current])
+  }, [])
 
   useLayoutEffect(() => {
-    if (page < pagesElements.length) return
-
-    const current = ref.current
-    const container = containerRef.current
-
-    if (!current || !container) return
-
-    const containerBottom = getBottomPosition(current)
-    const children = container.children
-    const lastChildBottom = getBottomPosition(
-      children[children.length] as HTMLElement,
-    )
-
-    const range = pagesElements[page]
-    const lastElementOut = lastChildBottom > containerBottom
-    const shouldShowPagination =
-      range.from !== 0 || range.to < elements.length || lastElementOut
-
-    if (!shouldShowPagination) return
-
-    const lastIndex = findIndexOfLastElement(
-      current,
-      children,
-      shouldShowPagination,
-    )
-
-    setPagesElements(it => [
-      ...it.slice(0, it.length - 1),
-      { ...range, from: lastIndex },
-    ])
+    findRightAmountPerPage()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page])
 
-  const showPagination =
-    pagesElements[page].from < elements.length || pagesElements[page].to > 0
-
-  const pageValue = pagesElements[page]
-
-  const hasNext = pageValue.to < elements.length
-  const nextPage = () => {
-    if (!hasNext) return
-
-    setPagesElements(it => {
-      const last = it[it.length - 1].to
-
-      return [
-        ...it,
-        {
-          from: last,
-          to: Math.min(last + defaultCount, elements.length + 1),
-        },
-      ]
-    })
-    setPage(it => it + 1)
-  }
-  const prevPage = () => setPage(it => it - 1)
-  const hasPrev = pageValue.from > 0
+  const pageValue = pageElements[page]
+  const showPagination = page !== 0 || pageValue.to < elements.length
 
   return (
     <div ref={ref} className={cn(styles.pagination, className)}>
@@ -129,7 +93,7 @@ export const PaginationList = <T,>({
           prev={prevPage}
           hasNext={hasNext}
           hasPrev={hasPrev}
-          text={`From ${pageValue.from} to ${pageValue.to - 1} out of ${
+          text={`From ${pageValue.from + 1} to ${pageValue.to} out of ${
             elements.length
           }`}
         />
