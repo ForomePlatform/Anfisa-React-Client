@@ -27,9 +27,7 @@ const compareVersions = (a, b) => {
   return -1
 }
 
-const tags = execSync('/usr/bin/git tag -l | grep -e "^v"')
-  .toString()
-  .split('\n')
+const tags = execSync('/usr/bin/git tag -l').toString().split('\n')
 
 let maxVersion = str2version(packageVersion) || [0, 0, 0]
 
