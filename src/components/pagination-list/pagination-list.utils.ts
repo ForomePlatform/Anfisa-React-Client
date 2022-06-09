@@ -13,7 +13,10 @@ export const findIndexOfLastElement = (
   container: HTMLElement,
   children: HTMLCollection,
 ): number => {
-  const bottom = getBottomPosition(container)
+  const parent = container.parentElement!
+  const footer = parent.children[1]
+  const footerHeight = !footer ? 0 : footer.clientHeight + 20
+  const bottom = getBottomPosition(parent) - footerHeight
 
   let left = 0
   let right = children.length

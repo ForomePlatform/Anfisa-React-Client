@@ -140,13 +140,18 @@ export const usePagination = (
     if (!current) return
 
     let height = current.clientHeight
+    let width = current.clientWidth
 
     const observer = new ResizeObserver(entries => {
-      if (entries[0].target.clientHeight !== height) {
+      if (
+        entries[0].target.clientHeight !== height ||
+        width !== entries[0].target.clientWidth
+      ) {
         reset()
         findRightAmountPerPage()
 
         height = entries[0].target.clientHeight
+        width = entries[0].target.clientWidth
       }
     })
 
