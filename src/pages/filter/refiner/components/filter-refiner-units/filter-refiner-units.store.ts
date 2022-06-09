@@ -1,8 +1,8 @@
 import { makeAutoObservable } from 'mobx'
 
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import filterStore from '@store/filter'
 import { TFunctionalCondition } from '@components/units-list'
+import { AttributeKinds } from '@service-providers/common'
 
 class FilterRefinerUnitsStore {
   constructor() {
@@ -15,7 +15,7 @@ class FilterRefinerUnitsStore {
     const counts: Record<string, number> = {}
 
     for (let i = 0; i < conditions.length; ++i) {
-      if (conditions[i][0] === FilterKindEnum.Func) {
+      if (conditions[i][0] === AttributeKinds.FUNC) {
         const name = conditions[i][1]
 
         ret.push({

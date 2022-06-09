@@ -1,14 +1,18 @@
 import { AxiosRequestConfig } from 'axios'
 
+import { getIncompletePoints } from '@service-providers/filtering-regime/filtering-regime.utils'
 import { ServiceProviderBase } from '../common'
 import { filteringProvider } from '../filtering-regime'
 import { adaptDtreeStatResponse } from './decision-trees.adapters'
 import {
   IDeleteDecisionTreeParams,
+  IDtreeCountsArguments,
+  IDtreeCountsResponse,
   IDtreeSetArguments,
   IDtreeSetResponse,
   IDtreeStatArguments,
   IDtreeStatResponse,
+  IGetFullDreeCountsOptions,
   IGetFullDtreeStatParams,
   IUpdateDecisionTreeParams,
   TDtreeStat,
@@ -20,7 +24,47 @@ class DecisionTreesProvider extends ServiceProviderBase {
     super()
   }
 
-  // TODO: dtree_counts Delayed evaluations of item counts for decision tree points
+  public async getDtreeCounts(
+    params: IDtreeCountsArguments,
+    options: Partial<AxiosRequestConfig<string>> = {},
+  ): Promise<IDtreeCountsResponse> {
+    const response = await this.post<IDtreeCountsResponse>(
+      '/dtree_counts',
+      params,
+      options,
+    )
+
+    return response.data
+  }
+
+  public async getFullDtreeCounts(
+    params: IDtreeCountsArguments,
+    options: IGetFullDreeCountsOptions,
+  ) {
+    const { abortSignal, onPartialResponse } = options
+
+    let response = await this.getDtreeCounts(params)
+
+    let incompletePoints = getIncompletePoints(response['point-counts'])
+
+    while (incompletePoints.length > 0) {
+      if (onPartialResponse) {
+        onPartialResponse(response)
+      }
+
+      response = await this.getDtreeCounts(
+        {
+          ...params,
+          points: incompletePoints,
+        },
+        { signal: abortSignal },
+      )
+      incompletePoints = getIncompletePoints(response['point-counts'])
+    }
+
+    return response
+  }
+
   // TODO: dtree_check  Decision tree code check
   // TODO: dtree_cmp
 

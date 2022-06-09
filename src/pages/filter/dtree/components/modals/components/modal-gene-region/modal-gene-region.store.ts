@@ -2,10 +2,10 @@ import get from 'lodash/get'
 import { makeAutoObservable } from 'mobx'
 
 import { ActionType } from '@declarations'
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import dtreeStore from '@store/dtree'
 import modalsControlStore from '@pages/filter/dtree/components/modals/modals-control-store'
+import { AttributeKinds } from '@service-providers/common'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { changeFunctionalStep } from '@utils/changeAttribute/changeFunctionalStep'
 import { getCurrentModeType } from '@utils/getCurrentModeType'
@@ -67,15 +67,15 @@ class ModalGeneRegionStore {
   public addAttribute(action: ActionType): void {
     dtreeStore.addSelectedFilter(modalsControlStore.variants[0][0])
 
-    const params = { locus: this.locusCondition }
+    const param = { locus: this.locusCondition }
 
-    addAttributeToStep(
+    addAttributeToStep({
       action,
-      FilterKindEnum.Func,
-      null,
-      params,
-      this.currentMode,
-    )
+      attributeType: AttributeKinds.FUNC,
+      filters: ['True'],
+      param,
+      mode: this.currentMode,
+    })
 
     dtreeStore.resetSelectedFilters()
 

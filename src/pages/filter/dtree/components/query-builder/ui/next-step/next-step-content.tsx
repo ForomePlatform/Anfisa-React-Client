@@ -3,11 +3,8 @@ import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 
 import { t } from '@i18n'
-import dtreeStore from '@store/dtree'
+import stepStore, { ActiveStepOptions } from '@store/dtree/step.store'
 import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
-import activeStepStore, {
-  ActiveStepOptions,
-} from '@pages/filter/dtree/components/active-step.store'
 import modalsVisibilityStore from '../../../modals/modals-visibility-store'
 import { ContentCode } from './content-code/content-code'
 import { NextStepContentItem } from './next-step-content-item'
@@ -25,23 +22,20 @@ const Content = styled.div`
 
 export const NextStepContent = observer(
   ({ index, stepNo }: INextStepContentProps): ReactElement => {
-    const groups = dtreeStore.filteredStepData[index].groups
-
     const [expanded, setExpanded] = useState<Record<number, boolean>>({})
+
     const expandGroup = (id: number) => () => {
       setExpanded(prev => ({ ...prev, [id]: !prev[id] }))
     }
 
-    const currentStepData = dtreeStore.filteredStepData[index]
+    const currentStepData = stepStore.filteredSteps[index]
+    const { groups } = currentStepData
 
     const codeCondition = currentStepData.condition || ''
     const codeResult = currentStepData.result || ''
 
     const openModal = () => {
-      activeStepStore.makeStepActive(
-        stepNo - 1,
-        ActiveStepOptions.StartedVariants,
-      )
+      stepStore.makeStepActive(stepNo - 1, ActiveStepOptions.StartedVariants)
 
       modalsVisibilityStore.openModalAttribute()
     }

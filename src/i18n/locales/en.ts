@@ -188,6 +188,11 @@ export const en = {
   enumCondition: {
     showZeroVariants: 'Show zero variants',
   },
+  funcCondition: {
+    scenario: 'Scenario',
+    problemGroup: 'Problem group:',
+    inheritanceMode: 'Inheritance mode',
+  },
   unitsList: {
     functionalUnits: 'Functional Units',
   },
@@ -200,7 +205,6 @@ export const en = {
     variants: 'Variants: {all}',
     transcripts: 'Transcripts: {all}',
     transcribedVariants: 'Transcribed variants: {all}',
-    inheritanceMode: 'Inheritance mode',
     query: 'Query',
     presetName: 'Preset name',
     presets: 'Presets',
@@ -268,10 +272,8 @@ export const en = {
     delete: 'Delete',
     addStepBefore: 'Add Step Before',
     addStepAfter: 'Add Step After',
-    problemGroup: 'Problem group:',
     fn: 'fn',
     noFilters: 'There are no filters to show',
-    scenario: 'Scenario',
     all: 'All',
     not: 'Not',
     reset: 'Reset',
@@ -339,5 +341,11 @@ export const en = {
   notFound: {
     somethingIsWrong: 'Something is wrong',
     info: 'The page you are looking for was moved, removed, renamed or might never existed',
+  },
+  viewVariants: {
+    fullList: 'Full list',
+    samples25: 'Samples-25',
+    gene: 'Gene',
+    variant: 'Variant',
   },
 }
