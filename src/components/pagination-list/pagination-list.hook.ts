@@ -100,8 +100,11 @@ export const usePagination = (
   const setPage = (value: PageValue) =>
     dispatch({ type: PaginationListActionKind.SetPage, payload: value })
 
+  const elementsLength = pageElements.length
+  const pageRange = pageElements[page]
+
   const findRightAmountPerPage = useCallback(() => {
-    if (page < pageElements.length - 1) return
+    if (page < elementsLength - 1) return
 
     const current = ref.current
 
@@ -113,20 +116,23 @@ export const usePagination = (
       children[children.length - 1] as HTMLElement,
     )
 
-    const range = pageElements[page]
     const lastElementOut = lastChildBottom > containerBottom
     const shouldShowPagination =
-      page !== 0 || range.to < length || lastElementOut
+      page !== 0 || pageRange.to < count || lastElementOut
 
     if (!shouldShowPagination) return
 
     const lastIndex = findIndexOfLastElement(current, children)
 
-    setPage({
-      index: pageElements.length - 1,
-      value: { ...range, to: range.from + lastIndex },
-    })
-  }, [page, pageElements, ref])
+    const computed = { ...pageRange, to: pageRange.from + lastIndex }
+
+    if (computed.to !== pageRange.to) {
+      setPage({
+        index: elementsLength - 1,
+        value: computed,
+      })
+    }
+  }, [count, elementsLength, page, pageRange, ref])
 
   useEffect(() => {
     const current = ref.current
@@ -153,8 +159,7 @@ export const usePagination = (
 
   useLayoutEffect(() => {
     findRightAmountPerPage()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page])
+  }, [findRightAmountPerPage, page])
 
   return [state, next, prev]
 }
