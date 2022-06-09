@@ -31,8 +31,7 @@ jobs:
             git config --global user.email '<>'
             yarn config set version-git-message "[RELEASE] %s"
             yarn config set version-commit-hooks false
-            echo "Path is ... $PATH"
-            PATH=$PATH:$(which git)
+            echo "Path is ... $(which git)"
             echo "Path is ... $PATH"
             yarn version `node ./tools/getNextVersion.js`
             git push --tags --no-verify &&
