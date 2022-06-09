@@ -7,6 +7,7 @@ import { Icon } from '@ui/icon'
 import { Loader } from '@components/loader'
 import { VariantAspectsLayoutGallery } from '@components/variant-aspects-layout'
 import { TAspectDescriptor } from '@service-providers/dataset-level'
+import { ReturnedVariantsDataCy } from '../../../../../components/data-testid/returned-variants'
 
 interface IVariantContentProps {
   className?: string
@@ -29,7 +30,10 @@ export const VariantContent = ({
 
   return (
     <div className={cn(styles.variantContent, className)}>
-      <div className={styles.variantContent__header}>
+      <div
+        className={styles.variantContent__header}
+        data-testid={ReturnedVariantsDataCy.returnedVariantsHeader}
+      >
         <div className={styles.variantContent__title}>{title}</div>
         <button className={styles.variantContent__close}>
           <Icon name="Close" onClick={onClose} size={16} />

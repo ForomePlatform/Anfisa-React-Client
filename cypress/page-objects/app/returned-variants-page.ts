@@ -1,4 +1,5 @@
 import { ReturnedVariantsDataCy } from '../../../src/components/data-testid/returned-variants'
+import { Helper } from '../../shared/helpers'
 import { BasePage } from '../lib/base-page'
 import { ReturnedVariantWidget } from './widgets/returned-variants.widget'
 
@@ -8,9 +9,12 @@ class ReturnedVariantsPage extends BasePage {
     super()
     this.returnedVariantsTable = new ReturnedVariantWidget({
       selectors: {
-        sampleButton: `[data-testid = "${ReturnedVariantsDataCy.sampleButton}"]`,
+        sampleButton: Helper.getDataId(ReturnedVariantsDataCy.sampleButton),
+        // TODO: fix the localor
         tableSection: '[data-grid="[object Object]"]',
-        returnedVariantsHeader: `[data-testid = "${ReturnedVariantsDataCy.returnedVariantsHeader}"]`,
+        returnedVariantsHeader: Helper.getDataId(
+          ReturnedVariantsDataCy.returnedVariantsHeader,
+        ),
       },
       labels: {
         returnedVariantsHeader: 'returnedVariantsHeader',
