@@ -1,11 +1,10 @@
 import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { t } from '@i18n'
 import filterStore from '@store/filter'
 import { Button } from '@ui/button'
-import { NumericCondition } from '@components/numeric-condition'
+import { NumericCondition } from '@components/conditions/numeric-condition'
 import { AttributeHeader } from '@pages/filter/refiner/components/middle-column/attribute-header'
 import { DividerHorizontal } from '@pages/filter/refiner/components/middle-column/components/divider-horizontal'
 import { AttributeKinds } from '@service-providers/common/common.interface'
@@ -54,7 +53,7 @@ export const NumericPanel = observer((): ReactElement | null => {
                 }
                 onClick={() =>
                   savePanelAttribute({
-                    filterKind: FilterKindEnum.Numeric,
+                    filterKind: AttributeKinds.NUMERIC,
                     attributeName,
                     value,
                   })

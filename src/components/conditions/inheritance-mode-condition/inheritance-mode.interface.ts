@@ -19,8 +19,9 @@ export interface IInheritanceModeConditionProps {
   initialProblemGroups: string[] | undefined
   initialMode: ModeTypes | undefined
   attributeSubKind: string | undefined
-  controls?: (props: IControlProps) => ReactElement | null
   statFuncStore: DtreeStatFuncStore | FilterStatFuncStore
+  onTouch?: () => void
+  controls?: (props: IControlProps) => ReactElement | null
 }
 
 export interface IInheritanceModeProblemGroupsProps {

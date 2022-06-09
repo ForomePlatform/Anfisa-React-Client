@@ -2,10 +2,13 @@ import { ReactElement, useState } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import stepStore from '@store/dtree/step.store'
 import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-modal.cy'
-import { TCondition, TNumericConditionBounds } from '@service-providers/common'
+import {
+  AttributeKinds,
+  TCondition,
+  TNumericConditionBounds,
+} from '@service-providers/common'
 import { DropDownJoin } from '../dropdown-join'
 import { ContentItemHeader } from './content-item-header'
 import { ContentItemValues } from './content-item-values'
@@ -29,7 +32,7 @@ export const NextStepContentItem = observer(
     setExpandOnClick,
   }: INextStepContentItemProps): ReactElement => {
     const [isVisible, setIsVisible] = useState<boolean>(false)
-    const stepType: FilterKindEnum = group[0]
+    const stepType: AttributeKinds = group[0]
     const groupName: string = group[1]
     const currentStep = stepStore.filteredSteps[index]
     const currentGroup: TCondition = currentStep.groups[groupNo]

@@ -19,9 +19,11 @@ export abstract class BaseStatFuncStore<
     })
   }
 
-  // amount of getters will be increased in the following func attrs refactors
-
   public get variants(): TVariant[] | undefined {
     return toJS(this.data?.variants)
+  }
+
+  public get status(): string | undefined {
+    return toJS(this.data?.err)
   }
 }

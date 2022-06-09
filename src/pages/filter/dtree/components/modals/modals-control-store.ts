@@ -58,16 +58,8 @@ class ModalsControlStore {
     return group
   }
 
-  public get currentGroupLength(): number {
-    return this.currentGroupToChange?.length ?? 0
-  }
-
   public get currentStepGroups(): string[] {
     return toJS(stepStore.steps[stepStore.activeStepIndex].groups)
-  }
-
-  public get statList(): TPropertyStatus[] {
-    return dtreeStore.stat.units || []
   }
 
   get attributeStatusToChange(): TPropertyStatus | undefined {
@@ -88,26 +80,6 @@ class ModalsControlStore {
 
   public get approxModes(): string[][] {
     return this.funcAttributeStatusToChange?.['approx-modes'] ?? []
-  }
-
-  public get approxOptions(): string[] {
-    const approxOptions: string[] = []
-
-    this.approxModes.map((mode: string[]) => {
-      approxOptions.push(mode[1])
-    })
-
-    return approxOptions
-  }
-
-  public get approxValues(): string[] {
-    const approxValues: string[] = []
-
-    this.approxModes.map((mode: string[]) => {
-      approxValues.push(mode[0])
-    })
-
-    return approxValues
   }
 
   public openModalJoin(): void {

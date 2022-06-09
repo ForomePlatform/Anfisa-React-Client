@@ -7,7 +7,11 @@ import datasetStore from '@store/dataset/dataset'
 import filterPresetsStore from '@store/filter-presets'
 import { GlbPagesNames } from '@glb/glb-names'
 import { FilterControlOptions } from '@pages/filter/common/filter-control/filter-control.const'
-import { TCondition, TPropertyStatus } from '@service-providers/common'
+import {
+  AttributeKinds,
+  TCondition,
+  TPropertyStatus,
+} from '@service-providers/common'
 import { IDsListArguments } from '@service-providers/dataset-level'
 import { IStatFuncArguments } from '@service-providers/filtering-regime'
 import filteringRegimeProvider from '@service-providers/filtering-regime/filtering-regime.provider'
@@ -118,7 +122,9 @@ export class FilterStore {
     const activeFilter = this._conditions[this._selectedConditionIndex]
 
     if (activeFilter) {
-      return this.filterStatUnit.data?.units[0]
+      return activeFilter[0] === AttributeKinds.FUNC
+        ? this.stat.getAttributeStatusByName(activeFilter[1])
+        : this.filterStatUnit.data?.units[0]
     } else if (this.attributeNameToAdd) {
       return this.stat.getAttributeStatusByName(this.attributeNameToAdd)
     }

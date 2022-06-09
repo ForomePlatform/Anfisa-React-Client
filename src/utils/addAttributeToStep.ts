@@ -1,9 +1,12 @@
 import { ActionType, AttributeType } from '@declarations'
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import dtreeStore from '@store/dtree'
 import stepStore from '@store/dtree/step.store'
-import { TFuncArgs, TNumericConditionBounds } from '@service-providers/common'
+import {
+  AttributeKinds,
+  TFuncArgs,
+  TNumericConditionBounds,
+} from '@service-providers/common'
 import {
   ActionTypes,
   TPointModifyingActions,
@@ -11,23 +14,30 @@ import {
 import { getConditionJoinMode } from '@utils/getConditionJoinMode'
 import datasetStore from '../store/dataset/dataset'
 
-export const addAttributeToStep = (
-  action: ActionType,
-  attributeType: AttributeType,
-  filters: string[] | TNumericConditionBounds | null = null,
-  param: TFuncArgs | null = null,
-  currentMode?: ModeTypes,
-  // eslint-disable-next-line max-params
-): void => {
+interface IAddAttributeToStepProps {
+  action: ActionType
+  attributeType: AttributeType
+  filters: string[] | TNumericConditionBounds
+  param?: TFuncArgs
+  mode?: ModeTypes
+}
+
+export const addAttributeToStep = ({
+  action,
+  attributeType,
+  filters,
+  param,
+  mode,
+}: IAddAttributeToStepProps): void => {
   const code = dtreeStore.dtreeCode ?? 'return False'
 
-  const shouldTakeAttributeFromStore = attributeType !== FilterKindEnum.Numeric
+  const shouldTakeAttributeFromStore = attributeType !== AttributeKinds.NUMERIC
 
   const subGroupName = dtreeStore.selectedGroups[1]
-  const attribute = [attributeType, subGroupName, filters]
+  const attribute = [attributeType, subGroupName, filters.length && filters]
 
   if (shouldTakeAttributeFromStore) {
-    const conditionsJoinMode = getConditionJoinMode(currentMode)
+    const conditionsJoinMode = getConditionJoinMode(mode)
 
     attribute.splice(2, 0, conditionsJoinMode)
   }
