@@ -7,7 +7,6 @@ on:
   push:
     branches:
       - 'develop'
-      - 'FOROME-1189'
     tags: [ stage ]
 
 jobs:
