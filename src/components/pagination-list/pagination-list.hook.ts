@@ -33,6 +33,12 @@ type PaginationListAction = {
 
 type PageValue = { value: PageElements; index: number }
 
+const init = (count: number): IPaginationListState => ({
+  page: 0,
+  pageElements: [{ from: 0, to: Math.min(getDefaultCount(), count) }],
+  maxValue: count,
+})
+
 const reducer = (
   state: IPaginationListState,
   action: PaginationListAction,
@@ -80,12 +86,6 @@ const reducer = (
   }
 }
 
-const init = (count: number): IPaginationListState => ({
-  page: 0,
-  pageElements: [{ from: 0, to: Math.min(getDefaultCount(), count) }],
-  maxValue: count,
-})
-
 export const usePagination = (
   count: number,
   ref: RefObject<HTMLDivElement>,
@@ -126,8 +126,7 @@ export const usePagination = (
       index: pageElements.length - 1,
       value: { ...range, to: range.from + lastIndex },
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, pageElements])
+  }, [page, pageElements, ref])
 
   useEffect(() => {
     const current = ref.current
@@ -150,8 +149,7 @@ export const usePagination = (
     return () => {
       observer.unobserve(current)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [findRightAmountPerPage, ref])
 
   useLayoutEffect(() => {
     findRightAmountPerPage()

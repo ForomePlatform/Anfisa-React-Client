@@ -13,8 +13,7 @@ export const findIndexOfLastElement = (
   container: HTMLElement,
   children: HTMLCollection,
 ): number => {
-  const offset = 56
-  const bottom = getBottomPosition(container) - offset
+  const bottom = getBottomPosition(container)
 
   let left = 0
   let right = children.length
@@ -40,5 +39,5 @@ export const findIndexOfLastElement = (
     middle = getMiddle(left, right)
   }
 
-  return left + 1
+  return right
 }
