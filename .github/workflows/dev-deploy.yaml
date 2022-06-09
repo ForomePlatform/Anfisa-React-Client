@@ -28,9 +28,12 @@ jobs:
       uses: actions/checkout@v2
     - run: |
             git config --global user.name 'Version Bot'
-            git config --global user.email 'robot@forome.dev'
+            git config --global user.email '<>'
             yarn config set version-git-message "[RELEASE] %s"
             yarn config set version-commit-hooks false
+            echo "Path is ... $PATH"
+            PATH=$PATH:$(which git)
+            echo "Path is ... $PATH"
             yarn version `node ./tools/getNextVersion.js`
             git push --tags --no-verify &&
             git push --no-verify
