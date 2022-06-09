@@ -62,7 +62,7 @@ class ModalCompoundHetStore {
     addAttributeToStep({
       action,
       attributeType: AttributeKinds.FUNC,
-      filters: ['True'],
+      filters: dtreeStore.selectedFilters,
       param,
       mode: this.currentMode,
     })
