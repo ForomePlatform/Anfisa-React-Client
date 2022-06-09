@@ -2,8 +2,8 @@ import { ReactElement } from 'react'
 import cn from 'classnames'
 
 import functionPanelStore from '@pages/filter/refiner/components/middle-column/panels/function-panel/function-panel.store'
+import { getScenarioValue } from '@pages/filter/refiner/components/right-column/func-filter/utils/get-scenario-value'
 import { ICustomInheritanceModeArgs } from '@service-providers/common/common.interface'
-import { getScenarioValue } from '@utils/filter-refiner/getScenarioValue'
 
 interface ICustomInheritanceModeViewProps {
   isFilterActive: boolean
@@ -16,7 +16,6 @@ export const CustomInheritanceModeView = ({
   filterExpression,
 }: ICustomInheritanceModeViewProps): ReactElement => {
   const { problemGroups } = functionPanelStore
-  const scenarioArray = Object.entries(filterExpression['scenario'])
 
   return (
     <div
@@ -37,7 +36,7 @@ export const CustomInheritanceModeView = ({
             <span>{group}</span>
 
             <span className="ml-1 text-grey-blue">
-              {getScenarioValue(group, scenarioArray)}
+              {getScenarioValue(group, filterExpression.scenario)}
             </span>
           </div>
         ))}

@@ -1,12 +1,13 @@
+import { useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { t } from '@i18n'
 import filterStore from '@store/filter'
 import { Button } from '@ui/button'
-import { InheritanceModeCondition } from '@components/inheritance-mode-condition/inheritance-mode-condition'
+import { InheritanceModeCondition } from '@components/conditions/inheritance-mode-condition/inheritance-mode-condition'
 import { refinerFunctionsStore } from '@pages/filter/refiner/components/attributes/refiner-functions.store'
 import { refinerStatFuncStore } from '@pages/filter/refiner/components/attributes/refiner-stat-func.store'
+import { AttributeKinds } from '@service-providers/common'
 import { savePanelAttribute } from '../../../utils/save-pannel-attribute'
 
 export const InheritanceMode = observer(() => {
@@ -22,6 +23,19 @@ export const InheritanceMode = observer(() => {
 
   const { isFilterTouched } = filterStore
 
+  const handleSaveChanges = useCallback(
+    (mode, values, param) => {
+      savePanelAttribute({
+        filterKind: AttributeKinds.FUNC,
+        attributeName,
+        mode,
+        selectedVariants: values,
+        param,
+      })
+    },
+    [attributeName],
+  )
+
   return (
     <InheritanceModeCondition
       problemGroups={problemGroups}
@@ -30,6 +44,7 @@ export const InheritanceMode = observer(() => {
       initialMode={initialMode}
       attributeSubKind={attributeSubKind}
       statFuncStore={refinerStatFuncStore}
+      onTouch={() => filterStore.setTouched(true)}
       controls={({ values, mode, hasErrors, param, clearValue }) => {
         return (
           <div className="flex-1 flex items-end justify-end mt-1 pb-[40px]">
@@ -45,15 +60,7 @@ export const InheritanceMode = observer(() => {
                   ? t('dtree.saveChanges')
                   : t('dtree.addAttribute')
               }
-              onClick={() =>
-                savePanelAttribute({
-                  filterKind: FilterKindEnum.Func,
-                  attributeName,
-                  mode,
-                  selectedVariants: values,
-                  param,
-                })
-              }
+              onClick={() => handleSaveChanges(mode, values, param)}
               disabled={hasErrors || !isFilterTouched}
             />
           </div>

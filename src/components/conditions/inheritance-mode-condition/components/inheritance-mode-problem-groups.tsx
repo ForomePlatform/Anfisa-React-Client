@@ -12,7 +12,7 @@ export const InheritanceModeProblemGroups = ({
   handleReset,
 }: IInheritanceModeProblemGroupsProps): ReactElement => (
   <div className="flex items-center justify-between w-full mt-4 text-14">
-    <div>{t('dtree.problemGroup')}</div>
+    <div>{t('funcCondition.problemGroup')}</div>
 
     {problemGroups?.map((problemGroup: string) => (
       <Checkbox

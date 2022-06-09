@@ -2,7 +2,6 @@ import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { theme } from '@theme'
 import { IStepData } from '@store/dtree/dtree.store'
@@ -10,6 +9,7 @@ import stepStore, { ActiveStepOptions } from '@store/dtree/step.store'
 import { Icon } from '@ui/icon'
 import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
 import { FnLabel } from '@components/fn-label'
+import { AttributeKinds } from '@service-providers/common'
 import modalsVisibilityStore from '../../../modals/modals-visibility-store'
 import { InactiveFieldLabel } from '../inactive-field-label'
 
@@ -24,7 +24,7 @@ const NotModeWrapper = styled.div`
 
 interface IContentItemHeaderProps {
   currentStep: IStepData
-  stepType: FilterKindEnum
+  stepType: AttributeKinds
   groupName: string
   stepNo: number
   groupNo: number
@@ -41,19 +41,19 @@ export const ContentItemHeader = observer(
     const isNegateStep: boolean = currentStep.isNegate || false
     const isStepInvalid: boolean =
       typeof groupName !== 'string' ||
-      stepType === FilterKindEnum.Error ||
+      stepType === AttributeKinds.ERROR ||
       !stepType
 
     const handleModals = () => {
       stepStore.makeStepActive(stepNo - 1, ActiveStepOptions.StartedVariants)
 
-      stepType === FilterKindEnum.Enum &&
+      stepType === AttributeKinds.ENUM &&
         modalsVisibilityStore.openModalEnum(groupName, groupNo)
 
-      stepType === FilterKindEnum.Numeric &&
+      stepType === AttributeKinds.NUMERIC &&
         modalsVisibilityStore.openModalNumeric(groupName, groupNo)
 
-      if (stepType === FilterKindEnum.Func) {
+      if (stepType === AttributeKinds.FUNC) {
         groupName === FuncStepTypesEnum.InheritanceMode &&
           modalsVisibilityStore.openModalInheritanceMode(groupName, groupNo)
 
@@ -93,7 +93,7 @@ export const ContentItemHeader = observer(
           )}
 
           <div className="flex items-center text-14">
-            {stepType === FilterKindEnum.Func && (
+            {stepType === AttributeKinds.FUNC && (
               <FnLabel
                 isActive={currentStep && currentStep.isActive}
                 className="shadow-dark mr-1"

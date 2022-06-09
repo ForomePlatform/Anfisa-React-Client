@@ -2,12 +2,11 @@ import { ReactElement } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { useToggle } from '@core/hooks/use-toggle'
 import filterStore from '@store/filter'
 import { Icon } from '@ui/icon'
 import { PopperButton } from '@components/popper-button'
-import { ConditionJoinMode } from '@service-providers/common'
+import { AttributeKinds, ConditionJoinMode } from '@service-providers/common'
 import {
   TFuncArgs,
   TNumericConditionBounds,
@@ -34,7 +33,7 @@ export const SelectedFilterCard = observer(
     const filterType: string = condition[0]
     const filterName: string = condition[1]
     const filterMode: ConditionJoinMode | undefined =
-      filterType !== FilterKindEnum.Numeric
+      filterType !== AttributeKinds.NUMERIC
         ? (condition[2] as ConditionJoinMode)
         : undefined
     const filterContent: string[] = condition[3] || []
@@ -87,7 +86,7 @@ export const SelectedFilterCard = observer(
           )}
         </div>
 
-        {isFilterContentVisible && filterType === FilterKindEnum.Numeric && (
+        {isFilterContentVisible && filterType === AttributeKinds.NUMERIC && (
           <NumericFilter
             filterName={filterName}
             isFilterActive={isActive}
@@ -95,11 +94,11 @@ export const SelectedFilterCard = observer(
           />
         )}
 
-        {isFilterContentVisible && filterType === FilterKindEnum.Enum && (
+        {isFilterContentVisible && filterType === AttributeKinds.ENUM && (
           <EnumFilter isFilterActive={isActive} filterContent={filterContent} />
         )}
 
-        {isFilterContentVisible && filterType === FilterKindEnum.Func && (
+        {isFilterContentVisible && filterType === AttributeKinds.FUNC && (
           <FuncFilter
             filterName={filterName}
             isFilterActive={isActive}
