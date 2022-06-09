@@ -40,5 +40,5 @@ export const findIndexOfLastElement = (
     middle = getMiddle(left, right)
   }
 
-  return left
+  return left + 1
 }

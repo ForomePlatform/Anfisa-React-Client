@@ -191,9 +191,11 @@ export const EnumCondition = observer(
         </div>
 
         <div
-          className="flex-1"
+          className="overflow-hidden flex-grow-1"
           style={{
-            maxHeight: `calc(100% - ${showFinder ? 220 : 174}px)`,
+            height: !isRefiner
+              ? `calc(580px - ${showFinder ? 249 : 203}px)`
+              : `calc(100% - ${showFinder ? 249 : 203}px)`,
           }}
         >
           {filteredVariants.length > 0 ? (

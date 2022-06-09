@@ -35,7 +35,10 @@ const reducer = (
     case PaginationListActionKind.NextPage: {
       const lastElement = state.pageElements[state.pageElements.length - 1]
 
-      if (lastElement.to === state.maxValue) {
+      if (
+        lastElement.to === state.maxValue &&
+        state.page === state.pageElements.length - 1
+      ) {
         return state
       }
 
