@@ -348,4 +348,7 @@ export const en = {
     gene: 'Gene',
     variant: 'Variant',
   },
+  paginationList: {
+    footer: 'From { from } to { to } out of { length }',
+  },
 }

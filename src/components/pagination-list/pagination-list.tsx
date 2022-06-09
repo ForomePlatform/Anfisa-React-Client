@@ -1,19 +1,11 @@
 import styles from './pagination-list.module.css'
 
-import {
-  PropsWithChildren,
-  ReactNode,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-} from 'react'
+import { PropsWithChildren, ReactNode, useRef } from 'react'
 import cn, { Argument } from 'classnames'
 
+import { t } from '@i18n'
 import { PaginationFooter } from '@components/pagination-list/components/pagination-footer'
-import {
-  useFindRightAmountOfElements,
-  usePagination,
-} from '@components/pagination-list/pagination-list.hook'
+import { usePagination } from '@components/pagination-list/pagination-list.hook'
 
 interface IPaginationListProps<T> {
   defaultCount?: number
@@ -28,62 +20,20 @@ export const PaginationList = <T,>({
   className,
 }: PropsWithChildren<IPaginationListProps<T>>) => {
   const ref = useRef<HTMLDivElement>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
 
-  const [
-    { page, pageElements },
-    hasNext,
-    hasPrev,
-    nextPage,
-    prevPage,
-    reset,
-    setPage,
-  ] = usePagination(elements.length)
-
-  const findRightAmountPerPage = useFindRightAmountOfElements(
-    page,
-    pageElements,
-    ref,
-    containerRef,
+  const [{ page, pageElements }, nextPage, prevPage] = usePagination(
     elements.length,
-    setPage,
+    ref,
   )
-
-  useEffect(() => {
-    const current = ref.current
-
-    if (!current) return
-
-    let height = current.clientHeight
-
-    const observer = new ResizeObserver(entries => {
-      if (entries[0].target.clientHeight !== height) {
-        reset()
-        findRightAmountPerPage()
-
-        height = entries[0].target.clientHeight
-      }
-    })
-
-    observer.observe(current)
-
-    return () => {
-      observer.unobserve(current)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  useLayoutEffect(() => {
-    findRightAmountPerPage()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page])
 
   const pageValue = pageElements[page]
   const showPagination = page !== 0 || pageValue.to < elements.length
+  const hasNext = pageValue.to < elements.length
+  const hasPrev = pageValue.from > 0
 
   return (
-    <div ref={ref} className={cn(styles.pagination, className)}>
-      <div ref={containerRef} className={cn(styles.pagination_container)}>
+    <div className={cn(styles.pagination, className)}>
+      <div ref={ref} className={cn(styles.pagination_container)}>
         {elements.slice(pageValue.from, pageValue.to).map(it => render(it))}
       </div>
 
@@ -93,9 +43,11 @@ export const PaginationList = <T,>({
           prev={prevPage}
           hasNext={hasNext}
           hasPrev={hasPrev}
-          text={`From ${pageValue.from + 1} to ${pageValue.to} out of ${
-            elements.length
-          }`}
+          text={t('paginationList.footer', {
+            from: pageValue.from + 1,
+            to: pageValue.to,
+            length: elements.length,
+          })}
         />
       )}
     </div>

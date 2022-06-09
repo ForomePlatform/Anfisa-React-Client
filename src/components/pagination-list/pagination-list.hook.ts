@@ -1,4 +1,10 @@
-import { RefObject, useCallback, useReducer } from 'react'
+import {
+  RefObject,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useReducer,
+} from 'react'
 
 import { PageElements } from '@components/pagination-list/pagination-list.interfaces'
 import {
@@ -82,48 +88,27 @@ const init = (count: number): IPaginationListState => ({
 
 export const usePagination = (
   count: number,
-): [
-  IPaginationListState,
-  boolean,
-  boolean,
-  () => void,
-  () => void,
-  () => void,
-  (value: PageValue) => void,
-] => {
+  ref: RefObject<HTMLDivElement>,
+): [IPaginationListState, () => void, () => void] => {
   const [state, dispatch] = useReducer(reducer, count, init)
+  const { page, pageElements } = state
 
-  const value = state.pageElements[state.page]
-
-  const hasNext = value.to < count
-  const hasPrev = value.from > 0
   const next = () => dispatch({ type: PaginationListActionKind.NextPage })
   const prev = () => dispatch({ type: PaginationListActionKind.PrevPage })
+
   const reset = () => dispatch({ type: PaginationListActionKind.Reset })
   const setPage = (value: PageValue) =>
     dispatch({ type: PaginationListActionKind.SetPage, payload: value })
 
-  return [state, hasNext, hasPrev, next, prev, reset, setPage]
-}
-
-export const useFindRightAmountOfElements = (
-  page: number,
-  pageElements: PageElements[],
-  ref: RefObject<HTMLDivElement>,
-  containerRef: RefObject<HTMLElement>,
-  length: number,
-  setPage: (value: PageValue) => void,
-): (() => void) => {
-  return useCallback(() => {
+  const findRightAmountPerPage = useCallback(() => {
     if (page < pageElements.length - 1) return
 
     const current = ref.current
-    const container = containerRef.current
 
-    if (!current || !container) return
+    if (!current) return
 
     const containerBottom = getBottomPosition(current)
-    const children = container.children
+    const children = current.children
     const lastChildBottom = getBottomPosition(
       children[children.length - 1] as HTMLElement,
     )
@@ -143,4 +128,35 @@ export const useFindRightAmountOfElements = (
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page, pageElements])
+
+  useEffect(() => {
+    const current = ref.current
+
+    if (!current) return
+
+    let height = current.clientHeight
+
+    const observer = new ResizeObserver(entries => {
+      if (entries[0].target.clientHeight !== height) {
+        reset()
+        findRightAmountPerPage()
+
+        height = entries[0].target.clientHeight
+      }
+    })
+
+    observer.observe(current)
+
+    return () => {
+      observer.unobserve(current)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useLayoutEffect(() => {
+    findRightAmountPerPage()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page])
+
+  return [state, next, prev]
 }
