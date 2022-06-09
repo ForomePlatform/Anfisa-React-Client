@@ -2,7 +2,7 @@ import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
-import { InheritanceModeCondition } from '@components/conditions/inheritance-mode-condition/inheritance-mode-condition'
+import { InheritanceModeCondition } from '@components/conditions/inheritance-mode/inheritance-mode-condition'
 import { AttributeKinds } from '@service-providers/common'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { saveAttribute } from '@utils/changeAttribute/saveAttribute'

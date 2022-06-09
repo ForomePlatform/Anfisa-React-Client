@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
-import { EnumCondition } from '@components/conditions/enum-condition/enum-condition'
+import { EnumCondition } from '@components/conditions/enum/enum-condition'
 import { dtreeAttributeStore } from '../../../attributes/dtree-attributes.store'
 import modalsControlStore from '../../modals-control-store'
 import modalsVisibilityStore from '../../modals-visibility-store'

@@ -150,7 +150,7 @@ class ModalsVisibilityStore {
     this.groupIndexToChange = groupIndex ?? -1
   }
 
-  public closeModalCompoundRequest() {
+  public closeModalCompoundRequest = () => {
     this.isModalCompoundRequestVisible = false
   }
 

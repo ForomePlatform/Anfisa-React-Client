@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
-import { NumericCondition } from '@components/conditions/numeric-condition'
+import { NumericCondition } from '@components/conditions/numeric'
 import { EditModalButtons } from '@pages/filter/dtree/components/modals/components/ui/edit-modal-buttons'
 import { AttributeKinds } from '@service-providers/common'
 import { addAttributeToStep } from '@utils/addAttributeToStep'

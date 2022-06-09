@@ -2,7 +2,7 @@ import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
-import { CustomInheritanceModeCondition } from '@components/conditions/custom-inheritance-mode-condition/custom-inheritance-mode-condition'
+import { CustomInheritanceModeCondition } from '@components/conditions/custom-inheritance-mode/custom-inheritance-mode-condition'
 import { AttributeKinds } from '@service-providers/common'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { saveAttribute } from '@utils/changeAttribute/saveAttribute'
@@ -28,7 +28,7 @@ export const ModalCustomInheritanceMode = observer((): ReactElement => {
   const { currentStepGroups } = modalsControlStore
 
   const handleModals = () => {
-    modalsVisibilityStore.closeModalInheritanceMode()
+    modalsVisibilityStore.closeModalCustomInheritanceMode()
     modalsVisibilityStore.openModalAttribute()
   }
 

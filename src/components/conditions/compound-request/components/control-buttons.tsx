@@ -3,42 +3,49 @@ import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { RequestBlockOperations } from '@core/enum/request-block-operations'
-import filterStore from '@store/filter'
 import { Button } from '@ui/button'
-import compoundRequestStore from '../compound-request.store'
+import { TRequestCondition } from '@service-providers/common'
 
 interface IControlButtonsProps {
+  handleRequestBlocksAmount: (type: string, activeRequestIndex: number) => void
   activeRequestIndex: number
+  onTouch?: () => void
+  requestCondition: TRequestCondition[]
 }
 
 export const ControlButtons = observer(
-  ({ activeRequestIndex }: IControlButtonsProps): ReactElement => (
+  ({
+    handleRequestBlocksAmount,
+    onTouch,
+    activeRequestIndex,
+    requestCondition,
+  }: IControlButtonsProps): ReactElement => (
     <div className="flex">
       <Button
         onClick={() => {
-          compoundRequestStore.handleRequestBlocksAmount(
+          handleRequestBlocksAmount(
             RequestBlockOperations.Add,
             activeRequestIndex,
           )
-          filterStore.setTouched(true)
+          onTouch?.()
         }}
         text="Add"
         variant="secondary"
         className={cn('mr-4')}
-        disabled={compoundRequestStore.requestCondition.length === 5}
+        disabled={requestCondition.length === 5}
       />
 
       <Button
         onClick={() => {
-          compoundRequestStore.handleRequestBlocksAmount(
+          handleRequestBlocksAmount(
             RequestBlockOperations.Remove,
             activeRequestIndex,
           )
-          filterStore.setTouched(true)
+          onTouch?.()
         }}
         text="Remove"
         variant="diestruction"
-        disabled={compoundRequestStore.requestCondition.length === 1}
+        disabled={requestCondition.length === 1}
       />
     </div>
   ),

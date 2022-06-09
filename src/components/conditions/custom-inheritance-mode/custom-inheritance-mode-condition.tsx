@@ -7,6 +7,7 @@ import { InheritanceModeSelect } from '@pages/filter/dtree/components/query-buil
 import { AllNotMods } from '@pages/filter/dtree/components/query-builder/ui/all-not-mods'
 import { DividerHorizontal } from '@pages/filter/refiner/components/middle-column/components/divider-horizontal'
 import { IScenario } from '@service-providers/common'
+import { getResetType } from '@utils/getResetType'
 import { DisabledVariants } from '../components/disabled-variants'
 import { CustomInheritanceModeScenario } from './components/custom-inheritance-mode-scenario'
 import { ICustomInheritanceModeConditionProps } from './custom-inheritance-mode.interface'
@@ -82,6 +83,7 @@ export const CustomInheritanceModeCondition = observer(
 
     useEffect(() => {
       setSelectValues(getSelectValues(scenario, problemGroups))
+      setPreparedValue(getResetType(scenario))
     }, [problemGroups, scenario])
 
     return (

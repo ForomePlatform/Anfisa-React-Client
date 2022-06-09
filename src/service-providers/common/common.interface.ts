@@ -32,11 +32,7 @@ export enum ConditionJoinMode {
   NOT = 'NOT',
 }
 
-export type TRequestCondition = [number, TSelectValues]
-
-export type TSelectValues = {
-  [key: string]: string[]
-}
+export type TRequestCondition = [number, IScenario]
 
 export interface IScenario {
   [key: string]: string[]

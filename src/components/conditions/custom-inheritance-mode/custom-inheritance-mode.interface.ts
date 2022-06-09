@@ -3,11 +3,14 @@ import { ReactElement } from 'react'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import { DtreeStatFuncStore } from '@store/dtree/dtree-stat-func.store'
 import { FilterStatFuncStore } from '@store/filter/filter-stat-func.store'
-import { IScenario } from '@service-providers/common'
+import {
+  ICustomInheritanceModeArgs,
+  IScenario,
+} from '@service-providers/common'
 
 export interface IControlProps {
   hasErrors: boolean
-  param: any
+  param: ICustomInheritanceModeArgs
   mode: ModeTypes | undefined
   clearValue?: () => void
 }
@@ -24,7 +27,7 @@ export interface ICustomInheritanceModeConditionProps {
 export interface IHandleSetComplexScenarioProps {
   preparedValue: string
   problemGroups: string[]
-  setScenario: (scenario: any) => void
+  setScenario: (scenario: IScenario) => void
 }
 
 export interface ICustomInheritanceModeScenarioProps {
