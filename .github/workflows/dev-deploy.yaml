@@ -31,7 +31,7 @@ jobs:
             git config --global user.email '<>'
             yarn config set version-git-message "[RELEASE] %s"
             yarn config set version-commit-hooks false
-            yarn version `node ./tools/getNextVersion.js`
+            yarn version --new-version `node ./tools/getNextVersion.js`
             git push --tags --no-verify &&
             git push --no-verify
     - run: yarn install
