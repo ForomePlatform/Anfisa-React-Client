@@ -36,7 +36,7 @@ export const CustomInheritanceModeContent = observer(
     return (
       <>
         <div className="text-14 leading-16px font-medium text-grey-blue mt-0.5 mb-2.5">
-          {t('dtree.scenario')}
+          {t('funcCondition.scenario')}
         </div>
         <div className="flex items-center justify-between w-full mt-4 text-14">
           {problemGroups.map((group: string, index: number) => (
