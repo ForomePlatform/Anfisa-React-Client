@@ -47,25 +47,23 @@ export const CompoundHetCondition = observer(
 
     return (
       <>
-        <>
-          <AprroxAndState approx={approx} setApprox={setApprox} />
+        <AprroxAndState approx={approx} setApprox={setApprox} />
 
-          <div className="flex justify-between items-center text-14 my-4">
-            <DisabledVariants
-              isFetching={isFetching}
-              variantsType={'Proband'}
-              variantsValue={variantsValue}
-              status={status}
-            />
+        <div className="flex justify-between items-center text-14 my-4">
+          <DisabledVariants
+            isFetching={isFetching}
+            variantsType={'Proband'}
+            variantsValue={variantsValue}
+            status={status}
+          />
 
-            <AllNotMods
-              groupSubKind={attributeSubKind}
-              isNotModeChecked={mode === ModeTypes.Not}
-              isNotModeDisabled={!variants?.length}
-              toggleNotMode={() => toggleMode(ModeTypes.Not)}
-            />
-          </div>
-        </>
+          <AllNotMods
+            groupSubKind={attributeSubKind}
+            isNotModeChecked={mode === ModeTypes.Not}
+            isNotModeDisabled={!variants?.length}
+            toggleNotMode={() => toggleMode(ModeTypes.Not)}
+          />
+        </div>
 
         {controls &&
           controls({

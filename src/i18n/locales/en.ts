@@ -185,6 +185,9 @@ export const en = {
     center: 'Center',
     distance: 'Distance',
   },
+  condition: {
+    noFilters: 'There are no filters to show',
+  },
   enumCondition: {
     showZeroVariants: 'Show zero variants',
   },
@@ -273,7 +276,6 @@ export const en = {
     addStepBefore: 'Add Step Before',
     addStepAfter: 'Add Step After',
     fn: 'fn',
-    noFilters: 'There are no filters to show',
     all: 'All',
     not: 'Not',
     reset: 'Reset',

@@ -31,8 +31,8 @@ export interface IInheritanceModeVariantsControlsProps {
   selectedVariants: string[]
   attributeSubKind: string | undefined
   mode: ModeTypes | undefined
-  selectAllVariants: () => void
-  clearAllVariants: () => void
+  onSelectAllVariants: () => void
+  onClearAllVariants: () => void
   toggleMode: (mode: ModeTypes) => void
 }
 

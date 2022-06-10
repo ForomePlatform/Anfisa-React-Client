@@ -69,7 +69,7 @@ export const InheritanceModeCondition = observer(
       onTouch?.()
     }
 
-    const selectAllVariants = () => {
+    const onSelectAllVariants = () => {
       const allVariantsNames = filteredVariants?.map(
         ([variantName]) => variantName,
       )
@@ -77,7 +77,7 @@ export const InheritanceModeCondition = observer(
       onTouch?.()
     }
 
-    const clearAllVariants = () => {
+    const onClearAllVariants = () => {
       setSelectedVariants([])
       setMode(undefined)
     }
@@ -109,8 +109,8 @@ export const InheritanceModeCondition = observer(
 
         <InheritanceModeVariantsControls
           selectedVariants={selectedVariants}
-          selectAllVariants={selectAllVariants}
-          clearAllVariants={clearAllVariants}
+          onSelectAllVariants={onSelectAllVariants}
+          onClearAllVariants={onClearAllVariants}
           attributeSubKind={attributeSubKind}
           mode={mode}
           toggleMode={toggleMode}
