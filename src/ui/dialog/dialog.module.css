@@ -7,7 +7,7 @@
   transform: translate(-50%, -50%);
 
   &_xs {
-    width: 370px;
+    width: 320px;
   }
 
   &_s {
@@ -20,6 +20,10 @@
 
   &_l {
     width: 640px;
+  }
+
+  &_xl {
+    width: 740px;
   }
 
   &_entering,

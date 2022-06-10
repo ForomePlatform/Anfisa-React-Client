@@ -40,7 +40,6 @@ export const QueryBuilderResults = observer(
       const fixedNextStepIndex = hasEmptyStep
         ? nextStepIndex - 1
         : nextStepIndex
-
       dtreeStore.openModalViewVariants(fixedNextStepIndex)
     }
 
