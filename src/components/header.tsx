@@ -9,7 +9,6 @@ import { t } from '@i18n'
 import datasetStore from '@store/dataset/dataset'
 import dirinfoStore from '@store/dirinfo'
 import filterStore from '@store/filter'
-import variantStore from '@store/ws/variant'
 import { PageRoute, RouteNames, Routes } from '@router/routes.enum'
 import { Divider } from '@ui/divider'
 import { Breadcrumbs } from '@components/breadcrumbs'
@@ -46,10 +45,6 @@ export const Header = observer(
 
       history.push(`${history.location.pathname}?ds=${datasetName}`)
       datasetStore.setDatasetName(datasetName)
-
-      if (datasetName && !variantStore.dsName) {
-        variantStore.setDsName(datasetName)
-      }
     }
 
     return (

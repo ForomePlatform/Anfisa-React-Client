@@ -42,7 +42,7 @@ export const CompoundRequestScenario: FC<ICompoundRequestScenarioProp> = ({
       >
         <div className="flex items-center mb-2">
           <div className="text-14 leading-16px font-medium text-grey-blue mr-2.5">
-            {t('dtree.scenario')}
+            {t('funcCondition.scenario')}
           </div>
           <div className="w-[60px]">
             <InputNumber

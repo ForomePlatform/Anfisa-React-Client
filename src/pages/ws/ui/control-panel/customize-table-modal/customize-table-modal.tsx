@@ -49,13 +49,14 @@ export const CustomizeTableModal = observer(
         setViewType={setViewType}
         viewType={viewType}
         isNotSearchable
-        notShowSelectedPanel={variantStore.drawerVisible}
+        notShowSelectedPanel={variantStore.isDrawerVisible}
       >
         <>
-          {!variantStore.drawerVisible && <ColumnsList />}
+          {!variantStore.isDrawerVisible && <ColumnsList />}
           <div
             className={cn('mt-4 mb-5', {
-              'border-t-[1px] border-t-blue-light': !variantStore.drawerVisible,
+              'border-t-[1px] border-t-blue-light':
+                !variantStore.isDrawerVisible,
             })}
           >
             <ViewTypeTable setViewType={setViewType} viewType={viewType} />

@@ -39,7 +39,11 @@ export type TZoneList = IZoneDescriptor | IZoneDescriptor[]
 
 // ws_tags
 
-export type TTagsDescriptor = Record<string, string | true>
+export type TTagsDescriptorSpecial = {
+  _note?: string
+}
+
+export type TTagsDescriptor = TTagsDescriptorSpecial & Record<string, true>
 
 export interface IWsTagsArguments {
   ds: string
@@ -49,12 +53,12 @@ export interface IWsTagsArguments {
 
 export interface IWsTags {
   filters: string[]
-  'check-tags': string[]
-  'op-tags': string[]
-  'rec-tags': TTagsDescriptor
-  'upd-time'?: string
-  'upd-from'?: string
-  'tags-state': number
+  checkTags: string[]
+  opTags: string[]
+  recTags: TTagsDescriptor
+  updTime?: string
+  updFrom?: string
+  tagsState: number
 }
 
 // tag_select

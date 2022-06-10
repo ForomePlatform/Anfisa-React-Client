@@ -1,16 +1,14 @@
-import { makeAutoObservable, reaction, runInAction, toJS } from 'mobx'
+import { makeAutoObservable, reaction, toJS } from 'mobx'
 
 import datasetStore from '@store/dataset/dataset'
 import filterStore from '@store/filter'
 import filterPresetsStore from '@store/filter-presets'
-import variantStore from '@store/ws/variant'
 import zoneStore from '@store/ws/zone'
 import {
   TCondition,
   TItemsCount,
 } from '@service-providers/common/common.interface'
 import { ITabReport } from '@service-providers/dataset-level/dataset-level.interface'
-import wsDatasetProvider from '@service-providers/ws-dataset-support/ws-dataset-support.provider'
 import { TabReportPaginatedAsyncStore } from './tab-report-paginated.async.store'
 import { IWsListQuery, WsListAsyncStore } from './ws-list.async.store'
 
@@ -92,22 +90,6 @@ export class MainTable {
     const transcriptsCounts = this.statAmount?.[2] ?? null
 
     return { variantCounts, dnaVariantsCounts, transcriptsCounts }
-  }
-
-  // update zone tags if smth was added in drawer
-  async fetchWsTagsAsync() {
-    if (datasetStore.isXL) return
-
-    const wsTags = await wsDatasetProvider.getWsTags({
-      ds: datasetStore.datasetName,
-      rec: variantStore.index,
-    })
-
-    runInAction(() => {
-      zoneStore.tags = [...wsTags['op-tags'], ...wsTags['check-tags']].filter(
-        item => item !== '_note',
-      )
-    })
   }
 
   setIsTableRecizing(value: boolean) {
