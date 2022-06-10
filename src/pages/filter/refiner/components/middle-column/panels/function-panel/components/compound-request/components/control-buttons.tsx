@@ -24,7 +24,7 @@ export const ControlButtons = observer(
         }}
         text="Add"
         variant="secondary"
-        className={cn('mr-4')}
+        className="mr-4"
         disabled={compoundRequestStore.requestCondition.length === 5}
       />
 

@@ -49,7 +49,7 @@ export const InheritanceMode = observer(() => {
         return (
           <div className="flex-1 flex items-end justify-end mt-1 pb-[40px]">
             <Button
-              variant={'secondary'}
+              variant="secondary"
               text={t('general.clear')}
               onClick={clearValue}
               className="px-5 mr-2"

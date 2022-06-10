@@ -1,3 +1,5 @@
+import style from '../undo-redo-buttons.module.css'
+
 import { FC, MouseEvent } from 'react'
 import cn, { Argument } from 'classnames'
 
@@ -17,10 +19,7 @@ export const UndoRedoButton: FC<IUndoRedoButtonProps> = ({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={cn(
-        'rounded-full w-8 h-8 flex items-center justify-center border-blue-bright border-2',
-        className,
-      )}
+      className={cn(style.undoRedo_button, className)}
     >
       {children}
     </button>
