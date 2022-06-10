@@ -13,7 +13,10 @@ export const RequestConditions = observer(
           requestItem={item}
           key={index}
           requestIndex={index}
-          className={props.activeRequestIndex === index && 'border-blue-active'}
+          className={
+            props.activeRequestIndex === index &&
+            'border-blue-active bg-blue-medium'
+          }
           {...props}
         />
       ))}
