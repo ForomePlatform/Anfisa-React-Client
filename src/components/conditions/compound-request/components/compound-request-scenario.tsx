@@ -4,7 +4,6 @@ import cn from 'classnames'
 import { t } from '@i18n'
 import { InputNumber } from '@ui/input-number/input-number'
 import { Select } from '@ui/select'
-import { DividerHorizontal } from '@pages/filter/refiner/components/middle-column/components/divider-horizontal'
 import { ICompoundRequestScenarioProps } from '../compound-request.interface'
 import { getSelectedValue } from '../compound-request.utils'
 
@@ -28,7 +27,7 @@ export const CompoundRequestScenario = ({
     <>
       <div
         className={cn(
-          'flex items-center justify-between w-full text-14 py-2 first:pt-0',
+          'flex items-center justify-between w-full text-14 py-2 px-2 my-0.5 border border-grey-light rounded-md',
           className,
         )}
         onClick={() => {
@@ -39,6 +38,7 @@ export const CompoundRequestScenario = ({
           <span className="mb-1 items-center">
             {t('funcCondition.scenario')}
           </span>
+
           <InputNumber
             value={requestItem[0]}
             onChange={e =>
@@ -50,13 +50,13 @@ export const CompoundRequestScenario = ({
 
         <div className="flex flex-1 justify-between ml-8">
           {problemGroups.map((group: string, groupIndex: number) => {
-            const value = getSelectedValue(
+            const value = getSelectedValue({
               group,
               requestIndex,
               requestCondition,
-            )
+            })
             return (
-              <div className="flex flex-col items-center" key={group}>
+              <div className="flex flex-col items-start" key={group}>
                 <span>{group}</span>
 
                 <Select
@@ -72,12 +72,12 @@ export const CompoundRequestScenario = ({
           })}
         </div>
       </div>
+
       {hasError && (
         <div className="flex items-center my-2 h-3 text-10 text-red-secondary">
           {t('dtree.minimalCountsOfEventsOnCompoundRequest')}
         </div>
       )}
-      <DividerHorizontal className="last:hidden mb-0 mt-0" />
     </>
   )
 }

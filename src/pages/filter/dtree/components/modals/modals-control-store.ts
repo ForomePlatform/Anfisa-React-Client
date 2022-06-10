@@ -63,10 +63,6 @@ class ModalsControlStore {
       ? toJS(dtreeStore.stat.getAttributeStatusByName(this.groupName))
       : undefined
   }
-
-  public openModalJoin(): void {
-    modalsVisibilityStore.openModalJoin()
-  }
 }
 
 export default new ModalsControlStore()

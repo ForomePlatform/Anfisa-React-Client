@@ -2,9 +2,10 @@ import { ReactElement } from 'react'
 import cn from 'classnames'
 
 import { approxOptions } from '@core/approxOptions'
+import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { getScenarioValue } from '@pages/filter/refiner/components/right-column/func-filter/utils/get-scenario-value'
 import { ICompoundRequestArgs } from '@service-providers/common/common.interface'
-import { refinerFunctionsStore } from '../../../attributes/refiner-functions.store'
+import { getDefaultProblemGroups } from '../utils/get-default-problem-groups'
 
 interface ICompoundRequestViewProps {
   isFilterActive: boolean
@@ -16,7 +17,9 @@ export const CompoundRequestView = ({
   isFilterActive,
   filterExpression,
 }: ICompoundRequestViewProps): ReactElement => {
-  const { problemGroups } = refinerFunctionsStore
+  const problemGroups = getDefaultProblemGroups(
+    FuncStepTypesEnum.CompoundRequest,
+  )
   const approx: string = filterExpression['approx'] || approxOptions[2]
   const state: string = filterExpression['state'] || 'current'
   const request = filterExpression['request']

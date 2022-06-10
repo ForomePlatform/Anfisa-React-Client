@@ -27,7 +27,7 @@ export const InheritanceModeSelect: FC<IInheritanceModeSelectProp> = ({
       </span>
     </div>
 
-    <div className="flex flex-col">
+    <div className="flex flex-col pl-2">
       {resetOptions.map(option => (
         <Checkbox
           key={option}

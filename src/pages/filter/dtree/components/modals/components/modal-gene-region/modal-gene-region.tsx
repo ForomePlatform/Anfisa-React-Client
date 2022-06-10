@@ -83,7 +83,7 @@ export const ModalGeneRegion = observer((): ReactElement => {
         <SelectModalButtons
           handleClose={() => modalGeneRegionStore.closeModal()}
           handleModals={() => modalGeneRegionStore.openModalAttribute()}
-          handleModalJoin={() => modalsControlStore.openModalJoin()}
+          handleModalJoin={modalsVisibilityStore.openModalJoin}
           handleAddAttribute={handleAddAttribute}
           disabled={!!error}
           currentGroup={currentGroupToModify ?? currentStepGroups}

@@ -78,13 +78,13 @@ export const CompoundRequestCondition = observer(
     ) => {
       const clonedRequestCondition = [...requestCondition]
 
-      const newRequestCondition = getNewRequestCondition(
+      const newRequestCondition = getNewRequestCondition({
         clonedRequestCondition,
         requestBlockIndex,
         value,
         problemGroups,
         selectIndex,
-      )
+      })
 
       setRequestCondition(newRequestCondition)
       setPreparedScenarioName('')
@@ -147,6 +147,11 @@ export const CompoundRequestCondition = observer(
       }
     }
 
+    const onChangeApprox = (approx: ApproxNameTypes) => {
+      setApprox(approx)
+      onTouch?.()
+    }
+
     useEffect(() => {
       statFuncStore.setQuery({
         unit: FuncStepTypesEnum.CompoundRequest,
@@ -165,7 +170,7 @@ export const CompoundRequestCondition = observer(
 
     return (
       <>
-        <AprroxAndState approx={approx} setApprox={setApprox} />
+        <AprroxAndState approx={approx} onChangeApprox={onChangeApprox} />
 
         <DividerHorizontal />
 

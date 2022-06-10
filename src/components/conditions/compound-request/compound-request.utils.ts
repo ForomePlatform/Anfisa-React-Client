@@ -1,14 +1,17 @@
-import { IScenario } from '@service-providers/common'
+import { IScenario, TRequestCondition } from '@service-providers/common'
 import { getSelectValues } from '../utils/conditions.utils'
-import { TRequestCondition } from './../../../service-providers/common/common.interface'
+import {
+  IGetNewRequestConditionProps,
+  IGetSelectedValueProps,
+} from './compound-request.interface'
 
-export const getNewRequestCondition = (
-  clonedRequestCondition: TRequestCondition[],
-  requestBlockIndex: number,
-  value: string,
-  problemGroups: string[],
-  selectIndex: number,
-) => {
+export const getNewRequestCondition = ({
+  clonedRequestCondition,
+  requestBlockIndex,
+  value,
+  problemGroups,
+  selectIndex,
+}: IGetNewRequestConditionProps) => {
   const newScenario: IScenario = {}
 
   const selectedScenario = clonedRequestCondition[requestBlockIndex][1]
@@ -43,14 +46,14 @@ export const getFilteredRequestCondition = (
   )
 }
 
-export const getSelectedValue = (
-  group: string,
-  index: number,
-  requestCondition: TRequestCondition[],
-): string => {
+export const getSelectedValue = ({
+  group,
+  requestIndex,
+  requestCondition,
+}: IGetSelectedValueProps): string => {
   let value = '--'
 
-  const currentRequestBlock = requestCondition[index][1]
+  const currentRequestBlock = requestCondition[requestIndex][1]
 
   Object.entries(currentRequestBlock).find((item: any[]) => {
     if (item[1].includes(group)) {

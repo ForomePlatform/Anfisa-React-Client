@@ -11,7 +11,7 @@ export const InheritanceModeProblemGroups = ({
   selectedPropblemGroups,
   handleReset,
 }: IInheritanceModeProblemGroupsProps): ReactElement => (
-  <div className="flex items-center justify-between w-full mt-4 text-14">
+  <div className="flex items-center justify-between w-full text-14">
     <div>{t('funcCondition.problemGroup')}</div>
 
     {problemGroups?.map((problemGroup: string) => (

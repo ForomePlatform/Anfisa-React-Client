@@ -7,13 +7,13 @@ import { TRequestCondition } from '@service-providers/common'
 
 export const RequestConditions = observer(
   (props: IRequestConditionsProps): ReactElement => (
-    <div className="flex flex-col w-full text-14 mb-4">
+    <div className="flex flex-col w-full text-14 mb-4 overflow-y-auto">
       {props.requestCondition.map((item: TRequestCondition, index: number) => (
         <CompoundRequestScenario
           requestItem={item}
           key={index}
           requestIndex={index}
-          className={props.activeRequestIndex === index && 'bg-blue-light'}
+          className={props.activeRequestIndex === index && 'border-blue-active'}
           {...props}
         />
       ))}

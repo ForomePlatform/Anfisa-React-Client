@@ -90,7 +90,7 @@ export const ModalCompoundHet = observer((): ReactElement => {
         <SelectModalButtons
           handleClose={() => modalCompoundHetStore.closeModal()}
           handleModals={() => modalCompoundHetStore.openModalAttribute()}
-          handleModalJoin={() => modalsControlStore.openModalJoin()}
+          handleModalJoin={modalsVisibilityStore.openModalJoin}
           disabled={!variants}
           currentGroup={currentGroupToModify ?? currentStepGroups}
           handleAddAttribute={handleAddAttribute}

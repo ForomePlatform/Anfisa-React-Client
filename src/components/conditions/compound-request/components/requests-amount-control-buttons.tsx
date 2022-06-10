@@ -1,5 +1,4 @@
 import { ReactElement } from 'react'
-import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { RequestBlockOperations } from '@core/enum/request-block-operations'
@@ -24,20 +23,6 @@ export const RequestsAmountControlButtons = observer(
       <Button
         onClick={() => {
           handleChangeRequestsAmount(
-            RequestBlockOperations.Add,
-            activeRequestIndex,
-          )
-          onTouch?.()
-        }}
-        text="Add"
-        variant="secondary"
-        className={cn('mr-4')}
-        disabled={requestCondition.length === 5}
-      />
-
-      <Button
-        onClick={() => {
-          handleChangeRequestsAmount(
             RequestBlockOperations.Remove,
             activeRequestIndex,
           )
@@ -46,6 +31,20 @@ export const RequestsAmountControlButtons = observer(
         text="Remove"
         variant="diestruction"
         disabled={requestCondition.length === 1}
+      />
+
+      <Button
+        onClick={() => {
+          handleChangeRequestsAmount(
+            RequestBlockOperations.Add,
+            activeRequestIndex,
+          )
+          onTouch?.()
+        }}
+        text="Add"
+        variant="secondary"
+        className="ml-2"
+        disabled={requestCondition.length === 5}
       />
     </div>
   ),

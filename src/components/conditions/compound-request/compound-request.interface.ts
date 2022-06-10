@@ -28,22 +28,10 @@ export interface ICompoundRequestProps {
   controls?: (props: IControlProps) => ReactElement | null
 }
 
-export interface ICompoundRequestScenarioProps {
+export interface ICompoundRequestScenarioProps extends IRequestConditionsProps {
   className: Argument
   requestItem: TRequestCondition
-  requestCondition: TRequestCondition[]
-  problemGroups: string[]
   requestIndex: number
-  onChangeRequestConditionNumber: (
-    requestBlockIndex: number,
-    value: number,
-  ) => void
-  onChangeScenario: (
-    requestBlockIndex: number,
-    value: string,
-    selectIndex: number,
-  ) => void
-  handleSetActiveRequestCondition: (requestBlockNumer: number) => void
 }
 
 export interface IRequestConditionsProps {
@@ -60,4 +48,18 @@ export interface IRequestConditionsProps {
     selectIndex: number,
   ) => void
   handleSetActiveRequestCondition: (requestBlockNumer: number) => void
+}
+
+export interface IGetSelectedValueProps {
+  group: string
+  requestIndex: number
+  requestCondition: TRequestCondition[]
+}
+
+export interface IGetNewRequestConditionProps {
+  clonedRequestCondition: TRequestCondition[]
+  requestBlockIndex: number
+  value: string
+  problemGroups: string[]
+  selectIndex: number
 }
