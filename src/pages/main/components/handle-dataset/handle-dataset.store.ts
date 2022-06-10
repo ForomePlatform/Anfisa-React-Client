@@ -6,6 +6,7 @@ import datasetStore from '@store/dataset/dataset'
 import dirInfoStore from '@store/dirinfo'
 import operationsProvider from '@service-providers/operations/operations.provider'
 import { downloadFile } from '@utils/download-file/download-file'
+
 class HandleDatasetStore {
   public isImportModalShown = false
   public isExportModalShown = false
@@ -24,7 +25,8 @@ class HandleDatasetStore {
     return (
       (datasetStore.dsInfoData &&
         !Object.keys(datasetStore.dsInfoData).length) ||
-      datasetStore.isXL
+      datasetStore.isXL ||
+      !dirInfoStore.selectedDirinfoName
     )
   }
 
