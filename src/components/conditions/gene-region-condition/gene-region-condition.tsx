@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
+import { t } from '@i18n'
 import { GeneRegionInput } from '@components/conditions/gene-region-condition/components/gene-region-input/gene-region-input'
 import { AllNotMods } from '@pages/filter/dtree/components/query-builder/ui/all-not-mods'
 import { DisabledVariants } from '../components/disabled-variants'
@@ -51,7 +52,7 @@ export const GeneRegionCondition = observer(
     return (
       <>
         <span className="text-14 leading-16px text-grey-blue font-medium mb-1">
-          Locus
+          {t('funcCondition.locus')}
         </span>
 
         <GeneRegionInput

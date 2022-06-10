@@ -23,7 +23,7 @@ export const InheritanceModeSelect: FC<IInheritanceModeSelectProp> = ({
         className="text-12 text-blue-bright leading-14px cursor-pointer"
         onClick={() => handleReset('empty')}
       >
-        Reset
+        {t('dtree.reset')}
       </span>
     </div>
 

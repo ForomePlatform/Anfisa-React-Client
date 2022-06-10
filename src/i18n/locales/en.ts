@@ -198,6 +198,7 @@ export const en = {
   },
   funcCondition: {
     scenario: 'Scenario',
+    locus: 'Locus',
     problemGroup: 'Problem group:',
     inheritanceMode: 'Inheritance mode',
   },

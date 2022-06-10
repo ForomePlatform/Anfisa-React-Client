@@ -1,19 +1,13 @@
 import styles from './gene-region-input.module.css'
 
 import { FC } from 'react'
-import cn, { Argument } from 'classnames'
+import cn from 'classnames'
 
-interface IGeneRegionInputProp {
-  value: string
-  handleChange: (e: string) => void
-  error?: string
-  classname?: Argument
-}
+import { IGeneRegionInputProps } from '../../gene-region.interface'
 
-export const GeneRegionInput: FC<IGeneRegionInputProp> = ({
+export const GeneRegionInput: FC<IGeneRegionInputProps> = ({
   value,
   handleChange,
-  error,
   classname,
 }) => (
   <div className={cn(styles.container, classname)}>
@@ -25,7 +19,5 @@ export const GeneRegionInput: FC<IGeneRegionInputProp> = ({
       }}
       className={styles.input}
     />
-
-    {error && <div className={styles.error}>{error}</div>}
   </div>
 )
