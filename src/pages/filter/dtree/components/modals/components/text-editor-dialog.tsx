@@ -50,16 +50,21 @@ export const TextEditorDialog = observer(
     const params = useParams()
     const [checked, setChecked] = useState(true)
 
-    const [code, setCode] = useState(dtreeStore.dtreeCode)
+    const [code, setCode] = useState(
+      dtreeStore.dtreeCode || dtreeStore.localDtreeCode,
+    )
 
     useEffect(() => {
-      if (dtreeStore.localDtreeCode) {
-        setCode(dtreeStore.localDtreeCode)
-        dtreeStore.resetLocalDtreeCode()
-      } else {
-        dtreeStore.setStartDtreeCode()
+      if (isOpen) {
+        if (dtreeStore.localDtreeCode) {
+          setCode(dtreeStore.localDtreeCode)
+          dtreeStore.resetLocalDtreeCode()
+        } else {
+          dtreeStore.setStartDtreeCode()
+          setCode(dtreeStore.dtreeCode)
+        }
       }
-    }, [])
+    }, [isOpen])
 
     const [theme, setTheme] = useState<TEditorTheme>(
       LocalStoreManager.read<TEditorTheme>(TEXT_EDITOR_THEME) || 'light',

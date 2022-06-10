@@ -1,65 +1,32 @@
 import { ReactElement, useEffect, useRef, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 
-import { ActionType } from '@declarations'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import { t } from '@i18n'
-import filterStore from '@store/filter'
 import { Divider } from '@ui/divider'
 import { Switch } from '@ui/switch'
 import { Pagintaion } from '@components/pagintaion'
-import { DtreeAttributeButtons } from '@pages/filter/common/attributes/dtree-attribute-buttons'
-import { RefinerAttributeButtons } from '@pages/filter/common/attributes/refiner-attribute-buttons'
 import { QueryBuilderSearch } from '@pages/filter/dtree/components/query-builder/query-builder-search'
 import { AllNotMods } from '@pages/filter/dtree/components/query-builder/ui/all-not-mods'
-import { AttributeHeader } from '@pages/filter/refiner/components/middle-column/attribute-header'
-import { DividerHorizontal } from '@pages/filter/refiner/components/middle-column/components/divider-horizontal'
 import { SelectedGroupItem } from '@pages/filter/refiner/components/middle-column/selected-group-item'
-import { TCondition, TVariant } from '@service-providers/common'
+import { TVariant } from '@service-providers/common'
+import { IEnumConditionProps } from './enum-condition.interface'
 import { EnumMods } from './enum-mods'
-
-interface IEnumCondition {
-  attributeName: string | undefined
-  enumVariants: TVariant[]
-  attributeSubKind: string | undefined
-  initialEnumVariants: string[] | undefined
-  initialEnumMode: ModeTypes | undefined
-  initialCondition?: TCondition | undefined
-  currentStepGroups?: string[] | undefined
-  isRefiner?: boolean
-  isFilterTouched?: boolean
-  isShowZeroes?: boolean
-  saveEnum: (
-    selectedVariants: string[],
-    mode: ModeTypes | undefined,
-    isRefiner?: boolean,
-  ) => void
-  addEnum?: (
-    action: ActionType,
-    mode: ModeTypes | undefined,
-    selectedVariants: string[],
-  ) => void
-  toggleShowZeroes: (value: boolean) => void
-}
 
 const initialCount = 8
 
 export const EnumCondition = observer(
   ({
-    isRefiner,
     attributeName,
     enumVariants,
     attributeSubKind,
     initialEnumVariants,
     initialEnumMode,
-    isFilterTouched,
-    initialCondition,
-    currentStepGroups,
     isShowZeroes,
-    saveEnum,
-    addEnum,
     toggleShowZeroes,
-  }: IEnumCondition): ReactElement => {
+    onTouch,
+    controls,
+  }: IEnumConditionProps): ReactElement => {
     const ref = useRef<HTMLDivElement>(null)
 
     const [mode, setMode] = useState(initialEnumMode)
@@ -70,8 +37,6 @@ export const EnumCondition = observer(
     const [currentPage, setCurrentPage] = useState(0)
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [variantsPerPage, setVariantsPerPage] = useState<number>(initialCount)
-
-    const isBlockAddBtn = !selectedVariants.length || !isFilterTouched
 
     useEffect(() => {
       setSearchValue('')
@@ -117,7 +82,6 @@ export const EnumCondition = observer(
 
     const handleCheckGroupItem = (checked: boolean, variant: TVariant) => {
       const variantName = variant[0]
-      isRefiner && filterStore.setTouched(true)
 
       if (checked) {
         setSelectedVariants([...selectedVariants, variantName])
@@ -126,6 +90,8 @@ export const EnumCondition = observer(
           selectedVariants.filter(element => element !== variantName),
         )
       }
+
+      onTouch?.()
     }
 
     const handleClear = () => {
@@ -136,7 +102,7 @@ export const EnumCondition = observer(
 
     const toggleMode = (mode: ModeTypes) => {
       setMode(currentMode => (currentMode === mode ? undefined : mode))
-      isRefiner && filterStore.setTouched(true)
+      onTouch?.()
     }
 
     const handleSearchChange = (value: string) => {
@@ -150,7 +116,7 @@ export const EnumCondition = observer(
 
       setSelectedVariants(allVariants)
 
-      isRefiner && filterStore.setTouched(true)
+      onTouch?.()
     }
 
     const clearAllVariants = () => {
@@ -162,18 +128,6 @@ export const EnumCondition = observer(
     const showFinder = enumVariants.length > initialCount
     return (
       <>
-        {isRefiner && (
-          <>
-            <AttributeHeader
-              chosenAttributes={selectedVariants.length}
-              allAttributes={enumVariants.length}
-              attrStatus={filterStore.selectedAttributeStatus!}
-            />
-
-            <DividerHorizontal />
-          </>
-        )}
-
         {showFinder && (
           <QueryBuilderSearch
             value={searchValue}
@@ -189,22 +143,24 @@ export const EnumCondition = observer(
           </div>
 
           <div className="flex items-center">
-            <Switch
-              className="mr-1"
-              isChecked={!!isShowZeroes}
-              onChange={toggleShowZeroes}
+            <div className="flex items-center">
+              <Switch
+                className="mr-1"
+                isChecked={!!isShowZeroes}
+                onChange={toggleShowZeroes}
+              />
+              <span className="text-grey-blue">
+                {t('enumCondition.showZeroVariants')}
+              </span>
+            </div>
+
+            <Divider orientation="vertical" color="light" />
+
+            <EnumMods
+              selectAllVariants={selectAllVariants}
+              clearAllVariants={clearAllVariants}
             />
-            <span className="text-grey-blue">
-              {t('enumCondition.showZeroVariants')}
-            </span>
           </div>
-
-          <Divider orientation="vertical" color="light" />
-
-          <EnumMods
-            selectAllVariants={selectAllVariants}
-            clearAllVariants={clearAllVariants}
-          />
         </div>
 
         <div
@@ -253,24 +209,8 @@ export const EnumCondition = observer(
           />
         )}
 
-        {isRefiner ? (
-          <RefinerAttributeButtons
-            handleClear={handleClear}
-            handleSave={() => saveEnum(selectedVariants, mode, isRefiner)}
-            isBlockAddBtn={isBlockAddBtn}
-            initialEnumVariants={initialEnumVariants}
-          />
-        ) : (
-          <DtreeAttributeButtons
-            initialCondition={initialCondition}
-            handleSave={() => saveEnum(selectedVariants, mode)}
-            selectedVariants={selectedVariants}
-            handleAddAttribute={action =>
-              addEnum && addEnum(action, mode, selectedVariants)
-            }
-            currentStepGroups={currentStepGroups}
-          />
-        )}
+        {controls &&
+          controls({ value: selectedVariants, mode, clearValue: handleClear })}
       </>
     )
   },
