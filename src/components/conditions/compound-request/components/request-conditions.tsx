@@ -6,30 +6,17 @@ import { IRequestConditionsProps } from '@components/conditions/compound-request
 import { TRequestCondition } from '@service-providers/common'
 
 export const RequestConditions = observer(
-  ({
-    problemGroups,
-    activeRequestIndex,
-    requestCondition,
-    onChangeScenario,
-    handleRequestConditionNumber,
-    handleActiveRequest,
-  }: IRequestConditionsProps): ReactElement => {
-    return (
-      <div className="flex flex-col w-full text-14 mb-4">
-        {requestCondition.map((item: TRequestCondition, index: number) => (
-          <CompoundRequestScenario
-            requestItem={item}
-            requestCondition={requestCondition}
-            key={index}
-            requestIndex={index}
-            problemGroups={problemGroups}
-            onChangeScenario={onChangeScenario}
-            handleActiveRequest={handleActiveRequest}
-            handleRequestConditionNumber={handleRequestConditionNumber}
-            className={activeRequestIndex === index && 'bg-blue-light'}
-          />
-        ))}
-      </div>
-    )
-  },
+  (props: IRequestConditionsProps): ReactElement => (
+    <div className="flex flex-col w-full text-14 mb-4">
+      {props.requestCondition.map((item: TRequestCondition, index: number) => (
+        <CompoundRequestScenario
+          requestItem={item}
+          key={index}
+          requestIndex={index}
+          className={props.activeRequestIndex === index && 'bg-blue-light'}
+          {...props}
+        />
+      ))}
+    </div>
+  ),
 )

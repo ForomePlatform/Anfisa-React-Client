@@ -1,6 +1,5 @@
-import { InheritanceModeEnum } from '@core/enum/inheritance-mode-enum'
 import { IScenario } from '@service-providers/common'
-import { getSelectValues } from '../custom-inheritance-mode/custom-inheritance-mode.utils'
+import { getSelectValues } from '../utils/conditions.utils'
 import { TRequestCondition } from './../../../service-providers/common/common.interface'
 
 export const getNewRequestCondition = (
@@ -36,34 +35,28 @@ export const getNewRequestCondition = (
   return clonedRequestCondition
 }
 
-export const getPreparedScenario = (
-  preparedValue: string,
-  problemGroups: string[],
-): IScenario => {
-  let preparedScenario: IScenario = {}
+export const getFilteredRequestCondition = (
+  fullRequestCondition: TRequestCondition[],
+) => {
+  return fullRequestCondition.filter(
+    ([, reqCondition]) => Object.keys(reqCondition).length > 0,
+  )
+}
 
-  switch (preparedValue) {
-    case InheritanceModeEnum.HomozygousRecessive_XLinked:
-      preparedScenario = {
-        '2': [problemGroups[0]],
-        '0-1': [problemGroups[1], problemGroups[2]],
-      }
-      break
+export const getSelectedValue = (
+  group: string,
+  index: number,
+  requestCondition: TRequestCondition[],
+): string => {
+  let value = '--'
 
-    case InheritanceModeEnum.AutosomalDominant:
-      preparedScenario = {
-        '1-2': [problemGroups[0]],
-        '0': [problemGroups[1], problemGroups[2]],
-      }
-      break
+  const currentRequestBlock = requestCondition[index][1]
 
-    case InheritanceModeEnum.Compensational:
-      preparedScenario = {
-        '0': [problemGroups[0]],
-        '1-2': [problemGroups[1], problemGroups[2]],
-      }
-      break
-  }
+  Object.entries(currentRequestBlock).find((item: any[]) => {
+    if (item[1].includes(group)) {
+      value = item[0]
+    }
+  })
 
-  return preparedScenario
+  return value
 }

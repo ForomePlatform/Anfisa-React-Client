@@ -6,14 +6,16 @@ import { ModeTypes } from '@core/enum/mode-types-enum'
 import datasetStore from '@store/dataset/dataset'
 import dtreeStore from '@store/dtree'
 import {
+  getApproxName,
+  getApproxValue,
+} from '@components/conditions/utils/conditions.utils'
+import {
   AttributeKinds,
   ICompoundHetArgs,
   TFuncCondition,
 } from '@service-providers/common/common.interface'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { changeFunctionalStep } from '@utils/changeAttribute/changeFunctionalStep'
-import { getApproxName } from '@utils/getApproxName'
-import { getApproxValue } from '@utils/getApproxValue'
 import { getCurrentModeType } from '@utils/getCurrentModeType'
 import modalsControlStore, { IParams } from '../../modals-control-store'
 import modalsVisibilityStore from '../../modals-visibility-store'

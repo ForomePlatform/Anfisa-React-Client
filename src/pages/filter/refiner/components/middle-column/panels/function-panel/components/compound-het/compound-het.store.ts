@@ -5,11 +5,11 @@ import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import datasetStore from '@store/dataset/dataset'
 import filterStore from '@store/filter'
+import { getApproxValue } from '@components/conditions/utils/conditions.utils'
 import {
   AttributeKinds,
   TFuncCondition,
 } from '@service-providers/common/common.interface'
-import { getApproxValue } from '@utils/getApproxValue'
 import { getConditionJoinMode } from '@utils/getConditionJoinMode'
 import functionPanelStore from '../../function-panel.store'
 class CompoundHetStore {

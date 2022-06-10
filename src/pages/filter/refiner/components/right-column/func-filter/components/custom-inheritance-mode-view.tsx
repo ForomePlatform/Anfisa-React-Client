@@ -1,9 +1,9 @@
 import { ReactElement } from 'react'
 import cn from 'classnames'
 
-import functionPanelStore from '@pages/filter/refiner/components/middle-column/panels/function-panel/function-panel.store'
 import { getScenarioValue } from '@pages/filter/refiner/components/right-column/func-filter/utils/get-scenario-value'
 import { ICustomInheritanceModeArgs } from '@service-providers/common/common.interface'
+import { refinerFunctionsStore } from '../../../attributes/refiner-functions.store'
 
 interface ICustomInheritanceModeViewProps {
   isFilterActive: boolean
@@ -15,7 +15,7 @@ export const CustomInheritanceModeView = ({
   isFilterActive,
   filterExpression,
 }: ICustomInheritanceModeViewProps): ReactElement => {
-  const { problemGroups } = functionPanelStore
+  const { problemGroups } = refinerFunctionsStore
 
   return (
     <div

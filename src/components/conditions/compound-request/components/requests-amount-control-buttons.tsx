@@ -7,15 +7,15 @@ import { Button } from '@ui/button'
 import { TRequestCondition } from '@service-providers/common'
 
 interface IControlButtonsProps {
-  handleRequestBlocksAmount: (type: string, activeRequestIndex: number) => void
   activeRequestIndex: number
-  onTouch?: () => void
   requestCondition: TRequestCondition[]
+  handleChangeRequestsAmount: (type: string, activeRequestIndex: number) => void
+  onTouch?: () => void
 }
 
-export const ControlButtons = observer(
+export const RequestsAmountControlButtons = observer(
   ({
-    handleRequestBlocksAmount,
+    handleChangeRequestsAmount,
     onTouch,
     activeRequestIndex,
     requestCondition,
@@ -23,7 +23,7 @@ export const ControlButtons = observer(
     <div className="flex">
       <Button
         onClick={() => {
-          handleRequestBlocksAmount(
+          handleChangeRequestsAmount(
             RequestBlockOperations.Add,
             activeRequestIndex,
           )
@@ -37,7 +37,7 @@ export const ControlButtons = observer(
 
       <Button
         onClick={() => {
-          handleRequestBlocksAmount(
+          handleChangeRequestsAmount(
             RequestBlockOperations.Remove,
             activeRequestIndex,
           )

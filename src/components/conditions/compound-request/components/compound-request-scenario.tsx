@@ -5,22 +5,25 @@ import { t } from '@i18n'
 import { InputNumber } from '@ui/input-number/input-number'
 import { Select } from '@ui/select'
 import { DividerHorizontal } from '@pages/filter/refiner/components/middle-column/components/divider-horizontal'
-import { getSelectedValue } from '@utils/function-panel/getSelectedValue'
 import { ICompoundRequestScenarioProps } from '../compound-request.interface'
+import { getSelectedValue } from '../compound-request.utils'
 
 const selectOptions = ['--', '0', '0-1', '1', '1-2', '2']
 
 export const CompoundRequestScenario = ({
   className,
   requestItem,
-  requestCondition,
-  problemGroups,
   requestIndex,
-  onChangeScenario,
-  handleRequestConditionNumber,
-  handleActiveRequest,
+  ...props
 }: ICompoundRequestScenarioProps): ReactElement => {
   const hasError = requestItem[0] <= 0
+  const {
+    problemGroups,
+    requestCondition,
+    onChangeScenario,
+    handleSetActiveRequestCondition,
+    onChangeRequestConditionNumber,
+  } = props
   return (
     <>
       <div
@@ -29,7 +32,7 @@ export const CompoundRequestScenario = ({
           className,
         )}
         onClick={() => {
-          handleActiveRequest(requestIndex)
+          handleSetActiveRequestCondition(requestIndex)
         }}
       >
         <div className="flex flex-col leading-16px font-medium text-grey-blue">
@@ -39,7 +42,7 @@ export const CompoundRequestScenario = ({
           <InputNumber
             value={requestItem[0]}
             onChange={e =>
-              handleRequestConditionNumber(requestIndex, +e.target.value)
+              onChangeRequestConditionNumber(requestIndex, +e.target.value)
             }
             className="cursor-pointer w-[60px] h-7"
           />

@@ -5,13 +5,13 @@ import { t } from '@i18n'
 import { Checkbox } from '@ui/checkbox/checkbox'
 
 interface IInheritanceModeSelectProp {
-  resetValue?: string
-  handleReset: (value: string) => void
+  preparedScenarioName?: string
+  handleSetPreparedScenario: (value: string) => void
 }
 
 export const InheritanceModeSelect: FC<IInheritanceModeSelectProp> = ({
-  resetValue,
-  handleReset,
+  preparedScenarioName,
+  handleSetPreparedScenario,
 }) => (
   <>
     <div className="flex justify-between">
@@ -21,7 +21,7 @@ export const InheritanceModeSelect: FC<IInheritanceModeSelectProp> = ({
 
       <span
         className="text-12 text-blue-bright leading-14px cursor-pointer"
-        onClick={() => handleReset('empty')}
+        onClick={() => handleSetPreparedScenario('empty')}
       >
         Reset
       </span>
@@ -32,8 +32,8 @@ export const InheritanceModeSelect: FC<IInheritanceModeSelectProp> = ({
         <Checkbox
           key={option}
           id={option}
-          onChange={() => handleReset(option)}
-          checked={resetValue === option}
+          onChange={() => handleSetPreparedScenario(option)}
+          checked={preparedScenarioName === option}
           className="mb-2 last:mb-0"
         >
           {option}

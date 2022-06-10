@@ -3,19 +3,19 @@ import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
-import { InheritanceModeSelect } from '@pages/filter/dtree/components/query-builder/components/inheritance-mode-select'
+import { InheritanceModeSelect } from '@components/conditions/components/inheritance-mode-select'
 import { AllNotMods } from '@pages/filter/dtree/components/query-builder/ui/all-not-mods'
 import { DividerHorizontal } from '@pages/filter/refiner/components/middle-column/components/divider-horizontal'
 import { IScenario } from '@service-providers/common'
-import { getResetType } from '@utils/getResetType'
 import { DisabledVariants } from '../components/disabled-variants'
+import {
+  getPreparedScenario,
+  getScenarioName,
+  getSelectValues,
+} from '../utils/conditions.utils'
 import { CustomInheritanceModeScenario } from './components/custom-inheritance-mode-scenario'
 import { ICustomInheritanceModeConditionProps } from './custom-inheritance-mode.interface'
-import {
-  getNewScenario,
-  getSelectValues,
-  handleSetComplexScenario,
-} from './custom-inheritance-mode.utils'
+import { getNewScenario } from './custom-inheritance-mode.utils'
 
 export const CustomInheritanceModeCondition = observer(
   ({
@@ -32,7 +32,7 @@ export const CustomInheritanceModeCondition = observer(
 
     const [mode, setMode] = useState<ModeTypes | undefined>(initialMode)
 
-    const [preparedValue, setPreparedValue] = useState<string>('')
+    const [preparedScenarioName, setPreparedScenarioName] = useState<string>('')
 
     const [scenario, setScenario] = useState<IScenario>(initialScenario || {})
 
@@ -44,14 +44,15 @@ export const CustomInheritanceModeCondition = observer(
       onTouch?.()
     }
 
-    const handleSetPreparedValue = (preparedValue: string) => {
-      setPreparedValue(preparedValue)
+    const handleSetPreparedScenario = (preparedScenarioName: string) => {
+      setPreparedScenarioName(preparedScenarioName)
 
-      handleSetComplexScenario({
-        preparedValue,
+      const preparedScenario = getPreparedScenario(
+        preparedScenarioName,
         problemGroups,
-        setScenario,
-      })
+      )
+
+      setScenario(preparedScenario)
 
       onTouch?.()
     }
@@ -64,13 +65,13 @@ export const CustomInheritanceModeCondition = observer(
 
       setScenario(newScenario)
 
-      setPreparedValue('')
+      setPreparedScenarioName('')
 
       onTouch?.()
     }
 
     const handleClearScenario = () => {
-      setPreparedValue('')
+      setPreparedScenarioName('')
       setScenario({})
     }
 
@@ -83,7 +84,7 @@ export const CustomInheritanceModeCondition = observer(
 
     useEffect(() => {
       setSelectValues(getSelectValues(scenario, problemGroups))
-      setPreparedValue(getResetType(scenario))
+      setPreparedScenarioName(getScenarioName(scenario))
     }, [problemGroups, scenario])
 
     return (
@@ -97,8 +98,8 @@ export const CustomInheritanceModeCondition = observer(
         <DividerHorizontal />
 
         <InheritanceModeSelect
-          resetValue={preparedValue}
-          handleReset={handleSetPreparedValue}
+          preparedScenarioName={preparedScenarioName}
+          handleSetPreparedScenario={handleSetPreparedScenario}
         />
 
         <DividerHorizontal />

@@ -25,7 +25,7 @@ export interface ICustomInheritanceModeConditionProps {
   statFuncStore: DtreeStatFuncStore | FilterStatFuncStore
 }
 export interface IHandleSetComplexScenarioProps {
-  preparedValue: string
+  preparedScenarioName: string
   problemGroups: string[]
   setScenario: (scenario: IScenario) => void
 }

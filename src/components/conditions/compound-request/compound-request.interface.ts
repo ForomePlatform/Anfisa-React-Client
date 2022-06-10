@@ -34,7 +34,7 @@ export interface ICompoundRequestScenarioProps {
   requestCondition: TRequestCondition[]
   problemGroups: string[]
   requestIndex: number
-  handleRequestConditionNumber: (
+  onChangeRequestConditionNumber: (
     requestBlockIndex: number,
     value: number,
   ) => void
@@ -43,14 +43,14 @@ export interface ICompoundRequestScenarioProps {
     value: string,
     selectIndex: number,
   ) => void
-  handleActiveRequest: (requestBlockNumer: number) => void
+  handleSetActiveRequestCondition: (requestBlockNumer: number) => void
 }
 
 export interface IRequestConditionsProps {
   problemGroups: string[]
   requestCondition: TRequestCondition[]
   activeRequestIndex: number
-  handleRequestConditionNumber: (
+  onChangeRequestConditionNumber: (
     requestBlockIndex: number,
     value: number,
   ) => void
@@ -59,5 +59,5 @@ export interface IRequestConditionsProps {
     value: string,
     selectIndex: number,
   ) => void
-  handleActiveRequest: (requestBlockNumer: number) => void
+  handleSetActiveRequestCondition: (requestBlockNumer: number) => void
 }
