@@ -30,10 +30,6 @@ class FunctionPanelStore {
   public submitConditions(condition: TFuncCondition): void {
     filterStore.saveCurrentCondition(condition)
   }
-
-  public fetchStatFunc(componentName: string, params: string) {
-    return filterStore.fetchStatFuncAsync(componentName, params)
-  }
 }
 
 export default new FunctionPanelStore()

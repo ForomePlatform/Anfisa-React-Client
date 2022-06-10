@@ -6,7 +6,7 @@ import cn, { Argument } from 'classnames'
 interface IGeneRegionInputProp {
   value: string
   handleChange: (e: string) => void
-  error: string
+  error?: string
   classname?: Argument
 }
 
@@ -15,19 +15,17 @@ export const GeneRegionInput: FC<IGeneRegionInputProp> = ({
   handleChange,
   error,
   classname,
-}) => {
-  return (
-    <div className={cn(styles.container, classname)}>
-      <input
-        type="text"
-        value={value}
-        onChange={e => {
-          handleChange(e.target.value)
-        }}
-        className={styles.input}
-      />
+}) => (
+  <div className={cn(styles.container, classname)}>
+    <input
+      type="text"
+      value={value}
+      onChange={e => {
+        handleChange(e.target.value)
+      }}
+      className={styles.input}
+    />
 
-      {error && <div className={styles.error}>{error}</div>}
-    </div>
-  )
-}
+    {error && <div className={styles.error}>{error}</div>}
+  </div>
+)
