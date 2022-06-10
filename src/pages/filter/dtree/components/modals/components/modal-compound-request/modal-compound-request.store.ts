@@ -3,7 +3,6 @@ import { makeAutoObservable } from 'mobx'
 
 import { ActionType } from '@declarations'
 import { ApproxNameTypes } from '@core/enum/approxNameTypes'
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import datasetStore from '@store/dataset/dataset'
@@ -12,6 +11,7 @@ import modalsControlStore, {
   IParams,
 } from '@pages/filter/dtree/components/modals/modals-control-store'
 import {
+  AttributeKinds,
   ICompoundRequestArgs,
   TRequestCondition,
 } from '@service-providers/common'
@@ -214,19 +214,19 @@ class ModalCompoundRequestStore {
   // final functions to add/save filter
 
   public addAttribute(action: ActionType): void {
-    const params: IParams = {
+    const param: IParams = {
       approx: datasetStore.isXL ? null : getApproxValue(this.approx),
     }
 
-    params.request = this.requestCondition
+    param.request = this.requestCondition
 
-    addAttributeToStep(
+    addAttributeToStep({
       action,
-      FilterKindEnum.Func,
-      null,
-      params,
-      this.currentMode,
-    )
+      attributeType: AttributeKinds.FUNC,
+      filters: ['True'],
+      param,
+      mode: this.currentMode,
+    })
 
     dtreeStore.resetSelectedFilters()
 

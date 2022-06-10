@@ -3,11 +3,8 @@ import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 
-import dtreeStore from '@store/dtree'
+import stepStore, { ActiveStepOptions } from '@store/dtree/step.store'
 import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
-import activeStepStore, {
-  ActiveStepOptions,
-} from '@pages/filter/dtree/components/active-step.store'
 import { NextStepContent } from './next-step-content'
 import { NextStepHeader } from './next-step-header'
 import { NextStepRoute } from './next-step-route'
@@ -49,8 +46,8 @@ export const NextStep = observer(
       setIsExpanded(prev => !prev)
     }
 
-    const currentStep = dtreeStore.filteredStepData[index]
-    const stepNo = dtreeStore.filteredStepData[index].step
+    const currentStep = stepStore.filteredSteps[index]
+    const stepNo = currentStep.step
 
     const setStepActive = (event: any) => {
       const classList = Array.from(event.target.classList)
@@ -58,10 +55,7 @@ export const NextStep = observer(
       const shouldMakeActive = classList.includes('step-content-area')
 
       if (shouldMakeActive) {
-        activeStepStore.makeStepActive(
-          stepNo - 1,
-          ActiveStepOptions.StartedVariants,
-        )
+        stepStore.makeStepActive(stepNo - 1, ActiveStepOptions.StartedVariants)
       }
     }
 
@@ -81,7 +75,7 @@ export const NextStep = observer(
               isExpanded={isExpanded}
               index={index}
               stepNo={stepNo}
-              isIncluded={!dtreeStore.filteredStepData[index].excluded}
+              isIncluded={!currentStep.excluded}
             />
           </TreeView>
 
@@ -96,7 +90,7 @@ export const NextStep = observer(
               isExpanded={isExpanded}
               expandContent={expandContent}
               index={index}
-              isExcluded={dtreeStore.filteredStepData[index].excluded}
+              isExcluded={currentStep.excluded}
             />
 
             {isExpanded && <NextStepContent index={index} stepNo={stepNo} />}

@@ -2,11 +2,13 @@ import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { Dialog } from '@ui/dialog'
-import { NumericCondition } from '@components/numeric-condition'
+import { NumericCondition } from '@components/conditions/numeric-condition'
 import { EditModalButtons } from '@pages/filter/dtree/components/modals/components/ui/edit-modal-buttons'
+import { AttributeKinds } from '@service-providers/common'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { changeNumericAttribute } from '@utils/changeAttribute/changeNumericAttribute'
 import { dtreeAttributeStore } from '../../../attributes/dtree-attributes.store'
+import modalsControlStore from '../../modals-control-store'
 import modalsVisibilityStore from '../../modals-visibility-store'
 import { SelectModalButtons } from '../ui/select-modal-buttons'
 
@@ -16,8 +18,9 @@ export const NumericDialog = observer((): ReactElement | null => {
     initialCondition,
     initialNumericValue,
     attributeName,
-    currentStepGroups,
   } = dtreeAttributeStore
+
+  const { currentStepGroups } = modalsControlStore
 
   if (!attributeStatus || attributeStatus.kind !== 'numeric') {
     return null
@@ -63,7 +66,11 @@ export const NumericDialog = observer((): ReactElement | null => {
               handleModals={handleModals}
               disabled={disabled}
               handleAddAttribute={action => {
-                addAttributeToStep(action, 'numeric', value)
+                addAttributeToStep({
+                  action,
+                  attributeType: AttributeKinds.NUMERIC,
+                  filters: value,
+                })
                 modalsVisibilityStore.closeNumericDialog()
               }}
             />

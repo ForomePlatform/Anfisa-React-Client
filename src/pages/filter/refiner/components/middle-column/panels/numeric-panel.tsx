@@ -4,14 +4,16 @@ import { observer } from 'mobx-react-lite'
 import { t } from '@i18n'
 import filterStore from '@store/filter'
 import { Button } from '@ui/button'
-import { NumericCondition } from '@components/numeric-condition'
+import { NumericCondition } from '@components/conditions/numeric-condition'
 import { AttributeHeader } from '@pages/filter/refiner/components/middle-column/attribute-header'
 import { DividerHorizontal } from '@pages/filter/refiner/components/middle-column/components/divider-horizontal'
 import { AttributeKinds } from '@service-providers/common/common.interface'
 import { refinerAttributeStore } from '../../attributes/refiner-attributes.store'
+import { savePanelAttribute } from './utils/save-pannel-attribute'
 
 export const NumericPanel = observer((): ReactElement | null => {
-  const { initialNumericValue, attributeStatus } = refinerAttributeStore
+  const { initialNumericValue, attributeStatus, attributeName } =
+    refinerAttributeStore
 
   const { selectedAttributeStatus, isFilterTouched } = filterStore
 
@@ -49,7 +51,13 @@ export const NumericPanel = observer((): ReactElement | null => {
                     ? t('dtree.saveChanges')
                     : t('dtree.addAttribute')
                 }
-                onClick={() => refinerAttributeStore.saveNumeric(value)}
+                onClick={() =>
+                  savePanelAttribute({
+                    filterKind: AttributeKinds.NUMERIC,
+                    attributeName,
+                    value,
+                  })
+                }
                 disabled={disabled || !isFilterTouched}
               />
             </div>

@@ -2,8 +2,9 @@ import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { Dialog } from '@ui/dialog'
-import { EnumCondition } from '@components/enum-condition/enum-condition'
+import { EnumCondition } from '@components/conditions/enum-condition/enum-condition'
 import { dtreeAttributeStore } from '../../../attributes/dtree-attributes.store'
+import modalsControlStore from '../../modals-control-store'
 import modalsVisibilityStore from '../../modals-visibility-store'
 
 export const EnumDialog = observer((): ReactElement => {
@@ -14,8 +15,9 @@ export const EnumDialog = observer((): ReactElement => {
     initialEnumVariants,
     initialEnumMode,
     initialCondition,
-    currentStepGroups,
   } = dtreeAttributeStore
+
+  const { currentStepGroups } = modalsControlStore
 
   return (
     <Dialog

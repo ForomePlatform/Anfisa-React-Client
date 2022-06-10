@@ -2,9 +2,9 @@ import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { theme } from '@theme'
 import {
+  AttributeKinds,
   ConditionJoinMode,
   TCondition,
   TNumericConditionBounds,
@@ -31,7 +31,7 @@ const AllModeWrapper = styled.div`
 
 interface IContentItemValuesProps {
   currentGroup: TCondition
-  stepType: FilterKindEnum
+  stepType: AttributeKinds
   groupName: string
   conditionValue: string[] | TNumericConditionBounds
   expanded: boolean
@@ -50,13 +50,13 @@ export const ContentItemValues = observer(
     setExpandOnClick,
   }: IContentItemValuesProps): ReactElement => {
     const isStepNonNumericAndValid: boolean =
-      stepType !== FilterKindEnum.Numeric && stepType !== FilterKindEnum.Error
+      stepType !== AttributeKinds.NUMERIC && stepType !== AttributeKinds.ERROR
 
     const isNotMode = currentGroup[2] === ConditionJoinMode.NOT
     const isAllMode = currentGroup[2] === ConditionJoinMode.AND
 
     const getButtonMessage = () => {
-      if (stepType === FilterKindEnum.Numeric) return ''
+      if (stepType === AttributeKinds.NUMERIC) return ''
 
       const size = conditionValue.length - LIMIT_SIZE
 
@@ -77,8 +77,8 @@ export const ContentItemValues = observer(
           </AllModeWrapper>
         )}
 
-        <div className="flex flex-col text-14 font-normal h-full flex-wrap mt-1">
-          {stepType === FilterKindEnum.Numeric &&
+        <div className="flex flex-col text-14 font-normal h-full flex-wrap mt-1 pl-1">
+          {stepType === AttributeKinds.NUMERIC &&
             getNumericExpression(conditionValue, groupName)}
 
           {isStepNonNumericAndValid &&

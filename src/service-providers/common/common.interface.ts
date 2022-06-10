@@ -1,5 +1,4 @@
 import { ApproxValueTypes } from '@core/enum/approxValueTypes'
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 
 export enum DatasetKinds {
   WS = 'ws',
@@ -22,7 +21,7 @@ export type TNumericConditionBounds = [
 ]
 
 export type TNumericCondition = [
-  conditionType: FilterKindEnum.Numeric | FilterKindEnum.Error,
+  conditionType: AttributeKinds.NUMERIC | AttributeKinds.ERROR,
   propertyName: string,
   bounds: TNumericConditionBounds,
 ]
@@ -39,12 +38,15 @@ export type TSelectValues = {
   [key: string]: string[]
 }
 
+export interface IScenario {
+  [key: string]: string[]
+}
+
 export interface IInheritanceModeArgs {
   problem_group: string[]
 }
-
 export interface ICustomInheritanceModeArgs {
-  scenario: [string, string[] | string]
+  scenario: IScenario
 }
 
 export interface ICompoundHetArgs {
@@ -62,7 +64,7 @@ export interface IGeneRegionArgs {
 }
 
 export type TEnumCondition = [
-  conditionType: FilterKindEnum.Enum | FilterKindEnum.Error,
+  conditionType: AttributeKinds.ENUM | AttributeKinds.ERROR,
   propertyName: string,
   joinMode: ConditionJoinMode,
   valueVariants: string[],
@@ -76,7 +78,7 @@ export type TFuncArgs =
   | IGeneRegionArgs
 
 export type TFuncCondition = [
-  conditionType: FilterKindEnum.Func | FilterKindEnum.Error,
+  conditionType: AttributeKinds.FUNC | AttributeKinds.ERROR,
   propertyName: string,
   joinMode: ConditionJoinMode,
   valueVariants: string[],
@@ -108,6 +110,7 @@ export enum AttributeKinds {
   NUMERIC = 'numeric',
   ENUM = 'enum',
   FUNC = 'func',
+  ERROR = 'error',
 }
 
 export enum AttributeChartRenderModes {
@@ -188,6 +191,11 @@ export type TPropertyStatus =
   | IEnumPropertyStatus
   | IFuncPropertyStatus
 
+export type TNonFuncPropertyStatus = Exclude<
+  TPropertyStatus,
+  IFuncPropertyStatus
+>
+
 export type TDocumentDescriptor = [
   documentName: string,
   pathToDocument: string[][],
@@ -197,10 +205,10 @@ export type TDocumentDescriptor = [
 export interface IBaseDatasetDescriptor {
   name: string
   kind: 'ws' | 'xl'
-  createTime: TDateISOString
-  updTime: null | TDateISOString
+  'create-time': TDateISOString
+  'upd-time': null | TDateISOString
   note: null | string
-  dateNote: null | TDateISOString
+  'date-note': null | TDateISOString
   total: number
   doc: TDocumentDescriptor
   ancestors: [
@@ -253,7 +261,8 @@ export type TFilteringStatCounts = {
 }
 
 export type TFilteringStat = {
-  list: TPropertyStatus[]
+  units: TPropertyStatus[]
+  functionalUnits: IFuncPropertyStatus[]
   filteredCounts: TFilteringStatCounts
   totalCounts: TFilteringStatCounts
 }

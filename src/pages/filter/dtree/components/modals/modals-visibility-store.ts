@@ -19,9 +19,6 @@ class ModalsVisibilityStore {
   isEnumDialogVisible = false
   isNumericDialogVisible = false
 
-  isModalViewVariantsVisible = false
-  tableModalIndexNumber: null | number = null
-
   constructor() {
     makeAutoObservable(this)
   }
@@ -86,7 +83,7 @@ class ModalsVisibilityStore {
     this.groupIndexToChange = groupIndex ?? -1
   }
 
-  public closeModalInheritanceMode() {
+  public closeModalInheritanceMode = () => {
     this.isModalInheritanceModeVisible = false
   }
 
@@ -101,7 +98,7 @@ class ModalsVisibilityStore {
     this.groupIndexToChange = groupIndex ?? -1
   }
 
-  public closeModalCustomInheritanceMode() {
+  public closeModalCustomInheritanceMode = () => {
     this.isModalCustomInheritanceModeVisible = false
   }
 
@@ -159,19 +156,6 @@ class ModalsVisibilityStore {
 
   public closeModalGeneRegion() {
     this.isModalGeneRegionVisible = false
-  }
-
-  // 5 Common UI/UX modals
-
-  openModalViewVariants(index?: number) {
-    this.isModalViewVariantsVisible = true
-
-    if (index) this.tableModalIndexNumber = index
-  }
-
-  closeModalViewVariants = () => {
-    this.isModalViewVariantsVisible = false
-    this.tableModalIndexNumber = null
   }
 }
 

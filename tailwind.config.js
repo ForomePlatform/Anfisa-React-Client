@@ -19,6 +19,7 @@ module.exports = {
         12: '12px',
         16: '16px',
         20: '20px',
+        24: '24px',
         28: '28px',
       },
       fontSize: {
@@ -34,6 +35,9 @@ module.exports = {
       },
       backgroundOpacity: {
         2: '0.02',
+      },
+      flex: {
+        'stretch-fill': '1 0 1px',
       },
     },
     colors: {

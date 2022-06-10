@@ -1,7 +1,7 @@
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import datasetStore from '@store/dataset/dataset'
 import dtreeStore from '@store/dtree'
-import activeStepStore from '@pages/filter/dtree/components/active-step.store'
+import stepStore from '@store/dtree/step.store'
 import modalsControlStore from '@pages/filter/dtree/components/modals/modals-control-store'
 import {
   ActionTypes,
@@ -9,6 +9,8 @@ import {
 } from '@service-providers/decision-trees'
 import { getConditionJoinMode } from '@utils/getConditionJoinMode'
 import modalsVisibilityStore from '../../pages/filter/dtree/components/modals/modals-visibility-store'
+
+// TODO: remove when all func attrs is unified
 
 export const changeFunctionalStep = (
   params: any,
@@ -19,10 +21,11 @@ export const changeFunctionalStep = (
 
   const { groupIndexToChange } = modalsVisibilityStore
   const { location } = modalsControlStore
-  const { activeStepIndex } = activeStepStore
+  const { activeStepIndex } = stepStore
 
+  // TODO: add type
   const attribute: any[] =
-    dtreeStore.stepData[activeStepIndex].groups[groupIndexToChange]
+    stepStore.steps[activeStepIndex].groups[groupIndexToChange]
 
   const filteredAttribute: any[] = []
 

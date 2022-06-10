@@ -7,11 +7,9 @@ import styled from 'styled-components'
 import { t } from '@i18n'
 import { theme } from '@theme'
 import dtreeStore from '@store/dtree'
+import stepStore, { ActiveStepOptions } from '@store/dtree/step.store'
 import { Icon } from '@ui/icon'
 import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
-import activeStepStore, {
-  ActiveStepOptions,
-} from '@pages/filter/dtree/components/active-step.store'
 import { StepCount } from '@pages/filter/dtree/components/query-builder/ui/step-count'
 
 const StartAmount = styled.div`
@@ -89,7 +87,7 @@ export const NextStepRoute = observer(
     isIncluded,
   }: INextStepRouteProps): ReactElement => {
     const isXl = dtreeStore.isXl
-    const currentStep = dtreeStore.filteredStepData[index]
+    const currentStep = stepStore.filteredSteps[index]
     const { conditionPointIndex, returnPointIndex } = currentStep
     const conditionCounts =
       conditionPointIndex !== null
@@ -100,7 +98,7 @@ export const NextStepRoute = observer(
         ? dtreeStore.pointCounts[returnPointIndex]
         : null
 
-    const isFinalStep = index === dtreeStore.stepData.length - 1
+    const isFinalStep = index === stepStore.steps.length - 1
     const isDifferenceActive = currentStep.isReturnedVariantsActive
     const shouldTooltipAppear = Boolean(returnCounts?.[0])
 
@@ -149,7 +147,7 @@ export const NextStepRoute = observer(
                     <ExcludeAmount
                       isIncluded={isIncluded}
                       onClick={() =>
-                        activeStepStore.makeStepActive(
+                        stepStore.makeStepActive(
                           stepNo - 1,
                           ActiveStepOptions.ReturnedVariants,
                         )

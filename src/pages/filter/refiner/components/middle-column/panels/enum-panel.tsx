@@ -2,7 +2,7 @@ import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import filterStore from '@store/filter'
-import { EnumCondition } from '@components/enum-condition/enum-condition'
+import { EnumCondition } from '@components/conditions/enum-condition/enum-condition'
 import { refinerAttributeStore } from '../../attributes/refiner-attributes.store'
 
 export const EnumPanel = observer((): ReactElement => {

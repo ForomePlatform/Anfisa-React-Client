@@ -13,17 +13,17 @@ import filterStore from '@store/filter'
 import { Routes } from '@router/routes.enum'
 import { Button } from '@ui/button'
 import { Loader } from '@components/loader'
-import modalsVisibilityStore from '@pages/filter/dtree/components/modals/modals-visibility-store'
 import { FilterRefinerStatCounts } from '@pages/filter/refiner/components/right-column/filter-refiner-stat-counts'
 import { showToast } from '@utils/notifications/showToast'
 import { QueryResults } from './query-results'
 
 interface IQuerySelectedProps {
   className?: string
+  onViewVariants: () => void
 }
 
 export const QuerySelected = observer(
-  ({ className }: IQuerySelectedProps): ReactElement => {
+  ({ className, onViewVariants }: IQuerySelectedProps): ReactElement => {
     const history = useHistory()
     const params = useParams()
 
@@ -77,7 +77,7 @@ export const QuerySelected = observer(
           {datasetStore.isXL ? (
             <Button
               className="ml-auto"
-              onClick={() => modalsVisibilityStore.openModalViewVariants()}
+              onClick={onViewVariants}
               text={t('dtree.viewVariants')}
             />
           ) : (

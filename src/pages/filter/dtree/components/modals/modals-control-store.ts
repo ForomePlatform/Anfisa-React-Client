@@ -1,7 +1,7 @@
 import { makeAutoObservable, toJS } from 'mobx'
 
 import dtreeStore from '@store/dtree'
-import activeStepStore from '@pages/filter/dtree/components/active-step.store'
+import stepStore from '@store/dtree/step.store'
 import {
   AttributeKinds,
   IFuncPropertyStatus,
@@ -25,7 +25,7 @@ class ModalsControlStore {
 
   public get location(): [number, number] {
     const locationIndex = modalsVisibilityStore.groupIndexToChange
-    const { stepIndexForApi } = activeStepStore
+    const { stepIndexForApi } = stepStore
 
     return [+stepIndexForApi, locationIndex]
   }
@@ -43,23 +43,23 @@ class ModalsControlStore {
       return undefined
     }
 
-    return toJS(
-      dtreeStore.stepData[activeStepStore.activeStepIndex]?.groups[
+    const group = toJS(
+      stepStore.steps[stepStore.activeStepIndex]?.groups[
         modalsVisibilityStore.groupIndexToChange
       ],
     )
+
+    const mayBeJoin = group?.[group.length - 2]
+
+    if (mayBeJoin === 'or' || mayBeJoin === 'and') {
+      group.splice(group.length - 2, 1)
+    }
+
+    return group
   }
 
-  public get currentGroupLength(): number {
-    return this.currentGroupToChange?.length ?? 0
-  }
-
-  public get currentStepGroups(): string[] | undefined {
-    return toJS(dtreeStore.stepData[activeStepStore.activeStepIndex]?.groups)
-  }
-
-  public get statList(): TPropertyStatus[] {
-    return dtreeStore.stat.list || []
+  public get currentStepGroups(): string[] {
+    return toJS(stepStore.steps[stepStore.activeStepIndex]?.groups)
   }
 
   get attributeStatusToChange(): TPropertyStatus | undefined {
@@ -80,26 +80,6 @@ class ModalsControlStore {
 
   public get approxModes(): string[][] {
     return this.funcAttributeStatusToChange?.['approx-modes'] ?? []
-  }
-
-  public get approxOptions(): string[] {
-    const approxOptions: string[] = []
-
-    this.approxModes.map((mode: string[]) => {
-      approxOptions.push(mode[1])
-    })
-
-    return approxOptions
-  }
-
-  public get approxValues(): string[] {
-    const approxValues: string[] = []
-
-    this.approxModes.map((mode: string[]) => {
-      approxValues.push(mode[0])
-    })
-
-    return approxValues
   }
 }
 

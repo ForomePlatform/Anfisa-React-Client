@@ -3,10 +3,10 @@ import { observer } from 'mobx-react-lite'
 
 import { ActionType } from '@declarations'
 import { t } from '@i18n'
+import stepStore, { ActiveStepOptions } from '@store/dtree/step.store'
 import { Popover } from '@ui/popover'
 import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-modal.cy'
 import { InstrModifyingActionNames } from '@service-providers/decision-trees'
-import activeStepStore, { ActiveStepOptions } from '../../active-step.store'
 import modalsVisibilityStore from '../modals-visibility-store'
 
 interface IStepJoinPopoverProps {
@@ -24,7 +24,7 @@ export const StepJoinPopover = observer(
     closePopover,
   }: IStepJoinPopoverProps): ReactElement => {
     const isReturnedVariants =
-      activeStepStore.activeStepOption === ActiveStepOptions.ReturnedVariants
+      stepStore.activeStepOption === ActiveStepOptions.ReturnedVariants
 
     const handleJoin = (typeOfJoin: ActionType) => {
       handleAddAttribute(typeOfJoin)

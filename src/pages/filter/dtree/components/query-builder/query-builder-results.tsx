@@ -4,9 +4,9 @@ import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
+import stepStore from '@store/dtree/step.store'
 import { Button } from '@ui/button'
 import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
-import modalsVisibilityStore from '../modals/modals-visibility-store'
 import { QueryBuilderResultsNumbers } from './query-builder-results-numbers'
 
 interface IQueryBuilderResultsProps {
@@ -15,20 +15,20 @@ interface IQueryBuilderResultsProps {
 
 export const QueryBuilderResults = observer(
   ({ className }: IQueryBuilderResultsProps): ReactElement => {
-    const { stepData, isTreeEmpty } = dtreeStore
+    const { isTreeEmpty } = dtreeStore
 
-    const stepIndex = stepData.findIndex(
+    const stepIndex = stepStore.steps.findIndex(
       element => element.isActive || element.isReturnedVariantsActive,
     )
 
-    const currentStep = stepData[stepIndex]
+    const currentStep = stepStore.steps[stepIndex]
 
     const hasReturnedVariants = currentStep?.returnPointIndex != null
     const hasStartVariants = currentStep?.conditionPointIndex != null
     const shouldShowReturnedVariants = hasReturnedVariants && !isTreeEmpty
 
     const openTableModal = (isReturnedVariants = true) => {
-      const hasEmptyStep = stepData.some(element => {
+      const hasEmptyStep = stepStore.steps.some(element => {
         if (!element.isFinalStep) {
           return element.groups.length === 0
         }
@@ -40,8 +40,7 @@ export const QueryBuilderResults = observer(
       const fixedNextStepIndex = hasEmptyStep
         ? nextStepIndex - 1
         : nextStepIndex
-
-      modalsVisibilityStore.openModalViewVariants(fixedNextStepIndex)
+      dtreeStore.openModalViewVariants(fixedNextStepIndex)
     }
 
     return (

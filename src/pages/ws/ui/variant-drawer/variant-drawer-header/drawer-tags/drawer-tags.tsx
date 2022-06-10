@@ -40,8 +40,10 @@ const DrawerTagModal = observer(({ close }: any) => {
     !variantStore.isModalNotesVisible && close()
   })
 
-  const { genes, hg19locus, tags, localCheckedTags, customTag, errorMessage } =
-    drawerTagsStore
+  const {
+    record: { genes, hg19locus },
+  } = variantStore
+  const { tags, localCheckedTags, customTag, errorMessage } = drawerTagsStore
 
   useEffect(() => {
     drawerTagsStore.setLocalCheckedTagList(toJS(variantStore.checkedTags))
@@ -74,7 +76,10 @@ const DrawerTagModal = observer(({ close }: any) => {
         </span>
       </span>
 
-      <div className="mt-4 h-auto overflow-auto" style={{ maxHeight: 300 }}>
+      <div
+        className="mt-4 h-auto overflow-auto flex flex-col"
+        style={{ maxHeight: 300 }}
+      >
         {tags.map((tagName, index) => {
           const checked = localCheckedTags.includes(tagName)
 

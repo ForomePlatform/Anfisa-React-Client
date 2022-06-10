@@ -1,6 +1,8 @@
 import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
+import dtreeStore from '@store/dtree'
+import { ViewVariantsModal } from '@pages/filter/common/view-variants'
 import { ExportDialog } from '@pages/main/components/dialogs/export-dialog'
 import { ImportDialog } from '@pages/main/components/dialogs/import-dialog'
 import { EnumDialog } from './components/enum-dialog/enum-dialog'
@@ -10,7 +12,6 @@ import { ModalCustomInheritanceMode } from './components/modal-custom-inheritanc
 import { ModalGeneRegion } from './components/modal-gene-region/modal-gene-region'
 import { ModalInheritanceMode } from './components/modal-inheritance-mode/modal-inheritance-mode'
 import { ModalSelectAttribute } from './components/modal-select-attribute'
-import { ModalViewVariants } from './components/modal-view-variants'
 import { NumericDialog } from './components/numeric-dialog'
 import modalsVisibilityStore from './modals-visibility-store'
 
@@ -41,9 +42,11 @@ export const ModalsContainer = observer(
 
       {modalsVisibilityStore.isModalGeneRegionVisible && <ModalGeneRegion />}
 
-      {modalsVisibilityStore.isModalViewVariantsVisible && (
-        <ModalViewVariants />
-      )}
+      <ViewVariantsModal
+        query={dtreeStore.variantsModalQuery}
+        isOpen={dtreeStore.isModalViewVariantsVisible}
+        onClose={dtreeStore.closeModalViewVariants}
+      />
 
       <ExportDialog />
 

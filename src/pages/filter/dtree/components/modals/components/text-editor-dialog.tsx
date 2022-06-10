@@ -54,7 +54,6 @@ export const TextEditorDialog = observer(
 
     useEffect(() => {
       if (dtreeStore.localDtreeCode) {
-        dtreeStore.setNextDtreeCode(dtreeStore.localDtreeCode)
         setCode(dtreeStore.localDtreeCode)
         dtreeStore.resetLocalDtreeCode()
       } else {
@@ -115,7 +114,6 @@ export const TextEditorDialog = observer(
     }, 300)
 
     const handleDrop = () => {
-      dtreeStore.setNextDtreeCode(dtreeStore.startDtreeCode)
       handleDtreeCheckAsync(dtreeStore.startDtreeCode)
 
       setCode(dtreeStore.startDtreeCode)
@@ -130,8 +128,6 @@ export const TextEditorDialog = observer(
     }
 
     const handleSave = () => {
-      dtreeStore.setNextDtreeCode(dtreeStore.startDtreeCode)
-
       dtreeStore.fetchDtreeSetAsync({
         ds: datasetStore.datasetName,
         code,

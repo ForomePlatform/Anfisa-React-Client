@@ -1,12 +1,9 @@
-import { makeAutoObservable, toJS } from 'mobx'
+import { makeAutoObservable } from 'mobx'
 
 import { ActionType } from '@declarations'
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
-import dtreeStore from '@store/dtree'
-import filterStore from '@store/filter'
-import activeStepStore from '@pages/filter/dtree/components/active-step.store'
 import modalsVisibilityStore from '@pages/filter/dtree/components/modals/modals-visibility-store'
+import { savePanelAttribute } from '@pages/filter/refiner/components/middle-column/panels/utils/save-pannel-attribute'
 import {
   AttributeKinds,
   TCondition,
@@ -16,9 +13,8 @@ import {
 } from '@service-providers/common'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { changeEnumAttribute } from '@utils/changeAttribute/changeEnumAttribute'
-import { getConditionJoinMode } from '@utils/getConditionJoinMode'
 import { getCurrentModeType } from '@utils/getCurrentModeType'
-interface IBaseAttributeStoreParams {
+export interface IBaseAttributeStoreParams {
   getAttributeStatus: () => TPropertyStatus | undefined
   getInitialCondition: () => TCondition | undefined
 }
@@ -56,7 +52,7 @@ export class BaseAttributeStore {
   }
 
   public get initialEnumVariants(): string[] | undefined {
-    if (this.initialCondition?.[0] === FilterKindEnum.Enum) {
+    if (this.initialCondition?.[0] === AttributeKinds.ENUM) {
       return this.initialCondition[3]
     }
 
@@ -64,15 +60,11 @@ export class BaseAttributeStore {
   }
 
   public get initialEnumMode(): ModeTypes | undefined {
-    if (this.initialCondition?.[0] === FilterKindEnum.Enum) {
+    if (this.initialCondition?.[0] === AttributeKinds.ENUM) {
       return getCurrentModeType(this.initialCondition[2])
     }
 
     return undefined
-  }
-
-  public get currentStepGroups(): string[] | undefined {
-    return toJS(dtreeStore.stepData[activeStepStore.activeStepIndex]?.groups)
   }
 
   public get enumVariants(): TVariant[] {
@@ -108,7 +100,7 @@ export class BaseAttributeStore {
   }
 
   public get initialNumericValue(): TNumericConditionBounds | undefined {
-    if (this.initialCondition?.[0] === FilterKindEnum.Numeric) {
+    if (this.initialCondition?.[0] === AttributeKinds.NUMERIC) {
       return this.initialCondition[2]
     }
 
@@ -124,15 +116,14 @@ export class BaseAttributeStore {
       return
     }
 
+    // TODO: will be fixed after enum condition is fixed
     if (isRefiner) {
-      filterStore.saveCurrentCondition([
-        FilterKindEnum.Enum,
-        this.attributeName,
-        getConditionJoinMode(mode),
+      savePanelAttribute({
+        filterKind: AttributeKinds.ENUM,
+        attributeName: this.attributeName,
+        mode,
         selectedVariants,
-      ])
-
-      filterStore.setTouched(false)
+      })
     } else {
       changeEnumAttribute(mode, selectedVariants)
       modalsVisibilityStore.closeEnumDialog()
@@ -144,29 +135,14 @@ export class BaseAttributeStore {
     mode: ModeTypes | undefined,
     selectedVariants: string[],
   ) => {
-    addAttributeToStep(
+    addAttributeToStep({
       action,
-      FilterKindEnum.Enum,
-      selectedVariants,
-      null,
+      attributeType: AttributeKinds.ENUM,
+      filters: selectedVariants,
       mode,
-    )
+    })
 
     modalsVisibilityStore.closeEnumDialog()
-  }
-
-  public saveNumeric = (value: TNumericConditionBounds) => {
-    if (!this.attributeName) {
-      return
-    }
-
-    filterStore.saveCurrentCondition([
-      FilterKindEnum.Numeric,
-      this.attributeName,
-      value,
-    ])
-
-    filterStore.setTouched(false)
   }
 
   public setIsShowZeroVariants = (value: boolean) => {
