@@ -110,7 +110,6 @@ export class DtreeStore {
   algorithmFilterFullWord = false
   filteredCounts = 0
 
-  isModalSaveDatasetVisible = false
   isModalViewVariantsVisible = false
   tableModalIndexNumber: null | number = null
 
@@ -375,14 +374,6 @@ export class DtreeStore {
   }
 
   // 3.4 Common UI/UX modals
-
-  openModalSaveDataset = () => {
-    this.isModalSaveDatasetVisible = true
-  }
-
-  closeModalSaveDataset() {
-    this.isModalSaveDatasetVisible = false
-  }
 
   openModalViewVariants(index?: number) {
     this.isModalViewVariantsVisible = true

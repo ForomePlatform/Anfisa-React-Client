@@ -6,7 +6,6 @@ import { NumberParam, useQueryParams } from 'use-query-params'
 import { useDatasetName } from '@core/hooks/use-dataset-name'
 import { useParams } from '@core/hooks/use-params'
 import datasetStore from '@store/dataset/dataset'
-import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
 import mainTableStore from '@store/ws/main-table.store'
 import variantStore from '@store/ws/variant'
@@ -15,7 +14,6 @@ import { ExportReportButton } from '@components/export-report-button'
 import { Header } from '@components/header'
 import { PopperButton } from '@components/popper-button'
 import { VariantsCount } from '@components/variants-count'
-import { ModalSaveDataset } from '@pages/filter/dtree/components/modals/components/modal-save-dataset'
 import { TCondition } from '@service-providers/common/common.interface'
 import { ModalNotes } from './ui//table/modal-notes'
 import { ControlPanel } from './ui/control-panel/control-panel'
@@ -66,8 +64,6 @@ export const WSPage = observer((): ReactElement => {
 
   return (
     <>
-      {dtreeStore.isModalSaveDatasetVisible && <ModalSaveDataset />}
-
       {variantStore.isModalNotesVisible && <ModalNotes />}
 
       <div className="h-full flex flex-col">

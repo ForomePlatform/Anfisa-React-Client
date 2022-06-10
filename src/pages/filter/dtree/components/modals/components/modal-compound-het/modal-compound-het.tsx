@@ -77,7 +77,6 @@ export const ModalCompoundHet = observer((): ReactElement => {
               currentGroup={currentStepGroups}
               handleClose={modalsVisibilityStore.closeModalCompoundHet}
               handleModals={handleModals}
-              handleModalJoin={modalsVisibilityStore.openModalJoin}
               disabled={hasErrors}
               handleAddAttribute={action =>
                 handleAddAttribute(action, mode, param)

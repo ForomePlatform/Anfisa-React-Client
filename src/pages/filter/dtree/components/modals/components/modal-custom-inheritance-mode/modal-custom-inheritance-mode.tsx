@@ -28,7 +28,7 @@ export const ModalCustomInheritanceMode = observer((): ReactElement => {
   const { currentStepGroups } = modalsControlStore
 
   const handleModals = () => {
-    modalsVisibilityStore.closeModalInheritanceMode()
+    modalsVisibilityStore.closeModalCustomInheritanceMode()
     modalsVisibilityStore.openModalAttribute()
   }
 
@@ -83,7 +83,6 @@ export const ModalCustomInheritanceMode = observer((): ReactElement => {
                 modalsVisibilityStore.closeModalCustomInheritanceMode
               }
               handleModals={handleModals}
-              handleModalJoin={modalsVisibilityStore.openModalJoin}
               disabled={hasErrors}
               handleAddAttribute={action =>
                 handleAddAttribute(action, mode, param)

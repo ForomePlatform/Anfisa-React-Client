@@ -81,7 +81,6 @@ export const ModalInheritanceMode = observer((): ReactElement => {
               currentGroup={currentStepGroups}
               handleClose={modalsVisibilityStore.closeModalInheritanceMode}
               handleModals={handleModals}
-              handleModalJoin={modalsVisibilityStore.openModalJoin}
               disabled={hasErrors}
               handleAddAttribute={action =>
                 handleAddAttribute(action, values, mode, param)
