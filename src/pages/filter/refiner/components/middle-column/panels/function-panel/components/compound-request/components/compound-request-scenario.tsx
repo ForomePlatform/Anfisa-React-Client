@@ -1,9 +1,9 @@
-import React, { ChangeEvent, FC } from 'react'
+import React, { FC } from 'react'
 import cn, { Argument } from 'classnames'
 
 import { t } from '@i18n'
 import filterStore from '@store/filter'
-import { InputNumber } from '@ui/input-number/input-number'
+import { InputNumeric } from '@ui/input-numeric/input-numeric'
 import { DividerHorizontal } from '@pages/filter/refiner/components/middle-column/components/divider-horizontal'
 import { ProblemGroup } from '@pages/filter/refiner/components/middle-column/panels/function-panel/components/compound-request/components/problem-group'
 import compoundRequestStore from '@pages/filter/refiner/components/middle-column/panels/function-panel/components/compound-request/compound-request.store'
@@ -22,12 +22,12 @@ export const CompoundRequestScenario: FC<ICompoundRequestScenarioProp> = ({
   index,
   className,
 }) => {
-  const onScenarioChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (item[0] !== Number.parseInt(e.target.value)) {
+  const onScenarioChange = (newValue: number) => {
+    if (item[0] !== newValue) {
       filterStore.setTouched(true)
     }
 
-    compoundRequestStore.handleRequestConditionNumber(index, +e.target.value)
+    compoundRequestStore.handleRequestConditionNumber(index, newValue)
   }
 
   const hasError = item[0] <= 0
@@ -44,11 +44,12 @@ export const CompoundRequestScenario: FC<ICompoundRequestScenarioProp> = ({
           <div className="text-14 leading-16px font-medium text-grey-blue mr-2.5">
             {t('dtree.scenario')}
           </div>
-          <div className="w-[60px]">
-            <InputNumber
+          <div>
+            <InputNumeric
               value={item[0]}
+              min={1}
+              className="cursor-pointer"
               onChange={onScenarioChange}
-              className="cursor-pointer w-[60px]"
             />
           </div>
         </div>

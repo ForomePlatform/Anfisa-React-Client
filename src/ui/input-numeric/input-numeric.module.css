@@ -1,0 +1,17 @@
+.wrapper {
+  background: theme("colors.white");
+  font-size: 14px;
+  line-height: 20px;
+  border-radius: 4px;
+  padding: 4px 0;
+  border: 1px solid theme("colors.grey.blue");
+}
+
+.input {
+  border: none;
+  outline: none;
+}
+
+.button {
+  user-select: none;
+}
