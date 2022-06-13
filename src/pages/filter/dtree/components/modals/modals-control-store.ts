@@ -40,12 +40,12 @@ class ModalsControlStore {
     }
 
     const group = toJS(
-      stepStore.steps[stepStore.activeStepIndex].groups[
+      stepStore.steps[stepStore.activeStepIndex]?.groups[
         modalsVisibilityStore.groupIndexToChange
       ],
     )
 
-    const mayBeJoin = group[group.length - 2]
+    const mayBeJoin = group?.[group.length - 2]
 
     if (mayBeJoin === 'or' || mayBeJoin === 'and') {
       group.splice(group.length - 2, 1)
@@ -55,7 +55,7 @@ class ModalsControlStore {
   }
 
   public get currentStepGroups(): string[] {
-    return toJS(stepStore.steps[stepStore.activeStepIndex].groups)
+    return toJS(stepStore.steps[stepStore.activeStepIndex]?.groups)
   }
 
   get attributeStatusToChange(): TPropertyStatus | undefined {

@@ -1,6 +1,7 @@
 import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
+import { Dialog } from '@ui/dialog'
 import { NumericCondition } from '@components/conditions/numeric'
 import { EditModalButtons } from '@pages/filter/dtree/components/modals/components/ui/edit-modal-buttons'
 import { AttributeKinds } from '@service-providers/common'
@@ -9,31 +10,35 @@ import { changeNumericAttribute } from '@utils/changeAttribute/changeNumericAttr
 import { dtreeAttributeStore } from '../../../attributes/dtree-attributes.store'
 import modalsControlStore from '../../modals-control-store'
 import modalsVisibilityStore from '../../modals-visibility-store'
-import { HeaderModal } from '../ui/header-modal'
-import { ModalBase } from '../ui/modal-base'
 import { SelectModalButtons } from '../ui/select-modal-buttons'
 
-export const ModalNumeric = observer((): ReactElement | null => {
-  const groups = modalsControlStore.currentStepGroups
+export const NumericDialog = observer((): ReactElement | null => {
+  const {
+    attributeStatus,
+    initialCondition,
+    initialNumericValue,
+    attributeName,
+  } = dtreeAttributeStore
 
-  const { attributeStatus, initialCondition, initialNumericValue } =
-    dtreeAttributeStore
+  const { currentStepGroups } = modalsControlStore
 
   if (!attributeStatus || attributeStatus.kind !== 'numeric') {
     return null
   }
 
   const handleModals = () => {
-    modalsVisibilityStore.closeModalNumeric()
+    modalsVisibilityStore.closeNumericDialog()
     modalsVisibilityStore.openModalAttribute()
   }
 
   return (
-    <ModalBase minHeight={200}>
-      <HeaderModal
-        groupName={attributeStatus.title ?? attributeStatus.name}
-        handleClose={modalsVisibilityStore.closeModalNumeric}
-      />
+    <Dialog
+      isOpen={modalsVisibilityStore.isNumericDialogVisible}
+      onClose={modalsVisibilityStore.closeNumericDialog}
+      title={attributeName}
+      width="m"
+      actions={''}
+    >
       <NumericCondition
         className="pt-3"
         attrData={attributeStatus}
@@ -47,19 +52,18 @@ export const ModalNumeric = observer((): ReactElement | null => {
 
           return initialCondition ? (
             <EditModalButtons
-              handleClose={modalsVisibilityStore.closeModalNumeric}
+              handleClose={modalsVisibilityStore.closeNumericDialog}
               handleSaveChanges={() => {
                 changeNumericAttribute(value)
-                modalsVisibilityStore.closeModalNumeric()
+                modalsVisibilityStore.closeNumericDialog()
               }}
               disabled={disabled}
             />
           ) : (
             <SelectModalButtons
-              currentGroup={groups}
-              handleClose={modalsVisibilityStore.closeModalNumeric}
+              currentGroup={currentStepGroups}
+              handleClose={modalsVisibilityStore.closeNumericDialog}
               handleModals={handleModals}
-              handleModalJoin={modalsVisibilityStore.openModalJoin}
               disabled={disabled}
               handleAddAttribute={action => {
                 addAttributeToStep({
@@ -67,12 +71,12 @@ export const ModalNumeric = observer((): ReactElement | null => {
                   attributeType: AttributeKinds.NUMERIC,
                   filters: value,
                 })
-                modalsVisibilityStore.closeModalNumeric()
+                modalsVisibilityStore.closeNumericDialog()
               }}
             />
           )
         }}
       />
-    </ModalBase>
+    </Dialog>
   )
 })

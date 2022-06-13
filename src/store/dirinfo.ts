@@ -107,14 +107,14 @@ class DirInfoStore {
         }
 
         if (
-          !this.dirInfoData?.dsDict[a].createTime ||
-          !this.dirInfoData?.dsDict[b].createTime
+          !this.dirInfoData?.dsDict[a]['create-time'] ||
+          !this.dirInfoData?.dsDict[b]['create-time']
         ) {
           return 1
         }
 
-        const aDate = new Date(this.dirInfoData?.dsDict[a].createTime)
-        const bDate = new Date(this.dirInfoData?.dsDict[b].createTime)
+        const aDate = new Date(this.dirInfoData?.dsDict[a]['create-time'])
+        const bDate = new Date(this.dirInfoData?.dsDict[b]['create-time'])
 
         return this.sortDirections.CreatedAt === SortDirection.ASC
           ? +aDate - +bDate

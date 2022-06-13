@@ -1,11 +1,12 @@
 # This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
 
-name: add-githubactions-test CI
+name: Deployment to dev
 
 on:
   push:
-    branches: [ develop ]
+    branches:
+      - 'develop'
     tags: [ stage ]
 
 jobs:
@@ -25,11 +26,11 @@ jobs:
       if: "!startsWith(github.event.head_commit.message, '[RELEASE]')"
       uses: actions/checkout@v2
     - run: |
-            git config --global user.name 'evgeniy-chernomortsev'
-            git config --global user.email 'evgeniy.chernomortsev@quantori.com'
+            git config --global user.name 'Version Bot'
+            git config --global user.email '<>'
             yarn config set version-git-message "[RELEASE] %s"
             yarn config set version-commit-hooks false
-            yarn version --patch
+            yarn version --new-version `node ./tools/getNextVersion.js`
             git push --tags --no-verify &&
             git push --no-verify
     - run: yarn install
