@@ -33,12 +33,4 @@
       margin-left: 8px;
     }
   }
-
-  &_close-icon {
-    display: flex;
-    flex-wrap: wrap;
-    margin-left: 12px;
-    color: theme("colors.white");
-    cursor: pointer;
-  }
 }
