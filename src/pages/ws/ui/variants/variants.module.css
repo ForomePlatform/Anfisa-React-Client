@@ -1,0 +1,5 @@
+.variants {
+  position: relative;
+  min-width: 380px;
+  overflow: auto;
+}

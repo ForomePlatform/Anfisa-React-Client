@@ -24,7 +24,9 @@ export abstract class BaseAsyncPaginatedDataStore<
 > {
   private readonly initialPagesCounts: number
   private readonly storeClass: TClassConstructor<AsyncDataStore>
-  private readonly _pages: AsyncDataStore[] = []
+  private readonly _pages = observable.array<AsyncDataStore>([], {
+    deep: false,
+  })
 
   protected constructor(
     storeClass: TClassConstructor<AsyncDataStore>,
@@ -36,36 +38,34 @@ export abstract class BaseAsyncPaginatedDataStore<
 
     this.initialPagesCounts = initialPagesCounts
 
-    makeObservable<BaseAsyncPaginatedDataStore<AsyncDataStore>, '_pages'>(
-      this,
-      {
-        _pages: observable,
-        pages: computed,
-        lastPage: computed,
-        pagesCount: computed,
-        addPage: action,
-        setPagesCount: action,
-        reset: action,
-        invalidate: action,
-        invalidatePage: action,
-      },
-    )
+    makeObservable(this, {
+      pages: computed,
+      firstPage: computed,
+      lastPage: computed,
+      pagesCount: computed,
+      hasNextPage: computed,
+      addPage: action,
+      setPagesCount: action,
+      reset: action,
+      invalidate: action,
+      invalidatePage: action,
+    })
 
     window.queueMicrotask(() => this.reset())
   }
 
   public get pages(): ReadonlyArray<AsyncDataStore> {
-    return this._pages
+    return this._pages.slice()
   }
 
   public get firstPage(): AsyncDataStore | undefined {
-    return this._pages[0]
+    return this.pages[0]
   }
 
   public get lastPage(): AsyncDataStore | undefined {
-    return this._pages.length > 0
-      ? this.pages[this._pages.length - 1]
-      : undefined
+    const count = this.pages.length
+
+    return count > 0 ? this.pages[count - 1] : undefined
   }
 
   public get pagesCount(): number {
@@ -96,7 +96,7 @@ export abstract class BaseAsyncPaginatedDataStore<
   }
 
   public reset(): void {
-    this._pages.splice(0)
+    this._pages.clear()
     this.setPagesCount(this.initialPagesCounts)
   }
 

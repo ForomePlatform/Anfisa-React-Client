@@ -17,8 +17,9 @@ import { VariantsCount } from '@components/variants-count'
 import { TCondition } from '@service-providers/common/common.interface'
 import { ModalNotes } from './ui//table/modal-notes'
 import { ControlPanel } from './ui/control-panel/control-panel'
-import { TableVariants } from './ui/table/table-variants'
+// import { TableVariants } from './ui/table/table-variants'
 import { VariantDrawer } from './ui/variant-drawer'
+import { Variants } from './ui/variants'
 
 export const WSPage = observer((): ReactElement => {
   const params = useParams()
@@ -83,7 +84,7 @@ export const WSPage = observer((): ReactElement => {
         <ControlPanel />
 
         <div className="flex-grow flex overflow-hidden">
-          <TableVariants className={cn(!isDrawerVisible && 'w-full')} />
+          <Variants className={cn(!isDrawerVisible && 'w-full')} />
           {isDrawerVisible && <VariantDrawer className="flex-1" />}
         </div>
       </div>
