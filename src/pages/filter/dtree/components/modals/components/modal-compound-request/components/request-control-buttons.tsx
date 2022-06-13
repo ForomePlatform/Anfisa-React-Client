@@ -19,7 +19,7 @@ export const RequestControlButtons = observer((): ReactElement => {
             modalCompoundRequestStore.setRequestBlocksAmount('ADD')
           }
           text="Add"
-          variant={'secondary'}
+          variant="secondary"
           className={cn('mr-4')}
           disabled={requestCondition.length === 5}
           dataTestId={DecisionTreeModalDataCy.addButton}
@@ -30,10 +30,7 @@ export const RequestControlButtons = observer((): ReactElement => {
             modalCompoundRequestStore.setRequestBlocksAmount('REMOVE')
           }
           text="Remove"
-          variant={'secondary'}
-          className={cn(
-            'border-red-secondary hover:text-white hover:bg-red-secondary',
-          )}
+          variant="diestruction"
           disabled={requestCondition.length === 1}
           dataTestId={DecisionTreeModalDataCy.removeButton}
         />

@@ -1,5 +1,4 @@
 import { ReactElement } from 'react'
-import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { RequestBlockOperations } from '@core/enum/request-block-operations'
@@ -24,7 +23,7 @@ export const ControlButtons = observer(
         }}
         text="Add"
         variant="secondary"
-        className={cn('mr-4')}
+        className="mr-4"
         disabled={compoundRequestStore.requestCondition.length === 5}
       />
 

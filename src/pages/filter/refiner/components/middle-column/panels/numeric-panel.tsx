@@ -40,7 +40,7 @@ export const NumericPanel = observer((): ReactElement | null => {
           return (
             <div className="flex-1 flex items-end justify-end mt-1 pb-6">
               <Button
-                variant={'secondary'}
+                variant="secondary"
                 text={t('general.clear')}
                 onClick={clearValue}
                 className="px-5 mr-2"

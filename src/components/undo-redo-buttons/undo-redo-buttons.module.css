@@ -1,0 +1,36 @@
+.undo-redo {
+  display: flex;
+  align-items: center;
+
+  &_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid theme("colors.blue.bright");
+    border-radius: 100vh;
+    width: 32px;
+    height: 32px;
+    background-color: inherit;
+
+    &:hover {
+      background-color: inherit;
+      border-color: theme("colors.blue.hover");
+    }
+
+    &:active {
+      background-color: inherit;
+      border-color: theme("colors.blue.active");
+    }
+
+    &:disabled {
+      color: theme("colors.grey.blue");
+      background-color: inherit;
+      border-color: theme("colors.red.disabled");
+      opacity: 0.5;
+    }
+
+    &_right {
+      margin-left: 8px;
+    }
+  }
+}
