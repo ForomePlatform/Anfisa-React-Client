@@ -10,24 +10,24 @@ import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
 import { MainTableDataCy } from './data-testid/main-table.cy'
 import { Loader } from './loader'
-
 interface IExportReportButtonProps {
   isOpen?: boolean
-  refEl: any
+  refEl: HTMLAnchorElement
   onClick?: () => void
 }
 
 export const ExportReportButton = observer(
   ({ isOpen, refEl, ...rest }: IExportReportButtonProps): ReactElement => {
-    const { variantCounts } = mainTableStore.fixedStatAmount
-    const disabled = !variantCounts
+    const { variantsForExport } = mainTableStore
+
+    const disabled = !variantsForExport
 
     return (
       <Button
         disabled={disabled}
         text={
           operationsStore.isExportingReport ? (
-            <Loader size="xs" color="white" />
+            <Loader size="xs" color="white" className="px-2 pb-2.5" />
           ) : (
             t('general.exportReport')
           )
