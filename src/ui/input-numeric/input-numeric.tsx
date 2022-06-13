@@ -1,17 +1,19 @@
 import styles from './input-numeric.module.css'
 
-import { ReactElement, useState } from 'react'
+import { KeyboardEvent, ReactElement, useState } from 'react'
 import cn, { Argument } from 'classnames'
 
 const KEYCODE_UP: number = 38
 const KEYCODE_DOWN: number = 40
 
-interface IInputNumberProps {
+interface IInputNumericProps {
   value: string | number
   className?: Argument
-  onChange: (e: number) => void
   min?: number
   max?: number
+  disabled?: boolean
+  hasErrors?: boolean
+  onChange: (e: number) => void
 }
 
 export const InputNumeric = ({
@@ -19,8 +21,10 @@ export const InputNumeric = ({
   value,
   min,
   max,
+  disabled,
+  hasErrors,
   onChange,
-}: IInputNumberProps): ReactElement => {
+}: IInputNumericProps): ReactElement => {
   const [inputValue, setInputValue] = useState<number>(+value)
   const minimal = min || 0
   const maximal = max || Infinity
@@ -41,6 +45,9 @@ export const InputNumeric = ({
   }
 
   function changeValue(newValue: number | string) {
+    if (disabled) {
+      return
+    }
     const numeric = getNumeric(newValue)
     setInputValue(numeric)
     onChange(numeric)
@@ -54,7 +61,7 @@ export const InputNumeric = ({
     changeValue(inputValue - 1)
   }
 
-  function onKeyDown(e: any) {
+  function onKeyDown(e: KeyboardEvent) {
     const actions = {
       [KEYCODE_UP]: increase,
       [KEYCODE_DOWN]: decrease,
@@ -69,24 +76,39 @@ export const InputNumeric = ({
   }
 
   return (
-    <div className={cn(styles.wrapper, className)}>
-      <div className={cn(styles.inputSection)}>
+    <div
+      className={cn(
+        styles.inputNumeric,
+        className,
+        disabled && styles.inputNumeric_disabled,
+        hasErrors && styles.inputNumeric_hasErrors,
+      )}
+    >
+      <div className={cn(styles.inputNumeric__inputSection)}>
         <input
-          className={cn(styles.input)}
+          className={cn(styles.inputNumeric__input)}
           type="text"
           value={displayValue}
+          disabled={disabled}
           onChange={e => changeValue(e.target.value)}
           onKeyDown={e => onKeyDown(e)}
         />
       </div>
-      <div className={cn(styles.buttons)}>
-        <b className={cn(styles.button)} onClick={() => increase()}>
+      <div className={cn(styles.inputNumeric__buttons)}>
+        <b
+          className={cn(styles.inputNumeric__button)}
+          onClick={() => increase()}
+        >
           +
         </b>
-        <b className={cn(styles.button)} onClick={() => decrease()}>
+        <b
+          className={cn(styles.inputNumeric__button)}
+          onClick={() => decrease()}
+        >
           –
         </b>
       </div>
+      {hasErrors && <div className={cn(styles.inputNumeric__error)}>Error</div>}
     </div>
   )
 }
