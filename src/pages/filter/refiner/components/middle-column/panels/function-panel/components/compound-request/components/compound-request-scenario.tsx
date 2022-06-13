@@ -49,6 +49,7 @@ export const CompoundRequestScenario: FC<ICompoundRequestScenarioProp> = ({
               value={item[0]}
               min={1}
               className="cursor-pointer"
+              disabled
               onChange={onScenarioChange}
             />
           </div>

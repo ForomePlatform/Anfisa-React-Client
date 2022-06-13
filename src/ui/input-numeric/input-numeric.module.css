@@ -1,40 +1,80 @@
-.wrapper {
+.input-numeric {
   display: inline-flex;
+  position: relative;
   border: 1px solid theme("colors.grey.blue");
   border-radius: 4px;
   font-size: 14px;
   line-height: 20px;
   background: theme("colors.white");
-}
 
-.input-section {
-  padding: 6px 0;
-}
+  &_disabled {
+    color: theme("colors.grey.blue");
+    border-color: theme("colors.grey.disabled");
+  }
 
-.input {
-  max-width: 80px;
-  padding: 0 8px;
-  border: none;
-  font-size: 12px;
-  outline: none;
-}
+  &_has-errors {
+    border-color: theme("colors.red.light");
+    margin-bottom: 16px;
+  }
 
-.buttons {
-  display: flex;
-  flex-direction: column;
-  width: 28px;
-  border-left: 1px solid theme("colors.grey.blue");
-  text-align: center;
-}
+  &_disabled &__button {
+    color: theme("colors.grey.disabled");
+    border-color: theme("colors.grey.disabled");
 
-.button {
-  height: 16px;
-  line-height: 16px;
-  user-select: none;
-  font-weight: normal;
-  color: theme("colors.grey.blue");
+    &:hover {
+      background-color: theme("colors.white");
+    }
 
-  &:first-child {
-    border-bottom: 1px solid theme("colors.grey.blue");
+    &:active {
+      color: theme("colors.grey.disabled");
+    }
+  }
+
+  &__input-section {
+    padding: 3px 0;
+  }
+
+  &__input {
+    max-width: 80px;
+    padding: 0 8px;
+    border: none;
+    font-size: 12px;
+    outline: none;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    width: 28px;
+    text-align: center;
+  }
+
+  &__button {
+    height: 50%;
+    line-height: 13px;
+    border-top: 1px solid theme("colors.grey.blue");
+    border-left: 1px solid theme("colors.grey.blue");
+    user-select: none;
+    font-weight: normal;
+    color: theme("colors.grey.blue");
+
+    &:first-child {
+      border-top: none;
+    }
+
+    &:hover {
+      background-color: theme("colors.blue.light");
+    }
+
+    &:active {
+      color: theme("colors.blue.dark");
+    }
+  }
+
+  &__error {
+    position: absolute;
+    bottom: -22px;
+    font-size: 12px;
+    color: theme("colors.red.light");
   }
 }
