@@ -3,8 +3,8 @@ const DEFAULT_HEIGHT_OF_ELEMENT = 20
 export const getDefaultCount = () =>
   Math.round(window.innerHeight / DEFAULT_HEIGHT_OF_ELEMENT) + 1
 
-export const getBottomPosition = (element: HTMLElement): number =>
-  element.offsetTop + element.offsetHeight
+export const getBottomPosition = (element: HTMLElement | undefined): number =>
+  !element ? 0 : element.offsetTop + element.offsetHeight
 
 const getMiddle = (left: number, right: number): number =>
   left + Math.round((right - left) / 2)

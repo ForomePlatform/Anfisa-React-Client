@@ -3,11 +3,9 @@ import styles from './dialog-card.module.css'
 import { HTMLAttributes, ReactElement, ReactNode } from 'react'
 import cn from 'classnames'
 
+import { DialogStandardActions, IDialogStandardActionsProps } from '@ui/dialog'
 import { Icon } from '@ui/icon'
-import {
-  DialogStandardActions,
-  IDialogStandardActionsProps,
-} from '../dialog-standard-actions'
+import { SwitchTheme } from '@pages/filter/dtree/components/query-builder/ui/switch-theme'
 
 export interface IDialogCardProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>,
@@ -29,10 +27,15 @@ export const DialogCard = ({
   isApplyDisabled,
   applyText,
   cancelText,
+  handleChangeTheme,
+  theme = 'light',
   ...divProps
 }: IDialogCardProps): ReactElement => {
   return (
-    <div className={cn(styles.dialogCard, className)} {...divProps}>
+    <div
+      className={cn(styles.dialogCard, styles[`theme_${theme}`], className)}
+      {...divProps}
+    >
       <button
         tabIndex={-1}
         className={styles.dialogCard__close}
@@ -40,8 +43,18 @@ export const DialogCard = ({
       >
         <Icon name="Close" size={16} />
       </button>
-      {title && <h2 className={styles.dialogCard__title}>{title}</h2>}
+      {title && (
+        <h2 className={styles.dialogCard__title}>
+          {title}
+
+          {handleChangeTheme && (
+            <SwitchTheme handleChangeTheme={handleChangeTheme} theme={theme} />
+          )}
+        </h2>
+      )}
+
       <div className={styles.dialogCard__content}>{children}</div>
+
       {(actions || actions === undefined) && (
         <div className={styles.dialogCard__actions}>
           {actions || (

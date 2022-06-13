@@ -99,6 +99,14 @@ export const en = {
     table: 'Main Table',
     dtree: 'Decision Tree Panel',
     refiner: 'Filter Refiner',
+    modals: {
+      importDataset: 'Import Dataset',
+      exportDataset: 'Export Dataset',
+      applyTextImport: 'Import',
+      applyTextExport: 'Export',
+      withDocumentation: 'with documentation',
+      withSupport: 'with support',
+    },
   },
   ds: {
     preset: 'Preset',
@@ -140,7 +148,7 @@ export const en = {
     },
   },
   dsCreation: {
-    createDeriveDS: 'Create Derive DS',
+    createDerivedDS: 'Create Derived DS',
     datasetCreation: 'Dataset Creation',
     addDatasetTitle: 'Add new dataset',
     label: 'Dataset Name:',
