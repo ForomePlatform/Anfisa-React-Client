@@ -4,6 +4,8 @@ import { FC, MouseEvent, ReactNode } from 'react'
 import cn, { Argument } from 'classnames'
 import { CSSProperties } from 'styled-components'
 
+import { LoaderWrapper } from '@components/loader'
+
 export interface IButtonProps {
   text?: ReactNode
   textSize?: 'xs' | 'sm'
@@ -25,6 +27,7 @@ export interface IButtonProps {
   append?: ReactNode
   prepend?: ReactNode
   icon?: ReactNode
+  isLoading?: boolean
   refEl?: any
   dataTestId?: string
   style?: CSSProperties
@@ -44,6 +47,7 @@ export const Button: FC<IButtonProps> = ({
   append,
   prepend,
   icon,
+  isLoading = false,
   refEl,
   dataTestId,
   style = {},
@@ -89,10 +93,12 @@ export const Button: FC<IButtonProps> = ({
       onMouseDown={onMouseDownHandler}
       style={style}
     >
-      {prepend}
-      {text && <span className={textStyle}>{text}</span>}
-      {icon}
-      {append}
+      <LoaderWrapper isLoading={isLoading}>
+        {prepend}
+        {text && <span className={textStyle}>{text}</span>}
+        {icon}
+        {append}
+      </LoaderWrapper>
     </button>
   )
 }

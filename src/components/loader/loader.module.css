@@ -1,0 +1,28 @@
+.loader-wrapper {
+  position: relative;
+
+  &__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    white-space: nowrap;
+  }
+
+  &__loader {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    height: 100%;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    color: theme("colors.white");
+
+    &_icon {
+      position: relative;
+      top: -4px;
+    }
+  }
+}
