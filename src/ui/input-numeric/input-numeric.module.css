@@ -1,17 +1,40 @@
 .wrapper {
-  background: theme("colors.white");
+  display: inline-flex;
+  border: 1px solid theme("colors.grey.blue");
+  border-radius: 4px;
   font-size: 14px;
   line-height: 20px;
-  border-radius: 4px;
-  padding: 4px 0;
-  border: 1px solid theme("colors.grey.blue");
+  background: theme("colors.white");
+}
+
+.input-section {
+  padding: 6px 0;
 }
 
 .input {
+  max-width: 80px;
+  padding: 0 8px;
   border: none;
+  font-size: 12px;
   outline: none;
 }
 
+.buttons {
+  display: flex;
+  flex-direction: column;
+  width: 28px;
+  border-left: 1px solid theme("colors.grey.blue");
+  text-align: center;
+}
+
 .button {
+  height: 16px;
+  line-height: 16px;
   user-select: none;
+  font-weight: normal;
+  color: theme("colors.grey.blue");
+
+  &:first-child {
+    border-bottom: 1px solid theme("colors.grey.blue");
+  }
 }
