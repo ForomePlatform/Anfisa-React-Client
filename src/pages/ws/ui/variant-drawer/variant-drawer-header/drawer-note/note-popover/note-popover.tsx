@@ -22,6 +22,7 @@ export const NotePopover = ({
   recordTitle,
   isOpen,
   onSave,
+  onClose,
   ...popoverProps
 }: INotePopoverProps): ReactElement => {
   const textareaRef = useResizeTextAreaHeight()
@@ -42,6 +43,7 @@ export const NotePopover = ({
       title={t('variant.notesFor', {
         title: <span className="text-blue-bright">{recordTitle}</span>,
       })}
+      onClose={onClose}
       {...popoverProps}
     >
       <textarea
@@ -61,7 +63,7 @@ export const NotePopover = ({
         />
         <Button
           text={t('general.cancel')}
-          onClick={close}
+          onClick={onClose}
           variant="secondary"
           className="mr-2"
         />

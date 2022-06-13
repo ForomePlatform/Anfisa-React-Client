@@ -96,7 +96,7 @@ export const TagsPopover = ({
       <div className={styles.tagsPopover__controls}>
         <Button
           text={t('general.cancel')}
-          onClick={close}
+          onClick={onClose}
           variant="secondary"
           className="mr-2"
         />
