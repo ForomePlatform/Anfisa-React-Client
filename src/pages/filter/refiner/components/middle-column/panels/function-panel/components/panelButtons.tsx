@@ -40,7 +40,7 @@ export const PanelButtons = observer(
 
         <div className="flex justify-end">
           <Button
-            text={t(isRedactorMode ? 'dtree.saveChanges' : 'dtree.apply')}
+            text={t(isRedactorMode ? 'condition.saveChanges' : 'dtree.apply')}
             onClick={onSubmit}
             disabled={disabled}
             className={!isRedactorMode && 'px-8'}

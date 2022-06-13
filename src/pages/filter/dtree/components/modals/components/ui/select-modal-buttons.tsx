@@ -46,7 +46,7 @@ export const SelectModalButtons = observer(
             className="text-14 text-blue-bright font-medium cursor-pointer"
             onClick={handleModals}
           >
-            {t('dtree.backToAttribute')}
+            {t('condition.backToAttribute')}
           </div>
         )}
 
@@ -71,7 +71,7 @@ export const SelectModalButtons = observer(
               <div className="relative">
                 <Button
                   disabled={disabled}
-                  text={t('dtree.addByJoining')}
+                  text={t('condition.addByJoining')}
                   onClick={handleModalJoin}
                   icon={<Icon name="Arrow" className="transform -rotate-90" />}
                   dataTestId={DecisionTreeModalDataCy.addByJoin}
@@ -84,7 +84,7 @@ export const SelectModalButtons = observer(
             </Fragment>
           ) : (
             <Button
-              text={t('dtree.addNewAttribute')}
+              text={t('condition.addAttribute')}
               onClick={() => handleAddAttribute('INSERT')}
               disabled={disabled}
               dataTestId={DecisionTreeModalDataCy.addSelectedAttributes}

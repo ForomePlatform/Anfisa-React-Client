@@ -21,7 +21,7 @@ export const EditModalButtons = observer(
     return (
       <div className="flex justify-between items-center">
         <Button
-          text={t('dtree.deleteAttribute')}
+          text={t('condition.deleteAttribute')}
           variant="secondary"
           className="border-red-secondary hover:text-white hover:bg-red-secondary"
           onClick={handleDeleteAttribute}
@@ -39,7 +39,7 @@ export const EditModalButtons = observer(
           <div className="relative">
             <Button
               disabled={disabled}
-              text={t('dtree.saveChanges')}
+              text={t('condition.saveChanges')}
               onClick={handleSaveChanges}
             />
           </div>

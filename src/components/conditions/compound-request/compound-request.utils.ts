@@ -51,15 +51,12 @@ export const getSelectedValue = ({
   requestIndex,
   requestCondition,
 }: IGetSelectedValueProps): string => {
-  let value = '--'
-
   const currentRequestBlock = requestCondition[requestIndex][1]
 
-  Object.entries(currentRequestBlock).find((item: any[]) => {
-    if (item[1].includes(group)) {
-      value = item[0]
-    }
-  })
-
-  return value
+  return (
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    Object.entries(currentRequestBlock).find(([_key, value]) =>
+      value.includes(group),
+    )?.[0] ?? '--'
+  )
 }

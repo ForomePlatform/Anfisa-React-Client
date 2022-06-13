@@ -48,8 +48,8 @@ export const NumericPanel = observer((): ReactElement | null => {
               <Button
                 text={
                   initialNumericValue
-                    ? t('dtree.saveChanges')
-                    : t('dtree.addAttribute')
+                    ? t('condition.saveChanges')
+                    : t('condition.addAttribute')
                 }
                 onClick={() =>
                   savePanelAttribute({

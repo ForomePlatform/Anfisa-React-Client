@@ -57,8 +57,8 @@ export const InheritanceMode = observer(() => {
             <Button
               text={
                 initialCondition
-                  ? t('dtree.saveChanges')
-                  : t('dtree.addAttribute')
+                  ? t('condition.saveChanges')
+                  : t('condition.addAttribute')
               }
               onClick={() => handleSaveChanges(mode, values, param)}
               disabled={hasErrors || !isFilterTouched}
