@@ -7,7 +7,7 @@ Scenario Outline:01 Add a valid locus - Secondary dataset
 	And clicks "+" button near Functional Units
 	And clicks the "GeneRegion" functional attribute
 	And enters <Valid Locus> value in the input field
-	And clicks the "Add" button
+	And clicks the "Apply" button
 	Then the filter by Locus should be added
 	And variants list should be filtered
 	And variants number should be equal to <Total Variants>
@@ -24,7 +24,7 @@ Scenario Outline:02 Add a valid locus - Primary dataset
 	When the user clicks Edit Filters
 	And clicks the "GeneRegion" functional attribute
 	And enters <ValidN Locus> value in the input field
-	And clicks the "Add" button
+	And clicks the "Apply" button
 	Then the filter by Locus should be added
 	And variants list should be filtered
 	And variants number should be equal to <Total Variants>
@@ -40,8 +40,8 @@ Scenario Outline:03 Add an Invalid locus
 	When the user clicks "+" button near Functional Units
 	And  clicks the "GeneRegion" functional attribute
 	And enters <Invalid Locus> value in the input field
-	And clicks the "Add" button
-	Then the "Add" button should be disabled
+	And clicks the "Apply" button
+	Then the "Apply" button should be disabled
 	And the filter should not be added
 	And the validation message should be displayed
 
@@ -59,8 +59,8 @@ Scenario Outline:04 Add an Empty locus
 	And clicks "+" button near Functional Units
 	And clicks the "GeneRegion" functional attribute
 	And nothing enters to the "Locus" field
-	And clicks the "Add" button
-	Then the "Add" button should be disabled
+	And clicks the "Apply" button
+	Then the "Apply" button should be disabled
 	And the filter should not be added
 	And the validation message should be displayed
 
@@ -69,9 +69,9 @@ Scenario Outline:05 Clear button
 	When the user  clicks "+" button near Functional Units
 	And  clicks the "GeneRegion" functional attribute
 	And inputs "<Valid Locus>"
-	And clicks the "Add"
+	And clicks the "Apply" button 
 	And the filter is applied
-	And the user clicks the "Clear" button
+	And the user clicks the "Clear all" button
 	Then the filter by Locus should be cleared
 	And Variants number should be updated
 
