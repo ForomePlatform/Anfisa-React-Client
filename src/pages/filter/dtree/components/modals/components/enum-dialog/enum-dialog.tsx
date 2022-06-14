@@ -2,15 +2,14 @@ import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { Dialog } from '@ui/dialog'
-import { EnumCondition } from '@components/conditions/enum-condition/enum-condition'
+import { EnumCondition } from '@components/conditions/enum-condition'
 import { AttributeKinds } from '@service-providers/common'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { changeEnumAttribute } from '@utils/changeAttribute/changeEnumAttribute'
 import { dtreeAttributeStore } from '../../../attributes/dtree-attributes.store'
 import modalsControlStore from '../../modals-control-store'
 import modalsVisibilityStore from '../../modals-visibility-store'
-import { EditModalButtons } from '../ui/edit-modal-buttons'
-import { SelectModalButtons } from '../ui/select-modal-buttons'
+import { renderAttributeDialogControls } from '../ui/renderAttributeControls'
 
 export const EnumDialog = observer((): ReactElement => {
   const {
@@ -61,25 +60,17 @@ export const EnumDialog = observer((): ReactElement => {
         initialEnumMode={initialEnumMode}
         isShowZeroes={dtreeAttributeStore.isShowZeroVariants}
         toggleShowZeroes={dtreeAttributeStore.setIsShowZeroVariants}
-        controls={({ value, mode }) => {
-          return initialCondition ? (
-            <EditModalButtons
-              handleClose={modalsVisibilityStore.closeEnumDialog}
-              handleSaveChanges={() => handleSaveChanges(mode, value)}
-              disabled={value.length === 0}
-            />
-          ) : (
-            <SelectModalButtons
-              currentGroup={currentStepGroups}
-              handleClose={modalsVisibilityStore.closeEnumDialog}
-              handleModals={handleModals}
-              disabled={value.length === 0}
-              handleAddAttribute={action =>
-                handleAddAttribute(action, mode, value)
-              }
-            />
-          )
-        }}
+        controls={({ value, mode }) =>
+          renderAttributeDialogControls({
+            initialCondition,
+            currentStepGroups,
+            onClose: modalsVisibilityStore.closeEnumDialog,
+            handleModals,
+            disabled: value.length === 0,
+            saveAttribute: () => handleSaveChanges(mode, value),
+            addAttribute: action => handleAddAttribute(action, mode, value),
+          })
+        }
       />
     </Dialog>
   )

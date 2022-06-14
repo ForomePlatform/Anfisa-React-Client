@@ -77,10 +77,6 @@ class ModalsControlStore {
   public get problemGroups(): string[] {
     return this.funcAttributeStatusToChange?.family ?? []
   }
-
-  public get approxModes(): string[][] {
-    return this.funcAttributeStatusToChange?.['approx-modes'] ?? []
-  }
 }
 
 export default new ModalsControlStore()

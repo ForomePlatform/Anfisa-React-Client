@@ -1,9 +1,11 @@
 import { makeAutoObservable } from 'mobx'
 
+import { ApproxNameTypes } from '@core/enum/approxNameTypes'
 import { DefaultProblemGroup } from '@core/enum/default-problem-group-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import datasetStore from '@store/dataset/dataset'
 import {
+  ICompoundHetArgs,
   ICustomInheritanceModeArgs,
   IFuncPropertyStatus,
   IInheritanceModeArgs,
@@ -11,6 +13,7 @@ import {
   TFuncCondition,
   TPropertyStatus,
 } from '@service-providers/common'
+import { getApproxName } from '@utils/getApproxName'
 import { getCurrentModeType } from '@utils/getCurrentModeType'
 import { BaseAttributeStore } from './base-attribute.store'
 
@@ -55,6 +58,17 @@ export class BaseFunctionsStore {
   public get initialScenario(): IScenario {
     const condition = this.initialCondition?.[4] as ICustomInheritanceModeArgs
     return condition?.scenario
+  }
+
+  public get initialApprox(): ApproxNameTypes {
+    if (this.initialCondition) {
+      const condition = this.initialCondition?.[4] as ICompoundHetArgs
+
+      return getApproxName(condition.approx)
+    }
+    return datasetStore.isXL
+      ? ApproxNameTypes.Non_Intersecting_Transcript
+      : ApproxNameTypes.Shared_Transcript
   }
 
   public get initialProblemGroups(): string[] | undefined {
