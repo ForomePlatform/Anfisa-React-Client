@@ -13,6 +13,7 @@ interface ISolutionControlProps {
   solutions: ISolutionEntryDescription[] | undefined
   selected: string
   isCreateDisabled?: boolean
+  isFetchingSolutions: boolean
   onCreate: (solutionName: string) => void
   onApply: (solutionName: string) => void
   onJoin?: (solutionName: string) => void
@@ -26,6 +27,7 @@ export const SolutionControl = ({
   controlName,
   selected: selectedProp,
   isCreateDisabled,
+  isFetchingSolutions,
   onCreate,
   onApply,
   onJoin,
@@ -66,6 +68,7 @@ export const SolutionControl = ({
         controlName={controlName}
         isOpen={isPopoverOpen}
         isDeleteShown={isSelectedSolutionNonStandard}
+        isFetchingSolutions={isFetchingSolutions}
         onDeleteClick={() => {
           openDeleteDialog({ solutionName: selectedProp })
         }}

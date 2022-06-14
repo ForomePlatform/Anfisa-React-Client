@@ -5,14 +5,16 @@ import cn from 'classnames'
 
 import { t } from '@i18n'
 import { Icon } from '@ui/icon'
+import { Loader } from '@ui/loader'
 
 interface ISolutionControlButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
   solutionName: string | undefined
   controlName: string
   isOpen: boolean
-  isDeleteShown: boolean
-  onDeleteClick: () => void
+  isFetchingSolutions: boolean
+  isDeleteShown?: boolean
+  onDeleteClick?: () => void
 }
 
 export const SolutionControlButton = ({
@@ -21,6 +23,7 @@ export const SolutionControlButton = ({
   controlName,
   isOpen,
   isDeleteShown,
+  isFetchingSolutions,
   onDeleteClick,
   ...buttonProps
 }: ISolutionControlButtonProps): ReactElement => {
@@ -30,7 +33,11 @@ export const SolutionControlButton = ({
       {...buttonProps}
     >
       <span className={styles.solutionControlButton__label}>
-        {solutionName || t('solutionControl.selectSolution', { controlName })}
+        {isFetchingSolutions ? (
+          <Loader size="xs" className="pb-2" />
+        ) : (
+          solutionName || t('solutionControl.selectSolution', { controlName })
+        )}
       </span>
       <span
         className={cn(
@@ -44,7 +51,7 @@ export const SolutionControlButton = ({
             size={16}
             onClick={event => {
               event.stopPropagation()
-              onDeleteClick()
+              onDeleteClick?.()
             }}
           />
         ) : (

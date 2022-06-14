@@ -14,7 +14,8 @@ import {
 } from './solution-control-refiner.utils'
 
 export const SolutionControlRefiner = observer((): ReactElement => {
-  const { activePreset, availablePresets } = filterPresetsStore
+  const { activePreset, availablePresets, isFetchingPresets } =
+    filterPresetsStore
 
   return (
     <SolutionControl
@@ -22,6 +23,7 @@ export const SolutionControlRefiner = observer((): ReactElement => {
       solutions={availablePresets}
       controlName={t('solutionControl.filterPreset')}
       isCreateDisabled={filterStore.isConditionsEmpty}
+      isFetchingSolutions={isFetchingPresets}
       onCreate={createPreset}
       onApply={applyPreset}
       onJoin={joinPreset}

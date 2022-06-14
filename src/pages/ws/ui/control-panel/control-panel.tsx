@@ -5,9 +5,9 @@ import zoneStore from '@store/ws/zone'
 import { Divider } from '@ui/divider'
 import { MainTableDataCy } from '@components/data-testid/main-table.cy'
 import { EditFilter } from './control-panel-edit-filter'
-import { ControlPanelPreset } from './control-panel-preset'
 import { CreateDatasetButton } from './create-dataset-button'
 import { CustomizeTable } from './customize-table/customize-table'
+import { SelectSolution } from './select-preset/select-solution'
 import { GenesListModal } from './zone-modals/genes-list-modal'
 import { GenesModal } from './zone-modals/genes-modal'
 import { SamplesModal } from './zone-modals/samples-modal'
@@ -18,7 +18,7 @@ export const ControlPanel = (): ReactElement => (
   <div className="w-full flex px-4 bg-blue-dark">
     <div className="w-full flex justify-between pt-2 pb-4">
       <div className="flex items-center">
-        <ControlPanelPreset />
+        <SelectSolution />
 
         <Divider orientation="vertical" className="h-[75%]" />
 
