@@ -195,7 +195,7 @@ export const EnumCondition = observer(
               ))
             ) : (
               <div className="flex justify-center items-center text-14 text-grey-blue">
-                {t('dtree.noFilters')}
+                {t('condition.noFilters')}
               </div>
             )}
           </div>

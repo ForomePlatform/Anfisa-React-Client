@@ -1,13 +1,12 @@
 import { useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
-import { t } from '@i18n'
 import filterStore from '@store/filter'
-import { Button } from '@ui/button'
-import { InheritanceModeCondition } from '@components/conditions/inheritance-mode-condition/inheritance-mode-condition'
+import { InheritanceModeCondition } from '@components/conditions/inheritance-mode-condition'
 import { refinerFunctionsStore } from '@pages/filter/refiner/components/attributes/refiner-functions.store'
 import { refinerStatFuncStore } from '@pages/filter/refiner/components/attributes/refiner-stat-func.store'
 import { AttributeKinds } from '@service-providers/common'
+import { renderPanelControls } from '../../../components/renderPanelControls'
 import { savePanelAttribute } from '../../../utils/save-pannel-attribute'
 
 export const InheritanceMode = observer(() => {
@@ -23,7 +22,7 @@ export const InheritanceMode = observer(() => {
 
   const { isFilterTouched } = filterStore
 
-  const handleSaveChanges = useCallback(
+  const saveAttribute = useCallback(
     (mode, values, param) => {
       savePanelAttribute({
         filterKind: AttributeKinds.FUNC,
@@ -45,27 +44,14 @@ export const InheritanceMode = observer(() => {
       attributeSubKind={attributeSubKind}
       statFuncStore={refinerStatFuncStore}
       onTouch={() => filterStore.setTouched(true)}
-      controls={({ values, mode, hasErrors, param, clearValue }) => {
-        return (
-          <div className="flex-1 flex items-end justify-end mt-1 pb-[40px]">
-            <Button
-              variant="secondary"
-              text={t('general.clear')}
-              onClick={clearValue}
-              className="px-5 mr-2"
-            />
-            <Button
-              text={
-                initialCondition
-                  ? t('dtree.saveChanges')
-                  : t('dtree.addAttribute')
-              }
-              onClick={() => handleSaveChanges(mode, values, param)}
-              disabled={hasErrors || !isFilterTouched}
-            />
-          </div>
-        )
-      }}
+      controls={({ values, mode, hasErrors, param, clearValue }) =>
+        renderPanelControls({
+          initialCondition,
+          disabled: hasErrors || !isFilterTouched,
+          saveAttribute: () => saveAttribute(mode, values, param),
+          clearValue,
+        })
+      }
     />
   )
 })

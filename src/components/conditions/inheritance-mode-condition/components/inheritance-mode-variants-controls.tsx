@@ -8,8 +8,8 @@ import { IInheritanceModeVariantsControlsProps } from '../inheritance-mode.inter
 
 export const InheritanceModeVariantsControls = ({
   selectedVariants,
-  selectAllVariants,
-  clearAllVariants,
+  onSelectAllVariants,
+  onClearAllVariants,
   attributeSubKind,
   mode,
   toggleMode,
@@ -23,7 +23,7 @@ export const InheritanceModeVariantsControls = ({
       <div className="flex">
         <div
           className="text-14 text-blue-bright cursor-pointer"
-          onClick={selectAllVariants}
+          onClick={onSelectAllVariants}
         >
           {t('general.selectAll')}
         </div>
@@ -32,7 +32,7 @@ export const InheritanceModeVariantsControls = ({
 
         <div
           className="text-14 text-blue-bright cursor-pointer"
-          onClick={clearAllVariants}
+          onClick={onClearAllVariants}
         >
           {t('general.clearAll')}
         </div>
