@@ -23,6 +23,7 @@ export type TUnitGroup = {
   name: string
   units: TUnit[]
   power?: number
+  attributes?: TUnit[]
 }
 
 export type TUnitGroups = TUnitGroup[]

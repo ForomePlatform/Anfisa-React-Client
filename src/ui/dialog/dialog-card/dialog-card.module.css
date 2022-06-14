@@ -14,7 +14,7 @@
     font-weight: bold;
     display: flex;
     flex: 0 0 auto;
-    align: center;
+    align-items: center;
     padding: 0 theme("spacing.6") theme("spacing.5") 0;
   }
 
