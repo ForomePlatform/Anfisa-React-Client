@@ -69,9 +69,9 @@ Scenario Outline:05 Clear button
 	When the user  clicks "+" button near Functional Units
 	And  clicks the "GeneRegion" functional attribute
 	And inputs "<Valid Locus>"
-	And clicks the "Apply"
+	And clicks the "Apply" button 
 	And the filter is applied
-	And the user clicks the "Clear" button
+	And the user clicks the "Clear all" button
 	Then the filter by Locus should be cleared
 	And Variants number should be updated
 
