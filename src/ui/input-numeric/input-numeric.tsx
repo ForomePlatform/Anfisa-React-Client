@@ -3,6 +3,8 @@ import styles from './input-numeric.module.css'
 import { KeyboardEvent, ReactElement, useState } from 'react'
 import cn, { Argument } from 'classnames'
 
+import { getNumeric } from './input-numeric.utils'
+
 const KEYCODE_UP: number = 38
 const KEYCODE_DOWN: number = 40
 
@@ -30,25 +32,11 @@ export const InputNumeric = ({
   const maximal = max || Infinity
   const displayValue = inputValue.toLocaleString()
 
-  function getNumeric(value: number | string): number {
-    const num = typeof value === 'string' ? +value.replace(/\s/g, '') : value
-    if (isNaN(num)) {
-      return minimal
-    }
-    if (num <= minimal) {
-      return minimal
-    }
-    if (num >= maximal) {
-      return maximal
-    }
-    return num
-  }
-
   function changeValue(newValue: number | string) {
     if (disabled) {
       return
     }
-    const numeric = getNumeric(newValue)
+    const numeric = getNumeric(newValue, minimal, maximal)
     setInputValue(numeric)
     onChange(numeric)
   }
@@ -91,20 +79,14 @@ export const InputNumeric = ({
           value={displayValue}
           disabled={disabled}
           onChange={e => changeValue(e.target.value)}
-          onKeyDown={e => onKeyDown(e)}
+          onKeyDown={onKeyDown}
         />
       </div>
       <div className={cn(styles.inputNumeric__buttons)}>
-        <b
-          className={cn(styles.inputNumeric__button)}
-          onClick={() => increase()}
-        >
+        <b className={cn(styles.inputNumeric__button)} onClick={increase}>
           +
         </b>
-        <b
-          className={cn(styles.inputNumeric__button)}
-          onClick={() => decrease()}
-        >
+        <b className={cn(styles.inputNumeric__button)} onClick={decrease}>
           –
         </b>
       </div>
