@@ -9,6 +9,7 @@ import variantStore from '@store/ws/variant'
 import { Popover } from '@ui/popover'
 import { PopupCard } from '@components/popup-card/popup-card'
 import { ViewTypeTable } from '@components/view-type-table'
+import { popoverOffset } from '@pages/ws/constants'
 import { ColumnsList } from './columns-list/columns-list'
 
 interface ICustomizeTablePopoverProps {
@@ -35,38 +36,36 @@ export const CustomizeTablePopover = observer(
       isOpen={isPopoverOpen}
       anchorEl={popoverAnchor}
       onClose={onClose}
-      offset={[0, 10]}
+      offset={popoverOffset}
     >
       <PopupCard title={t('ds.columns')} onClose={onClose} onApply={onApply}>
-        <>
-          <div className="flex justify-between items-center mt-4">
-            <span className="text-12 text-grey-blue">
-              {visibleColumnsAmount} {'Selected'}
-            </span>
+        <div className="flex justify-between items-center mt-4">
+          <span className="text-12 text-grey-blue">
+            {visibleColumnsAmount} {'Selected'}
+          </span>
 
-            <div className="flex text-blue-bright text-14 leading-5">
-              <div className="flex">
-                <div
-                  className="cursor-pointer"
-                  onClick={columnsStore.selectAllColumns}
-                >
-                  {t('general.selectAll')}
-                </div>
-
-                <div className="w-[2px] h-full mx-2 bg-blue-light" />
+          <div className="flex text-blue-bright text-14 leading-5">
+            <div className="flex">
+              <div
+                className="cursor-pointer"
+                onClick={columnsStore.selectAllColumns}
+              >
+                {t('general.selectAll')}
               </div>
 
-              <span
-                className="cursor-pointer"
-                onClick={columnsStore.clearAllColumns}
-              >
-                {t('general.clearAll')}
-              </span>
+              <div className="w-[2px] h-full mx-2 bg-blue-light" />
             </div>
-          </div>
 
-          <div className="h-px w-full bg-blue-light mt-4" />
-        </>
+            <span
+              className="cursor-pointer"
+              onClick={columnsStore.clearAllColumns}
+            >
+              {t('general.clearAll')}
+            </span>
+          </div>
+        </div>
+
+        <div className="h-px w-full bg-blue-light mt-4" />
 
         <div className="w-full">
           <>
