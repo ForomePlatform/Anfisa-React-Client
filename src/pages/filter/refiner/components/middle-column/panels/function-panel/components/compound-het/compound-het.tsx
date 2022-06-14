@@ -1,13 +1,12 @@
 import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
-import { t } from '@i18n'
 import filterStore from '@store/filter'
-import { Button } from '@ui/button'
-import { CompoundHetCondition } from '@components/conditions/compound-het-condition/compound-het-condition'
+import { CompoundHetCondition } from '@components/conditions/compound-het-condition'
 import { refinerFunctionsStore } from '@pages/filter/refiner/components/attributes/refiner-functions.store'
 import { refinerStatFuncStore } from '@pages/filter/refiner/components/attributes/refiner-stat-func.store'
 import { AttributeKinds } from '@service-providers/common'
+import { renderPanelControls } from '../../../components/renderPanelControls'
 import { savePanelAttribute } from '../../../utils/save-pannel-attribute'
 
 export const CompundHet = observer((): ReactElement => {
@@ -19,7 +18,7 @@ export const CompundHet = observer((): ReactElement => {
     attributeSubKind,
   } = refinerFunctionsStore
 
-  const handleSaveChanges = useCallback(
+  const saveAttribute = useCallback(
     (mode, param) => {
       savePanelAttribute({
         filterKind: AttributeKinds.FUNC,
@@ -38,27 +37,14 @@ export const CompundHet = observer((): ReactElement => {
       attributeSubKind={attributeSubKind}
       statFuncStore={refinerStatFuncStore}
       onTouch={() => filterStore.setTouched(true)}
-      controls={({ mode, hasErrors, param, clearValue }) => {
-        return (
-          <div className="flex-1 flex items-end justify-end mt-1 pb-[40px]">
-            <Button
-              variant={'secondary'}
-              text={t('general.clear')}
-              onClick={clearValue}
-              className="px-5 mr-2"
-            />
-            <Button
-              text={
-                initialCondition
-                  ? t('dtree.saveChanges')
-                  : t('dtree.addAttribute')
-              }
-              onClick={() => handleSaveChanges(mode, param)}
-              disabled={hasErrors}
-            />
-          </div>
-        )
-      }}
+      controls={({ mode, hasErrors, param, clearValue }) =>
+        renderPanelControls({
+          initialCondition,
+          disabled: hasErrors,
+          saveAttribute: () => saveAttribute(mode, param),
+          clearValue,
+        })
+      }
     />
   )
 })

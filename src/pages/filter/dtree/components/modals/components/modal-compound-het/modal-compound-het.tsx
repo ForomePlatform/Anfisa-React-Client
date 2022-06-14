@@ -2,7 +2,7 @@ import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
-import { CompoundHetCondition } from '@components/conditions/compound-het-condition/compound-het-condition'
+import { CompoundHetCondition } from '@components/conditions/compound-het-condition'
 import { AttributeKinds } from '@service-providers/common'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { saveAttribute } from '@utils/changeAttribute/saveAttribute'
@@ -10,10 +10,9 @@ import { dtreeFunctionsStore } from '../../../attributes/dtree-functions.store'
 import { dtreeStatFuncStore } from '../../../attributes/dtree-stat-func.store'
 import modalsControlStore from '../../modals-control-store'
 import modalsVisibilityStore from '../../modals-visibility-store'
-import { EditModalButtons } from '../ui/edit-modal-buttons'
 import { HeaderModal } from '../ui/header-modal'
 import { ModalBase } from '../ui/modal-base'
-import { SelectModalButtons } from '../ui/select-modal-buttons'
+import { renderAttributeDialogControls } from '../ui/renderAttributeControls'
 
 export const ModalCompoundHet = observer((): ReactElement => {
   const {
@@ -46,7 +45,7 @@ export const ModalCompoundHet = observer((): ReactElement => {
     addAttributeToStep({
       action,
       attributeType: AttributeKinds.FUNC,
-      filters: ['True'],
+      filters: ['Proband'],
       param,
       mode,
     })
@@ -65,25 +64,17 @@ export const ModalCompoundHet = observer((): ReactElement => {
         initialMode={initialMode}
         attributeSubKind={attributeSubKind}
         statFuncStore={dtreeStatFuncStore}
-        controls={({ hasErrors, param, mode }) => {
-          return initialCondition ? (
-            <EditModalButtons
-              handleClose={modalsVisibilityStore.closeModalCompoundHet}
-              handleSaveChanges={() => handleSaveChanges(mode, param)}
-              disabled={hasErrors}
-            />
-          ) : (
-            <SelectModalButtons
-              currentGroup={currentStepGroups}
-              handleClose={modalsVisibilityStore.closeModalCompoundHet}
-              handleModals={handleModals}
-              disabled={hasErrors}
-              handleAddAttribute={action =>
-                handleAddAttribute(action, mode, param)
-              }
-            />
-          )
-        }}
+        controls={({ hasErrors, param, mode }) =>
+          renderAttributeDialogControls({
+            initialCondition,
+            currentStepGroups,
+            onClose: modalsVisibilityStore.closeModalCompoundHet,
+            handleModals,
+            disabled: hasErrors,
+            saveAttribute: () => handleSaveChanges(mode, param),
+            addAttribute: action => handleAddAttribute(action, mode, param),
+          })
+        }
       />
     </ModalBase>
   )
