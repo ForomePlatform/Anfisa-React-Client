@@ -4,7 +4,7 @@ import { FC, MouseEvent, ReactNode } from 'react'
 import cn, { Argument } from 'classnames'
 import { CSSProperties } from 'styled-components'
 
-import { LoaderWrapper } from '@components/loader'
+import { LoaderWrapper } from '@ui/loader'
 
 export interface IButtonProps {
   text?: ReactNode

@@ -23,7 +23,26 @@
 
     &_icon {
       position: relative;
-      top: -4px;
+
+      &_xs {
+        top: -4px;
+      }
+
+      &_s {
+        top: -12px;
+      }
+
+      &_m {
+        top: -20px;
+      }
+
+      &_l {
+        top: -24px;
+      }
+
+      &_xl {
+        top: -32px;
+      }
     }
   }
 }

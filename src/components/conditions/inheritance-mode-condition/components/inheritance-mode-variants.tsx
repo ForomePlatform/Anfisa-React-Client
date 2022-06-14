@@ -3,7 +3,7 @@ import { ChangeEvent, ReactElement } from 'react'
 import { t } from '@i18n'
 import filterStore from '@store/filter'
 import { Checkbox } from '@ui/checkbox/checkbox'
-import { Loader } from '@components/loader'
+import { Loader } from '@ui/loader'
 import { IInheritanceModeVariantsProps } from '../inheritance-mode.interface'
 
 export const InheritanceModeVariants = ({

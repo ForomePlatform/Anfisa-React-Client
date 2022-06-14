@@ -3,14 +3,18 @@ import styles from './loader.module.css'
 import { FC } from 'react'
 import cn, { Argument } from 'classnames'
 
-import { Loader } from '@components/loader/loader'
+import { Loader, TLoaderSize } from '@ui/loader/loader'
 
 interface ILoaderWrapperProps {
+  size?: TLoaderSize
+  color?: 'default' | 'white'
   isLoading: boolean
   className?: Argument
 }
 
 export const LoaderWrapper: FC<ILoaderWrapperProps> = ({
+  size = 'xs',
+  color = 'white',
   isLoading,
   className,
   children,
@@ -28,9 +32,12 @@ export const LoaderWrapper: FC<ILoaderWrapperProps> = ({
         style={{ visibility: !isLoading ? 'hidden' : 'visible' }}
       >
         <Loader
-          size="xs"
-          color="white"
-          className={styles.loaderWrapper__loader_icon}
+          size={size}
+          color={color}
+          className={cn(
+            styles.loaderWrapper__loader_icon,
+            styles[`loaderWrapper__loader_icon_${size}`],
+          )}
         />
       </div>
     </div>
