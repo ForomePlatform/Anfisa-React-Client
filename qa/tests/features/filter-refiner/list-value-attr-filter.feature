@@ -3,21 +3,21 @@ Feature: Filter Refiner, Filter by List-value attributes
 
 
 	Scenario: 01 Open the Filter Refiner page for the secondary dataset
-		Given Anfisa's Main page was open
+		Given Anfisa's Main page was opened
 		When user clicks "PGP3140_wgs_panel_hl" dataset on the left panel
 		And clicks the "Open in viewer" dropdown
 		And clicks the "Filter Refiner" in the "Open in viewer" dropdown
 		Then the "Filter Refiner" should be opened
 
 	Scenario: 02 Open the Filter Refiner page for the primary dataset
-		Given Anfisa's Main page was open
+		Given Anfisa's Main page was opened
 		When user clicks "xl_PGP3140_wgs_NIST-4_2" dataset on the left panel
 		And clicks the "Open in viewer" dropdown
 		And clicks the "Filter Refiner" in the "Open in viewer" dropdown
 		Then the "Filter Refiner" should be opened
 
 	Scenario Outline: 03 Search by attribute value: full value
-		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was open
+		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the "ClinVar_Significance" attribute
 		And attribute's values are displayed in the middle part of the screen
 		And user enters the <Attribute Value> in the Search field
@@ -30,7 +30,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		| protective          |
 
 	Scenario Outline: 04 Search by attribute value: substring
-		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was open
+		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the "Chemicals" attribute
 		And attribute's values are displayed in the middle part of the screen
 		And user enters the <Substr Value> in the Search field
@@ -44,7 +44,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		| zoledronate             | edron          |
 
 	Scenario Outline: 05 Search by attribute value: upper-case
-		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was open
+		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the "ClinVar_Significance_Invitae" attribute
 		And attribute's values are displayed in the middle part of the screen
 		And user enters the <Upper Value> in the Search field
@@ -57,7 +57,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 
 
 	Scenario Outline: 06 Search by attribute value: lower-case
-		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was open
+		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the "Symbol" attribute
 		And attribute's values are displayed in the middle part of the screen
 		And user enters the <Lower Value> in the Search field
@@ -69,7 +69,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		| AASDHPPT          | aasdhppt      |
 
 	Scenario: 07 Search with pagination
-		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was open
+		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the "Symbol" attribute
 		And clicks the "Next Page" button three times
 		And the fourth page is displayed
@@ -78,7 +78,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		And list of values with "10" should be displayed
 
 	Scenario Outline: 08 No pagination
-		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was open
+		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the <Attribute Name> with number of values <= 8
 		Then the pagination should not be present in the middle part of the screen
 		And full list of values should be displayed
@@ -90,7 +90,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 
 
 	Scenario Outline: 09 Pagination
-		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was open
+		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the <Attribute Name> with number of values > 8
 		Then the pagination should be present in the middle part of the screen
 
@@ -100,7 +100,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		| Chromosome       |
 
 	Scenario: 10 Next/Previous pages
-		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was open
+		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the "Symbol" attribute
 		And the pagination is displayed
 		Then user should be able to click the "Next page" button
