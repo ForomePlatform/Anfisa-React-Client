@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react'
 import styled, { css } from 'styled-components'
 
-type TLoaderSize = 'xl' | 'l' | 'm' | 's' | 'xs'
+export type TLoaderSize = 'xl' | 'l' | 'm' | 's' | 'xs'
 
 export interface ILoaderProps {
   className?: string

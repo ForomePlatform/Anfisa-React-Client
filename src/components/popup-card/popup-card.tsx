@@ -8,7 +8,6 @@ import { t } from '@i18n'
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
 import { MainTableDataCy } from '@components/data-testid/main-table.cy'
-import { Loader } from '@components/loader'
 
 export interface IPopupCardProps {
   title: string | JSX.Element
@@ -80,13 +79,8 @@ export const PopupCard = ({
           <Button
             disabled={isApplyDisabled || isLoading}
             size="sm"
-            text={
-              isLoading ? (
-                <Loader size="xs" color="white" />
-              ) : (
-                applyText || t('general.apply')
-              )
-            }
+            text={applyText || t('general.apply')}
+            isLoading={isLoading}
             className="ml-3"
             onClick={onApply}
             dataTestId={MainTableDataCy.applyButton}

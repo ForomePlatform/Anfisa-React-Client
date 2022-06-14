@@ -9,7 +9,6 @@ import mainTableStore from '@store/ws/main-table.store'
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
 import { MainTableDataCy } from './data-testid/main-table.cy'
-import { Loader } from './loader'
 interface IExportReportButtonProps {
   isOpen?: boolean
   refEl: HTMLAnchorElement
@@ -25,13 +24,8 @@ export const ExportReportButton = observer(
     return (
       <Button
         disabled={disabled}
-        text={
-          operationsStore.isExportingReport ? (
-            <Loader size="xs" color="white" className="px-2 pb-2.5" />
-          ) : (
-            t('general.exportReport')
-          )
-        }
+        text={t('general.exportReport')}
+        isLoading={operationsStore.isExportingReport}
         dataTestId={MainTableDataCy.exportReport}
         refEl={refEl}
         size="xs"
