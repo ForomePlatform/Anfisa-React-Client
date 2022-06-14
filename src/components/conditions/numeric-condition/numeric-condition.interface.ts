@@ -4,11 +4,11 @@ import {
   INumericPropertyStatus,
   TNumericConditionBounds,
 } from '@service-providers/common/common.interface'
+import { ICommonControlProps } from '../conditions.interface'
 
-export interface INumericConditionControlsProps {
+export interface INumericConditionControlsProps
+  extends Omit<ICommonControlProps, 'mode'> {
   value: TNumericConditionBounds
-  hasErrors: boolean
-  clearValue: () => void
 }
 
 export interface INumericConditionProps {

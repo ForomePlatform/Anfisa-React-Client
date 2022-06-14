@@ -86,12 +86,18 @@ export class MainTable {
       : this.wsList.data?.totalCounts
   }
 
-  get fixedStatAmount() {
-    const variantCounts = this.statAmount?.[0] ?? null
-    const dnaVariantsCounts = this.statAmount?.[1] ?? null
-    const transcriptsCounts = this.statAmount?.[2] ?? null
+  public get fixedStatAmount() {
+    const variantCounts = this.statAmount?.[0] ?? undefined
+    const dnaVariantsCounts = this.statAmount?.[1] ?? undefined
+    const transcriptsCounts = this.statAmount?.[2] ?? undefined
 
     return { variantCounts, dnaVariantsCounts, transcriptsCounts }
+  }
+
+  public get variantsForExport(): number | undefined {
+    return datasetStore.isXL
+      ? filterStore.stat.filteredCounts?.variants
+      : this.fixedStatAmount.variantCounts
   }
 
   // update zone tags if smth was added in drawer

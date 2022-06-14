@@ -2,11 +2,11 @@ import { ReactElement } from 'react'
 
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import { TVariant } from '@service-providers/common'
+import { ICommonControlProps } from '../conditions.interface'
 
-export interface IEnumConditionControlsProps {
+export interface IEnumConditionControlsProps
+  extends Omit<ICommonControlProps, 'hasErrors'> {
   value: string[]
-  mode: ModeTypes | undefined
-  clearValue: () => void
 }
 
 export interface IEnumConditionProps {
