@@ -22,7 +22,7 @@ import mainTableStore from '@store/ws/main-table.store'
 import variantStore from '@store/ws/variant'
 import zoneStore from '@store/ws/zone'
 import { Routes } from '@router/routes.enum'
-import { Loader } from '@components/loader'
+import { Loader } from '@ui/loader'
 import { NoResultsFound } from '@components/no-results-found'
 import { TTabReport } from '@service-providers/dataset-level'
 
@@ -63,7 +63,7 @@ export const Table = observer(
       zoneStore
 
     const defaultColumn = {
-      width: variantStore.drawerVisible
+      width: variantStore.isDrawerVisible
         ? 190
         : (window.innerWidth ||
             document.documentElement.clientWidth ||
@@ -107,9 +107,8 @@ export const Table = observer(
         if (window.getSelection()?.toString() || datasetStore.isXL) return
         mainTableStore.setOpenedVariantPageNo(index)
 
-        if (!variantStore.drawerVisible) {
+        if (!variantStore.isDrawerVisible) {
           columnsStore.setColumns(columnsStore.getColumnsForOpenDrawer())
-          variantStore.setDsName(params.get('ds') ?? '')
           variantStore.setDrawerVisible(true)
         }
 
@@ -118,8 +117,6 @@ export const Table = observer(
           : index
 
         variantStore.setIndex(idx)
-
-        variantStore.fetchVarinatInfoAsync()
 
         routeToVariant(idx)
 
@@ -218,7 +215,7 @@ export const Table = observer(
             onClick={() => handleOpenVariant(row)}
             className={cn(
               'cursor-pointer flex items-center tr',
-              variantStore.drawerVisible &&
+              variantStore.isDrawerVisible &&
                 isRowSelected(row.index, variantStore.index)
                 ? 'bg-blue-bright text-white'
                 : 'text-black hover:bg-blue-light',

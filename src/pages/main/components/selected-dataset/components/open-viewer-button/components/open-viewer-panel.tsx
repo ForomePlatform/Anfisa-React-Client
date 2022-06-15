@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import { useHistory } from 'react-router-dom'
 
-import { t } from '@i18n'
+import { t, TI18nKey } from '@i18n'
 import datasetStore from '@store/dataset/dataset'
 import dirInfoStore from '@store/dirinfo'
 import filterStore from '@store/filter'
@@ -45,7 +45,7 @@ export const OpenViewerPanel = ({ close }: IPopperMenuProps): ReactElement => {
             data-testid={DatasetInfoDataCy.viewerOption}
             onClick={() => goToPage(pageName)}
           >
-            {t(`home.${pageName}`)}
+            {t(`home.${pageName}` as TI18nKey)}
           </PopperMenuItem>
         )
       })}

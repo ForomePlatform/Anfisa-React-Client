@@ -177,7 +177,10 @@ export class FilterStore {
         conditions: this._conditions,
         units: [this.attributeNameToAdd],
       })
-    } else if (this._selectedConditionIndex >= 0) {
+    } else if (
+      this._selectedConditionIndex >= 0 &&
+      this._conditions[this._selectedConditionIndex]
+    ) {
       return toJS({
         datasetName: this.datasetName,
         conditions: this._conditions.slice(0, this._selectedConditionIndex),

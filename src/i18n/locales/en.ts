@@ -26,6 +26,7 @@ export const en = {
     closeWindow: 'Close window',
     creaitionIsInProcess: 'Dataset creation has not been finished yet',
     selectPreset: 'Select Preset',
+    plusAdd: '+ Add',
   },
   header: {
     version: {
@@ -183,9 +184,11 @@ export const en = {
     paternal: 'Paternal',
     geneAnnotation: 'Gene annotation',
     tags: 'Tags',
-    tagsFor: 'Tags for',
+    addCustomTag: 'Add custom tag',
+    tagsFor: 'Tags for {title}',
+    saveTags: 'Save tags',
     notes: 'Notes',
-    notesFor: 'Notes for',
+    notesFor: 'Notes for {title}',
     tagExists: 'That tag already exists',
     showSelectionOnly: 'Show selection only',
     saveNote: 'Save note',
@@ -202,6 +205,9 @@ export const en = {
     includeZero: 'Include 0 ({ count } variants)',
     center: 'Center',
     distance: 'Distance',
+  },
+  condition: {
+    noFilters: 'There are no filters to show',
   },
   enumCondition: {
     showZeroVariants: 'Show zero variants',
@@ -291,7 +297,6 @@ export const en = {
     addStepBefore: 'Add Step Before',
     addStepAfter: 'Add Step After',
     fn: 'fn',
-    noFilters: 'There are no filters to show',
     all: 'All',
     not: 'Not',
     reset: 'Reset',

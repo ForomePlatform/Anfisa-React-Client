@@ -2,8 +2,8 @@ import { ReactElement } from 'react'
 
 import { t } from '@i18n'
 import { Checkbox } from '@ui/checkbox/checkbox'
+import { Loader } from '@ui/loader'
 import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
-import { Loader } from '@components/loader'
 
 interface IDisabledVariantsProps {
   isFetching: boolean
