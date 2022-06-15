@@ -1,6 +1,13 @@
 import styles from './note-popover.module.css'
 
-import { ReactElement, ReactNode, useEffect, useMemo, useState } from 'react'
+import {
+  ChangeEvent,
+  ReactElement,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useState,
+} from 'react'
 
 import { useResizeTextAreaHeight } from '@core/hooks/use-resize-text-area-height'
 import { t } from '@i18n'
@@ -14,7 +21,9 @@ interface INotePopoverProps
   extends Pick<IPopoverProps, 'isOpen' | 'anchorEl' | 'onClose'> {
   noteText?: string
   recordTitle?: ReactNode
+  changeValue: (text: string) => void
   onSave: (noteText: string | null) => void
+  onClose: (e?: boolean) => void
 }
 
 export const NotePopover = ({
@@ -23,6 +32,7 @@ export const NotePopover = ({
   isOpen,
   onSave,
   onClose,
+  changeValue,
   ...popoverProps
 }: INotePopoverProps): ReactElement => {
   const textareaRef = useResizeTextAreaHeight()
@@ -35,6 +45,13 @@ export const NotePopover = ({
       setValue(noteText ?? '')
     }
   }, [isOpen, noteText])
+
+  const changeTextNote = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const text = e.target.value
+
+    setValue(text)
+    changeValue(text)
+  }
 
   return (
     <DrawerPopover
@@ -50,7 +67,7 @@ export const NotePopover = ({
         ref={textareaRef}
         placeholder={t('variant.textAboutSomething')}
         value={value}
-        onChange={event => setValue(event.target.value)}
+        onChange={changeTextNote}
         className={styles.notePopover__textarea}
       />
       {error && <div className={styles.notePopover__error}>{error}</div>}
@@ -63,7 +80,7 @@ export const NotePopover = ({
         />
         <Button
           text={t('general.cancel')}
-          onClick={onClose}
+          onClick={() => onClose(false)}
           variant="secondary"
           className="mr-2"
         />
