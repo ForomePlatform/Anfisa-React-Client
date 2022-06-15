@@ -26,43 +26,41 @@ export const SolutionControlButton = ({
   isFetchingSolutions,
   onDeleteClick,
   ...buttonProps
-}: ISolutionControlButtonProps): ReactElement => {
-  return (
-    <button
-      className={cn(styles.solutionControlButton, className)}
-      {...buttonProps}
+}: ISolutionControlButtonProps): ReactElement => (
+  <button
+    className={cn(styles.solutionControlButton, className)}
+    {...buttonProps}
+  >
+    <span className={styles.solutionControlButton__label}>
+      {isFetchingSolutions ? (
+        <Loader size="xs" className="pb-2" />
+      ) : (
+        solutionName || t('solutionControl.selectSolution', { controlName })
+      )}
+    </span>
+    <span
+      className={cn(
+        styles.solutionControlButton__icon,
+        isDeleteShown && styles.solutionControlButton__icon_delete,
+      )}
     >
-      <span className={styles.solutionControlButton__label}>
-        {isFetchingSolutions ? (
-          <Loader size="xs" className="pb-2" />
-        ) : (
-          solutionName || t('solutionControl.selectSolution', { controlName })
-        )}
-      </span>
-      <span
-        className={cn(
-          styles.solutionControlButton__icon,
-          isDeleteShown && styles.solutionControlButton__icon_delete,
-        )}
-      >
-        {isDeleteShown ? (
-          <Icon
-            name="Delete"
-            size={16}
-            onClick={event => {
-              event.stopPropagation()
-              onDeleteClick?.()
-            }}
-          />
-        ) : (
-          <span
-            className={cn(
-              styles.solutionControlButton__arrow,
-              isOpen && styles.solutionControlButton__arrow_open,
-            )}
-          />
-        )}
-      </span>
-    </button>
-  )
-}
+      {isDeleteShown ? (
+        <Icon
+          name="Delete"
+          size={16}
+          onClick={event => {
+            event.stopPropagation()
+            onDeleteClick?.()
+          }}
+        />
+      ) : (
+        <span
+          className={cn(
+            styles.solutionControlButton__arrow,
+            isOpen && styles.solutionControlButton__arrow_open,
+          )}
+        />
+      )}
+    </span>
+  </button>
+)

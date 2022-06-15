@@ -34,11 +34,11 @@ class ZoneStore {
     makeAutoObservable(this)
   }
 
-  setZoneIndex(zone: [string, string[]], index: number): void {
+  public setZoneIndex(zone: [string, string[]], index: number): void {
     this.zone[index] = zone
   }
 
-  addZone(zone: [string, string[], false?]) {
+  public addZone(zone: [string, string[], false?]) {
     if (zone[1].length === 0) {
       this.zone = this.zone.filter(item => item[0] !== zone[0])
 
@@ -58,7 +58,7 @@ class ZoneStore {
       : (this.zone = [...this.zone, zone])
   }
 
-  removeZone(zone: [string, string[]]) {
+  public removeZone(zone: [string, string[]]) {
     this.zone.map((item, index) => {
       if (item[0] === zone[0]) {
         this.setZoneIndex(zone, index)
@@ -72,7 +72,7 @@ class ZoneStore {
     this.zone = []
   }
 
-  async fetchZoneListAsync(zone: string) {
+  public async fetchZoneListAsync(zone: string) {
     const zoneList = (await wsDatasetProvider.getZoneList({
       ds: datasetStore.datasetName,
       zone,
@@ -85,7 +85,7 @@ class ZoneStore {
     })
   }
 
-  async fetchZoneSamplesAsync() {
+  public async fetchZoneSamplesAsync() {
     const zoneList = (await wsDatasetProvider.getZoneList({
       ds: datasetStore.datasetName,
       zone: 'Has_Variant',
@@ -96,7 +96,7 @@ class ZoneStore {
     })
   }
 
-  async fetchZoneTagsAsync() {
+  public async fetchZoneTagsAsync() {
     const tagSelect = await wsDatasetProvider.getTagSelect({
       ds: datasetStore.datasetName,
     })
@@ -106,11 +106,11 @@ class ZoneStore {
     })
   }
 
-  addGene = (gene: string) => {
+  public addGene = (gene: string) => {
     this.localGenes = [...this.localGenes, gene]
   }
 
-  removeGene = (geneName: string, type: string) => {
+  public removeGene = (geneName: string, type: string) => {
     this.localGenes = this.localGenes.filter(gene => geneName !== gene)
 
     if (type === 'fast') {
@@ -120,15 +120,15 @@ class ZoneStore {
     }
   }
 
-  unselectAllGenes = () => {
+  public unselectAllGenes = () => {
     this.localGenes = []
   }
 
-  addGenesList = (gene: string) => {
+  public addGenesList = (gene: string) => {
     this.localGenesList = [...this.localGenesList, gene]
   }
 
-  removeGenesList = (geneName: string, type: string) => {
+  public removeGenesList = (geneName: string, type: string) => {
     this.localGenesList = this.localGenesList.filter(
       genesList => geneName !== genesList,
     )
@@ -140,15 +140,15 @@ class ZoneStore {
     }
   }
 
-  unselectAllGenesList() {
+  public unselectAllGenesList = () => {
     this.localGenesList = []
   }
 
-  addSample = (sample: string) => {
+  public addSample = (sample: string) => {
     this.localSamples = [...this.localSamples, sample]
   }
 
-  removeSample = (sample: string, type: string) => {
+  public removeSample = (sample: string, type: string) => {
     this.localSamples = this.localSamples.filter(
       sampleItem => sampleItem !== sample,
     )
@@ -162,7 +162,7 @@ class ZoneStore {
     this.paintSelectedSamples()
   }
 
-  paintSelectedSamples() {
+  public paintSelectedSamples() {
     const sampleTypes = new Set(
       this.selectedSamples.map(sample => sample.slice(0, 7).trim()),
     )
@@ -174,7 +174,7 @@ class ZoneStore {
     this.isFather = sampleTypes.has('father')
   }
 
-  unselectAllSamples = (type?: string) => {
+  public unselectAllSamples = (type?: string) => {
     this.localSamples = []
 
     if (type === 'clearAll') {
@@ -184,11 +184,11 @@ class ZoneStore {
     }
   }
 
-  addLocalTag = (tagName: string) => {
+  public addLocalTag = (tagName: string) => {
     this.localTags = [...this.localTags, tagName]
   }
 
-  removeLocalTag = (tagName: string, type: string) => {
+  public removeLocalTag = (tagName: string, type: string) => {
     this.localTags = this.localTags.filter(tag => tag !== tagName)
 
     tagName === '_note' && this.setModeWithNotes(false)
@@ -200,13 +200,13 @@ class ZoneStore {
     }
   }
 
-  unselectAllTags() {
+  public unselectAllTags = () => {
     this.localTags = []
     this.resetModeNOT()
     this.resetModeWithNotes()
   }
 
-  createSelectedZoneFilter(type: string) {
+  public createSelectedZoneFilter(type: string) {
     if (type === 'isGenes') this.selectedGenes = this.localGenes
 
     if (type === 'isGenesList') this.selectedGenesList = this.localGenesList
@@ -216,7 +216,7 @@ class ZoneStore {
     if (type === 'isTags') this.selectedTags = this.localTags
   }
 
-  syncSelectedAndLocalFilters(type: string) {
+  public syncSelectedAndLocalFilters(type: string) {
     if (type === 'isGenes') this.localGenes = this.selectedGenes
 
     if (type === 'isGenesList') this.localGenesList = this.selectedGenesList
@@ -226,7 +226,7 @@ class ZoneStore {
     if (type === 'isTags') this.localTags = this.selectedTags
   }
 
-  resetAllSelectedItems() {
+  public resetAllSelectedItems() {
     this.genes = []
     this.genesList = []
     this.samples = []
@@ -248,23 +248,23 @@ class ZoneStore {
     this.modeWithNotesSubmitted = false
   }
 
-  setModeNOT(value: boolean) {
+  public setModeNOT(value: boolean) {
     this.isModeNOT = value
   }
 
-  resetModeNOT() {
+  public resetModeNOT() {
     this.isModeNOT = this.modeNotSubmitted
   }
 
-  setModeWithNotes(value: boolean) {
+  public setModeWithNotes(value: boolean) {
     this.isModeWithNotes = value
   }
 
-  resetModeWithNotes() {
+  public resetModeWithNotes() {
     this.isModeWithNotes = this.modeWithNotesSubmitted
   }
 
-  submitTagsMode() {
+  public submitTagsMode() {
     this.modeNotSubmitted = this.isModeNOT
     this.modeWithNotesSubmitted = this.isModeWithNotes
   }

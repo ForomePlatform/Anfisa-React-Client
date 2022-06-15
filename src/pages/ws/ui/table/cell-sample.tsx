@@ -2,7 +2,7 @@ import { ReactElement } from 'react'
 import cn from 'classnames'
 
 import { useToggle } from '@core/hooks/use-toggle'
-import zoneStore from '@store/ws/zone'
+import zoneStore from '@store/ws/zone.store'
 import { IQualities } from './cell-samples'
 import { ModalTooltip } from './modal-tooltip'
 

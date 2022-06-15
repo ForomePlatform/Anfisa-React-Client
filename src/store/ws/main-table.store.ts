@@ -4,7 +4,7 @@ import datasetStore from '@store/dataset/dataset'
 import filterStore from '@store/filter'
 import filterPresetsStore from '@store/filter-presets'
 import variantStore from '@store/ws/variant'
-import zoneStore from '@store/ws/zone'
+import zoneStore from '@store/ws/zone.store'
 import {
   TCondition,
   TItemsCount,

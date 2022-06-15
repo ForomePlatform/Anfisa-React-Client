@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
-import zoneStore from '@store/ws/zone'
+import zoneStore from '@store/ws/zone.store'
 import { ZoneButtons } from './components/zone-buttons'
 import { ZonePopover } from './components/zone-popover'
 

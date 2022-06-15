@@ -7,7 +7,7 @@ import datasetStore from '@store/dataset/dataset'
 import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
 import mainTableStore from '@store/ws/main-table.store'
-import zoneStore from '@store/ws/zone'
+import zoneStore from '@store/ws/zone.store'
 import { Routes } from '@router/routes.enum'
 import {
   ICsvExportArguments,

@@ -17,21 +17,19 @@ export const SelectSolutionPopover = ({
   onApply,
   onClose,
   ...popoverProps
-}: ISelectPresetPopoverProps) => {
-  return (
-    <Popover onClose={onClose} {...popoverProps}>
-      <section className={styles.solutionControlCard}>
-        <MenuList className={styles.solutionControlCard__list} wrap="nowrap">
-          {solutions?.map(({ name }) => (
-            <MenuListItem
-              key={name}
-              label={name}
-              isSelected={selectedPreset === name}
-              onClick={() => onApply(name)}
-            />
-          ))}
-        </MenuList>
-      </section>
-    </Popover>
-  )
-}
+}: ISelectPresetPopoverProps) => (
+  <Popover onClose={onClose} {...popoverProps}>
+    <section className={styles.solutionControlCard}>
+      <MenuList className={styles.solutionControlCard__list} wrap="nowrap">
+        {solutions?.map(({ name }) => (
+          <MenuListItem
+            key={name}
+            label={name}
+            isSelected={selectedPreset === name}
+            onClick={() => onApply(name)}
+          />
+        ))}
+      </MenuList>
+    </section>
+  </Popover>
+)
