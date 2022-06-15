@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 import { makeAutoObservable } from 'mobx'
 
 import { ViewTypeEnum } from '@core/enum/view-type-enum'
@@ -24,9 +23,9 @@ class ColumnsStore {
   }
 
   get columnDataListForRender() {
-    const { drawerVisible } = variantStore
+    const { isDrawerVisible } = variantStore
 
-    return drawerVisible
+    return isDrawerVisible
       ? this.collapsedSelectedDataColumns
       : this.selectedDataColumns
   }
@@ -61,7 +60,7 @@ class ColumnsStore {
   public clearAllColumns = () => {
     const clearedColumns = this.getExtendedColumns.map(column => ({
       title: column.title,
-      hidden: columnsToIgnore.includes(column.title) ? false : true,
+      hidden: !columnsToIgnore.includes(column.title),
     }))
 
     this.setColumns(clearedColumns)
@@ -89,11 +88,7 @@ class ColumnsStore {
   }
 
   getColumnsForOpenDrawer() {
-    const columnsForOpenDrawer = this.getExtendedColumns
-      .filter(column => !column.hidden)
-      .splice(0, 2)
-
-    return columnsForOpenDrawer
+    return this.getExtendedColumns.filter(column => !column.hidden).splice(0, 2)
   }
 
   get getExtendedColumns() {
@@ -101,12 +96,10 @@ class ColumnsStore {
       return this.columns
     }
 
-    const extendedColumns = this.columns.map(column => ({
+    return this.columns.map(column => ({
       title: column,
       hidden: false,
     }))
-
-    return extendedColumns
   }
 }
 

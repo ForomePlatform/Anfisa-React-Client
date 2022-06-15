@@ -12,7 +12,7 @@ export const CellVariant = observer(({ cell }: CellI): ReactElement => {
   const rowIndex = get(cell, 'row.index', null)
 
   const selectedRow =
-    variantStore.drawerVisible && isRowSelected(rowIndex, variantStore.index)
+    variantStore.isDrawerVisible && isRowSelected(rowIndex, variantStore.index)
 
   return (
     <div className="leading-18px">

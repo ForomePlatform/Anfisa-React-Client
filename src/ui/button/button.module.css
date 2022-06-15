@@ -35,6 +35,10 @@
     padding: 2px 14px;
   }
 
+  &_xs&_none {
+    padding: 2px;
+  }
+
   &_sm {
     padding: 4px 22px;
   }
@@ -43,12 +47,20 @@
     padding: 4px 18px;
   }
 
+  &_sm&_none {
+    padding: 4px;
+  }
+
   &_md {
     padding: 4px 30px;
   }
 
   &_md&_dense {
     padding: 4px 26px;
+  }
+
+  &_md&_none {
+    padding: 4px;
   }
 
   &_primary-dark {
