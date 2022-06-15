@@ -1,43 +1,29 @@
-import styles from './variants-table.module.css'
-
-import { ReactElement, useRef } from 'react'
+import { ReactElement, useMemo, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 
+import { ViewTypeEnum } from '@core/enum/view-type-enum'
 import columnsStore from '@store/ws/columns'
-import mainTableStore from '@store/ws/main-table.store'
+import { VariantsTableLayout } from './components'
+import { useTableLayout } from './variants-table.hooks'
+import { getColumns } from './variants-table.utils'
 
 export const VariantsTable = observer((): ReactElement => {
-  const rootRef = useRef<HTMLDivElement>(null)
+  const [rootEl, setRootEl] = useState<HTMLDivElement | null>(null)
 
-  const { tabReport } = mainTableStore
-  const { selectedColumns } = columnsStore
+  const { selectedColumns, viewType } = columnsStore
+
+  const columns = useMemo(() => getColumns(selectedColumns), [selectedColumns])
+  const layout = useTableLayout(rootEl, columns, true)
 
   return (
-    <div ref={rootRef}>
-      <table className={styles.table}>
-        <thead className={styles.table__head}>
-          <tr>
-            {selectedColumns.map(column => (
-              <th key={column} className={styles.table__th}>
-                {column}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {tabReport.pages.map(page =>
-            page.data?.map(row => (
-              <tr key={row._no} className={styles.table__row}>
-                {selectedColumns.map(column => (
-                  <td key={column} className={styles.table__td}>
-                    {column}
-                  </td>
-                ))}
-              </tr>
-            )),
-          )}
-        </tbody>
-      </table>
+    <div ref={setRootEl}>
+      {layout && (
+        <VariantsTableLayout
+          columns={columns}
+          layout={layout}
+          isCompact={viewType === ViewTypeEnum.Compact}
+        />
+      )}
     </div>
   )
 })

@@ -1,0 +1,55 @@
+.samples {
+  @apply typography-xxs;
+
+  && {
+    padding: 0;
+    overflow: visible;
+  }
+
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+
+  &__sample {
+    position: relative;
+    flex: 0 0 33.333%;
+    max-width: 33.333%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 theme("spacing.4");
+
+    &_NA24149 {
+      background: theme("colors.orange.light");
+    }
+
+    &_NA24143 {
+      background: theme("colors.yellow.light");
+    }
+
+    &_NA24385 {
+      background: theme("colors.purple.light");
+    }
+  }
+
+  &__text {
+    max-width: 100%;
+    flex: 1 0 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__tooltip {
+    @apply popup-card;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: absolute;
+    z-index: 10;
+    left: 0;
+    top: 0;
+    height: 100%;
+    padding: 0 theme("spacing.4");
+  }
+}

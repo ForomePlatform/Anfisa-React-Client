@@ -34,6 +34,16 @@ class ZoneStore {
     makeAutoObservable(this)
   }
 
+  get preparedSamples(): string[] {
+    return this.selectedSamples
+      .map(sample => {
+        const match = sample.match(/^\S+\s+\[([^\]]+)\]$/)
+
+        return match ? match[1] : ''
+      })
+      .filter(Boolean)
+  }
+
   setZoneIndex(zone: [string, string[]], index: number): void {
     this.zone[index] = zone
   }

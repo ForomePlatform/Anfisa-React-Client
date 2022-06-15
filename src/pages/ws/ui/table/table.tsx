@@ -24,11 +24,11 @@ import zoneStore from '@store/ws/zone'
 import { Routes } from '@router/routes.enum'
 import { Loader } from '@components/loader'
 import { NoResultsFound } from '@components/no-results-found'
-import { ITabReport } from '@service-providers/dataset-level/dataset-level.interface'
+import { TTabReport } from '@service-providers/dataset-level'
 
 interface ITableProps {
   columns: any[]
-  data: ITabReport[]
+  data: TTabReport
 }
 
 interface PropsRow {
