@@ -40,7 +40,6 @@ export const QueryBuilderResults = observer(
       const fixedNextStepIndex = hasEmptyStep
         ? nextStepIndex - 1
         : nextStepIndex
-
       dtreeStore.openModalViewVariants(fixedNextStepIndex)
     }
 
@@ -57,7 +56,7 @@ export const QueryBuilderResults = observer(
               onClick={() => openTableModal(true)}
               text={t('dtree.viewReturnedVariants')}
               variant="secondary"
-              className="ml-auto  min-h-32"
+              className="ml-auto min-h-32"
             />
           )}
 

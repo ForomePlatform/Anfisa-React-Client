@@ -53,7 +53,7 @@ export const DisabledVariantsAmount = observer(
         ))
       ) : (
         <div className="flex justify-center items-center text-grey-blue">
-          {t('dtree.noFilters')}
+          {t('condition.noFilters')}
         </div>
       )}
     </div>

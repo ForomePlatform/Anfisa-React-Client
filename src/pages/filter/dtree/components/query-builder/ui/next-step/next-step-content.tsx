@@ -77,7 +77,7 @@ export const NextStepContent = observer(
           className="text-14 text-blue-bright font-normal pt-1 cursor-pointer hover:text-blue-dark"
           onClick={openModal}
         >
-          {t('dtree.addAttribute')}
+          {t('condition.addAttribute')}
         </div>
       </div>
     )
