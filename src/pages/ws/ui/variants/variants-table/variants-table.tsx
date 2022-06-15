@@ -1,29 +1,37 @@
-import { ReactElement, useMemo, useState } from 'react'
-import { observer } from 'mobx-react-lite'
+import { ReactElement, useRef } from 'react'
 
-import { ViewTypeEnum } from '@core/enum/view-type-enum'
-import columnsStore from '@store/ws/columns'
-import { VariantsTableLayout } from './components'
+import variantStore from '@store/ws/variant'
+import { IVariantsTableColumn, VariantsTableLayout } from './components'
 import { useTableLayout } from './variants-table.hooks'
-import { getColumns } from './variants-table.utils'
 
-export const VariantsTable = observer((): ReactElement => {
-  const [rootEl, setRootEl] = useState<HTMLDivElement | null>(null)
+interface IVariantsTableProps {
+  columns: IVariantsTableColumn[]
+  selectedVariantNo?: number
+  isCompact?: boolean
+}
 
-  const { selectedColumns, viewType } = columnsStore
+export const VariantsTable = ({
+  columns,
+  isCompact,
+  selectedVariantNo,
+}: IVariantsTableProps): ReactElement => {
+  const rootRef = useRef<HTMLDivElement>(null)
 
-  const columns = useMemo(() => getColumns(selectedColumns), [selectedColumns])
-  const layout = useTableLayout(rootEl, columns, true)
+  const layout = useTableLayout(rootRef, columns, true)
 
   return (
-    <div ref={setRootEl}>
+    <div ref={rootRef}>
       {layout && (
         <VariantsTableLayout
           columns={columns}
           layout={layout}
-          isCompact={viewType === ViewTypeEnum.Compact}
+          isCompact={isCompact}
+          selectedVariantNo={selectedVariantNo}
+          onRowClick={row => {
+            variantStore.showVariant(row._no)
+          }}
         />
       )}
     </div>
   )
-})
+}

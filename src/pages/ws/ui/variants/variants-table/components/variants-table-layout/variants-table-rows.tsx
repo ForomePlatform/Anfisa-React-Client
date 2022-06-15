@@ -1,52 +1,47 @@
 import styles from './variants-table-layout.module.css'
 
-import React from 'react'
-import cn from 'classnames'
+import { useLayoutEffect, useRef } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import mainTableStore from '@store/ws/main-table.store'
-import zoneStore from '@store/ws/zone'
 import { IVariantsTableLayoutProps } from './variants-table-layout.interface'
+import { VariantsTableRow } from './variants-table-row'
 
 export const VariantsTableRows = observer(
-  ({ columns, layout, isCompact, onRowClick }: IVariantsTableLayoutProps) => {
+  ({
+    columns,
+    layout,
+    isCompact,
+    onRowClick,
+    selectedVariantNo,
+  }: IVariantsTableLayoutProps) => {
     const { tabReport } = mainTableStore
-    const { preparedSamples } = zoneStore
+
+    const bodyRef = useRef<HTMLTableSectionElement>(null)
+
+    useLayoutEffect(() => {
+      if (bodyRef.current && selectedVariantNo !== undefined) {
+        bodyRef.current
+          .querySelector(`tr[data-no="${selectedVariantNo}"]`)
+          ?.scrollIntoView({
+            block: 'nearest',
+          })
+      }
+    }, [selectedVariantNo])
 
     return (
-      <tbody className={styles.table__body}>
+      <tbody ref={bodyRef} className={styles.table__body}>
         {tabReport.pages.map(page =>
           page.data?.map(row => (
-            <tr
+            <VariantsTableRow
               key={row._no}
-              className={cn(
-                styles.table__row,
-                isCompact && styles.table__row_compact,
-              )}
-              onClick={onRowClick ? () => onRowClick?.(row) : undefined}
-            >
-              {columns.map(({ name, component: Component }, index) => {
-                const isSticky = typeof layout.stickyPos[index] === 'number'
-
-                return (
-                  <Component
-                    key={name}
-                    className={cn(
-                      styles.table__td,
-                      isSticky && styles.table__td_sticky,
-                    )}
-                    style={
-                      isSticky
-                        ? { left: `${layout?.stickyPos[index]}px` }
-                        : undefined
-                    }
-                    row={row}
-                    isRowSelected={false}
-                    samples={preparedSamples}
-                  />
-                )
-              })}
-            </tr>
+              row={row}
+              columns={columns}
+              layout={layout}
+              onRowClick={onRowClick}
+              isCompact={isCompact}
+              isSelected={row._no === selectedVariantNo}
+            />
           )),
         )}
       </tbody>

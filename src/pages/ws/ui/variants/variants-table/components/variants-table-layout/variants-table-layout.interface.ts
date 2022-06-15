@@ -24,4 +24,5 @@ export interface IVariantsTableLayoutProps {
   layout: ITableLayout
   isCompact?: boolean
   onRowClick?: (row: ITabReportRecord) => void
+  selectedVariantNo?: number
 }

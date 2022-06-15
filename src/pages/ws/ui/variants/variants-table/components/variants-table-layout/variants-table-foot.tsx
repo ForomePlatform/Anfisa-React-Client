@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import mainTableStore from '@store/ws/main-table.store'
-import { Loader } from '@components/loader'
+import { Loader } from '@ui/loader'
 
 interface IVariantsTableFootProps {
   colSpan: number

@@ -66,3 +66,5 @@ export const columnDefs: IVariantsTableColumn[] = [
     width: 150,
   },
 ]
+
+export const columnsForDrawer = columnDefs.slice(0, 2)

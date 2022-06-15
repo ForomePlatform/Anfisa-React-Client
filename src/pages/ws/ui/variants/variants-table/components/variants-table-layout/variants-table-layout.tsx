@@ -11,6 +11,7 @@ export const VariantsTableLayout = ({
   layout,
   isCompact,
   onRowClick,
+  selectedVariantNo,
 }: IVariantsTableLayoutProps) => {
   return (
     <table className={styles.table} style={{ width: `${layout.width}px` }}>
@@ -21,6 +22,7 @@ export const VariantsTableLayout = ({
         layout={layout}
         isCompact={isCompact}
         onRowClick={onRowClick}
+        selectedVariantNo={selectedVariantNo}
       />
       <VariantsTableFoot colSpan={columns.length} />
     </table>

@@ -1,6 +1,5 @@
 .variants {
   position: relative;
-  min-width: 380px;
   overflow-y: scroll;
   overflow-x: auto;
 }

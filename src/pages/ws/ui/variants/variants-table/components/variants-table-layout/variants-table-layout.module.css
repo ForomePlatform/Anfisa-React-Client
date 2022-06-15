@@ -2,6 +2,7 @@
   min-width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
+  color: theme("colors.black");
 
   &__head {
     @apply typography-s;
@@ -36,10 +37,14 @@
 
   &__row {
     cursor: pointer;
-    border-bottom: 1px solid theme("colors.grey.light");
 
-    &:hover {
+    &:not(&_selected):hover {
       background: theme("colors.blue.light");
+    }
+
+    &_selected {
+      background: theme("colors.blue.bright");
+      color: theme("colors.white");
     }
   }
 
@@ -49,14 +54,11 @@
     vertical-align: middle;
     padding: 0 theme("spacing.4");
     height: 80px;
+    border-bottom: 1px solid theme("colors.grey.light");
   }
 
   &__row_compact &__td {
     height: 60px;
-  }
-
-  &__row:hover &__td_sticky {
-    background: theme("colors.blue.light");
   }
 
   &__th,
@@ -66,6 +68,14 @@
       z-index: 10;
       background: theme("colors.white");
     }
+  }
+
+  &__row_selected &__td_sticky {
+    background: theme("colors.blue.bright");
+  }
+
+  &__row:hover &__td_sticky {
+    background: theme("colors.blue.light");
   }
 
   &__loading-trigger {

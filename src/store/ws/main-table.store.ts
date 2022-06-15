@@ -106,7 +106,7 @@ export class MainTable {
 
     const wsTags = await wsDatasetProvider.wsTags({
       ds: datasetStore.datasetName,
-      rec: variantStore.index,
+      rec: variantStore.variantNo,
     })
 
     runInAction(() => {

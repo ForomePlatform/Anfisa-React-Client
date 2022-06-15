@@ -6,6 +6,5 @@ export interface ICellProps {
   className?: string
   style?: CSSProperties
   row: ITabReportRecord
-  isRowSelected: boolean
-  samples: string[]
+  isRowSelected?: boolean
 }
