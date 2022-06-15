@@ -7,9 +7,8 @@ import {
 } from 'react-beautiful-dnd'
 import { observer } from 'mobx-react-lite'
 
-import columnsStore from '@store/ws/columns'
 import { MainTableDataCy } from '@components/data-testid/main-table.cy'
-import { ColumnListStore } from './columns-list.store'
+import columnListStore from './columns-list.store'
 import { ColumnNameItem } from './components/column-name-item'
 
 const getItemStyle = (draggableStyle: any) => ({
@@ -18,8 +17,6 @@ const getItemStyle = (draggableStyle: any) => ({
   left: '0px !important',
   top: draggableStyle.top - 130 || 600,
 })
-
-const columnListStore = new ColumnListStore()
 
 export const ColumnsList = observer((): ReactElement => {
   const onDragEnd = (result: DropResult) => {
@@ -42,7 +39,6 @@ export const ColumnsList = observer((): ReactElement => {
                   key={column.title}
                   draggableId={column.title}
                   index={index}
-                  isDragDisabled={!!columnsStore.searchColumnValue}
                 >
                   {providedDraggable => (
                     <div

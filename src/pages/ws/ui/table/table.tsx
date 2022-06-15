@@ -22,7 +22,7 @@ import mainTableStore from '@store/ws/main-table.store'
 import variantStore from '@store/ws/variant'
 import zoneStore from '@store/ws/zone'
 import { Routes } from '@router/routes.enum'
-import { Loader } from '@components/loader'
+import { Loader } from '@ui/loader'
 import { NoResultsFound } from '@components/no-results-found'
 import { ITabReport } from '@service-providers/dataset-level/dataset-level.interface'
 

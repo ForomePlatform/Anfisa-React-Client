@@ -1,9 +1,9 @@
-import { ReactElement } from 'react'
-import { Link } from 'react-router-dom'
+import style from './undo-redo-buttons.module.css'
 
-import { Routes } from '@router/routes.enum'
+import { ReactElement } from 'react'
+import cn from 'classnames'
+
 import { Icon } from '@ui/icon'
-import { UndoRedoButton } from '@components/undo-redo-buttons/components/undo-redo-button'
 
 interface IUndoRedoButtons {
   onUndo: () => void
@@ -18,17 +18,21 @@ export const UndoRedoButtons = ({
   isUndoDisabled,
   isRedoDisabled,
 }: IUndoRedoButtons): ReactElement => (
-  <div className="flex items-center">
-    <UndoRedoButton onClick={onUndo} disabled={isUndoDisabled}>
+  <div className={cn(style.undoRedo)}>
+    <button
+      onClick={onUndo}
+      disabled={isUndoDisabled}
+      className={style.undoRedo_button}
+    >
       <Icon name="Undo" />
-    </UndoRedoButton>
+    </button>
 
-    <UndoRedoButton onClick={onRedo} disabled={isRedoDisabled} className="ml-2">
+    <button
+      onClick={onRedo}
+      disabled={isRedoDisabled}
+      className={cn(style.undoRedo_button, style.undoRedo_button_right)}
+    >
       <Icon name="Redo" />
-    </UndoRedoButton>
-
-    <Link className="flex flex-wrap ml-3" to={Routes.Root}>
-      <Icon size={15} name="Close" className="text-white cursor-pointer" />
-    </Link>
+    </button>
   </div>
 )

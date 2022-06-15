@@ -1,4 +1,4 @@
-import { MouseEvent, ReactElement } from 'react'
+import { Dispatch, ReactElement, SetStateAction } from 'react'
 import cn from 'classnames'
 
 import { t } from '@i18n'
@@ -7,24 +7,21 @@ import { Icon } from '@ui/icon'
 import { MainTableDataCy } from '@components/data-testid/main-table.cy'
 
 interface ICustomizeTableButtonProps {
-  refEl: any
-  isOpen?: boolean
-  onClick?: (event: MouseEvent<HTMLButtonElement>) => void
-  onMouseUp?: (event: MouseEvent<HTMLButtonElement>) => void
-  dataTestId?: string
+  isOpen: boolean
+  onClose: () => void
+  setPopoverAnchor: Dispatch<SetStateAction<HTMLElement | null>>
 }
 
 export const CustomizeTableButton = ({
-  refEl,
   isOpen,
-  onClick,
-  onMouseUp,
+  onClose,
+  setPopoverAnchor,
 }: ICustomizeTableButtonProps): ReactElement => (
   <Button
     dataTestId={MainTableDataCy.customizeTable}
-    refEl={refEl}
-    onClick={onClick}
-    onMouseUp={onMouseUp}
+    onClick={event =>
+      isOpen ? onClose() : setPopoverAnchor(event.currentTarget)
+    }
     text={t('ds.customizeTable')}
     variant="secondary-dark"
     size="sm"

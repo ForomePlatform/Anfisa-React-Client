@@ -3,14 +3,10 @@ import { makeAutoObservable } from 'mobx'
 import { IColumns } from '@declarations'
 import columnsStore, { columnsToIgnore } from '@store/ws/columns'
 
-export class ColumnListStore {
+class ColumnListStore {
   public get filteredColumns(): IColumns[] {
     return columnsStore.getExtendedColumns.filter(
-      (column: IColumns) =>
-        column.title
-          .toLocaleLowerCase()
-          .includes(columnsStore.searchColumnValue.toLocaleLowerCase()) &&
-        !columnsToIgnore.includes(column.title),
+      (column: IColumns) => !columnsToIgnore.includes(column.title),
     )
   }
 
@@ -56,3 +52,5 @@ export class ColumnListStore {
     return this.filteredColumns.filter(column => column.hidden === false).length
   }
 }
+
+export default new ColumnListStore()

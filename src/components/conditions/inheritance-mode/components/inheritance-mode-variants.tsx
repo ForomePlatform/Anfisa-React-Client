@@ -3,13 +3,14 @@ import { ChangeEvent, ReactElement } from 'react'
 import { t } from '@i18n'
 import filterStore from '@store/filter'
 import { Checkbox } from '@ui/checkbox/checkbox'
-import { Loader } from '@components/loader'
+import { Loader } from '@ui/loader'
 import { IInheritanceModeVariantsProps } from '../inheritance-mode.interface'
 
 export const InheritanceModeVariants = ({
   filteredVariants,
   selectedVariants,
   isFetching,
+  status,
   handleSetVariants,
 }: IInheritanceModeVariantsProps): ReactElement => (
   <div className="flex flex-col text-14">
@@ -36,8 +37,8 @@ export const InheritanceModeVariants = ({
           </Checkbox>
         ))
       ) : (
-        <div className="flex justify-center items-center text-grey-blue my-3">
-          {t('dtree.noFilters')}
+        <div className="flex justify-center items-center text-grey-blue my-2">
+          {status || t('condition.noFilters')}
         </div>
       )}
     </>

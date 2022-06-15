@@ -191,6 +191,7 @@ export const en = {
     deleteAttribute: 'Delete attribute',
     addAttribute: '+ Add Attribute',
     addByJoining: 'Add by joining',
+    noFilters: 'There are no filters to show',
   },
   numericCondition: {
     limitedRange: 'Limited range',
@@ -284,7 +285,6 @@ export const en = {
     addStepBefore: 'Add Step Before',
     addStepAfter: 'Add Step After',
     fn: 'fn',
-    noFilters: 'There are no filters to show',
     all: 'All',
     not: 'Not',
     reset: 'Reset',
