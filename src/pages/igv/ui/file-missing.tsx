@@ -15,7 +15,7 @@ export const FileMissing = (): ReactElement => {
         <Button
           text={t('error.getBack')}
           className="mt-3"
-          variant={'secondary-dark'}
+          variant="secondary-dark"
           prepend={<Icon name="Arrow" />}
         />
       </Link>

@@ -6,7 +6,7 @@ import filterStore from '@store/filter'
 import { AttributeKinds } from '@service-providers/common'
 import { EmptySelectedGroup } from './empty-selected-group'
 import { EnumPanel } from './panels/enum-panel'
-import { FunctionPanel } from './panels/function-panel/function-panel'
+import { FunctionPanel } from './panels/function-panel'
 import { NumericPanel } from './panels/numeric-panel'
 
 interface ISelectedGroupProps {

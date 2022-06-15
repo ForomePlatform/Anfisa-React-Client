@@ -24,22 +24,21 @@ export const DtreeAttributeButtons = observer(
     currentStepGroups,
   }: IDtreeAttributeButtonsProps): ReactElement => {
     const handleOpenModalAttribute = () => {
-      modalsVisibilityStore.closeModalEnum()
+      modalsVisibilityStore.closeEnumDialog()
       modalsVisibilityStore.openModalAttribute()
     }
     return (
       <>
         {initialCondition ? (
           <EditModalButtons
-            handleClose={modalsVisibilityStore.closeModalEnum}
+            handleClose={modalsVisibilityStore.closeEnumDialog}
             handleSaveChanges={handleSave}
             disabled={selectedVariants.length === 0}
           />
         ) : (
           <SelectModalButtons
-            handleClose={modalsVisibilityStore.closeModalEnum}
+            handleClose={modalsVisibilityStore.closeEnumDialog}
             handleModals={handleOpenModalAttribute}
-            handleModalJoin={modalsVisibilityStore.openModalJoin}
             disabled={selectedVariants.length === 0}
             currentGroup={currentStepGroups}
             handleAddAttribute={handleAddAttribute}

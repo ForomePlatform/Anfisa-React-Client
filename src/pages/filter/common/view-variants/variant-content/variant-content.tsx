@@ -4,7 +4,7 @@ import React, { ReactElement, ReactNode, useState } from 'react'
 import cn from 'classnames'
 
 import { Icon } from '@ui/icon'
-import { Loader } from '@components/loader'
+import { Loader } from '@ui/loader'
 import { VariantAspectsLayoutGallery } from '@components/variant-aspects-layout'
 import { TAspectDescriptor } from '@service-providers/dataset-level'
 

@@ -12,8 +12,9 @@ import datasetStore from '@store/dataset/dataset'
 import filterStore from '@store/filter'
 import { Routes } from '@router/routes.enum'
 import { Button } from '@ui/button'
-import { Loader } from '@components/loader'
+import { Loader } from '@ui/loader'
 import { FilterRefinerStatCounts } from '@pages/filter/refiner/components/right-column/filter-refiner-stat-counts'
+import { TCondition } from '@service-providers/common'
 import { showToast } from '@utils/notifications/showToast'
 import { QueryResults } from './query-results'
 
@@ -50,6 +51,9 @@ export const QuerySelected = observer(
 
     const clearAlSelectedFilters = () => {
       filterStore.clearConditions()
+      filterStore.actionHistory.addHistory(
+        filterStore.conditions as TCondition[],
+      )
     }
 
     const isDisabledApplyButton =

@@ -84,12 +84,34 @@ export class MainTable {
       : this.wsList.data?.totalCounts
   }
 
-  get fixedStatAmount() {
-    const variantCounts = this.statAmount?.[0] ?? null
-    const dnaVariantsCounts = this.statAmount?.[1] ?? null
-    const transcriptsCounts = this.statAmount?.[2] ?? null
+  public get fixedStatAmount() {
+    const variantCounts = this.statAmount?.[0] ?? undefined
+    const dnaVariantsCounts = this.statAmount?.[1] ?? undefined
+    const transcriptsCounts = this.statAmount?.[2] ?? undefined
 
     return { variantCounts, dnaVariantsCounts, transcriptsCounts }
+  }
+
+  public get variantsForExport(): number | undefined {
+    return datasetStore.isXL
+      ? filterStore.stat.filteredCounts?.variants
+      : this.fixedStatAmount.variantCounts
+  }
+
+  // update zone tags if smth was added in drawer
+  async fetchWsTagsAsync() {
+    if (datasetStore.isXL) return
+
+    const wsTags = await wsDatasetProvider.getWsTags({
+      ds: datasetStore.datasetName,
+      rec: variantStore.index,
+    })
+
+    runInAction(() => {
+      zoneStore.tags = [...wsTags['op-tags'], ...wsTags['check-tags']].filter(
+        item => item !== '_note',
+      )
+    })
   }
 
   setIsTableRecizing(value: boolean) {

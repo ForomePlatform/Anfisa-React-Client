@@ -1,3 +1,5 @@
+import style from './aspect-table-view.module.css'
+
 import { MouseEvent, ReactElement } from 'react'
 import cn from 'classnames'
 import Tooltip from 'rc-tooltip'
@@ -76,6 +78,7 @@ export const AspectTableView = ({
                           ? 'text-blue-bright'
                           : !cell[1]?.includes(AspectCellRenderClass.NoTrHit) &&
                               'text-grey-blue',
+                        style.linkContainer,
                       )}
                     >
                       <span

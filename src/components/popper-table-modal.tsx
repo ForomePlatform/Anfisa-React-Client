@@ -88,7 +88,6 @@ export const PopperTableModal = observer(
         title={title ?? ''}
         onClose={handleClose}
         onApply={handleApply}
-        shouldCloseOnOutsideClick={true}
       >
         <div className="">
           {!isNotSearchable && (

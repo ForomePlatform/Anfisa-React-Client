@@ -19,7 +19,7 @@ export const OpenViewerPanel = ({ close }: IPopperMenuProps): ReactElement => {
 
   let pages = Object.values(GlbPagesNames).filter(
     name => name !== GlbPagesNames.Root,
-  )
+  ) as Exclude<GlbPagesNames, typeof GlbPagesNames.Root>[]
 
   if (datasetStore.isXL) {
     pages = pages.filter(p => p !== GlbPagesNames.Table)

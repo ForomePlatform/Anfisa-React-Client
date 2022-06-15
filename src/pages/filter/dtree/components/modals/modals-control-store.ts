@@ -44,12 +44,12 @@ class ModalsControlStore {
     }
 
     const group = toJS(
-      stepStore.steps[stepStore.activeStepIndex].groups[
+      stepStore.steps[stepStore.activeStepIndex]?.groups[
         modalsVisibilityStore.groupIndexToChange
       ],
     )
 
-    const mayBeJoin = group[group.length - 2]
+    const mayBeJoin = group?.[group.length - 2]
 
     if (mayBeJoin === 'or' || mayBeJoin === 'and') {
       group.splice(group.length - 2, 1)
@@ -59,7 +59,7 @@ class ModalsControlStore {
   }
 
   public get currentStepGroups(): string[] {
-    return toJS(stepStore.steps[stepStore.activeStepIndex].groups)
+    return toJS(stepStore.steps[stepStore.activeStepIndex]?.groups)
   }
 
   get attributeStatusToChange(): TPropertyStatus | undefined {
@@ -76,14 +76,6 @@ class ModalsControlStore {
 
   public get problemGroups(): string[] {
     return this.funcAttributeStatusToChange?.family ?? []
-  }
-
-  public get approxModes(): string[][] {
-    return this.funcAttributeStatusToChange?.['approx-modes'] ?? []
-  }
-
-  public openModalJoin(): void {
-    modalsVisibilityStore.openModalJoin()
   }
 }
 

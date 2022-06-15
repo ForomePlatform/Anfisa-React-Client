@@ -100,6 +100,14 @@ export const en = {
     table: 'Main Table',
     dtree: 'Decision Tree Panel',
     refiner: 'Filter Refiner',
+    modals: {
+      importDataset: 'Import Dataset',
+      exportDataset: 'Export Dataset',
+      applyTextImport: 'Import',
+      applyTextExport: 'Export',
+      withDocumentation: 'with documentation',
+      withSupport: 'with support',
+    },
   },
   ds: {
     preset: 'Preset',
@@ -141,7 +149,7 @@ export const en = {
     },
   },
   dsCreation: {
-    createDeriveDS: 'Create Derive DS',
+    createDerivedDS: 'Create Derived DS',
     datasetCreation: 'Dataset Creation',
     addDatasetTitle: 'Add new dataset',
     label: 'Dataset Name:',
@@ -187,6 +195,9 @@ export const en = {
     includeZero: 'Include 0 ({ count } variants)',
     center: 'Center',
     distance: 'Distance',
+  },
+  condition: {
+    noFilters: 'There are no filters to show',
   },
   enumCondition: {
     showZeroVariants: 'Show zero variants',
@@ -276,7 +287,6 @@ export const en = {
     addStepBefore: 'Add Step Before',
     addStepAfter: 'Add Step After',
     fn: 'fn',
-    noFilters: 'There are no filters to show',
     all: 'All',
     not: 'Not',
     reset: 'Reset',

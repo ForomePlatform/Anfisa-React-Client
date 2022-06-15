@@ -1,42 +1,38 @@
 import { ReactElement } from 'react'
 
 import { ModeTypes } from '@core/enum/mode-types-enum'
-import { DtreeStatFuncStore } from '@store/dtree/dtree-stat-func.store'
-import { FilterStatFuncStore } from '@store/filter/filter-stat-func.store'
 import { IInheritanceModeArgs, TVariant } from '@service-providers/common'
+import {
+  ICommonControlProps,
+  ICommonFuncConditionProps,
+} from '../conditions.interface'
 
-export interface IControlProps {
-  values: string[]
-  hasErrors: boolean
+export interface IControlProps extends ICommonControlProps {
   param: IInheritanceModeArgs
-  mode: ModeTypes | undefined
-  clearValue?: () => void
+  values: string[]
 }
 
-export interface IInheritanceModeConditionProps {
+export interface IInheritanceModeConditionProps
+  extends ICommonFuncConditionProps {
   problemGroups: string[]
   initialVariants: string[] | undefined
   initialProblemGroups: string[] | undefined
-  initialMode: ModeTypes | undefined
-  attributeSubKind: string | undefined
-  statFuncStore: DtreeStatFuncStore | FilterStatFuncStore
-  onTouch?: () => void
   controls?: (props: IControlProps) => ReactElement | null
 }
 
 export interface IInheritanceModeProblemGroupsProps {
   problemGroups: string[]
-  handleSetProblemGroups: (checked: boolean, problemGroup: string) => void
   selectedPropblemGroups: string[]
   handleReset: () => void
+  handleSetProblemGroups: (checked: boolean, problemGroup: string) => void
 }
 
 export interface IInheritanceModeVariantsControlsProps {
   selectedVariants: string[]
-  selectAllVariants: () => void
-  clearAllVariants: () => void
   attributeSubKind: string | undefined
   mode: ModeTypes | undefined
+  onSelectAllVariants: () => void
+  onClearAllVariants: () => void
   toggleMode: (mode: ModeTypes) => void
 }
 
@@ -44,5 +40,6 @@ export interface IInheritanceModeVariantsProps {
   filteredVariants: TVariant[]
   selectedVariants: string[]
   isFetching: boolean
+  status: string | undefined
   handleSetVariants: (checked: boolean, variantName: string) => void
 }

@@ -1,14 +1,17 @@
 import { ReactElement } from 'react'
 import { useHistory } from 'react-router'
+import { Link } from 'react-router-dom'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { useParams } from '@core/hooks/use-params'
 import filterStore from '@store/filter'
 import { getPageRoute } from '@router/router.const'
+import { Routes } from '@router/routes.enum'
 import { Divider } from '@ui/divider'
+import { Icon } from '@ui/icon'
 import { UndoRedoButtons } from '@components/undo-redo-buttons'
-import { DatasetCreationButton } from '@pages/ws/ui/control-panel/dataset-creation-button'
+import { CreateDatasetButton } from '@pages/ws/ui/control-panel/create-dataset-button'
 import { FilterControlOptions } from './filter-control.const'
 import { IFilterControlProps } from './filter-control.interface'
 import { SolutionDropDown } from './solution-dropdown'
@@ -53,7 +56,7 @@ export const FilterControl = observer(
 
             <Divider orientation="vertical" className="h-[75%]" />
 
-            <DatasetCreationButton />
+            <CreateDatasetButton />
 
             {TextEditorButton && (
               <>
@@ -71,6 +74,13 @@ export const FilterControl = observer(
               isUndoDisabled={!isBackwardAllowed}
               isRedoDisabled={!isForwardAllowed}
             />
+
+            <Link
+              className="flex flex-wrap ml-3 text-white cursor-pointer"
+              to={Routes.Root}
+            >
+              <Icon size={15} name="Close" />
+            </Link>
           </div>
         </div>
       </div>

@@ -11,7 +11,6 @@ class ColumnsStore {
   columns: any[] = Object.values(tableColumnMap)
   viewType: ViewTypeEnum = ViewTypeEnum.Cozy
   selectedColumns: string[] = Object.values(tableColumnMap)
-  searchColumnValue = ''
 
   get selectedDataColumns() {
     return this.selectedColumns.map(column =>
@@ -35,14 +34,6 @@ class ColumnsStore {
     makeAutoObservable(this)
   }
 
-  setSearchColumnValue(value: string) {
-    this.searchColumnValue = value
-  }
-
-  resetSearchColumnValue() {
-    this.searchColumnValue = ''
-  }
-
   resetColumns() {
     this.columns = this.selectedColumns
   }
@@ -51,7 +42,7 @@ class ColumnsStore {
     this.viewType = viewType
   }
 
-  selectAllColumns() {
+  public selectAllColumns = () => {
     const clearedColumns =
       typeof this.columns[0] !== 'string'
         ? this.columns.map(column => ({
@@ -66,7 +57,7 @@ class ColumnsStore {
     this.setColumns(clearedColumns)
   }
 
-  clearAllColumns() {
+  public clearAllColumns = () => {
     const clearedColumns = this.getExtendedColumns.map(column => ({
       title: column.title,
       hidden: !columnsToIgnore.includes(column.title),
