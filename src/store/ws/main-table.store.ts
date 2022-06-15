@@ -1,4 +1,4 @@
-import { makeAutoObservable, reaction, toJS } from 'mobx'
+import { makeAutoObservable, reaction, runInAction, toJS } from 'mobx'
 
 import datasetStore from '@store/dataset/dataset'
 import filterStore from '@store/filter'
@@ -9,7 +9,9 @@ import {
   TItemsCount,
 } from '@service-providers/common/common.interface'
 import { ITabReport } from '@service-providers/dataset-level/dataset-level.interface'
+import wsDatasetProvider from '@service-providers/ws-dataset-support/ws-dataset-support.provider'
 import { TabReportPaginatedAsyncStore } from './tab-report-paginated.async.store'
+import variantStore from './variant'
 import { IWsListQuery, WsListAsyncStore } from './ws-list.async.store'
 
 export class MainTable {
@@ -102,13 +104,13 @@ export class MainTable {
   async fetchWsTagsAsync() {
     if (datasetStore.isXL) return
 
-    const wsTags = await wsDatasetProvider.getWsTags({
+    const wsTags = await wsDatasetProvider.wsTags({
       ds: datasetStore.datasetName,
       rec: variantStore.index,
     })
 
     runInAction(() => {
-      zoneStore.tags = [...wsTags['op-tags'], ...wsTags['check-tags']].filter(
+      zoneStore.tags = [...wsTags.opTags, ...wsTags.checkTags].filter(
         item => item !== '_note',
       )
     })

@@ -55,28 +55,6 @@ export class VariantStore {
     this.index = index
   }
 
-  // updateGeneralTags(tagName: string) {
-  //   this.generalTags = [...this.generalTags, tagName]
-  // }
-  //
-  // updateTagsWithNotes(tagWithNote: any[], operation = 'add') {
-  //   if (operation === 'add') {
-  //     let keyProp = ''
-  //
-  //     for (const key in this.tagsWithNotes) {
-  //       if (key === tagWithNote[0]) {
-  //         keyProp = key
-  //       }
-  //     }
-  //
-  //     keyProp
-  //       ? (this.tagsWithNotes[keyProp] = tagWithNote[1])
-  //       : (this.tagsWithNotes[tagWithNote[0]] = tagWithNote[1])
-  //   } else {
-  //     delete this.tagsWithNotes[tagWithNote[0]]
-  //   }
-  // }
-
   private get recordQuery(): IReccntArguments | undefined {
     if (!this.datasetName || this.index < 0) {
       return undefined
