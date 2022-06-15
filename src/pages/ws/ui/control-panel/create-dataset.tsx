@@ -6,7 +6,7 @@ import { Button } from '@ui/button'
 import { DecisionTreesMenuDataCy } from '@components/data-testid/decision-tree-menu.cy'
 import { CreateDatasetDialog } from '@pages/filter/dtree/components/modals/components/create-dataset-dialog'
 
-export const CreateDatasetButton = (): ReactElement => {
+export const CreateDataset = (): ReactElement => {
   const [creationDialog, openCreationDialog, closeCreationDialog] = useModal()
   const { isOpen } = creationDialog
 
