@@ -1,6 +1,7 @@
 import { ReactElement } from 'react'
 import { useHistory } from 'react-router-dom'
 
+import { SessionStoreManager } from '@core/storage-management/session-store-manager'
 import { t } from '@i18n'
 import datasetStore from '@store/dataset/dataset'
 import dirInfoStore from '@store/dirinfo'
@@ -13,6 +14,7 @@ import {
 } from '@components/popper-menu/popper-menu'
 import { PopperMenuItem } from '@components/popper-menu/popper-menu-item'
 import { GlbPagesNames } from '@glb/glb-names'
+import { FILTER_REFERRER } from '@pages/filter/common/filter-control/filter-control.const'
 
 export const OpenViewerPanel = ({ close }: IPopperMenuProps): ReactElement => {
   const history = useHistory()
@@ -28,6 +30,7 @@ export const OpenViewerPanel = ({ close }: IPopperMenuProps): ReactElement => {
   const goToPage = (name: GlbPagesNames) => {
     const route = getPageRoute(name)
 
+    SessionStoreManager.write(FILTER_REFERRER, GlbPagesNames.Root)
     history.push(`${route}?ds=${dirInfoStore.selectedDirinfoName}`)
     filterStore.setMethod(name)
   }
