@@ -10,11 +10,15 @@ import { IPopperMenuProps, PopperMenu } from './popper-menu/popper-menu'
 import { PopperMenuItem } from './popper-menu/popper-menu-item'
 
 export const ExportPanelModal = ({ close }: IPopperMenuProps): ReactElement => {
-  const { variantCounts } = mainTableStore.fixedStatAmount
+  const { variantsForExport } = mainTableStore
 
   const handleDownload = (type: ExportTypeEnum) => {
-    if (typeof variantCounts === 'number' && variantCounts > 300) {
-      showToast(t('ds.tooMuchVariants'), 'error')
+    if (typeof variantsForExport === 'number' && variantsForExport > 300) {
+      showToast(t('ds.tooMuchVariants'), 'error', {
+        position: 'top-right',
+        autoClose: 3500,
+        style: { top: 40 },
+      })
 
       close()
 

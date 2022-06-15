@@ -1,10 +1,12 @@
 import { makeAutoObservable } from 'mobx'
 
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import filterStore from '@store/filter'
-import { TFuncCondition } from '@service-providers/common/common.interface'
+import {
+  AttributeKinds,
+  TFuncCondition,
+} from '@service-providers/common/common.interface'
 import { getConditionJoinMode } from '@utils/getConditionJoinMode'
 import functionPanelStore from '../../function-panel.store'
 
@@ -35,7 +37,7 @@ class GeneRegionStore {
 
   public handleSumbitCondtions(locusValue: string): void {
     const conditions: TFuncCondition = [
-      FilterKindEnum.Func,
+      AttributeKinds.FUNC,
       FuncStepTypesEnum.GeneRegion,
       getConditionJoinMode(this.currentMode),
       ['True'],

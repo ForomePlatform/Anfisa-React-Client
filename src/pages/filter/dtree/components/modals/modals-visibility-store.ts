@@ -9,7 +9,6 @@ class ModalsVisibilityStore {
   modalSource = ''
 
   isModalAttributeVisible = false
-  isModalJoinVisible = false
 
   isModalInheritanceModeVisible = false
   isModalCustomInheritanceModeVisible = false
@@ -17,10 +16,8 @@ class ModalsVisibilityStore {
   isModalCompoundRequestVisible = false
   isModalGeneRegionVisible = false
 
-  isModalEnumVisible = false
-  isModalNumericVisible = false
-
-  isModalTextEditorVisible = false
+  isEnumDialogVisible = false
+  isNumericDialogVisible = false
 
   constructor() {
     makeAutoObservable(this)
@@ -36,48 +33,40 @@ class ModalsVisibilityStore {
     this.isModalAttributeVisible = false
   }
 
-  public openModalJoin = () => {
-    this.isModalJoinVisible = true
-  }
-
-  public closeModalJoin() {
-    this.isModalJoinVisible = false
-  }
-
   // 2. Modal for numeric attr
 
-  public openModalNumeric(
+  public openNumericDialog(
     groupName: string,
     groupIndex: number | undefined,
     source: string = '',
   ) {
     this.modalSource = source
 
-    this.isModalNumericVisible = true
+    this.isNumericDialogVisible = true
     this.groupNameToChange = groupName
     this.groupIndexToChange = groupIndex ?? -1
   }
 
-  public closeModalNumeric = (): void => {
-    this.isModalNumericVisible = false
+  public closeNumericDialog = (): void => {
+    this.isNumericDialogVisible = false
   }
 
   // 3. Modal for enum attr
 
-  public openModalEnum(
+  public openEnumDialog(
     groupName: string,
     groupIndex: number | undefined,
     source: string = '',
   ) {
     this.modalSource = source
 
-    this.isModalEnumVisible = true
+    this.isEnumDialogVisible = true
     this.groupNameToChange = groupName
     this.groupIndexToChange = groupIndex ?? -1
   }
 
-  public closeModalEnum = () => {
-    this.isModalEnumVisible = false
+  public closeEnumDialog = () => {
+    this.isEnumDialogVisible = false
     dtreeStore.resetSelectedFilters()
   }
 
@@ -94,7 +83,7 @@ class ModalsVisibilityStore {
     this.groupIndexToChange = groupIndex ?? -1
   }
 
-  public closeModalInheritanceMode() {
+  public closeModalInheritanceMode = () => {
     this.isModalInheritanceModeVisible = false
   }
 
@@ -109,7 +98,7 @@ class ModalsVisibilityStore {
     this.groupIndexToChange = groupIndex ?? -1
   }
 
-  public closeModalCustomInheritanceMode() {
+  public closeModalCustomInheritanceMode = () => {
     this.isModalCustomInheritanceModeVisible = false
   }
 
@@ -124,7 +113,7 @@ class ModalsVisibilityStore {
     this.groupIndexToChange = groupIndex ?? -1
   }
 
-  public closeModalCompoundHet() {
+  public closeModalCompoundHet = () => {
     this.isModalCompoundHetVisible = false
   }
 
@@ -167,16 +156,6 @@ class ModalsVisibilityStore {
 
   public closeModalGeneRegion() {
     this.isModalGeneRegionVisible = false
-  }
-
-  // 5. Modal for editing dtree code (new / loaded)
-
-  public openModalTextEditor = () => {
-    this.isModalTextEditorVisible = true
-  }
-
-  public closeModalTextEditor() {
-    this.isModalTextEditorVisible = false
   }
 }
 

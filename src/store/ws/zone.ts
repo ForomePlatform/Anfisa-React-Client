@@ -167,23 +167,11 @@ class ZoneStore {
       this.selectedSamples.map(sample => sample.slice(0, 7).trim()),
     )
 
-    if (sampleTypes.has('proband')) {
-      this.isProband = true
-    } else {
-      this.isProband = false
-    }
+    this.isProband = sampleTypes.has('proband')
 
-    if (sampleTypes.has('mother')) {
-      this.isMother = true
-    } else {
-      this.isMother = false
-    }
+    this.isMother = sampleTypes.has('mother')
 
-    if (sampleTypes.has('father')) {
-      this.isFather = true
-    } else {
-      this.isFather = false
-    }
+    this.isFather = sampleTypes.has('father')
   }
 
   unselectAllSamples = (type?: string) => {
@@ -214,8 +202,6 @@ class ZoneStore {
 
   unselectAllTags() {
     this.localTags = []
-    this.resetModeNOT()
-    this.resetModeWithNotes()
   }
 
   createSelectedZoneFilter(type: string) {
@@ -274,6 +260,11 @@ class ZoneStore {
 
   resetModeWithNotes() {
     this.isModeWithNotes = this.modeWithNotesSubmitted
+  }
+
+  resetModes() {
+    this.resetModeNOT()
+    this.resetModeWithNotes()
   }
 
   submitTagsMode() {

@@ -26,6 +26,7 @@ export const en = {
     closeWindow: 'Close window',
     creaitionIsInProcess: 'Dataset creation has not been finished yet',
     selectPreset: 'Select Preset',
+    plusAdd: '+ Add',
   },
   header: {
     version: {
@@ -99,6 +100,14 @@ export const en = {
     table: 'Main Table',
     dtree: 'Decision Tree Panel',
     refiner: 'Filter Refiner',
+    modals: {
+      importDataset: 'Import Dataset',
+      exportDataset: 'Export Dataset',
+      applyTextImport: 'Import',
+      applyTextExport: 'Export',
+      withDocumentation: 'with documentation',
+      withSupport: 'with support',
+    },
   },
   ds: {
     preset: 'Preset',
@@ -140,7 +149,7 @@ export const en = {
     },
   },
   dsCreation: {
-    createDeriveDS: 'Create Derive DS',
+    createDerivedDS: 'Create Derived DS',
     datasetCreation: 'Dataset Creation',
     addDatasetTitle: 'Add new dataset',
     label: 'Dataset Name:',
@@ -165,9 +174,11 @@ export const en = {
     paternal: 'Paternal',
     geneAnnotation: 'Gene annotation',
     tags: 'Tags',
-    tagsFor: 'Tags for',
+    addCustomTag: 'Add custom tag',
+    tagsFor: 'Tags for {title}',
+    saveTags: 'Save tags',
     notes: 'Notes',
-    notesFor: 'Notes for',
+    notesFor: 'Notes for {title}',
     tagExists: 'That tag already exists',
     showSelectionOnly: 'Show selection only',
     saveNote: 'Save note',
@@ -185,8 +196,16 @@ export const en = {
     center: 'Center',
     distance: 'Distance',
   },
+  condition: {
+    noFilters: 'There are no filters to show',
+  },
   enumCondition: {
     showZeroVariants: 'Show zero variants',
+  },
+  funcCondition: {
+    scenario: 'Scenario',
+    problemGroup: 'Problem group:',
+    inheritanceMode: 'Inheritance mode',
   },
   unitsList: {
     functionalUnits: 'Functional Units',
@@ -200,7 +219,6 @@ export const en = {
     variants: 'Variants: {all}',
     transcripts: 'Transcripts: {all}',
     transcribedVariants: 'Transcribed variants: {all}',
-    inheritanceMode: 'Inheritance mode',
     query: 'Query',
     presetName: 'Preset name',
     presets: 'Presets',
@@ -268,10 +286,7 @@ export const en = {
     delete: 'Delete',
     addStepBefore: 'Add Step Before',
     addStepAfter: 'Add Step After',
-    problemGroup: 'Problem group:',
     fn: 'fn',
-    noFilters: 'There are no filters to show',
-    scenario: 'Scenario',
     all: 'All',
     not: 'Not',
     reset: 'Reset',
@@ -339,5 +354,11 @@ export const en = {
   notFound: {
     somethingIsWrong: 'Something is wrong',
     info: 'The page you are looking for was moved, removed, renamed or might never existed',
+  },
+  viewVariants: {
+    fullList: 'Full list',
+    samples25: 'Samples-25',
+    gene: 'Gene',
+    variant: 'Variant',
   },
 }

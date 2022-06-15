@@ -6,7 +6,7 @@ import { ApproxNameTypes } from '@core/enum/approxNameTypes'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import datasetStore from '@store/dataset/dataset'
 import dtreeStore from '@store/dtree'
-import activeStepStore from '@pages/filter/dtree/components/active-step.store'
+import stepStore from '@store/dtree/step.store'
 import { AllNotMods } from '@pages/filter/dtree/components/query-builder/ui/all-not-mods'
 import { ApproxStateModalMods } from '@pages/filter/dtree/components/query-builder/ui/approx-state-modal-mods'
 import { DisabledVariantsAmount } from '@pages/filter/dtree/components/query-builder/ui/disabled-variants-amount'
@@ -26,13 +26,13 @@ export const ModalCompoundRequest = observer((): ReactElement => {
   const { requestCondition, activeRequestIndex, approx } =
     modalCompoundRequestStore
 
-  const currentStepIndex = activeStepStore.activeStepIndex
+  const currentStepIndex = stepStore.activeStepIndex
   const currentGroupIndex = modalsVisibilityStore.groupIndexToChange
 
   const currentGroup =
-    dtreeStore.stepData[currentStepIndex].groups[currentGroupIndex]
+    stepStore.steps[currentStepIndex].groups[currentGroupIndex]
 
-  const currentGroupToModify = dtreeStore.stepData[currentStepIndex].groups
+  const currentGroupToModify = stepStore.steps[currentStepIndex].groups
 
   const handleSetCondition = (approx: ApproxNameTypes) => {
     modalCompoundRequestStore.setApprox(approx)
@@ -109,7 +109,6 @@ export const ModalCompoundRequest = observer((): ReactElement => {
         <SelectModalButtons
           handleClose={() => modalCompoundRequestStore.closeModal()}
           handleModals={() => modalCompoundRequestStore.openModalAttribute()}
-          handleModalJoin={() => modalsControlStore.openModalJoin()}
           disabled={!variants}
           currentGroup={currentGroupToModify ?? currentStepGroups}
           handleAddAttribute={handleAddAttribute}

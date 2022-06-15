@@ -7,11 +7,17 @@ import datasetStore from '@store/dataset/dataset'
 import filterPresetsStore from '@store/filter-presets'
 import { GlbPagesNames } from '@glb/glb-names'
 import { FilterControlOptions } from '@pages/filter/common/filter-control/filter-control.const'
-import { TCondition, TPropertyStatus } from '@service-providers/common'
-import { IStatfuncArguments } from '@service-providers/filtering-regime'
+import {
+  AttributeKinds,
+  TCondition,
+  TPropertyStatus,
+} from '@service-providers/common'
+import { IDsListArguments } from '@service-providers/dataset-level'
+import { IStatFuncArguments } from '@service-providers/filtering-regime'
 import filteringRegimeProvider from '@service-providers/filtering-regime/filtering-regime.provider'
 import { showToast } from '@utils/notifications'
 import { FilterStatStore, TFilterStatQuery } from './filter-stat.store'
+import { FilterStatUnitStore } from './filter-stat-unit.store'
 
 enum PresetModifiedState {
   NotPreset = 'NotPreset',
@@ -22,6 +28,7 @@ enum PresetModifiedState {
 export class FilterStore {
   readonly initialStat = new FilterStatStore()
   readonly filteredStat = new FilterStatStore()
+  readonly filterStatUnit = new FilterStatUnitStore()
 
   // TODO: it's not good choice to save current page as store field
   method!: GlbPagesNames | FilterControlOptions
@@ -71,6 +78,15 @@ export class FilterStore {
     )
 
     reaction(
+      () => this.selectedAttributeQuery,
+      query => {
+        if (query) {
+          this.filterStatUnit.setQuery(query)
+        }
+      },
+    )
+
+    reaction(
       () => filterPresetsStore.activePreset,
       presetName => {
         if (presetName) {
@@ -103,12 +119,12 @@ export class FilterStore {
   }
 
   public get selectedAttributeStatus(): TPropertyStatus | undefined {
-    if (this.isRedactorMode) {
-      const activeFilter = this._conditions[this._selectedConditionIndex]
+    const activeFilter = this._conditions[this._selectedConditionIndex]
 
-      if (activeFilter) {
-        return this.stat.getAttributeStatusByName(activeFilter[1])
-      }
+    if (activeFilter) {
+      return activeFilter[0] === AttributeKinds.FUNC
+        ? this.stat.getAttributeStatusByName(activeFilter[1])
+        : this.filterStatUnit.data?.units[0]
     } else if (this.attributeNameToAdd) {
       return this.stat.getAttributeStatusByName(this.attributeNameToAdd)
     }
@@ -136,11 +152,42 @@ export class FilterStore {
     return this._presetModifiedState === PresetModifiedState.Modified
   }
 
+  public get viewVariantsQuery(): IDsListArguments | undefined {
+    if (this.datasetName) {
+      return {
+        ds: this.datasetName,
+        conditions: toJS(this.conditions),
+      }
+    }
+
+    return undefined
+  }
+
   private get filterQuery(): TFilterStatQuery {
     return {
       datasetName: this.datasetName,
       conditions: toJS(this.conditions),
     }
+  }
+
+  private get selectedAttributeQuery() {
+    if (this.attributeNameToAdd) {
+      return toJS({
+        datasetName: this.datasetName,
+        conditions: this._conditions,
+        units: [this.attributeNameToAdd],
+      })
+    } else if (
+      this._selectedConditionIndex >= 0 &&
+      this._conditions[this._selectedConditionIndex]
+    ) {
+      return toJS({
+        datasetName: this.datasetName,
+        conditions: this._conditions.slice(0, this._selectedConditionIndex),
+        units: [this._conditions[this._selectedConditionIndex][1]],
+      })
+    }
+    return undefined
   }
 
   public addCondition(condition: TCondition): number {
@@ -183,9 +230,9 @@ export class FilterStore {
     this.selectCondition(savedIndex)
   }
 
-  // TODO: why it's here?
+  // TODO: remove after all func filters is unified
   async fetchStatFuncAsync(unit: string, param: any) {
-    const body: IStatfuncArguments = {
+    const body: IStatFuncArguments = {
       ds: datasetStore.datasetName,
       conditions: this.conditions,
       rq_id: String(Date.now()),

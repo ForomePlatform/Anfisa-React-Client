@@ -1,10 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 
-import { ActionType } from '@declarations'
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
-import filterStore from '@store/filter'
-import modalsVisibilityStore from '@pages/filter/dtree/components/modals/modals-visibility-store'
 import {
   AttributeKinds,
   TCondition,
@@ -12,11 +8,8 @@ import {
   TPropertyStatus,
   TVariant,
 } from '@service-providers/common'
-import { addAttributeToStep } from '@utils/addAttributeToStep'
-import { changeEnumAttribute } from '@utils/changeAttribute/changeEnumAttribute'
-import { getConditionJoinMode } from '@utils/getConditionJoinMode'
 import { getCurrentModeType } from '@utils/getCurrentModeType'
-interface IBaseAttributeStoreParams {
+export interface IBaseAttributeStoreParams {
   getAttributeStatus: () => TPropertyStatus | undefined
   getInitialCondition: () => TCondition | undefined
 }
@@ -54,7 +47,7 @@ export class BaseAttributeStore {
   }
 
   public get initialEnumVariants(): string[] | undefined {
-    if (this.initialCondition?.[0] === FilterKindEnum.Enum) {
+    if (this.initialCondition?.[0] === AttributeKinds.ENUM) {
       return this.initialCondition[3]
     }
 
@@ -62,7 +55,7 @@ export class BaseAttributeStore {
   }
 
   public get initialEnumMode(): ModeTypes | undefined {
-    if (this.initialCondition?.[0] === FilterKindEnum.Enum) {
+    if (this.initialCondition?.[0] === AttributeKinds.ENUM) {
       return getCurrentModeType(this.initialCondition[2])
     }
 
@@ -102,65 +95,11 @@ export class BaseAttributeStore {
   }
 
   public get initialNumericValue(): TNumericConditionBounds | undefined {
-    if (this.initialCondition?.[0] === FilterKindEnum.Numeric) {
+    if (this.initialCondition?.[0] === AttributeKinds.NUMERIC) {
       return this.initialCondition[2]
     }
 
     return undefined
-  }
-
-  public saveEnum = (
-    selectedVariants: string[],
-    mode: ModeTypes | undefined,
-    isRefiner?: boolean,
-  ) => {
-    if (!this.attributeName) {
-      return
-    }
-
-    if (isRefiner) {
-      filterStore.saveCurrentCondition([
-        FilterKindEnum.Enum,
-        this.attributeName,
-        getConditionJoinMode(mode),
-        selectedVariants,
-      ])
-
-      filterStore.setTouched(false)
-    } else {
-      changeEnumAttribute(mode, selectedVariants)
-      modalsVisibilityStore.closeModalEnum()
-    }
-  }
-
-  public addEnum = (
-    action: ActionType,
-    mode: ModeTypes | undefined,
-    selectedVariants: string[],
-  ) => {
-    addAttributeToStep(
-      action,
-      FilterKindEnum.Enum,
-      selectedVariants,
-      null,
-      mode,
-    )
-
-    modalsVisibilityStore.closeModalEnum()
-  }
-
-  public saveNumeric = (value: TNumericConditionBounds) => {
-    if (!this.attributeName) {
-      return
-    }
-
-    filterStore.saveCurrentCondition([
-      FilterKindEnum.Numeric,
-      this.attributeName,
-      value,
-    ])
-
-    filterStore.setTouched(false)
   }
 
   public setIsShowZeroVariants = (value: boolean) => {

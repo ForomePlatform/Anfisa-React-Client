@@ -9,6 +9,7 @@
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
+  white-space: nowrap;
 
   &:hover {
     background-color: theme("colors.blue.hover");
@@ -30,12 +31,36 @@
     padding: 2px 18px;
   }
 
+  &_xs&_dense {
+    padding: 2px 14px;
+  }
+
+  &_xs&_none {
+    padding: 2px;
+  }
+
   &_sm {
     padding: 4px 22px;
   }
 
+  &_sm&_dense {
+    padding: 4px 18px;
+  }
+
+  &_sm&_none {
+    padding: 4px;
+  }
+
   &_md {
     padding: 4px 30px;
+  }
+
+  &_md&_dense {
+    padding: 4px 26px;
+  }
+
+  &_md&_none {
+    padding: 4px;
   }
 
   &_primary-dark {
@@ -60,6 +85,21 @@
 
   &_icon-only&_xs {
     padding: 7px 8px;
+  }
+
+  &_text {
+    background-color: transparent;
+    color: theme("colors.blue.bright");
+
+    &:hover {
+      background-color: transparent;
+      color: theme("colors.blue.hover");
+    }
+
+    &:active {
+      background-color: transparent;
+      color: theme("colors.blue.dark");
+    }
   }
 
   &_secondary,

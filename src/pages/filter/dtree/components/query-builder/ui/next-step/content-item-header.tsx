@@ -2,16 +2,14 @@ import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { theme } from '@theme'
 import { IStepData } from '@store/dtree/dtree.store'
+import stepStore, { ActiveStepOptions } from '@store/dtree/step.store'
 import { Icon } from '@ui/icon'
 import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
 import { FnLabel } from '@components/fn-label'
-import activeStepStore, {
-  ActiveStepOptions,
-} from '@pages/filter/dtree/components/active-step.store'
+import { AttributeKinds } from '@service-providers/common'
 import modalsVisibilityStore from '../../../modals/modals-visibility-store'
 import { InactiveFieldLabel } from '../inactive-field-label'
 
@@ -26,7 +24,7 @@ const NotModeWrapper = styled.div`
 
 interface IContentItemHeaderProps {
   currentStep: IStepData
-  stepType: FilterKindEnum
+  stepType: AttributeKinds
   groupName: string
   stepNo: number
   groupNo: number
@@ -40,25 +38,22 @@ export const ContentItemHeader = observer(
     stepNo,
     groupNo,
   }: IContentItemHeaderProps): ReactElement => {
-    const isNegateStep: boolean = currentStep.negate || false
+    const isNegateStep: boolean = currentStep.isNegate || false
     const isStepInvalid: boolean =
       typeof groupName !== 'string' ||
-      stepType === FilterKindEnum.Error ||
+      stepType === AttributeKinds.ERROR ||
       !stepType
 
     const handleModals = () => {
-      activeStepStore.makeStepActive(
-        stepNo - 1,
-        ActiveStepOptions.StartedVariants,
-      )
+      stepStore.makeStepActive(stepNo - 1, ActiveStepOptions.StartedVariants)
 
-      stepType === FilterKindEnum.Enum &&
-        modalsVisibilityStore.openModalEnum(groupName, groupNo)
+      stepType === AttributeKinds.ENUM &&
+        modalsVisibilityStore.openEnumDialog(groupName, groupNo)
 
-      stepType === FilterKindEnum.Numeric &&
-        modalsVisibilityStore.openModalNumeric(groupName, groupNo)
+      stepType === AttributeKinds.NUMERIC &&
+        modalsVisibilityStore.openNumericDialog(groupName, groupNo)
 
-      if (stepType === FilterKindEnum.Func) {
+      if (stepType === AttributeKinds.FUNC) {
         groupName === FuncStepTypesEnum.InheritanceMode &&
           modalsVisibilityStore.openModalInheritanceMode(groupName, groupNo)
 
@@ -97,11 +92,11 @@ export const ContentItemHeader = observer(
             </NotModeWrapper>
           )}
 
-          <div className="flex items-center text-14 mr-2">
-            {stepType === FilterKindEnum.Func && (
+          <div className="flex items-center text-14">
+            {stepType === AttributeKinds.FUNC && (
               <FnLabel
                 isActive={currentStep && currentStep.isActive}
-                className="shadow-dark"
+                className="shadow-dark mr-1"
               />
             )}
             {isStepInvalid ? (

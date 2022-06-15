@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite'
 import { ActionType } from '@declarations'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import dtreeStore from '@store/dtree'
-import activeStepStore from '@pages/filter/dtree/components/active-step.store'
+import stepStore from '@store/dtree/step.store'
 import { GeneRegionContent } from '../../../query-builder/ui/gene-region-content'
 import modalsControlStore from '../../modals-control-store'
 import modalsVisibilityStore from '../../modals-visibility-store'
@@ -18,13 +18,13 @@ export const ModalGeneRegion = observer((): ReactElement => {
   const { variants, currentStepGroups } = modalsControlStore
   const { locusCondition } = modalGeneRegionStore
 
-  const currentStepIndex = activeStepStore.activeStepIndex
+  const currentStepIndex = stepStore.activeStepIndex
   const currentGroupIndex = modalsVisibilityStore.groupIndexToChange
 
   const currentGroup =
-    dtreeStore.stepData[currentStepIndex].groups[currentGroupIndex]
+    stepStore.steps[currentStepIndex].groups[currentGroupIndex]
 
-  const currentGroupToModify = dtreeStore.stepData[currentStepIndex].groups
+  const currentGroupToModify = stepStore.steps[currentStepIndex].groups
 
   const [error, setError] = useState<string>('')
 
@@ -83,7 +83,6 @@ export const ModalGeneRegion = observer((): ReactElement => {
         <SelectModalButtons
           handleClose={() => modalGeneRegionStore.closeModal()}
           handleModals={() => modalGeneRegionStore.openModalAttribute()}
-          handleModalJoin={() => modalsControlStore.openModalJoin()}
           handleAddAttribute={handleAddAttribute}
           disabled={!!error}
           currentGroup={currentGroupToModify ?? currentStepGroups}

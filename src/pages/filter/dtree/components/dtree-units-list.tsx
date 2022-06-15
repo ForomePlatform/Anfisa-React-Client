@@ -6,6 +6,7 @@ import { ModalSources } from '@core/enum/modal-sources'
 import { useScrollPosition } from '@core/hooks/use-scroll-position'
 import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
+import stepStore from '@store/dtree/step.store'
 import { UnitsList } from '@components/units-list'
 import modalsVisibilityStore from '@pages/filter/dtree/components/modals/modals-visibility-store'
 import { AttributeKinds, TPropertyStatus } from '@service-providers/common'
@@ -17,11 +18,11 @@ interface IDtreeUnitsList {
 }
 
 const DtreeUnitsListSubHeader = observer(() => {
-  const activeStepIndex = dtreeStore.stepData.findIndex(
+  const activeStepIndex = stepStore.steps.findIndex(
     step => step.isActive || step.isReturnedVariantsActive,
   )
 
-  const activeStep = dtreeStore.stepData[activeStepIndex]
+  const activeStep = stepStore.steps[activeStepIndex]
 
   const returnedVariantsPrompt = activeStep?.excluded
     ? ` (${t('dtree.excludedVariants')})`
@@ -63,9 +64,9 @@ export const DtreeUnitsList = observer(
       modalsVisibilityStore.closeModalAttribute()
 
       if (kind === AttributeKinds.ENUM) {
-        modalsVisibilityStore.openModalEnum(name, undefined, source)
+        modalsVisibilityStore.openEnumDialog(name, undefined, source)
       } else if (kind === AttributeKinds.NUMERIC) {
-        modalsVisibilityStore.openModalNumeric(name, undefined, source)
+        modalsVisibilityStore.openNumericDialog(name, undefined, source)
       } else if (kind === AttributeKinds.FUNC) {
         switch (name as FuncStepTypesEnum) {
           case FuncStepTypesEnum.InheritanceMode:

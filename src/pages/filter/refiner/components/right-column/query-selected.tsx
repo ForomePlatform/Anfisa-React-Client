@@ -9,21 +9,22 @@ import { formatNumber } from '@core/format-number'
 import { useParams } from '@core/hooks/use-params'
 import { t } from '@i18n'
 import datasetStore from '@store/dataset/dataset'
-import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
 import { Routes } from '@router/routes.enum'
 import { Button } from '@ui/button'
-import { Loader } from '@components/loader'
+import { Loader } from '@ui/loader'
 import { FilterRefinerStatCounts } from '@pages/filter/refiner/components/right-column/filter-refiner-stat-counts'
+import { TCondition } from '@service-providers/common'
 import { showToast } from '@utils/notifications/showToast'
 import { QueryResults } from './query-results'
 
 interface IQuerySelectedProps {
   className?: string
+  onViewVariants: () => void
 }
 
 export const QuerySelected = observer(
-  ({ className }: IQuerySelectedProps): ReactElement => {
+  ({ className, onViewVariants }: IQuerySelectedProps): ReactElement => {
     const history = useHistory()
     const params = useParams()
 
@@ -50,6 +51,9 @@ export const QuerySelected = observer(
 
     const clearAlSelectedFilters = () => {
       filterStore.clearConditions()
+      filterStore.actionHistory.addHistory(
+        filterStore.conditions as TCondition[],
+      )
     }
 
     const isDisabledApplyButton =
@@ -77,7 +81,7 @@ export const QuerySelected = observer(
           {datasetStore.isXL ? (
             <Button
               className="ml-auto"
-              onClick={() => dtreeStore.openModalViewVariants()}
+              onClick={onViewVariants}
               text={t('dtree.viewVariants')}
             />
           ) : (

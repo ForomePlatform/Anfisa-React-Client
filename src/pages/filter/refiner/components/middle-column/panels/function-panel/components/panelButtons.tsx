@@ -13,6 +13,7 @@ interface IPanelButtons {
   classname?: Argument
 }
 
+// TODO: unify this component for all other panels
 export const PanelButtons = observer(
   ({
     onSubmit,
@@ -32,7 +33,7 @@ export const PanelButtons = observer(
       <div className={cn('flex items-center justify-end mt-4 pb-6', classname)}>
         <Button
           text={t('general.clear')}
-          variant={'secondary'}
+          variant="secondary"
           onClick={handleClear}
           className="px-5 mr-2"
         />

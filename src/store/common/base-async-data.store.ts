@@ -155,6 +155,14 @@ export abstract class BaseAsyncDataStore<Data, Query> {
     this.cache.clear()
   }
 
+  public handleQuery = (query: Query | undefined): void => {
+    if (query !== undefined) {
+      this.setQuery(query)
+    } else {
+      this.reset()
+    }
+  }
+
   public get data(): Data | undefined {
     return this._data
   }
@@ -239,6 +247,7 @@ export abstract class BaseAsyncDataStore<Data, Query> {
       this._error = null
 
       if (!keepData) {
+        this._lastUpdate = 0
         this._data = undefined
       }
     })

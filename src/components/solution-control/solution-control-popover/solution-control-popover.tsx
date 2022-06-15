@@ -76,6 +76,9 @@ export const SolutionControlPopover = ({
         )}
         <footer className={styles.solutionControlCard__actions}>
           <Button
+            size="xs"
+            textSize="sm"
+            padding="dense"
             className={styles.solutionControlCard__button}
             variant="tertiary"
             text={t('general.cancel')}
@@ -83,6 +86,9 @@ export const SolutionControlPopover = ({
           />
           {onJoin && (
             <Button
+              size="xs"
+              textSize="sm"
+              padding="dense"
               className={styles.solutionControlCard__button}
               variant="secondary"
               text={t('solutionControl.join')}
@@ -94,6 +100,9 @@ export const SolutionControlPopover = ({
             />
           )}
           <Button
+            size="xs"
+            textSize="sm"
+            padding="dense"
             className={styles.solutionControlCard__button}
             text={t('solutionControl.apply')}
             disabled={!selected}

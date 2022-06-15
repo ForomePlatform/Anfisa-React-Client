@@ -1,22 +1,17 @@
 import { ReactElement, useState } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
-import styled from 'styled-components'
 
-import { FilterKindEnum } from '@core/enum/filter-kind.enum'
-import { t } from '@i18n'
-import dtreeStore from '@store/dtree'
-import { IStepData } from '@store/dtree/dtree.store'
+import stepStore from '@store/dtree/step.store'
 import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-modal.cy'
-import { TCondition, TNumericConditionBounds } from '@service-providers/common'
+import {
+  AttributeKinds,
+  TCondition,
+  TNumericConditionBounds,
+} from '@service-providers/common'
 import { DropDownJoin } from '../dropdown-join'
 import { ContentItemHeader } from './content-item-header'
 import { ContentItemValues } from './content-item-values'
-
-const JoinType = styled.div`
-  width: 34px;
-  height: 28px;
-`
 
 interface INextStepContentItemProps {
   group: any
@@ -37,9 +32,9 @@ export const NextStepContentItem = observer(
     setExpandOnClick,
   }: INextStepContentItemProps): ReactElement => {
     const [isVisible, setIsVisible] = useState<boolean>(false)
-    const stepType: FilterKindEnum = group[0]
+    const stepType: AttributeKinds = group[0]
     const groupName: string = group[1]
-    const currentStep: IStepData = dtreeStore.filteredStepData[index]
+    const currentStep = stepStore.filteredSteps[index]
     const currentGroup: TCondition = currentStep.groups[groupNo]
     const conditionValue: string[] | TNumericConditionBounds = group.find(
       Array.isArray,
@@ -53,14 +48,8 @@ export const NextStepContentItem = observer(
               'flex w-full h-2/5 py-2 text-14 font-normal items-center relative step-content-area',
               currentStep.isActive && 'bg-blue-tertiary',
             )}
-            data-testId={DecisionTreeModalDataCy.joinByLabel}
+            data-testid={DecisionTreeModalDataCy.joinByLabel}
           >
-            <div className="mr-1">{t('dtree.joinBy')}</div>
-            <JoinType className="flex items-center justify-center bg-orange-light text-orange-bright">
-              {group.includes('or') && 'OR'}
-              {group.includes('and') && 'AND'}
-            </JoinType>
-
             {isVisible && (
               <DropDownJoin
                 close={() => setIsVisible(false)}
