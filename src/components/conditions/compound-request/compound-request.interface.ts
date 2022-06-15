@@ -2,29 +2,23 @@ import { ReactElement } from 'react'
 import { Argument } from 'classnames'
 
 import { ApproxNameTypes } from '@core/enum/approxNameTypes'
-import { ModeTypes } from '@core/enum/mode-types-enum'
-import { DtreeStatFuncStore } from '@store/dtree/dtree-stat-func.store'
-import { FilterStatFuncStore } from '@store/filter/filter-stat-func.store'
 import {
   ICompoundRequestArgs,
   TRequestCondition,
 } from '@service-providers/common'
+import {
+  ICommonControlProps,
+  ICommonFuncConditionProps,
+} from '../conditions.interface'
 
-export interface IControlProps {
-  hasErrors: boolean
+export interface IControlProps extends ICommonControlProps {
   param: ICompoundRequestArgs
-  mode: ModeTypes | undefined
-  clearValue?: () => void
 }
 
-export interface ICompoundRequestProps {
+export interface ICompoundRequestProps extends ICommonFuncConditionProps {
   problemGroups: string[]
-  initialMode: ModeTypes | undefined
   initialApprox: ApproxNameTypes
   initialRequestCondition: TRequestCondition[]
-  attributeSubKind: string | undefined
-  statFuncStore: DtreeStatFuncStore | FilterStatFuncStore
-  onTouch?: () => void
   controls?: (props: IControlProps) => ReactElement | null
 }
 
