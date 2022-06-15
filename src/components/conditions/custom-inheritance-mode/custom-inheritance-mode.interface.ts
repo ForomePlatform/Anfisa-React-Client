@@ -18,9 +18,9 @@ export interface ICustomInheritanceModeConditionProps
   controls?: (props: IControlProps) => ReactElement | null
 }
 export interface IHandleSetComplexScenarioProps {
-  preparedValue: string
+  preparedScenarioName: string
   problemGroups: string[]
-  setScenario: (scenario: any) => void
+  setScenario: (scenario: IScenario) => void
 }
 
 export interface ICustomInheritanceModeScenarioProps {

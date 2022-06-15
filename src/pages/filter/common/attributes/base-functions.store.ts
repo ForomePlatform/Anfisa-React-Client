@@ -4,16 +4,18 @@ import { ApproxNameTypes } from '@core/enum/approxNameTypes'
 import { DefaultProblemGroup } from '@core/enum/default-problem-group-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import datasetStore from '@store/dataset/dataset'
+import { getApproxName } from '@components/conditions/utils/conditions.utils'
 import {
   ICompoundHetArgs,
+  ICompoundRequestArgs,
   ICustomInheritanceModeArgs,
   IFuncPropertyStatus,
   IInheritanceModeArgs,
   IScenario,
   TFuncCondition,
   TPropertyStatus,
+  TRequestCondition,
 } from '@service-providers/common'
-import { getApproxName } from '@utils/getApproxName'
 import { getCurrentModeType } from '@utils/getCurrentModeType'
 import { BaseAttributeStore } from './base-attribute.store'
 
@@ -69,6 +71,12 @@ export class BaseFunctionsStore {
     return datasetStore.isXL
       ? ApproxNameTypes.Non_Intersecting_Transcript
       : ApproxNameTypes.Shared_Transcript
+  }
+
+  public get initialRequestCondition(): TRequestCondition[] {
+    const condition = this.initialCondition?.[4] as ICompoundRequestArgs
+
+    return condition?.request || [[1, {}]]
   }
 
   public get initialProblemGroups(): string[] | undefined {

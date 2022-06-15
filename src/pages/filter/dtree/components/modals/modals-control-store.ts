@@ -2,11 +2,7 @@ import { makeAutoObservable, toJS } from 'mobx'
 
 import dtreeStore from '@store/dtree'
 import stepStore from '@store/dtree/step.store'
-import {
-  AttributeKinds,
-  IFuncPropertyStatus,
-  TPropertyStatus,
-} from '@service-providers/common'
+import { TPropertyStatus } from '@service-providers/common'
 import modalsVisibilityStore from './modals-visibility-store'
 
 export const selectOptions = ['--', '0', '0-1', '1', '1-2', '2']
@@ -66,16 +62,6 @@ class ModalsControlStore {
     return this.groupName
       ? toJS(dtreeStore.stat.getAttributeStatusByName(this.groupName))
       : undefined
-  }
-
-  get funcAttributeStatusToChange(): IFuncPropertyStatus | undefined {
-    const status = this.attributeStatusToChange
-
-    return status && status?.kind === AttributeKinds.FUNC ? status : undefined
-  }
-
-  public get problemGroups(): string[] {
-    return this.funcAttributeStatusToChange?.family ?? []
   }
 }
 

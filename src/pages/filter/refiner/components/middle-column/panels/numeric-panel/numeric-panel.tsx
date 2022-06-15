@@ -2,7 +2,7 @@ import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import filterStore from '@store/filter'
-import { NumericCondition } from '@components/conditions/numeric-condition'
+import { NumericCondition } from '@components/conditions/numeric'
 import { AttributeHeader } from '@pages/filter/refiner/components/middle-column/attribute-header'
 import { DividerHorizontal } from '@pages/filter/refiner/components/middle-column/components/divider-horizontal'
 import { AttributeKinds } from '@service-providers/common/common.interface'

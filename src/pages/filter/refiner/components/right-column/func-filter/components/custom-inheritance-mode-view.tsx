@@ -1,10 +1,10 @@
 import { ReactElement } from 'react'
 import cn from 'classnames'
 
-import functionPanelStore from '@pages/filter/refiner/components/middle-column/panels/function-panel/function-panel.store'
+import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { getScenarioValue } from '@pages/filter/refiner/components/right-column/func-filter/utils/get-scenario-value'
 import { ICustomInheritanceModeArgs } from '@service-providers/common/common.interface'
-
+import { getDefaultProblemGroups } from '../utils/get-default-problem-groups'
 interface ICustomInheritanceModeViewProps {
   isFilterActive: boolean
   filterContent: string[]
@@ -15,7 +15,9 @@ export const CustomInheritanceModeView = ({
   isFilterActive,
   filterExpression,
 }: ICustomInheritanceModeViewProps): ReactElement => {
-  const { problemGroups } = functionPanelStore
+  const problemGroups = getDefaultProblemGroups(
+    FuncStepTypesEnum.CustomInheritanceMode,
+  )
 
   return (
     <div
