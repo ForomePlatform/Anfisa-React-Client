@@ -12,8 +12,8 @@ import {
   parseNumeric,
   prepareCenterDistanceValue,
   useCenterDistanceValue,
-} from '@components/conditions/numeric-condition/numeric-condition.utils'
-import { NumericConditionValue } from '@components/conditions/numeric-condition/numeric-condition-value'
+} from '@components/conditions/numeric/numeric-condition.utils'
+import { NumericConditionValue } from '@components/conditions/numeric/numeric-condition-value'
 import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-modal.cy'
 import { NumericPropertyStatusSubKinds } from '@service-providers/common/common.interface'
 import { INumericConditionProps } from './numeric-condition.interface'

@@ -187,6 +187,15 @@ export const en = {
     savePreset: 'Save Preset',
     savePredefinedPresetError: '{presetName} is a predefined preset',
   },
+  condition: {
+    selectAttribute: 'Select attribute',
+    backToAttribute: 'Back to Attributes List',
+    saveChanges: 'Save changes',
+    deleteAttribute: 'Delete attribute',
+    addAttribute: '+ Add Attribute',
+    addByJoining: 'Add by joining',
+    noFilters: 'There are no filters to show',
+  },
   numericCondition: {
     limitedRange: 'Limited range',
     upperBoundError: 'Upper bound is incorrect',
@@ -195,9 +204,6 @@ export const en = {
     includeZero: 'Include 0 ({ count } variants)',
     center: 'Center',
     distance: 'Distance',
-  },
-  condition: {
-    noFilters: 'There are no filters to show',
   },
   enumCondition: {
     showZeroVariants: 'Show zero variants',
@@ -265,16 +271,11 @@ export const en = {
     addStep: '+ Add Step',
     applyFilter: 'Apply Filter',
     algorithm: 'Algorithm',
-    addAttribute: '+ Add Attribute',
-    addNewAttribute: 'Add Attribute',
-    addByJoining: 'Add by joining',
+
     nothingSelected: 'Nothing is selected',
     addQuery: 'Add query',
     add: 'Add',
-    selectAttribute: 'Select attribute',
-    backToAttribute: 'Back to Attributes List',
-    saveChanges: 'Save changes',
-    deleteAttribute: 'Delete attribute',
+
     selected: 'selected',
     replace: 'Replace',
     join: 'Join',

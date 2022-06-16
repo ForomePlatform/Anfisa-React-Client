@@ -10,12 +10,12 @@ import { Select } from '@ui/select'
 interface IAprroxAndStateProps {
   approx: string
   className?: Argument
-  setApprox: (value: ApproxNameTypes) => void
+  onChangeApprox: (value: ApproxNameTypes) => void
 }
 
 export const AprroxAndState = ({
   approx,
-  setApprox,
+  onChangeApprox,
   className,
 }: IAprroxAndStateProps): ReactElement => (
   <div className={cn('flex justify-between text-14', className)}>
@@ -27,7 +27,7 @@ export const AprroxAndState = ({
         options={approxOptions}
         disabled={datasetStore.isXL}
         onChange={(e: ChangeEvent<HTMLSelectElement>) =>
-          setApprox(e.target.value as ApproxNameTypes)
+          onChangeApprox(e.target.value as ApproxNameTypes)
         }
         className="ml-1.5 py-1 pl-3 pr-3.5 flex-1 bg-white"
       />

@@ -16,7 +16,7 @@ export const CustomInheritanceModeScenario = ({
       {t('funcCondition.scenario')}
     </div>
 
-    <div className="flex items-center justify-between w-full text-14">
+    <div className="flex items-center justify-between w-full pl-2 text-14">
       {problemGroups.map((group: string, index: number) => (
         <div key={group}>
           <span>{group}</span>
