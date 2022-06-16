@@ -12,7 +12,7 @@ interface ISolutionControlButtonProps
   solutionName: string | undefined
   controlName: string
   isOpen: boolean
-  isFetchingSolutions: boolean
+  isFetchingSolutions?: boolean
   isDeleteShown?: boolean
   onDeleteClick?: () => void
 }
