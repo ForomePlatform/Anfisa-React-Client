@@ -26,7 +26,8 @@ Scenario: 03 Excel export with filters (Filter Refiner)
 	And the "Main Table" page is open for 58 variants
 	And user clicks "Export report"
 	And clicks "Excel"
-	Then Dataset should be exported.
+	Then Dataset should be exported in correct format
+	And should contain correct number of variants
 ​
 Scenario: 04 Excel export with filter by Tag(s)
 	Given "Main Table" was opened for the "PGP3140_wgs_panel_hl" dataset
@@ -45,21 +46,21 @@ Scenario: 05 Excel export with preset
 	When user applies the "⏚BGM_Homozygous_Rec" preset
 	And clicks "Export report"
 	And clicks "Excel"
-	Then Dataset should be exported.
+	Then Dataset should be exported with less then 300 variants.
 ​
 Scenario: 06 Excel export - No data
 	Given "Main Table" was opened for the "PGP3140_wgs_panel_hl" dataset
 	And there are no applied filters
 	When user applies the "⏚BGM_Compound_Het" preset
 	And Tries to click "Export report"
-	Then User should be unable to click "Export report" button when there is 0 variant
+	Then "Export report" button should be disabled 
 ​
 Scenario: 07 Excel export without filters
 	Given "Main Table" was opened for a dataset with a number of variants less than 300
 	When user clicks "Export report"
 	And Export panel is opened
 	And user clicks "Excel"
-	Then Dataset should be exported.
+	Then Dataset should be exported with less then 300 variants.
 ​
 Scenario: 08 CSV export with filters (Filter Refiner)
 	Given "Main Table" was opened for the "PGP3140_wgs_panel_hl" dataset
@@ -72,7 +73,8 @@ Scenario: 08 CSV export with filters (Filter Refiner)
 	And the "Main Table" page is open for 58 variants
 	And user clicks "Export report"
 	And clicks "CSV"
-	Then Dataset should be exported.
+	Then Dataset should be exported in correct format
+	And should contain correct number of variants
 ​
 Scenario: 09 CSV export with filter by Tag(s)
 	Given "Main Table" was opened for the "PGP3140_wgs_panel_hl" dataset
@@ -83,7 +85,8 @@ Scenario: 09 CSV export with filter by Tag(s)
 	And filter by tag is applied
 	And user clicks "Export report"
 	And clicks "CSV"
-	Then Dataset should be exported.
+	Then Dataset should be exported with less then 300 variants
+	
 ​
 Scenario: 10 CSV export with preset
 	Given "Main Table" was opened for the "PGP3140_wgs_panel_hl" dataset
@@ -91,14 +94,14 @@ Scenario: 10 CSV export with preset
 	When user applies the "⏚BGM_Homozygous_Rec" preset
 	And clicks "Export report"
 	And clicks "CSV"
-	Then Dataset should be exported.
+	Then Dataset should be exported with less then 300 variants.
 ​
 Scenario: 11 CSV export without filters
 	Given "Main Table" was opened for a dataset with a number of variants less than 300
 	When user clicks "Export report"
 	And Export panel is opened
 	And user clicks "CSV"
-	Then Dataset should be exported.
+	Then Dataset should be exported with less then 300 variants.
 
 Scenario: 12 Excel export with Preset + Filter + Zone filter
 	Given "Main Table" was opened for the "PGP3140_wgs_panel_hl" dataset
@@ -115,7 +118,7 @@ Scenario: 12 Excel export with Preset + Filter + Zone filter
 	And user applies the "⏚BGM_Homozygous_Rec" preset
 	And clicks "Export report"
 	And clicks "Excel"
-	Then Dataset should be exported
+	Then Dataset should be exported with less then 300 variants.
 
 Scenario: 13 CSV export with Preset + Filter + Zone filter
 	Given "Main Table" was opened for the "PGP3140_wgs_panel_hl" dataset
@@ -132,7 +135,7 @@ Scenario: 13 CSV export with Preset + Filter + Zone filter
 	And user applies the "⏚BGM_Homozygous_Rec" preset
 	And clicks "Export report"
 	And clicks "CSV"
-	Then Dataset should be exported
+	Then Dataset should be exported with less then 300 variants.
 
 Scenario: 14 Excel export with Preset + Filter
 	Given Main Table for the "PGP3140_wgs_panel_hl" dataset was opened
@@ -144,4 +147,4 @@ Scenario: 14 Excel export with Preset + Filter
 	And clicks the "Apply" button
 	And clicks "Export report"
 	And clicks "Excel"
-	Then Dataset should be exported
+	Then Dataset should be exported with less then 300 variants.
