@@ -56,7 +56,7 @@ export const QueryBuilderResults = observer(
               onClick={() => openTableModal(true)}
               text={t('dtree.viewReturnedVariants')}
               variant="secondary"
-              className="ml-auto  min-h-32"
+              className="ml-auto min-h-32"
             />
           )}
 

@@ -20,23 +20,27 @@ export const ExportDialog = observer(() => {
       isLoading={handleDatasetStore.isExporting}
       width="xs"
     >
-      <Checkbox
-        id={'with-support-checkbox'}
-        checked={handleDatasetStore.isSupportSelected}
-        className="mb-4 text-12"
-        onChange={e => handleDatasetStore.toggleSupport(e.target.checked)}
-      >
-        {t('home.modals.withSupport')}
-      </Checkbox>
+      <div className="flex flex-col">
+        <Checkbox
+          id={'with-support-checkbox'}
+          checked={handleDatasetStore.isSupportSelected}
+          className="mb-4 text-12"
+          onChange={e => handleDatasetStore.toggleSupport(e.target.checked)}
+        >
+          {t('home.modals.withSupport')}
+        </Checkbox>
 
-      <Checkbox
-        id={'with-documentation-checkbox'}
-        checked={handleDatasetStore.isDocumentationSelected}
-        className="mb-4 text-12"
-        onChange={e => handleDatasetStore.toggleDocumentation(e.target.checked)}
-      >
-        {t('home.modals.withDocumentation')}
-      </Checkbox>
+        <Checkbox
+          id={'with-documentation-checkbox'}
+          checked={handleDatasetStore.isDocumentationSelected}
+          className="text-12"
+          onChange={e =>
+            handleDatasetStore.toggleDocumentation(e.target.checked)
+          }
+        >
+          {t('home.modals.withDocumentation')}
+        </Checkbox>
+      </div>
     </Dialog>
   )
 })

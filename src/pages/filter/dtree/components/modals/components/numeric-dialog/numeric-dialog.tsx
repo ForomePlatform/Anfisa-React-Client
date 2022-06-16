@@ -1,16 +1,19 @@
 import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
+import { ActionType } from '@declarations'
 import { Dialog } from '@ui/dialog'
-import { NumericCondition } from '@components/conditions/numeric-condition'
-import { EditModalButtons } from '@pages/filter/dtree/components/modals/components/ui/edit-modal-buttons'
-import { AttributeKinds } from '@service-providers/common'
+import { NumericCondition } from '@components/conditions/numeric'
+import {
+  AttributeKinds,
+  TNumericConditionBounds,
+} from '@service-providers/common'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { changeNumericAttribute } from '@utils/changeAttribute/changeNumericAttribute'
 import { dtreeAttributeStore } from '../../../attributes/dtree-attributes.store'
 import modalsControlStore from '../../modals-control-store'
 import modalsVisibilityStore from '../../modals-visibility-store'
-import { SelectModalButtons } from '../ui/select-modal-buttons'
+import { renderAttributeDialogControls } from '../ui/renderAttributeControls'
 
 export const NumericDialog = observer((): ReactElement | null => {
   const {
@@ -29,6 +32,23 @@ export const NumericDialog = observer((): ReactElement | null => {
   const handleModals = () => {
     modalsVisibilityStore.closeNumericDialog()
     modalsVisibilityStore.openModalAttribute()
+  }
+
+  const handleSaveChanges = (value: TNumericConditionBounds) => {
+    changeNumericAttribute(value)
+    modalsVisibilityStore.closeNumericDialog()
+  }
+
+  const handleAddAttribute = (
+    action: ActionType,
+    value: TNumericConditionBounds,
+  ) => {
+    addAttributeToStep({
+      action,
+      attributeType: AttributeKinds.NUMERIC,
+      filters: value,
+    })
+    modalsVisibilityStore.closeNumericDialog()
   }
 
   return (
@@ -50,31 +70,15 @@ export const NumericDialog = observer((): ReactElement | null => {
             (typeof attributeStatus.min !== 'number' &&
               typeof attributeStatus.max !== 'number')
 
-          return initialCondition ? (
-            <EditModalButtons
-              handleClose={modalsVisibilityStore.closeNumericDialog}
-              handleSaveChanges={() => {
-                changeNumericAttribute(value)
-                modalsVisibilityStore.closeNumericDialog()
-              }}
-              disabled={disabled}
-            />
-          ) : (
-            <SelectModalButtons
-              currentGroup={currentStepGroups}
-              handleClose={modalsVisibilityStore.closeNumericDialog}
-              handleModals={handleModals}
-              disabled={disabled}
-              handleAddAttribute={action => {
-                addAttributeToStep({
-                  action,
-                  attributeType: AttributeKinds.NUMERIC,
-                  filters: value,
-                })
-                modalsVisibilityStore.closeNumericDialog()
-              }}
-            />
-          )
+          return renderAttributeDialogControls({
+            initialCondition,
+            currentStepGroups,
+            onClose: modalsVisibilityStore.closeNumericDialog,
+            handleModals,
+            disabled,
+            saveAttribute: () => handleSaveChanges(value),
+            addAttribute: action => handleAddAttribute(action, value),
+          })
         }}
       />
     </Dialog>

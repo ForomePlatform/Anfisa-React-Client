@@ -1,7 +1,7 @@
 import { AxiosRequestConfig } from 'axios'
 
 import { adaptDataToCamelizedType } from '@service-providers/common'
-import { ServiceProviderBase } from './../common/service-provider-base'
+import { ServiceProviderBase } from './../common'
 import {
   IMacroTagging,
   IMacroTaggingArguments,
@@ -33,8 +33,13 @@ class WsDatasetSupportProvider extends ServiceProviderBase {
     return this.post<TZoneList>('/zone_list', params).then(res => res.data)
   }
 
-  public getWsTags(params: IWsTagsArguments): Promise<IWsTags> {
-    return this.post<IWsTags>('/ws_tags', params).then(res => res.data)
+  public wsTags(
+    params: IWsTagsArguments,
+    options: Partial<AxiosRequestConfig> = {},
+  ): Promise<IWsTags> {
+    return this.post<IWsTags>('/ws_tags', params, options).then(res =>
+      adaptDataToCamelizedType(res.data),
+    )
   }
 
   public getTagSelect(params: ITagSelectArguments): Promise<ITagSelect> {
