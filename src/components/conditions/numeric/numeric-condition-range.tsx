@@ -3,7 +3,7 @@ import React, { ReactElement, useCallback, useMemo, useState } from 'react'
 import { adjustHistogramData } from '@core/histograms'
 import { t } from '@i18n'
 import { Checkbox } from '@ui/checkbox/checkbox'
-import { InputNumber } from '@ui/input-number/input-number'
+import { InputNumeric } from '@ui/input-numeric/input-numeric'
 import { RangeSliderSide } from '@ui/range-slider'
 import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-modal.cy'
 import { NumericPropertyStatusSubKinds } from '@service-providers/common/common.interface'
@@ -13,7 +13,6 @@ import {
   getLimitedRangeInitialState,
   NumericValueErrorType,
   NumericValueIndex,
-  parseNumeric,
   prepareValue,
   useConditionBoundsValue,
   validateNumericValue,
@@ -91,18 +90,15 @@ export const NumericConditionRange = ({
               {min}
             </div>
             <div className="grow">
-              <InputNumber
+              <InputNumeric
                 data-test-id={DecisionTreeModalDataCy.leftInput}
                 disabled={isZeroIncluded}
                 className="h-8 w-full border border-grey-disabled shadow-input"
                 min={min}
                 max={max}
                 value={minValue ?? ''}
-                onChange={event =>
-                  updateValue(
-                    NumericValueIndex.MinValue,
-                    parseNumeric(event.target.value, isFloat),
-                  )
+                onChange={value =>
+                  updateValue(NumericValueIndex.MinValue, value)
                 }
               />
             </div>
@@ -131,17 +127,14 @@ export const NumericConditionRange = ({
               />
             </div>
             <div className="grow">
-              <InputNumber
+              <InputNumeric
                 data-test-id={DecisionTreeModalDataCy.rightInput}
                 className="h-8 w-full border border-grey-disabled shadow-input"
                 min={min}
                 max={max}
                 value={maxValue ?? ''}
-                onChange={event =>
-                  updateValue(
-                    NumericValueIndex.MaxValue,
-                    parseNumeric(event.target.value, isFloat),
-                  )
+                onChange={value =>
+                  updateValue(NumericValueIndex.MaxValue, value)
                 }
               />
             </div>

@@ -11,6 +11,7 @@ const KEYCODE_DOWN: number = 40
 interface IInputNumericProps {
   value: string | number
   className?: Argument
+  placeholder?: string
   min?: number
   max?: number
   disabled?: boolean
@@ -26,11 +27,12 @@ export const InputNumeric = ({
   disabled,
   hasErrors,
   onChange,
+  ...rest
 }: IInputNumericProps): ReactElement => {
   const [inputValue, setInputValue] = useState<number>(+value)
   const minimal = min || 0
   const maximal = max || Infinity
-  const displayValue = inputValue.toLocaleString()
+  const displayValue = value === '' ? '' : inputValue.toLocaleString()
 
   function changeValue(newValue: number | string) {
     if (disabled) {
@@ -80,6 +82,7 @@ export const InputNumeric = ({
           disabled={disabled}
           onChange={e => changeValue(e.target.value)}
           onKeyDown={onKeyDown}
+          {...rest}
         />
       </div>
       <div className={cn(styles.inputNumeric__buttons)}>

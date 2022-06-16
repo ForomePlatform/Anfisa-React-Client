@@ -45,7 +45,7 @@ export const CompoundRequestScenario = ({
             onChange={value =>
               onChangeRequestConditionNumber(requestIndex, value)
             }
-            className="cursor-pointer h-7"
+            className="cursor-pointer h-7 w-[80px]"
           />
         </div>
 

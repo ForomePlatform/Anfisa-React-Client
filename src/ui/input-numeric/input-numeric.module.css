@@ -32,10 +32,12 @@
 
   &__input-section {
     padding: 3px 0;
+    flex-grow: 1;
+    width: calc(100% - 28px);
   }
 
   &__input {
-    max-width: 80px;
+    width: 100%;
     padding: 0 8px;
     border: none;
     font-size: 12px;
