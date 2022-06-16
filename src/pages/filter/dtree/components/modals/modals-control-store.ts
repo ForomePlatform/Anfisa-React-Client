@@ -26,10 +26,6 @@ class ModalsControlStore {
     return [+stepIndexForApi, locationIndex]
   }
 
-  public get variants(): string[] | [string, number] {
-    return dtreeStore.statFuncData.variants
-  }
-
   public get groupName(): string {
     return modalsVisibilityStore.groupNameToChange
   }
