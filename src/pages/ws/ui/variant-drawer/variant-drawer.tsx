@@ -37,7 +37,7 @@ export const VariantDrawer = observer(
 
     useEffect(() => {
       return () => {
-        columnsStore.closeDrawer()
+        columnsStore.onCloseDrawer()
       }
     }, [])
 

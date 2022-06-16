@@ -2,6 +2,7 @@ import { ReactElement, useState } from 'react'
 
 import { ViewTypeEnum } from '@core/enum/view-type-enum'
 import columnsStore from '@store/ws/columns'
+import variantStore from '@store/ws/variant'
 import columnListStore from './columns-list/columns-list.store'
 import { CustomizeTableButton } from './customize-table-button'
 import { CustomizeTablePopover } from './customize-table-popover'
@@ -19,11 +20,12 @@ export const CustomizeTable = (): ReactElement => {
 
   const handleClose = () => {
     columnsStore.resetColumns()
+    setViewType(columnsStore.viewType)
     closePopover()
   }
 
   const handleApply = () => {
-    columnsStore.filterColumns()
+    columnsStore.applyColumns()
     columnsStore.setViewType(viewType)
     closePopover()
   }
@@ -43,6 +45,7 @@ export const CustomizeTable = (): ReactElement => {
         onClose={handleClose}
         onApply={handleApply}
         setViewType={setViewType}
+        disabled={variantStore.drawerVisible}
       />
     </>
   )

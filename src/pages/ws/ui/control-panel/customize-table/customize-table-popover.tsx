@@ -5,7 +5,6 @@ import { observer } from 'mobx-react-lite'
 import { ViewTypeEnum } from '@core/enum/view-type-enum'
 import { t } from '@i18n'
 import columnsStore from '@store/ws/columns'
-import variantStore from '@store/ws/variant'
 import { Popover } from '@ui/popover'
 import { PopupCard } from '@components/popup-card/popup-card'
 import { ViewTypeTable } from '@components/view-type-table'
@@ -17,6 +16,7 @@ interface ICustomizeTablePopoverProps {
   viewType: ViewTypeEnum
   isPopoverOpen: boolean
   popoverAnchor: HTMLElement | null
+  disabled: boolean
   onClose: () => void
   onApply: () => void
   setViewType: Dispatch<SetStateAction<ViewTypeEnum>>
@@ -28,6 +28,7 @@ export const CustomizeTablePopover = observer(
     visibleColumnsAmount,
     isPopoverOpen,
     popoverAnchor,
+    disabled,
     onClose,
     onApply,
     setViewType,
@@ -44,24 +45,28 @@ export const CustomizeTablePopover = observer(
             {visibleColumnsAmount} {'Selected'}
           </span>
 
-          <div className="flex text-blue-bright text-14 leading-5">
+          <div
+            className={cn('flex text-blue-bright text-14 leading-5', {
+              ' text-grey-blue': disabled,
+            })}
+          >
             <div className="flex">
-              <div
-                className="cursor-pointer"
-                onClick={columnsStore.selectAllColumns}
+              <button
+                onClick={() => columnsStore.toggleColumns(false)}
+                disabled={disabled}
               >
                 {t('general.selectAll')}
-              </div>
+              </button>
 
               <div className="w-[2px] h-full mx-2 bg-blue-light" />
             </div>
 
-            <span
-              className="cursor-pointer"
-              onClick={columnsStore.clearAllColumns}
+            <button
+              onClick={() => columnsStore.toggleColumns(true)}
+              disabled={disabled}
             >
               {t('general.clearAll')}
-            </span>
+            </button>
           </div>
         </div>
 
@@ -69,11 +74,10 @@ export const CustomizeTablePopover = observer(
 
         <div className="w-full">
           <>
-            {!variantStore.drawerVisible && <ColumnsList />}
+            {!disabled && <ColumnsList />}
             <div
               className={cn('mt-4 mb-5', {
-                'border-t-[1px] border-t-blue-light':
-                  !variantStore.drawerVisible,
+                'border-t-[1px] border-t-blue-light': !disabled,
               })}
             >
               <ViewTypeTable setViewType={setViewType} viewType={viewType} />

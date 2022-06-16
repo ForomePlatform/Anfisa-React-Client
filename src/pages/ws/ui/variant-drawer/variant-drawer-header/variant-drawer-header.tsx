@@ -70,7 +70,7 @@ export const VariantDrawerHeader = observer(
         mainTableStore.fetchWsTagsAsync()
       }
 
-      columnsStore.closeDrawer()
+      columnsStore.onCloseDrawer()
       variantStore.setIsTagsModified(false)
 
       // if url has 'variant' should be navigated to prev route

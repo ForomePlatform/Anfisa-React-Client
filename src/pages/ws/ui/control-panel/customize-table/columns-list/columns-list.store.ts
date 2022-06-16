@@ -1,11 +1,12 @@
-import { makeAutoObservable } from 'mobx'
+import cloneDeep from 'lodash/cloneDeep'
+import { makeAutoObservable, toJS } from 'mobx'
 
 import { IColumns } from '@declarations'
 import columnsStore, { columnsToIgnore } from '@store/ws/columns'
 
 class ColumnListStore {
   public get filteredColumns(): IColumns[] {
-    return columnsStore.getExtendedColumns.filter(
+    return columnsStore.localColumns.filter(
       (column: IColumns) => !columnsToIgnore.includes(column.title),
     )
   }
@@ -15,7 +16,7 @@ class ColumnListStore {
   }
 
   public toggleColumnHidden = (name: string) => {
-    const newColumns = columnsStore.getExtendedColumns.map(col => {
+    const newColumns = cloneDeep(columnsStore.localColumns).map(col => {
       if (col.title === name) {
         col.hidden = !col.hidden
       }
@@ -23,7 +24,7 @@ class ColumnListStore {
       return col
     })
 
-    columnsStore.setColumns(newColumns)
+    columnsStore.setLocalColumns(newColumns)
   }
 
   public reorderColumns = (sourceIndex: number, destinationIndex?: number) => {
@@ -45,7 +46,7 @@ class ColumnListStore {
       ...items,
     ]
 
-    columnsStore.setColumns(extendedColumns)
+    columnsStore.setLocalColumns(toJS(extendedColumns))
   }
 
   public get visibleColumnsAmount(): number {

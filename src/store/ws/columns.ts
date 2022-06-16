@@ -1,29 +1,40 @@
-/* eslint-disable max-lines */
 import { makeAutoObservable } from 'mobx'
 
+import { IColumns } from '@declarations'
 import { ViewTypeEnum } from '@core/enum/view-type-enum'
 import { tableColumnMap } from '@core/table-column-map'
 import variantStore from '@store/ws/variant'
 import { variantColumnTable } from '@pages/ws/columns'
+import { getExtendedColumns } from '@utils/mian-table/get-extended-columns'
 
 export const columnsToIgnore: string[] = ['Gene', 'Variant']
 
 class ColumnsStore {
-  columns: any[] = Object.values(tableColumnMap)
-  viewType: ViewTypeEnum = ViewTypeEnum.Cozy
-  selectedColumns: string[] = Object.values(tableColumnMap)
+  public columns: IColumns[] = getExtendedColumns(Object.values(tableColumnMap))
+  public localColumns: IColumns[] = getExtendedColumns(
+    Object.values(tableColumnMap),
+  )
+  public viewType: ViewTypeEnum = ViewTypeEnum.Cozy
 
-  get selectedDataColumns() {
-    return this.selectedColumns.map(column =>
+  constructor() {
+    makeAutoObservable(this)
+  }
+
+  public get selectedDataColumns() {
+    const selectedColumns = this.columns
+      .filter(column => !column.hidden)
+      .map(column => column.title ?? column)
+
+    return selectedColumns.map(column =>
       variantColumnTable.find(item => item.Header === column),
     )
   }
 
-  get collapsedSelectedDataColumns() {
+  public get collapsedSelectedDataColumns() {
     return this.selectedDataColumns.slice(0, 2)
   }
 
-  get columnDataListForRender() {
+  public get columnDataListForRender() {
     const { drawerVisible } = variantStore
 
     return drawerVisible
@@ -31,82 +42,49 @@ class ColumnsStore {
       : this.selectedDataColumns
   }
 
-  constructor() {
-    makeAutoObservable(this)
-  }
-
-  resetColumns() {
-    this.columns = this.selectedColumns
-  }
-
-  setViewType(viewType: ViewTypeEnum) {
-    this.viewType = viewType
-  }
-
-  public selectAllColumns = () => {
-    const clearedColumns =
-      typeof this.columns[0] !== 'string'
-        ? this.columns.map(column => ({
-            title: column.title,
-            hidden: false,
-          }))
-        : this.columns.map(column => ({
-            title: column,
-            hidden: false,
-          }))
-
-    this.setColumns(clearedColumns)
-  }
-
-  public clearAllColumns = () => {
-    const clearedColumns = this.getExtendedColumns.map(column => ({
-      title: column.title,
-      hidden: columnsToIgnore.includes(column.title) ? false : true,
-    }))
-
-    this.setColumns(clearedColumns)
-  }
-
-  setColumns(columns: any[]) {
+  public setColumns(columns: IColumns[]) {
     this.columns = columns
   }
 
-  closeDrawer() {
-    const columns = this.selectedColumns.map(column => ({
-      title: column,
-      hidden: false,
+  public resetColumns() {
+    if (!variantStore.drawerVisible) {
+      this.localColumns = this.columns
+    }
+  }
+
+  public setLocalColumns(columns: IColumns[]) {
+    this.localColumns = columns
+  }
+
+  public toggleColumns = (isHidden: boolean) => {
+    const toggledColumns = this.localColumns.map((column, index) => ({
+      title: column.title,
+      hidden: index > 1 ? isHidden : false,
     }))
 
-    this.setColumns(columns)
-
-    variantStore.setDrawerVisible(false)
+    this.setLocalColumns(toggledColumns)
   }
 
-  filterColumns() {
-    this.selectedColumns = this.columns
-      .filter(column => !column.hidden)
-      .map(column => column.title ?? column)
+  public applyColumns() {
+    this.setColumns(this.localColumns)
   }
 
-  getColumnsForOpenDrawer() {
-    const columnsForOpenDrawer = this.getExtendedColumns
+  public setViewType(viewType: ViewTypeEnum) {
+    this.viewType = viewType
+  }
+
+  public getColumnsForOpenDrawer() {
+    const columnsForOpenDrawer = this.columns
       .filter(column => !column.hidden)
       .splice(0, 2)
 
     return columnsForOpenDrawer
   }
 
-  get getExtendedColumns() {
-    if (typeof this.columns[0] !== 'string') {
-      return this.columns
-    }
+  public onCloseDrawer() {
+    this.setColumns(this.localColumns)
 
-    const extendedColumns = this.columns.map(column => ({
-      title: column,
-      hidden: false,
-    }))
-
-    return extendedColumns
+    variantStore.setDrawerVisible(false)
   }
 }
 
