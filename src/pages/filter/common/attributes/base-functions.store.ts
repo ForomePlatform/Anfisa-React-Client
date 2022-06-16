@@ -10,6 +10,7 @@ import {
   ICompoundRequestArgs,
   ICustomInheritanceModeArgs,
   IFuncPropertyStatus,
+  IGeneRegionArgs,
   IInheritanceModeArgs,
   IScenario,
   TFuncCondition,
@@ -93,5 +94,10 @@ export class BaseFunctionsStore {
 
   public get initialMode(): ModeTypes | undefined {
     return getCurrentModeType(this.initialCondition?.[2])
+  }
+
+  public get initialLocusValue(): string | undefined {
+    const condition = this.initialCondition?.[4] as IGeneRegionArgs
+    return condition?.locus
   }
 }

@@ -56,6 +56,8 @@ class OperationsStore {
       this.isExportingReport = true
 
       if (exportType === ExportTypeEnum.Excel) {
+        params.schema = 'xbr'
+
         const response = await operationsProvider.export(params)
         const responseFile = await fetch(getApiUrl(response.fname))
 
@@ -72,7 +74,7 @@ class OperationsStore {
       }
 
       if (exportType === ExportTypeEnum.CSV) {
-        params.schema = 'xbr'
+        params.schema = 'csv'
 
         const response = await operationsProvider.exportCsv(params)
 
