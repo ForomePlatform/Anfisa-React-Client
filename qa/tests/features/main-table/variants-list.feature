@@ -1,34 +1,34 @@
 Feature: Main table, variants list
   As the Anfisa user I want to see variants list on the Main Table page
   
-Scenario: Anfisa version
+Scenario: 01 Anfisa version
 	Given Anfisa site was opened
 	When the user looks at the header
 	Then Anfisa version should be displayed
 ​
-Scenario: Open Main Table for the "PGP3140_wgs_panel_hl" dataset
+Scenario: 02 Open Main Table for the "PGP3140_wgs_panel_hl" dataset
 	Given Anfisa site was opened
 	When user clicks the "PGP3140_wgs_panel_hl" dataset
-	And clicks the "Open in viewer" button
-	And clicks the "Main table" submenu
+	And clicks the "Open" button
+	And clicks the "Main table" sub-menu
 	Then the Main table page should be open
 	And number of variants should be equal to "2592"
 	And number of transcribed variants should be equal to "32719"
 	And number of transcripts should be equal to "5997"
 		
-Scenario: Open Main Table for a secondary dataset of the "xl_PGP3140_wgs_NIST-4_2" dataset
+Scenario: 03 Open Main Table for a secondary dataset of the "xl_PGP3140_wgs_NIST-4_2" dataset
 	Given "Main table" for the "PGP3140_wgs_panel_hl" dataset was opened
 	When user back to the Main Page
 	And clicks the "xl_PGP3140_wgs_NIST-4_2" dataset
 	And the "xl_PGP3140_wgs_NIST-4_27" is expanded
 	And user clicks a secondary dataset
-	And clicks the "Open in viewer" button
-	And clicks the "Main table" submenu
+	And clicks the "Open" button
+	And clicks the "Main table" sub-menu
 	Then the Main Table page should be open for the secondary dataset
 	And number of variants, transcribed variants, And transcripts should be updated And correspond to the opened dataset
 	And URL should be updated.
 ​
-Scenario: Change secondary dataset via datasets list
+Scenario: 04 Change secondary dataset via datasets list
 	Given "Main table" for the secondary dataset was opened
 	When user clicks the dataset name in the drop-down
 	And list of secondary datasets of the "xl_PGP3140_wgs_NIST-4_27" dataset is displayed
@@ -37,7 +37,7 @@ Scenario: Change secondary dataset via datasets list
 	And number of variants, transcribed variants, And transcripts should be updated And correspond to the selected dataset
 	And URL should be updated.
 ​
-Scenario: Back to the first dataset via datasets list
+Scenario: 05 Back to the first dataset via datasets list
 	Given "Main table" for the secondary dataset was opened
 	When user clicks the dataset name in the drop-down
 	And list of secondary datasets of the "xl_PGP3140_wgs_NIST-4_27" dataset is displayed
@@ -46,7 +46,7 @@ Scenario: Back to the first dataset via datasets list
 	And number of variants, transcribed variants, And transcripts should be updated And correspond to the selected dataset
 	And URL should be updated.
 ​
-Scenario: Copy URL
+Scenario: 06 Copy URL
 	Given "Main table" for the secondary dataset was opened
 	When user clicks the chain icon near the dataset name
 	Then URL should be copied
