@@ -1,29 +1,20 @@
-import { ReactElement, RefObject } from 'react'
 import cn from 'classnames'
 
 import { t } from '@i18n'
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
+import { IPopoverButtonBaseProps } from '@ui/popover/popover.interface'
 import { DatasetInfoDataCy } from '@components/data-testid/dataset-info.cy'
 
-interface IOpenViewerBaseButtonProps {
-  isOpen?: boolean
-  refEl: RefObject<HTMLButtonElement> | null
-  onClick?: () => void
-}
-
-export const OpenViewerBaseButton = ({
+export const OpenViewerButton = ({
   isOpen,
-  refEl,
-  ...rest
-}: IOpenViewerBaseButtonProps): ReactElement => (
+  onClick,
+}: IPopoverButtonBaseProps) => (
   <Button
     text={t('home.openInViewer')}
+    onClick={e => onClick(e.currentTarget)}
     dataTestId={DatasetInfoDataCy.openInViewer}
-    refEl={refEl}
     size="sm"
-    onClick={rest.onClick}
-    {...rest}
     append={
       <Icon
         name="Arrow"

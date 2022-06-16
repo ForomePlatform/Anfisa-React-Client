@@ -1,27 +1,29 @@
 import { ReactElement } from 'react'
 import cn from 'classnames'
 
-import { t } from '@i18n'
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
 import { IPopoverButtonBaseProps } from '@ui/popover/popover.interface'
-import { MainTableDataCy } from '@components/data-testid/main-table.cy'
+import { FilterControlOptionsNames } from '../filter-control.const'
 
-export const CustomizeTableButton = ({
+interface ISolutionSelectProps extends IPopoverButtonBaseProps {
+  pageName: FilterControlOptionsNames
+}
+
+export const SolutionSelectButton = ({
+  pageName,
   isOpen,
   onClick,
-}: IPopoverButtonBaseProps): ReactElement => (
+}: ISolutionSelectProps): ReactElement => (
   <Button
-    dataTestId={MainTableDataCy.customizeTable}
-    onClick={e => onClick(e.currentTarget)}
-    text={t('ds.customizeTable')}
+    text={pageName}
     variant="secondary-dark"
-    size="sm"
-    prepend={<Icon name="Settings" size={14} className="text-blue-bright" />}
+    size="md"
+    onClick={e => onClick(e.currentTarget)}
     append={
       <Icon
-        name="Arrow"
         size={14}
+        name="Arrow"
         className={cn(
           'transform transition-transform',
           isOpen ? 'rotate-90' : '-rotate-90',
