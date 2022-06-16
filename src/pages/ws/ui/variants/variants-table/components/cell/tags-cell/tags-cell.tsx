@@ -1,10 +1,8 @@
-import { observer } from 'mobx-react-lite'
-
 import { Tag } from '@ui/tag'
 import { EMPTY_VALUE } from '../cell.constants'
 import { ICellProps } from '../cell.interface'
 
-export const TagsCell = observer(({ className, style, row }: ICellProps) => {
+export const TagsCell = ({ className, style, row }: ICellProps) => {
   const tags = Object.keys(row._tags ?? {}).filter(tag => tag !== '_note')
 
   return (
@@ -24,4 +22,4 @@ export const TagsCell = observer(({ className, style, row }: ICellProps) => {
       )}
     </td>
   )
-})
+}

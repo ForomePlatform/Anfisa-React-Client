@@ -1,11 +1,10 @@
 import styles from './gene-cell.module.css'
 
 import cn from 'classnames'
-import { observer } from 'mobx-react-lite'
 
 import { ICellProps } from '../cell.interface'
 
-export const GeneCell = observer(({ className, style, row }: ICellProps) => {
+export const GeneCell = ({ className, style, row }: ICellProps) => {
   const {
     ColorCode: color,
     GeneColored: [value],
@@ -27,4 +26,4 @@ export const GeneCell = observer(({ className, style, row }: ICellProps) => {
       </div>
     </td>
   )
-})
+}

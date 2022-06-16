@@ -34,14 +34,22 @@ class ZoneStore {
     makeAutoObservable(this)
   }
 
-  get preparedSamples(): string[] {
-    return this.selectedSamples
-      .map(sample => {
-        const match = sample.match(/^\S+\s+\[([^\]]+)\]$/)
+  get specialSamples(): [boolean, boolean, boolean] {
+    let proband = false
+    let mother = false
+    let father = false
 
-        return match ? match[1] : ''
-      })
-      .filter(Boolean)
+    for (const sample of this.selectedSamples) {
+      if (!proband && sample.startsWith('proband ')) {
+        proband = true
+      } else if (!mother && sample.startsWith('mother ')) {
+        mother = true
+      } else if (!father && sample.startsWith('father ')) {
+        father = true
+      }
+    }
+
+    return [proband, mother, father]
   }
 
   setZoneIndex(zone: [string, string[]], index: number): void {

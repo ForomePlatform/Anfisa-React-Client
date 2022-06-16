@@ -49,6 +49,7 @@
   }
 
   &__td {
+    border-collapse: collapse;
     overflow: hidden;
     text-align: left;
     vertical-align: middle;

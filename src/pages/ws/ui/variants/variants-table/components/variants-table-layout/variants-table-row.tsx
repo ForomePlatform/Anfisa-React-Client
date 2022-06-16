@@ -1,7 +1,7 @@
 import styles from './variants-table-layout.module.css'
 
+import { memo } from 'react'
 import cn from 'classnames'
-import { observer } from 'mobx-react-lite'
 
 import { ITabReportRecord } from '@service-providers/dataset-level'
 import { IVariantsTableLayoutProps } from './variants-table-layout.interface'
@@ -12,7 +12,7 @@ interface IVariantsTableRowProps
   isSelected?: boolean
 }
 
-export const VariantsTableRow = observer(
+export const VariantsTableRow = memo(
   ({
     isCompact,
     isSelected,
