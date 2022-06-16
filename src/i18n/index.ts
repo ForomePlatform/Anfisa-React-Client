@@ -45,6 +45,18 @@ export const intl = createIntl(
   cache,
 )
 
-export const t = (id: string, values = {}): string =>
+type JoinKeys<A extends string, B extends string> = `${A}${B extends ''
+  ? ''
+  : '.'}${B}`
+
+type CollectKeys<T> = T extends object
+  ? {
+      [K in Extract<keyof T, string>]: JoinKeys<K, CollectKeys<T[K]>>
+    }[Extract<keyof T, string>]
+  : ''
+
+export type TI18nKey = CollectKeys<typeof en>
+
+export const t = (id: TI18nKey, values = {}): string =>
   // eslint-disable-next-line formatjs/enforce-default-message
   intl.formatMessage({ id }, values)

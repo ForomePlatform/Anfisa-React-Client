@@ -12,7 +12,7 @@ export const EmptySelectedGroup = ({
   return (
     <div className={cn('flex items-center justify-center', className)}>
       <p className="leading-16px text-grey-blue align-center">
-        {t('dtree.selectAttribute')}
+        {t('condition.selectAttribute')}
       </p>
     </div>
   )
