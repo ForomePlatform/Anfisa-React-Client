@@ -7,7 +7,7 @@ import { IGeneRegionInputProps } from '../../gene-region.interface'
 
 export const GeneRegionInput: FC<IGeneRegionInputProps> = ({
   value,
-  handleChange,
+  onChange,
   classname,
 }) => (
   <div className={cn(styles.container, classname)}>
@@ -15,7 +15,7 @@ export const GeneRegionInput: FC<IGeneRegionInputProps> = ({
       type="text"
       value={value}
       onChange={e => {
-        handleChange(e.target.value)
+        onChange(e.target.value)
       }}
       className={styles.input}
     />

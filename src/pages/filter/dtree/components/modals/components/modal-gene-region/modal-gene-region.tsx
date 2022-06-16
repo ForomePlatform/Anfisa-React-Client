@@ -10,10 +10,9 @@ import { dtreeFunctionsStore } from '../../../attributes/dtree-functions.store'
 import { dtreeStatFuncStore } from '../../../attributes/dtree-stat-func.store'
 import modalsControlStore from '../../modals-control-store'
 import modalsVisibilityStore from '../../modals-visibility-store'
-import { EditModalButtons } from '../ui/edit-modal-buttons'
 import { HeaderModal } from '../ui/header-modal'
 import { ModalBase } from '../ui/modal-base'
-import { SelectModalButtons } from '../ui/select-modal-buttons'
+import { renderAttributeDialogControls } from '../ui/renderAttributeControls'
 
 export const ModalGeneRegion = observer((): ReactElement => {
   const {
@@ -65,25 +64,17 @@ export const ModalGeneRegion = observer((): ReactElement => {
         initialMode={initialMode}
         attributeSubKind={attributeSubKind}
         statFuncStore={dtreeStatFuncStore}
-        controls={({ hasErrors, param, mode }) => {
-          return initialCondition ? (
-            <EditModalButtons
-              handleClose={modalsVisibilityStore.closeModalGeneRegion}
-              handleSaveChanges={() => handleSaveChanges(mode, param)}
-              disabled={hasErrors}
-            />
-          ) : (
-            <SelectModalButtons
-              currentGroup={currentStepGroups}
-              handleClose={modalsVisibilityStore.closeModalGeneRegion}
-              handleModals={handleModals}
-              disabled={hasErrors}
-              handleAddAttribute={action =>
-                handleAddAttribute(action, mode, param)
-              }
-            />
-          )
-        }}
+        controls={({ hasErrors, param, mode }) =>
+          renderAttributeDialogControls({
+            initialCondition,
+            currentStepGroups,
+            onClose: modalsVisibilityStore.closeModalGeneRegion,
+            handleModals,
+            disabled: hasErrors,
+            saveAttribute: () => handleSaveChanges(mode, param),
+            addAttribute: action => handleAddAttribute(action, mode, param),
+          })
+        }
       />
     </ModalBase>
   )

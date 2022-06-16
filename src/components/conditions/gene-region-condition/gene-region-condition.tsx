@@ -57,7 +57,7 @@ export const GeneRegionCondition = observer(
 
         <GeneRegionInput
           value={locus}
-          handleChange={handleSetLocusValue}
+          onChange={handleSetLocusValue}
           classname="mb-2"
         />
 
