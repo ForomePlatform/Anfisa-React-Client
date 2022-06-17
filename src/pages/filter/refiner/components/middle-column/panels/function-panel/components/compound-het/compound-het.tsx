@@ -23,6 +23,7 @@ export const CompundHet = observer((): ReactElement => {
       savePanelAttribute({
         filterKind: AttributeKinds.FUNC,
         attributeName,
+        selectedVariants: ['Proband'],
         mode,
         param,
       })
