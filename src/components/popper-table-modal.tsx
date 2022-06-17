@@ -8,8 +8,8 @@ import { t } from '@i18n'
 import zoneStore from '@store/ws/zone'
 import { InputSearch } from '@components/input-search'
 import { ZoneModalMods } from '@pages/ws/ui/control-panel/zone-modals/components/zone-modal-mods'
-import { PopupCard } from './popup-card/popup-card'
 import { MainTableDataCy } from './data-testid/main-table.cy'
+import { PopupCard } from './popup-card/popup-card'
 
 interface IPopperTableModalProps {
   title?: string

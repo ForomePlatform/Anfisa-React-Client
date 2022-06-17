@@ -16,7 +16,7 @@ describe('Open saved dataset in MainTable', () => {
   const datasetName = 'PGP3140_wgs_NIST-4_2'
   const autoDataset = 'Dataset_from_autotests'
   const datasetsGroup = 'Datasets'
-  const xlDatasetName = 'xl_' + datasetName
+  // const xlDatasetName = 'xl_' + datasetName
 
   const presetName = '⏚SEQaBOO_Hearing_Quick'
   const variants1 = 'Variants: 41'
