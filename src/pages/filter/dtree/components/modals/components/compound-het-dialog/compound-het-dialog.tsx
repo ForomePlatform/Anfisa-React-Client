@@ -2,6 +2,7 @@ import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
+import { Dialog } from '@ui/dialog'
 import { CompoundHetCondition } from '@components/conditions/compound-het-condition'
 import { AttributeKinds } from '@service-providers/common'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
@@ -10,11 +11,9 @@ import { dtreeFunctionsStore } from '../../../attributes/dtree-functions.store'
 import { dtreeStatFuncStore } from '../../../attributes/dtree-stat-func.store'
 import modalsControlStore from '../../modals-control-store'
 import modalsVisibilityStore from '../../modals-visibility-store'
-import { HeaderModal } from '../ui/header-modal'
-import { ModalBase } from '../ui/modal-base'
 import { renderAttributeDialogControls } from '../ui/renderAttributeControls'
 
-export const ModalCompoundHet = observer((): ReactElement => {
+export const CompoundHetDialog = observer((): ReactElement => {
   const {
     attributeName,
     initialApprox,
@@ -26,7 +25,7 @@ export const ModalCompoundHet = observer((): ReactElement => {
   const { currentStepGroups } = modalsControlStore
 
   const handleModals = () => {
-    modalsVisibilityStore.closeModalCompoundHet()
+    modalsVisibilityStore.closeCompoundHetDialog()
     modalsVisibilityStore.openModalAttribute()
   }
 
@@ -38,7 +37,7 @@ export const ModalCompoundHet = observer((): ReactElement => {
       mode,
       param,
     })
-    modalsVisibilityStore.closeModalCompoundHet()
+    modalsVisibilityStore.closeCompoundHetDialog()
   }, [])
 
   const handleAddAttribute = useCallback((action, mode, param) => {
@@ -49,16 +48,17 @@ export const ModalCompoundHet = observer((): ReactElement => {
       param,
       mode,
     })
-    modalsVisibilityStore.closeModalCompoundHet()
+    modalsVisibilityStore.closeCompoundHetDialog()
   }, [])
 
   return (
-    <ModalBase minHeight={340}>
-      <HeaderModal
-        groupName={attributeName}
-        handleClose={modalsVisibilityStore.closeModalCompoundHet}
-      />
-
+    <Dialog
+      isOpen={modalsVisibilityStore.isCompoundHetDialogVisible}
+      onClose={modalsVisibilityStore.closeCompoundHetDialog}
+      title={attributeName}
+      width="m"
+      actions={''}
+    >
       <CompoundHetCondition
         initialApprox={initialApprox}
         initialMode={initialMode}
@@ -68,7 +68,7 @@ export const ModalCompoundHet = observer((): ReactElement => {
           renderAttributeDialogControls({
             initialCondition,
             currentStepGroups,
-            onClose: modalsVisibilityStore.closeModalCompoundHet,
+            onClose: modalsVisibilityStore.closeCompoundHetDialog,
             handleModals,
             disabled: hasErrors,
             saveAttribute: () => handleSaveChanges(mode, param),
@@ -76,6 +76,6 @@ export const ModalCompoundHet = observer((): ReactElement => {
           })
         }
       />
-    </ModalBase>
+    </Dialog>
   )
 })

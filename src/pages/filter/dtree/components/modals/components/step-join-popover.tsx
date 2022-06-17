@@ -7,7 +7,6 @@ import stepStore, { ActiveStepOptions } from '@store/dtree/step.store'
 import { Popover } from '@ui/popover'
 import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-modal.cy'
 import { InstrModifyingActionNames } from '@service-providers/decision-trees'
-import modalsVisibilityStore from '../modals-visibility-store'
 
 interface IStepJoinPopoverProps {
   isPopoverOpen: boolean
@@ -29,10 +28,6 @@ export const StepJoinPopover = observer(
     const handleJoin = (typeOfJoin: ActionType) => {
       handleAddAttribute(typeOfJoin)
       closePopover()
-      modalsVisibilityStore.closeEnumDialog()
-      modalsVisibilityStore.closeNumericDialog()
-      modalsVisibilityStore.closeModalInheritanceMode()
-      modalsVisibilityStore.closeModalCustomInheritanceMode()
     }
 
     return (

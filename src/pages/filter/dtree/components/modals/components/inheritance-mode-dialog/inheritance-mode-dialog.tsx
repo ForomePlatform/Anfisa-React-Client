@@ -2,6 +2,7 @@ import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
+import { Dialog } from '@ui/dialog'
 import { InheritanceModeCondition } from '@components/conditions/inheritance-mode'
 import { AttributeKinds } from '@service-providers/common'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
@@ -10,11 +11,9 @@ import { dtreeFunctionsStore } from '../../../attributes/dtree-functions.store'
 import { dtreeStatFuncStore } from '../../../attributes/dtree-stat-func.store'
 import modalsControlStore from '../../modals-control-store'
 import modalsVisibilityStore from '../../modals-visibility-store'
-import { HeaderModal } from '../ui/header-modal'
-import { ModalBase } from '../ui/modal-base'
 import { renderAttributeDialogControls } from '../ui/renderAttributeControls'
 
-export const ModalInheritanceMode = observer((): ReactElement => {
+export const InheritanceModeDialog = observer((): ReactElement => {
   const {
     attributeName,
     problemGroups,
@@ -28,7 +27,7 @@ export const ModalInheritanceMode = observer((): ReactElement => {
   const { currentStepGroups } = modalsControlStore
 
   const handleModals = () => {
-    modalsVisibilityStore.closeModalInheritanceMode()
+    modalsVisibilityStore.closeInheritanceModeDialog()
     modalsVisibilityStore.openModalAttribute()
   }
 
@@ -40,7 +39,7 @@ export const ModalInheritanceMode = observer((): ReactElement => {
       mode,
       param,
     })
-    modalsVisibilityStore.closeModalInheritanceMode()
+    modalsVisibilityStore.closeInheritanceModeDialog()
   }, [])
 
   const handleAddAttribute = useCallback((action, values, mode, param) => {
@@ -51,16 +50,17 @@ export const ModalInheritanceMode = observer((): ReactElement => {
       param,
       mode,
     })
-    modalsVisibilityStore.closeModalInheritanceMode()
+    modalsVisibilityStore.closeInheritanceModeDialog()
   }, [])
 
   return (
-    <ModalBase minHeight={340}>
-      <HeaderModal
-        groupName={attributeName}
-        handleClose={modalsVisibilityStore.closeModalInheritanceMode}
-      />
-
+    <Dialog
+      isOpen={modalsVisibilityStore.isInheritanceModeDialogVisible}
+      onClose={modalsVisibilityStore.closeInheritanceModeDialog}
+      title={attributeName}
+      width="m"
+      actions={''}
+    >
       <InheritanceModeCondition
         problemGroups={problemGroups}
         initialVariants={initialVariants}
@@ -72,7 +72,7 @@ export const ModalInheritanceMode = observer((): ReactElement => {
           renderAttributeDialogControls({
             initialCondition,
             currentStepGroups,
-            onClose: modalsVisibilityStore.closeModalInheritanceMode,
+            onClose: modalsVisibilityStore.closeInheritanceModeDialog,
             handleModals,
             disabled: hasErrors,
             saveAttribute: () => handleSaveChanges(values, mode, param),
@@ -81,6 +81,6 @@ export const ModalInheritanceMode = observer((): ReactElement => {
           })
         }
       />
-    </ModalBase>
+    </Dialog>
   )
 })

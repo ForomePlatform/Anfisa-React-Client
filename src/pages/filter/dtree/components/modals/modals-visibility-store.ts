@@ -10,11 +10,11 @@ class ModalsVisibilityStore {
 
   isModalAttributeVisible = false
 
-  isModalInheritanceModeVisible = false
-  isModalCustomInheritanceModeVisible = false
-  isModalCompoundHetVisible = false
-  isModalCompoundRequestVisible = false
-  isModalGeneRegionVisible = false
+  isInheritanceModeDialogVisible = false
+  isCustomInheritanceModeDialogVisible = false
+  isCompoundHetDialogVisible = false
+  isCompoundRequestDialogVisible = false
+  isGeneRegionDialogVisible = false
 
   isEnumDialogVisible = false
   isNumericDialogVisible = false
@@ -33,7 +33,7 @@ class ModalsVisibilityStore {
     this.isModalAttributeVisible = false
   }
 
-  // 2. Modal for numeric attr
+  // 2. Numeric dialog
 
   public openNumericDialog(
     groupName: string,
@@ -51,7 +51,7 @@ class ModalsVisibilityStore {
     this.isNumericDialogVisible = false
   }
 
-  // 3. Modal for enum attr
+  // 3. Enum dialog
 
   public openEnumDialog(
     groupName: string,
@@ -70,92 +70,81 @@ class ModalsVisibilityStore {
     dtreeStore.resetSelectedFilters()
   }
 
-  // 4. Modals for func attr
+  // 4. Func dialogs
 
-  public openModalInheritanceMode(
+  public openInheritanceModeDialog(
     groupName: string,
     groupIndex: number | undefined,
     source: string = '',
   ) {
     this.modalSource = source
-    this.isModalInheritanceModeVisible = true
+    this.isInheritanceModeDialogVisible = true
     this.groupNameToChange = groupName
     this.groupIndexToChange = groupIndex ?? -1
   }
 
-  public closeModalInheritanceMode = () => {
-    this.isModalInheritanceModeVisible = false
+  public closeInheritanceModeDialog = () => {
+    this.isInheritanceModeDialogVisible = false
   }
 
-  public openModalCustomInheritanceMode(
+  public openCustomInheritanceModeDialog(
     groupName: string,
     groupIndex: number | undefined,
     source: string = '',
   ) {
     this.modalSource = source
-    this.isModalCustomInheritanceModeVisible = true
+    this.isCustomInheritanceModeDialogVisible = true
     this.groupNameToChange = groupName
     this.groupIndexToChange = groupIndex ?? -1
   }
 
-  public closeModalCustomInheritanceMode = () => {
-    this.isModalCustomInheritanceModeVisible = false
+  public closeCustomInheritanceModeDialog = () => {
+    this.isCustomInheritanceModeDialogVisible = false
   }
 
-  public openModalCompoundHet(
+  public openCompoundHetDialog(
     groupName: string,
     groupIndex: number | undefined,
     source: string = '',
   ) {
     this.modalSource = source
-    this.isModalCompoundHetVisible = true
+    this.isCompoundHetDialogVisible = true
     this.groupNameToChange = groupName
     this.groupIndexToChange = groupIndex ?? -1
   }
 
-  public closeModalCompoundHet = () => {
-    this.isModalCompoundHetVisible = false
+  public closeCompoundHetDialog = () => {
+    this.isCompoundHetDialogVisible = false
   }
 
-  public openModalCompoundRequest(
+  public openCompoundRequestDialog(
     groupName: string,
     groupIndex: number | undefined,
     source: string = '',
   ) {
     this.modalSource = source
-    this.isModalCompoundRequestVisible = true
+    this.isCompoundRequestDialogVisible = true
     this.groupNameToChange = groupName
     this.groupIndexToChange = groupIndex ?? -1
   }
 
-  public openModalCustomInheritanceModeFunc(
+  public closeCompoundRequestDialog = () => {
+    this.isCompoundRequestDialogVisible = false
+  }
+
+  public openGeneRegionDialog(
     groupName: string,
     groupIndex: number | undefined,
     source: string = '',
   ) {
     this.modalSource = source
-    this.isModalCustomInheritanceModeVisible = true
+    this.isGeneRegionDialogVisible = true
     this.groupNameToChange = groupName
     this.groupIndexToChange = groupIndex ?? -1
   }
 
-  public closeModalCompoundRequest = () => {
-    this.isModalCompoundRequestVisible = false
-  }
-
-  public openModalGeneRegion(
-    groupName: string,
-    groupIndex: number | undefined,
-    source: string = '',
-  ) {
-    this.modalSource = source
-    this.isModalGeneRegionVisible = true
-    this.groupNameToChange = groupName
-    this.groupIndexToChange = groupIndex ?? -1
-  }
-
-  public closeModalGeneRegion = () => {
-    this.isModalGeneRegionVisible = false
+  public closeGeneRegionDialog = () => {
+    this.isGeneRegionDialogVisible = false
   }
 }
 

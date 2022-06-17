@@ -2,7 +2,8 @@ import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
-import { GeneRegionCondition } from '@components/conditions/gene-region-condition/gene-region-condition'
+import { Dialog } from '@ui/dialog'
+import { CompoundRequestCondition } from '@components/conditions/compound-request/compound-request-condition'
 import { AttributeKinds } from '@service-providers/common'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { saveAttribute } from '@utils/changeAttribute/saveAttribute'
@@ -10,14 +11,14 @@ import { dtreeFunctionsStore } from '../../../attributes/dtree-functions.store'
 import { dtreeStatFuncStore } from '../../../attributes/dtree-stat-func.store'
 import modalsControlStore from '../../modals-control-store'
 import modalsVisibilityStore from '../../modals-visibility-store'
-import { HeaderModal } from '../ui/header-modal'
-import { ModalBase } from '../ui/modal-base'
 import { renderAttributeDialogControls } from '../ui/renderAttributeControls'
 
-export const ModalGeneRegion = observer((): ReactElement => {
+export const CompoundRequestDialog = observer((): ReactElement => {
   const {
+    problemGroups,
     attributeName,
-    initialLocusValue,
+    initialApprox,
+    initialRequestCondition,
     initialMode,
     initialCondition,
     attributeSubKind,
@@ -26,19 +27,19 @@ export const ModalGeneRegion = observer((): ReactElement => {
   const { currentStepGroups } = modalsControlStore
 
   const handleModals = () => {
-    modalsVisibilityStore.closeModalGeneRegion()
+    modalsVisibilityStore.closeCompoundRequestDialog()
     modalsVisibilityStore.openModalAttribute()
   }
 
   const handleSaveChanges = useCallback((mode, param) => {
     saveAttribute({
       filterKind: AttributeKinds.FUNC,
-      filterName: FuncStepTypesEnum.GeneRegion,
+      filterName: FuncStepTypesEnum.CompoundRequest,
       values: ['True'],
       mode,
       param,
     })
-    modalsVisibilityStore.closeModalGeneRegion()
+    modalsVisibilityStore.closeCompoundRequestDialog()
   }, [])
 
   const handleAddAttribute = useCallback((action, mode, param) => {
@@ -49,18 +50,22 @@ export const ModalGeneRegion = observer((): ReactElement => {
       param,
       mode,
     })
-    modalsVisibilityStore.closeModalGeneRegion()
+    modalsVisibilityStore.closeCompoundRequestDialog()
   }, [])
 
   return (
-    <ModalBase minHeight={340}>
-      <HeaderModal
-        groupName={attributeName}
-        handleClose={modalsVisibilityStore.closeModalGeneRegion}
-      />
-
-      <GeneRegionCondition
-        initialLocusValue={initialLocusValue}
+    <Dialog
+      isOpen={modalsVisibilityStore.isCompoundRequestDialogVisible}
+      onClose={modalsVisibilityStore.closeCompoundRequestDialog}
+      title={attributeName}
+      width="m"
+      actions={''}
+      className="max-h-70 overflow-y-auto"
+    >
+      <CompoundRequestCondition
+        problemGroups={problemGroups}
+        initialApprox={initialApprox}
+        initialRequestCondition={initialRequestCondition}
         initialMode={initialMode}
         attributeSubKind={attributeSubKind}
         statFuncStore={dtreeStatFuncStore}
@@ -68,7 +73,7 @@ export const ModalGeneRegion = observer((): ReactElement => {
           renderAttributeDialogControls({
             initialCondition,
             currentStepGroups,
-            onClose: modalsVisibilityStore.closeModalGeneRegion,
+            onClose: modalsVisibilityStore.closeCompoundRequestDialog,
             handleModals,
             disabled: hasErrors,
             saveAttribute: () => handleSaveChanges(mode, param),
@@ -76,6 +81,6 @@ export const ModalGeneRegion = observer((): ReactElement => {
           })
         }
       />
-    </ModalBase>
+    </Dialog>
   )
 })
