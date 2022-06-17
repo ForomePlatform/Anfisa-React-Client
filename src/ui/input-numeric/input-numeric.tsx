@@ -32,11 +32,11 @@ export const InputNumeric = ({
   const [inputValue, setInputValue] = useState<number>(+value)
   const minimal = min || 0
   const maximal = max || Infinity
-  const displayValue = value === '' ? '' : inputValue.toLocaleString()
+  const displayValue = value === '' ? value : inputValue.toLocaleString()
 
   useEffect(() => {
     setInputValue(+value)
-  })
+  }, [value])
 
   function changeValue(newValue: number | string) {
     if (disabled) {
