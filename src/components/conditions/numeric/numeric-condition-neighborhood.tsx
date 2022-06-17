@@ -54,6 +54,8 @@ export const NumericConditionNeighborhood = ({
             <div className="grow">
               <InputNumeric
                 className="h-8 w-full border border-grey-disabled shadow-input"
+                min={min}
+                max={max}
                 value={center ?? ''}
                 placeholder={t('numericCondition.center')}
                 onChange={value => setCenter(value)}

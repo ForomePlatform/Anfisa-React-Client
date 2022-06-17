@@ -1,6 +1,6 @@
 import styles from './input-numeric.module.css'
 
-import { KeyboardEvent, ReactElement, useState } from 'react'
+import { KeyboardEvent, ReactElement, useEffect, useState } from 'react'
 import cn, { Argument } from 'classnames'
 
 import { getNumeric } from './input-numeric.utils'
@@ -33,6 +33,10 @@ export const InputNumeric = ({
   const minimal = min || 0
   const maximal = max || Infinity
   const displayValue = value === '' ? '' : inputValue.toLocaleString()
+
+  useEffect(() => {
+    setInputValue(+value)
+  })
 
   function changeValue(newValue: number | string) {
     if (disabled) {
