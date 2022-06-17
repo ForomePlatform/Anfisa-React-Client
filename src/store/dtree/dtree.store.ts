@@ -12,8 +12,6 @@ import {
   DtreeSetPointKinds,
   IDtreeSetArguments,
 } from '@service-providers/decision-trees'
-import { IStatFuncArguments } from '@service-providers/filtering-regime'
-import filteringRegimeProvider from '@service-providers/filtering-regime/filtering-regime.provider'
 import { showToast } from '@utils/notifications'
 import datasetStore from '../dataset/dataset'
 import { DtreeModifiedState } from '../filter-dtrees/filter-dtrees.store'
@@ -71,9 +69,6 @@ export class DtreeStore {
   private _dtreeModifiedState: DtreeModifiedState = DtreeModifiedState.NotDtree
   actionName: ActionFilterEnum | undefined = undefined
 
-  statFuncData: any = []
-  scenario: any
-  request: any
   queryBuilderRenderKey = Date.now()
 
   readonly stat = new DtreeStatStore()
@@ -110,7 +105,6 @@ export class DtreeStore {
   algorithmFilterFullWord = false
   filteredCounts = 0
 
-  isModalSaveDatasetVisible = false
   isModalViewVariantsVisible = false
   tableModalIndexNumber: null | number = null
 
@@ -264,29 +258,6 @@ export class DtreeStore {
     this.dtreeSet.setQuery(body)
   }
 
-  async fetchStatFuncAsync(subGroupName: string, param: string) {
-    const body: IStatFuncArguments = {
-      ds: datasetStore.datasetName,
-      no: stepStore.stepIndexForApi,
-      code: this.dtreeCode,
-      rq_id: Math.random().toString(),
-      unit: subGroupName,
-      param,
-    }
-
-    const result = await filteringRegimeProvider.getStatFunc(body)
-
-    runInAction(() => {
-      this.statFuncData = result
-
-      if (result.scenario) this.scenario = result.scenario
-
-      if (result.request) this.request = result.request
-    })
-
-    return result
-  }
-
   private loadDtree(dtreeName: string): void {
     this.isDtreeLoading = true
 
@@ -375,14 +346,6 @@ export class DtreeStore {
   }
 
   // 3.4 Common UI/UX modals
-
-  openModalSaveDataset = () => {
-    this.isModalSaveDatasetVisible = true
-  }
-
-  closeModalSaveDataset() {
-    this.isModalSaveDatasetVisible = false
-  }
 
   openModalViewVariants(index?: number) {
     this.isModalViewVariantsVisible = true
@@ -496,10 +459,6 @@ export class DtreeStore {
   toggleIsExcluded(index: number) {
     stepStore.steps[index].excluded = !stepStore.steps[index].excluded
     this.resetLocalDtreeCode()
-  }
-
-  resetStatFuncData() {
-    this.statFuncData = []
   }
 
   resetData() {

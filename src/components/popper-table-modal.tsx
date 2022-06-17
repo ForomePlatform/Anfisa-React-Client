@@ -58,7 +58,10 @@ export const PopperTableModal = observer(
       isGenes && zoneStore.unselectAllGenes()
       isGenesList && zoneStore.unselectAllGenesList()
       isSamples && zoneStore.unselectAllSamples()
-      isTags && zoneStore.unselectAllTags()
+      if (isTags) {
+        zoneStore.unselectAllTags()
+        zoneStore.resetModes()
+      }
     }
 
     const defintSelectedAmount = () => {
@@ -89,7 +92,6 @@ export const PopperTableModal = observer(
         title={title ?? ''}
         onClose={handleClose}
         onApply={handleApply}
-        shouldCloseOnOutsideClick={true}
       >
         <div className="">
           {!isNotSearchable && (
@@ -100,6 +102,13 @@ export const PopperTableModal = observer(
               onChange={e => onChange && onChange(e.target.value)}
             />
           )}
+
+          {isTags && (
+            <div className="my-3">
+              <ZoneModalMods />
+            </div>
+          )}
+
           {!notShowSelectedPanel && (
             <div className="flex justify-between items-center mt-4">
               {viewType ? (
@@ -129,8 +138,6 @@ export const PopperTableModal = observer(
               </div>
             </div>
           )}
-
-          {isTags && <ZoneModalMods />}
 
           <div className="h-px w-full bg-blue-light mt-4" />
         </div>

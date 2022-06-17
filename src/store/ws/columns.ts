@@ -1,4 +1,3 @@
-/* eslint-disable max-lines */
 import { makeAutoObservable } from 'mobx'
 
 import { ViewTypeEnum } from '@core/enum/view-type-enum'
@@ -12,7 +11,6 @@ class ColumnsStore {
   columns: any[] = Object.values(tableColumnMap)
   viewType: ViewTypeEnum = ViewTypeEnum.Cozy
   selectedColumns: string[] = Object.values(tableColumnMap)
-  searchColumnValue = ''
 
   get selectedDataColumns() {
     return this.selectedColumns.map(column =>
@@ -25,23 +23,15 @@ class ColumnsStore {
   }
 
   get columnDataListForRender() {
-    const { drawerVisible } = variantStore
+    const { isDrawerVisible } = variantStore
 
-    return drawerVisible
+    return isDrawerVisible
       ? this.collapsedSelectedDataColumns
       : this.selectedDataColumns
   }
 
   constructor() {
     makeAutoObservable(this)
-  }
-
-  setSearchColumnValue(value: string) {
-    this.searchColumnValue = value
-  }
-
-  resetSearchColumnValue() {
-    this.searchColumnValue = ''
   }
 
   resetColumns() {
@@ -52,7 +42,7 @@ class ColumnsStore {
     this.viewType = viewType
   }
 
-  selectAllColumns() {
+  public selectAllColumns = () => {
     const clearedColumns =
       typeof this.columns[0] !== 'string'
         ? this.columns.map(column => ({
@@ -67,10 +57,10 @@ class ColumnsStore {
     this.setColumns(clearedColumns)
   }
 
-  clearAllColumns() {
+  public clearAllColumns = () => {
     const clearedColumns = this.getExtendedColumns.map(column => ({
       title: column.title,
-      hidden: columnsToIgnore.includes(column.title) ? false : true,
+      hidden: !columnsToIgnore.includes(column.title),
     }))
 
     this.setColumns(clearedColumns)
@@ -98,11 +88,7 @@ class ColumnsStore {
   }
 
   getColumnsForOpenDrawer() {
-    const columnsForOpenDrawer = this.getExtendedColumns
-      .filter(column => !column.hidden)
-      .splice(0, 2)
-
-    return columnsForOpenDrawer
+    return this.getExtendedColumns.filter(column => !column.hidden).splice(0, 2)
   }
 
   get getExtendedColumns() {
@@ -110,12 +96,10 @@ class ColumnsStore {
       return this.columns
     }
 
-    const extendedColumns = this.columns.map(column => ({
+    return this.columns.map(column => ({
       title: column,
       hidden: false,
     }))
-
-    return extendedColumns
   }
 }
 

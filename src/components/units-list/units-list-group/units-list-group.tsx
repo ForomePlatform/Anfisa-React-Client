@@ -29,7 +29,7 @@ export const UnitsListGroup = ({
   onCollapsedChange,
   onSelect,
 }: IUnitsListGroupProps): ReactElement => {
-  const { power, name, units } = unitsGroup
+  const { power, name, attributes = [] } = unitsGroup
 
   return (
     <div className={className}>
@@ -49,7 +49,7 @@ export const UnitsListGroup = ({
         <DropdownArrow isOpen={!isCollapsed} />
       </div>
       {!isCollapsed &&
-        units.map(unit => (
+        attributes.map(unit => (
           <UnitsListUnit
             key={unit.name}
             unit={unit}

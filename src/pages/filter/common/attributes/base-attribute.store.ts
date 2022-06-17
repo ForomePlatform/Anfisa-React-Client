@@ -1,9 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 
-import { ActionType } from '@declarations'
 import { ModeTypes } from '@core/enum/mode-types-enum'
-import modalsVisibilityStore from '@pages/filter/dtree/components/modals/modals-visibility-store'
-import { savePanelAttribute } from '@pages/filter/refiner/components/middle-column/panels/utils/save-pannel-attribute'
 import {
   AttributeKinds,
   TCondition,
@@ -11,8 +8,6 @@ import {
   TPropertyStatus,
   TVariant,
 } from '@service-providers/common'
-import { addAttributeToStep } from '@utils/addAttributeToStep'
-import { changeEnumAttribute } from '@utils/changeAttribute/changeEnumAttribute'
 import { getCurrentModeType } from '@utils/getCurrentModeType'
 export interface IBaseAttributeStoreParams {
   getAttributeStatus: () => TPropertyStatus | undefined
@@ -105,44 +100,6 @@ export class BaseAttributeStore {
     }
 
     return undefined
-  }
-
-  public saveEnum = (
-    selectedVariants: string[],
-    mode: ModeTypes | undefined,
-    isRefiner?: boolean,
-  ) => {
-    if (!this.attributeName) {
-      return
-    }
-
-    // TODO: will be fixed after enum condition is fixed
-    if (isRefiner) {
-      savePanelAttribute({
-        filterKind: AttributeKinds.ENUM,
-        attributeName: this.attributeName,
-        mode,
-        selectedVariants,
-      })
-    } else {
-      changeEnumAttribute(mode, selectedVariants)
-      modalsVisibilityStore.closeModalEnum()
-    }
-  }
-
-  public addEnum = (
-    action: ActionType,
-    mode: ModeTypes | undefined,
-    selectedVariants: string[],
-  ) => {
-    addAttributeToStep({
-      action,
-      attributeType: AttributeKinds.ENUM,
-      filters: selectedVariants,
-      mode,
-    })
-
-    modalsVisibilityStore.closeModalEnum()
   }
 
   public setIsShowZeroVariants = (value: boolean) => {

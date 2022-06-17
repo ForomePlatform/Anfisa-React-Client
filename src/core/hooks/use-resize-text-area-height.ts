@@ -1,33 +1,44 @@
-import { useEffect } from 'react'
+import { Ref, useEffect, useRef } from 'react'
 
-export const useResizeTextAreaHeight = (
-  element: HTMLTextAreaElement | null,
-): void => {
-  const textAreaValue = element?.value
+export const useResizeTextAreaHeight = (): Ref<HTMLTextAreaElement> => {
+  const ref = useRef<HTMLTextAreaElement>(null)
 
   useEffect(() => {
+    const element = ref.current
+
     if (!element) return
 
-    if (textAreaValue === '') {
-      element.style.height = '55px'
-      return
+    const resize = () => {
+      const value = element.value
+
+      if (value === '') {
+        element.style.height = '55px'
+        return
+      }
+
+      // Reset field height
+      element.style.height = 'inherit'
+
+      // Get the computed styles for the element
+      const computed = window.getComputedStyle(element)
+
+      // Calculate the height
+      const height =
+        parseInt(computed.getPropertyValue('border-top-width'), 10) +
+        parseInt(computed.getPropertyValue('padding-top'), 10) +
+        element.scrollHeight +
+        parseInt(computed.getPropertyValue('padding-bottom'), 10) +
+        parseInt(computed.getPropertyValue('border-bottom-width'), 10)
+
+      element.style.height = `${height}px`
     }
 
-    // Reset field height
-    element.style.height = 'inherit'
+    element.addEventListener('input', resize)
 
-    // Get the computed styles for the element
-    const computed = window.getComputedStyle(element)
+    return () => {
+      element.removeEventListener('input', resize)
+    }
+  }, [])
 
-    // Calculate the height
-    const height =
-      parseInt(computed.getPropertyValue('border-top-width'), 10) +
-      parseInt(computed.getPropertyValue('padding-top'), 10) +
-      element.scrollHeight +
-      parseInt(computed.getPropertyValue('padding-bottom'), 10) +
-      parseInt(computed.getPropertyValue('border-bottom-width'), 10)
-
-    element.style.height = `${height}px`
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [textAreaValue])
+  return ref
 }

@@ -30,8 +30,8 @@ export const RefinerAttributeButtons = observer(
         <Button
           text={
             initialEnumVariants
-              ? t('dtree.saveChanges')
-              : t('dtree.addAttribute')
+              ? t('condition.saveChanges')
+              : t('condition.addAttribute')
           }
           onClick={handleSave}
           disabled={isBlockAddBtn}

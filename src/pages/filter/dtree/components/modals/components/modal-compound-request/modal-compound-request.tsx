@@ -1,120 +1,85 @@
-import { ReactElement, useEffect } from 'react'
+import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
-import { ActionType } from '@declarations'
-import { ApproxNameTypes } from '@core/enum/approxNameTypes'
-import { ModeTypes } from '@core/enum/mode-types-enum'
-import datasetStore from '@store/dataset/dataset'
-import dtreeStore from '@store/dtree'
-import stepStore from '@store/dtree/step.store'
-import { AllNotMods } from '@pages/filter/dtree/components/query-builder/ui/all-not-mods'
-import { ApproxStateModalMods } from '@pages/filter/dtree/components/query-builder/ui/approx-state-modal-mods'
-import { DisabledVariantsAmount } from '@pages/filter/dtree/components/query-builder/ui/disabled-variants-amount'
+import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
+import { CompoundRequestCondition } from '@components/conditions/compound-request/compound-request-condition'
+import { AttributeKinds } from '@service-providers/common'
+import { addAttributeToStep } from '@utils/addAttributeToStep'
+import { saveAttribute } from '@utils/changeAttribute/saveAttribute'
+import { dtreeFunctionsStore } from '../../../attributes/dtree-functions.store'
+import { dtreeStatFuncStore } from '../../../attributes/dtree-stat-func.store'
 import modalsControlStore from '../../modals-control-store'
 import modalsVisibilityStore from '../../modals-visibility-store'
-import { EditModalButtons } from '../ui/edit-modal-buttons'
 import { HeaderModal } from '../ui/header-modal'
 import { ModalBase } from '../ui/modal-base'
-import { SelectModalButtons } from '../ui/select-modal-buttons'
-import { RequestBlock } from './components/request-block'
-import { RequestControlButtons } from './components/request-control-buttons'
-import modalCompoundRequestStore from './modal-compound-request.store'
+import { renderAttributeDialogControls } from '../ui/renderAttributeControls'
 
 export const ModalCompoundRequest = observer((): ReactElement => {
-  const { variants, groupName, currentStepGroups } = modalsControlStore
+  const {
+    problemGroups,
+    attributeName,
+    initialApprox,
+    initialRequestCondition,
+    initialMode,
+    initialCondition,
+    attributeSubKind,
+  } = dtreeFunctionsStore
 
-  const { requestCondition, activeRequestIndex, approx } =
-    modalCompoundRequestStore
+  const { currentStepGroups } = modalsControlStore
 
-  const currentStepIndex = stepStore.activeStepIndex
-  const currentGroupIndex = modalsVisibilityStore.groupIndexToChange
-
-  const currentGroup =
-    stepStore.steps[currentStepIndex].groups[currentGroupIndex]
-
-  const currentGroupToModify = stepStore.steps[currentStepIndex].groups
-
-  const handleSetCondition = (approx: ApproxNameTypes) => {
-    modalCompoundRequestStore.setApprox(approx)
+  const handleModals = () => {
+    modalsVisibilityStore.closeModalCompoundRequest()
+    modalsVisibilityStore.openModalAttribute()
   }
 
-  useEffect(() => {
-    if (currentGroup) {
-      modalCompoundRequestStore.checkExistedSelectedFilters(currentGroup)
-
-      return
-    }
-
-    modalCompoundRequestStore.setApprox(
-      datasetStore.isXL
-        ? ApproxNameTypes.Non_Intersecting_Transcript
-        : ApproxNameTypes.Shared_Gene,
-    )
-
-    return () => dtreeStore.resetStatFuncData()
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleSaveChanges = useCallback((mode, param) => {
+    saveAttribute({
+      filterKind: AttributeKinds.FUNC,
+      filterName: FuncStepTypesEnum.CompoundRequest,
+      values: ['True'],
+      mode,
+      param,
+    })
+    modalsVisibilityStore.closeModalCompoundRequest()
   }, [])
 
-  const handleAddAttribute = (action: ActionType) => {
-    modalCompoundRequestStore.addAttribute(action)
-  }
+  const handleAddAttribute = useCallback((action, mode, param) => {
+    addAttributeToStep({
+      action,
+      attributeType: AttributeKinds.FUNC,
+      filters: ['True'],
+      param,
+      mode,
+    })
+    modalsVisibilityStore.closeModalCompoundRequest()
+  }, [])
 
   return (
-    <ModalBase minHeight={300}>
+    <ModalBase minHeight={340} maxHeight="auto">
       <HeaderModal
-        groupName={groupName}
-        handleClose={() => modalCompoundRequestStore.closeModal()}
+        groupName={attributeName}
+        handleClose={modalsVisibilityStore.closeModalCompoundRequest}
       />
 
-      <div className="flex justify-between w-full mt-4 text-14">
-        <ApproxStateModalMods
-          approx={approx}
-          handleSetCondition={handleSetCondition}
-        />
-
-        <AllNotMods
-          isNotModeChecked={
-            modalCompoundRequestStore.currentMode === ModeTypes.Not
-          }
-          isNotModeDisabled={variants ? variants.length === 0 : true}
-          toggleNotMode={() =>
-            modalCompoundRequestStore.setCurrentMode(ModeTypes.Not)
-          }
-        />
-      </div>
-
-      <div className="flex flex-col w-full mt-4 text-14">
-        {requestCondition.map(([requestBlockNumber], index) => (
-          <RequestBlock
-            key={index}
-            index={index}
-            activeRequestIndex={activeRequestIndex}
-            requestBlockNumber={requestBlockNumber}
-          />
-        ))}
-      </div>
-
-      <RequestControlButtons />
-
-      <DisabledVariantsAmount variants={variants} disabled={true} />
-
-      {currentGroup ? (
-        <EditModalButtons
-          handleClose={() => modalCompoundRequestStore.closeModal()}
-          handleSaveChanges={() => modalCompoundRequestStore.saveChanges()}
-          disabled={!variants}
-        />
-      ) : (
-        <SelectModalButtons
-          handleClose={() => modalCompoundRequestStore.closeModal()}
-          handleModals={() => modalCompoundRequestStore.openModalAttribute()}
-          handleModalJoin={() => modalsControlStore.openModalJoin()}
-          disabled={!variants}
-          currentGroup={currentGroupToModify ?? currentStepGroups}
-          handleAddAttribute={handleAddAttribute}
-        />
-      )}
+      <CompoundRequestCondition
+        problemGroups={problemGroups}
+        initialApprox={initialApprox}
+        initialRequestCondition={initialRequestCondition}
+        initialMode={initialMode}
+        attributeSubKind={attributeSubKind}
+        statFuncStore={dtreeStatFuncStore}
+        controls={({ hasErrors, param, mode }) =>
+          renderAttributeDialogControls({
+            initialCondition,
+            currentStepGroups,
+            onClose: modalsVisibilityStore.closeModalCompoundRequest,
+            handleModals,
+            disabled: hasErrors,
+            saveAttribute: () => handleSaveChanges(mode, param),
+            addAttribute: action => handleAddAttribute(action, mode, param),
+          })
+        }
+      />
     </ModalBase>
   )
 })

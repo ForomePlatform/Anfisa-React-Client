@@ -50,12 +50,12 @@ export const VariantDrawerHeader = observer(
     const { setVariantIndex } = useVariantIndex()
 
     const handlePrevVariant = () => {
-      if (!variantStore.drawerVisible || isNoPrevVariant) return
+      if (!variantStore.isDrawerVisible || isNoPrevVariant) return
       variantStore.prevVariant()
     }
 
     const handleNextVariant = () => {
-      if (!variantStore.drawerVisible || isNoNextVariant) return
+      if (!variantStore.isDrawerVisible || isNoNextVariant) return
       variantStore.nextVariant()
     }
 
@@ -67,7 +67,6 @@ export const VariantDrawerHeader = observer(
     const handleCloseDrawer = () => {
       if (variantStore.isTagsModified) {
         tabReport.invalidatePage(mainTableStore.openedVariantPageNo)
-        mainTableStore.fetchWsTagsAsync()
       }
 
       columnsStore.closeDrawer()
@@ -112,7 +111,7 @@ export const VariantDrawerHeader = observer(
             <Divider orientation="vertical" />
           </div>
           <div className="flex items-center my-2">
-            <DrawerTags />
+            <DrawerTags key={variantStore.index} />
             <Divider orientation="vertical" />
             <DrawerNote />
           </div>

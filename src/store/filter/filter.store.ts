@@ -13,7 +13,6 @@ import {
   TPropertyStatus,
 } from '@service-providers/common'
 import { IDsListArguments } from '@service-providers/dataset-level'
-import { IStatFuncArguments } from '@service-providers/filtering-regime'
 import filteringRegimeProvider from '@service-providers/filtering-regime/filtering-regime.provider'
 import { showToast } from '@utils/notifications'
 import { FilterStatStore, TFilterStatQuery } from './filter-stat.store'
@@ -32,8 +31,6 @@ export class FilterStore {
 
   // TODO: it's not good choice to save current page as store field
   method!: GlbPagesNames | FilterControlOptions
-
-  statFuncData: any = []
 
   private _conditions: TCondition[] = []
   private _isConditionsFetching = false
@@ -177,7 +174,10 @@ export class FilterStore {
         conditions: this._conditions,
         units: [this.attributeNameToAdd],
       })
-    } else if (this._selectedConditionIndex >= 0) {
+    } else if (
+      this._selectedConditionIndex >= 0 &&
+      this._conditions[this._selectedConditionIndex]
+    ) {
       return toJS({
         datasetName: this.datasetName,
         conditions: this._conditions.slice(0, this._selectedConditionIndex),
@@ -225,29 +225,6 @@ export class FilterStore {
       : this.addCondition(condition)
 
     this.selectCondition(savedIndex)
-  }
-
-  // TODO: remove after all func filters is unified
-  async fetchStatFuncAsync(unit: string, param: any) {
-    const body: IStatFuncArguments = {
-      ds: datasetStore.datasetName,
-      conditions: this.conditions,
-      rq_id: String(Date.now()),
-      unit,
-      param,
-    }
-
-    const result = await filteringRegimeProvider.getStatFunc(body)
-
-    runInAction(() => {
-      this.statFuncData = result
-    })
-
-    return result
-  }
-
-  public resetStatFuncData() {
-    this.statFuncData = []
   }
 
   public reset() {

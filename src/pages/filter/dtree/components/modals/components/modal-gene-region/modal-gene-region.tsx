@@ -1,94 +1,81 @@
-import { ReactElement, useEffect, useState } from 'react'
+import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
-import { ActionType } from '@declarations'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
-import dtreeStore from '@store/dtree'
-import stepStore from '@store/dtree/step.store'
-import { GeneRegionContent } from '../../../query-builder/ui/gene-region-content'
+import { GeneRegionCondition } from '@components/conditions/gene-region-condition/gene-region-condition'
+import { AttributeKinds } from '@service-providers/common'
+import { addAttributeToStep } from '@utils/addAttributeToStep'
+import { saveAttribute } from '@utils/changeAttribute/saveAttribute'
+import { dtreeFunctionsStore } from '../../../attributes/dtree-functions.store'
+import { dtreeStatFuncStore } from '../../../attributes/dtree-stat-func.store'
 import modalsControlStore from '../../modals-control-store'
 import modalsVisibilityStore from '../../modals-visibility-store'
-import { EditModalButtons } from '../ui/edit-modal-buttons'
 import { HeaderModal } from '../ui/header-modal'
 import { ModalBase } from '../ui/modal-base'
-import { SelectModalButtons } from '../ui/select-modal-buttons'
-import modalGeneRegionStore from './modal-gene-region.store'
+import { renderAttributeDialogControls } from '../ui/renderAttributeControls'
 
 export const ModalGeneRegion = observer((): ReactElement => {
-  const { variants, currentStepGroups } = modalsControlStore
-  const { locusCondition } = modalGeneRegionStore
+  const {
+    attributeName,
+    initialLocusValue,
+    initialMode,
+    initialCondition,
+    attributeSubKind,
+  } = dtreeFunctionsStore
 
-  const currentStepIndex = stepStore.activeStepIndex
-  const currentGroupIndex = modalsVisibilityStore.groupIndexToChange
+  const { currentStepGroups } = modalsControlStore
 
-  const currentGroup =
-    stepStore.steps[currentStepIndex].groups[currentGroupIndex]
-
-  const currentGroupToModify = stepStore.steps[currentStepIndex].groups
-
-  const [error, setError] = useState<string>('')
-
-  const handleSetValue = async (value: string) => {
-    modalGeneRegionStore.setLocusCondition(value)
-
-    const result = await dtreeStore.fetchStatFuncAsync(
-      FuncStepTypesEnum.GeneRegion,
-      `{"locus":"${value}"}`,
-    )
-
-    if (result.err) {
-      setError(result.err)
-    }
-
-    if (!result.err && error) {
-      setError('')
-    }
+  const handleModals = () => {
+    modalsVisibilityStore.closeModalGeneRegion()
+    modalsVisibilityStore.openModalAttribute()
   }
 
-  const handleAddAttribute = (action: ActionType) => {
-    modalGeneRegionStore.addAttribute(action)
-  }
+  const handleSaveChanges = useCallback((mode, param) => {
+    saveAttribute({
+      filterKind: AttributeKinds.FUNC,
+      filterName: FuncStepTypesEnum.GeneRegion,
+      values: ['True'],
+      mode,
+      param,
+    })
+    modalsVisibilityStore.closeModalGeneRegion()
+  }, [])
 
-  useEffect(() => {
-    if (currentGroup) {
-      modalGeneRegionStore.fetchStatFunc(currentGroup)
-    }
-
-    return () => dtreeStore.resetStatFuncData()
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleAddAttribute = useCallback((action, mode, param) => {
+    addAttributeToStep({
+      action,
+      attributeType: AttributeKinds.FUNC,
+      filters: ['True'],
+      param,
+      mode,
+    })
+    modalsVisibilityStore.closeModalGeneRegion()
   }, [])
 
   return (
-    <ModalBase minHeight={250}>
+    <ModalBase minHeight={340}>
       <HeaderModal
-        groupName={modalsVisibilityStore.groupNameToChange}
-        handleClose={() => modalGeneRegionStore.closeModal()}
+        groupName={attributeName}
+        handleClose={modalsVisibilityStore.closeModalGeneRegion}
       />
 
-      <GeneRegionContent
-        locusCondition={locusCondition}
-        handleSetValue={handleSetValue}
-        error={error}
-        variants={variants}
+      <GeneRegionCondition
+        initialLocusValue={initialLocusValue}
+        initialMode={initialMode}
+        attributeSubKind={attributeSubKind}
+        statFuncStore={dtreeStatFuncStore}
+        controls={({ hasErrors, param, mode }) =>
+          renderAttributeDialogControls({
+            initialCondition,
+            currentStepGroups,
+            onClose: modalsVisibilityStore.closeModalGeneRegion,
+            handleModals,
+            disabled: hasErrors,
+            saveAttribute: () => handleSaveChanges(mode, param),
+            addAttribute: action => handleAddAttribute(action, mode, param),
+          })
+        }
       />
-
-      {currentGroup ? (
-        <EditModalButtons
-          handleClose={() => modalGeneRegionStore.closeModal()}
-          handleSaveChanges={() => modalGeneRegionStore.saveChanges()}
-          disabled={!!error}
-        />
-      ) : (
-        <SelectModalButtons
-          handleClose={() => modalGeneRegionStore.closeModal()}
-          handleModals={() => modalGeneRegionStore.openModalAttribute()}
-          handleModalJoin={() => modalsControlStore.openModalJoin()}
-          handleAddAttribute={handleAddAttribute}
-          disabled={!!error}
-          currentGroup={currentGroupToModify ?? currentStepGroups}
-        />
-      )}
     </ModalBase>
   )
 })
