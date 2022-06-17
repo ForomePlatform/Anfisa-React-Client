@@ -32,7 +32,7 @@ export const DisabledVariants = ({
         </span>
       </Checkbox>
     ) : (
-      <div className="flex justify-center items-center text-grey-blue">
+      <div className="flex justify-center items-center text-red-secondary">
         {status}
       </div>
     )}
