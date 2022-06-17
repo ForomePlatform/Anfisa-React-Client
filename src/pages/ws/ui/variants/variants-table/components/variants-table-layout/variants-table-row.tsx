@@ -10,6 +10,7 @@ interface IVariantsTableRowProps
   extends Omit<IVariantsTableLayoutProps, 'selectedVariantNo'> {
   row: ITabReportRecord
   isSelected?: boolean
+  pageTrigger?: number
 }
 
 export const VariantsTableRow = memo(
@@ -20,6 +21,7 @@ export const VariantsTableRow = memo(
     layout,
     onRowClick,
     row,
+    pageTrigger,
   }: IVariantsTableRowProps) => {
     return (
       <tr
@@ -29,6 +31,7 @@ export const VariantsTableRow = memo(
           isCompact && styles.table__row_compact,
         )}
         data-no={row._no}
+        data-page-trigger={pageTrigger}
         onClick={onRowClick ? () => onRowClick?.(row) : undefined}
       >
         {columns.map(({ name, component: Component }, index) => {
