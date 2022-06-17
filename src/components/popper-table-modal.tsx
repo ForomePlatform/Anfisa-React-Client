@@ -9,6 +9,7 @@ import zoneStore from '@store/ws/zone'
 import { InputSearch } from '@components/input-search'
 import { ZoneModalMods } from '@pages/ws/ui/control-panel/zone-modals/components/zone-modal-mods'
 import { PopupCard } from './popup-card/popup-card'
+import { MainTableDataCy } from './data-testid/main-table.cy'
 
 interface IPopperTableModalProps {
   title?: string
@@ -93,6 +94,7 @@ export const PopperTableModal = observer(
         <div className="">
           {!isNotSearchable && (
             <InputSearch
+              dataTestId={MainTableDataCy.searchFilter}
               value={searchValue}
               placeholder={searchInputPlaceholder}
               onChange={e => onChange && onChange(e.target.value)}

@@ -8,7 +8,7 @@ import { Timeouts } from '../shared/timeouts'
 describe('Test on table of returned variants', () => {
   const datasetName = 'PGP3140_wgs_NIST-4_2'
   const xlDatasetName = 'xl_' + datasetName
-  const filterName = '⏚Hearing Loss, v.5'
+  const filterName = '@Hearing Loss, v.5'
 
   it('should show returned variants correctly | test #4', () => {
     cy.intercept('POST', ApiEndpoints.statUnits).as('statUnits')

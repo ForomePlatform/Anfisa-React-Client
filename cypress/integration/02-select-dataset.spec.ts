@@ -6,7 +6,7 @@ import { ApiEndpoints, Paths } from '../shared/constants'
 describe('XL Dataset should be opened in decision tree', () => {
   const datasetName = 'PGP3140_wgs_NIST-4_2'
   const xlDatasetName = 'xl_' + datasetName
-  const filterName = '⏚Hearing Loss, v.5'
+  const filterName = '@Hearing Loss, v.5'
 
   it('should open XL dataset in decision tree | Test #1', () => {
     datasetPage.visit()

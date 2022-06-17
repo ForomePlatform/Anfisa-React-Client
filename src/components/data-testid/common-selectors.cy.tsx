@@ -8,7 +8,6 @@ export const CommonSelectors = {
   tagInput: '[type="text"]',
   menuItem: '[role="menuitem"]',
   preset: '.Dropdown-option',
-  checkBoxList: 'div.mt-5.h-60.overflow-y-scroll',
   checkBoxListInDrawer: 'div.mt-4.h-auto.overflow-auto',
   tagNameInDrawer: 'span.text-12.ml-1',
   tableCell: '[role="cell"]',

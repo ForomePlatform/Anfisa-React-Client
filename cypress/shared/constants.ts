@@ -8,4 +8,8 @@ export const ApiEndpoints = {
   recCount: '/app/reccnt',
   jobStatus: '/app/job_status',
   ds2ws: '/app/ds2ws',
+  tabReport: '/app/tab_report',
+  wsTags: '/app/ws_tags',
+  wsList: '/app/ws_list',
+  excel: '/app/excel',
 }
