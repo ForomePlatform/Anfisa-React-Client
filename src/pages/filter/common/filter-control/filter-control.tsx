@@ -8,6 +8,7 @@ import { useExitPrompt } from '@core/hooks/use-exit-prompt'
 import { useParams } from '@core/hooks/use-params'
 import { SessionStoreManager } from '@core/storage-management/session-store-manager'
 import { t } from '@i18n'
+import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
 import { getPageRoute } from '@router/router.const'
 import { Routes } from '@router/routes.enum'
@@ -16,9 +17,13 @@ import { Icon } from '@ui/icon'
 import { UndoRedoButtons } from '@components/undo-redo-buttons'
 import { GlbPagesNames } from '@glb/glb-names'
 import { CreateDatasetButton } from '@pages/ws/ui/control-panel/create-dataset-button'
-import { FILTER_REFERRER, FilterControlOptions } from './filter-control.const'
+import { SolutionDropDown } from './components/solution-dropdown'
+import {
+  FILTER_REFERRER,
+  FilterControlOptions,
+  FilterControlOptionsNames,
+} from './filter-control.const'
 import { IFilterControlProps } from './filter-control.interface'
-import { SolutionDropDown } from './solution-dropdown'
 
 export const FilterControl = observer(
   ({
@@ -35,7 +40,23 @@ export const FilterControl = observer(
     const params = useParams()
     const dsName = params.get('ds') || ''
 
-    useExitPrompt(isBackwardAllowed)
+    const isNeedToShowPrompt = () => {
+      if (pageName === FilterControlOptionsNames.refiner) {
+        return (
+          (isBackwardAllowed && filterStore.isNotPreset) ||
+          filterStore.isPresetModified
+        )
+      } else if (pageName === FilterControlOptionsNames.dtree) {
+        return (
+          (isBackwardAllowed && dtreeStore.isNotDtree) ||
+          dtreeStore.isDtreeModified
+        )
+      }
+
+      return false
+    }
+
+    useExitPrompt(isNeedToShowPrompt())
 
     const goToPage = (name: FilterControlOptions) => {
       const route = getPageRoute(name)
@@ -101,7 +122,7 @@ export const FilterControl = observer(
         </div>
 
         <Prompt
-          when={isBackwardAllowed}
+          when={isNeedToShowPrompt()}
           message={t('filter.leaveConfirm.body')}
         />
       </div>

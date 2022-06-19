@@ -36,6 +36,7 @@ export class FilterStore {
   statFuncData: any = []
 
   private _conditions: TCondition[] = []
+
   private _isConditionsFetching = false
   private _selectedConditionIndex: number = -1
   private _attributeNameToAdd: string = ''
@@ -150,6 +151,10 @@ export class FilterStore {
 
   public get isPresetModified(): boolean {
     return this._presetModifiedState === PresetModifiedState.Modified
+  }
+
+  public get isNotPreset(): boolean {
+    return this._presetModifiedState === PresetModifiedState.NotPreset
   }
 
   public get viewVariantsQuery(): IDsListArguments | undefined {

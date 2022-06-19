@@ -15,7 +15,7 @@ import { GlbPagesNames } from '@glb/glb-names'
 import {
   FilterControlOptions,
   FilterControlOptionsNames,
-} from './filter-control.const'
+} from '../filter-control.const'
 
 interface ISolutionDropDownProps {
   pageName: FilterControlOptionsNames
