@@ -21,7 +21,7 @@ export interface IBreadcrumbsProps {
 const copyLink = (dataset: string) => {
   copyToClipboard(
     `${window.origin}${window.location.pathname}?ds=${dataset}${
-      variantStore.drawerVisible ? `&variant=${variantStore.index}` : ''
+      variantStore.isVariantShown ? `&variant=${variantStore.variantNo}` : ''
     }`,
   )
 

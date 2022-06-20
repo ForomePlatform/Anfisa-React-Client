@@ -1,25 +1,35 @@
 import { RefObject, useEffect } from 'react'
 
+import { alpha, Color, color2str, parseColor } from '@core/colors'
 import { ScrollDirection } from '@core/hooks/use-grab-scroll'
 import {
   createShadow,
   createTrigger,
-  DisplayValue,
-  hide,
   Placement,
 } from '@ui/shadow-scroller/shadow-scroller.utils'
 
-export const useScrollShadows = (
-  ref: RefObject<HTMLDivElement>,
-  shadowsRef: RefObject<HTMLDivElement>,
-  direction: ScrollDirection,
-  hideShadows: boolean,
-) => {
+type TUseScrollShadowsParams = {
+  scrollableRef: RefObject<HTMLDivElement>
+  shadowsRef: RefObject<HTMLDivElement>
+  direction: ScrollDirection
+  size: number
+  color: string | Color
+  isDisabled: boolean
+}
+
+export const useScrollShadows = ({
+  scrollableRef,
+  shadowsRef,
+  direction,
+  size,
+  color,
+  isDisabled,
+}: TUseScrollShadowsParams) => {
   useEffect(() => {
-    const scrollable = ref.current
+    const scrollable = scrollableRef.current
     const shadows = shadowsRef.current
 
-    if (!scrollable || !shadows) {
+    if (isDisabled || !scrollable || !shadows) {
       return
     }
 
@@ -29,35 +39,15 @@ export const useScrollShadows = (
       return
     }
 
-    const topTrigger = createTrigger(area, Placement.top)
-    const rightTrigger = createTrigger(area, Placement.right)
-    const bottomTrigger = createTrigger(area, Placement.bottom)
-    const leftTrigger = createTrigger(area, Placement.left)
+    let topTrigger: HTMLElement | undefined
+    let bottomTrigger: HTMLElement | undefined
+    let leftTrigger: HTMLElement | undefined
+    let rightTrigger: HTMLElement | undefined
 
-    const topShadow = createShadow(
-      shadows,
-      Placement.top,
-      direction,
-      hideShadows,
-    )
-    const rightShadow = createShadow(
-      shadows,
-      Placement.right,
-      direction,
-      hideShadows,
-    )
-    const bottomShadow = createShadow(
-      shadows,
-      Placement.bottom,
-      direction,
-      hideShadows,
-    )
-    const leftShadow = createShadow(
-      shadows,
-      Placement.left,
-      direction,
-      hideShadows,
-    )
+    let topShadow: HTMLElement | undefined
+    let bottomShadow: HTMLElement | undefined
+    let leftShadow: HTMLElement | undefined
+    let rightShadow: HTMLElement | undefined
 
     const resizeObserver = new ResizeObserver(entries => {
       const {
@@ -72,38 +62,20 @@ export const useScrollShadows = (
     const intersectionObserver = new IntersectionObserver(
       entries => {
         for (const entry of entries) {
+          const displayValue = entry.isIntersecting ? 'none' : 'block'
+
           switch (entry.target) {
             case topTrigger:
-              topShadow.style.display =
-                entry.isIntersecting ||
-                hide(Placement.top, direction) ||
-                hideShadows
-                  ? DisplayValue.none
-                  : DisplayValue.block
+              topShadow && (topShadow.style.display = displayValue)
               break
             case rightTrigger:
-              rightShadow.style.display =
-                entry.isIntersecting ||
-                hide(Placement.right, direction) ||
-                hideShadows
-                  ? DisplayValue.none
-                  : DisplayValue.block
+              rightShadow && (rightShadow.style.display = displayValue)
               break
             case bottomTrigger:
-              bottomShadow.style.display =
-                entry.isIntersecting ||
-                hide(Placement.bottom, direction) ||
-                hideShadows
-                  ? DisplayValue.none
-                  : DisplayValue.block
+              bottomShadow && (bottomShadow.style.display = displayValue)
               break
             case leftTrigger:
-              leftShadow.style.display =
-                entry.isIntersecting ||
-                hide(Placement.left, direction) ||
-                hideShadows
-                  ? DisplayValue.none
-                  : DisplayValue.block
+              leftShadow && (leftShadow.style.display = displayValue)
               break
           }
         }
@@ -112,10 +84,50 @@ export const useScrollShadows = (
         root: scrollable,
       },
     )
-    intersectionObserver.observe(topTrigger)
-    intersectionObserver.observe(rightTrigger)
-    intersectionObserver.observe(bottomTrigger)
-    intersectionObserver.observe(leftTrigger)
+
+    const shadowColor = Array.isArray(color) ? color : parseColor(color)
+    const fromColor = color2str(alpha(shadowColor, 0))
+    const toColor = color2str(shadowColor)
+
+    if (direction !== 'horizontal') {
+      topTrigger = createTrigger(area, Placement.top)
+      bottomTrigger = createTrigger(area, Placement.bottom)
+
+      topShadow = createShadow(shadows, Placement.top, size, fromColor, toColor)
+      bottomShadow = createShadow(
+        shadows,
+        Placement.bottom,
+        size,
+        fromColor,
+        toColor,
+      )
+
+      intersectionObserver.observe(topTrigger)
+      intersectionObserver.observe(bottomTrigger)
+    }
+
+    if (direction !== 'vertical') {
+      leftTrigger = createTrigger(area, Placement.left)
+      rightTrigger = createTrigger(area, Placement.right)
+
+      leftShadow = createShadow(
+        shadows,
+        Placement.left,
+        size,
+        fromColor,
+        toColor,
+      )
+      rightShadow = createShadow(
+        shadows,
+        Placement.right,
+        size,
+        fromColor,
+        toColor,
+      )
+
+      intersectionObserver.observe(leftTrigger)
+      intersectionObserver.observe(rightTrigger)
+    }
 
     return () => {
       ;[
@@ -127,10 +139,9 @@ export const useScrollShadows = (
         rightShadow,
         bottomShadow,
         leftShadow,
-      ].forEach(target => target.remove())
+      ].forEach(target => target?.remove())
       intersectionObserver.disconnect()
       resizeObserver.disconnect()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [direction, hideShadows])
+  }, [scrollableRef, shadowsRef, direction, size, color, isDisabled])
 }

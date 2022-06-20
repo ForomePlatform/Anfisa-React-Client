@@ -69,11 +69,11 @@ export const CustomizeTablePopover = observer(
 
         <div className="w-full">
           <>
-            {!variantStore.drawerVisible && <ColumnsList />}
+            {!variantStore.isVariantShown && <ColumnsList />}
             <div
               className={cn('mt-4 mb-5', {
                 'border-t-[1px] border-t-blue-light':
-                  !variantStore.drawerVisible,
+                  !variantStore.isVariantShown,
               })}
             >
               <ViewTypeTable setViewType={setViewType} viewType={viewType} />
