@@ -25,7 +25,7 @@ export const EnumDialog = observer((): ReactElement => {
 
   const handleModals = () => {
     modalsVisibilityStore.closeEnumDialog()
-    modalsVisibilityStore.openModalAttribute()
+    modalsVisibilityStore.openSelectAttributeDialog()
   }
 
   const handleAddAttribute = useCallback((action, mode, selectedVariants) => {

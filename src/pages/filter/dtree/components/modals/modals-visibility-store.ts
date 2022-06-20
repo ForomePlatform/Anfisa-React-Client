@@ -8,7 +8,7 @@ class ModalsVisibilityStore {
   dtreeOperation = ''
   modalSource = ''
 
-  isModalAttributeVisible = false
+  isSelectAttributeDialogVisible = false
 
   isInheritanceModeDialogVisible = false
   isCustomInheritanceModeDialogVisible = false
@@ -25,12 +25,12 @@ class ModalsVisibilityStore {
 
   // 1. Modals for creation brand new tree
 
-  public openModalAttribute() {
-    this.isModalAttributeVisible = true
+  public openSelectAttributeDialog() {
+    this.isSelectAttributeDialogVisible = true
   }
 
-  public closeModalAttribute() {
-    this.isModalAttributeVisible = false
+  public closeSelectAttributeDialog() {
+    this.isSelectAttributeDialogVisible = false
   }
 
   // 2. Numeric dialog

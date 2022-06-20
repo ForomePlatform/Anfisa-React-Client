@@ -31,7 +31,7 @@ export const NumericDialog = observer((): ReactElement | null => {
 
   const handleModals = () => {
     modalsVisibilityStore.closeNumericDialog()
-    modalsVisibilityStore.openModalAttribute()
+    modalsVisibilityStore.openSelectAttributeDialog()
   }
 
   const handleSaveChanges = (value: TNumericConditionBounds) => {

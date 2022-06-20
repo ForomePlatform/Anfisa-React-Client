@@ -61,7 +61,7 @@ export const DtreeUnitsList = observer(
         writeScrollPosition()
       }
       dtreeStore.addSelectedGroup([vgroup, name])
-      modalsVisibilityStore.closeModalAttribute()
+      modalsVisibilityStore.closeSelectAttributeDialog()
 
       if (kind === AttributeKinds.ENUM) {
         modalsVisibilityStore.openEnumDialog(name, undefined, source)
@@ -104,6 +104,7 @@ export const DtreeUnitsList = observer(
     return (
       <UnitsList
         className={className}
+        isModal={isModal}
         isDark={!isModal}
         withCharts={!isModal}
         subHeader={!isModal && <DtreeUnitsListSubHeader />}

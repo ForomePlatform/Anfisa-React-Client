@@ -27,7 +27,7 @@ export const CustomInheritanceModeDialog = observer((): ReactElement => {
 
   const handleModals = () => {
     modalsVisibilityStore.closeCustomInheritanceModeDialog()
-    modalsVisibilityStore.openModalAttribute()
+    modalsVisibilityStore.openSelectAttributeDialog()
   }
 
   const handleSaveChanges = useCallback((mode, param) => {

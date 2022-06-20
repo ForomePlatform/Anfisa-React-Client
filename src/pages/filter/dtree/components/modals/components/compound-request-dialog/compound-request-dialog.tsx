@@ -28,7 +28,7 @@ export const CompoundRequestDialog = observer((): ReactElement => {
 
   const handleModals = () => {
     modalsVisibilityStore.closeCompoundRequestDialog()
-    modalsVisibilityStore.openModalAttribute()
+    modalsVisibilityStore.openSelectAttributeDialog()
   }
 
   const handleSaveChanges = useCallback((mode, param) => {

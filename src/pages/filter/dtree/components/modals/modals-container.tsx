@@ -11,16 +11,13 @@ import { CustomInheritanceModeDialog } from './components/custom-inheritance-mod
 import { EnumDialog } from './components/enum-dialog'
 import { GeneRegionDialog } from './components/gene-region-dialog'
 import { InheritanceModeDialog } from './components/inheritance-mode-dialog'
-import { ModalSelectAttribute } from './components/modal-select-attribute'
 import { NumericDialog } from './components/numeric-dialog'
-import modalsVisibilityStore from './modals-visibility-store'
+import { SelectAttributeDialog } from './components/select-attribute-dialog'
 
 export const ModalsContainer = observer(
   (): ReactElement => (
     <>
-      {modalsVisibilityStore.isModalAttributeVisible && (
-        <ModalSelectAttribute />
-      )}
+      <SelectAttributeDialog />
 
       <EnumDialog />
 

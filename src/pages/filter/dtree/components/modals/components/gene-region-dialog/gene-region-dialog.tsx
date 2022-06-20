@@ -26,7 +26,7 @@ export const GeneRegionDialog = observer((): ReactElement => {
 
   const handleModals = () => {
     modalsVisibilityStore.closeGeneRegionDialog()
-    modalsVisibilityStore.openModalAttribute()
+    modalsVisibilityStore.openSelectAttributeDialog()
   }
 
   const handleSaveChanges = useCallback((mode, param) => {

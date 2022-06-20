@@ -26,7 +26,7 @@ export const CompoundHetDialog = observer((): ReactElement => {
 
   const handleModals = () => {
     modalsVisibilityStore.closeCompoundHetDialog()
-    modalsVisibilityStore.openModalAttribute()
+    modalsVisibilityStore.openSelectAttributeDialog()
   }
 
   const handleSaveChanges = useCallback((mode, param) => {
