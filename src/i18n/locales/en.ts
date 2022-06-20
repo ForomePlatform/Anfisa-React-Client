@@ -10,6 +10,7 @@ export const en = {
     resetFilters: 'Reset filters',
     selectAll: 'Select All',
     clearAll: 'Clear All',
+    selected: '{value} Selected',
     cancel: 'Cancel',
     create: 'Create',
     apply: 'Apply',
