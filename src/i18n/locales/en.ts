@@ -264,6 +264,10 @@ export const en = {
       loadPreset: 'Failed to load preset "{presetName}"',
       joinPreset: 'Failed to join preset "{presetName}"',
     },
+    leaveConfirm: {
+      title: 'Attention! All changes will be lost',
+      body: 'Are you sure you want to leave the page without saving?',
+    },
   },
   dtree: {
     variants: 'variants',

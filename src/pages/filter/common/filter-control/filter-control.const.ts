@@ -23,3 +23,5 @@ export const FilterControlOptionsNames = Glb.makeEnum({
 
 export type FilterControlOptionsNames =
   typeof FilterControlOptionsNames[keyof typeof FilterControlOptionsNames]
+
+export const FILTER_REFERRER = 'referrer'
