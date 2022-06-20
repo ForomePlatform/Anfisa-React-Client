@@ -220,8 +220,6 @@ class ZoneStore {
 
   unselectAllTags() {
     this.localTags = []
-    this.resetModeNOT()
-    this.resetModeWithNotes()
   }
 
   createSelectedZoneFilter(type: string) {
@@ -280,6 +278,11 @@ class ZoneStore {
 
   resetModeWithNotes() {
     this.isModeWithNotes = this.modeWithNotesSubmitted
+  }
+
+  resetModes() {
+    this.resetModeNOT()
+    this.resetModeWithNotes()
   }
 
   submitTagsMode() {
