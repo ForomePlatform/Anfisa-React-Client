@@ -1,7 +1,7 @@
 import React, { ReactElement } from 'react'
 
 import { t } from '@i18n'
-import { InputNumber } from '@ui/input-number/input-number'
+import { InputNumeric } from '@ui/input-numeric/input-numeric'
 import {
   RangeSlider,
   RangeSliderMode,
@@ -9,7 +9,6 @@ import {
   RangeSliderSide,
 } from '@ui/range-slider'
 import {
-  parseNumeric,
   prepareCenterDistanceValue,
   useCenterDistanceValue,
 } from '@components/conditions/numeric/numeric-condition.utils'
@@ -53,13 +52,13 @@ export const NumericConditionNeighborhood = ({
               {max}
             </div>
             <div className="grow">
-              <InputNumber
+              <InputNumeric
                 className="h-8 w-full border border-grey-disabled shadow-input"
+                min={min}
+                max={max}
                 value={center ?? ''}
                 placeholder={t('numericCondition.center')}
-                onChange={event =>
-                  setCenter(parseNumeric(event.target.value, isFloat))
-                }
+                onChange={value => setCenter(value)}
               />
             </div>
           </div>
@@ -68,16 +67,14 @@ export const NumericConditionNeighborhood = ({
           </div>
           <div className="relative grow flex items-center py-6">
             <div className="grow">
-              <InputNumber
+              <InputNumeric
                 data-test-id={DecisionTreeModalDataCy.rightInput}
                 className="h-8 w-full border border-grey-disabled shadow-input"
                 placeholder={t('numericCondition.distance')}
                 min={0}
                 max={maxDistance}
                 value={distance ?? ''}
-                onChange={event =>
-                  setDistance(parseNumeric(event.target.value, isFloat))
-                }
+                onChange={value => setDistance(value)}
               />
             </div>
           </div>
