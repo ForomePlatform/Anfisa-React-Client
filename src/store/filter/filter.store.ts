@@ -1,3 +1,4 @@
+import { updateURLParams } from './../../utils/url/update-url-params'
 import cloneDeep from 'lodash/cloneDeep'
 import { makeAutoObservable, reaction, runInAction, toJS } from 'mobx'
 
@@ -89,6 +90,7 @@ export class FilterStore {
       presetName => {
         if (presetName) {
           this.loadPreset(presetName)
+          this.updateURLWithPresetName(presetName)
         } else {
           this.resetPreset()
         }
@@ -333,5 +335,9 @@ export class FilterStore {
     }
 
     this.setPresetModifiedState(PresetModifiedState.NotPreset)
+  }
+
+  private updateURLWithPresetName(presetName: string) {
+    updateURLParams('preset', presetName)
   }
 }

@@ -12,6 +12,7 @@ import {
 import decisionTreesProvider from '@service-providers/decision-trees/decision-trees.provider'
 import { filterPresetsData } from '@utils/filter-presets'
 import { showToast } from '@utils/notifications/showToast'
+import { updateURLParams } from '@utils/url/update-url-params'
 import { validatePresetName } from '@utils/validation/validatePresetName'
 import { AvailableDtreesAsyncStore } from './available-dtrees.async.store'
 
@@ -34,6 +35,13 @@ export class FilterDtreesStore {
       datasetName => {
         this.resetActiveDtree()
         this.dtrees.setQuery({ datasetName, code: dtreeStore.dtreeCode })
+      },
+    )
+
+    reaction(
+      () => this.activeDtree,
+      dtree => {
+        this.updateURLWithDtreeName(dtree)
       },
     )
   }
@@ -144,5 +152,9 @@ export class FilterDtreesStore {
           )
         },
       )
+  }
+
+  private updateURLWithDtreeName(dtree: string) {
+    updateURLParams('dtree', dtree)
   }
 }
