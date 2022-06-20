@@ -11,22 +11,20 @@ import { NotePopover } from './note-popover'
 export const DrawerNote = observer(() => {
   const {
     tags: { noteText, isLoading },
-    tagText,
     record: { genes, locus },
   } = variantStore
 
   const [popoverAnchorEl, setPopoverAnchorEl] =
     useState<HTMLElement | null>(null)
 
-  const closePopover = (resetValue?: boolean) => {
-    !resetValue && variantStore.resetTagText()
+  const closePopover = () => {
     setPopoverAnchorEl(null)
   }
 
   const handleSave = (noteText: string | null) => {
     variantStore.setIsTagsModified(true)
     variantStore.tags.saveNote(noteText)
-    closePopover(true)
+    closePopover()
   }
 
   return (
@@ -44,14 +42,14 @@ export const DrawerNote = observer(() => {
         isOpen={!isLoading && !!popoverAnchorEl}
         anchorEl={popoverAnchorEl}
         onClose={closePopover}
-        changeValue={variantStore.setTagText}
+        key={noteText}
         recordTitle={
           <>
             {`[${genes}] `}
             <span dangerouslySetInnerHTML={{ __html: locus }} />
           </>
         }
-        noteText={tagText}
+        noteText={noteText}
         onSave={handleSave}
       />
     </div>

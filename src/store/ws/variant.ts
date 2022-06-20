@@ -15,28 +15,12 @@ export class VariantStore {
 
   variantNo = -1
   isTagsModified = false
-  private _rawTegText: string = this.tags.noteText
 
   constructor() {
     makeAutoObservable(this)
 
     reaction(() => this.recordQuery, this.record.handleQuery)
     reaction(() => this.tagsQuery, this.tags.handleQuery)
-  }
-
-  public get tagText(): string {
-    if (!this._rawTegText) {
-      return this.tags.noteText
-    }
-    return this._rawTegText
-  }
-
-  public setTagText = (text: string) => {
-    this._rawTegText = text
-  }
-
-  public resetTagText = () => {
-    this._rawTegText = this.tags.noteText
   }
 
   public get datasetName(): string {

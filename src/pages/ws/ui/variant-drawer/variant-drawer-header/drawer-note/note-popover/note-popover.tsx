@@ -6,6 +6,7 @@ import {
   ReactNode,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from 'react'
 
@@ -21,9 +22,8 @@ interface INotePopoverProps
   extends Pick<IPopoverProps, 'isOpen' | 'anchorEl' | 'onClose'> {
   noteText?: string
   recordTitle?: ReactNode
-  changeValue: (text: string) => void
   onSave: (noteText: string | null) => void
-  onClose: (e?: boolean) => void
+  onClose: () => void
 }
 
 export const NotePopover = ({
@@ -32,17 +32,21 @@ export const NotePopover = ({
   isOpen,
   onSave,
   onClose,
-  changeValue,
   ...popoverProps
 }: INotePopoverProps): ReactElement => {
   const textareaRef = useResizeTextAreaHeight()
   const [value, setValue] = useState(noteText ?? '')
 
   const error = useMemo(() => validateNotes(value), [value])
+  const saveValue = useRef<boolean>(false)
 
   useEffect(() => {
     if (isOpen) {
-      setValue(noteText ?? '')
+      if (!saveValue.current) {
+        setValue(noteText ?? '')
+      } else {
+        saveValue.current = false
+      }
     }
   }, [isOpen, noteText])
 
@@ -50,7 +54,6 @@ export const NotePopover = ({
     const text = e.target.value
 
     setValue(text)
-    changeValue(text)
   }
 
   return (
@@ -60,7 +63,10 @@ export const NotePopover = ({
       title={t('variant.notesFor', {
         title: <span className="text-blue-bright">{recordTitle}</span>,
       })}
-      onClose={onClose}
+      onClose={() => {
+        saveValue.current = true
+        onClose()
+      }}
       {...popoverProps}
     >
       <textarea
@@ -80,7 +86,7 @@ export const NotePopover = ({
         />
         <Button
           text={t('general.cancel')}
-          onClick={() => onClose(false)}
+          onClick={onClose}
           variant="secondary"
           className="mr-2"
         />
