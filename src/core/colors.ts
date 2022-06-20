@@ -15,9 +15,9 @@ export const parseColor = (color: string): Color => {
       .filter(Boolean)
 
     return [
-      parseInt(arr[0]),
-      parseInt(arr[1]),
-      parseInt(arr[2]),
+      parseInt(arr[0]) / 255,
+      parseInt(arr[1]) / 255,
+      parseInt(arr[2]) / 255,
       arr[3] != null ? parseFloat(arr[3]) : 1,
     ]
   }
@@ -27,6 +27,13 @@ export const parseColor = (color: string): Color => {
 
 export const interpolateColor = (c1: Color, c2: Color, pos: number): Color => {
   return c1.map((c, i) => c + (c2[i] - c) * pos) as Color
+}
+
+export const alpha = (color: Color, alpha: number): Color => {
+  const newColor = color.slice() as Color
+  newColor[3] = alpha
+
+  return newColor
 }
 
 export const color2str = (c: Color): string => {

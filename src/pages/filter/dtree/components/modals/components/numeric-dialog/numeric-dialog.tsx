@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite'
 
 import { ActionType } from '@declarations'
 import { Dialog } from '@ui/dialog'
-import { NumericCondition } from '@components/conditions/numeric-condition'
+import { NumericCondition } from '@components/conditions/numeric'
 import {
   AttributeKinds,
   TNumericConditionBounds,

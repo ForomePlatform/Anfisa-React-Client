@@ -1,60 +1,72 @@
-import { MouseEvent, RefObject, useRef } from 'react'
-
-interface Position {
-  scrollTop: number
-  scrollLeft: number
-  mouseX: number
-  mouseY: number
-}
+import { RefObject, useEffect } from 'react'
 
 export type ScrollDirection = 'horizontal' | 'vertical' | 'both'
+
+const getMouseDownHandler =
+  (direction: ScrollDirection) => (event: MouseEvent) => {
+    if (event.button !== 0) {
+      return
+    }
+
+    const element = event.currentTarget as HTMLElement
+    let isMoved = false
+    const origX = event.clientX
+    const origY = event.clientY
+    const origScrollLeft = element.scrollLeft
+    const origScrollTop = element.scrollTop
+
+    const mouseMoveHandler = (event: MouseEvent) => {
+      isMoved = true
+
+      if (direction !== 'horizontal') {
+        element.scrollTop = origScrollTop + origY - event.clientY
+      }
+      if (direction !== 'vertical') {
+        element.scrollLeft = origScrollLeft + origX - event.clientX
+      }
+    }
+
+    element.style.cursor = 'grabbing'
+    element.style.userSelect = 'none'
+
+    document.addEventListener('mousemove', mouseMoveHandler)
+    document.addEventListener(
+      'mouseup',
+      () => {
+        document.removeEventListener('mousemove', mouseMoveHandler)
+
+        element.style.cursor = ''
+        element.style.userSelect = ''
+      },
+      {
+        once: true,
+      },
+    )
+    document.addEventListener(
+      'click',
+      event => {
+        if (isMoved) {
+          event.stopPropagation()
+        }
+      },
+      { capture: true, once: true },
+    )
+  }
 
 export const useGrabScroll = (
   ref: RefObject<HTMLElement>,
   direction: ScrollDirection = 'both',
-): ((e: MouseEvent<HTMLElement>) => void) => {
-  const position = useRef<Position>({
-    mouseX: 0,
-    mouseY: 0,
-    scrollLeft: 0,
-    scrollTop: 0,
-  })
+  enabled = true,
+): void => {
+  useEffect(() => {
+    const el = ref.current
+    if (el && enabled) {
+      const handler = getMouseDownHandler(direction)
+      el.addEventListener('mousedown', handler, {
+        capture: true,
+      })
 
-  return (event: MouseEvent<HTMLElement>) => {
-    if (!ref.current) return
-
-    const mouseMoveHandler = (event: { clientX: number; clientY: number }) => {
-      if (!ref.current) return
-
-      const dx = event.clientX - position.current.mouseX
-      const dy = event.clientY - position.current.mouseY
-
-      if (direction !== 'horizontal') {
-        ref.current.scrollTop = position.current.scrollTop - dy
-      }
-      if (direction !== 'vertical') {
-        ref.current.scrollLeft = position.current.scrollLeft - dx
-      }
+      return () => el.removeEventListener('mousedown', handler)
     }
-
-    const mouseUpHandler = () => {
-      if (ref.current) ref.current.style.cursor = 'grab'
-
-      document.removeEventListener('mousemove', mouseMoveHandler)
-      document.removeEventListener('mouseup', mouseUpHandler)
-    }
-
-    position.current = {
-      scrollLeft: ref.current.scrollLeft,
-      scrollTop: ref.current.scrollTop,
-      mouseX: event.clientX,
-      mouseY: event.clientY,
-    }
-
-    ref.current.style.cursor = 'grabbing'
-    ref.current.style.userSelect = 'none'
-
-    document.addEventListener('mousemove', mouseMoveHandler)
-    document.addEventListener('mouseup', mouseUpHandler)
-  }
+  }, [ref, direction, enabled])
 }
