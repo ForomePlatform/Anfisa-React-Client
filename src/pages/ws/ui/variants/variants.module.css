@@ -1,0 +1,5 @@
+.variants {
+  position: relative;
+  overflow-y: scroll;
+  overflow-x: auto;
+}

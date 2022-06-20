@@ -1,0 +1,57 @@
+.gene {
+  @apply typography-s;
+
+  display: flex;
+  align-items: center;
+
+  &__icon {
+    overflow: hidden;
+    flex: 0 0 14px;
+    margin-right: theme("spacing.1");
+
+    &_grey,
+    &_green,
+    &_yellow,
+    &_red {
+      &::before {
+        display: block;
+        content: "";
+        width: 10px;
+        height: 10px;
+        border-radius: 5px;
+        border: 2px solid;
+      }
+    }
+
+    &_grey {
+      color: theme("colors.grey.blue");
+
+      &::before {
+        background: theme("colors.grey.blue");
+      }
+    }
+
+    &_green {
+      color: theme("colors.green.secondary")
+    }
+
+    &_yellow,
+    &_yellow-cross {
+      color: theme("colors.yellow.secondary")
+    }
+
+    &_red,
+    &_red-cross {
+      color: theme("colors.red.secondary")
+    }
+
+    &_yellow-cross,
+    &_red-cross {
+      font-size: 16px;
+
+      &::after {
+        content: "✚";
+      }
+    }
+  }
+}

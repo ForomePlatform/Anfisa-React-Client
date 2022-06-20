@@ -2,7 +2,7 @@ import { ReactElement } from 'react'
 import cn from 'classnames'
 
 import { t } from '@i18n'
-import { InputNumber } from '@ui/input-number/input-number'
+import { InputNumeric } from '@ui/input-numeric/input-numeric'
 import { Select } from '@ui/select'
 import { ICompoundRequestScenarioProps } from '../compound-request.interface'
 import { getSelectedValue } from '../compound-request.utils'
@@ -39,12 +39,13 @@ export const CompoundRequestScenario = ({
             {t('funcCondition.scenario')}
           </span>
 
-          <InputNumber
+          <InputNumeric
             value={requestItem[0]}
-            onChange={e =>
-              onChangeRequestConditionNumber(requestIndex, +e.target.value)
+            min={1}
+            onChange={value =>
+              onChangeRequestConditionNumber(requestIndex, value)
             }
-            className="cursor-pointer w-[60px] h-7"
+            className="cursor-pointer h-7 w-[80px]"
           />
         </div>
 

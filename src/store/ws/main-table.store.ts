@@ -8,7 +8,7 @@ import {
   TCondition,
   TItemsCount,
 } from '@service-providers/common/common.interface'
-import { ITabReport } from '@service-providers/dataset-level/dataset-level.interface'
+import { TTabReport } from '@service-providers/dataset-level'
 import wsDatasetProvider from '@service-providers/ws-dataset-support/ws-dataset-support.provider'
 import { TabReportPaginatedAsyncStore } from './tab-report-paginated.async.store'
 import variantStore from './variant'
@@ -46,8 +46,8 @@ export class MainTable {
     )
   }
 
-  public get tabReportPagesData(): ITabReport[] {
-    const pagesData: ITabReport[] = []
+  public get tabReportPagesData(): TTabReport {
+    const pagesData: TTabReport = []
 
     this.tabReport.pages.forEach(page =>
       page.data?.forEach(item => {
@@ -106,7 +106,7 @@ export class MainTable {
 
     const wsTags = await wsDatasetProvider.wsTags({
       ds: datasetStore.datasetName,
-      rec: variantStore.index,
+      rec: variantStore.variantNo,
     })
 
     runInAction(() => {

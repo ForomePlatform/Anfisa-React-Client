@@ -1,4 +1,4 @@
-.link-container {
+.container {
   position: relative;
   cursor: grab;
 
@@ -12,6 +12,8 @@
     position: relative;
     width: fit-content;
     height: fit-content;
+    min-width: 100%;
+    min-height: 100%;
 
     &_vertical {
       width: 100%;
@@ -39,6 +41,11 @@
     &_horizontal {
       overflow-y: hidden;
       overflow-x: auto;
+    }
+
+    &_nobars {
+      overflow-x: hidden;
+      overflow-y: hidden;
     }
   }
 }

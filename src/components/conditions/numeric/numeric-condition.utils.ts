@@ -115,21 +115,6 @@ export const useConditionBoundsValue = (
   return [value, settersRef.current]
 }
 
-export const parseNumeric = (
-  value: string | null | undefined,
-  isFloat: boolean,
-): number | null => {
-  if (!value) {
-    return null
-  }
-
-  if (isFloat) {
-    return parseFloat(value)
-  }
-
-  return parseInt(value, 10)
-}
-
 export enum NumericValueErrorType {
   MinValue,
   MaxValue,
