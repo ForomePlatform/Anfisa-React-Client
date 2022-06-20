@@ -157,6 +157,16 @@ export const en = {
       'Attention: Zone filters (Gene, Gene List, Sample, Tags) do not participate in dataset creation',
     addDataset: 'Add dataset',
   },
+  mainTable: {
+    gene: 'Gene',
+    variant: 'Variant',
+    tags: 'Tag(s)',
+    proteinChange: 'Protein Change',
+    inSilico: 'In-Silico',
+    population: 'Population',
+    samples: 'Samples',
+    filter: 'Filter',
+  },
   variant: {
     genes: 'Gene(s)',
     worstAnnotation: 'Worst Annotation',

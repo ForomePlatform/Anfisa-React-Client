@@ -8,3 +8,5 @@ export const tableColumnMap = {
   samples: 'Samples',
   filter: 'Filter',
 }
+
+export type TMainTableColumn = keyof typeof tableColumnMap

@@ -4,6 +4,8 @@ import {
   TCondition,
 } from 'service-providers/common'
 
+import { TTagsDescriptor } from '@service-providers/ws-dataset-support'
+
 // dsinfo
 
 export interface IDsInfoArguments {
@@ -155,32 +157,38 @@ export interface ITabReportArguments {
   schema: string
 }
 
-export interface ITabReport {
+export type TInSilico = [string, number][]
+
+export interface ITabReportRecord {
   _no: number
+  _tags: TTagsDescriptor
   ClinVar: string[]
   HGMD: string[]
-  Gene: string[]
+  ColorCode: string[]
+  GeneColored: [string[], number]
   Coordinate: string
   Change: string
   MSQ: string[]
   'Protein Change': string[]
-  Polyphen: string[]
-  SIFT: string[]
-  'MUT TASTER': string[]
-  FATHMM: string[]
-  gnomAD_Overall_AF: number
-  gnomAD_Overall_AF_Popmax: number
-  gnomAD_Genomes_AF: number
-  gnomAD_Exomes_AF: number
-  gnomAD_Overall_Hom: number
+  Polyphen?: TInSilico
+  SIFT?: TInSilico
+  'MUT TASTER'?: TInSilico
+  FATHMM?: TInSilico
+  gnomAD_Overall_AF?: number | null
+  gnomAD_Overall_AF_Popmax?: number | null
+  gnomAD_Genomes_AF?: number | null
+  gnomAD_Exomes_AF?: number | null
+  gnomAD_Overall_Hom?: number
   gnomAD_Overall_Hem?: any
   QD: number
   FT: string[]
   GTEx: string[][]
   IGV?: any
   gnomAD: string[]
-  Samples: ISample[]
+  Samples: Record<string, ISample>
 }
+
+export type TTabReport = ITabReportRecord[]
 
 export interface ISample {
   genotype: string
