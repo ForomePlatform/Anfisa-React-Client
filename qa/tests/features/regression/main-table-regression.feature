@@ -25,7 +25,7 @@ Scenario: 03 Chosen gene should be applied
 Scenario: 04 Custom tag should be added to the variant
 	Given Main Table was opened
 	When User Clicks on Variant
-	And Clicks on "+Add" button near Tags in variants Table
+	And Clicks on "+ Add" button near Tags in variants Table
 	And Writes new Tag name in the field
 	And Clicks "Add custom tag" button
 	And Clicks "Save Tags" button
@@ -34,14 +34,14 @@ Scenario: 04 Custom tag should be added to the variant
 Scenario: 05 Note should be added to the variant
 	Given Main Table was opened
 	When User Clicks on Variant
-	And Clicks on "+Add" button near Notes in variants Table
+	And Clicks on "+ Add" button near Notes in variants Table
 	And Writes new note
 	And Clicks on "Save note" button
 	Then note should be added to variant
 
 Scenario: 06 Main Table should be filtered by custom tag
 	Given Custom tag was created
-	When User clicks "+Add Tag"
+	When User clicks "+ Add Tag"
 	And Choses custom tag which is created
 	And Clicks on "Apply" button
 	Then Main table should be filtered by custom tag
