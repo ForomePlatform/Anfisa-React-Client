@@ -2,19 +2,35 @@ const { config } = require('dotenv-cra')
 const CracoAlias = require('craco-alias')
 const ProgressBarPlugin = require('progress-bar-webpack-plugin')
 
-config()
+const { parsed: env } = config()
+
+const appEnv = {}
+
+for (const [key, value] of Object.entries(env)) {
+  if (key.startsWith('REACT_APP_')) {
+    appEnv[key] = value
+  }
+}
 
 module.exports = {
   devServer: {
+    setupMiddlewares: (middlewares, devServer) => {
+      devServer.app.use('/env-config.js', (req, res) => {
+        res.setHeader('content-type', 'application/javascript')
+        res.status(200).send(`window._env_=${JSON.stringify(appEnv)}`)
+      })
+
+      return middlewares
+    },
     proxy: {
       '/app': {
-        target: process.env.REACT_APP_URL_BACKEND,
-        auth: process.env.REACT_APP_PROXY_AUTH || null,
+        target: env.REACT_APP_URL_BACKEND,
+        auth: env.REACT_APP_PROXY_AUTH || null,
         changeOrigin: true,
         pathRewrite: { '/app': '' },
       },
       '/igv-resource': {
-        target: process.env.REACT_APP_IGV_SERVICE_URL,
+        target: env.REACT_APP_IGV_SERVICE_URL,
         changeOrigin: true,
         pathRewrite: { '/igv-resource': '' },
       },
