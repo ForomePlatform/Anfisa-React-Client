@@ -31,10 +31,12 @@ export const DatasetName: FC<IDsNameProps> = ({
   const [hasTooltip, setHasTooltip] = useState<boolean>(false)
 
   useEffect(() => {
-    const { x = 0, width = 0 } =
-      datasetRef?.current?.getBoundingClientRect() || {}
+    const container = datasetRef?.current
+    const isTooltipNeeded = container
+      ? container.clientWidth < container.scrollWidth
+      : false
 
-    setHasTooltip(width + x > 220)
+    setHasTooltip(isTooltipNeeded)
   }, [])
 
   const fontColor = kind === null ? 'text-grey-blue' : 'text-white'
