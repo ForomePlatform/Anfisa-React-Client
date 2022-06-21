@@ -36,8 +36,18 @@ Scenario: 04 Add custom tag
 	And clicks the "Add custom tag" button
 	And clicks the "Save tags" button
 	Then Custom tag should be added
+
+Scenario: 05 Delete custom tag
+	Given the "Main table" for the "PGP3140_wgs_panel_hl" dataset was opened
+	And the Drawer was opened 
+	And custom tag was added to a variant
+	When user clicks "+ Add" button near tags
+	And unchecks a custom tag
+	And clicks "Save tags" button
+	Then "Tags" dialog should be closed 
+	And custom tag should be deleted
 ​
-Scenario: 05 Cancel custom tag
+Scenario: 06 Cancel custom tag
 	Given the "Main table" for the "PGP3140_wgs_panel_hl" dataset was opened
 	When user clicks one of the variants
 	And the Drawer is open
@@ -47,7 +57,7 @@ Scenario: 05 Cancel custom tag
 	And clicks the "Cancel" button
 	Then Custom tag should not be added
 ​
-Scenario: 06 Custom tag is too long
+Scenario: 07 Custom tag is too long
 	Given the "Main table" for the "PGP3140_wgs_panel_hl" dataset was opened
 	When user clicks one of the variants
 	And the Drawer is open
@@ -56,7 +66,7 @@ Scenario: 06 Custom tag is too long
 	Then the "Add custom tag" button should be disabled
 	And nothing should happen if user tries to click it
 ​
-Scenario: 07 Save note
+Scenario: 08 Save note
 	Given the "Main table" for the "PGP3140_wgs_panel_hl" dataset was opened
 	When user clicks one of the variants
 	And the Drawer is open
@@ -65,7 +75,7 @@ Scenario: 07 Save note
 	And clicks "Save note"
 	Then the note should be saved
 ​
-Scenario: 08 Delete note
+Scenario: 09 Delete note
 	Given the "Main table" for the "PGP3140_wgs_panel_hl" dataset was opened
 	When user clicks one of the variants with a note
 	And the Drawer is open
@@ -74,7 +84,7 @@ Scenario: 08 Delete note
 	And clicks "Delete" button
 	Then the note should be deleted
 ​
-Scenario: 09 "Save note" without any changes
+Scenario: 10 "Save note" without any changes
 	Given the "Main table" for the "PGP3140_wgs_panel_hl" dataset was opened
 	When user clicks one of the variants with a note
 	And the Drawer is open
@@ -83,21 +93,21 @@ Scenario: 09 "Save note" without any changes
 	And clicks "Save note" without any changes
 	Then the Note dialog should be closed without any changes
 
-Scenario: 10 Expand all sections
+Scenario: 11 Expand all sections
 	Given the "Main table" for the "PGP3140_wgs_panel_hl" dataset was opened
 	When user clicks one of the variants
 	And the Drawer is open
 	And user clicks the Expand button
 	Then All sections should be expanded
 	
-Scenario: 11 Collapse all sections
+Scenario: 12 Collapse all sections
 	Given the "Main table" for the "PGP3140_wgs_panel_hl" dataset was opened
 	And the Drawer was opened
 	And all sections were expanded
 	When user clicks the Collapse button
 	Then expanded sections should be collapsed
 
-Scenario: 12 Replace a section
+Scenario: 13 Replace a section
 	Given the "Main table" for the "PGP3140_wgs_panel_hl" dataset was opened
 	When user clicks one of the variants
 	And the Drawer is open
@@ -105,7 +115,7 @@ Scenario: 12 Replace a section
 	And moves the section to another place
 	Then section place should be changed
 
-Scenario: 13 Change section size
+Scenario: 14 Change section size
 	Given the "Main table" for the "PGP3140_wgs_panel_hl" dataset was opened
 	When user clicks one of the variants
 	And the Drawer is open
