@@ -12,6 +12,7 @@ export const DrawerNote = observer(() => {
   const {
     tags: { noteText, isLoading },
     record: { genes, locus },
+    variantNumber,
   } = variantStore
 
   const [popoverAnchorEl, setPopoverAnchorEl] =
@@ -42,7 +43,7 @@ export const DrawerNote = observer(() => {
         isOpen={!isLoading && !!popoverAnchorEl}
         anchorEl={popoverAnchorEl}
         onClose={closePopover}
-        key={noteText}
+        key={variantNumber}
         recordTitle={
           <>
             {`[${genes}] `}
