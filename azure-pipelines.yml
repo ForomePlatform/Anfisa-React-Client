@@ -14,7 +14,7 @@ variables:
 #   default: 'v0.6.43'
 
 steps:
-- checkout: develop
+- checkout: self
 
 # - task: Bash@3
 #   displayName: 'Clone repo'
