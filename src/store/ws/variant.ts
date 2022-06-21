@@ -23,6 +23,10 @@ export class VariantStore {
     reaction(() => this.tagsQuery, this.tags.handleQuery)
   }
 
+  public get variantNumber(): number {
+    return this.variantNo
+  }
+
   public get datasetName(): string {
     return datasetStore.datasetName
   }
