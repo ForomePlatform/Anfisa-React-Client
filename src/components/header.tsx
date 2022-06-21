@@ -87,7 +87,7 @@ export const Header = observer(
 
         {children}
 
-        <div className="text-white flex flex-row items-center">
+        <div className="text-white flex flex-row items-center ml-6">
           <div className="mr-2">Thomas Hunt</div>
 
           <img src={userIcon} className="w-8 h-8 rounded-full" />
