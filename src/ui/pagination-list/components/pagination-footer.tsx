@@ -3,7 +3,7 @@ import styles from '../pagination-list.module.css'
 import { FC } from 'react'
 import cn, { Argument } from 'classnames'
 
-import { PaginationButton } from '@ui/pagination-list/components/pagination-button'
+import { PaginationButton } from './pagination-button'
 
 interface IPaginationFooterProps {
   next: () => void
@@ -30,7 +30,13 @@ export const PaginationFooter: FC<IPaginationFooterProps> = ({
         className={styles.pagination_footer_button_left}
         position="left"
       />
+
+      <div className={cn(styles.pagination_footer_separator)} />
+
       <div className={cn(styles.pagination_footer_text)}>{text}</div>
+
+      <div className={cn(styles.pagination_footer_separator)} />
+
       <PaginationButton
         onClick={next}
         disabled={!hasNext}
