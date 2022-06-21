@@ -14,7 +14,7 @@ export const StrictnessSelectButton = ({
   onClick,
   value,
 }: IStrictnessSelectButtonProps): ReactElement => (
-  <div
+  <button
     className={cn(
       'flex items-center h-8 w-12 p-1 rounded bg-white border border-grey-disabled shadow-input',
       disabled
@@ -44,5 +44,5 @@ export const StrictnessSelectButton = ({
         })}
       />
     </span>
-  </div>
+  </button>
 )
