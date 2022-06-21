@@ -1,21 +1,16 @@
 import { ReactElement, useState } from 'react'
 
 import { ViewTypeEnum } from '@core/enum/view-type-enum'
+import { usePopover } from '@core/hooks/use-popover'
 import columnsStore from '@store/ws/columns'
 import columnListStore from './columns-list/columns-list.store'
 import { CustomizeTableButton } from './customize-table-button'
 import { CustomizeTablePopover } from './customize-table-popover'
 
 export const CustomizeTable = (): ReactElement => {
-  const [popoverAnchor, setPopoverAnchor] = useState<HTMLElement | null>(null)
+  const { popoverAnchor, isPopoverOpen, onToggle, closePopover } = usePopover()
 
   const [viewType, setViewType] = useState<ViewTypeEnum>(columnsStore.viewType)
-
-  const closePopover = () => {
-    setPopoverAnchor(null)
-  }
-
-  const isPopoverOpen = !!popoverAnchor
 
   const handleClose = () => {
     columnsStore.resetColumns()
@@ -29,11 +24,7 @@ export const CustomizeTable = (): ReactElement => {
   }
   return (
     <>
-      <CustomizeTableButton
-        isOpen={isPopoverOpen}
-        onClose={closePopover}
-        setPopoverAnchor={setPopoverAnchor}
-      />
+      <CustomizeTableButton isOpen={isPopoverOpen} onClick={onToggle} />
 
       <CustomizeTablePopover
         visibleColumnsAmount={columnListStore.visibleColumnsAmount}

@@ -6,10 +6,8 @@ import { useParams } from '@core/hooks/use-params'
 import filterStore from '@store/filter'
 import mainTableStore from '@store/ws/main-table.store'
 import variantStore from '@store/ws/variant'
-import { ExportPanelModal } from '@components/export-panel-modal'
-import { ExportReportButton } from '@components/export-report-button'
+import { ExportReport } from '@components/export-report'
 import { Header } from '@components/header'
-import { PopperButton } from '@components/popper-button'
 import { VariantsCount } from '@components/variants-count'
 import { TCondition } from '@service-providers/common/common.interface'
 import { ControlPanel } from './ui/control-panel/control-panel'
@@ -48,10 +46,7 @@ export const WSPage = observer((): ReactElement => {
             transcriptsCounts={transcriptsCounts}
             dnaVariantsCounts={dnaVariantsCounts}
           >
-            <PopperButton
-              ButtonElement={ExportReportButton}
-              ModalElement={ExportPanelModal}
-            />
+            <ExportReport />
           </VariantsCount>
         </Header>
 

@@ -9,10 +9,8 @@ import datasetStore from '@store/dataset/dataset'
 import dirInfoStore from '@store/dirinfo'
 import filterStore from '@store/filter'
 import mainTableStore from '@store/ws/main-table.store'
-import { ExportPanelModal } from '@components/export-panel-modal'
-import { ExportReportButton } from '@components/export-report-button'
+import { ExportReport } from '@components/export-report'
 import { Header } from '@components/header'
-import { PopperButton } from '@components/popper-button'
 import { VariantsCount } from '@components/variants-count'
 import { GlbPagesNames } from '@glb/glb-names'
 import { FilterControl } from '@pages/filter/common/filter-control/filter-control'
@@ -46,10 +44,7 @@ export const RefinerPage = observer((): ReactElement => {
           showDnaVariants={!isXL}
           showTranscripts={!isXL}
         >
-          <PopperButton
-            ButtonElement={ExportReportButton}
-            ModalElement={ExportPanelModal}
-          />
+          <ExportReport />
         </VariantsCount>
       </Header>
 

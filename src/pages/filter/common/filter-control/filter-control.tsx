@@ -17,13 +17,13 @@ import { Icon } from '@ui/icon'
 import { UndoRedoButtons } from '@components/undo-redo-buttons'
 import { GlbPagesNames } from '@glb/glb-names'
 import { CreateDatasetButton } from '@pages/ws/ui/control-panel/create-dataset-button'
-import { SolutionDropDown } from './components/solution-dropdown'
 import {
   FILTER_REFERRER,
   FilterControlOptions,
   FilterControlOptionsNames,
 } from './filter-control.const'
 import { IFilterControlProps } from './filter-control.interface'
+import { SolutionSelect } from './solution-select'
 
 export const FilterControl = observer(
   ({
@@ -85,7 +85,7 @@ export const FilterControl = observer(
       >
         <div className="flex items-center justify-between w-full mt-3">
           <div className="flex items-center">
-            <SolutionDropDown pageName={pageName} goToPage={goToPage} />
+            <SolutionSelect pageName={pageName} goToPage={goToPage} />
 
             <Divider orientation="vertical" className="h-[75%]" />
 

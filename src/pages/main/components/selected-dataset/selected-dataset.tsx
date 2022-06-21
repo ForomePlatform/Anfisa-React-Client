@@ -7,7 +7,7 @@ import { Card, CardTitle } from '@ui/card'
 import { DatasetCard } from '@components/data-testid/dataset-card.cy'
 import { DatasetsFieldsList } from './components/dataset-fields-list/dataset-fileds-list'
 import { DatasetGeneral } from './components/dataset-general/dataset-general'
-import { OpenViewerButton } from './components/open-viewer-button/open-viewer-button'
+import { OpenViewer } from './components/open-viewer'
 import { DeleteDatasetButton } from './delete-dataset-button'
 
 export const SelectedDataset = observer((): ReactElement => {
@@ -27,9 +27,9 @@ export const SelectedDataset = observer((): ReactElement => {
           style={{ maxWidth: 'calc(100% - 140px)' }}
         />
 
-        <OpenViewerButton />
+        <OpenViewer />
       </div>
-      <div className="flex-grow grid gap-4 grid-cols-3 p-4 overflow-auto flex-grow">
+      <div className="flex-grow grid gap-4 grid-cols-3 p-4 overflow-auto">
         <Card className="col-span-1 xl:col-span-3">
           <DatasetGeneral />
 
