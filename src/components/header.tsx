@@ -50,7 +50,7 @@ export const Header = observer(
     return (
       <div
         className={cn(
-          'bg-blue-dark flex flex-row justify-between items-center px-[18px] py-3',
+          'bg-blue-dark flex flex-row justify-between items-center px-4 py-3',
           className,
         )}
       >
