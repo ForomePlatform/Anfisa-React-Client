@@ -1,10 +1,4 @@
-import {
-  RefObject,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useReducer,
-} from 'react'
+import { RefObject, useEffect, useLayoutEffect, useReducer } from 'react'
 
 import { ElementsRange } from '@ui/pagination-list/pagination-list.interfaces'
 import {
@@ -28,7 +22,7 @@ enum PaginationListActionKind {
 
 type PaginationListAction = {
   type: PaginationListActionKind
-  payload?: PageValue
+  payload?: PageValue | number
 }
 
 type PageValue = { value: ElementsRange; index: number }
@@ -49,9 +43,9 @@ const reducer = (
 
       if (
         lastElement.to === state.maxValue &&
-        state.page === state.pageElements.length - 1
+        state.page < state.pageElements.length - 1
       ) {
-        return state
+        return { ...state, page: state.page + 1 }
       }
 
       const page = state.page + 1
@@ -74,15 +68,20 @@ const reducer = (
       return { ...state, page: state.page === 0 ? 0 : state.page - 1 }
 
     case PaginationListActionKind.Reset:
-      return init(state.maxValue)
+      return init(
+        typeof action.payload === 'number' ? action.payload : state.maxValue,
+      )
 
-    case PaginationListActionKind.SetPage:
+    case PaginationListActionKind.SetPage: {
+      const payload = action!.payload as PageValue
+
       return {
         ...state,
         pageElements: state.pageElements.map((it, index) =>
-          index === action.payload!.index ? action.payload!.value : it,
+          index === payload.index ? payload.value : it,
         ),
       }
+    }
   }
 }
 
@@ -95,44 +94,10 @@ export const usePagination = (
 
   const next = () => dispatch({ type: PaginationListActionKind.NextPage })
   const prev = () => dispatch({ type: PaginationListActionKind.PrevPage })
-
-  const reset = () => dispatch({ type: PaginationListActionKind.Reset })
+  const reset = (value?: number) =>
+    dispatch({ type: PaginationListActionKind.Reset, payload: value })
   const setPage = (value: PageValue) =>
     dispatch({ type: PaginationListActionKind.SetPage, payload: value })
-
-  const elementsLength = pageElements.length
-  const pageRange = pageElements[page]
-
-  const findRightAmountPerPage = useCallback(() => {
-    if (page < elementsLength - 1) return
-
-    const current = ref.current
-
-    if (!current) return
-
-    const containerBottom = getBottomPosition(current)
-    const children = current.children
-    const lastChildBottom = getBottomPosition(
-      children[children.length - 1] as HTMLElement,
-    )
-
-    const lastElementOut = lastChildBottom > containerBottom
-    const shouldShowPagination =
-      page !== 0 || pageRange.to < count || lastElementOut
-
-    if (!shouldShowPagination) return
-
-    const lastIndex = findIndexOfLastElement(current, children)
-
-    const computed = { ...pageRange, to: pageRange.from + lastIndex }
-
-    if (computed.to !== pageRange.to) {
-      setPage({
-        index: elementsLength - 1,
-        value: computed,
-      })
-    }
-  }, [count, elementsLength, page, pageRange, ref])
 
   useEffect(() => {
     const current = ref.current
@@ -148,7 +113,6 @@ export const usePagination = (
         width !== entries[0].target.clientWidth
       ) {
         reset()
-        findRightAmountPerPage()
 
         height = entries[0].target.clientHeight
         width = entries[0].target.clientWidth
@@ -160,14 +124,43 @@ export const usePagination = (
     return () => {
       observer.unobserve(current)
     }
-  }, [findRightAmountPerPage, ref])
+  }, [ref])
 
   useLayoutEffect(() => {
-    findRightAmountPerPage()
-  }, [findRightAmountPerPage, page])
+    const rangeLength = pageElements.length
+    const pageRange = pageElements[page]
+
+    if (page < rangeLength - 1) return
+
+    const current = ref.current
+
+    if (!current) return
+
+    const containerBottom = getBottomPosition(current)
+    const children = current.children
+    const lastChildBottom = getBottomPosition(
+      children[children.length - 1] as HTMLElement,
+    )
+
+    const shouldShowPagination =
+      page !== 0 || pageRange.to < count || lastChildBottom > containerBottom
+
+    if (!shouldShowPagination) return
+
+    const lastIndex = findIndexOfLastElement(current, children)
+
+    const computed = { ...pageRange, to: pageRange.from + lastIndex }
+
+    if (computed.to !== pageRange.to) {
+      setPage({
+        index: rangeLength - 1,
+        value: computed,
+      })
+    }
+  }, [count, page, pageElements, ref])
 
   useEffect(() => {
-    reset()
+    reset(count)
   }, [count])
 
   return [state, next, prev]

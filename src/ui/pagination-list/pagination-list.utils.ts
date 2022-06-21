@@ -18,17 +18,11 @@ export const findIndexOfLastElement = (
   const footerHeight = !footer ? 0 : footer.clientHeight + 20
   const bottom = getBottomPosition(parent) - footerHeight
 
-  let left = 0
+  let left = -1
   let right = children.length
   let middle = getMiddle(left, right)
-  let stop = false
 
-  while (!stop) {
-    if (left === right - 1) {
-      stop = true
-      continue
-    }
-
+  while (left < right - 1) {
     const position = getBottomPosition(children[middle] as HTMLElement)
 
     if (position === bottom) {
