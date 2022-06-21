@@ -6,7 +6,7 @@ import {
   useReducer,
 } from 'react'
 
-import { PageElements } from '@ui/pagination-list/pagination-list.interfaces'
+import { ElementsRange } from '@ui/pagination-list/pagination-list.interfaces'
 import {
   findIndexOfLastElement,
   getBottomPosition,
@@ -15,7 +15,7 @@ import {
 
 interface IPaginationListState {
   page: number
-  pageElements: PageElements[]
+  pageElements: ElementsRange[]
   maxValue: number
 }
 
@@ -31,7 +31,7 @@ type PaginationListAction = {
   payload?: PageValue
 }
 
-type PageValue = { value: PageElements; index: number }
+type PageValue = { value: ElementsRange; index: number }
 
 const init = (count: number): IPaginationListState => ({
   page: 0,
@@ -165,6 +165,10 @@ export const usePagination = (
   useLayoutEffect(() => {
     findRightAmountPerPage()
   }, [findRightAmountPerPage, page])
+
+  useEffect(() => {
+    reset()
+  }, [count])
 
   return [state, next, prev]
 }

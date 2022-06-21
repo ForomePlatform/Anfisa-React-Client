@@ -378,6 +378,6 @@ export const en = {
     variant: 'Variant',
   },
   paginationList: {
-    footer: 'From { from } to { to } out of { length }',
+    footer: '{ from } — { to } / { length }',
   },
 }

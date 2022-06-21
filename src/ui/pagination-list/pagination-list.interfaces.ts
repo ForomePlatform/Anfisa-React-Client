@@ -1,4 +1,4 @@
-export interface PageElements {
+export interface ElementsRange {
   from: number
   to: number
 }

@@ -24,17 +24,20 @@
       @apply typography-s;
 
       color: theme("colors.white");
-      padding: 6px 12px;
+      padding: 7px 12px;
+      min-width: 120px;
+      display: flex;
+      justify-content: center;
       background-color: theme("colors.blue.bright");
     }
 
     &_button {
       @apply typography-s;
 
-      color: theme("colors.blue.dark");
-      padding: 4px 30px;
+      color: theme("colors.blue.bright");
+      padding: 4px;
       border: 2px solid theme("colors.blue.bright");
-      border-radius: 100vh;
+      border-radius: theme("spacing.1");
       cursor: pointer;
 
       &:hover {
@@ -58,6 +61,12 @@
       &_right {
         border-bottom-left-radius: 0;
         border-top-left-radius: 0;
+      }
+
+      &__icon {
+        &_right {
+          transform: rotate(180deg);
+        }
       }
     }
   }

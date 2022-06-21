@@ -26,16 +26,16 @@ export const PaginationFooter: FC<IPaginationFooterProps> = ({
     <footer className={cn(styles.pagination_footer, className)}>
       <PaginationButton
         onClick={prev}
-        text="Prev"
         disabled={!hasPrev}
         className={styles.pagination_footer_button_left}
+        position="left"
       />
       <div className={cn(styles.pagination_footer_text)}>{text}</div>
       <PaginationButton
         onClick={next}
-        text="Next"
         disabled={!hasNext}
         className={styles.pagination_footer_button_right}
+        position="right"
       />
     </footer>
   )

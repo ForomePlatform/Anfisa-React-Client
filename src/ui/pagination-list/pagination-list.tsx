@@ -8,7 +8,6 @@ import { PaginationFooter } from '@ui/pagination-list/components/pagination-foot
 import { usePagination } from '@ui/pagination-list/pagination-list.hook'
 
 interface IPaginationListProps<T> {
-  defaultCount?: number
   className?: Argument
   elements: T[]
   render: (input: T) => ReactNode
