@@ -5,7 +5,8 @@ import cn from 'classnames'
 
 import { t } from '@i18n'
 import { Button } from '@ui/button'
-import { IPopoverBaseProps, Popover } from '@ui/popover'
+import { Popover } from '@ui/popover'
+import { IPopoverBaseProps } from '@ui/popover/popover.interface'
 import { ISolutionEntryDescription } from '@service-providers/common'
 import { SolutionControlList } from '../solution-control-list'
 

@@ -1,27 +1,19 @@
-import { Dispatch, ReactElement, SetStateAction } from 'react'
+import { ReactElement } from 'react'
 import cn from 'classnames'
 
 import { t } from '@i18n'
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
+import { IPopoverButtonBaseProps } from '@ui/popover/popover.interface'
 import { MainTableDataCy } from '@components/data-testid/main-table.cy'
-
-interface ICustomizeTableButtonProps {
-  isOpen: boolean
-  onClose: () => void
-  setPopoverAnchor: Dispatch<SetStateAction<HTMLElement | null>>
-}
 
 export const CustomizeTableButton = ({
   isOpen,
-  onClose,
-  setPopoverAnchor,
-}: ICustomizeTableButtonProps): ReactElement => (
+  onClick,
+}: IPopoverButtonBaseProps): ReactElement => (
   <Button
     dataTestId={MainTableDataCy.customizeTable}
-    onClick={event =>
-      isOpen ? onClose() : setPopoverAnchor(event.currentTarget)
-    }
+    onClick={e => onClick(e.currentTarget)}
     text={t('ds.customizeTable')}
     variant="secondary-dark"
     size="sm"

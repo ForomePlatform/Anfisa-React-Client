@@ -1,25 +1,11 @@
 import styles from './popover.module.css'
 
-import { ReactElement, ReactNode, useRef, useState } from 'react'
+import { ReactElement, useRef, useState } from 'react'
 import { usePopper } from 'react-popper'
 import cn from 'classnames'
 
-import { IModalBaseProps, Modal } from '@ui/modal'
-import { Placement } from '@popperjs/core'
-
-export interface IPopoverBaseProps
-  extends Omit<IModalBaseProps, 'transitionDuration' | 'isBackdropInvisible'> {
-  anchorEl?: HTMLElement | null
-}
-
-export interface IPopoverProps extends IPopoverBaseProps {
-  modalClassName?: string
-  transitionDuration?: number
-  className?: string
-  placement?: Placement
-  offset?: [number | null | undefined, number | null | undefined]
-  children: ReactNode
-}
+import { Modal } from '@ui/modal'
+import { IPopoverProps } from './popover.interface'
 
 export const Popover = ({
   modalClassName,

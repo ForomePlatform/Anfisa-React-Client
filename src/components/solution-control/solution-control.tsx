@@ -1,6 +1,7 @@
 import { ReactElement, useEffect, useMemo, useState } from 'react'
 
 import { useModal } from '@core/hooks/use-modal'
+import { usePopover } from '@core/hooks/use-popover'
 import { SolutionControlPopover } from '@components/solution-control/solution-control-popover'
 import { ISolutionEntryDescription } from '@service-providers/common'
 import { SolutionControlButton } from './solution-control-button'
@@ -33,7 +34,7 @@ export const SolutionControl = ({
   onDelete,
 }: ISolutionControlProps): ReactElement => {
   const [selected, setSelected] = useState(selectedProp)
-  const [popoverAnchor, setPopoverAnchor] = useState<HTMLElement | null>(null)
+  const { popoverAnchor, isPopoverOpen, onToggle, closePopover } = usePopover()
   const [deleteDialog, openDeleteDialog, closeDeleteDialog] = useModal({
     solutionName: '',
   })
@@ -44,12 +45,6 @@ export const SolutionControl = ({
       !solutions?.find(({ name }) => name === selectedProp)?.standard,
     [selectedProp, solutions],
   )
-
-  const isPopoverOpen = !!popoverAnchor
-
-  const closePopover = () => {
-    setPopoverAnchor(null)
-  }
 
   useEffect(() => {
     if (!isPopoverOpen) {
@@ -68,9 +63,7 @@ export const SolutionControl = ({
         onDeleteClick={() => {
           openDeleteDialog({ solutionName: selectedProp })
         }}
-        onClick={event =>
-          isPopoverOpen ? closePopover() : setPopoverAnchor(event.currentTarget)
-        }
+        onClick={e => onToggle(e.currentTarget)}
         onMouseUp={event => event.stopPropagation()}
       />
       <SolutionControlPopover
