@@ -6,7 +6,7 @@ import {
   createShadow,
   createTrigger,
   Placement,
-} from '@components/shadow-scroller/shadow-scroller.utils'
+} from '@ui/shadow-scroller/shadow-scroller.utils'
 
 type TUseScrollShadowsParams = {
   scrollableRef: RefObject<HTMLDivElement>

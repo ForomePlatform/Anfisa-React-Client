@@ -3,7 +3,7 @@ import styles from '../pagination-list.module.css'
 import { FC } from 'react'
 import cn, { Argument } from 'classnames'
 
-import { PaginationButton } from '@components/pagination-list/components/pagination-button'
+import { PaginationButton } from '@ui/pagination-list/components/pagination-button'
 
 interface IPaginationFooterProps {
   next: () => void

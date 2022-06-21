@@ -1,4 +1,4 @@
-import { PaginationList } from '@components/pagination-list/pagination-list'
+import { PaginationList } from '@ui/pagination-list/pagination-list'
 import { faker } from '@faker-js/faker'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 

@@ -1,4 +1,4 @@
-import { ShadowScroller } from '@components/shadow-scroller/shadow-scroller'
+import { ShadowScroller } from '@ui/shadow-scroller/shadow-scroller'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 export default {

@@ -6,12 +6,12 @@ import {
   useReducer,
 } from 'react'
 
-import { PageElements } from '@components/pagination-list/pagination-list.interfaces'
+import { PageElements } from '@ui/pagination-list/pagination-list.interfaces'
 import {
   findIndexOfLastElement,
   getBottomPosition,
   getDefaultCount,
-} from '@components/pagination-list/pagination-list.utils'
+} from '@ui/pagination-list/pagination-list.utils'
 
 interface IPaginationListState {
   page: number

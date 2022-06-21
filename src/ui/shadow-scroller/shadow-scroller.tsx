@@ -5,7 +5,7 @@ import cn, { Argument } from 'classnames'
 
 import { Color } from '@core/colors'
 import { ScrollDirection, useGrabScroll } from '@core/hooks/use-grab-scroll'
-import { useScrollShadows } from '@components/shadow-scroller/shadow-scroller.hook'
+import { useScrollShadows } from '@ui/shadow-scroller/shadow-scroller.hook'
 
 interface IShadowScrollerProp {
   direction?: ScrollDirection

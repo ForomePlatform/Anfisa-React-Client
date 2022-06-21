@@ -4,8 +4,8 @@ import { PropsWithChildren, ReactNode, useRef } from 'react'
 import cn, { Argument } from 'classnames'
 
 import { t } from '@i18n'
-import { PaginationFooter } from '@components/pagination-list/components/pagination-footer'
-import { usePagination } from '@components/pagination-list/pagination-list.hook'
+import { PaginationFooter } from '@ui/pagination-list/components/pagination-footer'
+import { usePagination } from '@ui/pagination-list/pagination-list.hook'
 
 interface IPaginationListProps<T> {
   defaultCount?: number
