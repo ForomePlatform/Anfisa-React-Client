@@ -1,4 +1,3 @@
-import { updateURLParams } from './../../utils/url/update-url-params'
 import cloneDeep from 'lodash/cloneDeep'
 import { makeAutoObservable, reaction, runInAction, toJS } from 'mobx'
 
@@ -16,6 +15,7 @@ import {
 import { IDsListArguments } from '@service-providers/dataset-level'
 import filteringRegimeProvider from '@service-providers/filtering-regime/filtering-regime.provider'
 import { showToast } from '@utils/notifications'
+import { updateURLParams } from './../../utils/url/update-url-params'
 import { FilterStatStore, TFilterStatQuery } from './filter-stat.store'
 import { FilterStatUnitStore } from './filter-stat-unit.store'
 
