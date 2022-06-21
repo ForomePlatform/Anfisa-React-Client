@@ -1,24 +1,26 @@
 import { BaseAsyncDataStore, TBaseDataStoreFetchOptions } from '@store/common'
-import datasetProvider from '@service-providers/dataset-level/dataset.provider'
 import {
-  ITabReport,
+  datasetProvider,
   ITabReportArguments,
-} from '@service-providers/dataset-level/dataset-level.interface'
+  TTabReport,
+} from '@service-providers/dataset-level'
 
 export type TTabReportQuery = Omit<ITabReportArguments, 'schema'>
 
 export class TabReportAsyncStore extends BaseAsyncDataStore<
-  ITabReport[],
+  TTabReport,
   TTabReportQuery
 > {
   constructor() {
-    super()
+    super({
+      dataObservable: 'shallow',
+    })
   }
 
   protected async fetch(
     query: TTabReportQuery,
     options: TBaseDataStoreFetchOptions,
-  ): Promise<ITabReport[]> {
+  ): Promise<TTabReport> {
     return datasetProvider.getTabReport(
       {
         ds: query.ds,

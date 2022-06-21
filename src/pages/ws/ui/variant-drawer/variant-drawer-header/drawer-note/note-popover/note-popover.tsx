@@ -1,6 +1,14 @@
 import styles from './note-popover.module.css'
 
-import { ReactElement, ReactNode, useEffect, useMemo, useState } from 'react'
+import {
+  ChangeEvent,
+  ReactElement,
+  ReactNode,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 
 import { useResizeTextAreaHeight } from '@core/hooks/use-resize-text-area-height'
 import { t } from '@i18n'
@@ -15,6 +23,7 @@ interface INotePopoverProps
   noteText?: string
   recordTitle?: ReactNode
   onSave: (noteText: string | null) => void
+  onClose: () => void
 }
 
 export const NotePopover = ({
@@ -29,12 +38,23 @@ export const NotePopover = ({
   const [value, setValue] = useState(noteText ?? '')
 
   const error = useMemo(() => validateNotes(value), [value])
+  const saveValue = useRef<boolean>(false)
 
   useEffect(() => {
     if (isOpen) {
-      setValue(noteText ?? '')
+      if (!saveValue.current) {
+        setValue(noteText ?? '')
+      } else {
+        saveValue.current = false
+      }
     }
   }, [isOpen, noteText])
+
+  const changeTextNote = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const text = e.target.value
+
+    setValue(text)
+  }
 
   return (
     <DrawerPopover
@@ -43,14 +63,17 @@ export const NotePopover = ({
       title={t('variant.notesFor', {
         title: <span className="text-blue-bright">{recordTitle}</span>,
       })}
-      onClose={onClose}
+      onClose={() => {
+        saveValue.current = true
+        onClose()
+      }}
       {...popoverProps}
     >
       <textarea
         ref={textareaRef}
         placeholder={t('variant.textAboutSomething')}
         value={value}
-        onChange={event => setValue(event.target.value)}
+        onChange={changeTextNote}
         className={styles.notePopover__textarea}
       />
       {error && <div className={styles.notePopover__error}>{error}</div>}

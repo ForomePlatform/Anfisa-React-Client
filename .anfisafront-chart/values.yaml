@@ -1,0 +1,17 @@
+# Default values
+
+# ------------------------------------------------------------------------------
+# Anfisa-ingress:
+# ------------------------------------------------------------------------------
+ingress:
+  host: __anfisaFrontIngressHost__
+  #oc get secrets -n openshift-ingress - view secrets with TLC-certificates
+
+# ------------------------------------------------------------------------------
+# anfisa_front:
+# ------------------------------------------------------------------------------
+anfisa_front:
+  name: __anfisaFrontName__
+  registry: __anfisaFrontRegistry__:__Build.BuildNumber__
+#  branch: __anfisaFrontBranch__
+  url_backend: https://__anfisaFrontIngressHost__/app
