@@ -125,6 +125,14 @@ export class DtreeStore {
     return counts ?? []
   }
 
+  public get isDtreeModified(): boolean {
+    return this._dtreeModifiedState === DtreeModifiedState.Modified
+  }
+
+  public get isNotDtree(): boolean {
+    return this._dtreeModifiedState === DtreeModifiedState.NotDtree
+  }
+
   constructor() {
     reaction(
       () => this.dtreeSetData,
@@ -486,5 +494,11 @@ export class DtreeStore {
 
   setActionName(actionName?: ActionFilterEnum): void {
     this.actionName = actionName
+  }
+
+  setDtreeModifyed() {
+    if (this._dtreeModifiedState === DtreeModifiedState.NotModified) {
+      this._dtreeModifiedState = DtreeModifiedState.Modified
+    }
   }
 }

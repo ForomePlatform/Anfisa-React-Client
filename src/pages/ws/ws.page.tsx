@@ -1,7 +1,5 @@
 import { ReactElement, useEffect } from 'react'
-import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
-import { NumberParam, useQueryParams } from 'use-query-params'
 
 import { useDatasetName } from '@core/hooks/use-dataset-name'
 import { useParams } from '@core/hooks/use-params'
@@ -13,8 +11,8 @@ import { Header } from '@components/header'
 import { VariantsCount } from '@components/variants-count'
 import { TCondition } from '@service-providers/common/common.interface'
 import { ControlPanel } from './ui/control-panel/control-panel'
-import { TableVariants } from './ui/table/table-variants'
 import { VariantDrawer } from './ui/variant-drawer'
+import { Variants } from './ui/variants'
 
 export const WSPage = observer((): ReactElement => {
   const params = useParams()
@@ -22,14 +20,6 @@ export const WSPage = observer((): ReactElement => {
   const { conditions } = filterStore
 
   useDatasetName()
-
-  const [query] = useQueryParams({
-    variant: NumberParam,
-  })
-
-  const { variant } = query
-
-  Number.isInteger(variant) && variantStore.setIndex(variant as number)
 
   useEffect(() => {
     if (stringifyedConditions && !conditions.length) {
@@ -40,10 +30,12 @@ export const WSPage = observer((): ReactElement => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  useEffect(() => variantStore.observeVariantHistory())
+
   const { variantCounts, dnaVariantsCounts, transcriptsCounts } =
     mainTableStore.fixedStatAmount
 
-  const isDrawerVisible = variantStore.isDrawerVisible
+  const { isVariantShown, variantNo: selectedVariantNo } = variantStore
 
   return (
     <>
@@ -61,8 +53,12 @@ export const WSPage = observer((): ReactElement => {
         <ControlPanel />
 
         <div className="flex-grow flex overflow-hidden">
-          <TableVariants className={cn(!isDrawerVisible && 'w-full')} />
-          {isDrawerVisible && <VariantDrawer className="flex-1" />}
+          <Variants
+            className={isVariantShown ? 'w-[380px]' : 'w-full'}
+            isDrawerVisible={isVariantShown}
+            selectedVariantNo={isVariantShown ? selectedVariantNo : undefined}
+          />
+          {isVariantShown && <VariantDrawer className="flex-1" />}
         </div>
       </div>
     </>

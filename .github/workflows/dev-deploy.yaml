@@ -8,6 +8,8 @@ on:
     branches:
       - 'develop'
     tags: [ stage ]
+    paths-ignore:
+      - '.azure/pipelines/**'
 
 jobs:
   build:

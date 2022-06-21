@@ -1,18 +1,27 @@
 import { ReactElement } from 'react'
 import { useHistory } from 'react-router'
-import { Link } from 'react-router-dom'
+import { Prompt } from 'react-router-dom'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
+import { useExitPrompt } from '@core/hooks/use-exit-prompt'
 import { useParams } from '@core/hooks/use-params'
+import { SessionStoreManager } from '@core/storage-management/session-store-manager'
+import { t } from '@i18n'
+import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
 import { getPageRoute } from '@router/router.const'
 import { Routes } from '@router/routes.enum'
 import { Divider } from '@ui/divider'
 import { Icon } from '@ui/icon'
 import { UndoRedoButtons } from '@components/undo-redo-buttons'
+import { GlbPagesNames } from '@glb/glb-names'
 import { CreateDatasetButton } from '@pages/ws/ui/control-panel/create-dataset-button'
-import { FilterControlOptions } from './filter-control.const'
+import {
+  FILTER_REFERRER,
+  FilterControlOptions,
+  FilterControlOptionsNames,
+} from './filter-control.const'
 import { IFilterControlProps } from './filter-control.interface'
 import { SolutionSelect } from './solution-select'
 
@@ -31,12 +40,40 @@ export const FilterControl = observer(
     const params = useParams()
     const dsName = params.get('ds') || ''
 
+    const isNeedToShowPrompt = () => {
+      if (pageName === FilterControlOptionsNames.refiner) {
+        return (
+          (isBackwardAllowed && filterStore.isNotPreset) ||
+          filterStore.isPresetModified
+        )
+      } else if (pageName === FilterControlOptionsNames.dtree) {
+        return (
+          (isBackwardAllowed && dtreeStore.isNotDtree) ||
+          dtreeStore.isDtreeModified
+        )
+      }
+
+      return false
+    }
+
+    useExitPrompt(isNeedToShowPrompt())
+
     const goToPage = (name: FilterControlOptions) => {
       const route = getPageRoute(name)
 
       filterStore.setMethod(name)
 
       history.push(`${route}?ds=${dsName}`)
+    }
+
+    const onLeave = () => {
+      const referrer = SessionStoreManager.read<GlbPagesNames>(FILTER_REFERRER)
+
+      if (!referrer || referrer === GlbPagesNames.Root) {
+        history.push(Routes.Root)
+      } else if (referrer === GlbPagesNames.Table) {
+        history.push(`${Routes.WS}?ds=${dsName}`)
+      }
     }
 
     return (
@@ -75,14 +112,19 @@ export const FilterControl = observer(
               isRedoDisabled={!isForwardAllowed}
             />
 
-            <Link
+            <div
               className="flex flex-wrap ml-3 text-white cursor-pointer"
-              to={Routes.Root}
+              onClick={onLeave}
             >
               <Icon size={15} name="Close" />
-            </Link>
+            </div>
           </div>
         </div>
+
+        <Prompt
+          when={isNeedToShowPrompt()}
+          message={t('filter.leaveConfirm.body')}
+        />
       </div>
     )
   },
