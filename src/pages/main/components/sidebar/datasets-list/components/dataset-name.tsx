@@ -35,10 +35,6 @@ export const DatasetName: FC<IDsNameProps> = ({
       datasetRef?.current?.getBoundingClientRect() || {}
 
     setHasTooltip(width + x > 220)
-
-    if (name === 'PGP3140_NIST42_ACTG1') {
-      console.log(width + x)
-    }
   }, [])
 
   const fontColor = kind === null ? 'text-grey-blue' : 'text-white'
