@@ -46,7 +46,11 @@ export const drawBarChart = ({
     .padding(0.1)
     .align(0)
 
-  const [yScale, yAxis] = getYScaleAndAxis({ min, max, height: chartHeight })
+  const [yScale, yAxis, isLogScale] = getYScaleAndAxis({
+    min,
+    max,
+    height: chartHeight,
+  })
 
   chart
     .append('g')
@@ -62,14 +66,21 @@ export const drawBarChart = ({
 
   const barWidth = xScale.bandwidth()
 
+  // in logarithmic scale 1 will be scaled to 0 height
+  // lets make it half the height of 2
+  // log10(2) ~= 0.3, and 10^0.15 = 1.413
+  const getY = isLogScale
+    ? (item: TVariant) => yScale(Math.max(item[1], 1.413))
+    : (item: TVariant) => yScale(item[1])
+
   chart
     .selectAll('bar')
     .data(data)
     .join('rect')
     .attr('x', item => xScale(item[0]) as number)
-    .attr('y', item => yScale(item[1]))
+    .attr('y', item => getY(item))
     .attr('width', barWidth)
-    .attr('height', item => chartHeight - yScale(item[1]))
+    .attr('height', item => chartHeight - getY(item))
     .attr('fill', barColor)
     .on('mouseover', (event, item) => {
       tooltip.show(event.target, renderTooltip(item))
