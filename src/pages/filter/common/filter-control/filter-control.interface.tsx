@@ -1,4 +1,3 @@
-import { GlbPagesNames } from '@glb/glb-names'
 import { FilterControlOptionsNames } from './filter-control.const'
 
 export interface IFilterControlProps {
