@@ -16,7 +16,6 @@ export class VariantStore {
   private isHistoryObserved = false
 
   variantNo = -1
-  isTagsModified = false
 
   constructor() {
     makeAutoObservable(this)
@@ -35,10 +34,6 @@ export class VariantStore {
 
   public get isVariantShown(): boolean {
     return this.variantNo >= 0
-  }
-
-  setIsTagsModified(value: boolean) {
-    this.isTagsModified = value
   }
 
   observeVariantHistory() {
@@ -99,8 +94,7 @@ export class VariantStore {
     }
   }
 
-  closeVariant() {
-    this.setIsTagsModified(false)
+  closeVariant = () => {
     this.showVariant(-1)
   }
 

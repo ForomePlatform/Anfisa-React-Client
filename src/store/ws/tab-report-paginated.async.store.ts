@@ -25,33 +25,42 @@ export class TabReportPaginatedAsyncStore extends BaseAsyncPaginatedDataStore<Ta
     )
   }
 
-  public getPageNo(recNo: number): number {
-    const currentPage = this.pages.find(page =>
-      page.data?.find(pageData => pageData._no === recNo),
-    )
-
-    return currentPage ? this._pages.indexOf(currentPage) : 0
-  }
-
-  public getRecIndex(pageNo: number, recNo: number): number {
-    let recIndex = 0
-    this.pages[pageNo].data?.forEach((pageData, index) => {
-      if (pageData._no === recNo) {
-        recIndex = index
+  public getPageNo(recNo: number): number | undefined {
+    const currentPage = this.pages.find(page => {
+      if (page.data?.find(pageData => pageData._no === recNo)) {
+        return true
       }
     })
 
-    return recIndex
+    return currentPage ? this.pages.indexOf(currentPage) : undefined
+  }
+
+  public getRecIndex(pageNo: number, recNo: number): number | undefined {
+    let recIndex
+
+    this.pages[pageNo].data?.find((pageData, index) => {
+      if (pageData._no === recNo) {
+        recIndex = index
+
+        return true
+      }
+    })
+
+    return recIndex ?? undefined
   }
 
   public updateRowTags(recNo: number, tags: TTagsDescriptor) {
     const pageNo = this.getPageNo(recNo)
-    const recIndex = this.getRecIndex(pageNo, recNo)
 
-    // fix ! sign
-    this.pages[pageNo].data![recIndex] = {
-      ...this.pages[pageNo].data![recIndex],
-      _tags: tags,
+    if (typeof pageNo === 'number') {
+      const recIndex = this.getRecIndex(pageNo, recNo)
+
+      if (typeof recIndex === 'number') {
+        this.pages[pageNo].data![recIndex] = {
+          ...this.pages[pageNo].data![recIndex],
+          _tags: tags,
+        }
+      }
     }
 
     zoneStore.hasDifferenceWithZoneTags(tags) &&

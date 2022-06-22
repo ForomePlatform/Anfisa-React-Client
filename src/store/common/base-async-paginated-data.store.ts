@@ -24,7 +24,7 @@ export abstract class BaseAsyncPaginatedDataStore<
 > {
   private readonly initialPagesCounts: number
   private readonly storeClass: TClassConstructor<AsyncDataStore>
-  public _pages = observable.array<AsyncDataStore>([], {
+  private readonly _pages = observable.array<AsyncDataStore>([], {
     deep: false,
   })
 
