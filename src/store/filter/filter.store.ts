@@ -265,8 +265,6 @@ export class FilterStore {
     if (state === undefined) {
       if (this._presetModifiedState === PresetModifiedState.NotModified) {
         this._presetModifiedState = PresetModifiedState.Modified
-
-        filterPresetsStore.resetActivePreset()
       }
     } else if (state !== this._presetModifiedState) {
       this._presetModifiedState = state
