@@ -6,6 +6,7 @@ on:
       - 'develop'
     tags: [ stage ]
     paths-ignore:
+      - '.github/workflows/**'
       - '.azure/pipelines/**'
 
 jobs:
