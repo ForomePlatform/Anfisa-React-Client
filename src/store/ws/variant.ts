@@ -9,7 +9,9 @@ import { TWsTagsAsyncStoreQuery, WsTagsAsyncStore } from './ws-tags.async.store'
 
 export class VariantStore {
   readonly record = new VariantAspectsAsyncStore({ keepPreviousData: true })
-  readonly tags = new WsTagsAsyncStore()
+  readonly tags = new WsTagsAsyncStore({
+    onChange: (rec, tags) => mainTableStore.tabReport.updateRowTags(rec, tags),
+  })
 
   private isHistoryObserved = false
 

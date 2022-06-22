@@ -25,7 +25,6 @@ export const VariantDrawerHeader = observer(
     windowsOpenState,
     onWindowsToggle,
   }: IVariantDrawerHeaderProps): ReactElement => {
-    const { tabReport } = mainTableStore
     const {
       record: { locus, genes },
     } = variantStore
@@ -61,9 +60,9 @@ export const VariantDrawerHeader = observer(
     ])
 
     const handleCloseDrawer = () => {
-      if (variantStore.isTagsModified) {
-        tabReport.invalidatePage(mainTableStore.openedVariantPageNo)
-      }
+      // if (variantStore.isTagsModified) {
+      //   tabReport.invalidatePage(mainTableStore.openedVariantPageNo)
+      // }
 
       variantStore.closeVariant()
     }
