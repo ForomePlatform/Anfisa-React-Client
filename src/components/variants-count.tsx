@@ -25,7 +25,7 @@ export const VariantsCount: FC<IVariantsCountProps> = ({
   children,
 }) => {
   return (
-    <div className="text-white flex-grow flex justify-end mr-6 items-center">
+    <div className="text-white flex-grow flex justify-end items-center">
       {showVariants && (
         <span
           className={cn('text-12 leading-14px text-white ml-auto', {
