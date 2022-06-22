@@ -50,7 +50,7 @@ export const EnumDialog = observer((): ReactElement => {
       onClose={modalsVisibilityStore.closeEnumDialog}
       title={attributeName}
       width="m"
-      actions={''}
+      isHiddenActions={true}
     >
       <EnumCondition
         attributeName={attributeName}

@@ -58,7 +58,7 @@ export const CustomInheritanceModeDialog = observer((): ReactElement => {
       onClose={modalsVisibilityStore.closeCustomInheritanceModeDialog}
       title={attributeName}
       width="m"
-      actions={''}
+      isHiddenActions={true}
     >
       <CustomInheritanceModeCondition
         problemGroups={problemGroups}

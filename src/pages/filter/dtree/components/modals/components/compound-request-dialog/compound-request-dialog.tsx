@@ -59,8 +59,8 @@ export const CompoundRequestDialog = observer((): ReactElement => {
       onClose={modalsVisibilityStore.closeCompoundRequestDialog}
       title={attributeName}
       width="m"
-      actions={''}
       className="max-h-70 overflow-y-auto"
+      isHiddenActions={true}
     >
       <CompoundRequestCondition
         problemGroups={problemGroups}

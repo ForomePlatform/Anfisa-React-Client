@@ -32,8 +32,8 @@ export const SelectAttributeDialog = observer((): ReactElement => {
       onClose={handleClose}
       title={t('condition.selectAttribute')}
       width="m"
-      actions={''}
       style={{ top: '50%' }}
+      isHiddenActions={true}
     >
       {isLoading ? (
         <div className="flex flex-1 justify-center w-full my-4">

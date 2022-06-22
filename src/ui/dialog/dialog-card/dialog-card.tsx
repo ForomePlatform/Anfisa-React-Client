@@ -16,6 +16,7 @@ export interface IDialogCardProps
   title?: ReactNode
   actions?: ReactNode
   children?: ReactNode
+  isHiddenActions?: boolean
   onClose?: () => void
 }
 
@@ -23,6 +24,7 @@ export const DialogCard = ({
   className,
   title,
   actions,
+  isHiddenActions,
   children,
   onClose,
   onApply,
@@ -58,7 +60,7 @@ export const DialogCard = ({
 
       <div className={styles.dialogCard__content}>{children}</div>
 
-      {(actions || actions === undefined) && (
+      {!isHiddenActions && (
         <div className={styles.dialogCard__actions}>
           {actions || (
             <DialogStandardActions
@@ -72,6 +74,21 @@ export const DialogCard = ({
           )}
         </div>
       )}
+
+      {/* {(actions || actions === undefined) && (
+        <div className={styles.dialogCard__actions}>
+          {actions || (
+            <DialogStandardActions
+              applyText={applyText}
+              cancelText={cancelText}
+              isApplyDisabled={isApplyDisabled}
+              isLoading={isLoading}
+              onClose={onClose}
+              onApply={onApply}
+            />
+          )}
+        </div>
+      )} */}
     </div>
   )
 }

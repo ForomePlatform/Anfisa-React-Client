@@ -6,6 +6,10 @@
   color: theme("colors.black");
   background: theme("colors.white");
 
+  &_column-list {
+    padding-left: theme("spacing.4");
+  }
+
   &_dark {
     color: theme("colors.white");
     background: theme("colors.blue.lighter");
@@ -15,6 +19,10 @@
     flex: 0 0 auto;
     padding-bottom: theme("spacing.4");
     border-bottom: 1px solid theme("colors.grey.disabled");
+
+    &_column-list {
+      padding-top: theme("spacing.4");
+    }
   }
 
   &_dark &__functional {
@@ -25,6 +33,10 @@
     flex: 0 0 auto;
     padding-top: theme("spacing.4");
     padding-bottom: theme("spacing.4");
+
+    &_column-list {
+      padding-right: theme("spacing.4");
+    }
   }
 
   &__sub-header {
@@ -36,5 +48,9 @@
     flex: 1 0 0;
     overflow-y: auto;
     padding-right: theme("spacing.4");
+
+    &_modal {
+      max-height: 70vh;
+    }
   }
 }

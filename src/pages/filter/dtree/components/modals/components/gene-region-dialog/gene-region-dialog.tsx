@@ -57,7 +57,7 @@ export const GeneRegionDialog = observer((): ReactElement => {
       onClose={modalsVisibilityStore.closeGeneRegionDialog}
       title={attributeName}
       width="m"
-      actions={''}
+      isHiddenActions={true}
     >
       <GeneRegionCondition
         initialLocusValue={initialLocusValue}

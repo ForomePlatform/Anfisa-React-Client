@@ -57,7 +57,7 @@ export const CompoundHetDialog = observer((): ReactElement => {
       onClose={modalsVisibilityStore.closeCompoundHetDialog}
       title={attributeName}
       width="m"
-      actions={''}
+      isHiddenActions={true}
     >
       <CompoundHetCondition
         initialApprox={initialApprox}

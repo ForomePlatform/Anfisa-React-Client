@@ -57,12 +57,15 @@ export const UnitsList = ({
       className={cn(
         styles.unitsList,
         isDark && styles.unitsList_dark,
-        { 'pl-4': !isModal },
+        !isModal && styles.unitsList_columnList,
         className,
       )}
     >
       <FunctionalUnits
-        className={cn(styles.unitsList__functional, { 'pt-4': !isModal })}
+        className={cn(
+          styles.unitsList__functional,
+          !isModal && styles.unitsList__functional_columnList,
+        )}
         units={functionalUnits}
         onSelect={onSelect}
         conditions={functionalConditions}
@@ -70,7 +73,10 @@ export const UnitsList = ({
         onConditionDelete={onFunctionalConditionDelete}
       />
       <UnitsListControls
-        className={cn(styles.unitsList__controls, { 'pr-4': !isModal })}
+        className={cn(
+          styles.unitsList__controls,
+          !isModal && styles.unitsList__controls_columnList,
+        )}
         filterValue={filterValue}
         onFilterValueChange={setFilterValue}
         onExpand={() => setCollapsedGroups([])}
@@ -81,7 +87,10 @@ export const UnitsList = ({
       )}
 
       <div
-        className={cn(styles.unitsList__list, { 'max-h-70': isModal })}
+        className={cn(
+          styles.unitsList__list,
+          isModal && styles.unitsList__list_modal,
+        )}
         id={listContainerId}
       >
         {filteredGroups.map(group => (
