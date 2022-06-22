@@ -1,6 +1,6 @@
 import { ReactElement, useState } from 'react'
-import Tooltip from 'rc-tooltip'
 
+import { Tooltip } from '@ui/tooltip'
 import {
   getColorByValue,
   PredictionPowerPoint,
@@ -24,7 +24,10 @@ export const PredictionPowerIndicator = ({
 
   return (
     <Tooltip
-      overlay={
+      theme="light"
+      key={isCommentShown ? 'long' : 'short'}
+      maxWidth="auto"
+      title={
         isCommentShown ? (
           <span>
             {valueStr} <span className="text-[10px]">{comment}</span>
@@ -33,8 +36,7 @@ export const PredictionPowerIndicator = ({
           valueStr
         )
       }
-      trigger="hover"
-      placement="topLeft"
+      placement="top-start"
     >
       <PredictionPowerPoint
         className={className}
