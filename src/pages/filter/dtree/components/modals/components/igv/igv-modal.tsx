@@ -5,23 +5,22 @@ import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
-import { IIgvParams } from '@store/variant-aspects.async.store'
 import { Icon } from '@ui/icon'
 import { Modal } from '@ui/modal'
 import modalsVisibilityStore from '@pages/filter/dtree/components/modals/modals-visibility-store'
+import { IIgvParams } from '@service-providers/dataset-level'
 
 export const hg38Folder = 'GRCh38'
 
 const igv = require('igv')
 
+interface IIgvModalProps {
+  isOpen: boolean
+  igvParams: IIgvParams | undefined
+}
+
 export const IgvModal = observer(
-  ({
-    isOpen,
-    igvParams,
-  }: {
-    isOpen: boolean
-    igvParams: IIgvParams | undefined
-  }): ReactElement => {
+  ({ isOpen, igvParams }: IIgvModalProps): ReactElement => {
     const [isEachFilesMissing, setIsEachFilesMissing] = useState(false)
 
     const ref = useRef<HTMLDivElement>(null)
@@ -69,9 +68,6 @@ export const IgvModal = observer(
       }
     }, [igvUrls, isOpen, locus, names])
 
-    // console.log(isEachFilesMissing)
-    // console.log(!isCorrectParams)
-
     return (
       <Modal
         isOpen={isOpen}
@@ -79,8 +75,8 @@ export const IgvModal = observer(
         transitionDuration={300}
         render={({ state }) => (
           <div className={cn(styles.igvModal, styles[`igvModal_${state}`])}>
-            <div className={styles.header}>
-              <button className={styles.header__close}>
+            <div className={styles.igvModal__header}>
+              <button className={styles.igvModal__header__close}>
                 <Icon
                   name="Close"
                   onClick={() =>
@@ -96,7 +92,7 @@ export const IgvModal = observer(
                 {t('igv.filesNotFound')}
               </span>
             ) : (
-              <div ref={ref}></div>
+              <div className={styles.igvModal__content} ref={ref}></div>
             )}
           </div>
         )}

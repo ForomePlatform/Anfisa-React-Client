@@ -44,8 +44,6 @@ export class FilterStore {
     conditions => (this._conditions = conditions),
   )
 
-  public isViewVariantsModalVisible = false
-
   constructor() {
     makeAutoObservable(this)
 
@@ -335,9 +333,5 @@ export class FilterStore {
     }
 
     this.setPresetModifiedState(PresetModifiedState.NotPreset)
-  }
-
-  public toggleIsViewVariantsModalVisible = (value: boolean) => {
-    this.isViewVariantsModalVisible = value
   }
 }

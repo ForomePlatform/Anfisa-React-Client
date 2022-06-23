@@ -238,3 +238,9 @@ export type TGetDsListCompleteOptions = {
   abortSignal?: AbortSignal
   onStatusChange?: (status: string) => void
 }
+
+export interface IIgvParams {
+  locus: string
+  names: string
+  igvUrls: string[]
+}

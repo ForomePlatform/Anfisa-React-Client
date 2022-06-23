@@ -2,9 +2,8 @@ import styles from './filter-refiner.module.css'
 
 import { ReactElement, useEffect } from 'react'
 import cn from 'classnames'
-import { observer } from 'mobx-react-lite'
 
-import filterStore from '@store/filter'
+import { useModal } from '@core/hooks/use-modal'
 import mainTableStore from '@store/ws/main-table.store'
 import { FilterRefinerUnits } from './filter-refiner-units'
 import { FilterRefinerViewVariants } from './filter-refiner-view-variants'
@@ -14,30 +13,31 @@ interface IFilterRefinerProps {
   className?: string
 }
 
-export const FilterRefiner = observer(
-  ({ className }: IFilterRefinerProps): ReactElement => {
-    useEffect(() => {
-      mainTableStore.memorizeFilterConditions()
-    }, [])
+export const FilterRefiner = ({
+  className,
+}: IFilterRefinerProps): ReactElement => {
+  const [viewVariantsModal, openViewVariantsModal, closeViewVariantsModal] =
+    useModal()
 
-    return (
-      <div className={cn(styles.filterRefiner, className)}>
-        <FilterRefinerUnits className={styles.filterRefiner__units} />
+  useEffect(() => {
+    mainTableStore.memorizeFilterConditions()
+  }, [])
 
-        <SelectedGroup className={styles.filterRefiner__currentAttribute} />
+  return (
+    <div className={cn(styles.filterRefiner, className)}>
+      <FilterRefinerUnits className={styles.filterRefiner__units} />
 
-        <QuerySelected
-          className={styles.filterRefiner__results}
-          onViewVariants={() =>
-            filterStore.toggleIsViewVariantsModalVisible(true)
-          }
-        />
+      <SelectedGroup className={styles.filterRefiner__currentAttribute} />
 
-        <FilterRefinerViewVariants
-          onClose={() => filterStore.toggleIsViewVariantsModalVisible(false)}
-          isOpen={filterStore.isViewVariantsModalVisible}
-        />
-      </div>
-    )
-  },
-)
+      <QuerySelected
+        className={styles.filterRefiner__results}
+        onViewVariants={openViewVariantsModal}
+      />
+
+      <FilterRefinerViewVariants
+        {...viewVariantsModal}
+        onClose={closeViewVariantsModal}
+      />
+    </div>
+  )
+}

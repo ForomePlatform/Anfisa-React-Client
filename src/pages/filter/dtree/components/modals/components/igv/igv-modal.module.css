@@ -4,7 +4,6 @@
   top: 5%;
   width: 90%;
   height: 90%;
-  overflow-y: auto;
   background: theme("colors.white");
   border-radius: theme("borderRadius.lg");
   transition-timing-function: ease-in-out;
@@ -19,21 +18,28 @@
   &_exited {
     opacity: 0;
   }
-}
 
-.header {
-  @apply typography-m;
+  &__header {
+    @apply typography-m;
 
-  padding: theme("spacing.2") theme("spacing.4") 0 theme("spacing.4");
-  display: flex;
-  justify-content: flex-end;
+    height: 6%;
+    padding: 0 theme("spacing.4");
+    display: flex;
+    justify-content: flex-end;
 
-  &__close {
-    color: theme("colors.black");
-    cursor: pointer;
+    &__close {
+      color: theme("colors.black");
+      cursor: pointer;
 
-    &:hover {
-      color: theme("colors.blue.bright");
+      &:hover {
+        color: theme("colors.blue.bright");
+      }
     }
+  }
+
+  &__content {
+    height: 93%;
+    padding: 0 theme("spacing.4");
+    overflow-y: auto;
   }
 }

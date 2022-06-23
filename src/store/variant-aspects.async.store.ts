@@ -9,6 +9,7 @@ import datasetStore from '@store/dataset/dataset'
 import {
   datasetProvider,
   HgModes,
+  IIgvParams,
   IReccntArguments,
   ITableAspectDescriptor,
   TAspectDescriptor,
@@ -16,12 +17,6 @@ import {
 import { findElementInRow } from '@utils/mian-table/find-element-in-row'
 
 const VARIANT_WITHOUT_GENES = 'None'
-
-export interface IIgvParams {
-  locus: string
-  names: string
-  igvUrls: string[]
-}
 
 export class VariantAspectsAsyncStore extends BaseAsyncDataStore<
   TAspectDescriptor[],
