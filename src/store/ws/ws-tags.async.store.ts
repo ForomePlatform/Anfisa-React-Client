@@ -1,4 +1,4 @@
-import { computed, makeObservable, toJS } from 'mobx'
+import { action, computed, makeObservable, toJS } from 'mobx'
 
 import { BaseAsyncDataStore, TBaseDataStoreFetchOptions } from '@store/common'
 import {
@@ -15,17 +15,25 @@ const NOTE_KEY: keyof TTagsDescriptorSpecial = '_note'
 
 const isNotSpecial = (tag: string) => tag !== NOTE_KEY
 
+interface IWsTagsAsyncStoreParams {
+  onChange: (rec: number, tags: TTagsDescriptor) => void
+}
+
 export class WsTagsAsyncStore extends BaseAsyncDataStore<
   IWsTags,
   TWsTagsAsyncStoreQuery
 > {
-  constructor() {
+  onChange: (rec: number, tags: TTagsDescriptor) => void
+
+  constructor(parmas: IWsTagsAsyncStoreParams) {
     super()
+    this.onChange = parmas.onChange
 
     makeObservable(this, {
       availableTags: computed,
       recordTags: computed,
       noteText: computed,
+      onChange: action,
     })
   }
 
@@ -92,6 +100,7 @@ export class WsTagsAsyncStore extends BaseAsyncDataStore<
           tags,
         })
         .then(result => {
+          this.onChange?.(rec, tags)
           if (this.query?.ds === ds && this.query?.rec === rec) {
             this.setData(result)
           }

@@ -19,7 +19,6 @@ export class MainTable {
   public tabReport = new TabReportPaginatedAsyncStore(this.wsList)
 
   public isTableResizing = false
-  public openedVariantPageNo = 0
 
   memorizedConditions:
     | {
@@ -118,17 +117,6 @@ export class MainTable {
 
   setIsTableRecizing(value: boolean) {
     this.isTableResizing = value
-  }
-
-  setOpenedVariantPageNo(variantIndex: number) {
-    const totalPagesAmount = this.tabReport.pagesCount
-    const totalVariantsLoaded = this.tabReportPagesData.length
-
-    const variantPerPage = totalVariantsLoaded / totalPagesAmount
-    const difference = variantIndex - variantPerPage
-
-    this.openedVariantPageNo =
-      difference < 1 ? 0 : Math.ceil(difference / variantPerPage)
   }
 
   memorizeFilterConditions() {
