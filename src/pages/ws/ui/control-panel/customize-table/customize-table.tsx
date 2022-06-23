@@ -1,7 +1,6 @@
 import { ReactElement, useState } from 'react'
 
-import { wsUiStore } from '../../ws-ui.store'
-import { TCustomizeTableValues } from './customize-table.interface'
+import { customizeTableStore } from './customize-table.store'
 import { CustomizeTableButton } from './customize-table-button'
 import { CustomizeTablePopover } from './customize-table-popover'
 
@@ -14,9 +13,8 @@ export const CustomizeTable = (): ReactElement => {
 
   const isPopoverOpen = !!popoverAnchor
 
-  const handleApply = ({ viewType, columns }: TCustomizeTableValues) => {
-    wsUiStore.setViewType(viewType)
-    wsUiStore.setOptionalColumns(columns)
+  const handleApply = () => {
+    customizeTableStore.applyValues()
     closePopover()
   }
   return (
@@ -26,9 +24,7 @@ export const CustomizeTable = (): ReactElement => {
         onClose={closePopover}
         setPopoverAnchor={setPopoverAnchor}
       />
-
       <CustomizeTablePopover
-        initialValues={wsUiStore.customizeTableValues}
         isOpen={isPopoverOpen}
         anchorEl={popoverAnchor}
         onClose={closePopover}
