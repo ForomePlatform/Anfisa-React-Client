@@ -5,7 +5,6 @@ import { usePopover } from '@core/hooks/use-popover'
 import { SolutionControlPopover } from '@components/solution-control/solution-control-popover'
 import { ISolutionEntryDescription } from '@service-providers/common'
 import { SolutionControlButton } from './solution-control-button'
-import { SolutionCreateDialog } from './solution-create-dialog'
 import { SolutionDeleteDialog } from './solution-delete-dialog'
 
 interface ISolutionControlProps {
@@ -13,8 +12,6 @@ interface ISolutionControlProps {
   controlName: string
   solutions: ISolutionEntryDescription[] | undefined
   selected: string
-  isCreateDisabled?: boolean
-  onCreate: (solutionName: string) => void
   onApply: (solutionName: string) => void
   onJoin?: (solutionName: string) => void
   onModify: (solutionName: string) => void
@@ -26,8 +23,6 @@ export const SolutionControl = ({
   solutions,
   controlName,
   selected: selectedProp,
-  isCreateDisabled,
-  onCreate,
   onApply,
   onJoin,
   onModify,
@@ -38,7 +33,6 @@ export const SolutionControl = ({
   const [deleteDialog, openDeleteDialog, closeDeleteDialog] = useModal({
     solutionName: '',
   })
-  const [createDialog, openCreateDialog, closeCreateDialog] = useModal()
 
   const isSelectedSolutionNonStandard = useMemo(
     () =>
@@ -69,13 +63,10 @@ export const SolutionControl = ({
       />
       <SolutionControlPopover
         isOpen={isPopoverOpen}
-        isCreateDisabled={isCreateDisabled}
-        controlName={controlName}
         onClose={closePopover}
         anchorEl={popoverAnchor}
         solutions={solutions}
         selected={selected}
-        onCreate={() => openCreateDialog()}
         onSelect={setSelected}
         onJoin={onJoin}
         onApply={onApply}
@@ -92,16 +83,6 @@ export const SolutionControl = ({
           }
         }}
         controlName={controlName}
-      />
-      <SolutionCreateDialog
-        {...createDialog}
-        solutions={solutions}
-        onClose={closeCreateDialog}
-        controlName={controlName}
-        onCreate={solutionName => {
-          closeCreateDialog()
-          onCreate(solutionName)
-        }}
       />
     </>
   )

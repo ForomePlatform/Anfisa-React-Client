@@ -13,6 +13,7 @@ import filterStore from '@store/filter'
 import { Header } from '@components/header'
 import { VariantsCount } from '@components/variants-count'
 import { GlbPagesNames } from '@glb/glb-names'
+import { SolutionCreateDtree } from '@pages/filter/dtree/components/solution-create-dtree'
 import { FilterControl } from '../common/filter-control/filter-control'
 import { FilterControlOptionsNames } from '../common/filter-control/filter-control.const'
 import { SolutionControlDtree } from './components/control-panel/solution-control-dtree'
@@ -103,6 +104,7 @@ export const DtreePage = observer((): ReactElement => {
         <FilterControl
           pageName={FilterControlOptionsNames[GlbPagesNames.Dtree]}
           SolutionControl={SolutionControlDtree}
+          SolutionCreate={SolutionCreateDtree}
           isBackwardAllowed={dtreeStore.actionHistory.isBackwardAllowed}
           isForwardAllowed={dtreeStore.actionHistory.isForwardAllowed}
           goForward={dtreeStore.actionHistory.goForward}

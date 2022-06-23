@@ -3,6 +3,7 @@ import { FilterControlOptionsNames } from './filter-control.const'
 
 export interface IFilterControlProps {
   SolutionControl: React.ElementType
+  SolutionCreate: React.ElementType
   TextEditorButton?: React.ElementType
   isForwardAllowed: boolean
   isBackwardAllowed: boolean

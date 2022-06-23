@@ -16,6 +16,7 @@ import { GlbPagesNames } from '@glb/glb-names'
 import { FilterControl } from '@pages/filter/common/filter-control/filter-control'
 import { FilterRefiner } from '@pages/filter/refiner/components/filter-refiner'
 import { FilterControlOptionsNames } from '../common/filter-control/filter-control.const'
+import { SolutionCreateRefiner } from './components/solution-create-refiner'
 import { SolutionControlRefiner } from './components/solution-control-refiner'
 
 export const RefinerPage = observer((): ReactElement => {
@@ -51,6 +52,7 @@ export const RefinerPage = observer((): ReactElement => {
       <FilterControl
         pageName={FilterControlOptionsNames[GlbPagesNames.Refiner]}
         SolutionControl={SolutionControlRefiner}
+        SolutionCreate={SolutionCreateRefiner}
         isBackwardAllowed={filterStore.actionHistory.isBackwardAllowed}
         isForwardAllowed={filterStore.actionHistory.isForwardAllowed}
         goForward={filterStore.actionHistory.goForward}

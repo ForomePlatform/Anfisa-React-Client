@@ -9,10 +9,6 @@ export const joinPreset = (presetName: string): void => {
   filterStore.joinPresetConditions(presetName)
 }
 
-export const createPreset = (presetName: string): void => {
-  filterPresetsStore.createPreset(presetName, filterStore.conditions)
-}
-
 export const modifyPreset = (presetName: string): void => {
   filterPresetsStore.modifyPreset(presetName, filterStore.conditions)
 }

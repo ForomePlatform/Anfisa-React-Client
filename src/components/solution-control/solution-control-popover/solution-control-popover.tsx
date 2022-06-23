@@ -1,7 +1,6 @@
 import styles from './solution-control-popover.module.css'
 
 import { ReactElement } from 'react'
-import cn from 'classnames'
 
 import { t } from '@i18n'
 import { Button } from '@ui/button'
@@ -11,8 +10,6 @@ import { ISolutionEntryDescription } from '@service-providers/common'
 import { SolutionControlList } from '../solution-control-list'
 
 interface ISolutionControlPopoverProps extends IPopoverBaseProps {
-  isCreateDisabled?: boolean
-  onCreate: () => void
   onApply: (solutionName: string) => void
   onJoin?: (solutionName: string) => void
   onSelect: (solutionName: string) => void
@@ -20,15 +17,11 @@ interface ISolutionControlPopoverProps extends IPopoverBaseProps {
   onDelete: (solutionName: string) => void
   solutions: ISolutionEntryDescription[] | undefined
   selected: string
-  controlName: string
 }
 
 export const SolutionControlPopover = ({
   solutions,
   selected,
-  isCreateDisabled,
-  controlName,
-  onCreate,
   onSelect,
   onApply,
   onJoin,
@@ -40,22 +33,6 @@ export const SolutionControlPopover = ({
   return (
     <Popover onClose={onClose} {...popoverProps}>
       <section className={styles.solutionControlCard}>
-        <header className={styles.solutionControlCard__header}>
-          <button
-            disabled={isCreateDisabled}
-            className={cn(
-              styles.solutionControlCard__createButton,
-              isCreateDisabled &&
-                styles.solutionControlCard__createButton_disabled,
-            )}
-            onClick={() => {
-              onClose?.()
-              onCreate()
-            }}
-          >
-            {t('solutionControl.createNewSolution', { controlName })}
-          </button>
-        </header>
         {solutions && (
           <SolutionControlList
             className={styles.solutionControlCard__list}

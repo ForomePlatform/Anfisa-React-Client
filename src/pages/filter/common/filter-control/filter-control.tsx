@@ -28,6 +28,7 @@ import { SolutionSelect } from './solution-select'
 export const FilterControl = observer(
   ({
     SolutionControl,
+    SolutionCreate,
     TextEditorButton,
     className,
     isForwardAllowed,
@@ -90,6 +91,10 @@ export const FilterControl = observer(
             <Divider orientation="vertical" className="h-[75%]" />
 
             <SolutionControl />
+
+            <Divider orientation="vertical" className="h-[75%]" />
+
+            <SolutionCreate />
 
             <Divider orientation="vertical" className="h-[75%]" />
 
