@@ -12,7 +12,7 @@ export const en = {
     clearAll: 'Clear All',
     cancel: 'Cancel',
     create: 'Create',
-    apply: 'Apply',
+    apply: 'View variants',
     applyFilters: 'Apply Filters',
     clear: 'Clear',
     replace: 'Replace',
@@ -266,7 +266,7 @@ export const en = {
     },
     leaveConfirm: {
       title: 'Attention! All changes will be lost',
-      body: 'Are you sure you want to leave the page without saving?',
+      body: 'Are you sure you want to leave the page without saving the preset?',
     },
   },
   dtree: {
