@@ -30,14 +30,18 @@ const showTooltipEl = (
   theme: TTooltipTheme,
   maxWidth: TTooltipWidth,
 ): HTMLElement => {
+  if (typeof maxWidth === 'number') {
+    globalTooltipEl.style.maxWidth = `${maxWidth}px`
+  } else {
+    globalTooltipEl.style.maxWidth = 'none'
+  }
+
   tooltipContentEl.innerHTML = content
   globalTooltipEl.className = cn(
     styles.tooltip,
     styles[`tooltip_${theme}`],
     styles.tooltip_shown,
   )
-  globalTooltipEl.style.maxWidth =
-    typeof maxWidth === 'number' ? `${maxWidth}px` : maxWidth
 
   return globalTooltipEl
 }
