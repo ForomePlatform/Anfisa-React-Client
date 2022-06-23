@@ -1,5 +1,6 @@
 import { makeAutoObservable, reaction, toJS } from 'mobx'
 
+import { pushQueryParams } from '@core/history'
 import { t } from '@i18n'
 import datasetStore from '@store/dataset/dataset'
 import dtreeStore from '@store/dtree'
@@ -12,7 +13,6 @@ import {
 import decisionTreesProvider from '@service-providers/decision-trees/decision-trees.provider'
 import { filterPresetsData } from '@utils/filter-presets'
 import { showToast } from '@utils/notifications/showToast'
-import { updateURLParams } from '@utils/url/update-url-params'
 import { validatePresetName } from '@utils/validation/validatePresetName'
 import { AvailableDtreesAsyncStore } from './available-dtrees.async.store'
 
@@ -155,6 +155,6 @@ export class FilterDtreesStore {
   }
 
   private updateURLWithDtreeName(dtree: string) {
-    updateURLParams('dtree', dtree)
+    pushQueryParams({ dtree })
   }
 }
