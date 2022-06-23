@@ -49,6 +49,11 @@ export abstract class BaseStatUnitsStore<
     return toJS(this.data?.functionalUnits) ?? []
   }
 
+  get dataReady(): number {
+    const units = this.data?.units || []
+    return toJS(units.filter(it => !it.incomplete).length / units.length)
+  }
+
   get totalCounts(): TFilteringStatCounts | undefined {
     return toJS(this.data?.totalCounts)
   }
