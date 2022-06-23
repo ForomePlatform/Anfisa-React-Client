@@ -14,8 +14,11 @@ import { Header } from '@components/header'
 import { VariantsCount } from '@components/variants-count'
 import { GlbPagesNames } from '@glb/glb-names'
 import { FilterControl } from '@pages/filter/common/filter-control/filter-control'
+import { IgvModal } from '@pages/filter/dtree/components/modals/components/igv'
 import { FilterRefiner } from '@pages/filter/refiner/components/filter-refiner'
 import { FilterControlOptionsNames } from '../common/filter-control/filter-control.const'
+import { viewVariantsStore } from '../common/view-variants/store'
+import modalsVisibilityStore from '../dtree/components/modals/modals-visibility-store'
 import { SolutionControlRefiner } from './components/solution-control-refiner'
 
 export const RefinerPage = observer((): ReactElement => {
@@ -56,6 +59,11 @@ export const RefinerPage = observer((): ReactElement => {
         goForward={filterStore.actionHistory.goForward}
         goBackward={filterStore.actionHistory.goBackward}
         className={styles.refinerPage__controls}
+      />
+
+      <IgvModal
+        isOpen={modalsVisibilityStore.isIgvModalVisible}
+        igvParams={viewVariantsStore.record.igvParams}
       />
 
       <FilterRefiner className={styles.refinerPage__refiner} />

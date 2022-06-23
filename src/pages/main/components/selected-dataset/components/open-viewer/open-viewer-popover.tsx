@@ -27,10 +27,6 @@ export const OpenViewerPopover = ({
   >
     <PopperMenu close={close}>
       {pages.map((pageName, index) => {
-        const shouldRenderOption = pageName !== GlbPagesNames.IGV
-
-        if (!shouldRenderOption) return
-
         return (
           <PopperMenuItem
             key={index}

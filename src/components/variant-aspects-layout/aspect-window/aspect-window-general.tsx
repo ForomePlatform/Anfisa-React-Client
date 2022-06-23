@@ -1,29 +1,33 @@
 import { ReactElement } from 'react'
-import { Link } from 'react-router-dom'
 
 import { t } from '@i18n'
-import { Routes } from '@router/routes.enum'
 import { Button } from '@ui/button'
+import modalsVisibilityStore from '@pages/filter/dtree/components/modals/modals-visibility-store'
 import { AspectWindowBase, IAspectWindowBaseProps } from './aspect-window-base'
 
 export const AspectWindowGeneral = ({
-  igvUrl,
+  igvUrls,
   ...windowProps
 }: IAspectWindowBaseProps): ReactElement => {
   return (
-    <AspectWindowBase
-      {...windowProps}
-      titleAdornment={
-        igvUrl && (
-          <Link target="_blank" to={`${Routes.IGV}?${igvUrl}`}>
-            <Button
-              className="mx-8 whitespace-nowrap"
-              text={t('igv.openIgv')}
-              size="xs"
-            />
-          </Link>
-        )
-      }
-    />
+    <>
+      <AspectWindowBase
+        {...windowProps}
+        titleAdornment={
+          igvUrls?.length && (
+            <div className="flex">
+              <Button
+                className="mx-8 whitespace-nowrap"
+                text={t('igv.openIgv')}
+                size="xs"
+                onClick={() =>
+                  modalsVisibilityStore.toggleIsIgvModalVisible(true)
+                }
+              />
+            </div>
+          )
+        }
+      />
+    </>
   )
 }

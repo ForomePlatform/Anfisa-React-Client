@@ -17,6 +17,12 @@ import { findElementInRow } from '@utils/mian-table/find-element-in-row'
 
 const VARIANT_WITHOUT_GENES = 'None'
 
+export interface IIgvParams {
+  locus: string
+  names: string
+  igvUrls: string[]
+}
+
 export class VariantAspectsAsyncStore extends BaseAsyncDataStore<
   TAspectDescriptor[],
   IReccntArguments
@@ -31,7 +37,7 @@ export class VariantAspectsAsyncStore extends BaseAsyncDataStore<
       hg38locus: computed,
       locus: computed,
       genes: computed,
-      igvUrl: computed,
+      igvParams: computed,
     })
   }
 
@@ -64,8 +70,22 @@ export class VariantAspectsAsyncStore extends BaseAsyncDataStore<
     return findElementInRow(rows, 'genes') || VARIANT_WITHOUT_GENES
   }
 
-  public get igvUrl(): string | undefined {
+  public get igvParams(): IIgvParams | undefined {
     const igvUrls = datasetStore.dsInfoData?.igvUrls
+
+    // uncomment to check igv modal for ws-page/PGP3140_wgs_panel_hl
+    // const igvUrls = [
+    //   'https://forome-bam.s3.us-south.cloud-object-storage.appdomain.cloud/GRCh38/NA24385.sorted.bam',
+    //   'https://forome-bam.s3.us-south.cloud-object-storage.appdomain.cloud/GRCh38/NA24143.sorted.bam',
+    //   'https://forome-bam.s3.us-south.cloud-object-storage.appdomain.cloud/GRCh38/NA24149.sorted.bam',
+    // ]
+
+    // uncomment to check igv modal for filter-page/xl_PGP3140_wgs_NIST-4_2
+    // const igvUrls = [
+    //   'https://forome-bam.s3.us-south.cloud-object-storage.appdomain.cloud/GRCh38/HG002.sorted.bam',
+    //   'https://forome-bam.s3.us-south.cloud-object-storage.appdomain.cloud/GRCh38/HG003.sorted.bam',
+    //   'https://forome-bam.s3.us-south.cloud-object-storage.appdomain.cloud/GRCh38/HG004.sorted.bam',
+    // ]
 
     if (!igvUrls) {
       return
@@ -95,11 +115,11 @@ export class VariantAspectsAsyncStore extends BaseAsyncDataStore<
       return undefined
     }
 
-    return new URLSearchParams({
+    return {
       locus,
       names: names.join(','),
-      igvUrls: JSON.stringify(igvUrls),
-    }).toString()
+      igvUrls,
+    }
   }
 
   protected fetch(

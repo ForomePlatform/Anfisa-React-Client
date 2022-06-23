@@ -17,9 +17,6 @@ export const getPageRoute = (
     case GlbPagesNames.Refiner:
       route = Routes.Refiner
       break
-    case GlbPagesNames.IGV:
-      route = Routes.IGV
-      break
   }
 
   return route as PageRoute

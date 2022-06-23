@@ -9,6 +9,8 @@ import variantStore from '@store/ws/variant'
 import { ExportReport } from '@components/export-report'
 import { Header } from '@components/header'
 import { VariantsCount } from '@components/variants-count'
+import { IgvModal } from '@pages/filter/dtree/components/modals/components/igv/igv-modal'
+import modalsVisibilityStore from '@pages/filter/dtree/components/modals/modals-visibility-store'
 import { TCondition } from '@service-providers/common/common.interface'
 import { ControlPanel } from './ui/control-panel/control-panel'
 import { VariantDrawer } from './ui/variant-drawer'
@@ -51,6 +53,11 @@ export const WSPage = observer((): ReactElement => {
         </Header>
 
         <ControlPanel />
+
+        <IgvModal
+          isOpen={modalsVisibilityStore.isIgvModalVisible}
+          igvParams={variantStore.record.igvParams}
+        />
 
         <div className="flex-grow flex overflow-hidden">
           <Variants

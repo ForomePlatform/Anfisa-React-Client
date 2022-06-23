@@ -1,0 +1,39 @@
+.igv-modal {
+  position: fixed;
+  left: 5%;
+  top: 5%;
+  width: 90%;
+  height: 90%;
+  overflow-y: auto;
+  background: theme("colors.white");
+  border-radius: theme("borderRadius.lg");
+  transition-timing-function: ease-in-out;
+  transition-property: opacity;
+
+  &_entering,
+  &_entered {
+    opacity: 1;
+  }
+
+  &_exiting,
+  &_exited {
+    opacity: 0;
+  }
+}
+
+.header {
+  @apply typography-m;
+
+  padding: theme("spacing.2") theme("spacing.4") 0 theme("spacing.4");
+  display: flex;
+  justify-content: flex-end;
+
+  &__close {
+    color: theme("colors.black");
+    cursor: pointer;
+
+    &:hover {
+      color: theme("colors.blue.bright");
+    }
+  }
+}

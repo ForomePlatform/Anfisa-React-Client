@@ -3,6 +3,8 @@ import { observer } from 'mobx-react-lite'
 
 import dtreeStore from '@store/dtree'
 import { ViewVariantsModal } from '@pages/filter/common/view-variants'
+import { viewVariantsStore } from '@pages/filter/common/view-variants/store'
+import { IgvModal } from '@pages/filter/dtree/components/modals/components/igv'
 import { ExportDialog } from '@pages/main/components/dialogs/export-dialog'
 import { ImportDialog } from '@pages/main/components/dialogs/import-dialog'
 import { EnumDialog } from './components/enum-dialog/enum-dialog'
@@ -51,6 +53,11 @@ export const ModalsContainer = observer(
       <ExportDialog />
 
       <ImportDialog />
+
+      <IgvModal
+        isOpen={modalsVisibilityStore.isIgvModalVisible}
+        igvParams={viewVariantsStore.record.igvParams}
+      />
     </>
   ),
 )

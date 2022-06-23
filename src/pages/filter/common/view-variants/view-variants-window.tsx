@@ -1,6 +1,6 @@
 import styles from './view-variants-window.module.css'
 
-import React, { ReactElement } from 'react'
+import { ReactElement } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
@@ -39,7 +39,7 @@ export const ViewVariantsWindow = observer(
               }
               onClose={onClose}
               aspects={record.aspects}
-              igvUrl={record.igvUrl}
+              igvUrls={record.igvParams?.igvUrls}
               isLoading={record.isLoading}
             />
           </>
