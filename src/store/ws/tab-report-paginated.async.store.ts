@@ -26,33 +26,30 @@ export class TabReportPaginatedAsyncStore extends BaseAsyncPaginatedDataStore<Ta
   }
 
   public getPageNo(recNo: number): number | undefined {
-    const currentPage = this.pages.find(page => {
+    return this.pages.findIndex(page => {
       if (page.data?.find(pageData => pageData._no === recNo)) {
         return true
       }
     })
-
-    return currentPage ? this.pages.indexOf(currentPage) : undefined
   }
 
   public getRecIndex(pageNo: number, recNo: number): number | undefined {
-    let recIndex
-
-    this.pages[pageNo].data?.find((pageData, index) => {
+    return this.pages[pageNo].data?.findIndex(pageData => {
       if (pageData._no === recNo) {
-        recIndex = index
-
         return true
       }
     })
-
-    return recIndex ?? undefined
   }
 
   public updateRowTags(recNo: number, tags: TTagsDescriptor) {
     const pageNo = this.getPageNo(recNo)
 
     if (typeof pageNo === 'number') {
+      if (zoneStore.hasDifferenceWithZoneTags(tags)) {
+        mainTableStore.wsList.invalidate()
+        return
+      }
+
       const recIndex = this.getRecIndex(pageNo, recNo)
 
       if (typeof recIndex === 'number') {
@@ -62,10 +59,6 @@ export class TabReportPaginatedAsyncStore extends BaseAsyncPaginatedDataStore<Ta
         }
       }
     }
-
-    zoneStore.hasDifferenceWithZoneTags(tags) &&
-      mainTableStore.wsList.invalidate()
-
     zoneStore.fetchZoneTagsAsync()
   }
 
