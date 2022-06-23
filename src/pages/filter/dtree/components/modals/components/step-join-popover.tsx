@@ -6,6 +6,9 @@ import { t } from '@i18n'
 import stepStore, { ActiveStepOptions } from '@store/dtree/step.store'
 import { Popover } from '@ui/popover'
 import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-modal.cy'
+import { PopperMenu } from '@components/popper-menu/popper-menu'
+import { PopperMenuItem } from '@components/popper-menu/popper-menu-item'
+import { popoverOffset } from '@pages/ws/constants'
 import { InstrModifyingActionNames } from '@service-providers/decision-trees'
 import modalsVisibilityStore from '../modals-visibility-store'
 
@@ -40,38 +43,39 @@ export const StepJoinPopover = observer(
         isOpen={isPopoverOpen}
         anchorEl={popoverAnchor}
         onClose={closePopover}
+        offset={popoverOffset}
+        placement="bottom"
+        className="border border-grey-disabled rounded-md"
       >
-        <div className="top-2 left-2 absolute text-14 font-normal">
-          <div className="w-28 flex flex-col justify-between px-0 py-0 bg-white rounded-md shadow-dark">
-            <div
-              onClick={() =>
-                handleJoin(
-                  isReturnedVariants
-                    ? InstrModifyingActionNames.UP_JOIN_AND
-                    : InstrModifyingActionNames.JOIN_AND,
-                )
-              }
-              className="cursor-pointer rounded-br-none rounded-bl-none rounded-l-md rounded-r-md py-2 px-2 hover:bg-blue-bright hover:text-white"
-              data-testid={DecisionTreeModalDataCy.joinByAnd}
-            >
-              {t('dtree.joinByAnd')}
-            </div>
+        <PopperMenu className="text-14">
+          <PopperMenuItem
+            onClick={() =>
+              handleJoin(
+                isReturnedVariants
+                  ? InstrModifyingActionNames.UP_JOIN_AND
+                  : InstrModifyingActionNames.JOIN_AND,
+              )
+            }
+            data-testid={DecisionTreeModalDataCy.joinByAnd}
+            className="rounded-t"
+          >
+            <span>{t('dtree.joinByAnd')}</span>
+          </PopperMenuItem>
 
-            <div
-              onClick={() =>
-                handleJoin(
-                  isReturnedVariants
-                    ? InstrModifyingActionNames.UP_JOIN_OR
-                    : InstrModifyingActionNames.JOIN_OR,
-                )
-              }
-              className="cursor-pointer py-2 px-2 hover:bg-blue-bright hover:text-white rounded-bl-md rounded-br-md"
-              data-testid={DecisionTreeModalDataCy.joinByOr}
-            >
-              {t('dtree.joinByOr')}
-            </div>
-          </div>
-        </div>
+          <PopperMenuItem
+            onClick={() =>
+              handleJoin(
+                isReturnedVariants
+                  ? InstrModifyingActionNames.UP_JOIN_OR
+                  : InstrModifyingActionNames.JOIN_OR,
+              )
+            }
+            data-testid={DecisionTreeModalDataCy.joinByOr}
+            className="rounded-b"
+          >
+            <span>{t('dtree.joinByOr')}</span>
+          </PopperMenuItem>
+        </PopperMenu>
       </Popover>
     )
   },

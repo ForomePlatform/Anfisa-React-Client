@@ -37,7 +37,7 @@ export const InheritanceModeVariants = ({
           </Checkbox>
         ))
       ) : (
-        <div className="flex justify-center items-center text-grey-blue my-2">
+        <div className="flex justify-center items-center text-red-secondary my-2">
           {status || t('condition.noFilters')}
         </div>
       )}

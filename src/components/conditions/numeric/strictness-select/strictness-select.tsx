@@ -1,65 +1,40 @@
-import React, { ReactElement, useState } from 'react'
-import cn from 'classnames'
+import { ReactElement } from 'react'
 
-import { Icon } from '@ui/icon'
-import { StrictnessSelectPopup } from './strictness-select-popup'
+import { usePopover } from '@core/hooks/use-popover'
+import { StrictnessSelectButton } from './strictness-select-button'
+import { StrictnessSelectPopover } from './strictness-select-popover'
 
 export interface IStrictnessSelectProps {
-  className?: string
   value: boolean
   onChange: (newValue: boolean) => void
   isDisabled?: boolean
 }
 
 export const StrictnessSelect = ({
-  className,
   value,
   onChange,
   isDisabled,
 }: IStrictnessSelectProps): ReactElement => {
-  const [isPopupOpen, setPopupOpen] = useState(false)
+  const { isPopoverOpen, popoverAnchor, onToggle, closePopover } = usePopover()
 
   return (
-    <div className={cn('relative', className)}>
-      <div
-        className={cn(
-          'flex items-center h-8 w-12 p-1 rounded bg-white border border-grey-disabled shadow-input',
-          isDisabled
-            ? 'text-grey-blue'
-            : 'cursor-pointer text-black  hover:text-blue-bright',
-          isPopupOpen && 'text-blue-bright',
-        )}
-        onClick={() => setPopupOpen(true)}
-      >
-        <span
-          className={cn(
-            'flex items-center justify-center w-3/5 h-full rounded',
-            isDisabled
-              ? 'bg-grey-light text-grey-blue'
-              : 'bg-blue-light text-blue-bright',
-          )}
-        >
-          {value ? '≤' : '<'}
-        </span>
-        <span className="flex items-center justify-center pl-1 w-2/5 h-full">
-          <Icon
-            name="Arrow"
-            size={16}
-            className={cn('transform rotate-90 transition-transform', {
-              'transform -rotate-90': !isPopupOpen,
-            })}
-          />
-        </span>
-      </div>
-      <StrictnessSelectPopup
-        className="mt-1"
-        isOpen={isPopupOpen}
-        onClose={() => setPopupOpen(false)}
+    <>
+      <StrictnessSelectButton
+        isOpen={isPopoverOpen}
+        onClick={onToggle}
+        value={value}
+        disabled={isDisabled}
+      />
+
+      <StrictnessSelectPopover
+        isOpen={isPopoverOpen}
+        anchorEl={popoverAnchor}
+        onClose={closePopover}
         onSelect={value => {
           onChange(value)
-          setPopupOpen(false)
+          closePopover()
         }}
       />
-    </div>
+    </>
   )
 }

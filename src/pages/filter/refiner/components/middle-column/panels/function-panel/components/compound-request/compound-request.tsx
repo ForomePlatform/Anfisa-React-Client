@@ -27,6 +27,7 @@ export const CompoundRequest = observer((): ReactElement => {
       savePanelAttribute({
         filterKind: AttributeKinds.FUNC,
         attributeName,
+        selectedVariants: ['True'],
         mode,
         param,
       })

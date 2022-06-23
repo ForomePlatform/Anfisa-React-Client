@@ -46,4 +46,6 @@ export const changeStep = (
     code,
     instr: [ActionTypes.INSTR, action, location] as TInstrModifyingActions,
   })
+
+  dtreeStore.setDtreeModifyed()
 }

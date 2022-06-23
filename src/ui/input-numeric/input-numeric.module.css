@@ -1,0 +1,82 @@
+.input-numeric {
+  display: inline-flex;
+  position: relative;
+  border: 1px solid theme("colors.grey.blue");
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 20px;
+  background: theme("colors.white");
+
+  &_disabled {
+    color: theme("colors.grey.blue");
+    border-color: theme("colors.grey.disabled");
+  }
+
+  &_has-errors {
+    border-color: theme("colors.red.light");
+    margin-bottom: 16px;
+  }
+
+  &_disabled &__button {
+    color: theme("colors.grey.disabled");
+    border-color: theme("colors.grey.disabled");
+
+    &:hover {
+      background-color: theme("colors.white");
+    }
+
+    &:active {
+      color: theme("colors.grey.disabled");
+    }
+  }
+
+  &__input-section {
+    padding: 3px 0;
+    flex-grow: 1;
+    width: calc(100% - 28px);
+  }
+
+  &__input {
+    width: 100%;
+    padding: 0 8px;
+    border: none;
+    font-size: 12px;
+    outline: none;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    width: 28px;
+    text-align: center;
+  }
+
+  &__button {
+    height: 50%;
+    line-height: 13px;
+    border-top: 1px solid theme("colors.grey.blue");
+    border-left: 1px solid theme("colors.grey.blue");
+    user-select: none;
+    font-weight: normal;
+    color: theme("colors.grey.blue");
+
+    &:first-child {
+      border-top: none;
+    }
+
+    &:hover {
+      background-color: theme("colors.blue.light");
+    }
+
+    &:active {
+      color: theme("colors.blue.dark");
+    }
+  }
+
+  &__error {
+    position: absolute;
+    bottom: -22px;
+    font-size: 12px;
+    color: theme("colors.red.light");
+  }
+}

@@ -1,0 +1,32 @@
+.control-panel {
+  width: 100%;
+  padding: 0 theme("spacing.4") theme("spacing.4");
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-flow: row wrap;
+  background: theme("colors.blue.dark");
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    flex: 1 0 0;
+    margin-top: theme("spacing.2")
+  }
+
+  &__zones {
+    display: flex;
+    background: theme("colors.blue.darkHover");
+    border-radius: theme("borderRadius.sm");
+    padding: 0 theme("spacing.3");
+    min-height: 32px;
+    flex: 1 1 1px;
+    max-width: fit-content;
+  }
+
+  &__save {
+    margin-top: theme("spacing.2");
+    margin-left: auto;
+    justify-self: flex-end;
+  }
+}

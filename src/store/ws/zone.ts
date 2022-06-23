@@ -1,6 +1,9 @@
 import { makeAutoObservable, runInAction } from 'mobx'
 
-import { IZoneDescriptor } from '@service-providers/ws-dataset-support/ws-dataset-support.interface'
+import {
+  IZoneDescriptor,
+  TTagsDescriptor,
+} from '@service-providers/ws-dataset-support/ws-dataset-support.interface'
 import wsDatasetProvider from '@service-providers/ws-dataset-support/ws-dataset-support.provider'
 import datasetStore from '../dataset/dataset'
 
@@ -32,6 +35,24 @@ class ZoneStore {
 
   constructor() {
     makeAutoObservable(this)
+  }
+
+  get specialSamples(): [boolean, boolean, boolean] {
+    let proband = false
+    let mother = false
+    let father = false
+
+    for (const sample of this.selectedSamples) {
+      if (!proband && sample.startsWith('proband ')) {
+        proband = true
+      } else if (!mother && sample.startsWith('mother ')) {
+        mother = true
+      } else if (!father && sample.startsWith('father ')) {
+        father = true
+      }
+    }
+
+    return [proband, mother, father]
   }
 
   setZoneIndex(zone: [string, string[]], index: number): void {
@@ -222,6 +243,20 @@ class ZoneStore {
     if (type === 'isSamples') this.localSamples = this.selectedSamples
 
     if (type === 'isTags') this.localTags = this.selectedTags
+  }
+
+  hasDifferenceWithZoneTags(tags: TTagsDescriptor): boolean {
+    const extendedSelectedTags = this.isModeWithNotes
+      ? [...this.selectedTags, '_note']
+      : this.selectedTags
+
+    if (!extendedSelectedTags.length) {
+      return false
+    }
+
+    return this.isModeNOT
+      ? Object.keys(tags).some(tag => extendedSelectedTags.includes(tag))
+      : Object.keys(tags).every(tag => !extendedSelectedTags.includes(tag))
   }
 
   resetAllSelectedItems() {

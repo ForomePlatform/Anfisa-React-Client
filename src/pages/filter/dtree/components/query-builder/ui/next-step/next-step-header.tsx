@@ -1,10 +1,10 @@
-import { MouseEvent, ReactElement } from 'react'
+import { ReactElement } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 
 import { formatNumber } from '@core/format-number'
-import { useToggle } from '@core/hooks/use-toggle'
+import { usePopover } from '@core/hooks/use-popover'
 import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
 import stepStore from '@store/dtree/step.store'
@@ -12,9 +12,9 @@ import { Icon } from '@ui/icon'
 import { Radio } from '@ui/radio'
 import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
 import { changeStep } from '@utils/changeStep'
-import { ModalOperation } from '../../../modals/components/modal-operation'
 import { ExpandContentButton } from '../expand-content-button'
 import { StepDivider } from '../step-divider'
+import { DtreeConditionsOptionsPopover } from './dtree-condition-options/dtree-conditions-options-popover'
 
 export const Operation = styled.div`
   font-size: 15px;
@@ -40,7 +40,8 @@ export const NextStepHeader = observer(
     index,
     isExcluded,
   }: INextStepHeaderProps): ReactElement => {
-    const [isVisibleModal, showModal, hideModal] = useToggle(false)
+    const { isPopoverOpen, popoverAnchor, onToggle, closePopover } =
+      usePopover()
 
     const currentStep = stepStore.filteredSteps[index]
     const { returnPointIndex } = currentStep
@@ -70,28 +71,29 @@ export const NextStepHeader = observer(
         >
           <div className="relative flex items-center">
             {!isEmptyFirstStep && (
-              <Icon
-                dataTestId={DecisionTreesResultsDataCy.optionsMenu}
-                name="Options"
-                className="cursor-pointer text-blue-bright"
-                stroke={false}
-                onMouseUp={(event: MouseEvent<HTMLButtonElement>) => {
-                  isVisibleModal && event.stopPropagation()
-                }}
-                onClick={isVisibleModal ? hideModal : showModal}
-              />
+              <>
+                <div onClick={e => onToggle(e.currentTarget)}>
+                  <Icon
+                    dataTestId={DecisionTreesResultsDataCy.optionsMenu}
+                    name="Options"
+                    className="cursor-pointer text-blue-bright"
+                    stroke={false}
+                  />
+                </div>
+
+                <DtreeConditionsOptionsPopover
+                  index={index}
+                  isOpen={isPopoverOpen}
+                  anchorEl={popoverAnchor}
+                  onClose={closePopover}
+                />
+              </>
             )}
 
             <Step>
               {t('dtree.step')}{' '}
               {dtreeStore.algorithmFilterValue ? currentStep.step : index + 1}
             </Step>
-
-            <div className="absolute">
-              {isVisibleModal && (
-                <ModalOperation hideModal={hideModal} index={index} />
-              )}
-            </div>
 
             {!isExpanded && (difference || difference === 0) && (
               <div className="ml-2 text-14 text-grey-blue font-normal">

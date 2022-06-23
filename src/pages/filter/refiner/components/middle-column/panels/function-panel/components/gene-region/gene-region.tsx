@@ -25,6 +25,7 @@ export const GeneRegion = observer(() => {
       savePanelAttribute({
         filterKind: AttributeKinds.FUNC,
         attributeName,
+        selectedVariants: ['True'],
         mode,
         param,
       })

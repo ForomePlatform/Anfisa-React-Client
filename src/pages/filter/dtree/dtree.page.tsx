@@ -10,6 +10,7 @@ import { useParams } from '@core/hooks/use-params'
 import datasetStore from '@store/dataset/dataset'
 import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
+import filterDtreesStore from '@store/filter-dtrees'
 import { Header } from '@components/header'
 import { VariantsCount } from '@components/variants-count'
 import { GlbPagesNames } from '@glb/glb-names'
@@ -28,6 +29,7 @@ export const DtreePage = observer((): ReactElement => {
   useDatasetName()
   const params = useParams()
   const dsName = params.get('ds') || ''
+  const dtreeName = params.get('dtree') || ''
 
   useEffect(() => {
     const initAsync = async () => {
@@ -38,7 +40,7 @@ export const DtreePage = observer((): ReactElement => {
       })
     }
 
-    initAsync()
+    dtreeName ? filterDtreesStore.setActiveDtree(dtreeName) : initAsync()
 
     return () => {
       dtreeStore.resetFilterValue()

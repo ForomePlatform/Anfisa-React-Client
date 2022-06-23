@@ -1,9 +1,9 @@
-import { useState } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { ActionType } from '@declarations'
 import { ModalSources } from '@core/enum/modal-sources'
+import { usePopover } from '@core/hooks/use-popover'
 import { t } from '@i18n'
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
@@ -30,13 +30,8 @@ export const SelectModalButtons = observer(
     disabled,
     handleAddAttribute,
   }: ISelectModalButtonsProps) => {
-    const [popoverAnchor, setPopoverAnchor] = useState<HTMLElement | null>(null)
-
-    const closePopover = () => {
-      setPopoverAnchor(null)
-    }
-
-    const isPopoverOpen = !!popoverAnchor
+    const { popoverAnchor, isPopoverOpen, onToggle, closePopover } =
+      usePopover()
 
     return (
       <div
@@ -78,11 +73,7 @@ export const SelectModalButtons = observer(
                 <Button
                   disabled={disabled}
                   text={t('condition.addByJoining')}
-                  onClick={event =>
-                    isPopoverOpen
-                      ? closePopover()
-                      : setPopoverAnchor(event.currentTarget)
-                  }
+                  onClick={e => onToggle(e.currentTarget)}
                   icon={<Icon name="Arrow" className="transform -rotate-90" />}
                   dataTestId={DecisionTreeModalDataCy.addByJoin}
                 />

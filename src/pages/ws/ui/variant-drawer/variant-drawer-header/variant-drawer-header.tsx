@@ -1,14 +1,10 @@
 import { ReactElement } from 'react'
-import { useHistory, useLocation } from 'react-router-dom'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { useKeydown } from '@core/hooks/use-keydown'
-import { useVariantIndex } from '@core/hooks/use-variant-index'
-import columnsStore from '@store/ws/columns'
 import mainTableStore from '@store/ws/main-table.store'
 import variantStore from '@store/ws/variant'
-import { Routes } from '@router/routes.enum'
 import { ArrowButton } from '@ui/arrow-button'
 import { Divider } from '@ui/divider'
 import { Icon } from '@ui/icon'
@@ -29,9 +25,6 @@ export const VariantDrawerHeader = observer(
     windowsOpenState,
     onWindowsToggle,
   }: IVariantDrawerHeaderProps): ReactElement => {
-    const history = useHistory()
-    const location = useLocation()
-    const { tabReport } = mainTableStore
     const {
       record: { locus, genes },
     } = variantStore
@@ -43,41 +36,28 @@ export const VariantDrawerHeader = observer(
       saveGridPreset,
     } = variantDrawerStore
 
-    const currentIndex = mainTableStore.filteredNo.indexOf(variantStore.index)
+    const currentIndex = mainTableStore.filteredNo.indexOf(
+      variantStore.variantNo,
+    )
     const isNoPrevVariant = currentIndex <= 0
     const isNoNextVariant = currentIndex + 1 >= mainTableStore.filteredNo.length
 
-    const { setVariantIndex } = useVariantIndex()
-
     const handlePrevVariant = () => {
-      if (!variantStore.isDrawerVisible || isNoPrevVariant) return
-      variantStore.prevVariant()
+      if (!isNoPrevVariant) {
+        variantStore.prevVariant()
+      }
     }
 
     const handleNextVariant = () => {
-      if (!variantStore.isDrawerVisible || isNoNextVariant) return
-      variantStore.nextVariant()
+      if (!isNoNextVariant) {
+        variantStore.nextVariant()
+      }
     }
 
     useKeydown([
       { eventCode: 'ArrowUp', callback: handlePrevVariant },
       { eventCode: 'ArrowDown', callback: handleNextVariant },
     ])
-
-    const handleCloseDrawer = () => {
-      if (variantStore.isTagsModified) {
-        tabReport.invalidatePage(mainTableStore.openedVariantPageNo)
-      }
-
-      columnsStore.closeDrawer()
-      variantStore.setIsTagsModified(false)
-
-      // if url has 'variant' should be navigated to prev route
-      const previousLocation = location.search.split('&variant')[0]
-
-      history.push(`${Routes.WS + previousLocation}`)
-      setVariantIndex()
-    }
 
     return (
       <div
@@ -111,7 +91,7 @@ export const VariantDrawerHeader = observer(
             <Divider orientation="vertical" />
           </div>
           <div className="flex items-center my-2">
-            <DrawerTags key={variantStore.index} />
+            <DrawerTags key={variantStore.variantNo} />
             <Divider orientation="vertical" />
             <DrawerNote />
           </div>
@@ -129,7 +109,7 @@ export const VariantDrawerHeader = observer(
           />
           <Divider orientation="vertical" spacing="dense" />
           <button className="w-4 h-4 flex items-center justify-center  text-white hover:text-blue-bright">
-            <Icon name="Close" onClick={handleCloseDrawer} size={16} />
+            <Icon name="Close" onClick={variantStore.closeVariant} size={16} />
           </button>
         </div>
       </div>

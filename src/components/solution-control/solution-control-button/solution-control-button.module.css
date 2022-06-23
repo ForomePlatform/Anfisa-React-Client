@@ -25,7 +25,13 @@
     width: 16px;
 
     &_delete {
-      color: theme("colors.blue.bright")
+      color: theme("colors.blue.bright");
+    }
+
+    &_modified {
+      color: theme("colors.grey.light");
+      opacity: 0.6;
+      margin-right: 3px;
     }
   }
 

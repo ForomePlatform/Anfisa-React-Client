@@ -12,8 +12,7 @@ interface ISolutionControlButtonProps
   solutionName: string | undefined
   controlName: string
   isOpen: boolean
-  isDeleteShown: boolean
-  onDeleteClick: () => void
+  isModified: boolean
 }
 
 export const SolutionControlButton = ({
@@ -21,8 +20,7 @@ export const SolutionControlButton = ({
   solutionName,
   controlName,
   isOpen,
-  isDeleteShown,
-  onDeleteClick,
+  isModified,
   ...buttonProps
 }: ISolutionControlButtonProps): ReactElement => {
   return (
@@ -34,29 +32,19 @@ export const SolutionControlButton = ({
       <span className={styles.solutionControlButton__label}>
         {solutionName || t('solutionControl.selectSolution', { controlName })}
       </span>
-      <span
-        className={cn(
-          styles.solutionControlButton__icon,
-          isDeleteShown && styles.solutionControlButton__icon_delete,
-        )}
-      >
-        {isDeleteShown ? (
-          <Icon
-            name="Delete"
-            size={16}
-            onClick={event => {
-              event.stopPropagation()
-              onDeleteClick()
-            }}
-          />
-        ) : (
-          <span
-            className={cn(
-              styles.solutionControlButton__arrow,
-              isOpen && styles.solutionControlButton__arrow_open,
-            )}
-          />
-        )}
+      {isModified && (
+        <span className={cn(styles.solutionControlButton__icon_modified)}>
+          <Icon name="Edit" />
+        </span>
+      )}
+
+      <span className={cn(styles.solutionControlButton__icon)}>
+        <span
+          className={cn(
+            styles.solutionControlButton__arrow,
+            isOpen && styles.solutionControlButton__arrow_open,
+          )}
+        />
       </span>
     </button>
   )

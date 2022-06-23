@@ -31,8 +31,9 @@ export const getYScaleAndAxis = ({
   height,
   minTickDistance = 36,
 }: TGetYScaleAndAxisParams): [
-  d3.ScaleContinuousNumeric<number, number>,
-  d3.Axis<number>,
+  scale: d3.ScaleContinuousNumeric<number, number>,
+  axis: d3.Axis<number>,
+  isLogarithmic: boolean,
 ] => {
   const logMin = Math.max(Math.floor(Math.log10(min)), 0)
   const logMax = Math.ceil(Math.log10(max))
@@ -57,5 +58,5 @@ export const getYScaleAndAxis = ({
     .ticks(ticksCount)
     .tickFormat(formatNumber)
 
-  return [scale, axis]
+  return [scale, axis, isLogScale]
 }

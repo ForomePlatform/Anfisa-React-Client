@@ -16,7 +16,7 @@ export const en = {
     applyFilters: 'Apply Filters',
     clear: 'Clear',
     replace: 'Replace',
-    add: '+ Add',
+    add: '+\u00a0Add',
     filter: '+ Filter',
     presetCreated: 'Preset has been created',
     showLess: 'Show less',
@@ -26,7 +26,7 @@ export const en = {
     closeWindow: 'Close window',
     creaitionIsInProcess: 'Dataset creation has not been finished yet',
     selectPreset: 'Select Preset',
-    plusAdd: '+ Add',
+    plusAdd: '+Add',
   },
   header: {
     version: {
@@ -129,7 +129,7 @@ export const en = {
     Compact: 'Compact View',
     Cozy: 'Cozy View',
     samples: 'Samples',
-    geneList: 'Gene List',
+    geneList: 'Gene\u00a0List',
     sample: 'Sample',
     tags: 'Tag',
     edit: 'Edit',
@@ -156,6 +156,16 @@ export const en = {
     attention:
       'Attention: Zone filters (Gene, Gene List, Sample, Tags) do not participate in dataset creation',
     addDataset: 'Add dataset',
+  },
+  mainTable: {
+    gene: 'Gene',
+    variant: 'Variant',
+    tags: 'Tag(s)',
+    proteinChange: 'Protein Change',
+    inSilico: 'In-Silico',
+    population: 'Population',
+    samples: 'Samples',
+    filter: 'Filter',
   },
   variant: {
     genes: 'Gene(s)',
@@ -253,6 +263,10 @@ export const en = {
     errors: {
       loadPreset: 'Failed to load preset "{presetName}"',
       joinPreset: 'Failed to join preset "{presetName}"',
+    },
+    leaveConfirm: {
+      title: 'Attention! All changes will be lost',
+      body: 'Are you sure you want to leave the page without saving?',
     },
   },
   dtree: {
@@ -362,5 +376,8 @@ export const en = {
     samples25: 'Samples-25',
     gene: 'Gene',
     variant: 'Variant',
+  },
+  paginationList: {
+    footer: '{ from } — { to } / { length }',
   },
 }

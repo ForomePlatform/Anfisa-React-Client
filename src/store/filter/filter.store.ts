@@ -1,6 +1,7 @@
 import cloneDeep from 'lodash/cloneDeep'
 import { makeAutoObservable, reaction, runInAction, toJS } from 'mobx'
 
+import { pushQueryParams } from '@core/history'
 import { t } from '@i18n'
 import { ActionsHistoryStore } from '@store/actions-history'
 import datasetStore from '@store/dataset/dataset'
@@ -33,6 +34,7 @@ export class FilterStore {
   method!: GlbPagesNames | FilterControlOptions
 
   private _conditions: TCondition[] = []
+
   private _isConditionsFetching = false
   private _selectedConditionIndex: number = -1
   private _attributeNameToAdd: string = ''
@@ -88,6 +90,7 @@ export class FilterStore {
       presetName => {
         if (presetName) {
           this.loadPreset(presetName)
+          this.updateURLWithPresetName(presetName)
         } else {
           this.resetPreset()
         }
@@ -147,6 +150,10 @@ export class FilterStore {
 
   public get isPresetModified(): boolean {
     return this._presetModifiedState === PresetModifiedState.Modified
+  }
+
+  public get isNotPreset(): boolean {
+    return this._presetModifiedState === PresetModifiedState.NotPreset
   }
 
   public get viewVariantsQuery(): IDsListArguments | undefined {
@@ -260,8 +267,6 @@ export class FilterStore {
     if (state === undefined) {
       if (this._presetModifiedState === PresetModifiedState.NotModified) {
         this._presetModifiedState = PresetModifiedState.Modified
-
-        filterPresetsStore.resetActivePreset()
       }
     } else if (state !== this._presetModifiedState) {
       this._presetModifiedState = state
@@ -328,5 +333,9 @@ export class FilterStore {
     }
 
     this.setPresetModifiedState(PresetModifiedState.NotPreset)
+  }
+
+  private updateURLWithPresetName(preset: string) {
+    pushQueryParams({ preset })
   }
 }

@@ -3,7 +3,8 @@ import styles from './preset-menu.module.css'
 import { ReactElement } from 'react'
 
 import { MenuList, MenuListItem } from '@ui/menu-list'
-import { IPopoverProps, Popover } from '@ui/popover'
+import { Popover } from '@ui/popover'
+import { IPopoverProps } from '@ui/popover/popover.interface'
 import { IVariantDrawerGridPreset } from '../../../variant-drawer.interface'
 
 interface IPresetMenuProps extends Omit<IPopoverProps, 'children'> {

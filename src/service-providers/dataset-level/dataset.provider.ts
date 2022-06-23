@@ -16,13 +16,13 @@ import {
   IRecdataArguments,
   ISolutions,
   ISolutionsArguments,
-  ITabReport,
   ITabReportArguments,
   IVsetupArguments,
   IVsetupAspectDescriptor,
   TGetDsListCompleteOptions,
   TRecCntResponse,
   TRecdata,
+  TTabReport,
 } from './dataset-level.interface'
 
 class DatasetProvider extends ServiceProviderBase {
@@ -59,8 +59,8 @@ class DatasetProvider extends ServiceProviderBase {
   public getTabReport(
     params: ITabReportArguments,
     options: Partial<AxiosRequestConfig> = {},
-  ): Promise<ITabReport[]> {
-    return this.post<ITabReport[]>('/tab_report', params, options).then(
+  ): Promise<TTabReport> {
+    return this.post<TTabReport>('/tab_report', params, options).then(
       res => res.data,
     )
   }

@@ -1,5 +1,6 @@
 import { makeAutoObservable, reaction } from 'mobx'
 
+import { getQueryParam, pushQueryParams } from '@core/history'
 import { VariantAspectsAsyncStore } from '@store/variant-aspects.async.store'
 import mainTableStore from '@store/ws/main-table.store'
 import { IReccntArguments } from '@service-providers/dataset-level'
@@ -8,11 +9,13 @@ import { TWsTagsAsyncStoreQuery, WsTagsAsyncStore } from './ws-tags.async.store'
 
 export class VariantStore {
   readonly record = new VariantAspectsAsyncStore({ keepPreviousData: true })
-  readonly tags = new WsTagsAsyncStore()
+  readonly tags = new WsTagsAsyncStore({
+    onChange: (rec, tags) => mainTableStore.tabReport.updateRowTags(rec, tags),
+  })
 
-  isDrawerVisible = false
-  index = -1
-  isTagsModified = false
+  private isHistoryObserved = false
+
+  variantNo = -1
 
   constructor() {
     makeAutoObservable(this)
@@ -21,51 +24,91 @@ export class VariantStore {
     reaction(() => this.tagsQuery, this.tags.handleQuery)
   }
 
+  public get variantNumber(): number {
+    return this.variantNo
+  }
+
   public get datasetName(): string {
     return datasetStore.datasetName
   }
 
-  setIsTagsModified(value: boolean) {
-    this.isTagsModified = value
+  public get isVariantShown(): boolean {
+    return this.variantNo >= 0
+  }
+
+  observeVariantHistory() {
+    this.isHistoryObserved = true
+    const handler = () => {
+      const variantNo = parseInt(getQueryParam('variant') ?? '', 10)
+
+      this.isHistoryObserved = false
+
+      if (!Number.isNaN(variantNo)) {
+        this.showVariant(variantNo)
+      } else {
+        this.closeVariant()
+      }
+
+      this.isHistoryObserved = true
+    }
+
+    handler()
+
+    window.addEventListener('popstate', handler)
+
+    return () => {
+      this.isHistoryObserved = false
+      window.removeEventListener('popstate', handler)
+    }
   }
 
   prevVariant() {
-    mainTableStore.filteredNo.length === 0
-      ? (this.index += 1)
-      : (this.index =
-          mainTableStore.filteredNo[
-            mainTableStore.filteredNo.indexOf(this.index) - 1
-          ])
+    this.showVariant(
+      mainTableStore.filteredNo.length === 0
+        ? this.variantNo + 1
+        : mainTableStore.filteredNo[
+            mainTableStore.filteredNo.indexOf(this.variantNo) - 1
+          ],
+    )
   }
 
   nextVariant() {
-    mainTableStore.filteredNo.length === 0
-      ? (this.index += 1)
-      : (this.index =
-          mainTableStore.filteredNo[
-            mainTableStore.filteredNo.indexOf(this.index) + 1
-          ])
+    this.showVariant(
+      mainTableStore.filteredNo.length === 0
+        ? this.variantNo + 1
+        : mainTableStore.filteredNo[
+            mainTableStore.filteredNo.indexOf(this.variantNo) + 1
+          ],
+    )
   }
 
-  setDrawerVisible(visible: boolean) {
-    this.isDrawerVisible = visible
+  showVariant(variantNo: number) {
+    if (this.variantNo !== variantNo) {
+      this.variantNo = variantNo
+
+      if (this.isHistoryObserved) {
+        pushQueryParams({
+          variant: variantNo >= 0 ? `${variantNo}` : null,
+        })
+      }
+    }
   }
 
-  setIndex(index: number) {
-    this.index = index
+  closeVariant = () => {
+    this.showVariant(-1)
   }
 
   private get recordQuery(): IReccntArguments | undefined {
-    if (!this.datasetName || this.index < 0) {
+    if (!this.datasetName || this.variantNo < 0) {
       return undefined
     }
 
     const details = mainTableStore.wsRecords?.find(
-      record => record.no === this.index,
+      record => record.no === this.variantNo,
     )
     const query: IReccntArguments = {
       ds: this.datasetName,
-      rec: this.index,
+      rec: this.variantNo,
     }
 
     const isVariantWithoutGene = details?.lb.includes('[None]')
@@ -78,13 +121,13 @@ export class VariantStore {
   }
 
   private get tagsQuery(): TWsTagsAsyncStoreQuery | undefined {
-    if (!this.datasetName || this.index < 0) {
+    if (!this.datasetName || this.variantNo < 0) {
       return undefined
     }
 
     return {
       ds: this.datasetName,
-      rec: this.index,
+      rec: this.variantNo,
     }
   }
 }

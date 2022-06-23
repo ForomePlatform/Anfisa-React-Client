@@ -4,7 +4,8 @@ import { ReactElement, ReactNode } from 'react'
 import cn from 'classnames'
 
 import { Icon } from '@ui/icon'
-import { IPopoverProps, Popover } from '@ui/popover'
+import { Popover } from '@ui/popover'
+import { IPopoverProps } from '@ui/popover/popover.interface'
 
 export interface IDrawerPopoverProps
   extends Pick<

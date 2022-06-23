@@ -1,0 +1,31 @@
+.entry {
+  @apply typography-xxs;
+
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &::before {
+    content: "";
+    width: 5px;
+    height: 5px;
+    border-radius: 100%;
+    overflow: hidden;
+    margin-right: theme("spacing.1");
+    background: theme("colors.grey.light")
+  }
+
+  &_10::before {
+    background: theme("colors.green.secondary")
+  }
+
+  &_20::before {
+    background: theme("colors.yellow.bright")
+  }
+
+  &_30::before {
+    background: theme("colors.yellow.dirty")
+  }
+}

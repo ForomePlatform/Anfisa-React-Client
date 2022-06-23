@@ -8,7 +8,7 @@ import {
   TCondition,
   TItemsCount,
 } from '@service-providers/common/common.interface'
-import { ITabReport } from '@service-providers/dataset-level/dataset-level.interface'
+import { TTabReport } from '@service-providers/dataset-level'
 import wsDatasetProvider from '@service-providers/ws-dataset-support/ws-dataset-support.provider'
 import { TabReportPaginatedAsyncStore } from './tab-report-paginated.async.store'
 import variantStore from './variant'
@@ -19,7 +19,6 @@ export class MainTable {
   public tabReport = new TabReportPaginatedAsyncStore(this.wsList)
 
   public isTableResizing = false
-  public openedVariantPageNo = 0
 
   memorizedConditions:
     | {
@@ -46,8 +45,8 @@ export class MainTable {
     )
   }
 
-  public get tabReportPagesData(): ITabReport[] {
-    const pagesData: ITabReport[] = []
+  public get tabReportPagesData(): TTabReport {
+    const pagesData: TTabReport = []
 
     this.tabReport.pages.forEach(page =>
       page.data?.forEach(item => {
@@ -106,7 +105,7 @@ export class MainTable {
 
     const wsTags = await wsDatasetProvider.wsTags({
       ds: datasetStore.datasetName,
-      rec: variantStore.index,
+      rec: variantStore.variantNo,
     })
 
     runInAction(() => {
@@ -118,17 +117,6 @@ export class MainTable {
 
   setIsTableRecizing(value: boolean) {
     this.isTableResizing = value
-  }
-
-  setOpenedVariantPageNo(variantIndex: number) {
-    const totalPagesAmount = this.tabReport.pagesCount
-    const totalVariantsLoaded = this.tabReportPagesData.length
-
-    const variantPerPage = totalVariantsLoaded / totalPagesAmount
-    const difference = variantIndex - variantPerPage
-
-    this.openedVariantPageNo =
-      difference < 1 ? 0 : Math.ceil(difference / variantPerPage)
   }
 
   memorizeFilterConditions() {
