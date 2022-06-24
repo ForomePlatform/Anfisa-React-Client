@@ -27,15 +27,20 @@ export interface IWsList {
 export interface IZoneDescriptor {
   zone: string
   title: string
+}
+
+export interface IZoneWithVariants extends IZoneDescriptor {
   variants: string[]
+}
+
+export interface IZoneVariantsArguments {
+  ds: string
+  zone: string
 }
 
 export interface IZoneListArguments {
   ds: string
-  zone?: string
 }
-
-export type TZoneList = IZoneDescriptor | IZoneDescriptor[]
 
 // ws_tags
 
@@ -69,11 +74,11 @@ export interface ITagSelectArguments {
 }
 
 export interface ITagSelect {
-  'tag-list': string[]
+  tagList: string[]
   tag?: string
-  'tags-state': any
-  'tag-rec-list'?: number[]
-  'tags-rec-list': number[]
+  tagsState: any
+  tagRecList?: number[]
+  tagsRecList: number[]
 }
 
 // macro_tagging

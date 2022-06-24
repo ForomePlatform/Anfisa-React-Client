@@ -1,17 +1,11 @@
-import { makeAutoObservable, runInAction } from 'mobx'
+import { makeAutoObservable, reaction } from 'mobx'
 
-import {
-  IZoneDescriptor,
-  TTagsDescriptor,
-} from '@service-providers/ws-dataset-support/ws-dataset-support.interface'
-import wsDatasetProvider from '@service-providers/ws-dataset-support/ws-dataset-support.provider'
-import datasetStore from '../dataset/dataset'
+import dataset from '@store/dataset/dataset'
+import { TTagsDescriptor } from '@service-providers/ws-dataset-support'
+import { TagSelectAsyncStore } from './tag-select.async.store'
+import { ZoneVariantsAsyncStore } from './zone-variants.async.store'
 
 class ZoneStore {
-  genes: string[] = []
-  genesList: string[] = []
-  tags: string[] = []
-  samples: string[] = []
   zone: any[] = []
 
   selectedGenes: string[] = []
@@ -24,20 +18,47 @@ class ZoneStore {
   localSamples: string[] = []
   localTags: string[] = []
 
-  isFather: boolean | undefined = false
-  isMother: boolean | undefined = false
-  isProband: boolean | undefined = false
-
   isModeNOT = false
   modeNotSubmitted = false
   isModeWithNotes = false
   modeWithNotesSubmitted = false
 
+  private readonly geneVariants = new ZoneVariantsAsyncStore('Symbol')
+  private readonly genesListVariants = new ZoneVariantsAsyncStore('Panels')
+  private readonly sampleVariants = new ZoneVariantsAsyncStore('Has_Variant')
+  private readonly tagsSelect = new TagSelectAsyncStore()
+
   constructor() {
     makeAutoObservable(this)
+
+    reaction(
+      () => dataset.datasetName,
+      datasetName => {
+        this.geneVariants.setQuery({ datasetName })
+        this.genesListVariants.setQuery({ datasetName })
+        this.sampleVariants.setQuery({ datasetName })
+        this.tagsSelect.setQuery({ datasetName })
+      },
+    )
   }
 
-  get specialSamples(): [boolean, boolean, boolean] {
+  public get genes(): string[] {
+    return this.geneVariants.variants
+  }
+
+  public get genesList(): string[] {
+    return this.genesListVariants.variants
+  }
+
+  public get samples(): string[] {
+    return this.sampleVariants.variants
+  }
+
+  public get tags(): string[] {
+    return this.tagsSelect.tags
+  }
+
+  public get specialSamples(): [boolean, boolean, boolean] {
     let proband = false
     let mother = false
     let father = false
@@ -53,6 +74,10 @@ class ZoneStore {
     }
 
     return [proband, mother, father]
+  }
+
+  public invalidateTags(): void {
+    this.tagsSelect.invalidate()
   }
 
   setZoneIndex(zone: [string, string[]], index: number): void {
@@ -91,40 +116,6 @@ class ZoneStore {
 
   clearZone() {
     this.zone = []
-  }
-
-  async fetchZoneListAsync(zone: string) {
-    const zoneList = (await wsDatasetProvider.getZoneList({
-      ds: datasetStore.datasetName,
-      zone,
-    })) as IZoneDescriptor
-
-    runInAction(() => {
-      zone === 'Symbol'
-        ? (this.genes = zoneList.variants)
-        : (this.genesList = zoneList.variants)
-    })
-  }
-
-  async fetchZoneSamplesAsync() {
-    const zoneList = (await wsDatasetProvider.getZoneList({
-      ds: datasetStore.datasetName,
-      zone: 'Has_Variant',
-    })) as IZoneDescriptor
-
-    runInAction(() => {
-      this.samples = zoneList.variants
-    })
-  }
-
-  async fetchZoneTagsAsync() {
-    const tagSelect = await wsDatasetProvider.getTagSelect({
-      ds: datasetStore.datasetName,
-    })
-
-    runInAction(() => {
-      this.tags = [...tagSelect['tag-list']].filter(item => item !== '_note')
-    })
   }
 
   addGene(gene: string) {
@@ -179,30 +170,10 @@ class ZoneStore {
 
       this.removeZone(['Has_Variant', this.selectedSamples])
     }
-
-    this.paintSelectedSamples()
   }
 
-  paintSelectedSamples() {
-    const sampleTypes = new Set(
-      this.selectedSamples.map(sample => sample.slice(0, 7).trim()),
-    )
-
-    this.isProband = sampleTypes.has('proband')
-
-    this.isMother = sampleTypes.has('mother')
-
-    this.isFather = sampleTypes.has('father')
-  }
-
-  unselectAllSamples = (type?: string) => {
+  unselectAllSamples = () => {
     this.localSamples = []
-
-    if (type === 'clearAll') {
-      this.isFather = false
-      this.isMother = false
-      this.isProband = false
-    }
   }
 
   addLocalTag(tagName: string) {
@@ -245,7 +216,10 @@ class ZoneStore {
     if (type === 'isTags') this.localTags = this.selectedTags
   }
 
-  hasDifferenceWithZoneTags(tags: TTagsDescriptor): boolean {
+  hasDifferenceWithZoneTags(
+    tags: TTagsDescriptor,
+    prevTags?: TTagsDescriptor,
+  ): boolean {
     const extendedSelectedTags = this.isModeWithNotes
       ? [...this.selectedTags, '_note']
       : this.selectedTags
@@ -254,16 +228,20 @@ class ZoneStore {
       return false
     }
 
-    return this.isModeNOT
-      ? Object.keys(tags).some(tag => extendedSelectedTags.includes(tag))
-      : Object.keys(tags).every(tag => !extendedSelectedTags.includes(tag))
+    const check = (testTags: TTagsDescriptor): boolean =>
+      this.isModeNOT
+        ? Object.keys(testTags).some(tag => extendedSelectedTags.includes(tag))
+        : Object.keys(testTags).every(
+            tag => !extendedSelectedTags.includes(tag),
+          )
+
+    const hasDifferenceWithCurrent = check(tags)
+    const hasDifferenceWithPrevious = prevTags ? check(prevTags) : false
+
+    return hasDifferenceWithCurrent || hasDifferenceWithPrevious
   }
 
   resetAllSelectedItems() {
-    this.genes = []
-    this.genesList = []
-    this.samples = []
-    this.tags = []
     this.selectedGenes = []
     this.selectedGenesList = []
     this.selectedSamples = []
@@ -272,9 +250,6 @@ class ZoneStore {
     this.localGenesList = []
     this.localSamples = []
     this.localTags = []
-    this.isFather = false
-    this.isMother = false
-    this.isProband = false
     this.setModeNOT(false)
     this.setModeWithNotes(false)
     this.modeNotSubmitted = false

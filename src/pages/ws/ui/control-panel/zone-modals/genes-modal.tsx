@@ -14,10 +14,6 @@ export const GenesModal = observer(({ close, title }: IGenesModalProps) => {
   const [searchValue, setSearchValue] = useState('')
 
   useEffect(() => {
-    if (!zoneStore.genes.length) {
-      zoneStore.fetchZoneListAsync('Symbol')
-    }
-
     if (zoneStore.selectedGenes.length > 0) {
       zoneStore.syncSelectedAndLocalFilters('isGenes')
     }

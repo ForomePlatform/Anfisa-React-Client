@@ -33,7 +33,7 @@ export const NoResultsFound = ({
   }
 
   return (
-    <div className="flex flex-col justify-center items-center h-full">
+    <div className="flex flex-col justify-center items-center h-full text-center">
       <div className={className ? className : 'text-grey-blue'}>{text}</div>
       {renderAction()}
     </div>

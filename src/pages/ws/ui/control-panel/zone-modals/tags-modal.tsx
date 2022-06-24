@@ -14,10 +14,6 @@ export const TagsModal = observer(({ close, title }: ITagsModalProps) => {
   const [searchValue, setSearchValue] = useState('')
 
   useEffect(() => {
-    if (!zoneStore.tags.length) {
-      zoneStore.fetchZoneTagsAsync()
-    }
-
     if (zoneStore.selectedTags.length > 0) {
       zoneStore.syncSelectedAndLocalFilters('isTags')
     }

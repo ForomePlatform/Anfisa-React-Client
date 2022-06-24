@@ -15,10 +15,6 @@ export const SamplesModal = observer(({ close, title }: ISamplesModalProps) => {
   const [searchValue, setSearchValue] = useState('')
 
   useEffect(() => {
-    if (!zoneStore.samples.length) {
-      zoneStore.fetchZoneSamplesAsync()
-    }
-
     if (zoneStore.selectedSamples.length > 0) {
       zoneStore.syncSelectedAndLocalFilters('isSamples')
     }
@@ -28,13 +24,12 @@ export const SamplesModal = observer(({ close, title }: ISamplesModalProps) => {
   const handleApplyAsync = async () => {
     zoneStore.createSelectedZoneFilter('isSamples')
     zoneStore.addZone(['Has_Variant', zoneStore.selectedSamples])
-    zoneStore.paintSelectedSamples()
 
     close()
   }
 
   const onClearAll = () => {
-    zoneStore.unselectAllSamples('clearAll')
+    zoneStore.unselectAllSamples()
   }
 
   return (
