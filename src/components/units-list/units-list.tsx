@@ -4,6 +4,7 @@ import { ReactNode, useState } from 'react'
 import cn from 'classnames'
 
 import { TFunctionalUnit, TUnitGroups } from '@store/stat-units'
+import { ProgressBar } from '@ui/progress-bar'
 import { TPropertyStatus } from '@service-providers/common'
 import { FunctionalUnits } from './functional-units'
 import { useFilteredUnits } from './units-lilst.utils'
@@ -15,6 +16,7 @@ export interface IUnitsListProps {
   className?: string
   isDark?: boolean
   withCharts?: boolean
+  downloadedData: number
   subHeader?: ReactNode
   groups: TUnitGroups
   functionalUnits: TFunctionalUnit[]
@@ -33,6 +35,7 @@ export const UnitsList = ({
   groups,
   functionalUnits,
   functionalConditions,
+  downloadedData,
   onSelect,
   onFunctionalConditionSelect,
   onFunctionalConditionDelete,
@@ -73,6 +76,11 @@ export const UnitsList = ({
         onExpand={() => setCollapsedGroups([])}
         onCollapse={() => setCollapsedGroups(groups.map(group => group.name))}
       />
+      {downloadedData !== 100 && (
+        <div className={styles.unitsList__controls}>
+          <ProgressBar status={downloadedData} step={10} size="xs" />
+        </div>
+      )}
       {subHeader && (
         <div className={styles.unitsList__subHeader}>{subHeader}</div>
       )}

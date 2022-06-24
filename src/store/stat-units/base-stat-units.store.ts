@@ -51,7 +51,8 @@ export abstract class BaseStatUnitsStore<
 
   get dataReady(): number {
     const units = this.data?.units || []
-    return toJS(units.filter(it => !it.incomplete).length / units.length)
+    const downloaded = units.length - units.filter(it => it.incomplete).length
+    return (downloaded / units.length) * 100
   }
 
   get totalCounts(): TFilteringStatCounts | undefined {

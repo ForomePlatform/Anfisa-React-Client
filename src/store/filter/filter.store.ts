@@ -96,6 +96,12 @@ export class FilterStore {
     )
   }
 
+  public get downloadedAmount(): number {
+    return this.isConditionsEmpty
+      ? this.initialStat.dataReady
+      : this.filteredStat.dataReady
+  }
+
   public get datasetName(): string {
     return datasetStore.datasetName
   }

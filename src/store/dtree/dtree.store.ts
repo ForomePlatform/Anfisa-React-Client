@@ -125,6 +125,10 @@ export class DtreeStore {
     return counts ?? []
   }
 
+  public get dataReady(): number {
+    return this.stat.dataReady
+  }
+
   public get isDtreeModified(): boolean {
     return this._dtreeModifiedState === DtreeModifiedState.Modified
   }
