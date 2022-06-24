@@ -28,11 +28,11 @@ import { SolutionSelect } from './solution-select'
 export const FilterControl = observer(
   ({
     SolutionControl,
-    SolutionCreate,
+    CreatePresetButton,
     TextEditorButton,
     className,
     isForwardAllowed,
-    isSaveButtonShown,
+    isPresetCreationAllowed,
     isBackwardAllowed,
     pageName,
     goForward,
@@ -93,11 +93,11 @@ export const FilterControl = observer(
 
             <SolutionControl />
 
-            {isSaveButtonShown && (
+            {isPresetCreationAllowed && (
               <>
                 <Divider orientation="vertical" className="h-[75%]" />
 
-                <SolutionCreate />
+                <CreatePresetButton />
               </>
             )}
 

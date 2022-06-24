@@ -5,9 +5,9 @@ import { t } from '@i18n'
 import filterPresetsStore from '@store/filter-presets'
 import { Button } from '@ui/button'
 import { SolutionCreateDialog } from '@components/solution-control/solution-create-dialog'
-import { createPreset } from './solution-create-refiner.utils'
+import { createPreset } from './create-preset-refiner.utils'
 
-export const SolutionCreateRefiner = (): ReactElement => {
+export const CreatePresetRefiner = (): ReactElement => {
   const { availablePresets } = filterPresetsStore
 
   const [createDialog, openCreateDialog, closeCreateDialog] = useModal()
@@ -15,7 +15,9 @@ export const SolutionCreateRefiner = (): ReactElement => {
   return (
     <>
       <Button
-        text={t('variant.savePreset')}
+        text={t('solutionControl.saveSolution', {
+          controlName: t('solutionControl.filterPreset'),
+        })}
         className="whitespace-nowrap"
         variant="secondary-dark"
         onClick={openCreateDialog}

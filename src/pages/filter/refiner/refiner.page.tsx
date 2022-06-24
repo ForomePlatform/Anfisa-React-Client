@@ -16,8 +16,8 @@ import { GlbPagesNames } from '@glb/glb-names'
 import { FilterControl } from '@pages/filter/common/filter-control/filter-control'
 import { FilterRefiner } from '@pages/filter/refiner/components/filter-refiner'
 import { FilterControlOptionsNames } from '../common/filter-control/filter-control.const'
+import { CreatePresetRefiner } from './components/create-preset-refiner'
 import { SolutionControlRefiner } from './components/solution-control-refiner'
-import { SolutionCreateRefiner } from './components/solution-create-refiner'
 
 export const RefinerPage = observer((): ReactElement => {
   const { isXL } = datasetStore
@@ -25,7 +25,7 @@ export const RefinerPage = observer((): ReactElement => {
   const { variantCounts, dnaVariantsCounts, transcriptsCounts } =
     mainTableStore.fixedStatAmount
 
-  const isSaveButtonShown = !filterStore.isConditionsEmpty
+  const isPresetCreationAllowed = !filterStore.isConditionsEmpty
 
   useDatasetName()
 
@@ -54,10 +54,10 @@ export const RefinerPage = observer((): ReactElement => {
       <FilterControl
         pageName={FilterControlOptionsNames[GlbPagesNames.Refiner]}
         SolutionControl={SolutionControlRefiner}
-        SolutionCreate={SolutionCreateRefiner}
+        CreatePresetButton={CreatePresetRefiner}
         isBackwardAllowed={filterStore.actionHistory.isBackwardAllowed}
         isForwardAllowed={filterStore.actionHistory.isForwardAllowed}
-        isSaveButtonShown={isSaveButtonShown}
+        isPresetCreationAllowed={isPresetCreationAllowed}
         goForward={filterStore.actionHistory.goForward}
         goBackward={filterStore.actionHistory.goBackward}
         className={styles.refinerPage__controls}
