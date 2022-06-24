@@ -2,6 +2,7 @@ import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
+import filterStore from '@store/filter'
 import filterPresetsStore from '@store/filter-presets'
 import { SolutionControl } from '@components/solution-control'
 import {
@@ -19,6 +20,11 @@ export const SolutionControlRefiner = observer((): ReactElement => {
       selected={activePreset}
       solutions={availablePresets}
       controlName={t('solutionControl.filterPreset')}
+      modifiedSolution={
+        filterStore.isPresetModified
+          ? filterPresetsStore.activePreset
+          : undefined
+      }
       onApply={applyPreset}
       onJoin={joinPreset}
       onModify={modifyPreset}

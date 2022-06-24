@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useMemo, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 
 import { useModal } from '@core/hooks/use-modal'
 import { usePopover } from '@core/hooks/use-popover'
@@ -12,6 +12,7 @@ interface ISolutionControlProps {
   controlName: string
   solutions: ISolutionEntryDescription[] | undefined
   selected: string
+  modifiedSolution?: string
   onApply: (solutionName: string) => void
   onJoin?: (solutionName: string) => void
   onModify: (solutionName: string) => void
@@ -23,6 +24,7 @@ export const SolutionControl = ({
   solutions,
   controlName,
   selected: selectedProp,
+  modifiedSolution,
   onApply,
   onJoin,
   onModify,
@@ -34,12 +36,7 @@ export const SolutionControl = ({
     solutionName: '',
   })
 
-  const isSelectedSolutionNonStandard = useMemo(
-    () =>
-      !!selectedProp &&
-      !solutions?.find(({ name }) => name === selectedProp)?.standard,
-    [selectedProp, solutions],
-  )
+  const isModified = !!(selectedProp && modifiedSolution === selectedProp)
 
   useEffect(() => {
     if (!isPopoverOpen) {
@@ -54,10 +51,7 @@ export const SolutionControl = ({
         solutionName={selectedProp}
         controlName={controlName}
         isOpen={isPopoverOpen}
-        isDeleteShown={isSelectedSolutionNonStandard}
-        onDeleteClick={() => {
-          openDeleteDialog({ solutionName: selectedProp })
-        }}
+        isModified={isModified}
         onClick={e => onToggle(e.currentTarget)}
         onMouseUp={event => event.stopPropagation()}
       />
@@ -66,6 +60,7 @@ export const SolutionControl = ({
         onClose={closePopover}
         anchorEl={popoverAnchor}
         solutions={solutions}
+        modifiedSolution={modifiedSolution}
         selected={selected}
         onSelect={setSelected}
         onJoin={onJoin}

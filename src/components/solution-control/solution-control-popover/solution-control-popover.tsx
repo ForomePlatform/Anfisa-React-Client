@@ -16,12 +16,14 @@ interface ISolutionControlPopoverProps extends IPopoverBaseProps {
   onModify: (solutionName: string) => void
   onDelete: (solutionName: string) => void
   solutions: ISolutionEntryDescription[] | undefined
+  modifiedSolution?: string
   selected: string
 }
 
 export const SolutionControlPopover = ({
   solutions,
   selected,
+  modifiedSolution,
   onSelect,
   onApply,
   onJoin,
@@ -39,6 +41,7 @@ export const SolutionControlPopover = ({
             solutions={solutions}
             selected={selected}
             onSelect={onSelect}
+            modifiedSolution={modifiedSolution}
             onModify={solutionName => {
               onClose?.()
               onModify(solutionName)

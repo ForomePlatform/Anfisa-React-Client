@@ -15,7 +15,9 @@ export const SamplesModal = observer(({ close, title }: ISamplesModalProps) => {
   const [searchValue, setSearchValue] = useState('')
 
   useEffect(() => {
-    zoneStore.samples.length <= 0 && zoneStore.fetchZoneSamplesAsync()
+    if (!zoneStore.samples.length) {
+      zoneStore.fetchZoneSamplesAsync()
+    }
 
     if (zoneStore.selectedSamples.length > 0) {
       zoneStore.syncSelectedAndLocalFilters('isSamples')

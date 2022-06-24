@@ -19,4 +19,5 @@ export interface IEnumConditionProps {
   toggleShowZeroes: (value: boolean) => void
   controls?: (props: IEnumConditionControlsProps) => ReactElement | null
   onTouch?: () => void
+  paginationHeight: string
 }
