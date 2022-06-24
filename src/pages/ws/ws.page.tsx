@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite'
 
 import { useDatasetName } from '@core/hooks/use-dataset-name'
 import { useParams } from '@core/hooks/use-params'
+import { usePreset } from '@core/hooks/use-preset'
 import filterStore from '@store/filter'
 import mainTableStore from '@store/ws/main-table.store'
 import variantStore from '@store/ws/variant'
@@ -20,6 +21,8 @@ export const WSPage = observer((): ReactElement => {
   const { conditions } = filterStore
 
   useDatasetName()
+
+  usePreset()
 
   useEffect(() => {
     if (stringifyedConditions && !conditions.length) {
