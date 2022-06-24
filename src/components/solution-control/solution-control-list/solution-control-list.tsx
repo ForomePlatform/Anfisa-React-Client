@@ -1,6 +1,7 @@
 import styles from './solution-control-list.module.css'
 
 import { ReactElement, useState } from 'react'
+import cn from 'classnames'
 
 import { t } from '@i18n'
 import { Icon } from '@ui/icon'
@@ -9,8 +10,9 @@ import { Popover } from '@ui/popover'
 import { ISolutionEntryDescription } from '@service-providers/common'
 
 interface ISolutionControlListProps {
-  className?: string
   solutions: ISolutionEntryDescription[]
+  modifiedSolution?: string
+  className?: string
   selected?: string
   isModifyDisabled: boolean
   onSelect: (solutionName: string) => void
@@ -22,6 +24,7 @@ export const SolutionControlList = ({
   className,
   solutions,
   selected,
+  modifiedSolution,
   onSelect,
   onModify,
   onDelete,
@@ -37,6 +40,35 @@ export const SolutionControlList = ({
     setContextMenuItem(null)
   }
 
+  const renderActions = (name: string, standard: boolean) => {
+    const actions: JSX.Element[] = []
+    const isModified = modifiedSolution && modifiedSolution === name
+
+    if (isModified) {
+      actions.push(
+        <span>
+          <Icon name="Edit" />
+        </span>,
+      )
+    }
+
+    if (!standard) {
+      actions.push(
+        <button
+          className={styles.contextMenuButton}
+          onClick={event => {
+            onSelect(name)
+            setContextMenuItem({ name, element: event.currentTarget })
+          }}
+        >
+          <Icon name="Ellipsis" size={12} />
+        </button>,
+      )
+    }
+
+    return <span className={cn(styles.menuListItemActions)}>{actions}</span>
+  }
+
   return (
     <>
       <MenuList className={className} wrap="nowrap">
@@ -46,19 +78,7 @@ export const SolutionControlList = ({
             label={name}
             isSelected={selected === name}
             onClick={() => onSelect(name)}
-            actions={
-              !standard && (
-                <button
-                  className={styles.contextMenuButton}
-                  onClick={event => {
-                    onSelect(name)
-                    setContextMenuItem({ name, element: event.currentTarget })
-                  }}
-                >
-                  <Icon name="Ellipsis" size={12} />
-                </button>
-              )
-            }
+            actions={renderActions(name, standard)}
           />
         ))}
       </MenuList>

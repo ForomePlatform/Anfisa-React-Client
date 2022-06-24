@@ -13,13 +13,13 @@ import { SolutionControlList } from '../solution-control-list'
 interface ISolutionControlPopoverProps extends IPopoverBaseProps {
   isCreateDisabled?: boolean
   onCreate: () => void
-  isModifyDisabled: boolean
   onApply: (solutionName: string) => void
   onJoin?: (solutionName: string) => void
   onSelect: (solutionName: string) => void
   onModify: (solutionName: string) => void
   onDelete: (solutionName: string) => void
   solutions: ISolutionEntryDescription[] | undefined
+  modifiedSolution?: string
   selected: string
   controlName: string
 }
@@ -29,6 +29,7 @@ export const SolutionControlPopover = ({
   selected,
   isCreateDisabled,
   controlName,
+  modifiedSolution,
   onCreate,
   onSelect,
   onApply,
@@ -36,7 +37,6 @@ export const SolutionControlPopover = ({
   onDelete,
   onModify,
   onClose,
-  isModifyDisabled,
   ...popoverProps
 }: ISolutionControlPopoverProps): ReactElement => {
   return (
@@ -64,7 +64,7 @@ export const SolutionControlPopover = ({
             solutions={solutions}
             selected={selected}
             onSelect={onSelect}
-            isModifyDisabled={isModifyDisabled}
+            modifiedSolution={modifiedSolution}
             onModify={solutionName => {
               onClose?.()
               onModify(solutionName)

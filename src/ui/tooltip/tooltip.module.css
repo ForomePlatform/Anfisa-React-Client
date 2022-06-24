@@ -1,0 +1,88 @@
+.tooltip {
+  @apply text-xs;
+
+  position: absolute;
+  z-index: -1;
+  border-radius: 2px;
+  left: -999px;
+  top: -999px;
+  opacity: 0;
+  transition: opacity 0.15s ease-in-out;
+
+  &_light {
+    color: theme("colors.black");
+    background: theme("colors.white");
+    border: 1px solid theme("colors.blue.secondary");
+  }
+
+  &_dark {
+    color: theme("colors.white");
+    background: theme("colors.blue.dark");
+    border: 1px solid theme("colors.blue.secondary");
+  }
+
+  &_shown {
+    z-index: 2000;
+    opacity: 0.9;
+  }
+
+  &__content {
+    position: relative;
+    z-index: 2;
+    padding: theme("spacing.1") theme("spacing.2");
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  &_light &__content {
+    background: theme("colors.white");
+  }
+
+  &_dark &__content {
+    background: theme("colors.blue.dark");
+  }
+
+  &__arrow {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+
+    &::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      left: 0;
+      top: 0;
+      width: 10px;
+      height: 10px;
+      transform: rotate(-45deg);
+      transform-origin: center center;
+    }
+  }
+
+  &_light &__arrow::before {
+    background: theme("colors.white");
+    border: 1px solid theme("colors.blue.secondary");
+  }
+
+  &_dark &__arrow::before {
+    background: theme("colors.blue.dark");
+    border: 1px solid theme("colors.blue.secondary");
+  }
+
+  &[data-popper-placement^="top"] &__arrow {
+    bottom: -4px;
+  }
+
+  &[data-popper-placement^="right"] &__arrow {
+    left: -4px;
+  }
+
+  &[data-popper-placement^="bottom"] &__arrow {
+    top: -4px;
+  }
+
+  &[data-popper-placement^="left"] &__arrow {
+    right: -4px;
+  }
+}

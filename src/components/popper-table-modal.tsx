@@ -3,7 +3,7 @@ import { Argument } from 'classnames'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
-import { ViewTypeEnum } from '@core/enum/view-type-enum'
+import { ViewTypeTableEnum } from '@core/enum/view-type-table-enum'
 import { t } from '@i18n'
 import zoneStore from '@store/ws/zone'
 import { InputSearch } from '@components/input-search'
@@ -15,13 +15,13 @@ interface IPopperTableModalProps {
   selectedAmount?: number
   searchValue: string
   searchInputPlaceholder?: string
-  viewType?: ViewTypeEnum
+  viewType?: ViewTypeTableEnum
   children: ReactElement
   onSelectAll?: () => void
   onClearAll?: () => void
   onClose?: () => void
   onApply?: () => void
-  setViewType?: (viewType: ViewTypeEnum) => void
+  setViewType?: (viewType: ViewTypeTableEnum) => void
   onChange?: (value: string) => void
   isGenes?: boolean
   isGenesList?: boolean

@@ -1,17 +1,17 @@
-import { ReactElement } from 'react'
+import { ReactElement, ReactNode } from 'react'
 import cn from 'classnames'
 
 import { Icon } from '@ui/icon'
 import { Switch } from '@ui/switch'
 
 interface IColumnNameItemProps {
-  name: string
+  title: ReactNode
   isChecked: boolean
-  onClickSwitch: () => void
+  onClickSwitch: (checked: boolean) => void
 }
 
-export const ColumnNameItem = ({
-  name,
+export const CustomizableListItem = ({
+  title,
   onClickSwitch,
   isChecked,
 }: IColumnNameItemProps): ReactElement => {
@@ -20,7 +20,7 @@ export const ColumnNameItem = ({
       <div className="flex items-center">
         <Icon name="Dnd" />
         <span className={cn('text-12 my-1', { 'font-medium': isChecked })}>
-          {name}
+          {title}
         </span>
       </div>
 

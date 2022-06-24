@@ -10,6 +10,7 @@ export interface IVariantsTableColumn {
   component: ComponentType<ICellProps>
   width: number
   grow?: number
+  isRequired?: boolean
   isSticky?: boolean
 }
 

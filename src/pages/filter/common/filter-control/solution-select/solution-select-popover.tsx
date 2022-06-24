@@ -6,7 +6,7 @@ import { IPopoverBaseProps } from '@ui/popover/popover.interface'
 import { PopperMenu } from '@components/popper-menu/popper-menu'
 import { PopperMenuItem } from '@components/popper-menu/popper-menu-item'
 import { GlbPagesNames } from '@glb/glb-names'
-import { popoverOffset } from '@pages/ws/constants'
+import { popoverOffset } from '@pages/ws/ws.constants'
 import { FilterControlOptions } from '../filter-control.const'
 
 interface ISolutionSelectPopoverProps extends IPopoverBaseProps {

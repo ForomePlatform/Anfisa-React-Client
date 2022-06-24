@@ -23,7 +23,6 @@ export const DrawerNote = observer(() => {
   }
 
   const handleSave = (noteText: string | null) => {
-    variantStore.setIsTagsModified(true)
     variantStore.tags.saveNote(noteText)
     closePopover()
   }

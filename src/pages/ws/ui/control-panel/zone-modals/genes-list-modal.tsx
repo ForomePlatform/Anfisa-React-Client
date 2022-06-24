@@ -16,7 +16,9 @@ export const GenesListModal = observer(
     const [searchValue, setSearchValue] = useState('')
 
     useEffect(() => {
-      zoneStore.genesList.length <= 0 && zoneStore.fetchZoneListAsync('Panels')
+      if (!zoneStore.genesList.length) {
+        zoneStore.fetchZoneListAsync('Panels')
+      }
 
       if (zoneStore.selectedGenesList.length > 0) {
         zoneStore.syncSelectedAndLocalFilters('isGenesList')

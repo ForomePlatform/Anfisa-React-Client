@@ -3,12 +3,9 @@ import styles from './dialog-card.module.css'
 import { HTMLAttributes, ReactElement, ReactNode } from 'react'
 import cn from 'classnames'
 
+import { DialogStandardActions, IDialogStandardActionsProps } from '@ui/dialog'
 import { Icon } from '@ui/icon'
 import { SwitchTheme } from '@pages/filter/dtree/components/query-builder/ui/switch-theme'
-import {
-  DialogStandardActions,
-  IDialogStandardActionsProps,
-} from '../dialog-standard-actions'
 
 export interface IDialogCardProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>,

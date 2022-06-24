@@ -9,12 +9,13 @@ import { TWsTagsAsyncStoreQuery, WsTagsAsyncStore } from './ws-tags.async.store'
 
 export class VariantStore {
   readonly record = new VariantAspectsAsyncStore({ keepPreviousData: true })
-  readonly tags = new WsTagsAsyncStore()
+  readonly tags = new WsTagsAsyncStore({
+    onChange: (rec, tags) => mainTableStore.tabReport.updateRowTags(rec, tags),
+  })
 
   private isHistoryObserved = false
 
   variantNo = -1
-  isTagsModified = false
 
   constructor() {
     makeAutoObservable(this)
@@ -33,10 +34,6 @@ export class VariantStore {
 
   public get isVariantShown(): boolean {
     return this.variantNo >= 0
-  }
-
-  setIsTagsModified(value: boolean) {
-    this.isTagsModified = value
   }
 
   observeVariantHistory() {
@@ -97,8 +94,7 @@ export class VariantStore {
     }
   }
 
-  closeVariant() {
-    this.setIsTagsModified(false)
+  closeVariant = () => {
     this.showVariant(-1)
   }
 

@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useMemo, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 
 import { useModal } from '@core/hooks/use-modal'
 import { usePopover } from '@core/hooks/use-popover'
@@ -14,6 +14,7 @@ interface ISolutionControlProps {
   solutions: ISolutionEntryDescription[] | undefined
   selected: string
   isCreateDisabled?: boolean
+  modifiedSolution?: string
   onCreate: (solutionName: string) => void
   onApply: (solutionName: string) => void
   onJoin?: (solutionName: string) => void
@@ -27,6 +28,7 @@ export const SolutionControl = ({
   controlName,
   selected: selectedProp,
   isCreateDisabled,
+  modifiedSolution,
   onCreate,
   onApply,
   onJoin,
@@ -39,12 +41,8 @@ export const SolutionControl = ({
     solutionName: '',
   })
   const [createDialog, openCreateDialog, closeCreateDialog] = useModal()
-  const isSelectedSolutionNonStandard = useMemo(
-    () =>
-      !!selectedProp &&
-      !solutions?.find(({ name }) => name === selectedProp)?.standard,
-    [selectedProp, solutions],
-  )
+
+  const isModified = !!(selectedProp && modifiedSolution === selectedProp)
 
   useEffect(() => {
     if (!isPopoverOpen) {
@@ -59,10 +57,7 @@ export const SolutionControl = ({
         solutionName={selectedProp}
         controlName={controlName}
         isOpen={isPopoverOpen}
-        isDeleteShown={isSelectedSolutionNonStandard}
-        onDeleteClick={() => {
-          openDeleteDialog({ solutionName: selectedProp })
-        }}
+        isModified={isModified}
         onClick={e => onToggle(e.currentTarget)}
         onMouseUp={event => event.stopPropagation()}
       />
@@ -73,6 +68,7 @@ export const SolutionControl = ({
         onClose={closePopover}
         anchorEl={popoverAnchor}
         solutions={solutions}
+        modifiedSolution={modifiedSolution}
         selected={selected}
         onCreate={() => openCreateDialog()}
         onSelect={setSelected}
@@ -80,7 +76,6 @@ export const SolutionControl = ({
         onApply={onApply}
         onModify={onModify}
         onDelete={solutionName => openDeleteDialog({ solutionName })}
-        isModifyDisabled={selected === selectedProp}
       />
       <SolutionDeleteDialog
         {...deleteDialog}
