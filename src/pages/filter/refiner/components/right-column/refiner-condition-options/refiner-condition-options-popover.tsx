@@ -7,7 +7,7 @@ import { IPopoverBaseProps } from '@ui/popover/popover.interface'
 import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-modal.cy'
 import { PopperMenu } from '@components/popper-menu/popper-menu'
 import { PopperMenuItem } from '@components/popper-menu/popper-menu-item'
-import { popoverOffset } from '@pages/ws/constants'
+import { popoverOffset } from '@pages/ws/ws.constants'
 
 interface IRefinerConditionPopoverProps extends IPopoverBaseProps {
   onDeleteFilterBlock: (e: React.MouseEvent) => void

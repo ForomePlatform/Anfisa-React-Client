@@ -8,7 +8,7 @@ import { Popover } from '@ui/popover'
 import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-modal.cy'
 import { PopperMenu } from '@components/popper-menu/popper-menu'
 import { PopperMenuItem } from '@components/popper-menu/popper-menu-item'
-import { popoverOffset } from '@pages/ws/constants'
+import { popoverOffset } from '@pages/ws/ws.constants'
 import { InstrModifyingActionNames } from '@service-providers/decision-trees'
 import modalsVisibilityStore from '../modals-visibility-store'
 

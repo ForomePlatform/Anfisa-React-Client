@@ -19,11 +19,7 @@ export const CustomizeTable = (): ReactElement => {
   }
   return (
     <>
-      <CustomizeTableButton
-        isOpen={isPopoverOpen}
-        onClose={closePopover}
-        setPopoverAnchor={setPopoverAnchor}
-      />
+      <CustomizeTableButton isOpen={isPopoverOpen} onClick={setPopoverAnchor} />
       <CustomizeTablePopover
         isOpen={isPopoverOpen}
         anchorEl={popoverAnchor}
