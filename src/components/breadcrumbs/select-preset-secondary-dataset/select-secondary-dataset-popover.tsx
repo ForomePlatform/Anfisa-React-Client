@@ -3,6 +3,7 @@ import styles from '@components/solution-control/solution-control-popover/soluti
 import { MenuList, MenuListItem } from '@ui/menu-list'
 import { Popover } from '@ui/popover'
 import { IPopoverBaseProps } from '@ui/popover/popover.interface'
+import { popoverOffset } from '@pages/ws/ws.constants'
 
 interface ISelectSecondaryDatasetPopoverProps extends IPopoverBaseProps {
   datasetList: string[]
@@ -18,7 +19,7 @@ export const SelectSecondaryDatasetPopover = ({
   onClose,
   ...popoverProps
 }: ISelectSecondaryDatasetPopoverProps) => (
-  <Popover onClose={onClose} {...popoverProps}>
+  <Popover onClose={onClose} offset={popoverOffset} {...popoverProps}>
     <section className={styles.solutionControlCard}>
       <MenuList className={styles.solutionControlCard__list} wrap="nowrap">
         {datasetList?.map(datasetName => (
