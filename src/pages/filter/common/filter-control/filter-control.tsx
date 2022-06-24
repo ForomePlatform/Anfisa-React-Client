@@ -32,6 +32,7 @@ export const FilterControl = observer(
     TextEditorButton,
     className,
     isForwardAllowed,
+    isSaveButtonShown,
     isBackwardAllowed,
     pageName,
     goForward,
@@ -92,9 +93,13 @@ export const FilterControl = observer(
 
             <SolutionControl />
 
-            <Divider orientation="vertical" className="h-[75%]" />
+            {isSaveButtonShown && (
+              <>
+                <Divider orientation="vertical" className="h-[75%]" />
 
-            <SolutionCreate />
+                <SolutionCreate />
+              </>
+            )}
 
             <Divider orientation="vertical" className="h-[75%]" />
 

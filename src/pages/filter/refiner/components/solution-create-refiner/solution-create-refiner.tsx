@@ -2,7 +2,6 @@ import { ReactElement } from 'react'
 
 import { useModal } from '@core/hooks/use-modal'
 import { t } from '@i18n'
-import filterStore from '@store/filter'
 import filterPresetsStore from '@store/filter-presets'
 import { Button } from '@ui/button'
 import { SolutionCreateDialog } from '@components/solution-control/solution-create-dialog'
@@ -16,7 +15,6 @@ export const SolutionCreateRefiner = (): ReactElement => {
   return (
     <>
       <Button
-        disabled={filterStore.isConditionsEmpty}
         text={t('variant.savePreset')}
         className="whitespace-nowrap"
         variant="secondary-dark"

@@ -7,6 +7,7 @@ export interface IFilterControlProps {
   TextEditorButton?: React.ElementType
   isForwardAllowed: boolean
   isBackwardAllowed: boolean
+  isSaveButtonShown: boolean
   pageName: FilterControlOptionsNames
   goForward: () => void
   goBackward: () => void
