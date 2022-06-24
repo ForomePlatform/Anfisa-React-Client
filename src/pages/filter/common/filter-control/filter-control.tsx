@@ -101,10 +101,6 @@ export const FilterControl = observer(
               </>
             )}
 
-            <Divider orientation="vertical" className="h-[75%]" />
-
-            <CreateDatasetButton />
-
             {TextEditorButton && (
               <>
                 <Divider orientation="vertical" className="h-[75%]" />
@@ -112,6 +108,10 @@ export const FilterControl = observer(
                 <TextEditorButton />
               </>
             )}
+
+            <Divider orientation="vertical" className="h-[75%]" />
+
+            <CreateDatasetButton />
           </div>
 
           <div className="flex items-center">
