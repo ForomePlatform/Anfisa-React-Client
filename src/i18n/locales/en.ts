@@ -86,6 +86,13 @@ export const en = {
       cancel: 'No, Keep {controlName}',
       confirm: 'Yes, Delete {controlName}',
     },
+    modifyDialog: {
+      title: 'Modify {controlName}',
+      message:
+        'Modifying a {controlName} "{solutionName}" will permanently remove old version from your system.',
+      cancel: 'Close',
+      confirm: 'Modify',
+    },
   },
   home: {
     title: 'Home',

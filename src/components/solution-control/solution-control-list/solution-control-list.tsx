@@ -14,7 +14,6 @@ interface ISolutionControlListProps {
   modifiedSolution?: string
   className?: string
   selected?: string
-  isModifyDisabled: boolean
   onSelect: (solutionName: string) => void
   onModify: (solutionName: string) => void
   onDelete: (solutionName: string) => void
@@ -28,7 +27,6 @@ export const SolutionControlList = ({
   onSelect,
   onModify,
   onDelete,
-  isModifyDisabled,
 }: ISolutionControlListProps): ReactElement => {
   const [contextMenuItem, setContextMenuItem] =
     useState<{
@@ -95,11 +93,11 @@ export const SolutionControlList = ({
           <MenuList isDense>
             <MenuListItem
               label={t('solutionControl.modify')}
+              disabled={contextMenuItem?.name !== modifiedSolution}
               onClick={() => {
                 closeContextMenu()
                 onModify(contextMenuItem?.name ?? '')
               }}
-              disabled={isModifyDisabled}
             />
             <MenuListItem
               label={t('solutionControl.delete')}

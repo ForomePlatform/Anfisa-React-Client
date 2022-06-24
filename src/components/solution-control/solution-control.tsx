@@ -3,6 +3,7 @@ import { ReactElement, useEffect, useState } from 'react'
 import { useModal } from '@core/hooks/use-modal'
 import { usePopover } from '@core/hooks/use-popover'
 import { SolutionControlPopover } from '@components/solution-control/solution-control-popover'
+import { SolutionModifyDialog } from '@components/solution-control/solution-modify-dialog'
 import { ISolutionEntryDescription } from '@service-providers/common'
 import { SolutionControlButton } from './solution-control-button'
 import { SolutionCreateDialog } from './solution-create-dialog'
@@ -40,6 +41,10 @@ export const SolutionControl = ({
   const [deleteDialog, openDeleteDialog, closeDeleteDialog] = useModal({
     solutionName: '',
   })
+  const [modifyDialog, openModifyDialog, closeModifyDialog] = useModal({
+    solutionName: '',
+  })
+
   const [createDialog, openCreateDialog, closeCreateDialog] = useModal()
 
   const isModified = !!(selectedProp && modifiedSolution === selectedProp)
@@ -74,8 +79,20 @@ export const SolutionControl = ({
         onSelect={setSelected}
         onJoin={onJoin}
         onApply={onApply}
-        onModify={onModify}
+        onModify={solutionName => openModifyDialog({ solutionName })}
         onDelete={solutionName => openDeleteDialog({ solutionName })}
+      />
+      <SolutionModifyDialog
+        {...modifyDialog}
+        onClose={closeModifyDialog}
+        onModify={() => {
+          closeModifyDialog()
+          const name = modifyDialog.solutionName
+          if (name) {
+            onModify(name)
+          }
+        }}
+        controlName={controlName}
       />
       <SolutionDeleteDialog
         {...deleteDialog}
