@@ -2,16 +2,15 @@ import { ReactElement } from 'react'
 
 import { t } from '@i18n'
 import { Divider } from '@ui/divider'
+import { IPopoverButtonBaseProps } from '@ui/popover/popover.interface'
 import { ZoneTags } from './zone-tags'
 
-interface IZoneButtonsProps {
+interface IZoneButtonsProps extends IPopoverButtonBaseProps {
   title: string
   selectedZoneItems: string[]
-  isOpen: boolean
   isLast?: boolean
   dataTestId?: string
   onClose: () => void
-  setPopoverAnchor: (target: HTMLDivElement) => void
   onRemove: (geneName: string, type: string) => void
 }
 
@@ -22,13 +21,11 @@ export const ZoneButtons = ({
   selectedZoneItems,
   dataTestId,
   onClose,
-  setPopoverAnchor,
+  onShowPopover,
   onRemove,
 }: IZoneButtonsProps): ReactElement => (
   <div
-    onClick={event =>
-      isOpen ? onClose() : setPopoverAnchor(event.currentTarget)
-    }
+    onClick={event => (isOpen ? onClose() : onShowPopover(event.currentTarget))}
     className="flex items-center text-14 justify-between cursor-pointer text-blue-bright ml-1"
     data-testid={dataTestId}
   >

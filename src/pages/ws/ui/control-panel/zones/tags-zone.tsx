@@ -1,21 +1,16 @@
 import { useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 
+import { usePopover } from '@core/hooks/use-popover'
 import { t } from '@i18n'
 import zoneStore from '@store/ws/zone.store'
 import { ZoneButtons } from './components/zone-buttons'
 import { ZonePopover } from './components/zone-popover'
 
 export const TagsZone = observer(() => {
-  const [popoverAnchor, setPopoverAnchor] = useState<HTMLElement | null>(null)
+  const { popoverAnchor, isPopoverOpen, onToggle, closePopover } = usePopover()
 
   const [searchValue, setSearchValue] = useState<string>('')
-
-  const isPopoverOpen = !!popoverAnchor
-
-  const closePopover = () => {
-    setPopoverAnchor(null)
-  }
 
   useEffect(() => {
     if (isPopoverOpen) {
@@ -62,7 +57,7 @@ export const TagsZone = observer(() => {
         selectedZoneItems={zoneStore.selectedTags}
         isOpen={isPopoverOpen}
         onClose={handleClose}
-        setPopoverAnchor={setPopoverAnchor}
+        onShowPopover={onToggle}
         onRemove={zoneStore.removeLocalTag}
         isLast
       />

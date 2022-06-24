@@ -2,26 +2,24 @@ import { ChangeEvent, ReactElement } from 'react'
 
 import { t } from '@i18n'
 import { Popover } from '@ui/popover'
+import { IPopoverBaseProps } from '@ui/popover/popover.interface'
 import { InputSearch } from '@components/input-search'
 import { PopupCard } from '@components/popup-card/popup-card'
 import { popoverOffset } from '@pages/ws/ws.constants'
 import { ZoneList } from './zone-list'
 import { ZoneMods } from './zone-mods'
 
-interface IZonePopoverProps {
+interface IZonePopoverProps extends IPopoverBaseProps {
   zoneList: string[]
   title: string
   selectedZoneItems: string[]
   searchValue: string
-  anchorEl: HTMLElement | null
-  isOpen: boolean
   isTags?: boolean
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
   onAdd: (value: string) => void
   onRemove: (value: string, type: string) => void
   onApply: () => void
   onClearAll: () => void
-  onClose: () => void
 }
 
 export const ZonePopover = ({

@@ -12,7 +12,7 @@ interface ISelectPresetPopoverProps extends IPopoverBaseProps {
   onClose: () => void
 }
 
-export const SelectSolutionPopover = ({
+export const SelectPresetPopover = ({
   solutions,
   selectedPreset,
   onApply,

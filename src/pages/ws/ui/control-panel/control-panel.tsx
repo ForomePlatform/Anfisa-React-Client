@@ -4,9 +4,9 @@ import { ReactElement } from 'react'
 
 import { Divider } from '@ui/divider'
 import { CreateDataset } from './create-dataset'
-import { CustomizeTable } from './customize-table/customize-table'
+import { CustomizeTable } from './customize-table'
 import { EditFilter } from './edit-filter'
-import { SelectSolution } from './select-preset/select-solution'
+import { SelectPreset } from './select-preset'
 import { GenesListZone } from './zones/genes-list-zone'
 import { GenesZone } from './zones/genes-zone'
 import { SamplesZone } from './zones/samples-zone'
@@ -15,7 +15,7 @@ import { TagsZone } from './zones/tags-zone'
 export const ControlPanel = (): ReactElement => (
   <div className={styles.controlPanel}>
     <div className={styles.controlPanel__controls}>
-      <SelectSolution />
+      <SelectPreset />
 
       <Divider orientation="vertical" />
 

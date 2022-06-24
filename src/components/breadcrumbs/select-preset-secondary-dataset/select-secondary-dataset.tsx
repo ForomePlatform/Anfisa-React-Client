@@ -1,6 +1,6 @@
-import { useState } from 'react'
 import { observer } from 'mobx-react-lite'
 
+import { usePopover } from '@core/hooks/use-popover'
 import { t } from '@i18n'
 import { SolutionControlButton } from '@components/solution-control/solution-control-button'
 import { SelectSecondaryDatasetPopover } from './select-secondary-dataset-popover'
@@ -17,13 +17,8 @@ export const SelectSecondaryDataset = observer(
     datasetList,
     onChangeDataset,
   }: ISelectSecondaryDatasetProps) => {
-    const [popoverAnchor, setPopoverAnchor] = useState<HTMLElement | null>(null)
-
-    const isPopoverOpen = !!popoverAnchor
-
-    const closePopover = () => {
-      setPopoverAnchor(null)
-    }
+    const { popoverAnchor, isPopoverOpen, onToggle, closePopover } =
+      usePopover()
 
     const handleChangeDataset = (datasetName: string) => {
       onChangeDataset(datasetName)
@@ -37,11 +32,7 @@ export const SelectSecondaryDataset = observer(
           solutionName={selectedDataset}
           controlName={t('header.secondaryPlaceholder')}
           isOpen={isPopoverOpen}
-          onClick={event =>
-            isPopoverOpen
-              ? closePopover()
-              : setPopoverAnchor(event.currentTarget)
-          }
+          onClick={e => onToggle(e.currentTarget)}
           onMouseUp={event => event.stopPropagation()}
         />
 

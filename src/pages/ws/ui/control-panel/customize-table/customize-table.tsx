@@ -1,17 +1,12 @@
-import { ReactElement, useState } from 'react'
+import { ReactElement } from 'react'
 
+import { usePopover } from '@core/hooks/use-popover'
 import { customizeTableStore } from './customize-table.store'
 import { CustomizeTableButton } from './customize-table-button'
 import { CustomizeTablePopover } from './customize-table-popover'
 
 export const CustomizeTable = (): ReactElement => {
-  const [popoverAnchor, setPopoverAnchor] = useState<HTMLElement | null>(null)
-
-  const closePopover = () => {
-    setPopoverAnchor(null)
-  }
-
-  const isPopoverOpen = !!popoverAnchor
+  const { popoverAnchor, isPopoverOpen, onToggle, closePopover } = usePopover()
 
   const handleApply = () => {
     customizeTableStore.applyValues()
@@ -19,7 +14,7 @@ export const CustomizeTable = (): ReactElement => {
   }
   return (
     <>
-      <CustomizeTableButton isOpen={isPopoverOpen} onClick={setPopoverAnchor} />
+      <CustomizeTableButton isOpen={isPopoverOpen} onShowPopover={onToggle} />
       <CustomizeTablePopover
         isOpen={isPopoverOpen}
         anchorEl={popoverAnchor}
