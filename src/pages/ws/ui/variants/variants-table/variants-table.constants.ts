@@ -16,6 +16,7 @@ export const columnDefs: IVariantsTableColumn[] = [
     title: 'mainTable.gene',
     component: GeneCell,
     width: 150,
+    isRequired: true,
     isSticky: true,
   },
   {
@@ -23,6 +24,7 @@ export const columnDefs: IVariantsTableColumn[] = [
     title: 'mainTable.variant',
     component: VariantCell,
     width: 150,
+    isRequired: true,
     isSticky: true,
   },
   {

@@ -1,7 +1,6 @@
 import { Fragment, ReactElement } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
-import Tooltip from 'rc-tooltip'
 import styled from 'styled-components'
 
 import { t } from '@i18n'
@@ -9,6 +8,7 @@ import { theme } from '@theme'
 import dtreeStore from '@store/dtree'
 import stepStore, { ActiveStepOptions } from '@store/dtree/step.store'
 import { Icon } from '@ui/icon'
+import { Tooltip } from '@ui/tooltip'
 import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
 import { StepCount } from '@pages/filter/dtree/components/query-builder/ui/step-count'
 
@@ -100,12 +100,13 @@ export const NextStepRoute = observer(
 
     const isFinalStep = index === stepStore.steps.length - 1
     const isDifferenceActive = currentStep.isReturnedVariantsActive
-    const shouldTooltipAppear = Boolean(returnCounts?.[0])
 
-    const tooltipContent = t('dtree.showReturnedVariantsForStep', {
-      returnValue: currentStep.excluded ? 'excluded' : 'included',
-      index: index + 1,
-    })
+    const tooltipContent = returnCounts?.[0]
+      ? t('dtree.showReturnedVariantsForStep', {
+          returnValue: currentStep.excluded ? 'excluded' : 'included',
+          index: index + 1,
+        })
+      : null
 
     const currentStartCounts = isFinalStep ? returnCounts : conditionCounts
 
@@ -140,10 +141,7 @@ export const NextStepRoute = observer(
                   className="absolute w-full right-4 flex justify-end"
                   style={{ top: 48 }}
                 >
-                  <Tooltip
-                    overlay={tooltipContent}
-                    trigger={shouldTooltipAppear ? ['hover'] : []}
-                  >
+                  <Tooltip title={tooltipContent}>
                     <ExcludeAmount
                       isIncluded={isIncluded}
                       onClick={() =>

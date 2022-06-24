@@ -27,6 +27,7 @@ jobs:
     - run: |
         git config --global user.name 'Version Bot'
         git config --global user.email '<>'
+        git fetch --tags
         yarn config set version-git-message "[RELEASE] %s"
         yarn config set version-commit-hooks false
         yarn version --new-version `node ./tools/getNextVersion.js`

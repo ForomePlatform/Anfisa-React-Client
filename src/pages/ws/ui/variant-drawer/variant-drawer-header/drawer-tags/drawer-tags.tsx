@@ -23,7 +23,6 @@ export const DrawerTags = observer(() => {
   }
 
   const handleSaveTags = (tags: string[]): void => {
-    variantStore.setIsTagsModified(true)
     variantStore.tags.saveTags(tags)
     closePopover()
   }

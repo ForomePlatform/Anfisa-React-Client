@@ -1,4 +1,4 @@
-export enum ViewTypeEnum {
+export enum ViewTypeTableEnum {
   Compact = 'Compact',
   Cozy = 'Cozy',
 }
