@@ -3,8 +3,11 @@ import styles from './progress-bar.module.css'
 import { FC } from 'react'
 import cn, { Argument } from 'classnames'
 
+import { inPercentRange } from '@ui/progress-bar/progress-bar.utils'
+
 interface IProgressBarProps {
   status: number
+  step?: number
   showStatus?: boolean
   size?: 'xs' | 'sm'
   className?: Argument
@@ -12,19 +15,12 @@ interface IProgressBarProps {
 
 export const ProgressBar: FC<IProgressBarProps> = ({
   status,
+  step = 10,
   size = 'sm',
   showStatus,
   className,
 }) => {
-  let progress = status
-
-  if (status < 0) {
-    progress = 0
-  } else if (status < 10) {
-    progress = 0
-  } else if (status > 100) {
-    progress = 100
-  }
+  const progress = inPercentRange(Math.round(status / step) * step)
 
   return (
     <div
@@ -41,7 +37,7 @@ export const ProgressBar: FC<IProgressBarProps> = ({
       {showStatus && size !== 'xs' && (
         <div className={cn(styles.progressBar__text_container)}>
           <span className={cn(styles.progressBar__text)}>
-            {Math.min(status, 100)} %
+            {inPercentRange(status)} %
           </span>
         </div>
       )}
