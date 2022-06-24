@@ -80,17 +80,17 @@ export const Breadcrumbs = observer<IBreadcrumbsProps>(
           )
         })}
         {(!isDatasetInSecondary || isCurrentSingleOption) && (
-          <Fragment>
+          <>
             <span className="mx-2">/</span>
             <div className={hasSecondarySelect ? 'shrink-1 min-w-0' : ''}>
               <div className="whitespace-nowrap overflow-hidden text-ellipsis">
                 {datasetName}
               </div>
             </div>
-          </Fragment>
+          </>
         )}
         {hasSecondarySelect && (
-          <Fragment>
+          <>
             <span className="mx-2">/</span>
             <div className="shrink-0 grow-0">
               <SelectSecondaryDataset
@@ -99,7 +99,7 @@ export const Breadcrumbs = observer<IBreadcrumbsProps>(
                 onChangeDataset={onChangeDataset}
               />
             </div>
-          </Fragment>
+          </>
         )}
         <Icon
           name="CopyLink"

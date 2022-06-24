@@ -21,20 +21,18 @@ export const ZoneList = observer(
         className="pt-4 overflow-y-auto flex flex-col"
         style={{ height: 'auto', maxHeight: 240 }}
       >
-        {zoneItems.map((itemName, index) => {
-          return (
-            <Checkbox
-              key={itemName + index}
-              checked={selectedItems.includes(itemName)}
-              onChange={e => onCheck(e.target.checked, itemName)}
-              id={itemName + index}
-              datatestId={MainTableDataCy.checkboxListElement}
-              className="mb-3 text-12"
-            >
-              {itemName}
-            </Checkbox>
-          )
-        })}
+        {zoneItems.map((itemName, index) => (
+          <Checkbox
+            key={itemName + index}
+            checked={selectedItems.includes(itemName)}
+            onChange={e => onCheck(e.target.checked, itemName)}
+            id={itemName + index}
+            datatestId={MainTableDataCy.checkboxListElement}
+            className="mb-3 text-12"
+          >
+            {itemName}
+          </Checkbox>
+        ))}
       </div>
     )
   },
