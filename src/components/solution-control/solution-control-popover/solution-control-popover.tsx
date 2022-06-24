@@ -5,6 +5,7 @@ import cn from 'classnames'
 
 import { t } from '@i18n'
 import { Button } from '@ui/button'
+import { Loader } from '@ui/loader'
 import { Popover } from '@ui/popover'
 import { IPopoverBaseProps } from '@ui/popover/popover.interface'
 import { ISolutionEntryDescription } from '@service-providers/common'
@@ -12,6 +13,7 @@ import { SolutionControlList } from '../solution-control-list'
 
 interface ISolutionControlPopoverProps extends IPopoverBaseProps {
   isCreateDisabled?: boolean
+  isFetching: boolean
   onCreate: () => void
   onApply: (solutionName: string) => void
   onJoin?: (solutionName: string) => void
@@ -28,6 +30,7 @@ export const SolutionControlPopover = ({
   solutions,
   selected,
   isCreateDisabled,
+  isFetching,
   controlName,
   modifiedSolution,
   onCreate,
@@ -58,7 +61,8 @@ export const SolutionControlPopover = ({
             {t('solutionControl.createNewSolution', { controlName })}
           </button>
         </header>
-        {solutions && (
+        {isFetching && <Loader size="m" />}
+        {!isFetching && solutions && (
           <SolutionControlList
             className={styles.solutionControlCard__list}
             solutions={solutions}

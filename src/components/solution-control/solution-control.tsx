@@ -14,6 +14,7 @@ interface ISolutionControlProps {
   solutions: ISolutionEntryDescription[] | undefined
   selected: string
   isCreateDisabled?: boolean
+  isFetching: boolean
   modifiedSolution?: string
   onCreate: (solutionName: string) => void
   onApply: (solutionName: string) => void
@@ -26,6 +27,7 @@ export const SolutionControl = ({
   className,
   solutions,
   controlName,
+  isFetching,
   selected: selectedProp,
   isCreateDisabled,
   modifiedSolution,
@@ -62,6 +64,7 @@ export const SolutionControl = ({
         onMouseUp={event => event.stopPropagation()}
       />
       <SolutionControlPopover
+        isFetching={isFetching}
         isOpen={isPopoverOpen}
         isCreateDisabled={isCreateDisabled}
         controlName={controlName}

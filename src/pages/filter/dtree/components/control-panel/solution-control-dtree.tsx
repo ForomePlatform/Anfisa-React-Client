@@ -9,11 +9,12 @@ import { SolutionControl } from '@components/solution-control'
 const MIN_CODE_LENGTH = 13
 
 export const SolutionControlDtree = observer((): ReactElement => {
-  const { activeDtree, availableDtrees } = filterDtreesStore
+  const { activeDtree, availableDtrees, isFetchingDtrees } = filterDtreesStore
 
   return (
     <SolutionControl
       selected={activeDtree}
+      isFetching={isFetchingDtrees}
       solutions={availableDtrees}
       isCreateDisabled={dtreeStore.dtreeCode.length < MIN_CODE_LENGTH}
       modifiedSolution={
