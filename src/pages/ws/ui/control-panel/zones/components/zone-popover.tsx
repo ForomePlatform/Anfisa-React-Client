@@ -4,7 +4,7 @@ import { t } from '@i18n'
 import { Popover } from '@ui/popover'
 import { InputSearch } from '@components/input-search'
 import { PopupCard } from '@components/popup-card/popup-card'
-import { popoverOffset } from '@pages/ws/constants'
+import { popoverOffset } from '@pages/ws/ws.constants'
 import { ZoneList } from './zone-list'
 import { ZoneMods } from './zone-mods'
 

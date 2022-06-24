@@ -1,7 +1,8 @@
 import styles from '@components/solution-control/solution-control-popover/solution-control-popover.module.css'
 
 import { MenuList, MenuListItem } from '@ui/menu-list'
-import { IPopoverBaseProps, Popover } from '@ui/popover'
+import { Popover } from '@ui/popover'
+import { IPopoverBaseProps } from '@ui/popover/popover.interface'
 import { ISolutionEntryDescription } from '@service-providers/common'
 
 interface ISelectPresetPopoverProps extends IPopoverBaseProps {

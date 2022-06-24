@@ -10,7 +10,7 @@ import { IPopoverBaseProps } from '@ui/popover/popover.interface'
 import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
 import { PopperMenu } from '@components/popper-menu/popper-menu'
 import { PopperMenuItem } from '@components/popper-menu/popper-menu-item'
-import { popoverOffset } from '@pages/ws/constants'
+import { popoverOffset } from '@pages/ws/ws.constants'
 import { InstrModifyingActionNames } from '@service-providers/decision-trees'
 import { changeStep } from '@utils/changeStep'
 

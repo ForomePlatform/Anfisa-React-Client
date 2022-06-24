@@ -12,7 +12,7 @@ interface ISolutionControlButtonProps
   solutionName: string | undefined
   controlName: string
   isOpen: boolean
-  isModified: boolean
+  isModified?: boolean
   isFetchingSolutions?: boolean
 }
 

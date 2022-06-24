@@ -1,9 +1,9 @@
 import { FC, useEffect, useRef, useState } from 'react'
 import cn, { Argument } from 'classnames'
-import Tooltip from 'rc-tooltip'
 
+import { Tooltip } from '@ui/tooltip'
 import { FilterDatasetDataCy } from '@components/data-testid/filter-dataset.cy'
-import { XLBage } from '@pages/main/components/sidebar/datasets-list/components/dataset-bage'
+import { XLBage } from './dataset-bage'
 
 interface IDsNameProps {
   dsName: any
@@ -51,9 +51,9 @@ export const DatasetName: FC<IDsNameProps> = ({
       {isXL && <XLBage isActive={isActive} />}
 
       <Tooltip
-        overlay={dsName}
-        trigger={hasTooltip ? ['hover'] : []}
+        title={hasTooltip ? dsName : null}
         placement="right"
+        theme="light"
       >
         <div
           ref={datasetRef}

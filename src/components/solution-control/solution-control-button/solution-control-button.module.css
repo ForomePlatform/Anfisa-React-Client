@@ -30,7 +30,7 @@
 
     &_modified {
       color: theme("colors.grey.light");
-      opacity: .6;
+      opacity: 0.6;
       margin-right: 3px;
     }
   }
