@@ -22,7 +22,7 @@ export const renderPanelControls = ({
   clearValue,
   saveAttribute,
 }: IRenderPanelControlsProps) => (
-  <div className="flex-1 flex items-end justify-end mt-1 pb-6">
+  <div className="flex items-end justify-end mt-1 pb-6">
     <Button
       variant={'secondary'}
       text={t('general.clear')}
@@ -30,7 +30,11 @@ export const renderPanelControls = ({
       className="px-5 mr-2"
     />
     <Button
-      text={initialCondition ? t('dtree.saveChanges') : t('dtree.addAttribute')}
+      text={
+        initialCondition
+          ? t('condition.saveChanges')
+          : t('condition.addAttribute')
+      }
       onClick={saveAttribute}
       disabled={disabled}
     />

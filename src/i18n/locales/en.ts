@@ -16,7 +16,7 @@ export const en = {
     applyFilters: 'Apply Filters',
     clear: 'Clear',
     replace: 'Replace',
-    add: '+ Add',
+    add: '+\u00a0Add',
     filter: '+ Filter',
     presetCreated: 'Preset has been created',
     showLess: 'Show less',
@@ -26,6 +26,7 @@ export const en = {
     closeWindow: 'Close window',
     creaitionIsInProcess: 'Dataset creation has not been finished yet',
     selectPreset: 'Select Preset',
+    plusAdd: '+Add',
   },
   header: {
     version: {
@@ -128,7 +129,7 @@ export const en = {
     Compact: 'Compact View',
     Cozy: 'Cozy View',
     samples: 'Samples',
-    geneList: 'Gene List',
+    geneList: 'Gene\u00a0List',
     sample: 'Sample',
     tags: 'Tag',
     edit: 'Edit',
@@ -156,6 +157,16 @@ export const en = {
       'Attention: Zone filters (Gene, Gene List, Sample, Tags) do not participate in dataset creation',
     addDataset: 'Add dataset',
   },
+  mainTable: {
+    gene: 'Gene',
+    variant: 'Variant',
+    tags: 'Tag(s)',
+    proteinChange: 'Protein Change',
+    inSilico: 'In-Silico',
+    population: 'Population',
+    samples: 'Samples',
+    filter: 'Filter',
+  },
   variant: {
     genes: 'Gene(s)',
     worstAnnotation: 'Worst Annotation',
@@ -173,9 +184,11 @@ export const en = {
     paternal: 'Paternal',
     geneAnnotation: 'Gene annotation',
     tags: 'Tags',
-    tagsFor: 'Tags for',
+    addCustomTag: 'Add custom tag',
+    tagsFor: 'Tags for {title}',
+    saveTags: 'Save tags',
     notes: 'Notes',
-    notesFor: 'Notes for',
+    notesFor: 'Notes for {title}',
     tagExists: 'That tag already exists',
     showSelectionOnly: 'Show selection only',
     saveNote: 'Save note',
@@ -183,6 +196,15 @@ export const en = {
     textAboutSomething: 'Text about something',
     savePreset: 'Save Preset',
     savePredefinedPresetError: '{presetName} is a predefined preset',
+  },
+  condition: {
+    selectAttribute: 'Select attribute',
+    backToAttribute: 'Back to Attributes List',
+    saveChanges: 'Save changes',
+    deleteAttribute: 'Delete attribute',
+    addAttribute: '+ Add Attribute',
+    addByJoining: 'Add by joining',
+    noFilters: 'There are no filters to show',
   },
   numericCondition: {
     limitedRange: 'Limited range',
@@ -193,14 +215,12 @@ export const en = {
     center: 'Center',
     distance: 'Distance',
   },
-  condition: {
-    noFilters: 'There are no filters to show',
-  },
   enumCondition: {
     showZeroVariants: 'Show zero variants',
   },
   funcCondition: {
     scenario: 'Scenario',
+    locus: 'Locus',
     problemGroup: 'Problem group:',
     inheritanceMode: 'Inheritance mode',
   },
@@ -244,6 +264,10 @@ export const en = {
       loadPreset: 'Failed to load preset "{presetName}"',
       joinPreset: 'Failed to join preset "{presetName}"',
     },
+    leaveConfirm: {
+      title: 'Attention! All changes will be lost',
+      body: 'Are you sure you want to leave the page without saving?',
+    },
   },
   dtree: {
     variants: 'variants',
@@ -262,16 +286,11 @@ export const en = {
     addStep: '+ Add Step',
     applyFilter: 'Apply Filter',
     algorithm: 'Algorithm',
-    addAttribute: '+ Add Attribute',
-    addNewAttribute: 'Add Attribute',
-    addByJoining: 'Add by joining',
+
     nothingSelected: 'Nothing is selected',
     addQuery: 'Add query',
     add: 'Add',
-    selectAttribute: 'Select attribute',
-    backToAttribute: 'Back to Attributes List',
-    saveChanges: 'Save changes',
-    deleteAttribute: 'Delete attribute',
+
     selected: 'selected',
     replace: 'Replace',
     join: 'Join',
@@ -357,5 +376,8 @@ export const en = {
     samples25: 'Samples-25',
     gene: 'Gene',
     variant: 'Variant',
+  },
+  paginationList: {
+    footer: '{ from } — { to } / { length }',
   },
 }

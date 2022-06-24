@@ -1,5 +1,3 @@
-import { ScrollDirection } from '@core/hooks/use-grab-scroll'
-
 export enum Placement {
   top = 'top',
   right = 'right',
@@ -7,47 +5,27 @@ export enum Placement {
   left = 'left',
 }
 
-export enum DisplayValue {
-  initial = 'initial',
-  none = 'none',
-  block = 'block',
-}
-
-export const getBackground = (placement: Placement) => {
-  return `linear-gradient(to ${placement}, rgba(255, 255, 255, 0), rgba(0, 0, 0, 0.3))`
-}
-
-export const hide = (placement: Placement, direction: ScrollDirection) => {
-  if (direction === 'both') return false
-
-  if (
-    (placement === Placement.left || placement === Placement.right) &&
-    direction === 'vertical'
-  ) {
-    return true
-  }
-
-  return (
-    (placement === Placement.top || placement === Placement.bottom) &&
-    direction === 'horizontal'
-  )
+export const getBackground = (
+  placement: Placement,
+  from: string,
+  to: string,
+) => {
+  return `linear-gradient(to ${placement}, ${from}, ${to})`
 }
 
 export const createShadow = (
   container: HTMLDivElement,
   placement: Placement,
-  direction: ScrollDirection,
-  hideShadow: boolean,
+  size: number,
+  fromColor: string,
+  toColor: string,
 ) => {
-  const size = '20px'
+  const sizePx = `${size}px`
   const shadow = document.createElement('div')
 
   Object.assign(shadow.style, {
     position: 'absolute',
-    display:
-      hide(placement, direction) || hideShadow
-        ? DisplayValue.none
-        : DisplayValue.initial,
+    display: 'none',
     zIndex: 2,
     top: placement === Placement.bottom ? undefined : 0,
     right: placement === Placement.left ? undefined : 0,
@@ -55,13 +33,13 @@ export const createShadow = (
     left: placement === Placement.right ? undefined : 0,
     width:
       placement === Placement.left || placement === Placement.right
-        ? size
+        ? sizePx
         : undefined,
     height:
       placement === Placement.top || placement === Placement.bottom
-        ? size
+        ? sizePx
         : undefined,
-    background: getBackground(placement),
+    background: getBackground(placement, fromColor, toColor),
   })
 
   container.appendChild(shadow)

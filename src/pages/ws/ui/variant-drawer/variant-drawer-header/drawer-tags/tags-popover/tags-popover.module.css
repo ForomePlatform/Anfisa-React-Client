@@ -1,0 +1,25 @@
+.tags-popover {
+  width: 342px;
+
+  &__list {
+    @apply typography-s;
+
+    max-height: 300px;
+    overflow: auto;
+  }
+
+  &__tag {
+    margin-bottom: theme("spacing.2");
+  }
+
+  &__custom {
+    margin-top: theme("spacing.2");
+  }
+
+  &__controls {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: theme("spacing.4");
+  }
+}

@@ -1,3 +1,5 @@
+import styles from './control-panel.module.css'
+
 import { ReactElement } from 'react'
 
 import { Divider } from '@ui/divider'
@@ -11,35 +13,33 @@ import { SamplesZone } from './zones/samples-zone'
 import { TagsZone } from './zones/tags-zone'
 
 export const ControlPanel = (): ReactElement => (
-  <div className="w-full flex px-4 bg-blue-dark">
-    <div className="w-full flex justify-between pt-2 pb-4">
-      <div className="flex items-center">
-        <SelectSolution />
+  <div className={styles.controlPanel}>
+    <div className={styles.controlPanel__controls}>
+      <SelectSolution />
 
-        <Divider orientation="vertical" className="h-[75%]" />
+      <Divider orientation="vertical" />
 
-        <EditFilter />
+      <EditFilter />
 
-        <Divider orientation="vertical" className="h-[75%]" />
+      <Divider orientation="vertical" />
 
-        <CustomizeTable />
+      <CustomizeTable />
 
-        <Divider orientation="vertical" className="h-[75%]" />
+      <Divider orientation="vertical" />
 
-        <div className="flex bg-blue-darkHover rounded-sm px-3 min-h-32">
-          <GenesZone />
+      <div className={styles.controlPanel__zones}>
+        <GenesZone />
 
-          <GenesListZone />
+        <GenesListZone />
 
-          <SamplesZone />
+        <SamplesZone />
 
-          <TagsZone />
-        </div>
-
-        <Divider orientation="vertical" className="h-[75%]" />
-
-        <CreateDataset />
+        <TagsZone />
       </div>
+    </div>
+
+    <div className={styles.controlPanel__save}>
+      <CreateDataset />
     </div>
   </div>
 )

@@ -139,7 +139,7 @@ class ModalsVisibilityStore {
     this.groupIndexToChange = groupIndex ?? -1
   }
 
-  public closeModalCompoundRequest() {
+  public closeModalCompoundRequest = () => {
     this.isModalCompoundRequestVisible = false
   }
 
@@ -154,7 +154,7 @@ class ModalsVisibilityStore {
     this.groupIndexToChange = groupIndex ?? -1
   }
 
-  public closeModalGeneRegion() {
+  public closeModalGeneRegion = () => {
     this.isModalGeneRegionVisible = false
   }
 }

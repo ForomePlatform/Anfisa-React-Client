@@ -1,0 +1,87 @@
+.table {
+  min-width: 100%;
+  border-spacing: 0;
+  border-collapse: separate;
+  table-layout: fixed;
+  color: theme("colors.black");
+
+  &__head {
+    @apply typography-s;
+
+    position: sticky;
+    z-index: 20;
+    top: 0;
+    background: theme("colors.white");
+
+    &::after {
+      content: "";
+      position: absolute;
+      z-index: 30;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      border-bottom: 1px solid theme("colors.grey.light");
+    }
+  }
+
+  &__th {
+    text-align: left;
+    font-weight: theme("fontWeight.bold");
+    height: 38px;
+    vertical-align: middle;
+    padding: 0 theme("spacing.4");
+  }
+
+  &__body {
+    @apply typography-xs;
+  }
+
+  &__row {
+    cursor: pointer;
+
+    &:not(&_selected):hover {
+      background: theme("colors.blue.light");
+    }
+
+    &_selected {
+      background: theme("colors.blue.bright");
+      color: theme("colors.white");
+    }
+  }
+
+  &__td {
+    border-collapse: collapse;
+    overflow: hidden;
+    text-align: left;
+    vertical-align: middle;
+    padding: 0 theme("spacing.4");
+    height: 80px;
+    border-bottom: 1px solid theme("colors.grey.light");
+  }
+
+  &__row_compact &__td {
+    height: 60px;
+  }
+
+  &__th,
+  &__td {
+    &_sticky {
+      position: sticky;
+      z-index: 10;
+      background: theme("colors.white");
+    }
+  }
+
+  &__row_selected &__td_sticky {
+    background: theme("colors.blue.bright");
+  }
+
+  &__row:hover &__td_sticky {
+    background: theme("colors.blue.light");
+  }
+
+  &__loader {
+    position: relative;
+    top: -18px;
+  }
+}

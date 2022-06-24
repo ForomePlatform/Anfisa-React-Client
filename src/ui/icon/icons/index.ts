@@ -19,6 +19,7 @@ import Copy from './copy'
 import CopyLink from './copy-link'
 import Delete from './delete'
 import Dnd from './dnd'
+import Edit from './edit'
 import Ellipsis from './ellipsis'
 import Expand from './expand'
 import Export from './export'
@@ -64,6 +65,7 @@ export const icons = {
   Copy,
   Delete,
   Dnd,
+  Edit,
   Ellipsis,
   Export,
   Expand,

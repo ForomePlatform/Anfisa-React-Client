@@ -9,7 +9,6 @@ import { t } from '@i18n'
 import datasetStore from '@store/dataset/dataset'
 import dirinfoStore from '@store/dirinfo'
 import filterStore from '@store/filter'
-import variantStore from '@store/ws/variant'
 import { PageRoute, RouteNames, Routes } from '@router/routes.enum'
 import { Divider } from '@ui/divider'
 import { Breadcrumbs } from '@components/breadcrumbs'
@@ -46,16 +45,12 @@ export const Header = observer(
 
       history.push(`${history.location.pathname}?ds=${datasetName}`)
       datasetStore.setDatasetName(datasetName)
-
-      if (datasetName && !variantStore.dsName) {
-        variantStore.setDsName(datasetName)
-      }
     }
 
     return (
       <div
         className={cn(
-          'bg-blue-dark flex flex-row justify-between items-center px-[18px] py-3',
+          'bg-blue-dark flex flex-row justify-between items-center px-4 py-3',
           className,
         )}
       >
@@ -92,7 +87,7 @@ export const Header = observer(
 
         {children}
 
-        <div className="text-white flex flex-row items-center">
+        <div className="text-white flex flex-row items-center ml-6">
           <div className="mr-2">Thomas Hunt</div>
 
           <img src={userIcon} className="w-8 h-8 rounded-full" />

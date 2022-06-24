@@ -4,7 +4,7 @@ import { IColumns } from '@declarations'
 import { ViewTypeEnum } from '@core/enum/view-type-enum'
 import { tableColumnMap } from '@core/table-column-map'
 import variantStore from '@store/ws/variant'
-import { variantColumnTable } from '@pages/ws/columns'
+// import { variantColumnTable } from '@pages/ws/columns'
 import { getExtendedColumns } from '@utils/mian-table/get-extended-columns'
 
 export const columnsToIgnore: string[] = ['Gene', 'Variant']
@@ -25,9 +25,7 @@ class ColumnsStore {
       .filter(column => !column.hidden)
       .map(column => column.title ?? column)
 
-    return selectedColumns.map(column =>
-      variantColumnTable.find(item => item.Header === column),
-    )
+    return []
   }
 
   public get collapsedSelectedDataColumns() {
@@ -35,11 +33,7 @@ class ColumnsStore {
   }
 
   public get columnDataListForRender() {
-    const { drawerVisible } = variantStore
-
-    return drawerVisible
-      ? this.collapsedSelectedDataColumns
-      : this.selectedDataColumns
+    return false
   }
 
   public setColumns(columns: IColumns[]) {
@@ -47,9 +41,9 @@ class ColumnsStore {
   }
 
   public resetColumns() {
-    if (!variantStore.drawerVisible) {
-      this.localColumns = this.columns
-    }
+    // if (!variantStore.drawerVisible) {
+    //   this.localColumns = this.columns
+    // }
   }
 
   public setLocalColumns(columns: IColumns[]) {
@@ -84,7 +78,7 @@ class ColumnsStore {
   public onCloseDrawer() {
     this.setColumns(this.localColumns)
 
-    variantStore.setDrawerVisible(false)
+    // variantStore.setDrawerVisible(false)
   }
 }
 

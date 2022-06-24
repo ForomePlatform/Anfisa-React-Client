@@ -1,190 +1,114 @@
-import { get } from 'lodash'
-import { makeAutoObservable, reaction, runInAction } from 'mobx'
+import { makeAutoObservable, reaction } from 'mobx'
 
+import { getQueryParam, pushQueryParams } from '@core/history'
 import { VariantAspectsAsyncStore } from '@store/variant-aspects.async.store'
 import mainTableStore from '@store/ws/main-table.store'
 import { IReccntArguments } from '@service-providers/dataset-level'
-import { TTagsDescriptor } from '@service-providers/ws-dataset-support/ws-dataset-support.interface'
-import wsDatasetProvider from '@service-providers/ws-dataset-support/ws-dataset-support.provider'
 import datasetStore from '../dataset/dataset'
+import { TWsTagsAsyncStoreQuery, WsTagsAsyncStore } from './ws-tags.async.store'
 
 export class VariantStore {
   readonly record = new VariantAspectsAsyncStore({ keepPreviousData: true })
+  readonly tags = new WsTagsAsyncStore({
+    onChange: (rec, tags) => mainTableStore.tabReport.updateRowTags(rec, tags),
+  })
 
-  drawerVisible = false
-  index = 0
-  dsName = ''
-  generalTags: string[] = []
-  optionalTags: string[] = []
-  checkedTags: string[] = []
-  tagsWithNotes: any = {}
-  currentTag = ''
-  noteText = ''
-  isActiveVariant = false
+  private isHistoryObserved = false
 
-  isModalNotesVisible = false
-  isTagsModified = false
+  variantNo = -1
 
   constructor() {
     makeAutoObservable(this)
 
-    reaction(
-      () => this.recordQuery,
-      query => {
-        if (query) {
-          this.record.setQuery(query)
-        } else {
-          this.record.reset()
-        }
-      },
-    )
+    reaction(() => this.recordQuery, this.record.handleQuery)
+    reaction(() => this.tagsQuery, this.tags.handleQuery)
   }
 
-  setIsTagsModified(value: boolean) {
-    this.isTagsModified = value
+  public get variantNumber(): number {
+    return this.variantNo
   }
 
-  setNoteText(value: string) {
-    this.noteText = value
+  public get datasetName(): string {
+    return datasetStore.datasetName
   }
 
-  setIsActiveVariant() {
-    this.isActiveVariant = true
+  public get isVariantShown(): boolean {
+    return this.variantNo >= 0
   }
 
-  resetIsActiveVariant() {
-    this.isActiveVariant = false
-  }
+  observeVariantHistory() {
+    this.isHistoryObserved = true
+    const handler = () => {
+      const variantNo = parseInt(getQueryParam('variant') ?? '', 10)
 
-  prevVariant() {
-    mainTableStore.filteredNo.length === 0
-      ? (this.index += 1)
-      : (this.index =
-          mainTableStore.filteredNo[
-            mainTableStore.filteredNo.indexOf(this.index) - 1
-          ])
-    this.fetchVarinatInfoAsync()
-  }
+      this.isHistoryObserved = false
 
-  nextVariant() {
-    mainTableStore.filteredNo.length === 0
-      ? (this.index += 1)
-      : (this.index =
-          mainTableStore.filteredNo[
-            mainTableStore.filteredNo.indexOf(this.index) + 1
-          ])
-
-    this.fetchVarinatInfoAsync()
-  }
-
-  setDrawerVisible(visible: boolean) {
-    this.drawerVisible = visible
-  }
-
-  setIndex(index: number) {
-    runInAction(() => {
-      this.index = index
-      this.fetchVarinatInfoAsync()
-    })
-  }
-
-  setDsName(settedDsName: string) {
-    this.dsName = settedDsName
-  }
-
-  updateGeneralTags(tagName: string) {
-    this.generalTags = [...this.generalTags, tagName]
-  }
-
-  async fetchVarinatInfoAsync() {
-    if (datasetStore.isXL) return
-
-    const tagsData = await wsDatasetProvider.getWsTags({
-      ds: this.dsName,
-      rec: this.index,
-    })
-
-    const checkedTags = Object.keys(tagsData['rec-tags']).filter(
-      tag => tag !== '_note',
-    )
-
-    const optionalTags = get(tagsData, 'op-tags').filter(
-      (tag: string) => tag !== '_note',
-    )
-
-    runInAction(() => {
-      this.generalTags = get(tagsData, 'check-tags')
-      this.optionalTags = optionalTags
-      this.checkedTags = checkedTags
-      this.tagsWithNotes = get(tagsData, 'rec-tags')
-      this.noteText = tagsData['rec-tags']['_note'] as string
-    })
-  }
-
-  async fetchSelectedTagsAsync(tagList: TTagsDescriptor) {
-    if (datasetStore.isXL) return
-
-    const wsTags = await wsDatasetProvider.getWsTags({
-      ds: this.dsName,
-      rec: this.index,
-      tags: tagList,
-    })
-
-    const checkedTags = Object.keys(wsTags['rec-tags']).filter(
-      tag => tag !== '_note',
-    )
-
-    runInAction(() => {
-      this.checkedTags = checkedTags
-      this.tagsWithNotes = wsTags['rec-tags']
-    })
-  }
-
-  updateTagsWithNotes(tagWithNote: any[], operation = 'add') {
-    if (operation === 'add') {
-      let keyProp = ''
-
-      for (const key in this.tagsWithNotes) {
-        if (key === tagWithNote[0]) {
-          keyProp = key
-        }
+      if (!Number.isNaN(variantNo)) {
+        this.showVariant(variantNo)
+      } else {
+        this.closeVariant()
       }
 
-      keyProp
-        ? (this.tagsWithNotes[keyProp] = tagWithNote[1])
-        : (this.tagsWithNotes[tagWithNote[0]] = tagWithNote[1])
-    } else {
-      delete this.tagsWithNotes[tagWithNote[0]]
+      this.isHistoryObserved = true
+    }
+
+    handler()
+
+    window.addEventListener('popstate', handler)
+
+    return () => {
+      this.isHistoryObserved = false
+      window.removeEventListener('popstate', handler)
     }
   }
 
-  showModalNotes() {
-    this.isModalNotesVisible = true
+  prevVariant() {
+    this.showVariant(
+      mainTableStore.filteredNo.length === 0
+        ? this.variantNo + 1
+        : mainTableStore.filteredNo[
+            mainTableStore.filteredNo.indexOf(this.variantNo) - 1
+          ],
+    )
   }
 
-  hideModalNotes() {
-    this.isModalNotesVisible = false
+  nextVariant() {
+    this.showVariant(
+      mainTableStore.filteredNo.length === 0
+        ? this.variantNo + 1
+        : mainTableStore.filteredNo[
+            mainTableStore.filteredNo.indexOf(this.variantNo) + 1
+          ],
+    )
   }
 
-  setCurrentTag(tag: string) {
-    this.currentTag = tag
+  showVariant(variantNo: number) {
+    if (this.variantNo !== variantNo) {
+      this.variantNo = variantNo
+
+      if (this.isHistoryObserved) {
+        pushQueryParams({
+          variant: variantNo >= 0 ? `${variantNo}` : null,
+        })
+      }
+    }
   }
 
-  resetData() {
-    this.dsName = ''
+  closeVariant = () => {
+    this.showVariant(-1)
   }
 
   private get recordQuery(): IReccntArguments | undefined {
-    if (!this.dsName) {
+    if (!this.datasetName || this.variantNo < 0) {
       return undefined
     }
 
     const details = mainTableStore.wsRecords?.find(
-      record => record.no === this.index,
+      record => record.no === this.variantNo,
     )
     const query: IReccntArguments = {
-      ds: this.dsName,
-      rec: this.index,
+      ds: this.datasetName,
+      rec: this.variantNo,
     }
 
     const isVariantWithoutGene = details?.lb.includes('[None]')
@@ -194,6 +118,17 @@ export class VariantStore {
     }
 
     return query
+  }
+
+  private get tagsQuery(): TWsTagsAsyncStoreQuery | undefined {
+    if (!this.datasetName || this.variantNo < 0) {
+      return undefined
+    }
+
+    return {
+      ds: this.datasetName,
+      rec: this.variantNo,
+    }
   }
 }
 

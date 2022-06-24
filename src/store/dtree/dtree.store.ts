@@ -12,8 +12,6 @@ import {
   DtreeSetPointKinds,
   IDtreeSetArguments,
 } from '@service-providers/decision-trees'
-import { IStatFuncArguments } from '@service-providers/filtering-regime'
-import filteringRegimeProvider from '@service-providers/filtering-regime/filtering-regime.provider'
 import { showToast } from '@utils/notifications'
 import datasetStore from '../dataset/dataset'
 import { DtreeModifiedState } from '../filter-dtrees/filter-dtrees.store'
@@ -71,9 +69,6 @@ export class DtreeStore {
   private _dtreeModifiedState: DtreeModifiedState = DtreeModifiedState.NotDtree
   actionName: ActionFilterEnum | undefined = undefined
 
-  statFuncData: any = []
-  scenario: any
-  request: any
   queryBuilderRenderKey = Date.now()
 
   readonly stat = new DtreeStatStore()
@@ -128,6 +123,14 @@ export class DtreeStore {
       : this.dtreeSetData?.['point-counts']
 
     return counts ?? []
+  }
+
+  public get isDtreeModified(): boolean {
+    return this._dtreeModifiedState === DtreeModifiedState.Modified
+  }
+
+  public get isNotDtree(): boolean {
+    return this._dtreeModifiedState === DtreeModifiedState.NotDtree
   }
 
   constructor() {
@@ -263,29 +266,6 @@ export class DtreeStore {
     this.dtreeSet.setQuery(body)
   }
 
-  async fetchStatFuncAsync(subGroupName: string, param: string) {
-    const body: IStatFuncArguments = {
-      ds: datasetStore.datasetName,
-      no: stepStore.stepIndexForApi,
-      code: this.dtreeCode,
-      rq_id: Math.random().toString(),
-      unit: subGroupName,
-      param,
-    }
-
-    const result = await filteringRegimeProvider.getStatFunc(body)
-
-    runInAction(() => {
-      this.statFuncData = result
-
-      if (result.scenario) this.scenario = result.scenario
-
-      if (result.request) this.request = result.request
-    })
-
-    return result
-  }
-
   private loadDtree(dtreeName: string): void {
     this.isDtreeLoading = true
 
@@ -295,6 +275,7 @@ export class DtreeStore {
     })
       .then(() => {
         this.setDtreeModifiedState(DtreeModifiedState.NotModified)
+        this.currentDtreeName = dtreeName
       })
       .catch(() => {
         showToast(t('dtree.errors.loadDtree', { dtreeName }), 'error')
@@ -489,10 +470,6 @@ export class DtreeStore {
     this.resetLocalDtreeCode()
   }
 
-  resetStatFuncData() {
-    this.statFuncData = []
-  }
-
   resetData() {
     this.filteredCounts = 0
     this.statRequestId = ''
@@ -518,5 +495,11 @@ export class DtreeStore {
 
   setActionName(actionName?: ActionFilterEnum): void {
     this.actionName = actionName
+  }
+
+  setDtreeModifyed() {
+    if (this._dtreeModifiedState === DtreeModifiedState.NotModified) {
+      this._dtreeModifiedState = DtreeModifiedState.Modified
+    }
   }
 }

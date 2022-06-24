@@ -2,7 +2,7 @@ import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { Dialog } from '@ui/dialog'
-import { EnumCondition } from '@components/conditions/enum-condition'
+import { DEFAULT_COUNT, EnumCondition } from '@components/conditions/enum'
 import { AttributeKinds } from '@service-providers/common'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { changeEnumAttribute } from '@utils/changeAttribute/changeEnumAttribute'
@@ -60,6 +60,9 @@ export const EnumDialog = observer((): ReactElement => {
         initialEnumMode={initialEnumMode}
         isShowZeroes={dtreeAttributeStore.isShowZeroVariants}
         toggleShowZeroes={dtreeAttributeStore.setIsShowZeroVariants}
+        paginationHeight={`calc(580px - ${
+          enumVariants.length > DEFAULT_COUNT ? 249 : 203
+        }px)`}
         controls={({ value, mode }) =>
           renderAttributeDialogControls({
             initialCondition,

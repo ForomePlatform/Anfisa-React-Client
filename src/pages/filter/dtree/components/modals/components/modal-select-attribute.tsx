@@ -32,7 +32,7 @@ export const ModalSelectAttribute = observer((): ReactElement => {
   return (
     <ModalBase refer={modalBaseRef} minHeight="580px">
       <HeaderModal
-        groupName={t('dtree.selectAttribute')}
+        groupName={t('condition.selectAttribute')}
         handleClose={handleClose}
       />
       {isLoading ? (

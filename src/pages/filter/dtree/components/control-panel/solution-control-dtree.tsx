@@ -17,6 +17,9 @@ export const SolutionControlDtree = observer((): ReactElement => {
       solutions={availableDtrees}
       isCreateDisabled={dtreeStore.dtreeCode.length < MIN_CODE_LENGTH}
       isFetchingSolutions={isFetchingDtrees}
+      modifiedSolution={
+        dtreeStore.isDtreeModified ? dtreeStore.currentDtreeName : undefined
+      }
       controlName={t('solutionControl.decisionTree')}
       onCreate={filterDtreesStore.createDtree}
       onApply={filterDtreesStore.setActiveDtree}

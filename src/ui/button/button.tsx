@@ -10,7 +10,7 @@ export interface IButtonProps {
   text?: ReactNode
   textSize?: 'xs' | 'sm'
   size?: 'xs' | 'sm' | 'md'
-  padding?: 'normal' | 'dense'
+  padding?: 'normal' | 'dense' | 'none'
   disabled?: boolean
   variant?:
     | 'text'

@@ -12,3 +12,8 @@
   min-width: 80px;
   margin-top: theme("spacing.1");
 }
+
+.menu-list-item-actions {
+  display: flex;
+  align-items: center;
+}

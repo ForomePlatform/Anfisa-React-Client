@@ -1,6 +1,9 @@
 import { makeAutoObservable, runInAction } from 'mobx'
 
-import { IZoneDescriptor } from '@service-providers/ws-dataset-support/ws-dataset-support.interface'
+import {
+  IZoneDescriptor,
+  TTagsDescriptor,
+} from '@service-providers/ws-dataset-support/ws-dataset-support.interface'
 import wsDatasetProvider from '@service-providers/ws-dataset-support/ws-dataset-support.provider'
 import datasetStore from '../dataset/dataset'
 
@@ -34,7 +37,25 @@ class ZoneStore {
     makeAutoObservable(this)
   }
 
-  public setZoneIndex(zone: [string, string[]], index: number): void {
+  get specialSamples(): [boolean, boolean, boolean] {
+    let proband = false
+    let mother = false
+    let father = false
+
+    for (const sample of this.selectedSamples) {
+      if (!proband && sample.startsWith('proband ')) {
+        proband = true
+      } else if (!mother && sample.startsWith('mother ')) {
+        mother = true
+      } else if (!father && sample.startsWith('father ')) {
+        father = true
+      }
+    }
+
+    return [proband, mother, father]
+  }
+
+  setZoneIndex(zone: [string, string[]], index: number): void {
     this.zone[index] = zone
   }
 
@@ -202,8 +223,6 @@ class ZoneStore {
 
   public unselectAllTags = () => {
     this.localTags = []
-    this.resetModeNOT()
-    this.resetModeWithNotes()
   }
 
   public createSelectedZoneFilter(type: string) {
@@ -226,7 +245,21 @@ class ZoneStore {
     if (type === 'isTags') this.localTags = this.selectedTags
   }
 
-  public resetAllSelectedItems() {
+  hasDifferenceWithZoneTags(tags: TTagsDescriptor): boolean {
+    const extendedSelectedTags = this.isModeWithNotes
+      ? [...this.selectedTags, '_note']
+      : this.selectedTags
+
+    if (!extendedSelectedTags.length) {
+      return false
+    }
+
+    return this.isModeNOT
+      ? Object.keys(tags).some(tag => extendedSelectedTags.includes(tag))
+      : Object.keys(tags).every(tag => !extendedSelectedTags.includes(tag))
+  }
+
+  resetAllSelectedItems() {
     this.genes = []
     this.genesList = []
     this.samples = []
@@ -264,7 +297,12 @@ class ZoneStore {
     this.isModeWithNotes = this.modeWithNotesSubmitted
   }
 
-  public submitTagsMode() {
+  resetModes() {
+    this.resetModeNOT()
+    this.resetModeWithNotes()
+  }
+
+  submitTagsMode() {
     this.modeNotSubmitted = this.isModeNOT
     this.modeWithNotesSubmitted = this.isModeWithNotes
   }

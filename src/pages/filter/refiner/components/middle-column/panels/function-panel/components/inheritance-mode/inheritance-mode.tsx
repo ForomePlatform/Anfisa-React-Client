@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import filterStore from '@store/filter'
-import { InheritanceModeCondition } from '@components/conditions/inheritance-mode-condition'
+import { InheritanceModeCondition } from '@components/conditions/inheritance-mode'
 import { refinerFunctionsStore } from '@pages/filter/refiner/components/attributes/refiner-functions.store'
 import { refinerStatFuncStore } from '@pages/filter/refiner/components/attributes/refiner-stat-func.store'
 import { AttributeKinds } from '@service-providers/common'

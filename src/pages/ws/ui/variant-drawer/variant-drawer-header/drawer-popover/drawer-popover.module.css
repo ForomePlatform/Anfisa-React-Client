@@ -1,0 +1,27 @@
+.drawer-popover {
+  margin-top: theme("spacing.2");
+  background: theme("colors.blue.light");
+  border-radius: theme("borderRadius.xl");
+  box-shadow: theme("boxShadow.card");
+  padding: theme("spacing.4");
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: theme("spacing.4");
+  }
+
+  &__title {
+    @apply typography-m;
+
+    flex: 1 0 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__close {
+    flex: 0 0 auto;
+  }
+}

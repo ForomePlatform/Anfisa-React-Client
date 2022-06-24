@@ -1,9 +1,9 @@
-import { useState } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { ActionType } from '@declarations'
 import { ModalSources } from '@core/enum/modal-sources'
+import { usePopover } from '@core/hooks/use-popover'
 import { t } from '@i18n'
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
@@ -30,13 +30,8 @@ export const SelectModalButtons = observer(
     disabled,
     handleAddAttribute,
   }: ISelectModalButtonsProps) => {
-    const [popoverAnchor, setPopoverAnchor] = useState<HTMLElement | null>(null)
-
-    const closePopover = () => {
-      setPopoverAnchor(null)
-    }
-
-    const isPopoverOpen = !!popoverAnchor
+    const { popoverAnchor, isPopoverOpen, onToggle, closePopover } =
+      usePopover()
 
     return (
       <div
@@ -52,7 +47,7 @@ export const SelectModalButtons = observer(
             className="text-14 text-blue-bright font-medium cursor-pointer"
             onClick={handleModals}
           >
-            {t('dtree.backToAttribute')}
+            {t('condition.backToAttribute')}
           </div>
         )}
 
@@ -77,12 +72,8 @@ export const SelectModalButtons = observer(
               <div className="relative">
                 <Button
                   disabled={disabled}
-                  text={t('dtree.addByJoining')}
-                  onClick={event =>
-                    isPopoverOpen
-                      ? closePopover()
-                      : setPopoverAnchor(event.currentTarget)
-                  }
+                  text={t('condition.addByJoining')}
+                  onClick={e => onToggle(e.currentTarget)}
                   icon={<Icon name="Arrow" className="transform -rotate-90" />}
                   dataTestId={DecisionTreeModalDataCy.addByJoin}
                 />
@@ -97,7 +88,7 @@ export const SelectModalButtons = observer(
             </>
           ) : (
             <Button
-              text={t('dtree.addNewAttribute')}
+              text={t('condition.addAttribute')}
               onClick={() => handleAddAttribute('INSERT')}
               disabled={disabled}
               dataTestId={DecisionTreeModalDataCy.addSelectedAttributes}

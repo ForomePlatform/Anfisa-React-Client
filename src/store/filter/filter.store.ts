@@ -1,6 +1,7 @@
 import cloneDeep from 'lodash/cloneDeep'
 import { makeAutoObservable, reaction, runInAction, toJS } from 'mobx'
 
+import { pushQueryParams } from '@core/history'
 import { t } from '@i18n'
 import { ActionsHistoryStore } from '@store/actions-history'
 import datasetStore from '@store/dataset/dataset'
@@ -13,7 +14,6 @@ import {
   TPropertyStatus,
 } from '@service-providers/common'
 import { IDsListArguments } from '@service-providers/dataset-level'
-import { IStatFuncArguments } from '@service-providers/filtering-regime'
 import filteringRegimeProvider from '@service-providers/filtering-regime/filtering-regime.provider'
 import { showToast } from '@utils/notifications'
 import { FilterStatStore, TFilterStatQuery } from './filter-stat.store'
@@ -33,9 +33,8 @@ export class FilterStore {
   // TODO: it's not good choice to save current page as store field
   method!: GlbPagesNames | FilterControlOptions
 
-  statFuncData: any = []
-
   private _conditions: TCondition[] = []
+
   private _isConditionsFetching = false
   private _selectedConditionIndex: number = -1
   private _attributeNameToAdd: string = ''
@@ -91,6 +90,7 @@ export class FilterStore {
       presetName => {
         if (presetName) {
           this.loadPreset(presetName)
+          this.updateURLWithPresetName(presetName)
         } else {
           this.resetPreset()
         }
@@ -150,6 +150,10 @@ export class FilterStore {
 
   public get isPresetModified(): boolean {
     return this._presetModifiedState === PresetModifiedState.Modified
+  }
+
+  public get isNotPreset(): boolean {
+    return this._presetModifiedState === PresetModifiedState.NotPreset
   }
 
   public get viewVariantsQuery(): IDsListArguments | undefined {
@@ -230,29 +234,6 @@ export class FilterStore {
     this.selectCondition(savedIndex)
   }
 
-  // TODO: remove after all func filters is unified
-  async fetchStatFuncAsync(unit: string, param: any) {
-    const body: IStatFuncArguments = {
-      ds: datasetStore.datasetName,
-      conditions: this.conditions,
-      rq_id: String(Date.now()),
-      unit,
-      param,
-    }
-
-    const result = await filteringRegimeProvider.getStatFunc(body)
-
-    runInAction(() => {
-      this.statFuncData = result
-    })
-
-    return result
-  }
-
-  public resetStatFuncData() {
-    this.statFuncData = []
-  }
-
   public reset() {
     this.method = GlbPagesNames.Dtree
     this._attributeNameToAdd = ''
@@ -286,8 +267,6 @@ export class FilterStore {
     if (state === undefined) {
       if (this._presetModifiedState === PresetModifiedState.NotModified) {
         this._presetModifiedState = PresetModifiedState.Modified
-
-        filterPresetsStore.resetActivePreset()
       }
     } else if (state !== this._presetModifiedState) {
       this._presetModifiedState = state
@@ -354,5 +333,9 @@ export class FilterStore {
     }
 
     this.setPresetModifiedState(PresetModifiedState.NotPreset)
+  }
+
+  private updateURLWithPresetName(preset: string) {
+    pushQueryParams({ preset })
   }
 }

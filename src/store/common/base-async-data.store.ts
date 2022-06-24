@@ -13,6 +13,7 @@ import {
 
 export type TBaseDataStoreOptions = {
   keepPreviousData?: boolean
+  dataObservable?: 'deep' | 'ref' | 'shallow' | 'struct'
 }
 
 export type TBaseDataStoreFetchOptions = {
@@ -23,8 +24,9 @@ export type TBaseDataStoreFetchOptions = {
 // TODO: automatic refetch in background
 // TODO: error handling (may be show error toast for all)
 
-const defaultOptions: TBaseDataStoreOptions = {
+const defaultOptions: Required<TBaseDataStoreOptions> = {
   keepPreviousData: false,
+  dataObservable: 'deep',
 }
 
 export abstract class BaseAsyncDataStore<Data, Query> {
@@ -41,6 +43,11 @@ export abstract class BaseAsyncDataStore<Data, Query> {
     new Map()
 
   protected constructor(options: TBaseDataStoreOptions = {}) {
+    const { keepPreviousData, dataObservable } = {
+      ...defaultOptions,
+      ...options,
+    }
+
     makeObservable<
       BaseAsyncDataStore<Data, Query>,
       | '_lastUpdate'
@@ -57,7 +64,7 @@ export abstract class BaseAsyncDataStore<Data, Query> {
       _isFetching: observable,
       _error: observable,
       _query: observable,
-      _data: observable,
+      _data: observable[dataObservable],
       isFetching: computed,
       lastUpdate: computed,
       isLoading: computed,
@@ -70,8 +77,6 @@ export abstract class BaseAsyncDataStore<Data, Query> {
       reset: action,
       resetState: action,
     })
-
-    const { keepPreviousData } = { ...defaultOptions, ...options }
 
     let disposeObserver: () => void
 
@@ -153,6 +158,14 @@ export abstract class BaseAsyncDataStore<Data, Query> {
   public reset(): void {
     this.resetState()
     this.cache.clear()
+  }
+
+  public handleQuery = (query: Query | undefined): void => {
+    if (query !== undefined) {
+      this.setQuery(query)
+    } else {
+      this.reset()
+    }
   }
 
   public get data(): Data | undefined {
