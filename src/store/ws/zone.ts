@@ -216,10 +216,7 @@ class ZoneStore {
     if (type === 'isTags') this.localTags = this.selectedTags
   }
 
-  hasDifferenceWithZoneTags(
-    tags: TTagsDescriptor,
-    prevTags?: TTagsDescriptor,
-  ): boolean {
+  hasDifferenceWithZoneTags(tags: TTagsDescriptor): boolean {
     const extendedSelectedTags = this.isModeWithNotes
       ? [...this.selectedTags, '_note']
       : this.selectedTags
@@ -228,17 +225,9 @@ class ZoneStore {
       return false
     }
 
-    const check = (testTags: TTagsDescriptor): boolean =>
-      this.isModeNOT
-        ? Object.keys(testTags).some(tag => extendedSelectedTags.includes(tag))
-        : Object.keys(testTags).every(
-            tag => !extendedSelectedTags.includes(tag),
-          )
-
-    const hasDifferenceWithCurrent = check(tags)
-    const hasDifferenceWithPrevious = prevTags ? check(prevTags) : false
-
-    return hasDifferenceWithCurrent || hasDifferenceWithPrevious
+    return this.isModeNOT
+      ? Object.keys(tags).some(tag => extendedSelectedTags.includes(tag))
+      : Object.keys(tags).every(tag => !extendedSelectedTags.includes(tag))
   }
 
   resetAllSelectedItems() {

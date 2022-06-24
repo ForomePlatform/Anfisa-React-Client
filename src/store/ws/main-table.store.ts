@@ -98,7 +98,10 @@ export class MainTable {
   ): void => {
     zoneStore.invalidateTags()
 
-    if (zoneStore.hasDifferenceWithZoneTags(tags, prevTags)) {
+    if (
+      zoneStore.hasDifferenceWithZoneTags(tags) ||
+      (prevTags && zoneStore.hasDifferenceWithZoneTags(prevTags))
+    ) {
       this.wsList.invalidate()
     } else {
       this.tabReport.updateRowTags(recNo, tags)
