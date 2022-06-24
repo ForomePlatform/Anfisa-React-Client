@@ -25,7 +25,6 @@ export const VariantDrawerHeader = observer(
     windowsOpenState,
     onWindowsToggle,
   }: IVariantDrawerHeaderProps): ReactElement => {
-    const { tabReport } = mainTableStore
     const {
       record: { locus, genes },
     } = variantStore
@@ -59,14 +58,6 @@ export const VariantDrawerHeader = observer(
       { eventCode: 'ArrowUp', callback: handlePrevVariant },
       { eventCode: 'ArrowDown', callback: handleNextVariant },
     ])
-
-    const handleCloseDrawer = () => {
-      if (variantStore.isTagsModified) {
-        tabReport.invalidatePage(mainTableStore.openedVariantPageNo)
-      }
-
-      variantStore.closeVariant()
-    }
 
     return (
       <div
@@ -118,7 +109,7 @@ export const VariantDrawerHeader = observer(
           />
           <Divider orientation="vertical" spacing="dense" />
           <button className="w-4 h-4 flex items-center justify-center  text-white hover:text-blue-bright">
-            <Icon name="Close" onClick={handleCloseDrawer} size={16} />
+            <Icon name="Close" onClick={variantStore.closeVariant} size={16} />
           </button>
         </div>
       </div>

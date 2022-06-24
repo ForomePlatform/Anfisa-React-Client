@@ -1,15 +1,12 @@
-import { ReactElement, useState } from 'react'
-import cn from 'classnames'
+import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import stepStore from '@store/dtree/step.store'
-import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-modal.cy'
 import {
   AttributeKinds,
   TCondition,
   TNumericConditionBounds,
 } from '@service-providers/common'
-import { DropDownJoin } from '../dropdown-join'
 import { ContentItemHeader } from './content-item-header'
 import { ContentItemValues } from './content-item-values'
 
@@ -31,7 +28,6 @@ export const NextStepContentItem = observer(
     expanded,
     setExpandOnClick,
   }: INextStepContentItemProps): ReactElement => {
-    const [isVisible, setIsVisible] = useState<boolean>(false)
     const stepType: AttributeKinds = group[0]
     const groupName: string = group[1]
     const currentStep = stepStore.filteredSteps[index]
@@ -41,25 +37,7 @@ export const NextStepContentItem = observer(
     )
 
     return (
-      <div className="flex flex-col h-auto">
-        {groupNo > 0 && (
-          <div
-            className={cn(
-              'flex w-full h-2/5 py-2 text-14 font-normal items-center relative step-content-area',
-              currentStep.isActive && 'bg-blue-tertiary',
-            )}
-            data-testid={DecisionTreeModalDataCy.joinByLabel}
-          >
-            {isVisible && (
-              <DropDownJoin
-                close={() => setIsVisible(false)}
-                index={index}
-                groupNo={groupNo}
-              />
-            )}
-          </div>
-        )}
-
+      <div className="flex flex-col h-auto mb-3">
         <div className="flex flex-col w-full h-auto mr-2 px-2 py-3 rounded-md border border-grey-light step-content-area">
           <ContentItemHeader
             currentStep={currentStep}

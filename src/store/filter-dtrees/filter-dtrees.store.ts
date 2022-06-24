@@ -1,5 +1,6 @@
 import { makeAutoObservable, reaction, toJS } from 'mobx'
 
+import { pushQueryParams } from '@core/history'
 import { t } from '@i18n'
 import datasetStore from '@store/dataset/dataset'
 import dtreeStore from '@store/dtree'
@@ -34,6 +35,13 @@ export class FilterDtreesStore {
       datasetName => {
         this.resetActiveDtree()
         this.dtrees.setQuery({ datasetName, code: dtreeStore.dtreeCode })
+      },
+    )
+
+    reaction(
+      () => this.activeDtree,
+      dtree => {
+        this.updateURLWithDtreeName(dtree)
       },
     )
   }
@@ -144,5 +152,9 @@ export class FilterDtreesStore {
           )
         },
       )
+  }
+
+  private updateURLWithDtreeName(dtree: string) {
+    pushQueryParams({ dtree })
   }
 }

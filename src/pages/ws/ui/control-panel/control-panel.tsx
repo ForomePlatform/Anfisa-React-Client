@@ -1,3 +1,5 @@
+import styles from './control-panel.module.css'
+
 import { ReactElement } from 'react'
 
 import { t } from '@i18n'
@@ -15,61 +17,60 @@ import { TagsModal } from './zone-modals/tags-modal'
 import { ZoneItem } from './zone-modals/zone-item'
 
 export const ControlPanel = (): ReactElement => (
-  <div className="w-full flex px-4 bg-blue-dark">
-    <div className="w-full flex justify-between pt-2 pb-4">
-      <div className="flex items-center">
-        <ControlPanelPreset />
+  <div className={styles.controlPanel}>
+    <div className={styles.controlPanel__controls}>
+      <ControlPanelPreset />
 
-        <Divider orientation="vertical" className="h-[75%]" />
+      <Divider orientation="vertical" />
 
-        <EditFilter />
+      <EditFilter />
 
-        <Divider orientation="vertical" className="h-[75%]" />
+      <Divider orientation="vertical" />
 
-        <CustomizeTable />
+      <CustomizeTable />
 
-        <Divider orientation="vertical" className="h-[75%]" />
+      <Divider orientation="vertical" />
 
-        <div className="flex bg-blue-darkHover rounded-sm px-3 min-h-32">
-          <ZoneItem
-            title={t('ds.gene')}
-            modalElement={GenesModal}
-            selectedTagsList={zoneStore.selectedGenes}
-            removeZoneTag={zoneStore.removeGene}
-            dataTestId={MainTableDataCy.addGene}
-          />
+      <div className={styles.controlPanel__zones}>
+        <ZoneItem
+          title={t('ds.gene')}
+          modalElement={GenesModal}
+          selectedTagsList={zoneStore.selectedGenes}
+          removeZoneTag={zoneStore.removeGene}
+          dataTestId={MainTableDataCy.addGene}
+        />
 
-          <ZoneItem
-            title={t('ds.geneList')}
-            modalElement={GenesListModal}
-            selectedTagsList={zoneStore.selectedGenesList}
-            removeZoneTag={zoneStore.removeGenesList}
-          />
+        <ZoneItem
+          title={t('ds.geneList')}
+          modalElement={GenesListModal}
+          selectedTagsList={zoneStore.selectedGenesList}
+          removeZoneTag={zoneStore.removeGenesList}
+        />
 
-          <ZoneItem
-            title={t('ds.sample')}
-            modalElement={SamplesModal}
-            selectedTagsList={zoneStore.selectedSamples}
-            removeZoneTag={zoneStore.removeSample}
-            dataTestId={MainTableDataCy.addSample}
-          />
+        <ZoneItem
+          title={t('ds.sample')}
+          modalElement={SamplesModal}
+          selectedTagsList={zoneStore.selectedSamples}
+          removeZoneTag={zoneStore.removeSample}
+          dataTestId={MainTableDataCy.addSample}
+        />
 
-          <ZoneItem
-            title={t('ds.tags')}
-            modalElement={TagsModal}
-            selectedTagsList={zoneStore.selectedTags}
-            removeZoneTag={zoneStore.removeLocalTag}
-            dataTestId={MainTableDataCy.addTag}
-            isLast
-          />
-        </div>
-
-        <Divider orientation="vertical" className="h-[75%]" />
-
-        <CreateDatasetButton />
+        <ZoneItem
+          title={t('ds.tags')}
+          modalElement={TagsModal}
+          selectedTagsList={zoneStore.selectedTags}
+          removeZoneTag={zoneStore.removeLocalTag}
+          dataTestId={MainTableDataCy.addTag}
+          isLast
+        />
       </div>
 
-      {/* TODO: need a functional <UndoRedoButtons /> */}
+      <Divider orientation="vertical" />
     </div>
+    <div className={styles.controlPanel__save}>
+      <CreateDatasetButton />
+    </div>
+
+    {/* TODO: need a functional <UndoRedoButtons /> */}
   </div>
 )

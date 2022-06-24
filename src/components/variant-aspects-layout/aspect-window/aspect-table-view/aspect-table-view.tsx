@@ -2,9 +2,9 @@ import style from './aspect-table-view.module.css'
 
 import { MouseEvent, ReactElement } from 'react'
 import cn from 'classnames'
-import Tooltip from 'rc-tooltip'
 
 import { t } from '@i18n'
+import { Tooltip } from '@ui/tooltip'
 import {
   AspectCellRenderClass,
   ITableAspectDescriptor,
@@ -47,16 +47,17 @@ export const AspectTableView = ({
 
               return (
                 <tr key={row.name}>
-                  <Tooltip
-                    overlay={row.tooltip}
-                    placement="bottomLeft"
-                    trigger={row.tooltip ? 'hover' : ''}
+                  <td
+                    className={cn(
+                      'p-3 text-blue-bright whitespace-nowrap sticky left-0',
+                      shouldAddShadow && blueBg,
+                    )}
                   >
-                    <td
-                      className={cn(
-                        'p-3 text-blue-bright whitespace-nowrap sticky left-0',
-                        shouldAddShadow && blueBg,
-                      )}
+                    <Tooltip
+                      maxWidth={600}
+                      theme="light"
+                      title={row.tooltip}
+                      placement="bottom-start"
                     >
                       <span
                         className="cursor-auto"
@@ -66,8 +67,8 @@ export const AspectTableView = ({
                           ? `${row.title} [${count}]`
                           : row.title}
                       </span>
-                    </td>
-                  </Tooltip>
+                    </Tooltip>
+                  </td>
 
                   {row.cells.map((cell, cIndex) => (
                     <td

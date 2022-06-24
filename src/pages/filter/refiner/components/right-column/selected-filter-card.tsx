@@ -5,18 +5,16 @@ import { observer } from 'mobx-react-lite'
 import { useToggle } from '@core/hooks/use-toggle'
 import filterStore from '@store/filter'
 import { Icon } from '@ui/icon'
-import { PopperButton } from '@components/popper-button'
 import { AttributeKinds, ConditionJoinMode } from '@service-providers/common'
 import {
   TFuncArgs,
   TNumericConditionBounds,
 } from '@service-providers/common/common.interface'
 import { AllNotModeLabel } from './all-not-mode-label'
-import { ConditionModalOptionsButton } from './condition-modal-options-button'
-import { ConditionModalOptionsPopup } from './condition-modal-options-popup'
 import { EnumFilter } from './enum-filter'
 import { FuncFilter } from './func-filter'
 import { NumericFilter } from './numeric-filter'
+import { RefinerConditionOptions } from './refiner-condition-options'
 
 interface ISelectedFilterCardProps {
   isActive: boolean
@@ -76,10 +74,7 @@ export const SelectedFilterCard = observer(
               />
             </div>
 
-            <PopperButton
-              ButtonElement={ConditionModalOptionsButton}
-              ModalElement={ConditionModalOptionsPopup}
-            />
+            <RefinerConditionOptions />
           </div>
           {isFilterContentVisible && (
             <div className="bg-grey-light h-px w-full" />

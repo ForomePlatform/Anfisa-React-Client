@@ -9,6 +9,7 @@ import { MenuList, MenuListItem } from '@ui/menu-list'
 import { Popover } from '@ui/popover'
 import { FnLabel } from '@components/fn-label'
 import { TFunctionalCondition } from '@components/units-list'
+import { popoverOffset } from '@pages/ws/constants'
 import { TPropertyStatus } from '@service-providers/common'
 
 interface IFunctionalUnitsProps {
@@ -73,6 +74,7 @@ export const FunctionalUnits = ({
         isOpen={isMenuOpen}
         anchorEl={titleRef.current}
         onClose={closeMenu}
+        offset={popoverOffset}
       >
         <MenuList className={styles.menu}>
           {units.map(unit => (

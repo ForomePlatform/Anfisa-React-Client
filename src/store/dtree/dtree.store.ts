@@ -275,6 +275,7 @@ export class DtreeStore {
     })
       .then(() => {
         this.setDtreeModifiedState(DtreeModifiedState.NotModified)
+        this.currentDtreeName = dtreeName
       })
       .catch(() => {
         showToast(t('dtree.errors.loadDtree', { dtreeName }), 'error')

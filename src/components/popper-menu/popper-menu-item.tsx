@@ -25,9 +25,9 @@ export const PopperMenuItem = ({
       className={cn(
         'py-1',
         'px-2',
-        'rounded',
         {
-          'hover:bg-blue-light': !isDisabled,
+          'hover:bg-blue-bright': !isDisabled,
+          'hover:text-white': !isDisabled,
           'cursor-default pointer-events-none opacity-50': isDisabled,
           'flex justify-between': !!iconName,
         },

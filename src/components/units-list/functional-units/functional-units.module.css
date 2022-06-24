@@ -35,7 +35,7 @@
   @apply popup-card;
 
   margin-top: theme("spacing.1");
-  min-width: 300px;
+  min-width: 200px;
 }
 
 .condition {

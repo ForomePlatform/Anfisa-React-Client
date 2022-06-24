@@ -1,27 +1,14 @@
-import { MouseEvent } from 'react'
-
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
+import { IPopoverButtonBaseProps } from '@ui/popover/popover.interface'
 
-interface IHandleDatasetButtonProps {
-  refEl: HTMLButtonElement | null
-  onClick?: (event?: MouseEvent<HTMLButtonElement>) => void
-  onMouseUp?: (event: MouseEvent<HTMLButtonElement>) => void
-}
-
-export const HandleDatasetButton = ({
-  refEl,
-  onClick,
-  onMouseUp,
-}: IHandleDatasetButtonProps) => {
+export const HandleDatasetButton = ({ onClick }: IPopoverButtonBaseProps) => {
   return (
     <Button
-      refEl={refEl}
-      onClick={onClick}
+      onClick={e => onClick(e.currentTarget)}
       className="rounded"
       size="md"
       icon={<Icon name="Ellipsis" />}
-      onMouseUp={onMouseUp}
       style={{
         width: '36px',
         height: '28px',

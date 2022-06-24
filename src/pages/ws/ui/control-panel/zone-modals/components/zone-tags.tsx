@@ -32,7 +32,7 @@ export const ZoneTags = observer(
                   onClick={() => deleteTag(item)}
                   name="Close"
                   size={8}
-                  className="ml-1"
+                  className="ml-1 cursor-pointer"
                 />
               </div>
             </div>
