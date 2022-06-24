@@ -25,7 +25,7 @@ export const HandleDataset = observer(() => {
   }
   return (
     <div className="ml-4 flex">
-      <HandleDatasetButton onClick={onToggle} />
+      <HandleDatasetButton onShowPopover={onToggle} />
 
       <HandleDatasetPopover
         isOpen={isPopoverOpen}

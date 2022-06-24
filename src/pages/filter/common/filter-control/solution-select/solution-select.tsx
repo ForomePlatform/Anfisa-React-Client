@@ -24,7 +24,7 @@ export const SolutionSelect = ({
       <SolutionSelectButton
         pageName={pageName}
         isOpen={isPopoverOpen}
-        onClick={onToggle}
+        onShowPopover={onToggle}
       />
 
       <SolutionSelectPopover

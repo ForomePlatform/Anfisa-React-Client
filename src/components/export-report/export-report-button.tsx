@@ -11,7 +11,11 @@ import { IPopoverButtonBaseProps } from '@ui/popover/popover.interface'
 import { MainTableDataCy } from '../data-testid/main-table.cy'
 
 export const ExportReportButton = observer(
-  ({ disabled, isOpen, onClick }: IPopoverButtonBaseProps): ReactElement => (
+  ({
+    disabled,
+    isOpen,
+    onShowPopover,
+  }: IPopoverButtonBaseProps): ReactElement => (
     <Button
       disabled={disabled}
       text={t('general.exportReport')}
@@ -21,7 +25,7 @@ export const ExportReportButton = observer(
       padding="dense"
       variant="primary-dark"
       prepend={<Icon name="Export" />}
-      onClick={e => onClick(e.currentTarget)}
+      onClick={e => onShowPopover(e.currentTarget)}
       style={{
         pointerEvents: operationsStore.isExportingReport ? 'none' : 'inherit',
         backgroundColor: !disabled && theme('colors.blue.secondary'),

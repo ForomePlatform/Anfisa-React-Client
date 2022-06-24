@@ -6,10 +6,10 @@ import { observer } from 'mobx-react-lite'
 import { copyToClipboard } from '@core/copy-to-clipboard'
 import { t } from '@i18n'
 import variantStore from '@store/ws/variant'
-import { DropDown } from '@ui/dropdown'
 import { Icon } from '@ui/icon'
 import { showToast } from '@utils/notifications/showToast'
 import breadcrumbsStore from './breadcrumbs.store'
+import { SelectSecondaryDataset } from './select-preset-secondary-dataset'
 
 export interface IBreadcrumbsProps {
   className?: string
@@ -80,27 +80,26 @@ export const Breadcrumbs = observer<IBreadcrumbsProps>(
           )
         })}
         {(!isDatasetInSecondary || isCurrentSingleOption) && (
-          <Fragment>
+          <>
             <span className="mx-2">/</span>
             <div className={hasSecondarySelect ? 'shrink-1 min-w-0' : ''}>
               <div className="whitespace-nowrap overflow-hidden text-ellipsis">
                 {datasetName}
               </div>
             </div>
-          </Fragment>
+          </>
         )}
         {hasSecondarySelect && (
-          <Fragment>
+          <>
             <span className="mx-2">/</span>
             <div className="shrink-0 grow-0">
-              <DropDown
-                options={secondaryOptions}
-                value={isDatasetInSecondary ? dataset.name : ''}
-                onSelect={option => onChangeDataset(option.value)}
-                placeholder={t('header.selectSecondaryPlaceholder')}
+              <SelectSecondaryDataset
+                datasetList={secondaryOptions}
+                selectedDataset={isDatasetInSecondary ? dataset.name : ''}
+                onChangeDataset={onChangeDataset}
               />
             </div>
-          </Fragment>
+          </>
         )}
         <Icon
           name="CopyLink"
