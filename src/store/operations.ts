@@ -3,6 +3,7 @@ import { makeAutoObservable, runInAction } from 'mobx'
 
 import { ExportTypeEnum } from '@core/enum/export-type.enum'
 import { getApiUrl } from '@core/get-api-url'
+import { t } from '@i18n'
 import datasetStore from '@store/dataset/dataset'
 import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
@@ -23,20 +24,6 @@ class OperationsStore {
     makeAutoObservable(this)
   }
 
-  /* TODO: not used anywhere
-    async macroTaggingAsync({ tag, off }: { tag: string; off?: boolean }) {
-      await wsDatasetProvider.updateMicroTagging({
-        ds: datasetStore.datasetName,
-        tag,
-        conditions: filterStore.conditions,
-        filter: filterPresetsStore.activePreset,
-        off,
-      })
-
-      datasetStore.initDatasetAsync(datasetStore.datasetName)
-      dirinfoStore.fetchDsinfoAsync(datasetStore.datasetName)
-    }
-  */
   async exportReportAsync(exportType?: ExportTypeEnum) {
     const { conditions } = filterStore
 
@@ -126,7 +113,7 @@ class OperationsStore {
 
       return {
         ok: false,
-        message: 'Too many variants',
+        message: t('dsCreation.tooManyVariants'),
       }
     }
 
@@ -150,6 +137,8 @@ class OperationsStore {
 
     if (result[0] === null) {
       this.setIsCreationOver()
+
+      this.savingStatus = result
 
       return { ok: false, message: result[1] }
     }
