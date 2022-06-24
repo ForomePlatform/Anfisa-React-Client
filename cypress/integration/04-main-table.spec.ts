@@ -12,7 +12,7 @@ const time =
 
 const dateTime = time
 
-describe('Open saved dataset in MainTable', () => {
+describe.skip('Open saved dataset in MainTable', () => {
   const datasetName = 'PGP3140_wgs_NIST-4_2'
   const autoDataset = 'Dataset_from_autotests'
   const datasetsGroup = 'Datasets'

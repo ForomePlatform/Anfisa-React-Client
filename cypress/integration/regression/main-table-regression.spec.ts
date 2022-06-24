@@ -6,7 +6,7 @@ import { variantDrawerPage } from '../../page-objects/app/variant-drawer-page'
 import { TestData } from '../../shared/test-data'
 import { Timeouts } from '../../shared/timeouts'
 
-describe('Regression test of the main table | step 1', () => {
+describe.skip('Regression test of the main table | step 1', () => {
   const link = '/ws?ds=PGP3140_wgs_panel_hl'
   const homozygous = '⏚BGM_Homozygous_Rec'
   const datasetName = 'PGP3140_wgs_panel_hl'

@@ -2,7 +2,7 @@ import { datasetPage } from '../../page-objects/app/datasets-page'
 import { decisionTreesPage } from '../../page-objects/app/decision-trees-page'
 import { Timeouts } from '../../shared/timeouts'
 
-describe('Regression test of the decision tree', () => {
+describe.skip('Regression test of the decision tree', () => {
   const includedVariants = '+5,041,176'
   const datasetName = 'xl_PGP3140_wgs_NIST-4_2'
   const filterName = '⏚Hearing Loss, v.5'
