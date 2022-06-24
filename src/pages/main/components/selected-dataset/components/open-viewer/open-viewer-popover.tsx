@@ -5,7 +5,8 @@ import { DatasetInfoDataCy } from '@components/data-testid/dataset-info.cy'
 import { PopperMenu } from '@components/popper-menu/popper-menu'
 import { PopperMenuItem } from '@components/popper-menu/popper-menu-item'
 import { GlbPagesNames } from '@glb/glb-names'
-import { popoverOffset } from '@pages/ws/constants'
+import { popoverOffset } from '@pages/ws/ws.constants'
+
 interface IOpenViewerPopoverProps extends IPopoverBaseProps {
   pages: string[]
   goToPage: (name: GlbPagesNames) => void

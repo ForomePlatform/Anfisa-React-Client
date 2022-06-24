@@ -1,8 +1,8 @@
 import { ReactElement } from 'react'
 import cn from 'classnames'
-import Tooltip from 'rc-tooltip'
 
 import { Icon } from '@ui/icon'
+import { Tooltip } from '@ui/tooltip'
 import { FnLabel } from '@components/fn-label'
 import { AttributeKinds, TPropertyStatus } from '@service-providers/common'
 
@@ -30,7 +30,7 @@ export const AttributeHeader = ({
       </span>
 
       {tooltip && (
-        <Tooltip overlay={tooltip} placement="left" trigger={['click']}>
+        <Tooltip title={tooltip} placement="right" trigger="click">
           <Icon name="Info" className="ml-1 text-grey-blue cursor-pointer" />
         </Tooltip>
       )}

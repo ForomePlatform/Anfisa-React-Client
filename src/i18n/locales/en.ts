@@ -10,6 +10,7 @@ export const en = {
     resetFilters: 'Reset filters',
     selectAll: 'Select All',
     clearAll: 'Clear All',
+    selected: '{value} Selected',
     cancel: 'Cancel',
     create: 'Create',
     apply: 'Apply',
@@ -59,7 +60,7 @@ export const en = {
         delete: 'Error when deleting the "{dtreeName}" decision tree',
       },
     },
-    selectSecondaryPlaceholder: 'Select secondary...',
+    secondaryPlaceholder: 'secondary...',
   },
   solutionControl: {
     filterPreset: 'Filter Preset',

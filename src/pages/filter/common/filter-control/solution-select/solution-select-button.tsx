@@ -13,13 +13,13 @@ interface ISolutionSelectProps extends IPopoverButtonBaseProps {
 export const SolutionSelectButton = ({
   pageName,
   isOpen,
-  onClick,
+  onShowPopover,
 }: ISolutionSelectProps): ReactElement => (
   <Button
     text={pageName}
     variant="secondary-dark"
     size="md"
-    onClick={e => onClick(e.currentTarget)}
+    onClick={e => onShowPopover(e.currentTarget)}
     append={
       <Icon
         size={14}

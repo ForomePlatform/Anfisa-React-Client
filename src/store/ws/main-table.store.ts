@@ -3,7 +3,6 @@ import { makeAutoObservable, reaction, runInAction, toJS } from 'mobx'
 import datasetStore from '@store/dataset/dataset'
 import filterStore from '@store/filter'
 import filterPresetsStore from '@store/filter-presets'
-import zoneStore from '@store/ws/zone'
 import {
   TCondition,
   TItemsCount,
@@ -13,6 +12,7 @@ import wsDatasetProvider from '@service-providers/ws-dataset-support/ws-dataset-
 import { TabReportPaginatedAsyncStore } from './tab-report-paginated.async.store'
 import variantStore from './variant'
 import { IWsListQuery, WsListAsyncStore } from './ws-list.async.store'
+import zoneStore from './zone.store'
 
 export class MainTable {
   public wsList = new WsListAsyncStore()

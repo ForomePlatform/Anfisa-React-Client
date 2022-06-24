@@ -11,7 +11,7 @@ interface IStrictnessSelectButtonProps extends IPopoverButtonBaseProps {
 export const StrictnessSelectButton = ({
   isOpen,
   disabled,
-  onClick,
+  onShowPopover,
   value,
 }: IStrictnessSelectButtonProps): ReactElement => (
   <button
@@ -22,7 +22,7 @@ export const StrictnessSelectButton = ({
         : 'cursor-pointer text-black  hover:text-blue-bright',
       isOpen && 'text-blue-bright',
     )}
-    onClick={e => onClick(e.currentTarget)}
+    onClick={e => onShowPopover(e.currentTarget)}
   >
     <span
       className={cn(

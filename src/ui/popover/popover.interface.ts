@@ -20,5 +20,5 @@ export interface IPopoverProps extends IPopoverBaseProps {
 export interface IPopoverButtonBaseProps {
   isOpen?: boolean
   disabled?: boolean
-  onClick: (target: HTMLElement) => void
+  onShowPopover: (target: HTMLElement) => void
 }

@@ -31,7 +31,7 @@ export const OpenViewer = observer(() => {
   }
   return (
     <>
-      <OpenViewerButton isOpen={isPopoverOpen} onClick={onToggle} />
+      <OpenViewerButton isOpen={isPopoverOpen} onShowPopover={onToggle} />
 
       <OpenViewerPopover
         pages={pages}

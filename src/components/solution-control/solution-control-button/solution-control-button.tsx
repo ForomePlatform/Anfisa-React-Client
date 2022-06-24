@@ -6,13 +6,15 @@ import cn from 'classnames'
 import { t } from '@i18n'
 import { Icon } from '@ui/icon'
 import { DecisionTreesMenuDataCy } from '../../data-testid/decision-tree-menu.cy'
+import { Loader } from '@ui/loader'
 
 interface ISolutionControlButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {
   solutionName: string | undefined
   controlName: string
   isOpen: boolean
-  isModified: boolean
+  isModified?: boolean
+  isFetchingSolutions?: boolean
 }
 
 export const SolutionControlButton = ({
@@ -21,6 +23,7 @@ export const SolutionControlButton = ({
   controlName,
   isOpen,
   isModified,
+  isFetchingSolutions,
   ...buttonProps
 }: ISolutionControlButtonProps): ReactElement => {
   return (
@@ -30,7 +33,11 @@ export const SolutionControlButton = ({
       {...buttonProps}
     >
       <span className={styles.solutionControlButton__label}>
-        {solutionName || t('solutionControl.selectSolution', { controlName })}
+        {isFetchingSolutions ? (
+          <Loader size="xs" className="pb-2" />
+        ) : (
+          solutionName || t('solutionControl.selectSolution', { controlName })
+        )}
       </span>
       {isModified && (
         <span className={cn(styles.solutionControlButton__icon_modified)}>

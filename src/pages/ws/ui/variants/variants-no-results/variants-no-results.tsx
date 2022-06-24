@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
 import filterStore from '@store/filter'
-import zoneStore from '@store/ws/zone'
+import zoneStore from '@store/ws/zone.store'
 import { NoResultsFound } from '@components/no-results-found'
 
 export const VariantsNoResults = observer(() => {
