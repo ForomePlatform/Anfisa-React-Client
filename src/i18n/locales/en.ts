@@ -17,7 +17,7 @@ export const en = {
     applyFilters: 'Apply Filters',
     clear: 'Clear',
     replace: 'Replace',
-    add: '+ Add',
+    add: '+\u00a0Add',
     filter: '+ Filter',
     presetCreated: 'Preset has been created',
     showLess: 'Show less',
@@ -27,7 +27,7 @@ export const en = {
     closeWindow: 'Close window',
     creaitionIsInProcess: 'Dataset creation has not been finished yet',
     selectPreset: 'Select Preset',
-    plusAdd: '+ Add',
+    plusAdd: '+Add',
   },
   header: {
     version: {
@@ -130,7 +130,7 @@ export const en = {
     Compact: 'Compact View',
     Cozy: 'Cozy View',
     samples: 'Samples',
-    geneList: 'Gene List',
+    geneList: 'Gene\u00a0List',
     sample: 'Sample',
     tags: 'Tag',
     edit: 'Edit',
@@ -377,5 +377,8 @@ export const en = {
     samples25: 'Samples-25',
     gene: 'Gene',
     variant: 'Variant',
+  },
+  paginationList: {
+    footer: '{ from } — { to } / { length }',
   },
 }

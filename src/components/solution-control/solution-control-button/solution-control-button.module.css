@@ -27,6 +27,12 @@
     &_delete {
       color: theme("colors.blue.bright")
     }
+
+    &_modified {
+      color: theme("colors.grey.light");
+      opacity: 0.6;
+      margin-right: 3px;
+    }
   }
 
   &__arrow {
