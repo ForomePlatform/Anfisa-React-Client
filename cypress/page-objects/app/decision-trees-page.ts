@@ -34,7 +34,7 @@ class DecisionTreesPage extends BasePage {
         datasetNameInput: Helper.getDataId(
           DecisionTreesMenuDataCy.datasetNameInput,
         ),
-        addNewDataset: Helper.getDataId(DecisionTreesMenuDataCy.addNewDataset),
+        addNewDataset: DecisionTreesMenuDataCy.addNewDataset,
         cancelAddNewDataset: Helper.getDataId(
           DecisionTreesMenuDataCy.cancelAddNewDataset,
         ),

@@ -6,7 +6,7 @@ export const DecisionTreesMenuDataCy = {
   selectDropdownElem: 'dropdown-element',
   saveDataset: 'save-dataset',
   datasetNameInput: 'dataset-name-input',
-  addNewDataset: 'add-dataset',
+  addNewDataset: 'Add dataset',
   cancelAddNewDataset: 'cancel-adding-dataset',
   textEditor: 'text-editor',
   createNew: 'create-new',

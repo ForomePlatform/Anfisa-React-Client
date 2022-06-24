@@ -34,7 +34,7 @@ export const OpenViewerPopover = ({
         return (
           <PopperMenuItem
             key={index}
-            data-testid={DatasetInfoDataCy.viewerOption}
+            dataTestId={DatasetInfoDataCy.viewerOption}
             onClick={() => goToPage(pageName as GlbPagesNames)}
             className="first:rounded-t last:rounded-b"
           >

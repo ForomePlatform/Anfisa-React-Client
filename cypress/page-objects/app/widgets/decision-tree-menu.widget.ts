@@ -51,7 +51,7 @@ export class DecisionTreeWidget extends UIWidget {
     this.selectDropdownElem = new Button(selectors.selectDropdownElem)
     this.saveDataset = new Button(selectors.saveDataset)
     this.datasetNameInput = new Input(selectors.datasetNameInput)
-    this.addNewDataset = new Button(selectors.addNewDataset)
+    this.addNewDataset = new Button(selectors.addNewDataset, true)
     this.cancelAddNewDataset = new Button(selectors.cancelAddNewDataset)
     this.textEditor = new Button(selectors.textEditor)
     this.createNew = new Button(selectors.createNew)
