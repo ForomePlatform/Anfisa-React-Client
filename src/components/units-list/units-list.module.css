@@ -5,6 +5,7 @@
   justify-content: stretch;
   color: theme("colors.black");
   background: theme("colors.white");
+  position: relative;
 
   &_dark {
     color: theme("colors.white");
@@ -20,6 +21,13 @@
 
   &_dark &__functional {
     border-color: theme("colors.blue.secondary");
+  }
+
+  &__loader {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
   }
 
   &__controls {

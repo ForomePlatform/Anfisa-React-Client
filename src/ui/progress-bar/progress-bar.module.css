@@ -6,13 +6,21 @@
   position: relative;
 
   &_xs {
+    height: 4px;
+  }
+
+  &_sm {
     height: 8px;
     border-radius: 4px;
   }
 
-  &_sm {
+  &_md {
     height: 16px;
     border-radius: 8px;
+  }
+
+  &_no-rounding {
+    border-radius: 0;
   }
 
   &__text {

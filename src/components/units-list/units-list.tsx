@@ -61,6 +61,11 @@ export const UnitsList = ({
         className,
       )}
     >
+      {downloadedData !== 100 && (
+        <div className={styles.unitsList__loader}>
+          <ProgressBar status={downloadedData} step={10} size="xs" />
+        </div>
+      )}
       <FunctionalUnits
         className={styles.unitsList__functional}
         units={functionalUnits}
@@ -76,11 +81,6 @@ export const UnitsList = ({
         onExpand={() => setCollapsedGroups([])}
         onCollapse={() => setCollapsedGroups(groups.map(group => group.name))}
       />
-      {downloadedData !== 100 && (
-        <div className={styles.unitsList__controls}>
-          <ProgressBar status={downloadedData} step={10} size="xs" />
-        </div>
-      )}
       {subHeader && (
         <div className={styles.unitsList__subHeader}>{subHeader}</div>
       )}

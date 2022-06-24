@@ -9,7 +9,7 @@ export default {
 const Template: ComponentStory<typeof ProgressBar> = args => {
   return (
     <div className="w-full h-full flex items-center justify-center">
-      <div className="w-[100px]">
+      <div className="w-[300px]">
         <ProgressBar {...args} />
       </div>
     </div>
