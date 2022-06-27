@@ -12,7 +12,7 @@ export const en = {
     clearAll: 'Clear All',
     cancel: 'Cancel',
     create: 'Create',
-    apply: 'View variants',
+    viewVariants: 'View variants',
     applyFilters: 'Apply Filters',
     clear: 'Clear',
     replace: 'Replace',

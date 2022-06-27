@@ -34,7 +34,7 @@ export const DialogStandardActions = ({
         className="relative"
         disabled={isApplyDisabled || isLoading}
         isLoading={isLoading}
-        text={applyText || t('general.apply')}
+        text={applyText || t('general.viewVariants')}
         onClick={onApply}
       />
     </>
