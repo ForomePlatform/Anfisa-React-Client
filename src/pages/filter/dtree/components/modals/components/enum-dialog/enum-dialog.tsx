@@ -44,6 +44,9 @@ export const EnumDialog = observer((): ReactElement => {
     modalsVisibilityStore.closeEnumDialog()
   }, [])
 
+  const paginationHeight =
+    enumVariants.length > DEFAULT_COUNT ? 'calc(580px - 249px)' : 'auto'
+
   return (
     <Dialog
       isOpen={modalsVisibilityStore.isEnumDialogVisible}
@@ -60,9 +63,7 @@ export const EnumDialog = observer((): ReactElement => {
         initialEnumMode={initialEnumMode}
         isShowZeroes={dtreeAttributeStore.isShowZeroVariants}
         toggleShowZeroes={dtreeAttributeStore.setIsShowZeroVariants}
-        paginationHeight={`calc(580px - ${
-          enumVariants.length > DEFAULT_COUNT ? 249 : 203
-        }px)`}
+        paginationHeight={paginationHeight}
         controls={({ value, mode }) =>
           renderAttributeDialogControls({
             initialCondition,
