@@ -14,6 +14,11 @@ class ZoneStore {
   samples: string[] = []
   zone: any[] = []
 
+  private _fetchingGenes: boolean = false
+  private _fetchingGenesList: boolean = false
+  private _fetchingTags: boolean = false
+  private _fetchingSamples: boolean = false
+
   selectedGenes: string[] = []
   selectedGenesList: string[] = []
   selectedSamples: string[] = []
@@ -35,6 +40,22 @@ class ZoneStore {
 
   constructor() {
     makeAutoObservable(this)
+  }
+
+  public get fetchingGenes(): boolean {
+    return this._fetchingGenes
+  }
+
+  public get fetchingGenesList(): boolean {
+    return this._fetchingGenesList
+  }
+
+  public get fetchingTags(): boolean {
+    return this._fetchingTags
+  }
+
+  public get fetchingSamples(): boolean {
+    return this._fetchingSamples
   }
 
   get specialSamples(): [boolean, boolean, boolean] {
@@ -94,36 +115,52 @@ class ZoneStore {
   }
 
   public async fetchZoneListAsync(zone: string) {
+    if (zone === 'Symbol') {
+      this._fetchingGenes = true
+    } else {
+      this._fetchingGenesList = true
+    }
+
     const zoneList = (await wsDatasetProvider.getZoneList({
       ds: datasetStore.datasetName,
       zone,
     })) as IZoneDescriptor
 
     runInAction(() => {
-      zone === 'Symbol'
-        ? (this.genes = zoneList.variants)
-        : (this.genesList = zoneList.variants)
+      if (zone === 'Symbol') {
+        this.genes = zoneList.variants
+        this._fetchingGenes = false
+
+        return
+      }
+
+      this.genesList = zoneList.variants
+      this._fetchingGenesList = false
     })
   }
 
   public async fetchZoneSamplesAsync() {
+    this._fetchingSamples = true
     const zoneList = (await wsDatasetProvider.getZoneList({
       ds: datasetStore.datasetName,
       zone: 'Has_Variant',
     })) as IZoneDescriptor
 
     runInAction(() => {
+      this._fetchingSamples = false
       this.samples = zoneList.variants
     })
   }
 
   public async fetchZoneTagsAsync() {
+    this._fetchingTags = true
     const tagSelect = await wsDatasetProvider.getTagSelect({
       ds: datasetStore.datasetName,
     })
 
     runInAction(() => {
       this.tags = [...tagSelect['tag-list']].filter(item => item !== '_note')
+      this._fetchingTags = false
     })
   }
 

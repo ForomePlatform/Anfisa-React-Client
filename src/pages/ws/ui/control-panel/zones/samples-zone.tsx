@@ -54,6 +54,7 @@ export const SamplesZone = observer(() => {
       />
 
       <ZonePopover
+        isFetching={zoneStore.fetchingSamples}
         zoneList={zoneStore.samples}
         title={t('ds.samples')}
         selectedZoneItems={zoneStore.localSamples}
