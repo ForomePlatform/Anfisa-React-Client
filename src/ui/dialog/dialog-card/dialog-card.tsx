@@ -74,21 +74,6 @@ export const DialogCard = ({
           )}
         </div>
       )}
-
-      {/* {(actions || actions === undefined) && (
-        <div className={styles.dialogCard__actions}>
-          {actions || (
-            <DialogStandardActions
-              applyText={applyText}
-              cancelText={cancelText}
-              isApplyDisabled={isApplyDisabled}
-              isLoading={isLoading}
-              onClose={onClose}
-              onApply={onApply}
-            />
-          )}
-        </div>
-      )} */}
     </div>
   )
 }
