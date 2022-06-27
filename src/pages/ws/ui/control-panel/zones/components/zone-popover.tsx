@@ -70,7 +70,7 @@ export const ZonePopover = ({
       <div className="h-px w-full bg-blue-light mt-4" />
 
       {isFetching ? (
-        <Loader size="s" />
+        <Loader size="s" className="py-[40px]" />
       ) : (
         <ZoneList
           zoneItems={zoneList.filter(item =>
