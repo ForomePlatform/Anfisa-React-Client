@@ -60,7 +60,7 @@ export const en = {
         delete: 'Error when deleting the "{dtreeName}" decision tree',
       },
     },
-    selectSecondaryPlaceholder: 'Select secondary...',
+    secondaryPlaceholder: 'secondary...',
   },
   solutionControl: {
     filterPreset: 'Filter Preset',

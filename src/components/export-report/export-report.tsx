@@ -35,7 +35,7 @@ export const ExportReport = observer((): ReactElement => {
     <>
       <ExportReportButton
         isOpen={isPopoverOpen}
-        onClick={onToggle}
+        onShowPopover={onToggle}
         disabled={disabled}
       />
 
