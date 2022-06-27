@@ -4,6 +4,7 @@ import { ReactNode, useState } from 'react'
 import cn from 'classnames'
 
 import { TFunctionalUnit, TUnitGroups } from '@store/stat-units'
+import { Loader } from '@ui/loader'
 import { ProgressBar } from '@ui/progress-bar'
 import { TPropertyStatus } from '@service-providers/common'
 import { FunctionalUnits } from './functional-units'
@@ -16,7 +17,7 @@ export interface IUnitsListProps {
   className?: string
   isDark?: boolean
   withCharts?: boolean
-  downloadedData: number
+  fetchedAmount: number
   subHeader?: ReactNode
   groups: TUnitGroups
   functionalUnits: TFunctionalUnit[]
@@ -35,7 +36,7 @@ export const UnitsList = ({
   groups,
   functionalUnits,
   functionalConditions,
-  downloadedData,
+  fetchedAmount,
   onSelect,
   onFunctionalConditionSelect,
   onFunctionalConditionDelete,
@@ -61,9 +62,9 @@ export const UnitsList = ({
         className,
       )}
     >
-      {downloadedData !== 100 && (
+      {fetchedAmount !== 100 && (
         <div className={styles.unitsList__loader}>
-          <ProgressBar status={downloadedData} step={10} size="xs" />
+          <ProgressBar status={fetchedAmount} step={10} size="xs" />
         </div>
       )}
       <FunctionalUnits
@@ -84,18 +85,28 @@ export const UnitsList = ({
       {subHeader && (
         <div className={styles.unitsList__subHeader}>{subHeader}</div>
       )}
-      <div className={styles.unitsList__list} id={listContainerId}>
-        {filteredGroups.map(group => (
-          <UnitsListGroup
-            key={group.name}
-            isCollapsed={collapsedGroups.includes(group.name)}
-            onCollapsedChange={handleCollapsedChange}
-            isDark={isDark}
-            withCharts={withCharts}
-            unitsGroup={group}
-            onSelect={onSelect}
-          />
-        ))}
+      <div
+        className={cn(
+          styles.unitsList__list,
+          !filteredGroups.length && styles.unitsList__list_empty,
+        )}
+        id={listContainerId}
+      >
+        {!filteredGroups.length ? (
+          <Loader />
+        ) : (
+          filteredGroups.map(group => (
+            <UnitsListGroup
+              key={group.name}
+              isCollapsed={collapsedGroups.includes(group.name)}
+              onCollapsedChange={handleCollapsedChange}
+              isDark={isDark}
+              withCharts={withCharts}
+              unitsGroup={group}
+              onSelect={onSelect}
+            />
+          ))
+        )}
       </div>
     </div>
   )

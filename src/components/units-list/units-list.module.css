@@ -44,5 +44,10 @@
     flex: 1 0 0;
     overflow-y: auto;
     padding: 0 theme("spacing.4") theme("spacing.4");
+
+    &_empty {
+      display: flex;
+      align-items: center;
+    }
   }
 }
