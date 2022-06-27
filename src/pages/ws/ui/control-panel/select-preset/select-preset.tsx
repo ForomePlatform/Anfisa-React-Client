@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { reaction } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
 import { usePopover } from '@core/hooks/use-popover'
@@ -20,6 +21,15 @@ export const SelectPreset = observer(() => {
     filterPresetsStore.setActivePreset(presetName)
     closePopover()
   }
+
+  useEffect(() => {
+    reaction(
+      () => filterPresetsStore.activePreset,
+      activePreset => {
+        !activePreset && setSelectedPreset('')
+      },
+    )
+  })
 
   return (
     <>
