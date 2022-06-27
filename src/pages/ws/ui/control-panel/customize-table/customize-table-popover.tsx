@@ -5,16 +5,14 @@ import { observer } from 'mobx-react-lite'
 import { t } from '@i18n'
 import variantStore from '@store/ws/variant'
 import { Popover } from '@ui/popover'
+import { IPopoverBaseProps } from '@ui/popover/popover.interface'
 import { CustomizableList } from '@components/customizable-list'
 import { PopupCard } from '@components/popup-card/popup-card'
 import { ViewTypeTable } from '@components/view-type-table'
 import { popoverOffset } from '@pages/ws/ws.constants'
 import { customizeTableStore } from './customize-table.store'
 
-interface ICustomizeTablePopoverProps {
-  isOpen: boolean
-  anchorEl: HTMLElement | null
-  onClose: () => void
+interface ICustomizeTablePopoverProps extends IPopoverBaseProps {
   onApply: () => void
 }
 

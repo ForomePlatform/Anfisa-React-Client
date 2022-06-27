@@ -24,6 +24,7 @@ export const SolutionControlRefiner = observer((): ReactElement => {
       solutions={availablePresets}
       controlName={t('solutionControl.filterPreset')}
       isCreateDisabled={filterStore.isConditionsEmpty}
+      isFetchingSolutions={isFetchingPresets}
       modifiedSolution={
         filterStore.isPresetModified
           ? filterPresetsStore.activePreset

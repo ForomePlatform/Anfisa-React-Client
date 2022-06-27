@@ -1,12 +1,12 @@
-import React, { ReactElement } from 'react'
+import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { FilterModsEnum } from '@core/enum/filter-mods-enum'
 import { t } from '@i18n'
-import zoneStore from '@store/ws/zone'
+import zoneStore from '@store/ws/zone.store'
 import { Checkbox } from '@ui/checkbox/checkbox'
 
-export const ZoneModalMods = observer((): ReactElement => {
+export const ZoneMods = observer((): ReactElement => {
   const handleCheck = (checked: boolean, name: string) => {
     if (checked && name) {
       name === FilterModsEnum.NOTMode && zoneStore.setModeNOT(true)

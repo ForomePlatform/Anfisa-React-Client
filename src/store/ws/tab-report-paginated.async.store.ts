@@ -2,10 +2,10 @@ import { reaction } from 'mobx'
 
 import { BaseAsyncPaginatedDataStore } from '@store/common'
 import mainTableStore from '@store/ws/main-table.store'
-import zoneStore from '@store/ws/zone'
 import { TTagsDescriptor } from '@service-providers/ws-dataset-support/ws-dataset-support.interface'
 import { TabReportAsyncStore, TTabReportQuery } from './tab-report.async.store'
 import { WsListAsyncStore } from './ws-list.async.store'
+import zoneStore from './zone.store'
 
 const PAGE_SIZE = 50
 
