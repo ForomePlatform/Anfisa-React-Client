@@ -4,11 +4,13 @@ import { ReactElement, useEffect } from 'react'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
+import { pushQueryParams } from '@core/history'
 import { useDatasetName } from '@core/hooks/use-dataset-name'
 import { useParams } from '@core/hooks/use-params'
 import datasetStore from '@store/dataset/dataset'
 import dirInfoStore from '@store/dirinfo'
 import filterStore from '@store/filter'
+import filterPresetsStore from '@store/filter-presets'
 import mainTableStore from '@store/ws/main-table.store'
 import { ExportReport } from '@components/export-report'
 import { Header } from '@components/header'
@@ -32,6 +34,10 @@ export const RefinerPage = observer((): ReactElement => {
 
   useEffect(() => {
     presetName && applyPreset(presetName)
+
+    if (filterPresetsStore.activePreset && !presetName) {
+      pushQueryParams({ preset: filterPresetsStore.activePreset })
+    }
 
     return () => {
       dirInfoStore.resetData()

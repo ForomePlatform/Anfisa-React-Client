@@ -1,7 +1,5 @@
 import { makeAutoObservable } from 'mobx'
 
-import dtreeStore from '@store/dtree'
-
 class ModalsVisibilityStore {
   groupNameToChange = ''
   groupIndexToChange = 0
@@ -29,7 +27,7 @@ class ModalsVisibilityStore {
     this.isSelectAttributeDialogVisible = true
   }
 
-  public closeSelectAttributeDialog() {
+  public closeSelectAttributeDialog = () => {
     this.isSelectAttributeDialogVisible = false
   }
 
@@ -67,7 +65,6 @@ class ModalsVisibilityStore {
 
   public closeEnumDialog = () => {
     this.isEnumDialogVisible = false
-    dtreeStore.resetSelectedFilters()
   }
 
   // 4. Func dialogs
