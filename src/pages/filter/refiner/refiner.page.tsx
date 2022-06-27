@@ -9,6 +9,7 @@ import { useParams } from '@core/hooks/use-params'
 import datasetStore from '@store/dataset/dataset'
 import dirInfoStore from '@store/dirinfo'
 import filterStore from '@store/filter'
+import filterPresetsStore from '@store/filter-presets'
 import mainTableStore from '@store/ws/main-table.store'
 import { ExportReport } from '@components/export-report'
 import { Header } from '@components/header'
@@ -17,7 +18,6 @@ import { GlbPagesNames } from '@glb/glb-names'
 import { FilterControl } from '@pages/filter/common/filter-control/filter-control'
 import { FilterRefiner } from '@pages/filter/refiner/components/filter-refiner'
 import { FilterControlOptionsNames } from '../common/filter-control/filter-control.const'
-import { CreatePresetRefiner } from './components/create-preset-refiner'
 import { SolutionControlRefiner } from './components/solution-control-refiner'
 import { applyPreset } from './components/solution-control-refiner/solution-control-refiner.utils'
 
@@ -29,7 +29,13 @@ export const RefinerPage = observer((): ReactElement => {
   const { variantCounts, dnaVariantsCounts, transcriptsCounts } =
     mainTableStore.fixedStatAmount
 
-  const isPresetCreationAllowed = !filterStore.isConditionsEmpty
+  const isEntryCreationAllowed = !filterStore.isConditionsEmpty
+
+  const { availablePresets: availableSolutionEntries } = filterPresetsStore
+
+  const createPreset = (presetName: string): void => {
+    filterPresetsStore.createPreset(presetName, filterStore.conditions)
+  }
 
   useDatasetName()
 
@@ -60,10 +66,11 @@ export const RefinerPage = observer((): ReactElement => {
       <FilterControl
         pageName={FilterControlOptionsNames[GlbPagesNames.Refiner]}
         SolutionControl={SolutionControlRefiner}
-        CreatePresetButton={CreatePresetRefiner}
+        createSolutionEntry={createPreset}
+        availableSolutionEntries={availableSolutionEntries}
         isBackwardAllowed={filterStore.actionHistory.isBackwardAllowed}
         isForwardAllowed={filterStore.actionHistory.isForwardAllowed}
-        isPresetCreationAllowed={isPresetCreationAllowed}
+        isEntryCreationAllowed={isEntryCreationAllowed}
         goForward={filterStore.actionHistory.goForward}
         goBackward={filterStore.actionHistory.goBackward}
         className={styles.refinerPage__controls}

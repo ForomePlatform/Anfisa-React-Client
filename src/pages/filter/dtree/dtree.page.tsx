@@ -14,7 +14,6 @@ import filterDtreesStore from '@store/filter-dtrees'
 import { Header } from '@components/header'
 import { VariantsCount } from '@components/variants-count'
 import { GlbPagesNames } from '@glb/glb-names'
-import { CreatePresetDtree } from '@pages/filter/dtree/components/create-preset-dtree'
 import { FilterControl } from '../common/filter-control/filter-control'
 import { FilterControlOptionsNames } from '../common/filter-control/filter-control.const'
 import { SolutionControlDtree } from './components/control-panel/solution-control-dtree'
@@ -29,7 +28,13 @@ export const DtreePage = observer((): ReactElement => {
 
   const history = useHistory()
 
-  const isPresetCreationAllowed = dtreeStore.dtreeCode.length >= MIN_CODE_LENGTH
+  const isEntryCreationAllowed = dtreeStore.dtreeCode.length >= MIN_CODE_LENGTH
+
+  const { availableDtrees: availableSolutionEntries } = filterDtreesStore
+
+  const createDtree = (treeName: string): void => {
+    filterDtreesStore.createDtree(treeName)
+  }
 
   useDatasetName()
   const params = useParams()
@@ -110,8 +115,9 @@ export const DtreePage = observer((): ReactElement => {
         <FilterControl
           pageName={FilterControlOptionsNames[GlbPagesNames.Dtree]}
           SolutionControl={SolutionControlDtree}
-          CreatePresetButton={CreatePresetDtree}
-          isPresetCreationAllowed={isPresetCreationAllowed}
+          createSolutionEntry={createDtree}
+          availableSolutionEntries={availableSolutionEntries}
+          isEntryCreationAllowed={isEntryCreationAllowed}
           isBackwardAllowed={dtreeStore.actionHistory.isBackwardAllowed}
           isForwardAllowed={dtreeStore.actionHistory.isForwardAllowed}
           goForward={dtreeStore.actionHistory.goForward}

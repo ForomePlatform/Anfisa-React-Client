@@ -66,7 +66,7 @@ export const en = {
     filterPreset: 'Filter Preset',
     decisionTree: 'Decision Tree',
     selectSolution: 'Select {controlName}',
-    saveSolution: 'Save {controlName}',
+    saveEntry: 'Save {solutionName}',
     join: 'Join',
     apply: 'Apply Filter',
     delete: 'Delete',

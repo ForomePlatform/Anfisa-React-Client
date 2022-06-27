@@ -2,34 +2,39 @@ import { ReactElement } from 'react'
 
 import { useModal } from '@core/hooks/use-modal'
 import { t } from '@i18n'
-import filterPresetsStore from '@store/filter-presets'
 import { Button } from '@ui/button'
 import { SolutionCreateDialog } from '@components/solution-control/solution-create-dialog'
-import { createPreset } from './create-preset-refiner.utils'
+import { ISolutionEntryDescription } from '@service-providers/common'
 
-export const CreatePresetRefiner = (): ReactElement => {
-  const { availablePresets } = filterPresetsStore
+interface ICreateEntryProps {
+  solutionName: string
+  availableSolutionEntries: ISolutionEntryDescription[] | undefined
+  createSolutionEntry: (entryName: string) => void
+}
 
+export const CreateEntryButton = ({
+  solutionName,
+  availableSolutionEntries,
+  createSolutionEntry,
+}: ICreateEntryProps): ReactElement => {
   const [createDialog, openCreateDialog, closeCreateDialog] = useModal()
 
   return (
     <>
       <Button
-        text={t('solutionControl.saveSolution', {
-          controlName: t('solutionControl.filterPreset'),
-        })}
+        text={t('solutionControl.saveEntry', { solutionName })}
         className="whitespace-nowrap"
         variant="secondary-dark"
         onClick={openCreateDialog}
       />
       <SolutionCreateDialog
         {...createDialog}
-        solutions={availablePresets}
+        solutions={availableSolutionEntries}
         onClose={closeCreateDialog}
-        controlName={t('solutionControl.filterPreset')}
+        controlName={solutionName}
         onCreate={solutionName => {
           closeCreateDialog()
-          createPreset(solutionName)
+          createSolutionEntry(solutionName)
         }}
       />
     </>
