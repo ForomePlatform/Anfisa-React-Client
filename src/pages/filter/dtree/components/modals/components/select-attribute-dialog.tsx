@@ -16,11 +16,6 @@ export const SelectAttributeDialog = observer((): ReactElement => {
     storageId: 'attributesModalScrollPos',
   })
 
-  const handleClose = () => {
-    modalsVisibilityStore.closeSelectAttributeDialog()
-    dtreeStore.resetFilterModalValue()
-  }
-
   useEffect(() => {
     readScrollPosition()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -29,7 +24,7 @@ export const SelectAttributeDialog = observer((): ReactElement => {
   return (
     <Dialog
       isOpen={modalsVisibilityStore.isSelectAttributeDialogVisible}
-      onClose={handleClose}
+      onClose={modalsVisibilityStore.closeSelectAttributeDialog}
       title={t('condition.selectAttribute')}
       width="m"
       style={{ top: '50%' }}
