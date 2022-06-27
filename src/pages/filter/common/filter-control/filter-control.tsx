@@ -16,8 +16,8 @@ import { Divider } from '@ui/divider'
 import { Icon } from '@ui/icon'
 import { UndoRedoButtons } from '@components/undo-redo-buttons'
 import { GlbPagesNames } from '@glb/glb-names'
-import { CreateDatasetButton } from '@pages/ws/ui/control-panel/create-dataset-button'
 import { CreateEntryButton } from './create-entry-button'
+import { CreateDataset } from '@pages/ws/ui/control-panel/create-dataset'
 import {
   FILTER_REFERRER,
   FilterControlOptions,
@@ -117,7 +117,7 @@ export const FilterControl = observer(
 
             <Divider orientation="vertical" className="h-[75%]" />
 
-            <CreateDatasetButton />
+            <CreateDataset />
           </div>
 
           <div className="flex items-center">

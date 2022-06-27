@@ -2,24 +2,20 @@ import styles from './control-panel.module.css'
 
 import { ReactElement } from 'react'
 
-import { t } from '@i18n'
-import zoneStore from '@store/ws/zone'
 import { Divider } from '@ui/divider'
-import { MainTableDataCy } from '@components/data-testid/main-table.cy'
-import { EditFilter } from './control-panel-edit-filter'
-import { ControlPanelPreset } from './control-panel-preset'
-import { CreateDatasetButton } from './create-dataset-button'
-import { CustomizeTable } from './customize-table/customize-table'
-import { GenesListModal } from './zone-modals/genes-list-modal'
-import { GenesModal } from './zone-modals/genes-modal'
-import { SamplesModal } from './zone-modals/samples-modal'
-import { TagsModal } from './zone-modals/tags-modal'
-import { ZoneItem } from './zone-modals/zone-item'
+import { CreateDataset } from './create-dataset'
+import { CustomizeTable } from './customize-table'
+import { EditFilter } from './edit-filter'
+import { SelectPreset } from './select-preset'
+import { GenesListZone } from './zones/genes-list-zone'
+import { GenesZone } from './zones/genes-zone'
+import { SamplesZone } from './zones/samples-zone'
+import { TagsZone } from './zones/tags-zone'
 
 export const ControlPanel = (): ReactElement => (
   <div className={styles.controlPanel}>
     <div className={styles.controlPanel__controls}>
-      <ControlPanelPreset />
+      <SelectPreset />
 
       <Divider orientation="vertical" />
 
@@ -32,45 +28,18 @@ export const ControlPanel = (): ReactElement => (
       <Divider orientation="vertical" />
 
       <div className={styles.controlPanel__zones}>
-        <ZoneItem
-          title={t('ds.gene')}
-          modalElement={GenesModal}
-          selectedTagsList={zoneStore.selectedGenes}
-          removeZoneTag={zoneStore.removeGene}
-          dataTestId={MainTableDataCy.addGene}
-        />
+        <GenesZone />
 
-        <ZoneItem
-          title={t('ds.geneList')}
-          modalElement={GenesListModal}
-          selectedTagsList={zoneStore.selectedGenesList}
-          removeZoneTag={zoneStore.removeGenesList}
-        />
+        <GenesListZone />
 
-        <ZoneItem
-          title={t('ds.sample')}
-          modalElement={SamplesModal}
-          selectedTagsList={zoneStore.selectedSamples}
-          removeZoneTag={zoneStore.removeSample}
-          dataTestId={MainTableDataCy.addSample}
-        />
+        <SamplesZone />
 
-        <ZoneItem
-          title={t('ds.tags')}
-          modalElement={TagsModal}
-          selectedTagsList={zoneStore.selectedTags}
-          removeZoneTag={zoneStore.removeLocalTag}
-          dataTestId={MainTableDataCy.addTag}
-          isLast
-        />
+        <TagsZone />
       </div>
-
-      <Divider orientation="vertical" />
     </div>
+
     <div className={styles.controlPanel__save}>
-      <CreateDatasetButton />
+      <CreateDataset />
     </div>
-
-    {/* TODO: need a functional <UndoRedoButtons /> */}
   </div>
 )

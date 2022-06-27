@@ -7,12 +7,13 @@ import filterDtreesStore from '@store/filter-dtrees'
 import { SolutionControl } from '@components/solution-control'
 
 export const SolutionControlDtree = observer((): ReactElement => {
-  const { activeDtree, availableDtrees } = filterDtreesStore
+  const { activeDtree, availableDtrees, isFetchingDtrees } = filterDtreesStore
 
   return (
     <SolutionControl
       selected={activeDtree}
       solutions={availableDtrees}
+      isFetchingSolutions={isFetchingDtrees}
       modifiedSolution={
         dtreeStore.isDtreeModified ? dtreeStore.currentDtreeName : undefined
       }

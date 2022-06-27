@@ -8,11 +8,11 @@ import { DatasetInfoDataCy } from '@components/data-testid/dataset-info.cy'
 
 export const OpenViewerButton = ({
   isOpen,
-  onClick,
+  onShowPopover,
 }: IPopoverButtonBaseProps) => (
   <Button
     text={t('home.openInViewer')}
-    onClick={e => onClick(e.currentTarget)}
+    onClick={e => onShowPopover(e.currentTarget)}
     dataTestId={DatasetInfoDataCy.openInViewer}
     size="sm"
     append={

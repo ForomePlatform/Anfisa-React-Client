@@ -6,6 +6,7 @@ import { t } from '@i18n'
 import { Button } from '@ui/button'
 import { Popover } from '@ui/popover'
 import { IPopoverBaseProps } from '@ui/popover/popover.interface'
+import { popoverOffset } from '@pages/ws/ws.constants'
 import { ISolutionEntryDescription } from '@service-providers/common'
 import { SolutionControlList } from '../solution-control-list'
 
@@ -33,7 +34,7 @@ export const SolutionControlPopover = ({
   ...popoverProps
 }: ISolutionControlPopoverProps): ReactElement => {
   return (
-    <Popover onClose={onClose} {...popoverProps}>
+    <Popover onClose={onClose} offset={popoverOffset} {...popoverProps}>
       <section className={styles.solutionControlCard}>
         {solutions && (
           <SolutionControlList

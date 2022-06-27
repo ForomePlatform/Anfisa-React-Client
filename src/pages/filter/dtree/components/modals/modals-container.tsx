@@ -5,42 +5,33 @@ import dtreeStore from '@store/dtree'
 import { ViewVariantsModal } from '@pages/filter/common/view-variants'
 import { ExportDialog } from '@pages/main/components/dialogs/export-dialog'
 import { ImportDialog } from '@pages/main/components/dialogs/import-dialog'
-import { EnumDialog } from './components/enum-dialog/enum-dialog'
-import { ModalCompoundHet } from './components/modal-compound-het/modal-compound-het'
-import { ModalCompoundRequest } from './components/modal-compound-request/modal-compound-request'
-import { ModalCustomInheritanceMode } from './components/modal-custom-inheritance-mode/modal-custom-inheritance-mode'
-import { ModalGeneRegion } from './components/modal-gene-region/modal-gene-region'
-import { ModalInheritanceMode } from './components/modal-inheritance-mode/modal-inheritance-mode'
-import { ModalSelectAttribute } from './components/modal-select-attribute'
+import { CompoundHetDialog } from './components/compound-het-dialog'
+import { CompoundRequestDialog } from './components/compound-request-dialog'
+import { CustomInheritanceModeDialog } from './components/custom-inheritance-mode-dialog'
+import { EnumDialog } from './components/enum-dialog'
+import { GeneRegionDialog } from './components/gene-region-dialog'
+import { InheritanceModeDialog } from './components/inheritance-mode-dialog'
 import { NumericDialog } from './components/numeric-dialog'
-import modalsVisibilityStore from './modals-visibility-store'
+import { SelectAttributeDialog } from './components/select-attribute-dialog'
 
 export const ModalsContainer = observer(
   (): ReactElement => (
     <>
-      {modalsVisibilityStore.isModalAttributeVisible && (
-        <ModalSelectAttribute />
-      )}
+      <SelectAttributeDialog />
 
       <EnumDialog />
 
       <NumericDialog />
 
-      {modalsVisibilityStore.isModalInheritanceModeVisible && (
-        <ModalInheritanceMode />
-      )}
+      <InheritanceModeDialog />
 
-      {modalsVisibilityStore.isModalCustomInheritanceModeVisible && (
-        <ModalCustomInheritanceMode />
-      )}
+      <CustomInheritanceModeDialog />
 
-      {modalsVisibilityStore.isModalCompoundHetVisible && <ModalCompoundHet />}
+      <CompoundHetDialog />
 
-      {modalsVisibilityStore.isModalCompoundRequestVisible && (
-        <ModalCompoundRequest />
-      )}
+      <CompoundRequestDialog />
 
-      {modalsVisibilityStore.isModalGeneRegionVisible && <ModalGeneRegion />}
+      <GeneRegionDialog />
 
       <ViewVariantsModal
         query={dtreeStore.variantsModalQuery}

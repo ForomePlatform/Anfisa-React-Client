@@ -4,6 +4,7 @@ import { ReactElement, useEffect } from 'react'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
+import { pushQueryParams } from '@core/history'
 import { useDatasetName } from '@core/hooks/use-dataset-name'
 import { useParams } from '@core/hooks/use-params'
 import datasetStore from '@store/dataset/dataset'
@@ -41,6 +42,10 @@ export const RefinerPage = observer((): ReactElement => {
 
   useEffect(() => {
     presetName && applyPreset(presetName)
+
+    if (filterPresetsStore.activePreset && !presetName) {
+      pushQueryParams({ preset: filterPresetsStore.activePreset })
+    }
 
     return () => {
       dirInfoStore.resetData()

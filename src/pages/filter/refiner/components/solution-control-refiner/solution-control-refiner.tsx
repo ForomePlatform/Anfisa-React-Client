@@ -13,13 +13,15 @@ import {
 } from './solution-control-refiner.utils'
 
 export const SolutionControlRefiner = observer((): ReactElement => {
-  const { activePreset, availablePresets } = filterPresetsStore
+  const { activePreset, availablePresets, isFetchingPresets } =
+    filterPresetsStore
 
   return (
     <SolutionControl
       selected={activePreset}
       solutions={availablePresets}
       controlName={t('solutionControl.filterPreset')}
+      isFetchingSolutions={isFetchingPresets}
       modifiedSolution={
         filterStore.isPresetModified
           ? filterPresetsStore.activePreset

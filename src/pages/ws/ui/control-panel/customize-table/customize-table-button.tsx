@@ -9,11 +9,11 @@ import { MainTableDataCy } from '@components/data-testid/main-table.cy'
 
 export const CustomizeTableButton = ({
   isOpen,
-  onClick,
+  onShowPopover,
 }: IPopoverButtonBaseProps): ReactElement => (
   <Button
     dataTestId={MainTableDataCy.customizeTable}
-    onClick={e => onClick(e.currentTarget)}
+    onClick={e => onShowPopover(e.currentTarget)}
     text={t('ds.customizeTable')}
     variant="secondary-dark"
     size="sm"

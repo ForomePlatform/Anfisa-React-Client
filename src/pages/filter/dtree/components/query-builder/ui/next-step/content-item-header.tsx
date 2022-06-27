@@ -55,22 +55,22 @@ export const ContentItemHeader = observer(
 
       if (stepType === AttributeKinds.FUNC) {
         groupName === FuncStepTypesEnum.InheritanceMode &&
-          modalsVisibilityStore.openModalInheritanceMode(groupName, groupNo)
+          modalsVisibilityStore.openInheritanceModeDialog(groupName, groupNo)
 
         groupName === FuncStepTypesEnum.CustomInheritanceMode &&
-          modalsVisibilityStore.openModalCustomInheritanceMode(
+          modalsVisibilityStore.openCustomInheritanceModeDialog(
             groupName,
             groupNo,
           )
 
         groupName === FuncStepTypesEnum.CompoundHet &&
-          modalsVisibilityStore.openModalCompoundHet(groupName, groupNo)
+          modalsVisibilityStore.openCompoundHetDialog(groupName, groupNo)
 
         groupName === FuncStepTypesEnum.CompoundRequest &&
-          modalsVisibilityStore.openModalCompoundRequest(groupName, groupNo)
+          modalsVisibilityStore.openCompoundRequestDialog(groupName, groupNo)
 
         groupName === FuncStepTypesEnum.GeneRegion &&
-          modalsVisibilityStore.openModalGeneRegion(groupName, groupNo)
+          modalsVisibilityStore.openGeneRegionDialog(groupName, groupNo)
       }
     }
 

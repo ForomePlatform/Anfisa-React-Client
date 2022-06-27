@@ -25,7 +25,7 @@ export const EnumDialog = observer((): ReactElement => {
 
   const handleModals = () => {
     modalsVisibilityStore.closeEnumDialog()
-    modalsVisibilityStore.openModalAttribute()
+    modalsVisibilityStore.openSelectAttributeDialog()
   }
 
   const handleAddAttribute = useCallback((action, mode, selectedVariants) => {
@@ -50,7 +50,7 @@ export const EnumDialog = observer((): ReactElement => {
       onClose={modalsVisibilityStore.closeEnumDialog}
       title={attributeName}
       width="m"
-      actions={''}
+      isHiddenActions={true}
     >
       <EnumCondition
         attributeName={attributeName}

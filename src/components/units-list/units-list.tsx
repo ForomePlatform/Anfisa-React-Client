@@ -13,6 +13,7 @@ import { UnitsListGroup } from './units-list-group'
 
 export interface IUnitsListProps {
   className?: string
+  isModal?: boolean
   isDark?: boolean
   withCharts?: boolean
   subHeader?: ReactNode
@@ -27,6 +28,7 @@ export interface IUnitsListProps {
 
 export const UnitsList = ({
   className,
+  isModal,
   isDark = false,
   withCharts = false,
   subHeader,
@@ -55,11 +57,15 @@ export const UnitsList = ({
       className={cn(
         styles.unitsList,
         isDark && styles.unitsList_dark,
+        !isModal && styles.unitsList_columnList,
         className,
       )}
     >
       <FunctionalUnits
-        className={styles.unitsList__functional}
+        className={cn(
+          styles.unitsList__functional,
+          !isModal && styles.unitsList__functional_columnList,
+        )}
         units={functionalUnits}
         onSelect={onSelect}
         conditions={functionalConditions}
@@ -67,7 +73,10 @@ export const UnitsList = ({
         onConditionDelete={onFunctionalConditionDelete}
       />
       <UnitsListControls
-        className={styles.unitsList__controls}
+        className={cn(
+          styles.unitsList__controls,
+          !isModal && styles.unitsList__controls_columnList,
+        )}
         filterValue={filterValue}
         onFilterValueChange={setFilterValue}
         onExpand={() => setCollapsedGroups([])}
@@ -76,7 +85,14 @@ export const UnitsList = ({
       {subHeader && (
         <div className={styles.unitsList__subHeader}>{subHeader}</div>
       )}
-      <div className={styles.unitsList__list} id={listContainerId}>
+
+      <div
+        className={cn(
+          styles.unitsList__list,
+          isModal && styles.unitsList__list_modal,
+        )}
+        id={listContainerId}
+      >
         {filteredGroups.map(group => (
           <UnitsListGroup
             key={group.name}

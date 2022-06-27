@@ -2,10 +2,8 @@
   @apply popup-card;
 
   width: 300px;
-  margin-top: theme("spacing.3");
 
   &__list {
-    margin-top: theme("spacing.1");
     overflow: auto;
     max-height: 252px;
   }

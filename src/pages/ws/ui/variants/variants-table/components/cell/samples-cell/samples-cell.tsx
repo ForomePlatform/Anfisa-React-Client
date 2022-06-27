@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite'
 
 import { alpha, parseColor } from '@core/colors'
 import { theme } from '@theme'
-import zoneStore from '@store/ws/zone'
+import zoneStore from '@store/ws/zone.store'
 import { ShadowScroller } from '@ui/shadow-scroller'
 import { ICellProps } from '../cell.interface'
 import { handleSampleMouseEnter } from './samples-cell.utils'
