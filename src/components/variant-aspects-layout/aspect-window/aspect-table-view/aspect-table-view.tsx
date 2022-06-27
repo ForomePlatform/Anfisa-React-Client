@@ -49,7 +49,7 @@ export const AspectTableView = ({
                 <tr key={row.name}>
                   <td
                     className={cn(
-                      'p-3 text-blue-bright whitespace-nowrap sticky left-0',
+                      'p-3 text-grey-blue whitespace-nowrap sticky left-0',
                       shouldAddShadow && blueBg,
                     )}
                   >
@@ -78,7 +78,7 @@ export const AspectTableView = ({
                         cell[0]?.includes('</a>')
                           ? 'text-blue-bright'
                           : !cell[1]?.includes(AspectCellRenderClass.NoTrHit) &&
-                              'text-grey-blue',
+                              'text-white',
                         style.linkContainer,
                       )}
                     >
