@@ -14,7 +14,6 @@ export const SolutionControlDtree = observer((): ReactElement => {
   return (
     <SolutionControl
       selected={activeDtree}
-      isFetching={isFetchingDtrees}
       solutions={availableDtrees}
       isCreateDisabled={dtreeStore.dtreeCode.length < MIN_CODE_LENGTH}
       isFetchingSolutions={isFetchingDtrees}

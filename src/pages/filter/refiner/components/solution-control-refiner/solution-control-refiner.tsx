@@ -19,7 +19,6 @@ export const SolutionControlRefiner = observer((): ReactElement => {
 
   return (
     <SolutionControl
-      isFetching={isFetchingPresets}
       selected={activePreset}
       solutions={availablePresets}
       controlName={t('solutionControl.filterPreset')}
