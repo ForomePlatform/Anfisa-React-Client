@@ -37,7 +37,7 @@ export const NextStepContent = observer(
     const openModal = () => {
       stepStore.makeStepActive(stepNo - 1, ActiveStepOptions.StartedVariants)
 
-      modalsVisibilityStore.openModalAttribute()
+      modalsVisibilityStore.openSelectAttributeDialog()
     }
 
     return (

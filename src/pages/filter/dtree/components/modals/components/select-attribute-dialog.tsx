@@ -1,15 +1,14 @@
-import { ReactElement, useEffect, useRef } from 'react'
+import { ReactElement, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { useScrollPosition } from '@core/hooks/use-scroll-position'
 import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
+import { Dialog } from '@ui/dialog'
 import { DtreeUnitsList } from '@pages/filter/dtree/components/dtree-units-list'
 import modalsVisibilityStore from '../modals-visibility-store'
-import { HeaderModal } from './ui/header-modal'
-import { ModalBase } from './ui/modal-base'
 
-export const ModalSelectAttribute = observer((): ReactElement => {
+export const SelectAttributeDialog = observer((): ReactElement => {
   const { isLoading } = dtreeStore.stat
 
   const [readScrollPosition] = useScrollPosition({
@@ -17,10 +16,8 @@ export const ModalSelectAttribute = observer((): ReactElement => {
     storageId: 'attributesModalScrollPos',
   })
 
-  const modalBaseRef = useRef(null)
-
   const handleClose = () => {
-    modalsVisibilityStore.closeModalAttribute()
+    modalsVisibilityStore.closeSelectAttributeDialog()
     dtreeStore.resetFilterModalValue()
   }
 
@@ -30,22 +27,21 @@ export const ModalSelectAttribute = observer((): ReactElement => {
   }, [])
 
   return (
-    <ModalBase refer={modalBaseRef} minHeight="580px">
-      <HeaderModal
-        groupName={t('condition.selectAttribute')}
-        handleClose={handleClose}
-      />
+    <Dialog
+      isOpen={modalsVisibilityStore.isSelectAttributeDialogVisible}
+      onClose={handleClose}
+      title={t('condition.selectAttribute')}
+      width="m"
+      style={{ top: '50%' }}
+      isHiddenActions={true}
+    >
       {isLoading ? (
         <div className="flex flex-1 justify-center w-full my-4">
           {t('dtree.loading')}
         </div>
       ) : (
-        <DtreeUnitsList
-          isModal
-          className="overflow-hidden -mx-4 flex-stretch-fill"
-          listContainerId="attributes-container"
-        />
+        <DtreeUnitsList isModal listContainerId="attributes-container" />
       )}
-    </ModalBase>
+    </Dialog>
   )
 })

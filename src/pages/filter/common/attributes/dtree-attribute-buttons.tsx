@@ -25,7 +25,7 @@ export const DtreeAttributeButtons = observer(
   }: IDtreeAttributeButtonsProps): ReactElement => {
     const handleOpenModalAttribute = () => {
       modalsVisibilityStore.closeEnumDialog()
-      modalsVisibilityStore.openModalAttribute()
+      modalsVisibilityStore.openSelectAttributeDialog()
     }
     return (
       <>

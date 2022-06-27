@@ -2,7 +2,8 @@ import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
-import { GeneRegionCondition } from '@components/conditions/gene-region-condition/gene-region-condition'
+import { Dialog } from '@ui/dialog'
+import { InheritanceModeCondition } from '@components/conditions/inheritance-mode'
 import { AttributeKinds } from '@service-providers/common'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { saveAttribute } from '@utils/changeAttribute/saveAttribute'
@@ -10,14 +11,14 @@ import { dtreeFunctionsStore } from '../../../attributes/dtree-functions.store'
 import { dtreeStatFuncStore } from '../../../attributes/dtree-stat-func.store'
 import modalsControlStore from '../../modals-control-store'
 import modalsVisibilityStore from '../../modals-visibility-store'
-import { HeaderModal } from '../ui/header-modal'
-import { ModalBase } from '../ui/modal-base'
 import { renderAttributeDialogControls } from '../ui/renderAttributeControls'
 
-export const ModalGeneRegion = observer((): ReactElement => {
+export const InheritanceModeDialog = observer((): ReactElement => {
   const {
     attributeName,
-    initialLocusValue,
+    problemGroups,
+    initialVariants,
+    initialProblemGroups,
     initialMode,
     initialCondition,
     attributeSubKind,
@@ -26,56 +27,60 @@ export const ModalGeneRegion = observer((): ReactElement => {
   const { currentStepGroups } = modalsControlStore
 
   const handleModals = () => {
-    modalsVisibilityStore.closeModalGeneRegion()
-    modalsVisibilityStore.openModalAttribute()
+    modalsVisibilityStore.closeInheritanceModeDialog()
+    modalsVisibilityStore.openSelectAttributeDialog()
   }
 
-  const handleSaveChanges = useCallback((mode, param) => {
+  const handleSaveChanges = useCallback((values, mode, param) => {
     saveAttribute({
       filterKind: AttributeKinds.FUNC,
-      filterName: FuncStepTypesEnum.GeneRegion,
-      values: ['True'],
+      filterName: FuncStepTypesEnum.InheritanceMode,
+      values,
       mode,
       param,
     })
-    modalsVisibilityStore.closeModalGeneRegion()
+    modalsVisibilityStore.closeInheritanceModeDialog()
   }, [])
 
-  const handleAddAttribute = useCallback((action, mode, param) => {
+  const handleAddAttribute = useCallback((action, values, mode, param) => {
     addAttributeToStep({
       action,
       attributeType: AttributeKinds.FUNC,
-      filters: ['True'],
+      filters: values,
       param,
       mode,
     })
-    modalsVisibilityStore.closeModalGeneRegion()
+    modalsVisibilityStore.closeInheritanceModeDialog()
   }, [])
 
   return (
-    <ModalBase minHeight={340}>
-      <HeaderModal
-        groupName={attributeName}
-        handleClose={modalsVisibilityStore.closeModalGeneRegion}
-      />
-
-      <GeneRegionCondition
-        initialLocusValue={initialLocusValue}
+    <Dialog
+      isOpen={modalsVisibilityStore.isInheritanceModeDialogVisible}
+      onClose={modalsVisibilityStore.closeInheritanceModeDialog}
+      title={attributeName}
+      width="m"
+      isHiddenActions={true}
+    >
+      <InheritanceModeCondition
+        problemGroups={problemGroups}
+        initialVariants={initialVariants}
+        initialProblemGroups={initialProblemGroups}
         initialMode={initialMode}
         attributeSubKind={attributeSubKind}
         statFuncStore={dtreeStatFuncStore}
-        controls={({ hasErrors, param, mode }) =>
+        controls={({ values, hasErrors, param, mode }) =>
           renderAttributeDialogControls({
             initialCondition,
             currentStepGroups,
-            onClose: modalsVisibilityStore.closeModalGeneRegion,
+            onClose: modalsVisibilityStore.closeInheritanceModeDialog,
             handleModals,
             disabled: hasErrors,
-            saveAttribute: () => handleSaveChanges(mode, param),
-            addAttribute: action => handleAddAttribute(action, mode, param),
+            saveAttribute: () => handleSaveChanges(values, mode, param),
+            addAttribute: action =>
+              handleAddAttribute(action, values, mode, param),
           })
         }
       />
-    </ModalBase>
+    </Dialog>
   )
 })
