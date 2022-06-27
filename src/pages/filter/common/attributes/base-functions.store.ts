@@ -6,6 +6,7 @@ import { ModeTypes } from '@core/enum/mode-types-enum'
 import datasetStore from '@store/dataset/dataset'
 import { getApproxName } from '@components/conditions/utils/conditions.utils'
 import {
+  AttributeKinds,
   ICompoundHetArgs,
   ICompoundRequestArgs,
   ICustomInheritanceModeArgs,
@@ -64,7 +65,7 @@ export class BaseFunctionsStore {
   }
 
   public get initialApprox(): ApproxNameTypes {
-    if (this.initialCondition) {
+    if (this.initialCondition?.[0] === AttributeKinds.FUNC) {
       const condition = this.initialCondition?.[4] as ICompoundHetArgs
 
       return getApproxName(condition.approx)

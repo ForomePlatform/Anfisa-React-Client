@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
+import { pushQueryParams } from '@core/history'
 import { useDatasetName } from '@core/hooks/use-dataset-name'
 import { useParams } from '@core/hooks/use-params'
 import datasetStore from '@store/dataset/dataset'
@@ -40,14 +41,15 @@ export const DtreePage = observer((): ReactElement => {
       })
     }
 
+    if (filterDtreesStore.activeDtree && !dtreeName) {
+      pushQueryParams({ dtree: filterDtreesStore.activeDtree })
+      return
+    }
+
     dtreeName ? filterDtreesStore.setActiveDtree(dtreeName) : initAsync()
 
     return () => {
-      dtreeStore.resetFilterValue()
       dtreeStore.resetAlgorithmFilterValue()
-      dtreeStore.resetPrevDtreeName()
-      dtreeStore.resetData()
-      // TODO: need to fix after dtree_set is refactored
       dtreeStore.actionHistory.resetHistory()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

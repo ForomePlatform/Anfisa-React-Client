@@ -2,7 +2,8 @@ import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
-import { CompoundRequestCondition } from '@components/conditions/compound-request/compound-request-condition'
+import { Dialog } from '@ui/dialog'
+import { CustomInheritanceModeCondition } from '@components/conditions/custom-inheritance-mode'
 import { AttributeKinds } from '@service-providers/common'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { saveAttribute } from '@utils/changeAttribute/saveAttribute'
@@ -10,16 +11,13 @@ import { dtreeFunctionsStore } from '../../../attributes/dtree-functions.store'
 import { dtreeStatFuncStore } from '../../../attributes/dtree-stat-func.store'
 import modalsControlStore from '../../modals-control-store'
 import modalsVisibilityStore from '../../modals-visibility-store'
-import { HeaderModal } from '../ui/header-modal'
-import { ModalBase } from '../ui/modal-base'
 import { renderAttributeDialogControls } from '../ui/renderAttributeControls'
 
-export const ModalCompoundRequest = observer((): ReactElement => {
+export const CustomInheritanceModeDialog = observer((): ReactElement => {
   const {
-    problemGroups,
     attributeName,
-    initialApprox,
-    initialRequestCondition,
+    problemGroups,
+    initialScenario,
     initialMode,
     initialCondition,
     attributeSubKind,
@@ -28,19 +26,19 @@ export const ModalCompoundRequest = observer((): ReactElement => {
   const { currentStepGroups } = modalsControlStore
 
   const handleModals = () => {
-    modalsVisibilityStore.closeModalCompoundRequest()
-    modalsVisibilityStore.openModalAttribute()
+    modalsVisibilityStore.closeCustomInheritanceModeDialog()
+    modalsVisibilityStore.openSelectAttributeDialog()
   }
 
   const handleSaveChanges = useCallback((mode, param) => {
     saveAttribute({
       filterKind: AttributeKinds.FUNC,
-      filterName: FuncStepTypesEnum.CompoundRequest,
+      filterName: FuncStepTypesEnum.CustomInheritanceMode,
       values: ['True'],
       mode,
       param,
     })
-    modalsVisibilityStore.closeModalCompoundRequest()
+    modalsVisibilityStore.closeCustomInheritanceModeDialog()
   }, [])
 
   const handleAddAttribute = useCallback((action, mode, param) => {
@@ -51,20 +49,20 @@ export const ModalCompoundRequest = observer((): ReactElement => {
       param,
       mode,
     })
-    modalsVisibilityStore.closeModalCompoundRequest()
+    modalsVisibilityStore.closeCustomInheritanceModeDialog()
   }, [])
 
   return (
-    <ModalBase minHeight={340} maxHeight="auto">
-      <HeaderModal
-        groupName={attributeName}
-        handleClose={modalsVisibilityStore.closeModalCompoundRequest}
-      />
-
-      <CompoundRequestCondition
+    <Dialog
+      isOpen={modalsVisibilityStore.isCustomInheritanceModeDialogVisible}
+      onClose={modalsVisibilityStore.closeCustomInheritanceModeDialog}
+      title={attributeName}
+      width="m"
+      isHiddenActions={true}
+    >
+      <CustomInheritanceModeCondition
         problemGroups={problemGroups}
-        initialApprox={initialApprox}
-        initialRequestCondition={initialRequestCondition}
+        initialScenario={initialScenario}
         initialMode={initialMode}
         attributeSubKind={attributeSubKind}
         statFuncStore={dtreeStatFuncStore}
@@ -72,7 +70,7 @@ export const ModalCompoundRequest = observer((): ReactElement => {
           renderAttributeDialogControls({
             initialCondition,
             currentStepGroups,
-            onClose: modalsVisibilityStore.closeModalCompoundRequest,
+            onClose: modalsVisibilityStore.closeCustomInheritanceModeDialog,
             handleModals,
             disabled: hasErrors,
             saveAttribute: () => handleSaveChanges(mode, param),
@@ -80,6 +78,6 @@ export const ModalCompoundRequest = observer((): ReactElement => {
           })
         }
       />
-    </ModalBase>
+    </Dialog>
   )
 })

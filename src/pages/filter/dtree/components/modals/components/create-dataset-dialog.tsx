@@ -129,7 +129,6 @@ export const CreateDatasetDialog = observer(
 
       zoneStore.clearZone()
       filterStore.reset()
-      dtreeStore.resetData()
       zoneStore.resetAllSelectedItems()
     }
 

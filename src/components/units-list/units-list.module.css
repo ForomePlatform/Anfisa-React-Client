@@ -7,6 +7,10 @@
   background: theme("colors.white");
   position: relative;
 
+  &_column-list {
+    padding-left: theme("spacing.4");
+  }
+
   &_dark {
     color: theme("colors.white");
     background: theme("colors.blue.lighter");
@@ -14,9 +18,12 @@
 
   &__functional {
     flex: 0 0 auto;
-    padding: theme("spacing.4") 0;
-    margin: 0 theme("spacing.4");
+    padding-bottom: theme("spacing.4");
     border-bottom: 1px solid theme("colors.grey.disabled");
+
+    &_column-list {
+      padding-top: theme("spacing.4");
+    }
   }
 
   &_dark &__functional {
@@ -32,18 +39,27 @@
 
   &__controls {
     flex: 0 0 auto;
-    padding: theme("spacing.4");
+    padding-top: theme("spacing.4");
+    padding-bottom: theme("spacing.4");
+
+    &_column-list {
+      padding-right: theme("spacing.4");
+    }
   }
 
   &__sub-header {
     flex: 0 0 auto;
-    padding: 0 theme("spacing.4") theme("spacing.4");
+    padding-bottom: theme("spacing.4");
   }
 
   &__list {
     flex: 1 0 0;
     overflow-y: auto;
-    padding: 0 theme("spacing.4") theme("spacing.4");
+    padding-right: theme("spacing.4");
+
+    &_modal {
+      max-height: 70vh;
+    }
 
     &_empty {
       display: flex;

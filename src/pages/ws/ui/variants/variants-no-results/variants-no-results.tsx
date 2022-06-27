@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
 import filterStore from '@store/filter'
+import filterPresetsStore from '@store/filter-presets'
 import zoneStore from '@store/ws/zone.store'
 import { NoResultsFound } from '@components/no-results-found'
 
@@ -13,6 +14,7 @@ export const VariantsNoResults = observer(() => {
 
   const resetTableToInitial = () => {
     filterStore.reset()
+    filterPresetsStore.resetActivePreset()
     zoneStore.resetAllSelectedItems()
     zoneStore.clearZone()
   }
@@ -22,7 +24,8 @@ export const VariantsNoResults = observer(() => {
     selectedGenes.length > 0 ||
     selectedGenesList.length > 0 ||
     selectedSamples.length > 0 ||
-    selectedTags.length > 0
+    selectedTags.length > 0 ||
+    zoneStore.isModeWithNotes
 
   return isFiltersSelected ? (
     <NoResultsFound

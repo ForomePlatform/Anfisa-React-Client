@@ -10,7 +10,6 @@ import { PopperMenu } from '@components/popper-menu/popper-menu'
 import { PopperMenuItem } from '@components/popper-menu/popper-menu-item'
 import { popoverOffset } from '@pages/ws/ws.constants'
 import { InstrModifyingActionNames } from '@service-providers/decision-trees'
-import modalsVisibilityStore from '../modals-visibility-store'
 
 interface IStepJoinPopoverProps {
   isPopoverOpen: boolean
@@ -32,10 +31,6 @@ export const StepJoinPopover = observer(
     const handleJoin = (typeOfJoin: ActionType) => {
       handleAddAttribute(typeOfJoin)
       closePopover()
-      modalsVisibilityStore.closeEnumDialog()
-      modalsVisibilityStore.closeNumericDialog()
-      modalsVisibilityStore.closeModalInheritanceMode()
-      modalsVisibilityStore.closeModalCustomInheritanceMode()
     }
 
     return (
