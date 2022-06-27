@@ -13,12 +13,13 @@ export const EmptySelectedGroup = ({
 }: IEmptySelectedGroupProps): ReactElement => {
   return (
     <div className={cn('flex items-center justify-center', className)}>
-      {!content && (
+      {!content ? (
         <p className="leading-16px text-grey-blue align-center">
           {t('condition.selectAttribute')}
         </p>
+      ) : (
+        content
       )}
-      {!!content && content}
     </div>
   )
 }

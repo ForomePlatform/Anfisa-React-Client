@@ -69,9 +69,9 @@ export const ZonePopover = ({
 
       <div className="h-px w-full bg-blue-light mt-4" />
 
-      {isFetching && <Loader size="m" />}
-
-      {!isFetching && (
+      {isFetching ? (
+        <Loader size="m" />
+      ) : (
         <ZoneList
           zoneItems={zoneList.filter(item =>
             item.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
