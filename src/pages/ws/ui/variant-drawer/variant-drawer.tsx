@@ -1,11 +1,13 @@
 import styles from './variant-drawer.module.css'
 
-import { ReactElement, useRef } from 'react'
+import { ReactElement, useRef, useState } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
+import { t } from '@i18n'
 import variantStore from '@store/ws/variant'
 import { Loader } from '@ui/loader'
+import { InputSearch } from '@components/input-search'
 import {
   TVariantAspectsGridHandles,
   VariantAspectsLayoutGallery,
@@ -22,7 +24,7 @@ interface IVariantDrawerProps {
 export const VariantDrawer = observer(
   ({ className }: IVariantDrawerProps): ReactElement => {
     const {
-      record: { aspects, igvUrl, isFetching },
+      record: { igvUrl, isFetching },
     } = variantStore
 
     const {
@@ -35,6 +37,10 @@ export const VariantDrawer = observer(
     } = variantDrawerStore
 
     const gridHandles = useRef<TVariantAspectsGridHandles>(null)
+
+    const [searchValue, setSearchValue] = useState<string>('')
+
+    const filteredAspects = variantStore.getAspects(searchValue)
 
     return (
       <div className={cn(styles.drawer, className)}>
@@ -55,10 +61,18 @@ export const VariantDrawer = observer(
               <Loader />
             </div>
           )}
+          <div className={styles.drawer__search}>
+            <InputSearch
+              placeholder={t('filter.searchForAField')}
+              value={searchValue}
+              onChange={e => setSearchValue(e.target.value)}
+            />
+          </div>
+
           {layoutMode == VariantDrawerLayoutMode.Grid && (
             <VariantAspectsLayoutGrid
               className={styles.drawer__layout}
-              aspects={aspects}
+              aspects={filteredAspects}
               onChangeLayout={setGridLayout}
               layout={gridLayout}
               handles={gridHandles}
@@ -68,7 +82,7 @@ export const VariantDrawer = observer(
           {layoutMode === VariantDrawerLayoutMode.Gallery && (
             <VariantAspectsLayoutGallery
               className={styles.drawer__layout}
-              aspects={aspects}
+              aspects={filteredAspects}
               activeAspect={galleryActiveAspect}
               onChangeActiveAspect={setGalleryActiveAspect}
               igvUrl={igvUrl}

@@ -105,6 +105,7 @@ export interface ICommonAspectDescriptor<T extends AspectDescriptorTypes> {
   name: string
   title: string
   kind: CommonAspectDescriptorKinds
+  rows: [] | IAttributeDescriptors[]
 }
 
 export interface IAttributeDescriptors {
@@ -120,7 +121,6 @@ export interface ITableAspectDescriptor
   columns: number
   colhead: null | [title: string, count: number][]
   colgroup?: null | string[]
-  rows: [] | IAttributeDescriptors[]
   parcontrol: string | undefined
   parmodes: Record<string, unknown>[] | undefined
 }
