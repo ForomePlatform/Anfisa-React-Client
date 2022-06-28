@@ -4,10 +4,12 @@ import { ReactElement } from 'react'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
+import { SolutionTypesEnum } from '@core/enum/solution-types-enum'
 import { useDatasetName } from '@core/hooks/use-dataset-name'
-import { usePreset } from '@core/hooks/use-preset'
+import { useSolution } from '@core/hooks/use-solution'
 import datasetStore from '@store/dataset/dataset'
 import filterStore from '@store/filter'
+import filterPresetsStore from '@store/filter-presets'
 import mainTableStore from '@store/ws/main-table.store'
 import { ExportReport } from '@components/export-report'
 import { Header } from '@components/header'
@@ -26,7 +28,7 @@ export const RefinerPage = observer((): ReactElement => {
 
   useDatasetName()
 
-  usePreset()
+  useSolution(SolutionTypesEnum.Preset, filterPresetsStore.activePreset)
 
   return (
     <div className={styles.refinerPage}>
