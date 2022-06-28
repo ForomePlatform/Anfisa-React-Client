@@ -34,7 +34,7 @@ export const EnumPanel = observer((): ReactElement => {
   )
 
   const paginationHeight =
-    enumVariants.length > DEFAULT_COUNT ? 'calc(500px - 249px)' : 'auto'
+    enumVariants.length > DEFAULT_COUNT ? 'calc(100% - 249px)' : 'auto'
 
   return (
     <>
