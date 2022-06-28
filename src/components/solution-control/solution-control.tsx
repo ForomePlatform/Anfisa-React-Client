@@ -61,12 +61,16 @@ export const SolutionControl = ({
 
   const onModifyDialog = () => {
     closeModifyDialog()
-    modifyDialog.solutionName && onModify(modifyDialog.solutionName)
+    if (modifyDialog.solutionName) {
+      onModify(modifyDialog.solutionName)
+    }
   }
 
   const onDeleteDialog = () => {
     closeDeleteDialog()
-    deleteDialog.solutionName && onDelete(deleteDialog.solutionName)
+    if (deleteDialog.solutionName) {
+      onDelete(deleteDialog.solutionName)
+    }
   }
 
   const onCreateDialog = (solutionName: string) => {
