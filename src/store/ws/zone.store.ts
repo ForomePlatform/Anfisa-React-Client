@@ -118,7 +118,7 @@ class ZoneStore {
     this.zone = []
   }
 
-  addGene(gene: string) {
+  addGene = (gene: string) => {
     this.localGenes = [...this.localGenes, gene]
   }
 
@@ -132,11 +132,11 @@ class ZoneStore {
     }
   }
 
-  unselectAllGenes() {
+  unselectAllGenes = () => {
     this.localGenes = []
   }
 
-  addGenesList(gene: string) {
+  addGenesList = (gene: string) => {
     this.localGenesList = [...this.localGenesList, gene]
   }
 
@@ -152,11 +152,11 @@ class ZoneStore {
     }
   }
 
-  unselectAllGenesList() {
+  unselectAllGenesList = () => {
     this.localGenesList = []
   }
 
-  addSample(sample: string) {
+  addSample = (sample: string) => {
     this.localSamples = [...this.localSamples, sample]
   }
 
@@ -176,7 +176,7 @@ class ZoneStore {
     this.localSamples = []
   }
 
-  addLocalTag(tagName: string) {
+  addLocalTag = (tagName: string) => {
     this.localTags = [...this.localTags, tagName]
   }
 
@@ -192,7 +192,7 @@ class ZoneStore {
     }
   }
 
-  unselectAllTags() {
+  unselectAllTags = () => {
     this.localTags = []
   }
 
