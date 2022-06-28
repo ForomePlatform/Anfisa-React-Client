@@ -23,7 +23,9 @@
 	    And Filter Refiner was opened
 	    When User clicks "Filtering method"
 	    And chooses "Decision Tree"
-	    Then There should be blank Decision Tree shown
+	    Then Decision Tree should be shown
+		And "⏚BGM Research" decision tree should be loaded again
+
 
 	Scenario: 04 Open Decision tree Panel 
 	    Given Dataset list was opened
