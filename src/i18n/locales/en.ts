@@ -239,6 +239,7 @@ export const en = {
     switcher: 'Only starts with',
     method: 'Filtering method',
     results: 'Results',
+    viewVariants: 'View variants',
     selectedVariants: 'Selected variants',
     show: 'Show {amount} variants',
     variants: 'Variants: {all}',
@@ -274,7 +275,7 @@ export const en = {
     },
     leaveConfirm: {
       title: 'Attention! All changes will be lost',
-      body: 'Are you sure you want to leave the page without saving?',
+      body: 'Are you sure you want to leave the page without saving the preset?',
     },
   },
   dtree: {
