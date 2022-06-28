@@ -30,7 +30,7 @@ export const RefinerConditionOptions = (): ReactElement => {
     <>
       <RefinerConditionOptionsButton
         isOpen={isPopoverOpen}
-        onClick={onToggle}
+        onShowPopover={onToggle}
       />
 
       <RefinerConditionPopover

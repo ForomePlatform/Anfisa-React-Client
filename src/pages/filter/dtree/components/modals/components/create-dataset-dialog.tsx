@@ -13,7 +13,7 @@ import filterStore from '@store/filter'
 import filterPresetsStore from '@store/filter-presets'
 import operations from '@store/operations'
 import mainTableStore from '@store/ws/main-table.store'
-import zoneStore from '@store/ws/zone'
+import zoneStore from '@store/ws/zone.store'
 import { Routes } from '@router/routes.enum'
 import { Dialog } from '@ui/dialog'
 import { IBaseDialogProps } from '@ui/dialog/dialog.interface'
@@ -129,7 +129,6 @@ export const CreateDatasetDialog = observer(
 
       zoneStore.clearZone()
       filterStore.reset()
-      dtreeStore.resetData()
       zoneStore.resetAllSelectedItems()
     }
 

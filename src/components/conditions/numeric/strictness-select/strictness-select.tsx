@@ -21,7 +21,7 @@ export const StrictnessSelect = ({
     <>
       <StrictnessSelectButton
         isOpen={isPopoverOpen}
-        onClick={onToggle}
+        onShowPopover={onToggle}
         value={value}
         disabled={isDisabled}
       />
