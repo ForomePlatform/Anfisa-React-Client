@@ -4,13 +4,13 @@ import { getQueryParam, pushQueryParams } from '@core/history'
 import { VariantAspectsAsyncStore } from '@store/variant-aspects.async.store'
 import mainTableStore from '@store/ws/main-table.store'
 import { IReccntArguments } from '@service-providers/dataset-level'
-import datasetStore from '../dataset/dataset'
+import { datasetStore } from '../dataset'
 import { TWsTagsAsyncStoreQuery, WsTagsAsyncStore } from './ws-tags.async.store'
 
 export class VariantStore {
   readonly record = new VariantAspectsAsyncStore({ keepPreviousData: true })
   readonly tags = new WsTagsAsyncStore({
-    onChange: (rec, tags) => mainTableStore.tabReport.updateRowTags(rec, tags),
+    onChange: mainTableStore.updateRecordTags,
   })
 
   private isHistoryObserved = false

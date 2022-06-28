@@ -14,8 +14,6 @@ export const TagsZone = observer(() => {
 
   useEffect(() => {
     if (isPopoverOpen) {
-      zoneStore.fetchZoneTagsAsync()
-
       if (zoneStore.selectedTags.length > 0) {
         zoneStore.syncSelectedAndLocalFilters('isTags')
       }

@@ -6,8 +6,8 @@ import {
   IWsTagsArguments,
   TTagsDescriptor,
   TTagsDescriptorSpecial,
-} from '@service-providers/ws-dataset-support/ws-dataset-support.interface'
-import wsDatasetProvider from '@service-providers/ws-dataset-support/ws-dataset-support.provider'
+  wsDatasetProvider,
+} from '@service-providers/ws-dataset-support'
 
 export type TWsTagsAsyncStoreQuery = Omit<IWsTagsArguments, 'tags'>
 
@@ -15,15 +15,21 @@ const NOTE_KEY: keyof TTagsDescriptorSpecial = '_note'
 
 const isNotSpecial = (tag: string) => tag !== NOTE_KEY
 
+type TVariantTagsChangeHandler = (
+  recNo: number,
+  tags: TTagsDescriptor,
+  prevTags?: TTagsDescriptor,
+) => void
+
 interface IWsTagsAsyncStoreParams {
-  onChange: (rec: number, tags: TTagsDescriptor) => void
+  onChange: TVariantTagsChangeHandler
 }
 
 export class WsTagsAsyncStore extends BaseAsyncDataStore<
   IWsTags,
   TWsTagsAsyncStoreQuery
 > {
-  onChange: (rec: number, tags: TTagsDescriptor) => void
+  onChange: TVariantTagsChangeHandler
 
   constructor(parmas: IWsTagsAsyncStoreParams) {
     super()
@@ -92,6 +98,7 @@ export class WsTagsAsyncStore extends BaseAsyncDataStore<
   public updateTags(tags: TTagsDescriptor): void {
     if (this.query) {
       const { ds, rec } = this.query
+      const prevTags = toJS(this.data?.recTags)
 
       wsDatasetProvider
         .wsTags({
@@ -100,7 +107,7 @@ export class WsTagsAsyncStore extends BaseAsyncDataStore<
           tags,
         })
         .then(result => {
-          this.onChange?.(rec, tags)
+          this.onChange?.(rec, tags, prevTags)
           if (this.query?.ds === ds && this.query?.rec === rec) {
             this.setData(result)
           }
