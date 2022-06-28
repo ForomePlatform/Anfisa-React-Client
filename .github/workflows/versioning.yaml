@@ -32,4 +32,7 @@ jobs:
         yarn config set version-commit-hooks false
         yarn version --new-version `node ./tools/getNextVersion.js`
         git push --tags --no-verify &&
+        yarn create:changelog
+        git add .
+        git commit -m docs:changelog-auto-generated
         git push --no-verify
