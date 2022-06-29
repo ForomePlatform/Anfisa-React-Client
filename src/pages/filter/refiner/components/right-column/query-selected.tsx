@@ -87,7 +87,7 @@ export const QuerySelected = observer(
           ) : (
             <Button
               className="ml-auto"
-              text={t('general.apply', {
+              text={t('filter.viewVariants', {
                 amount: formatNumber(filteredVariantsCount),
               })}
               disabled={isDisabledApplyButton}

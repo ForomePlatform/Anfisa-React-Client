@@ -2,10 +2,13 @@ import { ReactElement, useEffect, useState } from 'react'
 
 import { useModal } from '@core/hooks/use-modal'
 import { usePopover } from '@core/hooks/use-popover'
+import {
+  SolutionDeleteDialog,
+  SolutionModifyDialog,
+} from '@components/solution-control/solution-change-dialog'
 import { SolutionControlPopover } from '@components/solution-control/solution-control-popover'
 import { ISolutionEntryDescription } from '@service-providers/common'
 import { SolutionControlButton } from './solution-control-button'
-import { SolutionDeleteDialog } from './solution-delete-dialog'
 
 interface ISolutionControlProps {
   className?: string
@@ -37,6 +40,9 @@ export const SolutionControl = ({
   const [deleteDialog, openDeleteDialog, closeDeleteDialog] = useModal({
     solutionName: '',
   })
+  const [modifyDialog, openModifyDialog, closeModifyDialog] = useModal({
+    solutionName: '',
+  })
 
   const isModified = !!(selectedProp && modifiedSolution === selectedProp)
 
@@ -45,6 +51,20 @@ export const SolutionControl = ({
       setSelected(selectedProp)
     }
   }, [isPopoverOpen, selectedProp])
+
+  const onModifyDialog = () => {
+    closeModifyDialog()
+    if (modifyDialog.solutionName) {
+      onModify(modifyDialog.solutionName)
+    }
+  }
+
+  const onDeleteDialog = () => {
+    closeDeleteDialog()
+    if (deleteDialog.solutionName) {
+      onDelete(deleteDialog.solutionName)
+    }
+  }
 
   return (
     <>
@@ -68,18 +88,19 @@ export const SolutionControl = ({
         onSelect={setSelected}
         onJoin={onJoin}
         onApply={onApply}
-        onModify={onModify}
+        onModify={solutionName => openModifyDialog({ solutionName })}
         onDelete={solutionName => openDeleteDialog({ solutionName })}
+      />
+      <SolutionModifyDialog
+        {...modifyDialog}
+        onClose={closeModifyDialog}
+        onApply={onModifyDialog}
+        controlName={controlName}
       />
       <SolutionDeleteDialog
         {...deleteDialog}
         onClose={closeDeleteDialog}
-        onDelete={() => {
-          closeDeleteDialog()
-          if (deleteDialog.solutionName) {
-            onDelete(deleteDialog.solutionName)
-          }
-        }}
+        onApply={onDeleteDialog}
         controlName={controlName}
       />
     </>

@@ -86,6 +86,13 @@ export const en = {
       cancel: 'No, Keep {controlName}',
       confirm: 'Yes, Delete {controlName}',
     },
+    modifyDialog: {
+      title: 'Modify {controlName}',
+      message:
+        'Modifying a {controlName} "{solutionName}" will permanently remove old version from your system.',
+      cancel: 'Close',
+      confirm: 'Modify',
+    },
   },
   home: {
     title: 'Home',
@@ -232,6 +239,7 @@ export const en = {
     switcher: 'Only starts with',
     method: 'Filtering method',
     results: 'Results',
+    viewVariants: 'View variants',
     selectedVariants: 'Selected variants',
     show: 'Show {amount} variants',
     variants: 'Variants: {all}',
@@ -267,7 +275,7 @@ export const en = {
     },
     leaveConfirm: {
       title: 'Attention! All changes will be lost',
-      body: 'Are you sure you want to leave the page without saving?',
+      body: 'Are you sure you want to leave the page without saving the preset?',
     },
   },
   dtree: {
