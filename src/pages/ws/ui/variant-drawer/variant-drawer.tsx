@@ -24,7 +24,7 @@ interface IVariantDrawerProps {
 export const VariantDrawer = observer(
   ({ className }: IVariantDrawerProps): ReactElement => {
     const {
-      record: { igvUrl, isFetching },
+      record: { igvUrl, isFetching, aspects },
     } = variantStore
 
     const {
@@ -40,7 +40,12 @@ export const VariantDrawer = observer(
 
     const [searchValue, setSearchValue] = useState<string>('')
 
-    const filteredAspects = variantStore.getAspects(searchValue)
+    const onChange = (value: string) => {
+      setSearchValue(value)
+      value
+        ? gridHandles.current?.maximizeAll()
+        : gridHandles.current?.minimizeAll()
+    }
 
     return (
       <div className={cn(styles.drawer, className)}>
@@ -65,27 +70,29 @@ export const VariantDrawer = observer(
             <InputSearch
               placeholder={t('filter.searchForAField')}
               value={searchValue}
-              onChange={e => setSearchValue(e.target.value)}
+              onChange={e => onChange(e.target.value)}
             />
           </div>
 
           {layoutMode == VariantDrawerLayoutMode.Grid && (
             <VariantAspectsLayoutGrid
               className={styles.drawer__layout}
-              aspects={filteredAspects}
+              aspects={aspects}
               onChangeLayout={setGridLayout}
               layout={gridLayout}
               handles={gridHandles}
               igvUrl={igvUrl}
+              searchValue={searchValue}
             />
           )}
           {layoutMode === VariantDrawerLayoutMode.Gallery && (
             <VariantAspectsLayoutGallery
               className={styles.drawer__layout}
-              aspects={filteredAspects}
+              aspects={aspects}
               activeAspect={galleryActiveAspect}
               onChangeActiveAspect={setGalleryActiveAspect}
               igvUrl={igvUrl}
+              searchValue={searchValue}
             />
           )}
         </div>

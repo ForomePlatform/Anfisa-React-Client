@@ -3,14 +3,9 @@ import { makeAutoObservable, reaction } from 'mobx'
 import { getQueryParam, pushQueryParams } from '@core/history'
 import { VariantAspectsAsyncStore } from '@store/variant-aspects.async.store'
 import mainTableStore from '@store/ws/main-table.store'
-import {
-  IReccntArguments,
-  TAspectDescriptor,
-} from '@service-providers/dataset-level'
+import { IReccntArguments } from '@service-providers/dataset-level'
 import { datasetStore } from '../dataset'
 import { TWsTagsAsyncStoreQuery, WsTagsAsyncStore } from './ws-tags.async.store'
-
-const aspectTitleToIgnore = 'VCF'
 
 export class VariantStore {
   readonly record = new VariantAspectsAsyncStore({ keepPreviousData: true })
@@ -134,31 +129,6 @@ export class VariantStore {
       ds: this.datasetName,
       rec: this.variantNo,
     }
-  }
-
-  public getAspects(searchValue: string): TAspectDescriptor[] {
-    const value = searchValue.toLocaleLowerCase()
-
-    const aspectsWithFilteredRows = this.record.aspects.map(aspect => {
-      if (aspect.rows) {
-        return {
-          ...aspect,
-          rows: aspect.rows.filter(
-            row => row && row.title.toLocaleLowerCase().includes(value),
-          ),
-        }
-      } else {
-        return aspect
-      }
-    })
-
-    const filteredAspects = aspectsWithFilteredRows.filter(
-      aspect =>
-        (aspect.rows && aspect.rows.length > 0) ||
-        aspect.title === aspectTitleToIgnore,
-    )
-
-    return searchValue ? filteredAspects : this.record.aspects
   }
 }
 

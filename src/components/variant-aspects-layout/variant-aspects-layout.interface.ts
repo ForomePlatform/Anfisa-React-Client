@@ -7,6 +7,7 @@ export interface IVariantAspectsLayoutBaseProps {
   className?: string
   aspects: TAspectDescriptor[]
   igvUrl?: string
+  searchValue: string
 }
 
 export type TVariantAspectsGridLayout = Layout[]

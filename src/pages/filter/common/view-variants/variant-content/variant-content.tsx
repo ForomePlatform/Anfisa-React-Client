@@ -3,8 +3,10 @@ import styles from './variant-content.module.css'
 import React, { ReactElement, ReactNode, useState } from 'react'
 import cn from 'classnames'
 
+import { t } from '@i18n'
 import { Icon } from '@ui/icon'
 import { Loader } from '@ui/loader'
+import { InputSearch } from '@components/input-search'
 import { VariantAspectsLayoutGallery } from '@components/variant-aspects-layout'
 import { TAspectDescriptor } from '@service-providers/dataset-level'
 
@@ -27,6 +29,12 @@ export const VariantContent = ({
 }: IVariantContentProps): ReactElement => {
   const [activeAspect, setActiveAspect] = useState('')
 
+  const [searchValue, setSearchValue] = useState<string>('')
+
+  const onChange = (value: string) => {
+    setSearchValue(value)
+  }
+
   return (
     <div className={cn(styles.variantContent, className)}>
       <div className={styles.variantContent__header}>
@@ -38,13 +46,24 @@ export const VariantContent = ({
       {isLoading ? (
         <Loader className={styles.variantContent__aspects} />
       ) : (
-        <VariantAspectsLayoutGallery
-          className={styles.variantContent__aspects}
-          activeAspect={activeAspect}
-          onChangeActiveAspect={setActiveAspect}
-          aspects={aspects}
-          igvUrl={igvUrl}
-        />
+        <>
+          <div className={styles.variantContent__search}>
+            <InputSearch
+              placeholder={t('filter.searchForAField')}
+              value={searchValue}
+              onChange={e => onChange(e.target.value)}
+            />
+          </div>
+
+          <VariantAspectsLayoutGallery
+            className={styles.variantContent__aspects}
+            activeAspect={activeAspect}
+            onChangeActiveAspect={setActiveAspect}
+            aspects={aspects}
+            igvUrl={igvUrl}
+            searchValue={searchValue}
+          />
+        </>
       )}
     </div>
   )
