@@ -2,7 +2,8 @@ import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
-import { CompoundHetCondition } from '@components/conditions/compound-het-condition'
+import { Dialog } from '@ui/dialog'
+import { CompoundRequestCondition } from '@components/conditions/compound-request/compound-request-condition'
 import { AttributeKinds } from '@service-providers/common'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { saveAttribute } from '@utils/changeAttribute/saveAttribute'
@@ -10,14 +11,14 @@ import { dtreeFunctionsStore } from '../../../attributes/dtree-functions.store'
 import { dtreeStatFuncStore } from '../../../attributes/dtree-stat-func.store'
 import modalsControlStore from '../../modals-control-store'
 import modalsVisibilityStore from '../../modals-visibility-store'
-import { HeaderModal } from '../ui/header-modal'
-import { ModalBase } from '../ui/modal-base'
 import { renderAttributeDialogControls } from '../ui/renderAttributeControls'
 
-export const ModalCompoundHet = observer((): ReactElement => {
+export const CompoundRequestDialog = observer((): ReactElement => {
   const {
+    problemGroups,
     attributeName,
     initialApprox,
+    initialRequestCondition,
     initialMode,
     initialCondition,
     attributeSubKind,
@@ -26,41 +27,45 @@ export const ModalCompoundHet = observer((): ReactElement => {
   const { currentStepGroups } = modalsControlStore
 
   const handleModals = () => {
-    modalsVisibilityStore.closeModalCompoundHet()
-    modalsVisibilityStore.openModalAttribute()
+    modalsVisibilityStore.closeCompoundRequestDialog()
+    modalsVisibilityStore.openSelectAttributeDialog()
   }
 
   const handleSaveChanges = useCallback((mode, param) => {
     saveAttribute({
       filterKind: AttributeKinds.FUNC,
-      filterName: FuncStepTypesEnum.CompoundHet,
-      values: ['Proband'],
+      filterName: FuncStepTypesEnum.CompoundRequest,
+      values: ['True'],
       mode,
       param,
     })
-    modalsVisibilityStore.closeModalCompoundHet()
+    modalsVisibilityStore.closeCompoundRequestDialog()
   }, [])
 
   const handleAddAttribute = useCallback((action, mode, param) => {
     addAttributeToStep({
       action,
       attributeType: AttributeKinds.FUNC,
-      filters: ['Proband'],
+      filters: ['True'],
       param,
       mode,
     })
-    modalsVisibilityStore.closeModalCompoundHet()
+    modalsVisibilityStore.closeCompoundRequestDialog()
   }, [])
 
   return (
-    <ModalBase minHeight={340}>
-      <HeaderModal
-        groupName={attributeName}
-        handleClose={modalsVisibilityStore.closeModalCompoundHet}
-      />
-
-      <CompoundHetCondition
+    <Dialog
+      isOpen={modalsVisibilityStore.isCompoundRequestDialogVisible}
+      onClose={modalsVisibilityStore.closeCompoundRequestDialog}
+      title={attributeName}
+      width="m"
+      className="max-h-70 overflow-y-auto"
+      isHiddenActions={true}
+    >
+      <CompoundRequestCondition
+        problemGroups={problemGroups}
         initialApprox={initialApprox}
+        initialRequestCondition={initialRequestCondition}
         initialMode={initialMode}
         attributeSubKind={attributeSubKind}
         statFuncStore={dtreeStatFuncStore}
@@ -68,7 +73,7 @@ export const ModalCompoundHet = observer((): ReactElement => {
           renderAttributeDialogControls({
             initialCondition,
             currentStepGroups,
-            onClose: modalsVisibilityStore.closeModalCompoundHet,
+            onClose: modalsVisibilityStore.closeCompoundRequestDialog,
             handleModals,
             disabled: hasErrors,
             saveAttribute: () => handleSaveChanges(mode, param),
@@ -76,6 +81,6 @@ export const ModalCompoundHet = observer((): ReactElement => {
           })
         }
       />
-    </ModalBase>
+    </Dialog>
   )
 })

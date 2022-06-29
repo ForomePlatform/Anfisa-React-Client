@@ -11,8 +11,10 @@ import {
   IWsListArguments,
   IWsTags,
   IWsTagsArguments,
+  IZoneDescriptor,
   IZoneListArguments,
-  TZoneList,
+  IZoneVariantsArguments,
+  IZoneWithVariants,
 } from './ws-dataset-support.interface'
 
 class WsDatasetSupportProvider extends ServiceProviderBase {
@@ -29,8 +31,18 @@ class WsDatasetSupportProvider extends ServiceProviderBase {
     )
   }
 
-  public getZoneList(params: IZoneListArguments): Promise<TZoneList> {
-    return this.post<TZoneList>('/zone_list', params).then(res => res.data)
+  public getZoneList(
+    params: IZoneListArguments,
+    options: Partial<AxiosRequestConfig> = {},
+  ): Promise<IZoneDescriptor[]> {
+    return this.post('/zone_list', params, options).then(res => res.data)
+  }
+
+  public getZoneVariants(
+    params: IZoneVariantsArguments,
+    options: Partial<AxiosRequestConfig> = {},
+  ): Promise<IZoneWithVariants> {
+    return this.post('/zone_list', params, options).then(res => res.data)
   }
 
   public wsTags(
@@ -42,8 +54,13 @@ class WsDatasetSupportProvider extends ServiceProviderBase {
     )
   }
 
-  public getTagSelect(params: ITagSelectArguments): Promise<ITagSelect> {
-    return this.get<ITagSelect>('/tag_select', { params }).then(res => res.data)
+  public getTagSelect(
+    params: ITagSelectArguments,
+    options: Partial<AxiosRequestConfig> = {},
+  ): Promise<ITagSelect> {
+    return this.get('/tag_select', { ...options, params }).then(res =>
+      adaptDataToCamelizedType(res.data),
+    )
   }
 
   public updateMicroTagging(

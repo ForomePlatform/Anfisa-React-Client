@@ -2,7 +2,8 @@ import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
-import { CustomInheritanceModeCondition } from '@components/conditions/custom-inheritance-mode'
+import { Dialog } from '@ui/dialog'
+import { GeneRegionCondition } from '@components/conditions/gene-region-condition/gene-region-condition'
 import { AttributeKinds } from '@service-providers/common'
 import { addAttributeToStep } from '@utils/addAttributeToStep'
 import { saveAttribute } from '@utils/changeAttribute/saveAttribute'
@@ -10,15 +11,12 @@ import { dtreeFunctionsStore } from '../../../attributes/dtree-functions.store'
 import { dtreeStatFuncStore } from '../../../attributes/dtree-stat-func.store'
 import modalsControlStore from '../../modals-control-store'
 import modalsVisibilityStore from '../../modals-visibility-store'
-import { HeaderModal } from '../ui/header-modal'
-import { ModalBase } from '../ui/modal-base'
 import { renderAttributeDialogControls } from '../ui/renderAttributeControls'
 
-export const ModalCustomInheritanceMode = observer((): ReactElement => {
+export const GeneRegionDialog = observer((): ReactElement => {
   const {
     attributeName,
-    problemGroups,
-    initialScenario,
+    initialLocusValue,
     initialMode,
     initialCondition,
     attributeSubKind,
@@ -27,19 +25,19 @@ export const ModalCustomInheritanceMode = observer((): ReactElement => {
   const { currentStepGroups } = modalsControlStore
 
   const handleModals = () => {
-    modalsVisibilityStore.closeModalCustomInheritanceMode()
-    modalsVisibilityStore.openModalAttribute()
+    modalsVisibilityStore.closeGeneRegionDialog()
+    modalsVisibilityStore.openSelectAttributeDialog()
   }
 
   const handleSaveChanges = useCallback((mode, param) => {
     saveAttribute({
       filterKind: AttributeKinds.FUNC,
-      filterName: FuncStepTypesEnum.CustomInheritanceMode,
+      filterName: FuncStepTypesEnum.GeneRegion,
       values: ['True'],
       mode,
       param,
     })
-    modalsVisibilityStore.closeModalCustomInheritanceMode()
+    modalsVisibilityStore.closeGeneRegionDialog()
   }, [])
 
   const handleAddAttribute = useCallback((action, mode, param) => {
@@ -50,19 +48,19 @@ export const ModalCustomInheritanceMode = observer((): ReactElement => {
       param,
       mode,
     })
-    modalsVisibilityStore.closeModalCustomInheritanceMode()
+    modalsVisibilityStore.closeGeneRegionDialog()
   }, [])
 
   return (
-    <ModalBase minHeight={340}>
-      <HeaderModal
-        groupName={attributeName}
-        handleClose={modalsVisibilityStore.closeModalCustomInheritanceMode}
-      />
-
-      <CustomInheritanceModeCondition
-        problemGroups={problemGroups}
-        initialScenario={initialScenario}
+    <Dialog
+      isOpen={modalsVisibilityStore.isGeneRegionDialogVisible}
+      onClose={modalsVisibilityStore.closeGeneRegionDialog}
+      title={attributeName}
+      width="m"
+      isHiddenActions={true}
+    >
+      <GeneRegionCondition
+        initialLocusValue={initialLocusValue}
         initialMode={initialMode}
         attributeSubKind={attributeSubKind}
         statFuncStore={dtreeStatFuncStore}
@@ -70,7 +68,7 @@ export const ModalCustomInheritanceMode = observer((): ReactElement => {
           renderAttributeDialogControls({
             initialCondition,
             currentStepGroups,
-            onClose: modalsVisibilityStore.closeModalCustomInheritanceMode,
+            onClose: modalsVisibilityStore.closeGeneRegionDialog,
             handleModals,
             disabled: hasErrors,
             saveAttribute: () => handleSaveChanges(mode, param),
@@ -78,6 +76,6 @@ export const ModalCustomInheritanceMode = observer((): ReactElement => {
           })
         }
       />
-    </ModalBase>
+    </Dialog>
   )
 })
