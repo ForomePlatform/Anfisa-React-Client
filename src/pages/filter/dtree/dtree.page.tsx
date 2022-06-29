@@ -29,13 +29,19 @@ export const DtreePage = observer((): ReactElement => {
 
   const history = useHistory()
 
-  const isEntryCreationAllowed = dtreeStore.dtreeCode.length >= MIN_CODE_LENGTH
-
   const { availableDtrees: availableSolutionEntries } = filterDtreesStore
 
   const createDtree = (treeName: string): void => {
     filterDtreesStore.createDtree(treeName)
   }
+
+  const modifiedDtree = dtreeStore.isDtreeModified
+    ? dtreeStore.currentDtreeName
+    : undefined
+
+  const isEntryCreationAllowed = filterDtreesStore.activeDtree
+    ? modifiedDtree === filterDtreesStore.activeDtree
+    : dtreeStore.dtreeCode.length >= MIN_CODE_LENGTH
 
   useDatasetName()
   const params = useParams()

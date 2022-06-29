@@ -16,8 +16,8 @@ import { Divider } from '@ui/divider'
 import { Icon } from '@ui/icon'
 import { UndoRedoButtons } from '@components/undo-redo-buttons'
 import { GlbPagesNames } from '@glb/glb-names'
-import { CreateEntryButton } from './create-entry-button'
 import { CreateDataset } from '@pages/ws/ui/control-panel/create-dataset'
+import { CreateEntryButton } from './create-entry-button'
 import {
   FILTER_REFERRER,
   FilterControlOptions,

@@ -30,13 +30,20 @@ export const RefinerPage = observer((): ReactElement => {
   const { variantCounts, dnaVariantsCounts, transcriptsCounts } =
     mainTableStore.fixedStatAmount
 
-  const isEntryCreationAllowed = !filterStore.isConditionsEmpty
-
-  const { availablePresets: availableSolutionEntries } = filterPresetsStore
+  const { availablePresets: availableSolutionEntries, activePreset } =
+    filterPresetsStore
 
   const createPreset = (presetName: string): void => {
     filterPresetsStore.createPreset(presetName, filterStore.conditions)
   }
+
+  const modifiedPreset = filterStore.isPresetModified
+    ? filterPresetsStore.activePreset
+    : undefined
+
+  const isEntryCreationAllowed = activePreset
+    ? modifiedPreset === activePreset
+    : !filterStore.isConditionsEmpty
 
   useDatasetName()
 
