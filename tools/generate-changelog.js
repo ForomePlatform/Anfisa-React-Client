@@ -6,7 +6,6 @@ const taskNumberRegex = /(FOROME-\d+)/
 const delimeter = '??'
 const maxBuffer = 50 * 1024 * 1024
 const logFormat = `--pretty=format:'%h${delimeter}%an${delimeter}%ad${delimeter}%s${delimeter}%d'`
-const techCommitMessage = 'docs:changelog-auto-generated'
 const techAccountName = 'Version Bot'
 const baseJiraUrl = 'https://quantori.atlassian.net/browse/FOROME-'
 const baseGitHubUrl =
@@ -16,7 +15,7 @@ const execCommand = (command, options) => {
   return new Promise((resolve, reject) => {
     let output
     try {
-      output = execSync(`npx ${command}`, options)
+      output = execSync(`${command}`, options)
     } catch (error) {
       reject()
       process.exit(0)
@@ -104,10 +103,6 @@ const createResult = parsedLog => {
 }
 
 const formatRow = ({ message, hash }) => {
-  if (message.includes(techCommitMessage)) {
-    return
-  }
-
   const GHUrl = `${baseGitHubUrl}${hash}`
   const taskNumberMatch = message.match(taskNumberRegex)
   let commitMesage = message
