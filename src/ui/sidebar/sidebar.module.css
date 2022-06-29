@@ -1,0 +1,132 @@
+.sidebar {
+  position: relative;
+  transition: width 0.15s ease-in-out;
+
+  &_collapsed {
+    width: 36px;
+  }
+
+  &_resize,
+  &_expanded {
+    transition: none;
+  }
+
+  &__wrapper {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+  }
+
+  &_collapsed &__wrapper {
+    transition: width 0.15s ease-in-out;
+  }
+
+  &__separator {
+    position: absolute;
+    z-index: 20;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    cursor: col-resize;
+    opacity: 0;
+    transition: opacity 0.15s ease-in-out;
+
+    &_collapsed {
+      opacity: 1;
+      cursor: default;
+    }
+
+    &::before {
+      content: "";
+      position: absolute;
+      z-index: 10;
+      background: linear-gradient(to left, rgba(24 160 251 / 100%) 0, rgba(24 160 251 / 0%) 100%);
+      top: 0;
+      bottom: 0;
+      left: 0;
+      margin-left: -6px;
+      width: 3px;
+      opacity: 0;
+    }
+
+    &::after {
+      content: "";
+      position: absolute;
+      z-index: 20;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 6px;
+      margin-left: -3px;
+      background: theme("colors.blue.bright");
+      transition: opacity 0.15s ease-in-out;
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+
+    &_collapsed::before,
+    &_collapsed::after {
+      display: none;
+    }
+  }
+
+  &_resize &__separator {
+    opacity: 1;
+
+    &::before {
+      opacity: 0.5;
+    }
+  }
+
+  &__collapse-btn {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 30;
+    top: theme("spacing.5");
+    width: 24px;
+    height: 24px;
+    left: 50%;
+    margin-left: -12px;
+    background: theme("colors.white");
+    box-shadow: 0 0 2px theme("colors.blue.secondary");
+    color: theme("colors.blue.secondary");
+    border-radius: 12px;
+    transition: background-color 0.1s linear;
+
+    &:hover {
+      background: theme("colors.blue.bright");
+      color: theme("colors.white");
+    }
+  }
+
+  &__contentWrapper {
+    position: absolute;
+    z-index: 5;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  &_collapsed &__contentWrapper {
+    opacity: 0.2;
+    transition: opacity 0.15s ease-in-out;
+  }
+
+  &_collapsed &__contentWrapper_expanded {
+    opacity: 1;
+  }
+
+  &__content {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+  }
+}
