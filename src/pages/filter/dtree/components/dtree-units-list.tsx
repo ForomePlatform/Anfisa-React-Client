@@ -112,6 +112,7 @@ export const DtreeUnitsList = observer(
         functionalUnits={functionalUnits}
         onSelect={handleUnitSelect}
         listContainerId={listContainerId}
+        fetchedAmount={dtreeStore.dataReady}
       />
     )
   },

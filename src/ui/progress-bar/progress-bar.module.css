@@ -1,0 +1,48 @@
+.progress-bar {
+  width: 100%;
+  min-width: 100%;
+  background-color: theme("colors.grey.blue");
+  display: flex;
+  position: relative;
+
+  &_xs {
+    height: 4px;
+  }
+
+  &_sm {
+    height: 8px;
+    border-radius: 4px;
+  }
+
+  &_md {
+    height: 16px;
+    border-radius: 8px;
+  }
+
+  &_no-rounding {
+    border-radius: 0;
+  }
+
+  &__text {
+    @apply typography-s;
+
+    color: theme("colors.blue.dark");
+
+    &_container {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  &__result {
+    height: 100%;
+    border-radius: inherit;
+    background-color: theme("colors.blue.bright");
+  }
+}

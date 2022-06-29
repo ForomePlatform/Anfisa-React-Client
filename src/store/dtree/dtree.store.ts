@@ -90,6 +90,10 @@ export class DtreeStore {
     return this.dtreeSetData?.['eval-status'] ?? ''
   }
 
+  public get dataReady(): number {
+    return this.stat.dataReady
+  }
+
   public get isDtreeModified(): boolean {
     return this._dtreeModifiedState === DtreeModifiedState.Modified
   }
