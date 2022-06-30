@@ -7,7 +7,7 @@ Scenario: 01 Group is not selected
 	And clicks the "Inheritance_Mode" attribute
 	And doesn't selects any problem group check-box
 	And clicks the "+ Add Attribute" button
-	Then the "+ Add Attribute" should be disabled
+	Then the "+ Add Attribute" button should be disabled
 	And the filter should not be applied
 
 Scenario: 02 Inheritance mode is not selected
