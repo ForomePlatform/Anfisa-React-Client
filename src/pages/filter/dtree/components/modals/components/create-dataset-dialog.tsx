@@ -191,7 +191,7 @@ export const CreateDatasetDialog = observer(
             pathName !== PatnNameEnum.Filter &&
             filterStore.method !== GlbPagesNames.Refiner && (
               <div className="mt-5 flex items-center">
-                <Icon name="Attention" className="mr-2" />
+                <Icon name="Attention" className="mr-2 text-red-light" />
 
                 <span className="text-12">{t('dsCreation.attention')}</span>
               </div>
