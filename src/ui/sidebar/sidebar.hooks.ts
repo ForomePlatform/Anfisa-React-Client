@@ -91,7 +91,7 @@ export const useSeparator = (
           root.classList.remove(styles.sidebar_resize)
           document.removeEventListener('mousemove', moveHandler)
 
-          if ((dragWidth < minWidth || dragWidth === startWidth) && onToggle) {
+          if (onToggle && (dragWidth < minWidth || dragWidth === startWidth)) {
             onToggle(true)
           } else {
             const newWidth = Math.max(minWidth, Math.min(maxWidth, dragWidth))

@@ -50,7 +50,7 @@ export const Sidebar = ({
   const onStartDrag = useSeparator(isCollapsed, rootRef, {
     minWidth,
     maxWidth,
-    onToggle,
+    onToggle: canCollapse ? onToggle : undefined,
     onChangeWidth,
   })
 

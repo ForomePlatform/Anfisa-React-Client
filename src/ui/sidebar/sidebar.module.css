@@ -28,8 +28,9 @@
     z-index: 20;
     top: 0;
     bottom: 0;
-    right: 0;
-    width: 0;
+    left: 100%;
+    width: 24px;
+    margin-left: -12px;
     cursor: col-resize;
     opacity: 0;
     transition: opacity 0.15s ease-in-out;
@@ -46,7 +47,7 @@
       background: linear-gradient(to left, rgba(24 160 251 / 100%) 0, rgba(24 160 251 / 0%) 100%);
       top: 0;
       bottom: 0;
-      left: 0;
+      left: 12px;
       margin-left: -6px;
       width: 3px;
       opacity: 0;
@@ -58,7 +59,7 @@
       z-index: 20;
       top: 0;
       bottom: 0;
-      left: 0;
+      left: 12px;
       width: 6px;
       margin-left: -3px;
       background: theme("colors.blue.bright");
