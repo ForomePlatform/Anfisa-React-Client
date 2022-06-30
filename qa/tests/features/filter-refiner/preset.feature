@@ -2,7 +2,7 @@
 	As a user, I want to apply predefined presets to filter variants
 
 	Scenario Outline: 01 load a preset for XL dataset
-		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was open
+		Given "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
 		When user clicks the "Select Filter Preset" dropdown
 		And selects the preset <Preset Name>
 		And clicks the "Apply Filter" button
@@ -10,12 +10,12 @@
 
 		Examples:
 		| <Preset Name>      |
-		| Loss_Of_Function   |
-		| In_Silico_Damaging |
-		| Impact_Splicing    |
+		| @Loss_Of_Function   |
+		| @In_Silico_Damaging |
+		| @Impact_Splicing    |
 
 	Scenario Outline: 02 load a preset for Secondary dataset
-		Given the "Filter Refiner" for the "PGP3140_wgs_panel_hl" was open
+		Given the "Filter Refiner" for the "PGP3140_wgs_panel_hl" was opened
 		When user clicks the "Select Filter Preset" dropdown
 		And selects the preset <Preset Name>
 		And clicks the "Apply Filter" button
@@ -23,12 +23,12 @@
 
 		Examples:
 		| <Preset Name>            |
-		| BGM_De_Novo              |
-		| SEQaBOO_Hearing_Loss_v_5 |
-		| SEQaBOO_ACMG59           |
+		| @BGM_De_Novo              |
+		| @SEQaBOO_Hearing_Loss_v_5 |
+		| @SEQaBOO_ACMG59           |
 
 	Scenario Outline: 03 Create a preset
-		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was open
+		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the "Num_Samples" attribute
 		And enters "1" as Minimum value
 		And changes "<" sign with "≤"
@@ -50,13 +50,12 @@
 		And clicks the "AMR" value
 		And clicks the "+ Add Attribute" button
 		And the number of variants equal to 855
-		And user clicks "Select Filter Preset" dropdown
-		And clicks the "Create New Filter Preset" button
+		And user clicks "Create Preset"
 		And enters the <Preset Name>
 		And clicks the "Create" button
-		Then the preset is created 
-		And information message appears
-		And the preset is present in the presets list
+		Then the preset should be created 
+		And information message should be appeared
+		And the preset should be presented in the presets list
 
 		Examples:
 		| <PresetName>                |
@@ -65,13 +64,12 @@
 		| preset_preset_preset_preset |
 
 	Scenario: 04 Create a preset without attributes
-		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was open
+		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user doesn't add attribute
-		And clicks "Select Filter Preset" dropdown
-		Then the "Create New Filter Preset" button should be disabled
+		Then There should not be "Create Preset" button shown
 
 	Scenario: 05 Modify a custom preset
-		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was open
+		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the "Select Filter Preset" dropdown
 		And clicks the custom preset
 		And clicks the "Apply Filter" button
@@ -82,19 +80,19 @@
 		Then the preset should be modified
 
 	Scenario: 06 Join two presets
-		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was open
+		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the "Select Filter Preset" dropdown
-		And selects the "Loss_Of_Functions" preset
+		And selects the "@Loss_Of_Functions" preset
 		And clicks the "Apply Filter" button
-		And the "Loss_Of_Functions" preset is loaded
+		And the "@Loss_Of_Functions" preset is loaded
 		And user clicks the "Select Filter Preset" dropdown
-		And selects the "In_Silico_Damaging" preset
+		And selects the "@In_Silico_Damaging" preset
 		And clicks the "Join" option
-		Then filters from "Loss_Of_Functions" and "In_Silico_Damaging" presets should be merged
+		Then filters from "@Loss_Of_Functions" and "@In_Silico_Damaging" presets should be merged
 		And the number of variants should be 1
 
 	Scenario: 07 Delete a custom preset
-		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was open
+		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the "Select Filter Preset" dropdown
 		And clicks three dots near the custom preset 
 		And clicks the "Delete" option
