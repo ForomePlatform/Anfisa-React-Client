@@ -1,10 +1,8 @@
 import { ReactElement, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 
-import { SolutionTypesEnum } from '@core/enum/solution-types-enum'
 import { useDatasetName } from '@core/hooks/use-dataset-name'
 import { useParams } from '@core/hooks/use-params'
-import { useSolution } from '@core/hooks/use-solution'
 import filterStore from '@store/filter'
 import filterPresetsStore from '@store/filter-presets'
 import mainTableStore from '@store/ws/main-table.store'
@@ -18,13 +16,14 @@ import { VariantDrawer } from './ui/variant-drawer'
 import { Variants } from './ui/variants'
 
 export const WSPage = observer((): ReactElement => {
+  useDatasetName()
+  variantStore.observeHistory.useHook()
+  filterPresetsStore.observeHistory.useHook()
+
   const params = useParams()
+
   const stringifyedConditions = params.get('conditions')
   const { conditions } = filterStore
-
-  useDatasetName()
-
-  useSolution(SolutionTypesEnum.Preset, filterPresetsStore.activePreset)
 
   useEffect(() => {
     if (stringifyedConditions && !conditions.length) {
@@ -34,9 +33,6 @@ export const WSPage = observer((): ReactElement => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  variantStore.observeHistory.useHook()
-  filterPresetsStore.observeHistory.useHook()
 
   const { variantCounts, dnaVariantsCounts, transcriptsCounts } =
     mainTableStore.fixedStatAmount

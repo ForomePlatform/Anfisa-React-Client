@@ -1,12 +1,11 @@
 import styles from './dtree.page.module.css'
 
-import { ReactElement } from 'react'
+import { ReactElement, useEffect } from 'react'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
-import { SolutionTypesEnum } from '@core/enum/solution-types-enum'
 import { useDatasetName } from '@core/hooks/use-dataset-name'
-import { useSolution } from '@core/hooks/use-solution'
+import { useParams } from '@core/hooks/use-params'
 import datasetStore from '@store/dataset/dataset'
 import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
@@ -25,10 +24,25 @@ export const DtreePage = observer((): ReactElement => {
   const { isXL } = datasetStore
 
   useDatasetName()
-
-  useSolution(SolutionTypesEnum.Dtree, filterDtreesStore.activeDtree)
-
   filterDtreesStore.observeHistory.useHook()
+
+  const params = useParams()
+  const dsName = params.get('ds') || ''
+  const dtreeName = params.get('dtree') || ''
+
+  useEffect(() => {
+    const initAsync = async () => {
+      await dtreeStore.fetchDtreeSetAsync({
+        ds: dsName,
+        tm: '0',
+        code: 'return False',
+      })
+    }
+
+    if (!dtreeName) {
+      initAsync()
+    }
+  }, [dsName, dtreeName])
 
   const getFiltersValue = (type: string) => {
     if (type === 'all') {

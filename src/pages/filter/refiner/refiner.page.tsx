@@ -4,9 +4,7 @@ import { ReactElement } from 'react'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
-import { SolutionTypesEnum } from '@core/enum/solution-types-enum'
 import { useDatasetName } from '@core/hooks/use-dataset-name'
-import { useSolution } from '@core/hooks/use-solution'
 import datasetStore from '@store/dataset/dataset'
 import filterStore from '@store/filter'
 import filterPresetsStore from '@store/filter-presets'
@@ -27,8 +25,6 @@ export const RefinerPage = observer((): ReactElement => {
     mainTableStore.fixedStatAmount
 
   useDatasetName()
-
-  useSolution(SolutionTypesEnum.Preset, filterPresetsStore.activePreset)
 
   filterPresetsStore.observeHistory.useHook()
 
