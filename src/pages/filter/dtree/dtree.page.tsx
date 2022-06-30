@@ -26,11 +26,9 @@ export const DtreePage = observer((): ReactElement => {
 
   useDatasetName()
 
-  useSolution({
-    solutionType: SolutionTypesEnum.Dtree,
-    activeSolution: filterDtreesStore.activeDtree,
-    onApply: filterDtreesStore.setActiveDtree,
-  })
+  useSolution(SolutionTypesEnum.Dtree, filterDtreesStore.activeDtree)
+
+  filterDtreesStore.observeHistory.useHook()
 
   const getFiltersValue = (type: string) => {
     if (type === 'all') {

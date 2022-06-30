@@ -6,25 +6,14 @@ import datasetStore from '@store/dataset/dataset'
 import dtreeStore from '@store/dtree'
 import { useParams } from './use-params'
 
-interface IUseSolutionProps {
-  solutionType: SolutionTypesEnum
-  activeSolution: string
-  onApply: (solutionName: string) => void
-}
-
-export const useSolution = ({
-  solutionType,
-  activeSolution,
-  onApply,
-}: IUseSolutionProps) => {
+export const useSolution = (
+  solutionType: SolutionTypesEnum,
+  activeSolution: string,
+) => {
   const params = useParams()
   const solutionName = params.get(solutionType) || ''
 
   useEffect(() => {
-    if (solutionName) {
-      onApply(solutionName)
-    }
-
     if (solutionType === SolutionTypesEnum.Preset) {
       if (activeSolution && !solutionName) {
         pushQueryParams({ preset: activeSolution })
@@ -42,5 +31,5 @@ export const useSolution = ({
         })
       }
     }
-  }, [activeSolution, onApply, solutionName, solutionType])
+  }, [activeSolution, solutionName, solutionType])
 }

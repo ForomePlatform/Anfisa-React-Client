@@ -12,7 +12,6 @@ import variantStore from '@store/ws/variant'
 import { ExportReport } from '@components/export-report'
 import { Header } from '@components/header'
 import { VariantsCount } from '@components/variants-count'
-import { applyPreset } from '@pages/filter/refiner/components/solution-control-refiner/solution-control-refiner.utils'
 import { TCondition } from '@service-providers/common/common.interface'
 import { ControlPanel } from './ui/control-panel/control-panel'
 import { VariantDrawer } from './ui/variant-drawer'
@@ -25,11 +24,7 @@ export const WSPage = observer((): ReactElement => {
 
   useDatasetName()
 
-  useSolution({
-    solutionType: SolutionTypesEnum.Preset,
-    activeSolution: filterPresetsStore.activePreset,
-    onApply: applyPreset,
-  })
+  useSolution(SolutionTypesEnum.Preset, filterPresetsStore.activePreset)
 
   useEffect(() => {
     if (stringifyedConditions && !conditions.length) {
@@ -41,6 +36,7 @@ export const WSPage = observer((): ReactElement => {
   }, [])
 
   variantStore.observeHistory.useHook()
+  filterPresetsStore.observeHistory.useHook()
 
   const { variantCounts, dnaVariantsCounts, transcriptsCounts } =
     mainTableStore.fixedStatAmount
