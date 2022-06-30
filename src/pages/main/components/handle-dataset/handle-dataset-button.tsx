@@ -1,4 +1,3 @@
-import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
 import { IPopoverButtonBaseProps } from '@ui/popover/popover.interface'
 
@@ -6,16 +5,11 @@ export const HandleDatasetButton = ({
   onShowPopover,
 }: IPopoverButtonBaseProps) => {
   return (
-    <Button
+    <button
       onClick={e => onShowPopover(e.currentTarget)}
-      className="rounded"
-      size="md"
-      icon={<Icon name="Ellipsis" />}
-      style={{
-        width: '36px',
-        height: '28px',
-        justifyContent: 'center',
-      }}
-    />
+      className="hover:bg-blue-darkHover p-1 rounded-md"
+    >
+      <Icon name="Options" className="text-white hover:text-grey-blue" />
+    </button>
   )
 }

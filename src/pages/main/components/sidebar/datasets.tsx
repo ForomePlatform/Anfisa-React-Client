@@ -3,7 +3,7 @@ import cn from 'classnames'
 
 import { useToggle } from '@core/hooks/use-toggle'
 import { t } from '@i18n'
-import { Button } from '@ui/button'
+import dirinfo from '@store/dirinfo'
 import { Icon } from '@ui/icon'
 import { FilterDatasetDataCy } from '@components/data-testid/filter-dataset.cy'
 import { HandleDataset } from '../handle-dataset'
@@ -12,7 +12,7 @@ import { DocLinks } from './doc-links'
 import { FilterSortDatasets } from './filter-sort-datasets'
 
 export const Datasets = (): ReactElement => {
-  const [isOpen, open, close] = useToggle(true)
+  const [isOpen] = useToggle(true)
 
   return (
     <div
@@ -35,16 +35,13 @@ export const Datasets = (): ReactElement => {
             <HandleDataset />
           </div>
         )}
-        <button>Hi</button>
-        <Button
-          dataTestId={FilterDatasetDataCy.leftPanelArrowButton}
-          size="sm"
-          icon={<Icon name="Arrow" />}
-          className={cn('bg-blue-bright transform rounded-md', {
-            'rotate-180': !isOpen,
-          })}
-          onClick={isOpen ? close : open}
-        />
+        <button
+          data-TestId={FilterDatasetDataCy.updateDatasets}
+          onClick={() => dirinfo.dirinfo.invalidate()}
+          className="hover:bg-blue-darkHover p-1 rounded-md"
+        >
+          <Icon name="Reload" className="text-white hover:text-grey-blue" />
+        </button>
       </div>
       {isOpen && (
         <>
