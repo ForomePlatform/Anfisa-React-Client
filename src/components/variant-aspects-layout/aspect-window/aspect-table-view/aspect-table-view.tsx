@@ -41,16 +41,14 @@ export const AspectTableView = ({
             {rows?.map((row, index) => {
               if (!row) return <tr key={index} />
 
-              const blueBg = 'p-3 bg-blue-darkHover'
-
               const shouldShowCount = count && index === 0
 
               return (
                 <tr key={row.name}>
                   <td
                     className={cn(
-                      'p-3 text-grey-blue whitespace-nowrap sticky left-0',
-                      shouldAddShadow && blueBg,
+                      style.firstColumn,
+                      shouldAddShadow && 'bg-blue-darkHover',
                     )}
                   >
                     <Tooltip
@@ -74,7 +72,7 @@ export const AspectTableView = ({
                     <td
                       key={cIndex}
                       className={cn(
-                        'py-3 pr-3 font-normal',
+                        'py-3 pr-3 font-normal w-auto',
                         cell[0]?.includes('</a>')
                           ? 'text-blue-bright'
                           : !cell[1]?.includes(AspectCellRenderClass.NoTrHit) &&
@@ -83,7 +81,7 @@ export const AspectTableView = ({
                       )}
                     >
                       <span
-                        className="cursor-auto"
+                        className={cn('cursor-auto', style.geneTranscripts)}
                         onMouseDownCapture={onMouseDownHandler}
                         dangerouslySetInnerHTML={{ __html: cell[0] }}
                       />
