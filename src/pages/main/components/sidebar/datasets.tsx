@@ -20,7 +20,7 @@ export const Datasets = observer((): ReactElement => {
       contentClassName="flex flex-col pt-[18px] overflow-auto"
       width={width}
       minWidth={240}
-      maxWidth={500}
+      maxWidth={600}
       onChangeWidth={setWidth}
       canCollapse
       isCollapsed={isCollapsed}
