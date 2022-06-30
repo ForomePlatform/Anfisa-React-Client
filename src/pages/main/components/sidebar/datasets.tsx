@@ -35,6 +35,7 @@ export const Datasets = (): ReactElement => {
             <HandleDataset />
           </div>
         )}
+        <button>Hi</button>
         <Button
           dataTestId={FilterDatasetDataCy.leftPanelArrowButton}
           size="sm"

@@ -3,4 +3,5 @@ export const FilterDatasetDataCy = {
   leftPanelHeader: 'panel-header',
   leftPanelArrowButton: 'arrow-button',
   datasetsListElem: 'list-element',
+  updateDatasets: 'update-datasets',
 }
