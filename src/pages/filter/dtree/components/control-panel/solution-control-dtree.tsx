@@ -6,8 +6,6 @@ import dtreeStore from '@store/dtree'
 import filterDtreesStore from '@store/filter-dtrees'
 import { SolutionControl } from '@components/solution-control'
 
-const MIN_CODE_LENGTH = 13
-
 export const SolutionControlDtree = observer((): ReactElement => {
   const { activeDtree, availableDtrees, isFetchingDtrees } = filterDtreesStore
 
@@ -15,13 +13,11 @@ export const SolutionControlDtree = observer((): ReactElement => {
     <SolutionControl
       selected={activeDtree}
       solutions={availableDtrees}
-      isCreateDisabled={dtreeStore.dtreeCode.length < MIN_CODE_LENGTH}
       isFetchingSolutions={isFetchingDtrees}
       modifiedSolution={
         dtreeStore.isDtreeModified ? dtreeStore.currentDtreeName : undefined
       }
       controlName={t('solutionControl.decisionTree')}
-      onCreate={filterDtreesStore.createDtree}
       onApply={filterDtreesStore.setActiveDtree}
       onModify={filterDtreesStore.modifyDtree}
       onDelete={filterDtreesStore.deleteDtree}

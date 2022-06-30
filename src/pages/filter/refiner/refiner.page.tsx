@@ -30,6 +30,21 @@ export const RefinerPage = observer((): ReactElement => {
   const { variantCounts, dnaVariantsCounts, transcriptsCounts } =
     mainTableStore.fixedStatAmount
 
+  const { availablePresets: availableSolutionEntries, activePreset } =
+    filterPresetsStore
+
+  const createPreset = (presetName: string): void => {
+    filterPresetsStore.createPreset(presetName, filterStore.conditions)
+  }
+
+  const modifiedPreset = filterStore.isPresetModified
+    ? filterPresetsStore.activePreset
+    : undefined
+
+  const isEntryCreationAllowed = activePreset
+    ? modifiedPreset === activePreset
+    : !filterStore.isConditionsEmpty
+
   useDatasetName()
 
   useEffect(() => {
@@ -63,8 +78,11 @@ export const RefinerPage = observer((): ReactElement => {
       <FilterControl
         pageName={FilterControlOptionsNames[GlbPagesNames.Refiner]}
         SolutionControl={SolutionControlRefiner}
+        createSolutionEntry={createPreset}
+        availableSolutionEntries={availableSolutionEntries}
         isBackwardAllowed={filterStore.actionHistory.isBackwardAllowed}
         isForwardAllowed={filterStore.actionHistory.isForwardAllowed}
+        isEntryCreationAllowed={isEntryCreationAllowed}
         goForward={filterStore.actionHistory.goForward}
         goBackward={filterStore.actionHistory.goBackward}
         className={styles.refinerPage__controls}
