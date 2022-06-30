@@ -66,7 +66,7 @@ export const en = {
     filterPreset: 'Filter Preset',
     decisionTree: 'Decision Tree',
     selectSolution: 'Select {controlName}',
-    createNewSolution: 'Create New {controlName}',
+    createEntry: 'Create {solutionName}',
     join: 'Join',
     apply: 'Apply Filter',
     delete: 'Delete',
@@ -85,6 +85,13 @@ export const en = {
         'Deleting a {controlName} "{solutionName}" will permanently remove it from your system.',
       cancel: 'No, Keep {controlName}',
       confirm: 'Yes, Delete {controlName}',
+    },
+    modifyDialog: {
+      title: 'Modify {controlName}',
+      message:
+        'Modifying a {controlName} "{solutionName}" will permanently remove old version from your system.',
+      cancel: 'Close',
+      confirm: 'Modify',
     },
   },
   home: {
@@ -157,6 +164,7 @@ export const en = {
     attention:
       'Attention: Zone filters (Gene, Gene List, Sample, Tags) do not participate in dataset creation',
     addDataset: 'Add dataset',
+    tooManyVariants: 'The number of variants should be less than 9000',
   },
   mainTable: {
     gene: 'Gene',
@@ -233,6 +241,7 @@ export const en = {
     switcher: 'Only starts with',
     method: 'Filtering method',
     results: 'Results',
+    viewVariants: 'View variants',
     selectedVariants: 'Selected variants',
     show: 'Show {amount} variants',
     variants: 'Variants: {all}',
@@ -268,7 +277,7 @@ export const en = {
     },
     leaveConfirm: {
       title: 'Attention! All changes will be lost',
-      body: 'Are you sure you want to leave the page without saving?',
+      body: 'Are you sure you want to leave the page without saving the preset?',
     },
   },
   dtree: {

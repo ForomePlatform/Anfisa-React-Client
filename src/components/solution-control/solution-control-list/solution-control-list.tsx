@@ -93,6 +93,7 @@ export const SolutionControlList = ({
           <MenuList isDense>
             <MenuListItem
               label={t('solutionControl.modify')}
+              disabled={contextMenuItem?.name !== modifiedSolution}
               onClick={() => {
                 closeContextMenu()
                 onModify(contextMenuItem?.name ?? '')

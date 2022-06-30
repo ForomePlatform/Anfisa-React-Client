@@ -32,6 +32,7 @@ export const FilterRefinerUnits = observer(
         onFunctionalConditionDelete={condition =>
           filterStore.removeCondition(condition.key as number)
         }
+        fetchedAmount={filterStore.downloadedAmount}
       />
     )
   },

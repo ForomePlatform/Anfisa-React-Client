@@ -9,6 +9,7 @@ import ArrowRightXs from './arrow-right-xs'
 import ArrowUpS from './arrow-up-s'
 import ArrowUpXs from './arrow-up-xs'
 import ArrowsOut from './arrows-out'
+import Attention from './attention'
 import Circle from './circle'
 import Close from './close'
 import CloseMD from './close-md'
@@ -55,6 +56,7 @@ export const icons = {
   ArrowRightS,
   ArrowUpS,
   ArrowsOut,
+  Attention,
   Circle,
   Close,
   CloseMD,
