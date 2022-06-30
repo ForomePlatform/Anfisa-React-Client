@@ -4,34 +4,43 @@ import { SolutionTypesEnum } from '@core/enum/solution-types-enum'
 import { pushQueryParams } from '@core/history'
 import datasetStore from '@store/dataset/dataset'
 import dtreeStore from '@store/dtree'
-import filterDtreesStore from '@store/filter-dtrees'
-import { applyPreset } from '@pages/filter/refiner/components/solution-control-refiner/solution-control-refiner.utils'
 import { useParams } from './use-params'
 
-export const useSolution = (
-  solutionType: SolutionTypesEnum,
-  activeSolution: string,
-) => {
+interface IUseSolutionProps {
+  solutionType: SolutionTypesEnum
+  activeSolution: string
+  onApply: (solutionName: string) => void
+}
+
+export const useSolution = ({
+  solutionType,
+  activeSolution,
+  onApply,
+}: IUseSolutionProps) => {
   const params = useParams()
   const solutionName = params.get(solutionType) || ''
 
   useEffect(() => {
-    activeSolution &&
-      !solutionName &&
-      pushQueryParams({ solutionType: activeSolution })
+    if (solutionName) {
+      onApply(solutionName)
+    }
 
     if (solutionType === SolutionTypesEnum.Preset) {
-      solutionName && applyPreset(solutionName)
+      if (activeSolution && !solutionName) {
+        pushQueryParams({ preset: activeSolution })
+      }
     } else {
-      solutionName && filterDtreesStore.setActiveDtree(solutionName)
+      if (activeSolution && !solutionName) {
+        pushQueryParams({ dtree: activeSolution })
+      }
 
-      !activeSolution &&
-        !solutionName &&
+      if (!activeSolution && !solutionName) {
         dtreeStore.fetchDtreeSetAsync({
           ds: datasetStore.datasetName,
           tm: '0',
           code: 'return False',
         })
+      }
     }
-  }, [activeSolution, solutionName, solutionType])
+  }, [activeSolution, onApply, solutionName, solutionType])
 }

@@ -26,7 +26,7 @@ export const SelectPreset = observer(() => {
     reaction(
       () => filterPresetsStore.activePreset,
       activePreset => {
-        !activePreset && setSelectedPreset('')
+        activePreset ? setSelectedPreset(activePreset) : setSelectedPreset('')
       },
     )
   })

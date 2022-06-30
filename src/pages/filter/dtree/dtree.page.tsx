@@ -25,7 +25,12 @@ export const DtreePage = observer((): ReactElement => {
   const { isXL } = datasetStore
 
   useDatasetName()
-  useSolution(SolutionTypesEnum.Dtree, filterDtreesStore.activeDtree)
+
+  useSolution({
+    solutionType: SolutionTypesEnum.Dtree,
+    activeSolution: filterDtreesStore.activeDtree,
+    onApply: filterDtreesStore.setActiveDtree,
+  })
 
   const getFiltersValue = (type: string) => {
     if (type === 'all') {

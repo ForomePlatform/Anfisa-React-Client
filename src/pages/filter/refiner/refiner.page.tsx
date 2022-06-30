@@ -19,6 +19,7 @@ import { FilterControl } from '@pages/filter/common/filter-control/filter-contro
 import { FilterRefiner } from '@pages/filter/refiner/components/filter-refiner'
 import { FilterControlOptionsNames } from '../common/filter-control/filter-control.const'
 import { SolutionControlRefiner } from './components/solution-control-refiner'
+import { applyPreset } from './components/solution-control-refiner/solution-control-refiner.utils'
 
 export const RefinerPage = observer((): ReactElement => {
   const { isXL } = datasetStore
@@ -28,7 +29,11 @@ export const RefinerPage = observer((): ReactElement => {
 
   useDatasetName()
 
-  useSolution(SolutionTypesEnum.Preset, filterPresetsStore.activePreset)
+  useSolution({
+    solutionType: SolutionTypesEnum.Preset,
+    activeSolution: filterPresetsStore.activePreset,
+    onApply: applyPreset,
+  })
 
   return (
     <div className={styles.refinerPage}>
