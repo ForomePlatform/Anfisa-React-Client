@@ -43,6 +43,11 @@ export const VariantDrawer = observer(
 
     const refIndex = useRef(0)
 
+    const handleChangeActiveAspect = (aspect: string) => {
+      refIndex.current = 0
+      setGalleryActiveAspect(aspect)
+    }
+
     const onChange = (value: string) => {
       setSearchValue(value)
 
@@ -104,7 +109,7 @@ export const VariantDrawer = observer(
               className={styles.drawer__layout}
               aspects={aspects}
               activeAspect={galleryActiveAspect}
-              onChangeActiveAspect={setGalleryActiveAspect}
+              onChangeActiveAspect={handleChangeActiveAspect}
               igvUrl={igvUrl}
               searchValue={searchValue}
             />
