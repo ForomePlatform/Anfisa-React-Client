@@ -1,14 +1,11 @@
 import styles from './refiner.page.module.css'
 
-import { ReactElement, useEffect } from 'react'
+import { ReactElement } from 'react'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
-import { pushQueryParams } from '@core/history'
 import { useDatasetName } from '@core/hooks/use-dataset-name'
-import { useParams } from '@core/hooks/use-params'
 import datasetStore from '@store/dataset/dataset'
-import dirInfoStore from '@store/dirinfo'
 import filterStore from '@store/filter'
 import filterPresetsStore from '@store/filter-presets'
 import mainTableStore from '@store/ws/main-table.store'
@@ -20,11 +17,8 @@ import { FilterControl } from '@pages/filter/common/filter-control/filter-contro
 import { FilterRefiner } from '@pages/filter/refiner/components/filter-refiner'
 import { FilterControlOptionsNames } from '../common/filter-control/filter-control.const'
 import { SolutionControlRefiner } from './components/solution-control-refiner'
-import { applyPreset } from './components/solution-control-refiner/solution-control-refiner.utils'
 
 export const RefinerPage = observer((): ReactElement => {
-  const params = useParams()
-  const presetName = params.get('preset') || ''
   const { isXL } = datasetStore
 
   const { variantCounts, dnaVariantsCounts, transcriptsCounts } =
@@ -47,17 +41,7 @@ export const RefinerPage = observer((): ReactElement => {
 
   useDatasetName()
 
-  useEffect(() => {
-    presetName && applyPreset(presetName)
-
-    if (filterPresetsStore.activePreset && !presetName) {
-      pushQueryParams({ preset: filterPresetsStore.activePreset })
-    }
-
-    return () => {
-      dirInfoStore.resetData()
-    }
-  }, [presetName])
+  filterPresetsStore.observeHistory.useHook()
 
   return (
     <div className={styles.refinerPage}>

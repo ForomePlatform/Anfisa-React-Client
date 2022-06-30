@@ -1,11 +1,9 @@
 import styles from './dtree.page.module.css'
 
 import { ReactElement, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
-import { pushQueryParams } from '@core/history'
 import { useDatasetName } from '@core/hooks/use-dataset-name'
 import { useParams } from '@core/hooks/use-params'
 import datasetStore from '@store/dataset/dataset'
@@ -27,8 +25,6 @@ const MIN_CODE_LENGTH = 13
 export const DtreePage = observer((): ReactElement => {
   const { isXL } = datasetStore
 
-  const history = useHistory()
-
   const { availableDtrees: availableSolutionEntries } = filterDtreesStore
 
   const createDtree = (treeName: string): void => {
@@ -44,6 +40,8 @@ export const DtreePage = observer((): ReactElement => {
     : dtreeStore.dtreeCode.length >= MIN_CODE_LENGTH
 
   useDatasetName()
+  filterDtreesStore.observeHistory.useHook()
+
   const params = useParams()
   const dsName = params.get('ds') || ''
   const dtreeName = params.get('dtree') || ''
@@ -57,19 +55,10 @@ export const DtreePage = observer((): ReactElement => {
       })
     }
 
-    if (filterDtreesStore.activeDtree && !dtreeName) {
-      pushQueryParams({ dtree: filterDtreesStore.activeDtree })
-      return
+    if (!dtreeName) {
+      initAsync()
     }
-
-    dtreeName ? filterDtreesStore.setActiveDtree(dtreeName) : initAsync()
-
-    return () => {
-      dtreeStore.resetAlgorithmFilterValue()
-      dtreeStore.actionHistory.resetHistory()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dsName, history])
+  }, [dsName, dtreeName])
 
   const getFiltersValue = (type: string) => {
     if (type === 'all') {
