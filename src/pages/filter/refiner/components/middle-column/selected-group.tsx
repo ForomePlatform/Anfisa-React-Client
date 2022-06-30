@@ -3,6 +3,7 @@ import cn, { Argument } from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import filterStore from '@store/filter'
+import { Loader } from '@ui/loader'
 import { AttributeKinds } from '@service-providers/common'
 import { EmptySelectedGroup } from './empty-selected-group'
 import { EnumPanel } from './panels/enum-panel'
@@ -17,8 +18,17 @@ export const SelectedGroup = observer(
   ({ className }: ISelectedGroupProps): ReactElement => {
     const { selectedAttributeStatus } = filterStore
 
-    if (!selectedAttributeStatus) {
-      return <EmptySelectedGroup className={className} />
+    if (!selectedAttributeStatus || selectedAttributeStatus.incomplete) {
+      return (
+        <EmptySelectedGroup
+          content={
+            selectedAttributeStatus?.incomplete ? (
+              <Loader size="l" />
+            ) : undefined
+          }
+          className={className}
+        />
+      )
     }
 
     const { isRedactorMode, selectedConditionIndex } = filterStore

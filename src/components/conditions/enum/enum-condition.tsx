@@ -136,10 +136,7 @@ export const EnumCondition = observer(
           />
         </div>
 
-        <div
-          className="overflow-hidden flex-grow-1"
-          style={{ height: paginationHeight }}
-        >
+        <div style={{ height: paginationHeight }}>
           {filteredVariants.length > 0 ? (
             <PaginationList
               elements={filteredVariants}

@@ -35,7 +35,7 @@ export const WSPage = observer((): ReactElement => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  useEffect(() => variantStore.observeVariantHistory())
+  variantStore.observeHistory.useHook()
 
   const { variantCounts, dnaVariantsCounts, transcriptsCounts } =
     mainTableStore.fixedStatAmount

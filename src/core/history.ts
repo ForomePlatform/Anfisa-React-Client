@@ -20,3 +20,13 @@ export const pushQueryParams = (
 export const getQueryParam = (name: string): string | null => {
   return new URLSearchParams(window.location.search).get(name)
 }
+
+export const getQueryParams = <T extends string>(
+  names: T[],
+): Record<T, string | null> => {
+  const urlParams = new URLSearchParams(window.location.search)
+
+  return Object.fromEntries(
+    names.map(name => [name, urlParams.get(name)]),
+  ) as Record<T, string | null>
+}
