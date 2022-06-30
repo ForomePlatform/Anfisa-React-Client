@@ -100,7 +100,11 @@ export const FilterControl = observer(
                 <Divider orientation="vertical" className="h-[75%]" />
 
                 <CreateEntryButton
-                  solutionName={pageName}
+                  solutionName={
+                    pageName === FilterControlOptionsNames.dtree
+                      ? pageName
+                      : 'Preset'
+                  }
                   createSolutionEntry={createSolutionEntry}
                   availableSolutionEntries={availableSolutionEntries}
                 />

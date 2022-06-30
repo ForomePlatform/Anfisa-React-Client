@@ -22,7 +22,7 @@ export const CreateEntryButton = ({
   return (
     <>
       <Button
-        text={t('solutionControl.saveEntry', { solutionName })}
+        text={t('solutionControl.createEntry', { solutionName })}
         className="whitespace-nowrap"
         variant="secondary-dark"
         onClick={openCreateDialog}
@@ -32,9 +32,9 @@ export const CreateEntryButton = ({
         solutions={availableSolutionEntries}
         onClose={closeCreateDialog}
         controlName={solutionName}
-        onCreate={solutionName => {
+        onCreate={entryName => {
           closeCreateDialog()
-          createSolutionEntry(solutionName)
+          createSolutionEntry(entryName)
         }}
       />
     </>
