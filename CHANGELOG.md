@@ -1,4 +1,8 @@
 # Change log 
+* fix([FOROME-1274](https://quantori.atlassian.net/browse/FOROME-1274)): saving preset on ws-page after reloading (#764) ([08d2f914](https://github.com/ForomePlatform/Anfisa-React-Client/commit/08d2f914))
+
+## <small>0.6.77 (6/30/2022)</small>
+
 * feat([FOROME-1293](https://quantori.atlassian.net/browse/FOROME-1293)) Added changelog generator (#772) ([72fe8d06](https://github.com/ForomePlatform/Anfisa-React-Client/commit/72fe8d06))
 
 ## <small>0.6.76 (6/30/2022)</small>
