@@ -1,6 +1,6 @@
 {
   "name": "anfisa-react-client",
-  "version": "0.6.74",
+  "version": "0.6.77",
   "private": true,
   "dependencies": {
     "@monaco-editor/react": "4.3.1",
@@ -125,7 +125,8 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "storybook": "start-storybook -p 6006 -s public",
-    "build-storybook": "build-storybook -s public"
+    "build-storybook": "build-storybook -s public",
+    "create:changelog": "node ./tools/generate-changelog.js"
   },
   "simple-git-hooks": {
     "pre-commit": "yarn lint-stage && yarn lint:fix",

@@ -20,8 +20,24 @@ import { TextEditorButton } from './components/control-panel/text-editor-button'
 import { ModalsContainer } from './components/modals/modals-container'
 import { QueryBuilder } from './components/query-builder/query-builder'
 
+const MIN_CODE_LENGTH = 13
+
 export const DtreePage = observer((): ReactElement => {
   const { isXL } = datasetStore
+
+  const { availableDtrees: availableSolutionEntries } = filterDtreesStore
+
+  const createDtree = (treeName: string): void => {
+    filterDtreesStore.createDtree(treeName)
+  }
+
+  const modifiedDtree = dtreeStore.isDtreeModified
+    ? dtreeStore.currentDtreeName
+    : undefined
+
+  const isEntryCreationAllowed = filterDtreesStore.activeDtree
+    ? modifiedDtree === filterDtreesStore.activeDtree
+    : dtreeStore.dtreeCode.length >= MIN_CODE_LENGTH
 
   useDatasetName()
   filterDtreesStore.observeHistory.useHook()
@@ -96,6 +112,9 @@ export const DtreePage = observer((): ReactElement => {
         <FilterControl
           pageName={FilterControlOptionsNames[GlbPagesNames.Dtree]}
           SolutionControl={SolutionControlDtree}
+          createSolutionEntry={createDtree}
+          availableSolutionEntries={availableSolutionEntries}
+          isEntryCreationAllowed={isEntryCreationAllowed}
           isBackwardAllowed={dtreeStore.actionHistory.isBackwardAllowed}
           isForwardAllowed={dtreeStore.actionHistory.isForwardAllowed}
           goForward={dtreeStore.actionHistory.goForward}
