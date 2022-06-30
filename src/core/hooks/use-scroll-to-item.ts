@@ -10,6 +10,15 @@ export const useScrollToItem = (
     const searchedNodesList = document.querySelectorAll(className)
     const currentNode = searchedNodesList[refIndex.current]
     const prevNode = searchedNodesList[refIndex.current - 1]
+    const lastNode = searchedNodesList[searchedNodesList.length - 1]
+
+    if (!currentNode) {
+      return
+    }
+
+    if (refIndex.current === 0) {
+      lastNode.classList.remove(highlighted)
+    }
 
     if (currentNode) {
       currentNode.scrollIntoView({

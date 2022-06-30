@@ -50,7 +50,7 @@ export const AspectTableView = ({
               const isSearched = searchValue.trim()
                 ? row.title
                     .toLocaleLowerCase()
-                    .includes(searchValue.toLocaleLowerCase())
+                    .startsWith(searchValue.toLocaleLowerCase())
                 : false
 
               return (
@@ -69,8 +69,8 @@ export const AspectTableView = ({
                     >
                       <span
                         className={cn('cursor-auto', {
-                          'border border-blue-bright': isSearched,
-                          'aspect-window__content_active': isSearched,
+                          'aspect-window__content_active border border-blue-bright':
+                            isSearched,
                         })}
                         onMouseDownCapture={onMouseDownHandler}
                       >

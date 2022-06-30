@@ -1,6 +1,6 @@
 import styles from './variant-drawer.module.css'
 
-import React, { ReactElement, useRef, useState } from 'react'
+import React, { ReactElement, useEffect, useRef, useState } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
@@ -54,6 +54,10 @@ export const VariantDrawer = observer(
         activeIndex.current = 0
       }
     }
+
+    useEffect(() => {
+      setSearchValue('')
+    }, [layoutMode])
 
     useScrollToItem('.aspect-window__content_active', activeIndex)
 
