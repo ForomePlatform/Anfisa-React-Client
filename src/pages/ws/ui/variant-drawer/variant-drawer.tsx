@@ -1,9 +1,10 @@
 import styles from './variant-drawer.module.css'
 
-import { ReactElement, useRef, useState } from 'react'
+import React, { ReactElement, useRef, useState } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
+import { useScrollToItem } from '@core/hooks/use-scroll-to-item'
 import { t } from '@i18n'
 import variantStore from '@store/ws/variant'
 import { Loader } from '@ui/loader'
@@ -40,15 +41,24 @@ export const VariantDrawer = observer(
 
     const [searchValue, setSearchValue] = useState<string>('')
 
+    const divRef = React.createRef<HTMLDivElement>()
+    const activeIndex = useRef(0)
+
     const onChange = (value: string) => {
       setSearchValue(value)
-      value
-        ? gridHandles.current?.maximizeAll()
-        : gridHandles.current?.minimizeAll()
+
+      if (value) {
+        gridHandles.current?.maximizeAll()
+      } else {
+        gridHandles.current?.minimizeAll()
+        activeIndex.current = 0
+      }
     }
 
+    useScrollToItem('.aspect-window__content_active', activeIndex)
+
     return (
-      <div className={cn(styles.drawer, className)}>
+      <div className={cn(styles.drawer, className)} ref={divRef}>
         <VariantDrawerHeader
           className={styles.drawer__header}
           windowsOpenState={gridWindowsOpenState}
