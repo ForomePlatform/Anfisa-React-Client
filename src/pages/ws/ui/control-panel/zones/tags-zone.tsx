@@ -61,6 +61,7 @@ export const TagsZone = observer(() => {
       />
 
       <ZonePopover
+        isFetching={zoneStore.fetchingTags}
         zoneList={zoneStore.tags}
         title={t('ds.tags')}
         selectedZoneItems={zoneStore.localTags}
