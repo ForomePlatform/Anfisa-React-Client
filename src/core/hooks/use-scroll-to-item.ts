@@ -1,6 +1,6 @@
 import { MutableRefObject, useEffect } from 'react'
 
-const highlighted = 'bg-yellow-secondary'
+const highlighted = 'bg-blue-tertiary'
 
 export const useScrollToItem = (
   className: string,
@@ -45,9 +45,9 @@ export const useScrollToItem = (
   }
 
   useEffect(() => {
-    document.addEventListener('keydown', detectKey)
+    window.addEventListener('keydown', detectKey)
 
-    return () => document.removeEventListener('keydown', detectKey)
+    return () => window.removeEventListener('keydown', detectKey)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 }

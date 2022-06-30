@@ -41,8 +41,7 @@ export const VariantDrawer = observer(
 
     const [searchValue, setSearchValue] = useState<string>('')
 
-    const divRef = React.createRef<HTMLDivElement>()
-    const activeIndex = useRef(0)
+    const refIndex = useRef(0)
 
     const onChange = (value: string) => {
       setSearchValue(value)
@@ -51,18 +50,19 @@ export const VariantDrawer = observer(
         gridHandles.current?.maximizeAll()
       } else {
         gridHandles.current?.minimizeAll()
-        activeIndex.current = 0
+        refIndex.current = 0
       }
     }
 
     useEffect(() => {
       setSearchValue('')
+      refIndex.current = 0
     }, [layoutMode])
 
-    useScrollToItem('.aspect-window__content_active', activeIndex)
+    useScrollToItem('.aspect-window__content_active', refIndex)
 
     return (
-      <div className={cn(styles.drawer, className)} ref={divRef}>
+      <div className={cn(styles.drawer, className)}>
         <VariantDrawerHeader
           className={styles.drawer__header}
           windowsOpenState={gridWindowsOpenState}
@@ -82,7 +82,7 @@ export const VariantDrawer = observer(
           )}
           <div className={styles.drawer__search}>
             <InputSearch
-              placeholder={t('filter.searchForAField')}
+              placeholder={t('variant.searchThroughTheTabs')}
               value={searchValue}
               onChange={e => onChange(e.target.value)}
             />

@@ -1,8 +1,9 @@
 import styles from './variant-content.module.css'
 
-import React, { ReactElement, ReactNode, useState } from 'react'
+import React, { ReactElement, ReactNode, useRef, useState } from 'react'
 import cn from 'classnames'
 
+import { useScrollToItem } from '@core/hooks/use-scroll-to-item'
 import { t } from '@i18n'
 import { Icon } from '@ui/icon'
 import { Loader } from '@ui/loader'
@@ -30,10 +31,17 @@ export const VariantContent = ({
   const [activeAspect, setActiveAspect] = useState('')
 
   const [searchValue, setSearchValue] = useState<string>('')
+  const refIndex = useRef(0)
 
   const onChange = (value: string) => {
     setSearchValue(value)
+
+    if (!value) {
+      refIndex.current = 0
+    }
   }
+
+  useScrollToItem('.aspect-window__content_active', refIndex)
 
   return (
     <div className={cn(styles.variantContent, className)}>
@@ -49,7 +57,7 @@ export const VariantContent = ({
         <>
           <div className={styles.variantContent__search}>
             <InputSearch
-              placeholder={t('filter.searchForAField')}
+              placeholder={t('variant.searchThroughTheTabs')}
               value={searchValue}
               onChange={e => onChange(e.target.value)}
             />
