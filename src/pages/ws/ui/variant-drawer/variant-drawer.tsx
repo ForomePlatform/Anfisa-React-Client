@@ -24,7 +24,8 @@ export const VariantDrawer = observer(
     const {
       record: { aspects, igvParams, isFetching },
     } = variantStore
-    const igvUrls = igvParams?.igvUrls
+
+    const igvUrls = igvParams?.igvUrlSearchParams
 
     const {
       layoutMode,

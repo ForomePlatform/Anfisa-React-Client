@@ -6,7 +6,7 @@ import { TAspectDescriptor } from '@service-providers/dataset-level/dataset-leve
 export interface IVariantAspectsLayoutBaseProps {
   className?: string
   aspects: TAspectDescriptor[]
-  igvUrls?: string[]
+  igvUrls?: string
 }
 
 export type TVariantAspectsGridLayout = Layout[]

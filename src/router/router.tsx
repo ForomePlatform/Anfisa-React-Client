@@ -7,6 +7,7 @@ import { GlobalStyle } from '@theme'
 import { Routes } from '@router/routes.enum'
 import { DtreePage } from '@pages/filter/dtree'
 import { RefinerPage } from '@pages/filter/refiner'
+import { IgvPage } from '@pages/igv'
 import { MainPage } from '@pages/main'
 import { NotFoundPage } from '@pages/not-found'
 import { WSPage } from '@pages/ws'
@@ -17,6 +18,7 @@ const pages = wrapWithErrorBoundary({
   [Routes.WS]: WSPage,
   [Routes.Dtree]: DtreePage,
   [Routes.Refiner]: RefinerPage,
+  [Routes.IGV]: IgvPage,
 })
 
 export const RouterBase = (): ReactElement => {

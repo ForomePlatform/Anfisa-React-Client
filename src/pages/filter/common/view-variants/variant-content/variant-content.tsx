@@ -14,7 +14,7 @@ interface IVariantContentProps {
   onClose: () => void
   isLoading?: boolean
   aspects: TAspectDescriptor[]
-  igvUrls?: string[]
+  igvUrls?: string
 }
 
 export const VariantContent = ({

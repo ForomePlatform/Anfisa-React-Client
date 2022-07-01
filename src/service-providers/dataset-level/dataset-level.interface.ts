@@ -243,4 +243,5 @@ export interface IIgvParams {
   locus: string
   names: string
   igvUrls: string[]
+  igvUrlSearchParams: string
 }

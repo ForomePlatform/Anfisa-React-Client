@@ -110,10 +110,17 @@ export class VariantAspectsAsyncStore extends BaseAsyncDataStore<
       return undefined
     }
 
+    const igvUrlSearchParams = new URLSearchParams({
+      locus,
+      names: names.join(','),
+      igvUrls: JSON.stringify(igvUrls),
+    }).toString()
+
     return {
       locus,
       names: names.join(','),
       igvUrls,
+      igvUrlSearchParams,
     }
   }
 
