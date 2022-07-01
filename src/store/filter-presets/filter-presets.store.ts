@@ -1,6 +1,7 @@
 import { makeAutoObservable, reaction, toJS } from 'mobx'
 
 import { t } from '@i18n'
+import { createHistoryObserver } from '@store/common'
 import {
   ISolutionEntryDescription,
   TCondition,
@@ -16,6 +17,15 @@ export class FilterPresetsStore {
   private _activePreset: string = ''
 
   private readonly presets = new AvailablePresetsAsyncStore()
+
+  readonly observeHistory = createHistoryObserver({
+    preset: {
+      get: () => this.activePreset ?? '',
+      apply: preset => {
+        this.setActivePreset(preset ?? '')
+      },
+    },
+  })
 
   constructor() {
     makeAutoObservable(this)

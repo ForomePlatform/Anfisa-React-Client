@@ -17,6 +17,7 @@ import { Icon } from '@ui/icon'
 import { UndoRedoButtons } from '@components/undo-redo-buttons'
 import { GlbPagesNames } from '@glb/glb-names'
 import { CreateDataset } from '@pages/ws/ui/control-panel/create-dataset'
+import { CreateEntryButton } from './create-entry-button'
 import {
   FILTER_REFERRER,
   FilterControlOptions,
@@ -29,8 +30,11 @@ export const FilterControl = observer(
   ({
     SolutionControl,
     TextEditorButton,
+    createSolutionEntry,
+    availableSolutionEntries,
     className,
     isForwardAllowed,
+    isEntryCreationAllowed,
     isBackwardAllowed,
     pageName,
     goForward,
@@ -91,9 +95,21 @@ export const FilterControl = observer(
 
             <SolutionControl />
 
-            <Divider orientation="vertical" className="h-[75%]" />
+            {isEntryCreationAllowed && (
+              <>
+                <Divider orientation="vertical" className="h-[75%]" />
 
-            <CreateDataset />
+                <CreateEntryButton
+                  solutionName={
+                    pageName === FilterControlOptionsNames.dtree
+                      ? pageName
+                      : 'Preset'
+                  }
+                  createSolutionEntry={createSolutionEntry}
+                  availableSolutionEntries={availableSolutionEntries}
+                />
+              </>
+            )}
 
             {TextEditorButton && (
               <>
@@ -102,6 +118,10 @@ export const FilterControl = observer(
                 <TextEditorButton />
               </>
             )}
+
+            <Divider orientation="vertical" className="h-[75%]" />
+
+            <CreateDataset />
           </div>
 
           <div className="flex items-center">

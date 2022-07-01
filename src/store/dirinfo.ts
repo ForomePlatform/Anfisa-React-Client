@@ -150,14 +150,6 @@ class DirInfoStore {
     return [[]]
   }
 
-  resetData() {
-    this.selectedDirinfoName = ''
-    this.filterValue = ''
-    this.infoFrameLink = ''
-    this.iframeInfoFullscreen = false
-    this.activeInfoName = ''
-  }
-
   deleteDataset(datasetName: string): void {
     vaultProvider
       .dropDs({ ds: datasetName })

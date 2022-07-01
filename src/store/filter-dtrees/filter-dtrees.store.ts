@@ -2,6 +2,7 @@ import { makeAutoObservable, reaction, toJS } from 'mobx'
 
 import { pushQueryParams } from '@core/history'
 import { t } from '@i18n'
+import { createHistoryObserver } from '@store/common'
 import datasetStore from '@store/dataset/dataset'
 import dtreeStore from '@store/dtree'
 import { ISolutionEntryDescription } from '@service-providers/common'
@@ -26,6 +27,15 @@ export class FilterDtreesStore {
   public activeDtree: string = ''
 
   private readonly dtrees = new AvailableDtreesAsyncStore()
+
+  readonly observeHistory = createHistoryObserver({
+    dtree: {
+      get: () => this.activeDtree ?? '',
+      apply: dtree => {
+        this.setActiveDtree(dtree ?? '')
+      },
+    },
+  })
 
   constructor() {
     makeAutoObservable(this)

@@ -17,6 +17,8 @@ import { DtreeSetAsyncStore } from './dtree-set.async.store'
 import { DtreeStatStore } from './dtree-stat.store'
 import stepStore, { ActiveStepOptions } from './step.store'
 
+const MIN_CODE_LENGTH = 13
+
 export type IStepData = {
   step: number
   groups: any[]
@@ -42,6 +44,7 @@ export class DtreeStore {
   readonly dtreeCounts = new DtreeCountsAsyncStore()
   readonly stat = new DtreeStatStore()
   private _dtreeModifiedState: DtreeModifiedState = DtreeModifiedState.NotDtree
+  private _previousDtreeCode = ''
 
   public startDtreeCode = ''
   public localDtreeCode = ''
@@ -150,6 +153,16 @@ export class DtreeStore {
         }
       },
     )
+
+    reaction(
+      () => this.dtreeCode,
+      code => {
+        if (this._previousDtreeCode.length > MIN_CODE_LENGTH) {
+          this.setDtreeModifiedState()
+        }
+        this._previousDtreeCode = code
+      },
+    )
   }
 
   get statAmount(): TFilteringStatCounts | undefined {
@@ -253,7 +266,6 @@ export class DtreeStore {
     if (state === undefined) {
       if (this._dtreeModifiedState === DtreeModifiedState.NotModified) {
         this._dtreeModifiedState = DtreeModifiedState.Modified
-        filterDtreesStore.resetActiveDtree()
       }
     } else if (state !== this._dtreeModifiedState) {
       this._dtreeModifiedState = state
