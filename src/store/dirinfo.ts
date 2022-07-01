@@ -26,6 +26,8 @@ class DirInfoStore {
   iframeInfoFullscreen = false
   activeInfoName = ''
 
+  private readonly closedDatasets = new Set<string>()
+
   readonly dirinfo = new DirInfoAsyncStore()
 
   get dirInfoData() {
@@ -34,6 +36,18 @@ class DirInfoStore {
 
   constructor() {
     makeAutoObservable(this)
+  }
+
+  public closeDs(name: string) {
+    this.closedDatasets.add(name)
+  }
+
+  public openDs(name: string) {
+    this.closedDatasets.delete(name)
+  }
+
+  public isDsClosed(name: string): boolean {
+    return this.closedDatasets.has(name)
   }
 
   setActiveInfoName(name: string) {
