@@ -9,17 +9,14 @@ import {
 import { SolutionControlPopover } from '@components/solution-control/solution-control-popover'
 import { ISolutionEntryDescription } from '@service-providers/common'
 import { SolutionControlButton } from './solution-control-button'
-import { SolutionCreateDialog } from './solution-create-dialog'
 
 interface ISolutionControlProps {
   className?: string
   controlName: string
   solutions: ISolutionEntryDescription[] | undefined
   selected: string
-  isCreateDisabled?: boolean
   isFetchingSolutions: boolean
   modifiedSolution?: string
-  onCreate: (solutionName: string) => void
   onApply: (solutionName: string) => void
   onJoin?: (solutionName: string) => void
   onModify: (solutionName: string) => void
@@ -31,10 +28,8 @@ export const SolutionControl = ({
   solutions,
   controlName,
   selected: selectedProp,
-  isCreateDisabled,
   isFetchingSolutions,
   modifiedSolution,
-  onCreate,
   onApply,
   onJoin,
   onModify,
@@ -48,8 +43,6 @@ export const SolutionControl = ({
   const [modifyDialog, openModifyDialog, closeModifyDialog] = useModal({
     solutionName: '',
   })
-
-  const [createDialog, openCreateDialog, closeCreateDialog] = useModal()
 
   const isModified = !!(selectedProp && modifiedSolution === selectedProp)
 
@@ -73,11 +66,6 @@ export const SolutionControl = ({
     }
   }
 
-  const onCreateDialog = (solutionName: string) => {
-    closeCreateDialog()
-    onCreate(solutionName)
-  }
-
   return (
     <>
       <SolutionControlButton
@@ -92,14 +80,11 @@ export const SolutionControl = ({
       />
       <SolutionControlPopover
         isOpen={isPopoverOpen}
-        isCreateDisabled={isCreateDisabled}
-        controlName={controlName}
         onClose={closePopover}
         anchorEl={popoverAnchor}
         solutions={solutions}
         modifiedSolution={modifiedSolution}
         selected={selected}
-        onCreate={() => openCreateDialog()}
         onSelect={setSelected}
         onJoin={onJoin}
         onApply={onApply}
@@ -117,13 +102,6 @@ export const SolutionControl = ({
         onClose={closeDeleteDialog}
         onApply={onDeleteDialog}
         controlName={controlName}
-      />
-      <SolutionCreateDialog
-        {...createDialog}
-        solutions={solutions}
-        onClose={closeCreateDialog}
-        controlName={controlName}
-        onCreate={onCreateDialog}
       />
     </>
   )

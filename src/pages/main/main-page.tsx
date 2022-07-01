@@ -27,6 +27,7 @@ export const MainPage = (): ReactElement => {
     zoneStore.clearZone()
     filterStore.reset()
     dtreeStore.actionHistory.resetHistory()
+    dtreeStore.resetAlgorithmFilterValue()
     zoneStore.resetAllSelectedItems()
   }, [])
 
