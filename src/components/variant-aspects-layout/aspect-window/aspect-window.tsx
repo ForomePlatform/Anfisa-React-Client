@@ -6,11 +6,15 @@ import { AspectWindowGeneral } from './aspect-window-general'
 import { AspectWindowTranscripts } from './aspect-window-transcripts'
 
 export const AspectWindow = forwardRef<HTMLDivElement, IAspectWindowProps>(
-  ({ igvUrls, ...props }, ref): ReactElement => {
+  ({ igvUrlSearchParams, ...props }, ref): ReactElement => {
     switch (props.aspect.name) {
       case 'view_gen':
         return (
-          <AspectWindowGeneral rootRef={ref} igvUrls={igvUrls} {...props} />
+          <AspectWindowGeneral
+            rootRef={ref}
+            igvUrlSearchParams={igvUrlSearchParams}
+            {...props}
+          />
         )
       case 'view_transcripts':
         return <AspectWindowTranscripts rootRef={ref} {...props} />

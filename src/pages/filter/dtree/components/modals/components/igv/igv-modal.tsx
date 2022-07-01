@@ -1,6 +1,6 @@
 import styles from './igv-modal.module.css'
 
-import { ReactElement, useEffect, useRef, useState } from 'react'
+import { ReactElement, useState } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
@@ -8,11 +8,8 @@ import { t } from '@i18n'
 import { Icon } from '@ui/icon'
 import { Modal } from '@ui/modal'
 import modalsVisibilityStore from '@pages/filter/dtree/components/modals/modals-visibility-store'
+import { IgvContent } from '@pages/igv/ui/igv-content'
 import { IIgvParams } from '@service-providers/dataset-level'
-
-export const hg38Folder = 'GRCh38'
-
-const igv = require('igv')
 
 interface IIgvModalProps {
   isOpen: boolean
@@ -23,50 +20,11 @@ export const IgvModal = observer(
   ({ isOpen, igvParams }: IIgvModalProps): ReactElement => {
     const [isEachFilesMissing, setIsEachFilesMissing] = useState(false)
 
-    const ref = useRef<HTMLDivElement>(null)
-
     const locus = igvParams?.locus
     const names = igvParams?.names
     const igvUrls = igvParams?.igvUrls
 
     const isCorrectParams = locus && names && igvUrls
-
-    useEffect(() => {
-      if (isOpen) {
-        const nameList = names?.split(',') ?? []
-
-        const tracks = nameList
-          .map(name => {
-            const path = igvUrls?.find(url => url.includes(name))
-
-            if (!path) return null
-
-            const indexPath = `${path}.bai`
-
-            return {
-              name,
-              url: path,
-              indexURL: indexPath,
-              format: 'bam',
-            }
-          })
-          .filter(element => element)
-
-        const isTracksEmpty = tracks.length === 0
-
-        if (isTracksEmpty) {
-          setIsEachFilesMissing(true)
-        } else {
-          const options = {
-            genome: 'hg38',
-            locus,
-            tracks,
-          }
-
-          igv.createBrowser(ref.current, options)
-        }
-      }
-    }, [igvUrls, isOpen, locus, names])
 
     return (
       <Modal
@@ -92,7 +50,15 @@ export const IgvModal = observer(
                 {t('igv.filesNotFound')}
               </span>
             ) : (
-              <div className={styles.igvModal__content} ref={ref}></div>
+              <div className={styles.igvModal__content}>
+                <IgvContent
+                  locus={locus}
+                  names={names}
+                  igvUrls={igvUrls}
+                  isOpen={isOpen}
+                  setIsEachFilesMissing={setIsEachFilesMissing}
+                />
+              </div>
             )}
           </div>
         )}

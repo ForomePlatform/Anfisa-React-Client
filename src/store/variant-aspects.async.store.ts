@@ -68,20 +68,6 @@ export class VariantAspectsAsyncStore extends BaseAsyncDataStore<
   public get igvParams(): IIgvParams | undefined {
     const igvUrls = datasetStore.dsInfoData?.igvUrls
 
-    // uncomment to check igv modal for ws-page/PGP3140_wgs_panel_hl
-    // const igvUrls = [
-    //   'https://forome-bam.s3.us-south.cloud-object-storage.appdomain.cloud/GRCh38/NA24385.sorted.bam',
-    //   'https://forome-bam.s3.us-south.cloud-object-storage.appdomain.cloud/GRCh38/NA24143.sorted.bam',
-    //   'https://forome-bam.s3.us-south.cloud-object-storage.appdomain.cloud/GRCh38/NA24149.sorted.bam',
-    // ]
-
-    // uncomment to check igv modal for filter-page/xl_PGP3140_wgs_NIST-4_2
-    // const igvUrls = [
-    //   'https://forome-bam.s3.us-south.cloud-object-storage.appdomain.cloud/GRCh38/HG002.sorted.bam',
-    //   'https://forome-bam.s3.us-south.cloud-object-storage.appdomain.cloud/GRCh38/HG003.sorted.bam',
-    //   'https://forome-bam.s3.us-south.cloud-object-storage.appdomain.cloud/GRCh38/HG004.sorted.bam',
-    // ]
-
     if (!igvUrls) {
       return
     }

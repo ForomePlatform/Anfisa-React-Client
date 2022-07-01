@@ -25,7 +25,7 @@ export const VariantDrawer = observer(
       record: { aspects, igvParams, isFetching },
     } = variantStore
 
-    const igvUrls = igvParams?.igvUrlSearchParams
+    const igvUrlSearchParams = igvParams?.igvUrlSearchParams
 
     const {
       layoutMode,
@@ -64,7 +64,7 @@ export const VariantDrawer = observer(
               onChangeLayout={setGridLayout}
               layout={gridLayout}
               handles={gridHandles}
-              igvUrls={igvUrls}
+              igvUrlSearchParams={igvUrlSearchParams}
             />
           )}
           {layoutMode === VariantDrawerLayoutMode.Gallery && (
@@ -73,7 +73,7 @@ export const VariantDrawer = observer(
               aspects={aspects}
               activeAspect={galleryActiveAspect}
               onChangeActiveAspect={setGalleryActiveAspect}
-              igvUrls={igvUrls}
+              igvUrlSearchParams={igvUrlSearchParams}
             />
           )}
         </div>
