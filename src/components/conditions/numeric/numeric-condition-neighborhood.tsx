@@ -57,6 +57,7 @@ export const NumericConditionNeighborhood = ({
                 min={min}
                 max={max}
                 value={center ?? ''}
+                isFloat={isFloat}
                 placeholder={t('numericCondition.center')}
                 onChange={value => setCenter(value)}
               />
@@ -73,6 +74,7 @@ export const NumericConditionNeighborhood = ({
                 placeholder={t('numericCondition.distance')}
                 min={0}
                 max={maxDistance}
+                isFloat={isFloat}
                 value={distance ?? ''}
                 onChange={value => setDistance(value)}
               />

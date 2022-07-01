@@ -15,6 +15,8 @@ interface IInputNumericProps {
   placeholder?: string
   min?: number
   max?: number
+  step?: number
+  isFloat?: boolean
   disabled?: boolean
   hasErrors?: boolean
   onChange: (e: number) => void
@@ -25,6 +27,8 @@ export const InputNumeric = ({
   value,
   min,
   max,
+  step,
+  isFloat,
   disabled,
   hasErrors,
   onChange,
@@ -33,6 +37,7 @@ export const InputNumeric = ({
   const [inputValue, setInputValue] = useState<number>(+value)
   const minimal = min || 0
   const maximal = max || Infinity
+  const valueStep = step || 1
   const displayValue = value === '' ? value : inputValue
 
   useEffect(() => {
@@ -43,17 +48,21 @@ export const InputNumeric = ({
     if (disabled) {
       return
     }
-    const num = checkMaxMin(newValue, maximal, minimal)
-    setInputValue(num)
-    onChange(num)
+    const isFloatNumber = !!isFloat
+    const limitedNum = checkMaxMin(newValue, maximal, minimal)
+    const result = isFloatNumber
+      ? +limitedNum.toFixed(2)
+      : +limitedNum.toFixed(0)
+    setInputValue(result)
+    onChange(result)
   }
 
   function increase() {
-    changeValue(inputValue + 1)
+    changeValue(inputValue + valueStep)
   }
 
   function decrease() {
-    changeValue(inputValue - 1)
+    changeValue(inputValue - valueStep)
   }
 
   function onKeyDown(e: KeyboardEvent) {
