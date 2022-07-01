@@ -1,9 +1,10 @@
 import styles from './input-numeric.module.css'
 
 import { KeyboardEvent, ReactElement, useEffect, useState } from 'react'
+import NumberFormat from 'react-number-format'
 import cn, { Argument } from 'classnames'
 
-import { getNumeric } from './input-numeric.utils'
+import { checkMaxMin } from './input-numeric.utils'
 
 const KEYCODE_UP: number = 38
 const KEYCODE_DOWN: number = 40
@@ -32,19 +33,19 @@ export const InputNumeric = ({
   const [inputValue, setInputValue] = useState<number>(+value)
   const minimal = min || 0
   const maximal = max || Infinity
-  const displayValue = value === '' ? value : inputValue.toLocaleString()
+  const displayValue = value === '' ? value : inputValue
 
   useEffect(() => {
     setInputValue(+value)
   }, [value])
 
-  function changeValue(newValue: number | string) {
+  function changeValue(newValue: number) {
     if (disabled) {
       return
     }
-    const numeric = getNumeric(newValue, minimal, maximal)
-    setInputValue(numeric)
-    onChange(numeric)
+    const num = checkMaxMin(newValue, maximal, minimal)
+    setInputValue(num)
+    onChange(num)
   }
 
   function increase() {
@@ -79,12 +80,17 @@ export const InputNumeric = ({
       )}
     >
       <div className={cn(styles.inputNumeric__inputSection)}>
-        <input
+        <NumberFormat
           className={cn(styles.inputNumeric__input)}
           type="text"
           value={displayValue}
           disabled={disabled}
-          onChange={e => changeValue(e.target.value)}
+          thousandSeparator={' '}
+          onValueChange={(v: any) => {
+            if (v.floatValue !== inputValue) {
+              changeValue(v.floatValue || 0)
+            }
+          }}
           onKeyDown={onKeyDown}
           {...rest}
         />

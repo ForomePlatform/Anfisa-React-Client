@@ -6,6 +6,7 @@
   font-size: 14px;
   line-height: 20px;
   background: theme("colors.white");
+  overflow: hidden;
 
   &_disabled {
     color: theme("colors.grey.blue");
@@ -49,6 +50,7 @@
     flex-direction: column;
     width: 28px;
     text-align: center;
+    overflow: hidden;
   }
 
   &__button {
