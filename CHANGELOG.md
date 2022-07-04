@@ -1,5 +1,8 @@
 # Change log 
 
+## <small>0.6.90 (7/1/2022)</small>
+
+
 ## <small>0.6.89 (7/1/2022)</small>
 
 
