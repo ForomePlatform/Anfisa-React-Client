@@ -13,6 +13,9 @@ import { Datasets } from './components/sidebar/datasets'
 export const MainPage = (): ReactElement => {
   const params = useParams()
 
+  // eslint-disable-next-line no-console
+  console.log('main2')
+
   useEffect(() => {
     const handlerAsync = async () => {
       const dsName = params.get('ds') || ''
