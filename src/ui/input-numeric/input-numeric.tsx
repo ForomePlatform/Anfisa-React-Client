@@ -19,7 +19,7 @@ interface IInputNumericProps {
   isFloat?: boolean
   disabled?: boolean
   hasErrors?: boolean
-  onChange: (e: number) => void
+  onChange: (e: number | null) => void
 }
 
 export const InputNumeric = ({
@@ -34,35 +34,41 @@ export const InputNumeric = ({
   onChange,
   ...rest
 }: IInputNumericProps): ReactElement => {
-  const [inputValue, setInputValue] = useState<number>(+value)
+  const [inputValue, setInputValue] = useState<number | null>(+value)
   const minimal = min || 0
   const maximal = max || Infinity
   const valueStep = step || 1
   const displayValue = value === '' ? value : inputValue
+  let enteredNumber: number | null = inputValue ?? null
 
   useEffect(() => {
     setInputValue(+value)
   }, [value])
 
-  function changeValue(newValue: number) {
+  function checkValue(value: number): number {
+    const isFloatNumber = Boolean(isFloat)
+    const limitedNum = checkMaxMin(value, maximal, minimal)
+    return isFloatNumber ? +limitedNum.toFixed(2) : +limitedNum.toFixed(0)
+  }
+
+  function changeValue(newValue: number | null) {
     if (disabled) {
       return
     }
-    const isFloatNumber = !!isFloat
-    const limitedNum = checkMaxMin(newValue, maximal, minimal)
-    const result = isFloatNumber
-      ? +limitedNum.toFixed(2)
-      : +limitedNum.toFixed(0)
+
+    const result = newValue === null ? null : checkValue(newValue)
     setInputValue(result)
     onChange(result)
   }
 
   function increase() {
-    changeValue(inputValue + valueStep)
+    const oldValue = inputValue ?? 0
+    changeValue(oldValue + valueStep)
   }
 
   function decrease() {
-    changeValue(inputValue - valueStep)
+    const oldValue = inputValue ?? 0
+    changeValue(oldValue - valueStep)
   }
 
   function onKeyDown(e: KeyboardEvent) {
@@ -97,8 +103,11 @@ export const InputNumeric = ({
           thousandSeparator={' '}
           onValueChange={(v: any) => {
             if (v.floatValue !== inputValue) {
-              changeValue(v.floatValue || 0)
+              enteredNumber = v.floatValue ?? null
             }
+          }}
+          onBlur={() => {
+            changeValue(enteredNumber)
           }}
           onKeyDown={onKeyDown}
           {...rest}
