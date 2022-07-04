@@ -58,6 +58,8 @@ export const DtreePage = observer((): ReactElement => {
     if (!dtreeName) {
       initAsync()
     }
+
+    return () => dtreeStore.actionHistory.resetHistory()
   }, [dsName, dtreeName])
 
   const getFiltersValue = (type: string) => {
