@@ -1,5 +1,9 @@
 # Change log 
 
+## <small>0.6.91 (7/4/2022)</small>
+
+* fix([FOROME-1312](https://quantori.atlassian.net/browse/FOROME-1312)): don't show prompt on change dtree to refiner ([c5f78c46](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c5f78c46))
+
 ## <small>0.6.90 (7/1/2022)</small>
 
 
