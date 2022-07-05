@@ -24,14 +24,14 @@ export const CheckInput: FC<ICheckInputProps> = ({
   datatestId,
 }) => {
   return type === 'radio' ? (
-    <label htmlFor={id?.toString()} className={cn(className)}>
+    <label htmlFor={id?.toString()} className={cn(className, 'cursor-pointer')}>
       <input
         type="radio"
         id={id?.toString()}
         checked={checked}
         disabled={disabled}
         onChange={onChange}
-        className="mr-1"
+        className="mr-1 cursor-pointer"
       />
       {children}
     </label>
