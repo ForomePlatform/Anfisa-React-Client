@@ -54,13 +54,14 @@ export const StartFlowRightColumn = observer(
         )}
 
         {isEditionExploreGenome && (
-          <Card>
+          <Card className="px-0">
             <CardListSection
               title={'Relevant presets'}
               optionsList={relevantPresetsList}
               onSelect={value => selectedDatasetStore.setPreset(value)}
               selectedItem={selectedDatasetStore.selectedPreset}
               onOpen={() => alert('Whats next?')}
+              style={{ maxHeight: 'calc(100vh - 265px)' }}
             />
           </Card>
         )}
@@ -73,6 +74,7 @@ export const StartFlowRightColumn = observer(
               onSelect={value => selectedDatasetStore.setPreset(value)}
               selectedItem={selectedDatasetStore.selectedPreset}
               onOpen={() => alert('Whats next?')}
+              style={{ maxHeight: 'calc(100vh - 460px)' }}
             />
           </Card>
         )}

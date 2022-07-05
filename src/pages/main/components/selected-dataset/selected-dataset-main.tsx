@@ -38,6 +38,17 @@ export const relevantPresetsList = [
   'Preset_name_4',
   'Preset_name_5',
   'Preset_name_6',
+  'Preset_name_7',
+  'Preset_name_8',
+  'Preset_name_9',
+  'Preset_name_10',
+  'Preset_name_11',
+  'Preset_name_12',
+  'Preset_name_13',
+  'Preset_name_14',
+  'Preset_name_15',
+  'Preset_name_16',
+  'Preset_name_17',
 ]
 
 export const secondaryDslist = [
@@ -47,6 +58,17 @@ export const secondaryDslist = [
   'Ds_name_4',
   'Ds_name_5',
   'Ds_name_6',
+  'Ds_name_7',
+  'Ds_name_8',
+  'Ds_name_9',
+  'Ds_name_10',
+  'Ds_name_11',
+  'Ds_name_12',
+  'Ds_name_13',
+  'Ds_name_14',
+  'Ds_name_15',
+  'Ds_name_16',
+  'Ds_name_17',
 ]
 
 export const datasetDescription =

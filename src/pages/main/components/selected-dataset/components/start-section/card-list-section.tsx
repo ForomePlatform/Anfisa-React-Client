@@ -9,6 +9,7 @@ interface ICardListSectionProps {
   title: string
   optionsList: string[]
   selectedItem: string
+  style?: React.CSSProperties
   onSelect: (value: string) => void
   onOpen?: () => void
 }
@@ -17,20 +18,21 @@ export const CardListSection = ({
   title,
   optionsList,
   selectedItem,
+  style,
   onSelect,
   onOpen,
 }: ICardListSectionProps): ReactElement => (
   <>
-    <CardTitle text={title} className="text-16" />
+    <CardTitle text={title} className="text-16 px-4" />
 
-    <div className="h-auto text-14 overflow-y-auto">
+    <div className="mb-4 text-14 overflow-y-auto" style={style}>
       {optionsList.map(option => {
         const isSelected = option === selectedItem
         return (
           <div key={option} onClick={() => onSelect(option)}>
             <div
               className={cn(
-                'w-full flex items-center py-2 leading-5 cursor-pointer',
+                'w-full flex items-center py-2 leading-5 cursor-pointer px-4',
                 isSelected
                   ? 'bg-blue-bright text-white'
                   : 'hover:bg-blue-light',
@@ -49,7 +51,7 @@ export const CardListSection = ({
     </div>
 
     {onOpen && (
-      <div className="flex justify-end">
+      <div className="flex justify-end px-4">
         <Button text="Open" onClick={onOpen} disabled={!selectedItem} />
       </div>
     )}

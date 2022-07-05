@@ -39,7 +39,7 @@ export const StartFlowLeftColumn = observer(
 
         {!isGenome && !isEditionExploreType && (
           <>
-            <Card className="mt-4">
+            <Card className="mt-4 px-0">
               <CardListSection
                 title={'Existing candidate sets'}
                 optionsList={secondaryDslist}
@@ -47,6 +47,7 @@ export const StartFlowLeftColumn = observer(
                   selectedDatasetStore.setSecondaryDataset(value)
                 }
                 selectedItem={selectedDatasetStore.selectedSecondaryDataset}
+                style={{ maxHeight: 'calc(100vh - 363px)' }}
               />
             </Card>
           </>
