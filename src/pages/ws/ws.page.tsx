@@ -31,6 +31,7 @@ export const WSPage = observer((): ReactElement => {
 
       conditions.forEach(condition => filterStore.addCondition(condition))
     }
+    variantStore.showVariant(0)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
