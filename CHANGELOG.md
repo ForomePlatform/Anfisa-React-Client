@@ -1,4 +1,7 @@
 # Change log 
+
+## <small>0.6.95 (7/6/2022)</small>
+
 * fix([FOROME-1269](https://quantori.atlassian.net/browse/FOROME-1269)): input-numeric with react-number-format (#777) ([bd053091](https://github.com/ForomePlatform/Anfisa-React-Client/commit/bd053091))
 
 ## <small>0.6.94 (7/6/2022)</small>
