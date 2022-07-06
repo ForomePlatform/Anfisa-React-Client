@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import {
   CommonSelectors,
-  DecisionTreesMenuDataCy,
   DecisionTreeModalDataCy,
+  DecisionTreesMenuDataCy,
   DecisionTreesResultsDataCy,
 } from '@data-testid/index'
 import { Helper } from '../../shared/helpers'

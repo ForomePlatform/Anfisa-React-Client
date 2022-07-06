@@ -5,7 +5,9 @@ export class MainTableCheckbox extends Checkbox {
   constructor(selector: string) {
     super(selector)
   }
+
   variantMainTableCheckbox(substring?: string) {
+    substring
     // TODO: fix selector
     // cy.get(CommonSelectors.checkBoxList)
     //   .find(`[data-testid = "${MainTableDataCy.checkboxListElement}"]`)
