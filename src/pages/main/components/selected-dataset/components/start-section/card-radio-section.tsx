@@ -1,17 +1,21 @@
 import { ReactElement } from 'react'
+import cn from 'classnames'
 
 import { Button } from '@ui/button'
 import { Card, CardTitle } from '@ui/card'
 import { Icon } from '@ui/icon'
 import { Radio } from '@ui/radio'
+import selectedDatasetStore from '../../selected-dataset.store'
 
 interface ICardRadioSectionProps {
   title: string
   optionsList: string[]
   checkedValue: string
   description?: string
-  disabled?: boolean
-  onEdit: () => void
+  isContinueDisabled?: boolean
+  isEditDisabled?: boolean
+  isRadioDisabled?: boolean
+  onEdit?: () => void
   onChange: (value: string) => void
   onContinue: () => void
 }
@@ -19,7 +23,9 @@ interface ICardRadioSectionProps {
 export const CardRadioSection = ({
   title,
   optionsList,
-  disabled,
+  isContinueDisabled,
+  isEditDisabled,
+  isRadioDisabled,
   checkedValue,
   description,
   onEdit,
@@ -30,13 +36,20 @@ export const CardRadioSection = ({
     <div className="flex items-center justify-between">
       <CardTitle text={title} className="text-16" />
 
-      {disabled && (
+      {onEdit && (
         <Button
           variant="secondary"
           style={{ padding: 0 }}
           icon={
-            <Icon name="Edit" className="text-blue-bright cursor-pointer" />
+            <Icon
+              name="Edit"
+              className={cn(
+                'cursor-pointer',
+                isEditDisabled ? 'text-grey-blue' : 'text-blue-bright',
+              )}
+            />
           }
+          disabled={isEditDisabled}
           onClick={onEdit}
         ></Button>
       )}
@@ -64,18 +77,22 @@ export const CardRadioSection = ({
             className="flex items-center"
             checked={option === checkedValue}
             onChange={() => onChange(option)}
-            disabled={disabled}
+            disabled={isRadioDisabled}
           >
             <div className="ml-1.5">{option}</div>
           </Radio>
         </div>
       ))}
 
-      {!disabled && (
-        <div className="flex justify-end">
-          <Button text="Continue" onClick={onContinue} />
-        </div>
-      )}
+      <div className="flex justify-end">
+        <Button
+          text="Continue"
+          onClick={onContinue}
+          disabled={
+            isContinueDisabled && !!selectedDatasetStore.isStartFlowVisible
+          }
+        />
+      </div>
     </div>
   </>
 )

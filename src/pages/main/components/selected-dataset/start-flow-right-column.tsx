@@ -1,21 +1,21 @@
 import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
-import { ExploreCandidateType } from '@core/enum/explore-candidate-type-enum'
+import { ExploreCandidateTypes } from '@core/enum/explore-candidate-types-enum'
 import { Card } from '@ui/card'
 import { CardListSection } from './components/start-section/card-list-section'
 import { CardRadioSection } from './components/start-section/card-radio-section'
-import selectedDatasetStore from './selected-dataset.store'
 import {
   datasetDescription,
   exploreCandidateOptionsList,
   relevantPresetsList,
-} from './selected-dataset-main'
+} from './selected-dataset.constants'
+import selectedDatasetStore from './selected-dataset.store'
 
 interface IStartFlowRightColumnProps {
   isEditionExploreGenome: boolean
   isEditionExploreCandidate: boolean
-  exploreCandidateType: ExploreCandidateType
+  exploreCandidateType: ExploreCandidateTypes
   secondaryDataset: string
 }
 
@@ -27,7 +27,7 @@ export const StartFlowRightColumn = observer(
     secondaryDataset,
   }: IStartFlowRightColumnProps): ReactElement => {
     const shouldShowAdditionalPresetChoice =
-      exploreCandidateType === ExploreCandidateType.ApplyFilter &&
+      exploreCandidateType === ExploreCandidateTypes.ApplyFilter &&
       isEditionExploreCandidate
 
     return (
@@ -38,7 +38,11 @@ export const StartFlowRightColumn = observer(
               title={'Candidate set name'}
               optionsList={exploreCandidateOptionsList}
               description={datasetDescription}
-              disabled={selectedDatasetStore.isEditionExploreCandidate}
+              isContinueDisabled={
+                selectedDatasetStore.isEditionExploreCandidate
+              }
+              isRadioDisabled={!!selectedDatasetStore.isEditionExploreCandidate}
+              isEditDisabled={!selectedDatasetStore.isEditionExploreCandidate}
               checkedValue={selectedDatasetStore.exploreCandidateType}
               onEdit={() =>
                 selectedDatasetStore.toggleIsEditionExploreCandidate(false)

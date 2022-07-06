@@ -4,12 +4,12 @@ import { observer } from 'mobx-react-lite'
 import { Card } from '@ui/card'
 import { CardListSection } from './components/start-section/card-list-section'
 import { CardRadioSection } from './components/start-section/card-radio-section'
-import selectedDatasetStore from './selected-dataset.store'
 import {
   secondaryDslist,
   startWithOptionsList,
   whatsNextOptionsList,
-} from './selected-dataset-main'
+} from './selected-dataset.constants'
+import selectedDatasetStore from './selected-dataset.store'
 
 interface IStartFlowLeftColumnProps {
   isGenome: boolean
@@ -29,7 +29,15 @@ export const StartFlowLeftColumn = observer(
           <CardRadioSection
             title={'Start with'}
             optionsList={startWithOptionsList}
-            disabled={!selectedDatasetStore.isEditionExploreType}
+            isContinueDisabled={!selectedDatasetStore.isEditionExploreType}
+            isEditDisabled={
+              !selectedDatasetStore.secondaryDatasets ||
+              !!selectedDatasetStore.isEditionExploreType
+            }
+            isRadioDisabled={
+              !selectedDatasetStore.secondaryDatasets ||
+              !selectedDatasetStore.isEditionExploreType
+            }
             checkedValue={selectedDatasetStore.exploreType}
             onEdit={() => selectedDatasetStore.toggleIsEditionExploreType(true)}
             onChange={value => selectedDatasetStore.setExploreType(value)}
@@ -47,7 +55,7 @@ export const StartFlowLeftColumn = observer(
                   selectedDatasetStore.setSecondaryDataset(value)
                 }
                 selectedItem={selectedDatasetStore.selectedSecondaryDataset}
-                style={{ maxHeight: 'calc(100vh - 363px)' }}
+                style={{ maxHeight: 'calc(100vh - 403px)' }}
               />
             </Card>
           </>
@@ -59,7 +67,11 @@ export const StartFlowLeftColumn = observer(
               <CardRadioSection
                 title={'Whats next?'}
                 optionsList={whatsNextOptionsList}
-                disabled={selectedDatasetStore.isEditionExploreGenome}
+                isContinueDisabled={
+                  !!selectedDatasetStore.isEditionExploreGenome
+                }
+                isEditDisabled={!selectedDatasetStore.isEditionExploreGenome}
+                isRadioDisabled={!!selectedDatasetStore.isEditionExploreGenome}
                 checkedValue={selectedDatasetStore.exploreGenomeType}
                 onEdit={() =>
                   selectedDatasetStore.toggleIsEditionExploreGenome(false)

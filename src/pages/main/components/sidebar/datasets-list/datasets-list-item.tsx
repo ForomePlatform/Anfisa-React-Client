@@ -4,6 +4,7 @@ import cn from 'classnames'
 import get from 'lodash/get'
 import { observer } from 'mobx-react-lite'
 
+import { ExploreTypes } from '@core/enum/explore-types-enum'
 import { useParams } from '@core/hooks/use-params'
 import dirinfoStore from '@store/dirinfo'
 import { Routes } from '@router/routes.enum'
@@ -15,6 +16,7 @@ import {
 } from '@pages/main/components/sidebar/datasets-list/datasets-list.constants'
 import { datasetNameByKey } from '@pages/main/components/sidebar/datasets-list/datasets-list.utils'
 import { IDirInfoDatasetDescriptor } from '@service-providers/vault-level/vault-level.interface'
+import selectedDatasetStore from '../../selected-dataset/selected-dataset.store'
 import { DatasetType } from './components/dataset-type'
 
 interface IDatasetsListItemProps {
@@ -45,6 +47,14 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
 
     const handleClick = () => {
       if (isNullKind && !hasChildren) return
+
+      if (selectedDatasetStore.isStartFlowVisible) {
+        selectedDatasetStore.toggleIsStartFlowVisible(false)
+      }
+
+      if (selectedDatasetStore.exploreType === ExploreTypes.Candidate) {
+        selectedDatasetStore.setExploreType(ExploreTypes.Genome)
+      }
 
       if (hasChildren) {
         setIsOpenFolder(prev => !(prev && isActive))
