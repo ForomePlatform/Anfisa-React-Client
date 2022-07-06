@@ -2,7 +2,7 @@ import {
   DatasetCard,
   DatasetInfoDataCy,
   FilterDatasetDataCy,
-} from '@data-testid/index'
+} from '@data-testid'
 import { Helper } from '../../shared/helpers'
 import { BasePage } from '../lib/base-page'
 import { DatasetInfoWidget } from './widgets/dataset-info.widget'

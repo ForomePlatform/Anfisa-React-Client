@@ -4,7 +4,7 @@ import {
   DecisionTreeModalDataCy,
   DecisionTreesMenuDataCy,
   DecisionTreesResultsDataCy,
-} from '@data-testid/index'
+} from '@data-testid'
 import { Helper } from '../../shared/helpers'
 import { BasePage } from '../lib/base-page'
 import { AttributesListWidget } from './widgets/attributes-list.widget'

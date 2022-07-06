@@ -1,4 +1,4 @@
-import { CommonSelectors } from '@data-testid/index'
+import { CommonSelectors } from '@data-testid'
 import { datasetPage } from '../page-objects/app/datasets-page'
 import { decisionTreesPage } from '../page-objects/app/decision-trees-page'
 import { ApiEndpoints, Paths } from '../shared/constants'

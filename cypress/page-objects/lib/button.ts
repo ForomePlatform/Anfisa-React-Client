@@ -1,4 +1,4 @@
-import { CommonSelectors } from '@data-testid/index'
+import { CommonSelectors } from '@data-testid'
 import { UIElement } from './ui-element'
 
 export class Button extends UIElement {

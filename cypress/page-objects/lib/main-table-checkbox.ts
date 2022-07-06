@@ -1,4 +1,4 @@
-import { CommonSelectors } from '@data-testid/index'
+import { CommonSelectors } from '@data-testid'
 import { Checkbox } from './checkbox'
 
 export class MainTableCheckbox extends Checkbox {

@@ -1,4 +1,4 @@
-import { ReturnedVariantsDataCy } from '@data-testid/index'
+import { ReturnedVariantsDataCy } from '@data-testid'
 import { Helper } from '../../shared/helpers'
 import { BasePage } from '../lib/base-page'
 import { ReturnedVariantWidget } from './widgets/returned-variants.widget'

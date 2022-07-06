@@ -1,4 +1,4 @@
-import { CommonSelectors, FilterRefiner } from '@data-testid/index'
+import { CommonSelectors, FilterRefiner } from '@data-testid'
 import { Helper } from '../../shared/helpers'
 import { BasePage } from '../lib/base-page'
 import { FilterRefinerMenuWidget } from './widgets/filter-refiner.widget'

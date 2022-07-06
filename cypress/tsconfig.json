@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "./",
     "target": "es6",
     "lib": [
       "es6",
@@ -23,7 +24,7 @@
     "noEmit": true,
     "jsx": "react",
     "paths": {
-      "@data-testid/*": ["../src/data-testid/*"],
+      "@data-testid": ["../src/data-testid/index"],
     },
   },
   "include": [

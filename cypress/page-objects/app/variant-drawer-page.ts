@@ -1,4 +1,4 @@
-import { CommonSelectors, VariantDrawerDataCy } from '@data-testid/index'
+import { CommonSelectors, VariantDrawerDataCy } from '@data-testid'
 import { Helper } from '../../shared/helpers'
 import { BasePage } from '../lib/base-page'
 import { VariantDrawerWidget } from './widgets/variant-drawer.widget'

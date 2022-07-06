@@ -1,4 +1,4 @@
-import { CommonSelectors, MainTableDataCy } from '@data-testid/index'
+import { CommonSelectors, MainTableDataCy } from '@data-testid'
 import { Helper } from '../../shared/helpers'
 import { BasePage } from '../lib/base-page'
 import { Button } from '../lib/button'

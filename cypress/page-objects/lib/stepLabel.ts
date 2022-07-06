@@ -1,4 +1,4 @@
-import { DecisionTreesResultsDataCy } from '@data-testid/index'
+import { DecisionTreesResultsDataCy } from '@data-testid'
 import { Label } from './label'
 
 export class StepLabel extends Label {
