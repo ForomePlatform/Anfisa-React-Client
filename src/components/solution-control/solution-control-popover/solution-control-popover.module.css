@@ -3,25 +3,6 @@
 
   width: 300px;
 
-  &__header {
-    display: flex;
-    align-items: center;
-    height: 42px;
-    padding: 0 theme("spacing.3");
-    border-bottom: 1px solid theme("colors.blue.light");
-  }
-
-  &__createButton {
-    @apply typography-s;
-
-    font-weight: theme("fontWeight.medium");
-    color: theme("colors.blue.bright");
-
-    &_disabled {
-      color: theme("colors.grey.disabled");
-    }
-  }
-
   &__list {
     overflow: auto;
     max-height: 252px;
@@ -38,7 +19,7 @@
     margin-left: theme("spacing.2");
 
     &:first-child {
-      margin-left: 0
+      margin-left: 0;
     }
   }
 }

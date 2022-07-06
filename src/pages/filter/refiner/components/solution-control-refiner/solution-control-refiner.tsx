@@ -7,7 +7,6 @@ import filterPresetsStore from '@store/filter-presets'
 import { SolutionControl } from '@components/solution-control'
 import {
   applyPreset,
-  createPreset,
   deletePreset,
   joinPreset,
   modifyPreset,
@@ -22,14 +21,12 @@ export const SolutionControlRefiner = observer((): ReactElement => {
       selected={activePreset}
       solutions={availablePresets}
       controlName={t('solutionControl.filterPreset')}
-      isCreateDisabled={filterStore.isConditionsEmpty}
       isFetchingSolutions={isFetchingPresets}
       modifiedSolution={
         filterStore.isPresetModified
           ? filterPresetsStore.activePreset
           : undefined
       }
-      onCreate={createPreset}
       onApply={applyPreset}
       onJoin={joinPreset}
       onModify={modifyPreset}
