@@ -4,9 +4,9 @@ import { t } from '@i18n'
 import { Icon } from '@ui/icon'
 import { Popover } from '@ui/popover'
 import { IPopoverBaseProps } from '@ui/popover/popover.interface'
-import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-modal.cy'
 import { PopperMenu } from '@components/popper-menu/popper-menu'
 import { PopperMenuItem } from '@components/popper-menu/popper-menu-item'
+import { DecisionTreeModalDataCy } from '@data-testid'
 import { popoverOffset } from '@pages/ws/ws.constants'
 
 interface IRefinerConditionPopoverProps extends IPopoverBaseProps {

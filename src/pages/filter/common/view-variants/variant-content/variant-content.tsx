@@ -6,8 +6,8 @@ import cn from 'classnames'
 import { Icon } from '@ui/icon'
 import { Loader } from '@ui/loader'
 import { VariantAspectsLayoutGallery } from '@components/variant-aspects-layout'
+import { ReturnedVariantsDataCy } from '@data-testid'
 import { TAspectDescriptor } from '@service-providers/dataset-level'
-import { ReturnedVariantsDataCy } from '../../../../../components/data-testid/returned-variants'
 
 interface IVariantContentProps {
   className?: string

@@ -2,7 +2,7 @@ import styles from './content-code.module.css'
 
 import { memo, ReactElement } from 'react'
 
-import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
+import { DecisionTreesResultsDataCy } from '@data-testid'
 
 interface IContentCodeProps {
   codeCondition: string

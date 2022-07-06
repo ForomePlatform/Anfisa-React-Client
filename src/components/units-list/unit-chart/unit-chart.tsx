@@ -1,8 +1,8 @@
 import { ReactElement, ReactNode } from 'react'
 import cn from 'classnames'
 
+import { DecisionTreesResultsDataCy } from '@data-testid'
 import { TPropertyStatus } from '@service-providers/common'
-import { DecisionTreesResultsDataCy } from '../../data-testid/decision-tree-results.cy'
 import { BarChart } from './bar-chart'
 import { HistogramChart } from './histogram-chart'
 import { PieChart } from './pie-chart'

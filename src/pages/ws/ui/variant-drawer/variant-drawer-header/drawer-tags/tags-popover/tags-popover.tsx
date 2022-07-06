@@ -12,7 +12,7 @@ import {
 import { t } from '@i18n'
 import { Button } from '@ui/button'
 import { Checkbox } from '@ui/checkbox/checkbox'
-import { VariantDrawerDataCy } from '@components/data-testid/variant-drawer.cy'
+import { VariantDrawerDataCy } from '@data-testid'
 import { DrawerPopover, IDrawerPopoverProps } from '../../drawer-popover'
 import { CustomTagForm } from './custom-tag-form'
 import { TTagsOverrides } from './tags-popover.interface'

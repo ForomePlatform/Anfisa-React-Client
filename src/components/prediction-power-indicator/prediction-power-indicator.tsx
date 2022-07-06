@@ -1,7 +1,7 @@
 import { ReactElement, useState } from 'react'
 
 import { Tooltip } from '@ui/tooltip'
-import { DecisionTreesResultsDataCy } from '../data-testid/decision-tree-results.cy'
+import { DecisionTreesResultsDataCy } from '@data-testid'
 import {
   getColorByValue,
   PredictionPowerPoint,

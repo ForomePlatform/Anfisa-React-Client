@@ -6,8 +6,8 @@ import cn from 'classnames'
 import { TUnitGroup } from '@store/stat-units'
 import { DropdownArrow } from '@ui/dropdown-arrow'
 import { PredictionPowerIndicator } from '@components/prediction-power-indicator'
+import { DecisionTreesResultsDataCy } from '@data-testid'
 import { TPropertyStatus } from '@service-providers/common'
-import { DecisionTreesResultsDataCy } from '../../data-testid/decision-tree-results.cy'
 import { UnitsListUnit } from '../units-list-unit'
 
 interface IUnitsListGroupProps {

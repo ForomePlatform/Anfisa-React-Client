@@ -2,7 +2,7 @@ import { FC, memo } from 'react'
 import cn, { Argument } from 'classnames'
 
 import { Tooltip } from '@ui/tooltip'
-import { DecisionTreesResultsDataCy } from '../../../data-testid/decision-tree-results.cy'
+import { DecisionTreesResultsDataCy } from '@data-testid'
 
 export interface IUnitsListUnitNameProps {
   className: Argument

@@ -7,7 +7,7 @@ import { usePopover } from '@core/hooks/use-popover'
 import { t } from '@i18n'
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
-import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-modal.cy'
+import { DecisionTreeModalDataCy } from '@data-testid'
 import modalsVisibilityStore from '../../modals-visibility-store'
 import { StepJoinPopover } from '../step-join-popover'
 

@@ -6,7 +6,7 @@ import cn from 'classnames'
 import { t } from '@i18n'
 import { Icon } from '@ui/icon'
 import { Loader } from '@ui/loader'
-import { DecisionTreesMenuDataCy } from '../../data-testid/decision-tree-menu.cy'
+import { DecisionTreesMenuDataCy } from '@data-testid'
 
 interface ISolutionControlButtonProps
   extends ButtonHTMLAttributes<HTMLButtonElement> {

@@ -5,7 +5,7 @@ import { t } from '@i18n'
 import { Checkbox } from '@ui/checkbox/checkbox'
 import { InputNumeric } from '@ui/input-numeric/input-numeric'
 import { RangeSliderSide } from '@ui/range-slider'
-import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-modal.cy'
+import { DecisionTreeModalDataCy } from '@data-testid'
 import { NumericPropertyStatusSubKinds } from '@service-providers/common/common.interface'
 import { INumericConditionProps } from './numeric-condition.interface'
 import {

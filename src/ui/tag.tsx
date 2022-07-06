@@ -3,7 +3,7 @@ import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { Icon } from '@ui/icon'
-import { VariantDrawerDataCy } from '@components/data-testid/variant-drawer.cy'
+import { VariantDrawerDataCy } from '@data-testid'
 
 interface Props {
   text: string
