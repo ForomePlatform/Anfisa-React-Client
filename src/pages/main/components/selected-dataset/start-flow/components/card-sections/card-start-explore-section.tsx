@@ -11,20 +11,18 @@ interface ICardStartExploreSectionProps {
 }
 
 export const CardStartExploreSection = observer(
-  ({ onContinue }: ICardStartExploreSectionProps): ReactElement => {
-    return (
-      <div className="w-1/2 pr-12">
-        <CardRadioListSection
-          title={t('home.startFlow.startWith')}
-          optionsList={startWithOptionsList}
-          isContinueDisabled={false}
-          isEditDisabled={false}
-          isRadioDisabled={!selectedDatasetStore.secondaryDatasets}
-          checkedValue={selectedDatasetStore.exploreType}
-          onChange={value => selectedDatasetStore.setExploreType(value)}
-          onContinue={onContinue}
-        />
-      </div>
-    )
-  },
+  ({ onContinue }: ICardStartExploreSectionProps): ReactElement => (
+    <div className="w-1/2 pr-12">
+      <CardRadioListSection
+        title={t('home.startFlow.startWith')}
+        optionsList={startWithOptionsList}
+        isContinueDisabled={false}
+        isEditDisabled={false}
+        isRadioDisabled={!selectedDatasetStore.secondaryDatasets}
+        checkedValue={selectedDatasetStore.exploreType}
+        onChange={value => selectedDatasetStore.setExploreType(value)}
+        onContinue={onContinue}
+      />
+    </div>
+  ),
 )

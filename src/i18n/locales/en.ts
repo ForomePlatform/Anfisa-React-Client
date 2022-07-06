@@ -120,7 +120,8 @@ export const en = {
       main: 'MAIN',
       startFlow: 'Start flow',
       startWith: 'Start with',
-      prevWorkSection: ' In this section your previous work will be displayed.',
+      prevWorkSection: 'In this section your previous work will be displayed',
+      prevWorkWith: 'You previously worked with',
     },
     buildFlow: {
       candidateSet: 'Existing candidate sets',
