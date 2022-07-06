@@ -1,0 +1,74 @@
+.condition-card {
+  &_active {
+    background: theme("colors.blue.tertiary");
+  }
+
+  &::after {
+    content: "";
+    display: block;
+    height: 0;
+    margin: 0 theme("spacing.4");
+    border-bottom: 1px solid theme("colors.grey.light");
+  }
+
+  &:last-of-type &::after {
+    display: none;
+  }
+
+  &__title {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  &:first-of-type &__title {
+    border-top: 0;
+  }
+
+  &__filter-name {
+    @apply typography-m;
+
+    flex: 1 0 100%;
+    display: flex;
+    align-items: center;
+    font-weight: theme("fontWeight.bold");
+    padding: theme("spacing.4") theme("spacing.10");
+    cursor: pointer;
+  }
+
+  &__join-mode {
+    margin-left: theme("spacing.1");
+  }
+
+  &__toggle-button {
+    position: absolute;
+    padding: theme("spacing.2");
+    left: theme("spacing.2");
+    color: theme("colors.grey.blue");
+    cursor: pointer;
+
+    &:hover {
+      color: theme("colors.blue.bright");
+    }
+
+    svg {
+      transition: transform 0.15s ease-in-out;
+      transform: rotate(-90deg);
+    }
+
+    &_open svg {
+      transform: rotate(90deg);
+    }
+  }
+
+  &__options {
+    position: absolute;
+    right: theme("spacing.2");
+  }
+
+  &__content {
+    border-top: 1px solid theme("colors.grey.light");
+    margin: 0 theme("spacing.4");
+    padding: theme("spacing.4") 0 theme("spacing.4") theme("spacing.6");
+  }
+}

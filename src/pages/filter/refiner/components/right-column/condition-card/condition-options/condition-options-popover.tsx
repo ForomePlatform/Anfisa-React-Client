@@ -9,7 +9,7 @@ import { PopperMenu } from '@components/popper-menu/popper-menu'
 import { PopperMenuItem } from '@components/popper-menu/popper-menu-item'
 import { popoverOffset } from '@pages/ws/ws.constants'
 
-interface IRefinerConditionPopoverProps extends IPopoverBaseProps {
+interface IConditionPopoverProps extends IPopoverBaseProps {
   onDeleteFilterBlock: (e: React.MouseEvent) => void
   onCopyFilterName: (e: React.MouseEvent) => void
 }
@@ -20,7 +20,7 @@ export const RefinerConditionPopover = ({
   onClose,
   onDeleteFilterBlock,
   onCopyFilterName,
-}: IRefinerConditionPopoverProps): ReactElement => {
+}: IConditionPopoverProps): ReactElement => {
   return (
     <Popover
       onClose={onClose}

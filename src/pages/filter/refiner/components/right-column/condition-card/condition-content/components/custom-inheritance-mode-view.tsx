@@ -2,17 +2,18 @@ import { ReactElement } from 'react'
 import cn from 'classnames'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
-import { getScenarioValue } from '@pages/filter/refiner/components/right-column/func-filter/utils/get-scenario-value'
 import { ICustomInheritanceModeArgs } from '@service-providers/common/common.interface'
 import { getDefaultProblemGroups } from '../utils/get-default-problem-groups'
+import { getScenarioValue } from '../utils/get-scenario-value'
+
 interface ICustomInheritanceModeViewProps {
-  isFilterActive: boolean
+  className?: string
   filterContent: string[]
   filterExpression: ICustomInheritanceModeArgs
 }
 
 export const CustomInheritanceModeView = ({
-  isFilterActive,
+  className,
   filterExpression,
 }: ICustomInheritanceModeViewProps): ReactElement => {
   const problemGroups = getDefaultProblemGroups(
@@ -20,17 +21,13 @@ export const CustomInheritanceModeView = ({
   )
 
   return (
-    <div
-      className={cn('text-14 pb-4 pl-5', {
-        'bg-blue-tertiary': isFilterActive,
-      })}
-    >
-      <div className="mt-4">
-        <div className="px-4 text-grey-blue">Scenario</div>
+    <div className={className}>
+      <div>
+        <div className="text-grey-blue">Scenario</div>
 
         {problemGroups.map((group, idx) => (
           <div
-            className={cn('flex items-center pl-4 py-1', {
+            className={cn('flex items-center py-1', {
               'pt-2': idx === 0,
             })}
             key={group}

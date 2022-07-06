@@ -1,0 +1,11 @@
+.condition-content {
+  @apply typography-s;
+
+  &__element {
+    padding-top: theme("spacing.2");
+
+    &:first-of-type {
+      padding-top: 0;
+    }
+  }
+}

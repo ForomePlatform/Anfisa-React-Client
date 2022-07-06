@@ -232,6 +232,28 @@ export class FilterStore {
     return index
   }
 
+  public moveCondition = (fromIndex: number, toIndex: number): void => {
+    if (fromIndex !== toIndex) {
+      const insertionIndex = toIndex > fromIndex ? toIndex - 1 : toIndex
+      this._conditions.splice(
+        insertionIndex,
+        0,
+        ...this._conditions.splice(fromIndex, 1),
+      )
+
+      const selectedIndex = this._selectedConditionIndex
+      if (selectedIndex > -1) {
+        if (selectedIndex === fromIndex) {
+          this.selectCondition(insertionIndex)
+        } else if (selectedIndex > fromIndex && selectedIndex < toIndex) {
+          this.selectCondition(selectedIndex - 1)
+        } else if (selectedIndex < fromIndex && selectedIndex >= toIndex) {
+          this.selectCondition(selectedIndex + 1)
+        }
+      }
+    }
+  }
+
   public saveCurrentCondition(condition: TCondition): void {
     const savedIndex = this.isRedactorMode
       ? this.replaceCondition(this._selectedConditionIndex, condition)
