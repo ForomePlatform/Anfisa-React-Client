@@ -1,10 +1,14 @@
 # Change log 
 
+## <small>0.6.99 (7/6/2022)</small>
+
+
 ## <small>0.6.98 (7/6/2022)</small>
 
 
 ## <small>0.6.97 (7/6/2022)</small>
 
+* feat([FOROME-1300](https://quantori.atlassian.net/browse/FOROME-1300)): rename methods ([4c066748](https://github.com/ForomePlatform/Anfisa-React-Client/commit/4c066748))
 
 ## <small>0.6.96 (7/6/2022)</small>
 
@@ -65,6 +69,7 @@
 ## <small>0.6.79 (7/1/2022)</small>
 
 * feat([FOROME-1301](https://quantori.atlassian.net/browse/FOROME-1301)): show drawer by default, show Gallery layout by default ([9b5aba1a](https://github.com/ForomePlatform/Anfisa-React-Client/commit/9b5aba1a))
+* feat([FOROME-1300](https://quantori.atlassian.net/browse/FOROME-1300)): make datasets unfolded in the beggining ([3b279622](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3b279622))
 
 ## <small>0.6.78 (6/30/2022)</small>
 
