@@ -160,17 +160,16 @@ export const NumericConditionRange = ({
         </Checkbox>
         {isZeroSkipped && (
           <div>
-            <label className="inline-flex items-center text-sm">
-              <input
-                type="checkbox"
-                checked={isZeroIncluded}
-                className="mr-1"
-                onChange={handleZeroIncludedChange}
-              />
+            <Checkbox
+              id="numeric-include"
+              checked={isZeroIncluded}
+              onChange={handleZeroIncludedChange}
+              className="text-sm"
+            >
               {t('numericCondition.includeZero', {
                 count: Math.round(histogram?.[3][0] ?? 0),
               })}
-            </label>
+            </Checkbox>
           </div>
         )}
         {min != null && max != null && min < max && (

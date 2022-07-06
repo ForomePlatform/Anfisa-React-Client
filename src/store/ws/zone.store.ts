@@ -42,6 +42,22 @@ class ZoneStore {
     )
   }
 
+  public get fetchingGenes(): boolean {
+    return this.geneVariants.isFetching
+  }
+
+  public get fetchingGenesList(): boolean {
+    return this.genesListVariants.isFetching
+  }
+
+  public get fetchingTags(): boolean {
+    return this.tagsSelect.isFetching
+  }
+
+  public get fetchingSamples(): boolean {
+    return this.sampleVariants.isFetching
+  }
+
   public get genes(): string[] {
     return this.geneVariants.variants
   }

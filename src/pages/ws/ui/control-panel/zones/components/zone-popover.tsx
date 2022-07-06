@@ -1,6 +1,7 @@
 import { ChangeEvent, ReactElement } from 'react'
 
 import { t } from '@i18n'
+import { Loader } from '@ui/loader'
 import { Popover } from '@ui/popover'
 import { IPopoverBaseProps } from '@ui/popover/popover.interface'
 import { InputSearch } from '@components/input-search'
@@ -15,6 +16,7 @@ interface IZonePopoverProps extends IPopoverBaseProps {
   selectedZoneItems: string[]
   searchValue: string
   isTags?: boolean
+  isFetching: boolean
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
   onAdd: (value: string) => void
   onRemove: (value: string, type: string) => void
@@ -29,6 +31,7 @@ export const ZonePopover = ({
   searchValue,
   anchorEl,
   isOpen,
+  isFetching,
   isTags,
   onChange,
   onAdd,
@@ -66,14 +69,18 @@ export const ZonePopover = ({
 
       <div className="h-px w-full bg-blue-light mt-4" />
 
-      <ZoneList
-        zoneItems={zoneList.filter(item =>
-          item.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
-        )}
-        selectedItems={selectedZoneItems}
-        onAdd={onAdd}
-        onRemove={onRemove}
-      />
+      {isFetching ? (
+        <Loader size="s" className="py-[40px]" />
+      ) : (
+        <ZoneList
+          zoneItems={zoneList.filter(item =>
+            item.toLocaleLowerCase().includes(searchValue.toLocaleLowerCase()),
+          )}
+          selectedItems={selectedZoneItems}
+          onAdd={onAdd}
+          onRemove={onRemove}
+        />
+      )}
     </PopupCard>
   </Popover>
 )

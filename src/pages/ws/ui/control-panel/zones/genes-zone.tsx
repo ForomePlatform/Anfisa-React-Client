@@ -52,6 +52,7 @@ export const GenesZone = observer(() => {
       />
 
       <ZonePopover
+        isFetching={zoneStore.fetchingGenes}
         zoneList={zoneStore.genes}
         title={t('ds.gene')}
         selectedZoneItems={zoneStore.localGenes}
