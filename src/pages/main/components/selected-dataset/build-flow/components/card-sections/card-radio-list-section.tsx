@@ -5,9 +5,9 @@ import { Button } from '@ui/button'
 import { Card, CardTitle } from '@ui/card'
 import { Icon } from '@ui/icon'
 import { Radio } from '@ui/radio'
-import selectedDatasetStore from '../../selected-dataset.store'
+import selectedDatasetStore from '../../../selected-dataset.store'
 
-interface ICardRadioSectionProps {
+interface ICardRadioListSectionProps {
   title: string
   optionsList: string[]
   checkedValue: string
@@ -20,7 +20,7 @@ interface ICardRadioSectionProps {
   onContinue: () => void
 }
 
-export const CardRadioSection = ({
+export const CardRadioListSection = ({
   title,
   optionsList,
   isContinueDisabled,
@@ -31,7 +31,7 @@ export const CardRadioSection = ({
   onEdit,
   onChange,
   onContinue,
-}: ICardRadioSectionProps): ReactElement => (
+}: ICardRadioListSectionProps): ReactElement => (
   <>
     <div className="flex items-center justify-between">
       <CardTitle text={title} className="text-16" />
@@ -89,7 +89,7 @@ export const CardRadioSection = ({
           text="Continue"
           onClick={onContinue}
           disabled={
-            isContinueDisabled && !!selectedDatasetStore.isStartFlowVisible
+            isContinueDisabled && !!selectedDatasetStore.isBuildFlowVisible
           }
         />
       </div>

@@ -2,20 +2,20 @@ import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { ExploreTypes } from '@core/enum/explore-types-enum'
-import selectedDatasetStore from './selected-dataset.store'
-import { StartFlowHeader } from './start-flow-header'
-import { StartFlowLeftColumn } from './start-flow-left-column'
-import { StartFlowRightColumn } from './start-flow-right-column'
+import selectedDatasetStore from '../selected-dataset.store'
+import { BuildFlowHeader } from './components/build-flow-header'
+import { BuildFlowLeftColumn } from './components/build-flow-left-column'
+import { BuildFlowRightColumn } from './components/build-flow-right-column'
 
-export const SelectedDatasetStartFlow = observer(
+export const SelectedDatasetBuildFlow = observer(
   ({ goBack }: { goBack: () => void }): ReactElement => {
     const handleGoBack = () => {
       goBack()
       selectedDatasetStore.toggleIsEditionExploreType(false)
     }
 
-    const handleContinueStartFlow = () => {
-      selectedDatasetStore.toggleIsStartFlowVisible(true)
+    const handleContinueBuildFlow = () => {
+      selectedDatasetStore.toggleIsBuildFlowVisible(true)
       selectedDatasetStore.toggleIsEditionExploreType(false)
     }
 
@@ -24,16 +24,16 @@ export const SelectedDatasetStartFlow = observer(
     return (
       <div className="flex flex-col flex-grow justify-start overflow-y-auto">
         <div className="flex flex-col py-4 px-4">
-          <StartFlowHeader goBack={handleGoBack} />
+          <BuildFlowHeader goBack={handleGoBack} />
 
           <div className="flex">
-            <StartFlowLeftColumn
+            <BuildFlowLeftColumn
               isGenome={isGenome}
               isEditionExploreType={selectedDatasetStore.isEditionExploreType}
-              onContinue={handleContinueStartFlow}
+              onContinue={handleContinueBuildFlow}
             />
 
-            <StartFlowRightColumn
+            <BuildFlowRightColumn
               isEditionExploreGenome={
                 selectedDatasetStore.isEditionExploreGenome
               }

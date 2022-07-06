@@ -4,12 +4,12 @@ import { observer } from 'mobx-react-lite'
 import dirinfoStore from '@store/dirinfo'
 import { Card, CardTitle } from '@ui/card'
 import { DatasetCard } from '@components/data-testid/dataset-card.cy'
+import { CardExploreType } from './components/card-sections/card-explore-type'
 import { DatasetsFieldsList } from './components/dataset-fields-list/dataset-fileds-list'
 import { DatasetGeneral } from './components/dataset-general/dataset-general'
-import { ChooseExploreSelection } from './components/start-section/choose-explore-selection'
-import { DeleteDatasetButton } from './delete-dataset-button'
+import { DeleteDatasetButton } from './components/delete-dataset-button'
 
-export const SelectedDatasetMain = observer((): ReactElement => {
+export const SelectedDatasetStartFlow = observer((): ReactElement => {
   return (
     <div className="flex flex-col flex-grow justify-center">
       <div className="flex flex-col items-start flex-wrap mt-4 px-4">
@@ -20,7 +20,7 @@ export const SelectedDatasetMain = observer((): ReactElement => {
           style={{ maxWidth: 'calc(100% - 140px)' }}
         />
 
-        <ChooseExploreSelection />
+        <CardExploreType />
       </div>
 
       <div className="flex-grow grid gap-4 grid-cols-3 p-4 overflow-y-auto">

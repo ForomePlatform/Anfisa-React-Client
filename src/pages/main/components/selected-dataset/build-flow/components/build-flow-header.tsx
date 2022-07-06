@@ -9,9 +9,9 @@ import { Routes } from '@router/routes.enum'
 import { CardTitle } from '@ui/card'
 import { Icon } from '@ui/icon'
 import { DatasetCard } from '@components/data-testid/dataset-card.cy'
-import selectedDatasetStore from './selected-dataset.store'
+import selectedDatasetStore from '../../selected-dataset.store'
 
-export const StartFlowHeader = observer(
+export const BuildFlowHeader = observer(
   ({ goBack }: { goBack: () => void }): ReactElement => {
     const history = useHistory()
 
@@ -19,6 +19,9 @@ export const StartFlowHeader = observer(
       goBack()
       history.push(Routes.Root)
     }
+
+    const isGenomeExplore =
+      selectedDatasetStore.exploreType === ExploreTypes.Genome
 
     return (
       <div className="flex flex-col w-full">
@@ -51,15 +54,23 @@ export const StartFlowHeader = observer(
             Start flow
           </div>
 
-          {!selectedDatasetStore.isEditionExploreType && (
-            <div className="flex text-grey-dark">
-              <div className="mx-1">/</div>
+          <div className="flex text-grey-dark">
+            {!selectedDatasetStore.isEditionExploreType && isGenomeExplore && (
+              <>
+                <div className="mx-1">/</div>
 
-              {selectedDatasetStore.exploreType === ExploreTypes.Genome
-                ? datasetStore.datasetName
-                : selectedDatasetStore.selectedSecondaryDataset}
-            </div>
-          )}
+                <div>{datasetStore.datasetName}</div>
+              </>
+            )}
+
+            {selectedDatasetStore.selectedSecondaryDataset && !isGenomeExplore && (
+              <>
+                <div className="mx-1">/</div>
+
+                <div>{selectedDatasetStore.selectedSecondaryDataset}</div>
+              </>
+            )}
+          </div>
         </div>
       </div>
     )

@@ -6,7 +6,7 @@ import { ExploreTypes } from '@core/enum/explore-types-enum'
 import { datasetStore } from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
 class SelectedDatasetStore {
-  public isStartFlowVisible = false
+  public isBuildFlowVisible = false
   public isEditionExploreType = false
   public isEditionExploreGenome = false
   public isEditionExploreCandidate = false
@@ -27,8 +27,8 @@ class SelectedDatasetStore {
     return dirinfoStore.dirinfo.data?.dsDict[datasetStore.datasetName].secondary
   }
 
-  public toggleIsStartFlowVisible(value: boolean) {
-    this.isStartFlowVisible = value
+  public toggleIsBuildFlowVisible(value: boolean) {
+    this.isBuildFlowVisible = value
   }
 
   public setExploreType(value: string) {

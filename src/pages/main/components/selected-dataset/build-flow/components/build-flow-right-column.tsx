@@ -3,29 +3,29 @@ import { observer } from 'mobx-react-lite'
 
 import { ExploreCandidateTypes } from '@core/enum/explore-candidate-types-enum'
 import { Card } from '@ui/card'
-import { CardListSection } from './components/start-section/card-list-section'
-import { CardRadioSection } from './components/start-section/card-radio-section'
 import {
   datasetDescription,
   exploreCandidateOptionsList,
   relevantPresetsList,
-} from './selected-dataset.constants'
-import selectedDatasetStore from './selected-dataset.store'
+} from '../../selected-dataset.constants'
+import selectedDatasetStore from '../../selected-dataset.store'
+import { CardListSection } from './card-sections/card-list-section'
+import { CardRadioListSection } from './card-sections/card-radio-list-section'
 
-interface IStartFlowRightColumnProps {
+interface IBuildFlowRightColumnProps {
   isEditionExploreGenome: boolean
   isEditionExploreCandidate: boolean
   exploreCandidateType: ExploreCandidateTypes
   secondaryDataset: string
 }
 
-export const StartFlowRightColumn = observer(
+export const BuildFlowRightColumn = observer(
   ({
     isEditionExploreGenome,
     isEditionExploreCandidate,
     exploreCandidateType,
     secondaryDataset,
-  }: IStartFlowRightColumnProps): ReactElement => {
+  }: IBuildFlowRightColumnProps): ReactElement => {
     const shouldShowAdditionalPresetChoice =
       exploreCandidateType === ExploreCandidateTypes.ApplyFilter &&
       isEditionExploreCandidate
@@ -34,7 +34,7 @@ export const StartFlowRightColumn = observer(
       <div className="flex flex-col w-1/2 pl-2">
         {secondaryDataset && (
           <Card>
-            <CardRadioSection
+            <CardRadioListSection
               title={'Candidate set name'}
               optionsList={exploreCandidateOptionsList}
               description={datasetDescription}

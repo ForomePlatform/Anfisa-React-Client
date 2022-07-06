@@ -7,7 +7,7 @@ import { Icon } from '@ui/icon'
 
 interface ICardListSectionProps {
   title: string
-  optionsList: string[]
+  optionsList: string[] | undefined
   selectedItem: string
   style?: React.CSSProperties
   onSelect: (value: string) => void
@@ -26,7 +26,7 @@ export const CardListSection = ({
     <CardTitle text={title} className="text-16 px-4" />
 
     <div className="mb-4 text-14 overflow-y-auto" style={style}>
-      {optionsList.map(option => {
+      {optionsList?.map(option => {
         const isSelected = option === selectedItem
         return (
           <div key={option} onClick={() => onSelect(option)}>

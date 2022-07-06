@@ -48,8 +48,8 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
     const handleClick = () => {
       if (isNullKind && !hasChildren) return
 
-      if (selectedDatasetStore.isStartFlowVisible) {
-        selectedDatasetStore.toggleIsStartFlowVisible(false)
+      if (selectedDatasetStore.isBuildFlowVisible) {
+        selectedDatasetStore.toggleIsBuildFlowVisible(false)
       }
 
       if (selectedDatasetStore.exploreType === ExploreTypes.Candidate) {

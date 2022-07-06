@@ -3,9 +3,9 @@ import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
 import dirinfoStore from '@store/dirinfo'
+import { SelectedDatasetBuildFlow } from './build-flow'
 import selectedDatasetStore from './selected-dataset.store'
-import { SelectedDatasetMain } from './selected-dataset-main'
-import { SelectedDatasetStartFlow } from './selected-dataset-start-flow'
+import { SelectedDatasetStartFlow } from './start-flow'
 
 export const SelectedDataset = observer((): ReactElement => {
   if (!dirinfoStore.selectedDirinfoName) {
@@ -16,12 +16,12 @@ export const SelectedDataset = observer((): ReactElement => {
 
   return (
     <>
-      {selectedDatasetStore.isStartFlowVisible ? (
-        <SelectedDatasetStartFlow
-          goBack={() => selectedDatasetStore.toggleIsStartFlowVisible(false)}
+      {selectedDatasetStore.isBuildFlowVisible ? (
+        <SelectedDatasetBuildFlow
+          goBack={() => selectedDatasetStore.toggleIsBuildFlowVisible(false)}
         />
       ) : (
-        <SelectedDatasetMain />
+        <SelectedDatasetStartFlow />
       )}
     </>
   )
