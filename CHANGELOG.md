@@ -1,5 +1,8 @@
 # Change log 
 
+## <small>0.6.97 (7/6/2022)</small>
+
+
 ## <small>0.6.96 (7/6/2022)</small>
 
 * feat([FOROME-1295](https://quantori.atlassian.net/browse/FOROME-1295)): fix merge conflicts ([3b375e81](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3b375e81))
@@ -20,6 +23,7 @@
 
 ## <small>0.6.91 (7/4/2022)</small>
 
+* feat([FOROME-1297](https://quantori.atlassian.net/browse/FOROME-1297)): remove hours from dataset creation time ([3207e18e](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3207e18e))
 * fix([FOROME-1312](https://quantori.atlassian.net/browse/FOROME-1312)): don't show prompt on change dtree to refiner ([c5f78c46](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c5f78c46))
 
 ## <small>0.6.90 (7/1/2022)</small>
