@@ -1,3 +1,5 @@
+import styles from '../build-flow.module.css'
+
 import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
@@ -33,7 +35,7 @@ export const BuildFlowLeftColumn = observer(
 
     const { secondaryDatasets } = selectedDatasetStore
     return (
-      <div className="flex flex-col w-1/2 pr-2">
+      <div className={styles.buildFlow__column}>
         <Card>
           <CardRadioListSection
             title={t('home.startFlow.startWith')}

@@ -1,3 +1,5 @@
+import styles from '../build-flow.module.css'
+
 import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
@@ -32,7 +34,7 @@ export const BuildFlowRightColumn = observer(
       isEditionExploreCandidate
 
     return (
-      <div className="flex flex-col w-1/2 pl-2">
+      <div className={styles.buildFlow__column}>
         {secondaryDataset && (
           <Card>
             <CardRadioListSection

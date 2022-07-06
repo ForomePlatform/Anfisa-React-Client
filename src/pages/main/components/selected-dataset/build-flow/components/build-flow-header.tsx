@@ -1,3 +1,5 @@
+import styles from '../build-flow.module.css'
+
 import { ReactElement } from 'react'
 import { useHistory } from 'react-router'
 import { observer } from 'mobx-react-lite'
@@ -25,14 +27,13 @@ export const BuildFlowHeader = observer(
       selectedDatasetStore.exploreType === ExploreTypes.Genome
 
     return (
-      <div className="flex flex-col w-full">
-        {/* TODO: find a way to replace div => Button */}
+      <div className={styles.buildFlow__header}>
         <div className="flex">
-          <div
-            onClick={goBack}
-            className="flex items-center justify-center w-6 h-6 mr-4 cursor-pointer border border-blue-bright rounded-md"
-          >
-            <Icon name="Arrow" className="text-blue-bright" />
+          <div onClick={goBack} className={styles.buildFlow__header__button}>
+            <Icon
+              name="Arrow"
+              className={styles.buildFlow__header__button__icon}
+            />
           </div>
 
           <CardTitle
@@ -43,22 +44,27 @@ export const BuildFlowHeader = observer(
           />
         </div>
 
-        <div className="flex mt-3 mb-4 text-14">
+        <div className={styles.buildFlow__breadcrumbs}>
           <div
             onClick={handleGoHome}
-            className="text-blue-bright cursor-pointer"
+            className={styles.buildFlow__breadcrumbs__folder}
           >
             {t('home.startFlow.main')}
           </div>
+
           <div className="text-blue-bright mx-1">/</div>
-          <div onClick={goBack} className="text-blue-bright cursor-pointer">
+
+          <div
+            onClick={goBack}
+            className={styles.buildFlow__breadcrumbs__folder}
+          >
             {t('home.startFlow.startFlow')}
           </div>
 
           <div className="flex text-grey-dark">
             {!selectedDatasetStore.isEditionExploreType && isGenomeExplore && (
               <>
-                <div className="mx-1">/</div>
+                <div className="text-blue-bright mx-1">/</div>
 
                 <div>{datasetStore.datasetName}</div>
               </>

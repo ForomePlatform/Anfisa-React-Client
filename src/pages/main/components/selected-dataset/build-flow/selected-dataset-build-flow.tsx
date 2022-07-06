@@ -1,3 +1,5 @@
+import styles from './build-flow.module.css'
+
 import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
@@ -22,8 +24,8 @@ export const SelectedDatasetBuildFlow = observer(
     const isGenome = selectedDatasetStore.exploreType === ExploreTypes.Genome
 
     return (
-      <div className="flex flex-col flex-grow justify-start overflow-y-auto">
-        <div className="flex flex-col py-4 px-4">
+      <div className={styles.buildFlow}>
+        <div className={styles.buildFlow__container}>
           <BuildFlowHeader goBack={handleGoBack} />
 
           <div className="flex">
