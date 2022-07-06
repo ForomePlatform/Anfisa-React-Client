@@ -42,9 +42,11 @@ export const CompoundRequestScenario = ({
           <InputNumeric
             value={requestItem[0]}
             min={1}
-            onChange={value =>
-              onChangeRequestConditionNumber(requestIndex, value)
-            }
+            onChange={value => {
+              if (value !== null) {
+                onChangeRequestConditionNumber(requestIndex, value)
+              }
+            }}
             className="cursor-pointer h-7 w-[80px]"
           />
         </div>

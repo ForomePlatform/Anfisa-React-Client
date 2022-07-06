@@ -1,17 +1,13 @@
-export const getNumeric = (
-  value: number | string,
-  minimal: number,
+export const checkMaxMin = (
+  value: number,
   maximal: number,
+  minimal: number,
 ): number => {
-  const num = typeof value === 'string' ? +value.replace(/\s/g, '') : value
-  if (isNaN(num)) {
+  if (value <= minimal) {
     return minimal
   }
-  if (num <= minimal) {
-    return minimal
-  }
-  if (num >= maximal) {
+  if (value >= maximal) {
     return maximal
   }
-  return num
+  return value
 }
