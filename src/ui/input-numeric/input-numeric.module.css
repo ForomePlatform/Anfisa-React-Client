@@ -18,6 +18,10 @@
     margin-bottom: 16px;
   }
 
+  &_focused {
+    border-color: theme("colors.blue.bright")
+  }
+
   &_disabled &__button {
     color: theme("colors.grey.disabled");
     border-color: theme("colors.grey.disabled");

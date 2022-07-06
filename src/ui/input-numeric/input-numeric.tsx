@@ -1,7 +1,7 @@
 import styles from './input-numeric.module.css'
 
 import { KeyboardEvent, ReactElement, useEffect, useState } from 'react'
-import NumberFormat from 'react-number-format'
+import NumberFormat, { NumberFormatValues } from 'react-number-format'
 import cn, { Argument } from 'classnames'
 
 import { checkMaxMin } from './input-numeric.utils'
@@ -35,6 +35,7 @@ export const InputNumeric = ({
   ...rest
 }: IInputNumericProps): ReactElement => {
   const [inputValue, setInputValue] = useState<number | null>(+value)
+  const [isFocused, setIsFocused] = useState<boolean>(false)
   const minimal = min || 0
   const maximal = max || Infinity
   const valueStep = step || 1
@@ -46,9 +47,8 @@ export const InputNumeric = ({
   }, [value])
 
   function checkValue(value: number): number {
-    const isFloatNumber = Boolean(isFloat)
     const limitedNum = checkMaxMin(value, maximal, minimal)
-    return isFloatNumber ? +limitedNum.toFixed(2) : +limitedNum.toFixed(0)
+    return isFloat ? +limitedNum.toFixed(2) : +limitedNum.toFixed(0)
   }
 
   function changeValue(newValue: number | null) {
@@ -91,6 +91,7 @@ export const InputNumeric = ({
         styles.inputNumeric,
         className,
         disabled && styles.inputNumeric_disabled,
+        isFocused && styles.inputNumeric_focused,
         hasErrors && styles.inputNumeric_hasErrors,
       )}
     >
@@ -101,13 +102,17 @@ export const InputNumeric = ({
           value={displayValue}
           disabled={disabled}
           thousandSeparator={' '}
-          onValueChange={(v: any) => {
-            if (v.floatValue !== inputValue) {
-              enteredNumber = v.floatValue ?? null
+          onValueChange={(value: NumberFormatValues) => {
+            if (value.floatValue !== inputValue) {
+              enteredNumber = value.floatValue ?? null
             }
+          }}
+          onFocus={() => {
+            setIsFocused(true)
           }}
           onBlur={() => {
             changeValue(enteredNumber)
+            setIsFocused(false)
           }}
           onKeyDown={onKeyDown}
           {...rest}
