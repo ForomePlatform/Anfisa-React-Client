@@ -1,5 +1,9 @@
 # Change log 
 
+## <small>0.6.96 (7/6/2022)</small>
+
+* feat([FOROME-1295](https://quantori.atlassian.net/browse/FOROME-1295)): fix merge conflicts ([3b375e81](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3b375e81))
+
 ## <small>0.6.95 (7/6/2022)</small>
 
 * fix([FOROME-1269](https://quantori.atlassian.net/browse/FOROME-1269)): input-numeric with react-number-format (#777) ([bd053091](https://github.com/ForomePlatform/Anfisa-React-Client/commit/bd053091))
@@ -57,10 +61,12 @@
 ## <small>0.6.78 (6/30/2022)</small>
 
 * fix([FOROME-1274](https://quantori.atlassian.net/browse/FOROME-1274)): saving preset on ws-page after reloading (#764) ([08d2f914](https://github.com/ForomePlatform/Anfisa-React-Client/commit/08d2f914))
+* feat([FOROME-1295](https://quantori.atlassian.net/browse/FOROME-1295)): add reload button, loader for list and new design button for manupalitng ds ([7b4291d2](https://github.com/ForomePlatform/Anfisa-React-Client/commit/7b4291d2))
 
 ## <small>0.6.77 (6/30/2022)</small>
 
 * feat([FOROME-1293](https://quantori.atlassian.net/browse/FOROME-1293)) Added changelog generator (#772) ([72fe8d06](https://github.com/ForomePlatform/Anfisa-React-Client/commit/72fe8d06))
+* feat([FOROME-1295](https://quantori.atlassian.net/browse/FOROME-1295)): add reload icon ([e882e395](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e882e395))
 
 ## <small>0.6.76 (6/30/2022)</small>
 
