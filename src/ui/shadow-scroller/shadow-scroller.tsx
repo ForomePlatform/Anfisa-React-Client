@@ -1,9 +1,10 @@
 import styles from './shadow-scroller.module.css'
 
-import { FC, useRef } from 'react'
+import { ElementType, FC, Ref, useRef } from 'react'
 import cn, { Argument } from 'classnames'
 
 import { Color } from '@core/colors'
+import { useForkRef } from '@core/hooks/use-fork-ref'
 import { ScrollDirection, useGrabScroll } from '@core/hooks/use-grab-scroll'
 import { useScrollShadows } from '@ui/shadow-scroller/shadow-scroller.hook'
 
@@ -16,10 +17,14 @@ interface IShadowScrollerProp {
   grabScroll?: boolean
   className?: Argument
   contentClassName?: string
+  component?: ElementType
+  onScroll?: () => void
+  innerRef?: Ref<HTMLElement>
 }
 
 export const ShadowScroller: FC<IShadowScrollerProp> = ({
   direction = 'both',
+  component: Component = 'div',
   shadowColor = [0, 0, 0, 0.3],
   shadowSize = 20,
   grabScroll = true,
@@ -27,12 +32,14 @@ export const ShadowScroller: FC<IShadowScrollerProp> = ({
   hideScrollbars,
   className,
   contentClassName,
+  onScroll,
+  innerRef,
   children,
 }) => {
   const scrollableRef = useRef<HTMLDivElement>(null)
   const shadowsRef = useRef<HTMLDivElement>(null)
 
-  useGrabScroll(scrollableRef, direction, grabScroll)
+  useGrabScroll(scrollableRef, onScroll, direction, grabScroll)
 
   useScrollShadows({
     scrollableRef,
@@ -43,13 +50,15 @@ export const ShadowScroller: FC<IShadowScrollerProp> = ({
     isDisabled: hideShadows,
   })
 
+  const ref = useForkRef(scrollableRef, innerRef)
+
   return (
     <div className={cn(styles.container, className)}>
       {!hideShadows && (
         <div className={cn(styles.container__shadow)} ref={shadowsRef} />
       )}
-      <div
-        ref={scrollableRef}
+      <Component
+        ref={ref}
         className={cn(
           styles.container__scroller,
           styles[`container__scroller_${direction}`],
@@ -65,7 +74,7 @@ export const ShadowScroller: FC<IShadowScrollerProp> = ({
         >
           {children}
         </div>
-      </div>
+      </Component>
     </div>
   )
 }
