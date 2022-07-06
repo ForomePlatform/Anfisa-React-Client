@@ -1,4 +1,8 @@
 # Change log 
+* feat([FOROME-1291](https://quantori.atlassian.net/browse/FOROME-1291)): implemented resizable sidebar component (#773) ([9adf1359](https://github.com/ForomePlatform/Anfisa-React-Client/commit/9adf1359))
+
+## <small>0.6.93 (7/4/2022)</small>
+
 
 ## <small>0.6.92 (7/4/2022)</small>
 
