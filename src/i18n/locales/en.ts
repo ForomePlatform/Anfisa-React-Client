@@ -116,6 +116,19 @@ export const en = {
       withDocumentation: 'with documentation',
       withSupport: 'with support',
     },
+    startFlow: {
+      main: 'MAIN',
+      startFlow: 'Start flow',
+      startWith: 'Start with',
+      prevWorkSection: ' In this section your previous work will be displayed.',
+    },
+    buildFlow: {
+      candidateSet: 'Existing candidate sets',
+      candidateName: 'Candidate set name',
+      whatsNext: "What's next?",
+      relevantPresets: 'Relevant presets',
+      additionalPresetFilter: 'Additional preset filters',
+    },
   },
   ds: {
     preset: 'Preset',

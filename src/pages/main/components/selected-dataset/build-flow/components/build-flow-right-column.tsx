@@ -2,6 +2,7 @@ import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { ExploreCandidateTypes } from '@core/enum/explore-candidate-types-enum'
+import { t } from '@i18n'
 import { Card } from '@ui/card'
 import {
   datasetDescription,
@@ -35,7 +36,7 @@ export const BuildFlowRightColumn = observer(
         {secondaryDataset && (
           <Card>
             <CardRadioListSection
-              title={'Candidate set name'}
+              title={t('home.buildFlow.candidateName')}
               optionsList={exploreCandidateOptionsList}
               description={datasetDescription}
               isContinueDisabled={
@@ -60,7 +61,7 @@ export const BuildFlowRightColumn = observer(
         {isEditionExploreGenome && (
           <Card className="px-0">
             <CardListSection
-              title={'Relevant presets'}
+              title={t('home.buildFlow.relevantPresets')}
               optionsList={relevantPresetsList}
               onSelect={value => selectedDatasetStore.setPreset(value)}
               selectedItem={selectedDatasetStore.selectedPreset}
@@ -73,7 +74,7 @@ export const BuildFlowRightColumn = observer(
         {shouldShowAdditionalPresetChoice && (
           <Card className="mt-4">
             <CardListSection
-              title={'Additional preset filters'}
+              title={t('home.buildFlow.additionalPresetFilter')}
               optionsList={relevantPresetsList}
               onSelect={value => selectedDatasetStore.setPreset(value)}
               selectedItem={selectedDatasetStore.selectedPreset}

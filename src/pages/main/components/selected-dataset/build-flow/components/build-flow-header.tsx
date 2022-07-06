@@ -3,6 +3,7 @@ import { useHistory } from 'react-router'
 import { observer } from 'mobx-react-lite'
 
 import { ExploreTypes } from '@core/enum/explore-types-enum'
+import { t } from '@i18n'
 import { datasetStore } from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
 import { Routes } from '@router/routes.enum'
@@ -47,11 +48,11 @@ export const BuildFlowHeader = observer(
             onClick={handleGoHome}
             className="text-blue-bright cursor-pointer"
           >
-            MAIN
+            {t('home.startFlow.main')}
           </div>
           <div className="text-blue-bright mx-1">/</div>
           <div onClick={goBack} className="text-blue-bright cursor-pointer">
-            Start flow
+            {t('home.startFlow.startFlow')}
           </div>
 
           <div className="flex text-grey-dark">

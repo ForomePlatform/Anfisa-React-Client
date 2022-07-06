@@ -1,6 +1,7 @@
 import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
+import { t } from '@i18n'
 import { CardRadioListSection } from '../../../build-flow/components/card-sections/card-radio-list-section'
 import { startWithOptionsList } from '../../../selected-dataset.constants'
 import selectedDatasetStore from '../../../selected-dataset.store'
@@ -14,7 +15,7 @@ export const CardStartExploreSection = observer(
     return (
       <div className="w-1/2 pr-12">
         <CardRadioListSection
-          title={'Start with'}
+          title={t('home.startFlow.startWith')}
           optionsList={startWithOptionsList}
           isContinueDisabled={false}
           isEditDisabled={false}

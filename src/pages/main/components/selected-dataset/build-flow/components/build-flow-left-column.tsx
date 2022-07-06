@@ -1,6 +1,7 @@
 import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
+import { t } from '@i18n'
 import { Card } from '@ui/card'
 import {
   startWithOptionsList,
@@ -35,7 +36,7 @@ export const BuildFlowLeftColumn = observer(
       <div className="flex flex-col w-1/2 pr-2">
         <Card>
           <CardRadioListSection
-            title={'Start with'}
+            title={t('home.startFlow.startWith')}
             optionsList={startWithOptionsList}
             isContinueDisabled={!selectedDatasetStore.isEditionExploreType}
             isEditDisabled={isEditDisabled}
@@ -50,7 +51,7 @@ export const BuildFlowLeftColumn = observer(
         {!isGenome && !isEditionExploreType && (
           <Card className="mt-4 px-0">
             <CardListSection
-              title={'Existing candidate sets'}
+              title={t('home.buildFlow.candidateSet')}
               optionsList={secondaryDatasets}
               onSelect={value =>
                 selectedDatasetStore.setSecondaryDataset(value)
@@ -64,7 +65,7 @@ export const BuildFlowLeftColumn = observer(
         {isGenome && !isEditionExploreType && (
           <Card className="mt-4">
             <CardRadioListSection
-              title={'Whats next?'}
+              title={t('home.buildFlow.whatsNext')}
               optionsList={whatsNextOptionsList}
               isContinueDisabled={!!selectedDatasetStore.isEditionExploreGenome}
               isEditDisabled={!selectedDatasetStore.isEditionExploreGenome}
