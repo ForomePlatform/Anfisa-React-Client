@@ -1,4 +1,8 @@
 # Change log 
+* fix([FOROME-1269](https://quantori.atlassian.net/browse/FOROME-1269)): input-numeric with react-number-format (#777) ([bd053091](https://github.com/ForomePlatform/Anfisa-React-Client/commit/bd053091))
+
+## <small>0.6.94 (7/6/2022)</small>
+
 * feat([FOROME-1291](https://quantori.atlassian.net/browse/FOROME-1291)): implemented resizable sidebar component (#773) ([9adf1359](https://github.com/ForomePlatform/Anfisa-React-Client/commit/9adf1359))
 
 ## <small>0.6.93 (7/4/2022)</small>
