@@ -1,3 +1,5 @@
+import styles from '../sidebar/datasets.module.css'
+
 import { Icon } from '@ui/icon'
 import { IPopoverButtonBaseProps } from '@ui/popover/popover.interface'
 
@@ -7,9 +9,9 @@ export const HandleDatasetButton = ({
   return (
     <button
       onClick={e => onShowPopover(e.currentTarget)}
-      className="hover:bg-blue-darkHover p-1 rounded-md"
+      className={styles.datasets__header__button}
     >
-      <Icon name="Options" className="text-white hover:text-grey-blue" />
+      <Icon name="Options" />
     </button>
   )
 }

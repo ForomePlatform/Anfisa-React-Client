@@ -1,11 +1,13 @@
+import styles from './datasets.module.css'
+
 import React, { ReactElement } from 'react'
+import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
-import dirinfo from '@store/dirinfo'
-import { Icon } from '@ui/icon'
 import { Sidebar } from '@ui/sidebar'
 import { FilterDatasetDataCy } from '@components/data-testid/filter-dataset.cy'
+import { ReloadButton } from '@pages/main/components/sidebar/reload-button'
 import { HandleDataset } from '../handle-dataset'
 import { DatasetsList } from './datasets-list/datasets-list'
 import { DocLinks } from './doc-links'
@@ -28,24 +30,21 @@ export const Datasets = observer((): ReactElement => {
       isCollapsed={isCollapsed}
       onToggle={setCollapsed}
     >
-      <div className="flex justify-between mb-3 px-4">
-        <div className="flex items-center">
+      <div className={cn(styles.datasets__header)}>
+        <div className={cn(styles.datasets__header__container)}>
           <div
             data-testid={FilterDatasetDataCy.leftPanelHeader}
-            className="font-bold text-white text-20 leading-6"
+            className={cn(styles.datasets__header__text)}
           >
             {t('home.datasets')}
           </div>
+
           <HandleDataset />
         </div>
-        <button
-          data-TestId={FilterDatasetDataCy.updateDatasets}
-          onClick={() => dirinfo.dirinfo.invalidate()}
-          className="hover:bg-blue-darkHover p-1 rounded-md"
-        >
-          <Icon name="Reload" className="text-white hover:text-grey-blue" />
-        </button>
+
+        <ReloadButton />
       </div>
+
       <FilterSortDatasets />
 
       <DatasetsList />
