@@ -96,6 +96,7 @@ export const NumericConditionRange = ({
                 className="h-8 w-full border border-grey-disabled shadow-input"
                 min={min}
                 max={max}
+                isFloat={isFloat}
                 value={minValue ?? ''}
                 onChange={value =>
                   updateValue(NumericValueIndex.MinValue, value)
@@ -132,6 +133,7 @@ export const NumericConditionRange = ({
                 className="h-8 w-full border border-grey-disabled shadow-input"
                 min={min}
                 max={max}
+                isFloat={isFloat}
                 value={maxValue ?? ''}
                 onChange={value =>
                   updateValue(NumericValueIndex.MaxValue, value)
