@@ -1,4 +1,4 @@
-import { CommonSelectors } from '../../src/components/data-testid/common-selectors.cy'
+import { CommonSelectors } from '@data-testid/index'
 import { datasetPage } from '../page-objects/app/datasets-page'
 import { decisionTreesPage } from '../page-objects/app/decision-trees-page'
 import { ApiEndpoints, Paths } from '../shared/constants'
@@ -58,6 +58,7 @@ describe('XL Dataset should be opened in decision tree', () => {
     const unitName = 'Most_Severe_Consequence'
 
     results.unitGroupName
+      //@ts-ignore
       .contains(/^Variant$/)
       .parent()
       .parent()

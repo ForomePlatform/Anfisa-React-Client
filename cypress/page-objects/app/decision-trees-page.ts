@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { CommonSelectors } from '../../../src/components/data-testid/common-selectors.cy'
-import { DecisionTreesMenuDataCy } from '../../../src/components/data-testid/decision-tree-menu.cy'
-import { DecisionTreeModalDataCy } from '../../../src/components/data-testid/decision-tree-modal.cy'
-import { DecisionTreesResultsDataCy } from '../../../src/components/data-testid/decision-tree-results.cy'
+import {
+  CommonSelectors,
+  DecisionTreesMenuDataCy,
+  DecisionTreeModalDataCy,
+  DecisionTreesResultsDataCy,
+} from '@data-testid/index'
 import { Helper } from '../../shared/helpers'
 import { BasePage } from '../lib/base-page'
 import { AttributesListWidget } from './widgets/attributes-list.widget'

@@ -1,5 +1,4 @@
-import { CommonSelectors } from '../../../src/components/data-testid/common-selectors.cy'
-import { MainTableDataCy } from '../../../src/components/data-testid/main-table.cy'
+import { CommonSelectors, MainTableDataCy } from '@data-testid/index'
 import { Helper } from '../../shared/helpers'
 import { BasePage } from '../lib/base-page'
 import { Button } from '../lib/button'

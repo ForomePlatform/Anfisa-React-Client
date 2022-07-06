@@ -1,4 +1,4 @@
-import { CommonSelectors } from '../../../src/components/data-testid/common-selectors.cy'
+import { CommonSelectors } from '@data-testid/index'
 import { UIElement } from './ui-element'
 
 export class Button extends UIElement {

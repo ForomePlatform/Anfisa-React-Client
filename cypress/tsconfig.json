@@ -21,7 +21,10 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react"
+    "jsx": "react",
+    "paths": {
+      "@data-testid/*": ["../src/data-testid/*"],
+    },
   },
   "include": [
     "**/*.ts"

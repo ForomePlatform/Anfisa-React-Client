@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-import { CommonSelectors } from '../../../src/components/data-testid/common-selectors.cy'
+import { CommonSelectors } from '@data-testid/index'
 import { datasetPage } from '../../page-objects/app/datasets-page'
 import { mainTablePage } from '../../page-objects/app/main-table-page'
 import { variantDrawerPage } from '../../page-objects/app/variant-drawer-page'
