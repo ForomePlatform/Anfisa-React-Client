@@ -25,7 +25,7 @@ export const EnumDialog = observer((): ReactElement => {
 
   const handleModals = () => {
     modalsVisibilityStore.closeEnumDialog()
-    modalsVisibilityStore.openModalAttribute()
+    modalsVisibilityStore.openSelectAttributeDialog()
   }
 
   const handleAddAttribute = useCallback((action, mode, selectedVariants) => {
@@ -44,13 +44,16 @@ export const EnumDialog = observer((): ReactElement => {
     modalsVisibilityStore.closeEnumDialog()
   }, [])
 
+  const paginationHeight =
+    enumVariants.length > DEFAULT_COUNT ? 'calc(580px - 249px)' : 'auto'
+
   return (
     <Dialog
       isOpen={modalsVisibilityStore.isEnumDialogVisible}
       onClose={modalsVisibilityStore.closeEnumDialog}
       title={attributeName}
       width="m"
-      actions={''}
+      isHiddenActions={true}
     >
       <EnumCondition
         attributeName={attributeName}
@@ -60,9 +63,7 @@ export const EnumDialog = observer((): ReactElement => {
         initialEnumMode={initialEnumMode}
         isShowZeroes={dtreeAttributeStore.isShowZeroVariants}
         toggleShowZeroes={dtreeAttributeStore.setIsShowZeroVariants}
-        paginationHeight={`calc(580px - ${
-          enumVariants.length > DEFAULT_COUNT ? 249 : 203
-        }px)`}
+        paginationHeight={paginationHeight}
         controls={({ value, mode }) =>
           renderAttributeDialogControls({
             initialCondition,

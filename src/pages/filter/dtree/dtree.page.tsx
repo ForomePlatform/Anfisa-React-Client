@@ -1,7 +1,6 @@
 import styles from './dtree.page.module.css'
 
 import { ReactElement, useEffect } from 'react'
-import { useHistory } from 'react-router-dom'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
@@ -21,12 +20,28 @@ import { TextEditorButton } from './components/control-panel/text-editor-button'
 import { ModalsContainer } from './components/modals/modals-container'
 import { QueryBuilder } from './components/query-builder/query-builder'
 
+const MIN_CODE_LENGTH = 13
+
 export const DtreePage = observer((): ReactElement => {
   const { isXL } = datasetStore
 
-  const history = useHistory()
+  const { availableDtrees: availableSolutionEntries } = filterDtreesStore
+
+  const createDtree = (treeName: string): void => {
+    filterDtreesStore.createDtree(treeName)
+  }
+
+  const modifiedDtree = dtreeStore.isDtreeModified
+    ? dtreeStore.currentDtreeName
+    : undefined
+
+  const isEntryCreationAllowed = filterDtreesStore.activeDtree
+    ? modifiedDtree === filterDtreesStore.activeDtree
+    : dtreeStore.dtreeCode.length >= MIN_CODE_LENGTH
 
   useDatasetName()
+  filterDtreesStore.observeHistory.useHook()
+
   const params = useParams()
   const dsName = params.get('ds') || ''
   const dtreeName = params.get('dtree') || ''
@@ -40,18 +55,12 @@ export const DtreePage = observer((): ReactElement => {
       })
     }
 
-    dtreeName ? filterDtreesStore.setActiveDtree(dtreeName) : initAsync()
-
-    return () => {
-      dtreeStore.resetFilterValue()
-      dtreeStore.resetAlgorithmFilterValue()
-      dtreeStore.resetPrevDtreeName()
-      dtreeStore.resetData()
-      // TODO: need to fix after dtree_set is refactored
-      dtreeStore.actionHistory.resetHistory()
+    if (!dtreeName) {
+      initAsync()
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dsName, history])
+
+    return () => dtreeStore.actionHistory.resetHistory()
+  }, [dsName, dtreeName])
 
   const getFiltersValue = (type: string) => {
     if (type === 'all') {
@@ -105,6 +114,9 @@ export const DtreePage = observer((): ReactElement => {
         <FilterControl
           pageName={FilterControlOptionsNames[GlbPagesNames.Dtree]}
           SolutionControl={SolutionControlDtree}
+          createSolutionEntry={createDtree}
+          availableSolutionEntries={availableSolutionEntries}
+          isEntryCreationAllowed={isEntryCreationAllowed}
           isBackwardAllowed={dtreeStore.actionHistory.isBackwardAllowed}
           isForwardAllowed={dtreeStore.actionHistory.isForwardAllowed}
           goForward={dtreeStore.actionHistory.goForward}

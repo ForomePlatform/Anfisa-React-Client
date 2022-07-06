@@ -88,10 +88,7 @@ export abstract class BaseAsyncDataStore<Data, Query> {
           this.reconcile(keepPreviousData ?? false)
         },
         {
-          fireImmediately: !comparer.structural(
-            this.lastOnlineQuery,
-            this.query,
-          ),
+          fireImmediately: this.isQueryObsolete,
         },
       )
 
@@ -101,6 +98,9 @@ export abstract class BaseAsyncDataStore<Data, Query> {
           if (didInvalidate) {
             this.reconcile(true)
           }
+        },
+        {
+          fireImmediately: true,
         },
       )
 
@@ -140,7 +140,7 @@ export abstract class BaseAsyncDataStore<Data, Query> {
   }
 
   public invalidate(): void {
-    if (this._isFetching) {
+    if (this._isFetching || this.isQueryObsolete) {
       return
     }
 
@@ -194,6 +194,10 @@ export abstract class BaseAsyncDataStore<Data, Query> {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected getCacheKey(query: Query): string | undefined {
     return undefined
+  }
+
+  private get isQueryObsolete(): boolean {
+    return !comparer.structural(this.lastOnlineQuery, this.query)
   }
 
   private reconcileFromCache(query: Query): boolean {

@@ -14,8 +14,6 @@ export const GenesListZone = observer(() => {
 
   useEffect(() => {
     if (isPopoverOpen) {
-      zoneStore.genesList.length <= 0 && zoneStore.fetchZoneListAsync('Panels')
-
       if (zoneStore.selectedGenesList.length > 0) {
         zoneStore.syncSelectedAndLocalFilters('isGenesList')
       }
@@ -52,6 +50,7 @@ export const GenesListZone = observer(() => {
       />
 
       <ZonePopover
+        isFetching={zoneStore.fetchingGenesList}
         zoneList={zoneStore.genesList}
         title={t('ds.geneList')}
         selectedZoneItems={zoneStore.localGenesList}

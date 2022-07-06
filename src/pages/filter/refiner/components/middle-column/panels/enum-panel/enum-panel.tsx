@@ -33,6 +33,9 @@ export const EnumPanel = observer((): ReactElement => {
     [attributeName],
   )
 
+  const paginationHeight =
+    enumVariants.length > DEFAULT_COUNT ? 'calc(100% - 249px)' : 'auto'
+
   return (
     <>
       <AttributeHeader attrStatus={selectedAttributeStatus!} />
@@ -56,9 +59,7 @@ export const EnumPanel = observer((): ReactElement => {
             clearValue,
           })
         }
-        paginationHeight={`calc(100% - ${
-          enumVariants.length > DEFAULT_COUNT ? 249 : 203
-        }px)`}
+        paginationHeight={paginationHeight}
       />
     </>
   )

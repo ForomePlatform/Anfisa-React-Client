@@ -1,8 +1,5 @@
-/* eslint-disable max-lines */
+import { makeAutoObservable, reaction, toJS } from 'mobx'
 
-import { makeAutoObservable, reaction, runInAction, toJS } from 'mobx'
-
-import { ActionFilterEnum } from '@core/enum/action-filter.enum'
 import { t } from '@i18n'
 import { ActionsHistoryStore } from '@store/actions-history'
 import filterDtreesStore from '@store/filter-dtrees'
@@ -20,6 +17,8 @@ import { DtreeSetAsyncStore } from './dtree-set.async.store'
 import { DtreeStatStore } from './dtree-stat.store'
 import stepStore, { ActiveStepOptions } from './step.store'
 
+const MIN_CODE_LENGTH = 13
+
 export type IStepData = {
   step: number
   groups: any[]
@@ -35,20 +34,37 @@ export type IStepData = {
   isFinalStep?: boolean
 }
 
-interface IRequestData {
-  operation: number
-  request: {
-    setCode: string
-    statCode: string
-  }
-}
-
 interface IDtreeFilteredCounts {
   accepted: number
   rejected: number
 }
 
 export class DtreeStore {
+  readonly dtreeSet = new DtreeSetAsyncStore()
+  readonly dtreeCounts = new DtreeCountsAsyncStore()
+  readonly stat = new DtreeStatStore()
+  private _dtreeModifiedState: DtreeModifiedState = DtreeModifiedState.NotDtree
+  private _previousDtreeCode = ''
+
+  public startDtreeCode = ''
+  public localDtreeCode = ''
+  public currentDtreeName = ''
+
+  public selectedGroups: any = []
+
+  public isResultsContentExpanded = false
+  public resultsChangeIndicator = 0
+
+  public algorithmFilterValue = ''
+  public algorithmFilterFullWord = false
+
+  public isModalViewVariantsVisible = false
+  public tableModalIndexNumber: null | number = null
+
+  public actionHistory = new ActionsHistoryStore<IDtreeSetArguments>(data =>
+    this.fetchDtreeSetAsync(data, false),
+  )
+
   get dtreeList() {
     return this.dtreeSetData?.['dtree-list']
   }
@@ -61,21 +77,13 @@ export class DtreeStore {
     return this.dtreeSetData?.code ?? ''
   }
 
-  startDtreeCode = ''
-  localDtreeCode = ''
-  // TODO: get dtree name from this.dtreeSetData
-  currentDtreeName = ''
-  previousDtreeName = ''
-  private _dtreeModifiedState: DtreeModifiedState = DtreeModifiedState.NotDtree
-  actionName: ActionFilterEnum | undefined = undefined
+  get pointCounts() {
+    const counts = this.isXl
+      ? this.dtreeCounts.data?.['point-counts']
+      : this.dtreeSetData?.['point-counts']
 
-  queryBuilderRenderKey = Date.now()
-
-  readonly stat = new DtreeStatStore()
-  statRequestId = ''
-
-  selectedGroups: any = []
-  selectedFilters: string[] = []
+    return counts ?? []
+  }
 
   get dtreeStepIndices(): string[] {
     return Object.keys(this.dtreeSetData?.['cond-atoms'] ?? {})
@@ -85,44 +93,8 @@ export class DtreeStore {
     return this.dtreeSetData?.['eval-status'] ?? ''
   }
 
-  savingStatus: any = []
-  shouldLoadTableModal = false
-
-  isFilterContentExpanded = false
-  filterChangeIndicator = 0
-
-  isFilterModalContentExpanded = false
-  filterModalChangeIndicator = 0
-
-  isDtreeLoading = false
-
-  isResultsContentExpanded = false
-  resultsChangeIndicator = 0
-
-  filterValue = ''
-  filterModalValue = ''
-  algorithmFilterValue = ''
-  algorithmFilterFullWord = false
-  filteredCounts = 0
-
-  isModalViewVariantsVisible = false
-  tableModalIndexNumber: null | number = null
-
-  requestData: IRequestData[] = []
-
-  actionHistory = new ActionsHistoryStore<IDtreeSetArguments>(data =>
-    this.fetchDtreeSetAsync(data, false),
-  )
-
-  readonly dtreeSet = new DtreeSetAsyncStore()
-  readonly dtreeCounts = new DtreeCountsAsyncStore()
-
-  get pointCounts() {
-    const counts = this.isXl
-      ? this.dtreeCounts.data?.['point-counts']
-      : this.dtreeSetData?.['point-counts']
-
-    return counts ?? []
+  public get dataReady(): number {
+    return this.stat.dataReady
   }
 
   public get isDtreeModified(): boolean {
@@ -179,6 +151,16 @@ export class DtreeStore {
         } else {
           this.resetPreset()
         }
+      },
+    )
+
+    reaction(
+      () => this.dtreeCode,
+      code => {
+        if (this._previousDtreeCode.length > MIN_CODE_LENGTH) {
+          this.setDtreeModifiedState()
+        }
+        this._previousDtreeCode = code
       },
     )
   }
@@ -267,8 +249,6 @@ export class DtreeStore {
   }
 
   private loadDtree(dtreeName: string): void {
-    this.isDtreeLoading = true
-
     this.fetchDtreeSetAsync({
       ds: datasetStore.datasetName,
       dtree: dtreeName,
@@ -280,18 +260,12 @@ export class DtreeStore {
       .catch(() => {
         showToast(t('dtree.errors.loadDtree', { dtreeName }), 'error')
       })
-      .finally(() => {
-        runInAction(() => {
-          this.isDtreeLoading = false
-        })
-      })
   }
 
   private setDtreeModifiedState(state?: DtreeModifiedState): void {
     if (state === undefined) {
       if (this._dtreeModifiedState === DtreeModifiedState.NotModified) {
         this._dtreeModifiedState = DtreeModifiedState.Modified
-        filterDtreesStore.resetActiveDtree()
       }
     } else if (state !== this._dtreeModifiedState) {
       this._dtreeModifiedState = state
@@ -319,28 +293,7 @@ export class DtreeStore {
     this.resetLocalDtreeCode()
   }
 
-  addSelectedFilter(filter: string) {
-    this.selectedFilters = [...this.selectedFilters, filter]
-
-    this.resetLocalDtreeCode()
-  }
-
-  addSelectedFilterList(filters: string[]) {
-    this.selectedFilters = [...this.selectedFilters, ...filters]
-
-    this.resetLocalDtreeCode()
-  }
-
-  removeSelectedFilter(filter: string) {
-    this.selectedFilters = this.selectedFilters.filter(item => item !== filter)
-    this.resetLocalDtreeCode()
-  }
-
-  resetSelectedFilters() {
-    this.selectedFilters = []
-  }
-
-  // 3.2 Functions for editing loaded tree
+  // 3. Functions for editing loaded tree
 
   setStartDtreeCode() {
     this.startDtreeCode = this.dtreeCode
@@ -354,7 +307,7 @@ export class DtreeStore {
     this.localDtreeCode = ''
   }
 
-  // 3.4 Common UI/UX modals
+  // 4. Common UI/UX modals
 
   openModalViewVariants(index?: number) {
     this.isModalViewVariantsVisible = true
@@ -381,51 +334,7 @@ export class DtreeStore {
     }
   }
 
-  // 4. Other UI control functions
-
-  setJobStatus(jobStatus: any) {
-    runInAction(() => {
-      this.savingStatus = JSON.parse(JSON.stringify(jobStatus))
-    })
-  }
-
-  clearJobStatus() {
-    runInAction(() => {
-      this.savingStatus = []
-    })
-  }
-
-  setShouldLoadTableModal(shouldLoad: boolean) {
-    runInAction(() => {
-      this.shouldLoadTableModal = shouldLoad
-    })
-  }
-
-  setQueryBuilderRenderKey(key: number) {
-    runInAction(() => {
-      this.queryBuilderRenderKey = key
-    })
-  }
-
-  expandFilterContent() {
-    this.isFilterContentExpanded = true
-    this.filterChangeIndicator++
-  }
-
-  collapseFilterContent() {
-    this.isFilterContentExpanded = false
-    this.filterChangeIndicator--
-  }
-
-  expandFilterModalContent() {
-    this.isFilterModalContentExpanded = true
-    this.filterModalChangeIndicator++
-  }
-
-  collapseFilterModalContent() {
-    this.isFilterModalContentExpanded = false
-    this.filterModalChangeIndicator--
-  }
+  // 5. Other UI control functions
 
   expandResultsContent() {
     this.isResultsContentExpanded = true
@@ -435,22 +344,6 @@ export class DtreeStore {
   collapseResultsContent() {
     this.isResultsContentExpanded = false
     this.resultsChangeIndicator--
-  }
-
-  setFilterValue(item: string) {
-    this.filterValue = item
-  }
-
-  resetFilterValue() {
-    this.filterValue = ''
-  }
-
-  setFilterModalValue(item: string) {
-    this.filterModalValue = item
-  }
-
-  resetFilterModalValue() {
-    this.filterModalValue = ''
   }
 
   setAlgorithmFilterValue(item: string) {
@@ -468,33 +361,6 @@ export class DtreeStore {
   toggleIsExcluded(index: number) {
     stepStore.steps[index].excluded = !stepStore.steps[index].excluded
     this.resetLocalDtreeCode()
-  }
-
-  resetData() {
-    this.filteredCounts = 0
-    this.statRequestId = ''
-  }
-
-  setPrevDtreeName(name: string) {
-    this.previousDtreeName = name
-  }
-
-  resetPrevDtreeName() {
-    this.previousDtreeName = ''
-  }
-
-  setStatRequestId(id: string) {
-    this.statRequestId = id
-  }
-
-  clearStatRequestId() {
-    runInAction(() => {
-      this.statRequestId = ''
-    })
-  }
-
-  setActionName(actionName?: ActionFilterEnum): void {
-    this.actionName = actionName
   }
 
   setDtreeModifyed() {

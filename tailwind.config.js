@@ -68,6 +68,9 @@ module.exports = {
       50: '50px',
       32: '32px',
     },
+    maxHeight: {
+      70: '70vh',
+    },
   },
   variants: {
     appearance: [],
@@ -165,7 +168,7 @@ module.exports = {
     // 'listStylePosition', // The list-style-position utilities like list-inside
     // 'listStyleType', // The list-style-type utilities like list-disc
     'margin', // The margin utilities like ml-8
-    // 'maxHeight', // The max-height utilities like max-h-32
+    'maxHeight', // The max-height utilities like max-h-32
     'maxWidth', // The max-width utilities like max-w-5xl
     'minHeight', // The min-height utilities like min-h-full
     'minWidth', // The min-width utilities like min-w-full

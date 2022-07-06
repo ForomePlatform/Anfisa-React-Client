@@ -65,7 +65,7 @@ export const DtreeUnitsList = observer(
         writeScrollPosition()
       }
       dtreeStore.addSelectedGroup([vgroup, name])
-      modalsVisibilityStore.closeModalAttribute()
+      modalsVisibilityStore.closeSelectAttributeDialog()
 
       if (kind === AttributeKinds.ENUM) {
         modalsVisibilityStore.openEnumDialog(name, undefined, source)
@@ -74,24 +74,24 @@ export const DtreeUnitsList = observer(
       } else if (kind === AttributeKinds.FUNC) {
         switch (name as FuncStepTypesEnum) {
           case FuncStepTypesEnum.InheritanceMode:
-            modalsVisibilityStore.openModalInheritanceMode(
+            modalsVisibilityStore.openInheritanceModeDialog(
               name,
               undefined,
               source,
             )
             break
           case FuncStepTypesEnum.CustomInheritanceMode:
-            modalsVisibilityStore.openModalCustomInheritanceMode(
+            modalsVisibilityStore.openCustomInheritanceModeDialog(
               name,
               undefined,
               source,
             )
             break
           case FuncStepTypesEnum.CompoundHet:
-            modalsVisibilityStore.openModalCompoundHet(name, undefined, source)
+            modalsVisibilityStore.openCompoundHetDialog(name, undefined, source)
             break
           case FuncStepTypesEnum.CompoundRequest:
-            modalsVisibilityStore.openModalCompoundRequest(
+            modalsVisibilityStore.openCompoundRequestDialog(
               name,
               undefined,
               source,
@@ -99,7 +99,7 @@ export const DtreeUnitsList = observer(
 
             break
           case FuncStepTypesEnum.GeneRegion:
-            modalsVisibilityStore.openModalGeneRegion(name, undefined, source)
+            modalsVisibilityStore.openGeneRegionDialog(name, undefined, source)
             break
         }
       }
@@ -108,6 +108,7 @@ export const DtreeUnitsList = observer(
     return (
       <UnitsList
         className={className}
+        isModal={isModal}
         isDark={!isModal}
         withCharts={!isModal}
         subHeader={!isModal && <DtreeUnitsListSubHeader />}
@@ -115,6 +116,7 @@ export const DtreeUnitsList = observer(
         functionalUnits={functionalUnits}
         onSelect={handleUnitSelect}
         listContainerId={listContainerId}
+        fetchedAmount={dtreeStore.dataReady}
       />
     )
   },

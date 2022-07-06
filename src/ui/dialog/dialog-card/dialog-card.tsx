@@ -3,9 +3,13 @@ import styles from './dialog-card.module.css'
 import { HTMLAttributes, ReactElement, ReactNode } from 'react'
 import cn from 'classnames'
 
-import { DialogStandardActions, IDialogStandardActionsProps } from '@ui/dialog'
 import { Icon } from '@ui/icon'
+// TODO: remove specific behaviour from base component
 import { SwitchTheme } from '@pages/filter/dtree/components/query-builder/ui/switch-theme'
+import {
+  DialogStandardActions,
+  IDialogStandardActionsProps,
+} from '../dialog-standard-actions'
 
 export interface IDialogCardProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'title'>,
@@ -13,6 +17,7 @@ export interface IDialogCardProps
   title?: ReactNode
   actions?: ReactNode
   children?: ReactNode
+  isHiddenActions?: boolean
   onClose?: () => void
 }
 
@@ -20,6 +25,7 @@ export const DialogCard = ({
   className,
   title,
   actions,
+  isHiddenActions,
   children,
   onClose,
   onApply,
@@ -55,7 +61,7 @@ export const DialogCard = ({
 
       <div className={styles.dialogCard__content}>{children}</div>
 
-      {(actions || actions === undefined) && (
+      {!isHiddenActions && (
         <div className={styles.dialogCard__actions}>
           {actions || (
             <DialogStandardActions

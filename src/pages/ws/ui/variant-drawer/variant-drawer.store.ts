@@ -29,7 +29,7 @@ const presetsSortComparator = (
 }
 
 class VariantDrawerStore {
-  public layoutMode: VariantDrawerLayoutMode
+  public layoutMode: VariantDrawerLayoutMode = VariantDrawerLayoutMode.Gallery
   public galleryActiveAspect = ''
 
   private readonly customGridPresets: IVariantDrawerGridPreset[]
@@ -128,7 +128,7 @@ class VariantDrawerStore {
     const data: Partial<IVariantDrawerData> | undefined =
       LocalStoreManager.read('variantDrawer')
     return {
-      mode: data?.mode ?? VariantDrawerLayoutMode.Grid,
+      mode: data?.mode ?? VariantDrawerLayoutMode.Gallery,
       presets: data?.presets ?? [],
       preset: data?.preset ?? null,
     }

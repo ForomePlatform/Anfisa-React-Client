@@ -9,6 +9,7 @@ import ArrowRightXs from './arrow-right-xs'
 import ArrowUpS from './arrow-up-s'
 import ArrowUpXs from './arrow-up-xs'
 import ArrowsOut from './arrows-out'
+import Attention from './attention'
 import Circle from './circle'
 import Close from './close'
 import CloseMD from './close-md'
@@ -36,6 +37,7 @@ import Loupe from './loupe'
 import Options from './options'
 import Rect from './rect'
 import Redo from './redo'
+import Reload from './reload'
 import Settings from './settings'
 import SettingsFat from './settings-fat'
 import Sort from './sort'
@@ -55,6 +57,7 @@ export const icons = {
   ArrowRightS,
   ArrowUpS,
   ArrowsOut,
+  Attention,
   Circle,
   Close,
   CloseMD,
@@ -82,6 +85,7 @@ export const icons = {
   Options,
   Rect,
   Redo,
+  Reload,
   Settings,
   SettingsFat,
   Sort,

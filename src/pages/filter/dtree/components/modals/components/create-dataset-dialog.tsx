@@ -17,8 +17,7 @@ import zoneStore from '@store/ws/zone.store'
 import { Routes } from '@router/routes.enum'
 import { Dialog } from '@ui/dialog'
 import { IBaseDialogProps } from '@ui/dialog/dialog.interface'
-// TODO: convert attention icon to project icon format
-import { Attention } from '@ui/icon/icons/attention'
+import { Icon } from '@ui/icon'
 import { Input } from '@ui/input'
 import { DecisionTreesMenuDataCy } from '@components/data-testid/decision-tree-menu.cy'
 import { GlbPagesNames } from '@glb/glb-names'
@@ -39,37 +38,45 @@ export const CreateDatasetDialog = observer(
     const isDone = operations.savingStatus[1] === 'Done'
 
     useEffect(() => {
-      const { variantCounts } = mainTableStore.fixedStatAmount
-      const { conditions } = filterStore
+      if (isOpen) {
+        const { variantCounts } = mainTableStore.fixedStatAmount
+        const { conditions } = filterStore
 
-      if (
-        pathName === PatnNameEnum.Filter &&
-        filterStore.method === GlbPagesNames.Dtree &&
-        dtreeStore.acceptedVariants === 0
-      ) {
-        setError(DatasetCreationErrorsEnum.EmptyDataset)
-      }
+        if (
+          pathName === PatnNameEnum.Filter &&
+          filterStore.method === GlbPagesNames.Dtree &&
+          dtreeStore.acceptedVariants === 0
+        ) {
+          setError(DatasetCreationErrorsEnum.EmptyDataset)
+          return
+        }
 
-      if (
-        pathName === PatnNameEnum.Filter &&
-        filterStore.method === GlbPagesNames.Refiner &&
-        variantCounts === 0
-      ) {
-        setError(DatasetCreationErrorsEnum.EmptyDataset)
-      }
+        if (
+          pathName === PatnNameEnum.Filter &&
+          filterStore.method === GlbPagesNames.Refiner &&
+          variantCounts === 0
+        ) {
+          setError(DatasetCreationErrorsEnum.EmptyDataset)
+          return
+        }
 
-      if (pathName === PatnNameEnum.Ws && variantCounts === 0) {
-        setError(DatasetCreationErrorsEnum.EmptyDataset)
-      }
+        if (pathName === PatnNameEnum.Ws && variantCounts === 0) {
+          setError(DatasetCreationErrorsEnum.EmptyDataset)
+          return
+        }
 
-      if (
-        pathName === PatnNameEnum.Ws &&
-        !filterPresetsStore.activePreset &&
-        conditions.length === 0
-      ) {
-        setError(DatasetCreationErrorsEnum.ChooseAnyFilter)
+        if (
+          pathName === PatnNameEnum.Ws &&
+          !filterPresetsStore.activePreset &&
+          conditions.length === 0
+        ) {
+          setError(DatasetCreationErrorsEnum.ChooseAnyFilter)
+          return
+        }
+
+        setError('')
       }
-    }, [pathName])
+    }, [isOpen, pathName])
 
     const saveDatasetAsync = async () => {
       if (toJS(dirinfoStore.dsDistKeys).includes(value)) {
@@ -91,7 +98,7 @@ export const CreateDatasetDialog = observer(
     }
 
     const handleClose = () => {
-      if (!value && !operations.isCreationOver) {
+      if (operations.isCreationOver && !isDone) {
         onClose()
         operations.resetSavingStatus()
 
@@ -129,7 +136,6 @@ export const CreateDatasetDialog = observer(
 
       zoneStore.clearZone()
       filterStore.reset()
-      dtreeStore.resetData()
       zoneStore.resetAllSelectedItems()
     }
 
@@ -184,7 +190,7 @@ export const CreateDatasetDialog = observer(
             pathName !== PatnNameEnum.Filter &&
             filterStore.method !== GlbPagesNames.Refiner && (
               <div className="mt-5 flex items-center">
-                <Attention className="mr-2" />
+                <Icon name="Attention" className="mr-2 text-red-light" />
 
                 <span className="text-12">{t('dsCreation.attention')}</span>
               </div>

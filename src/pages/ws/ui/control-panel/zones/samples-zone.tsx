@@ -14,8 +14,6 @@ export const SamplesZone = observer(() => {
 
   useEffect(() => {
     if (isPopoverOpen) {
-      zoneStore.samples.length <= 0 && zoneStore.fetchZoneSamplesAsync()
-
       if (zoneStore.selectedSamples.length > 0) {
         zoneStore.syncSelectedAndLocalFilters('isSamples')
       }
@@ -25,7 +23,6 @@ export const SamplesZone = observer(() => {
   const handleApply = () => {
     zoneStore.createSelectedZoneFilter('isSamples')
     zoneStore.addZone(['Has_Variant', zoneStore.selectedSamples])
-    zoneStore.paintSelectedSamples()
     setSearchValue('')
 
     closePopover()
@@ -33,7 +30,7 @@ export const SamplesZone = observer(() => {
 
   const handleClose = () => {
     closePopover()
-    zoneStore.unselectAllSamples('clearAll')
+    zoneStore.unselectAllSamples()
 
     setSearchValue('')
 
@@ -54,6 +51,7 @@ export const SamplesZone = observer(() => {
       />
 
       <ZonePopover
+        isFetching={zoneStore.fetchingSamples}
         zoneList={zoneStore.samples}
         title={t('ds.samples')}
         selectedZoneItems={zoneStore.localSamples}

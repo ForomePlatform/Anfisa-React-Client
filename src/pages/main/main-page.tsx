@@ -26,9 +26,8 @@ export const MainPage = (): ReactElement => {
   useEffect(() => {
     zoneStore.clearZone()
     filterStore.reset()
-    dtreeStore.resetData()
-    // TODO: need to fix after dtree_set refactoring
     dtreeStore.actionHistory.resetHistory()
+    dtreeStore.resetAlgorithmFilterValue()
     zoneStore.resetAllSelectedItems()
   }, [])
 

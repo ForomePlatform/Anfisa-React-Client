@@ -1,19 +1,29 @@
 import { makeAutoObservable, reaction } from 'mobx'
 
-import { getQueryParam, pushQueryParams } from '@core/history'
+import { createHistoryObserver } from '@store/common'
 import { VariantAspectsAsyncStore } from '@store/variant-aspects.async.store'
 import mainTableStore from '@store/ws/main-table.store'
 import { IReccntArguments } from '@service-providers/dataset-level'
-import datasetStore from '../dataset/dataset'
+import { datasetStore } from '../dataset'
 import { TWsTagsAsyncStoreQuery, WsTagsAsyncStore } from './ws-tags.async.store'
 
 export class VariantStore {
   readonly record = new VariantAspectsAsyncStore({ keepPreviousData: true })
   readonly tags = new WsTagsAsyncStore({
-    onChange: (rec, tags) => mainTableStore.tabReport.updateRowTags(rec, tags),
+    onChange: mainTableStore.updateRecordTags,
   })
 
-  private isHistoryObserved = false
+  readonly observeHistory = createHistoryObserver({
+    variant: {
+      get: () => (this.variantNo >= 0 ? this.variantNo.toString() : null),
+      apply: value => {
+        const variantNo = parseInt(value ?? '', 10)
+        this.showVariant(
+          !Number.isNaN(variantNo) && variantNo >= 0 ? variantNo : -1,
+        )
+      },
+    },
+  })
 
   variantNo = -1
 
@@ -34,32 +44,6 @@ export class VariantStore {
 
   public get isVariantShown(): boolean {
     return this.variantNo >= 0
-  }
-
-  observeVariantHistory() {
-    this.isHistoryObserved = true
-    const handler = () => {
-      const variantNo = parseInt(getQueryParam('variant') ?? '', 10)
-
-      this.isHistoryObserved = false
-
-      if (!Number.isNaN(variantNo)) {
-        this.showVariant(variantNo)
-      } else {
-        this.closeVariant()
-      }
-
-      this.isHistoryObserved = true
-    }
-
-    handler()
-
-    window.addEventListener('popstate', handler)
-
-    return () => {
-      this.isHistoryObserved = false
-      window.removeEventListener('popstate', handler)
-    }
   }
 
   prevVariant() {
@@ -85,12 +69,6 @@ export class VariantStore {
   showVariant(variantNo: number) {
     if (this.variantNo !== variantNo) {
       this.variantNo = variantNo
-
-      if (this.isHistoryObserved) {
-        pushQueryParams({
-          variant: variantNo >= 0 ? `${variantNo}` : null,
-        })
-      }
     }
   }
 

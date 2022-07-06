@@ -12,43 +12,28 @@ import { InputSearch } from '@components/input-search/input-search'
 
 interface IQueryBuilderSearchProps {
   value: string
-  onChange: (item: string) => void
-  isFilter?: boolean
-  isModal?: boolean
   isSubgroupItemSearch?: boolean
   showSwitcher?: boolean
-  onSwitch?: (e: boolean) => void
   isSwitched?: boolean
   className?: Argument
+  onChange: (item: string) => void
+  onSwitch?: (e: boolean) => void
 }
 
 export const QueryBuilderSearch = observer(
   ({
     value,
-    onChange,
-    isFilter,
-    isModal,
     isSubgroupItemSearch,
     showSwitcher,
-    onSwitch,
     isSwitched,
     className,
+    onChange,
+    onSwitch,
   }: IQueryBuilderSearchProps): ReactElement => {
     const handleClick = (operation: string) => {
-      if (isFilter) {
-        operation === 'expand' && dtreeStore.expandFilterContent()
-        operation === 'collapse' && dtreeStore.collapseFilterContent()
-      }
-
-      if (isModal) {
-        operation === 'expand' && dtreeStore.expandFilterModalContent()
-        operation === 'collapse' && dtreeStore.collapseFilterModalContent()
-      }
-
-      if (!isModal && !isFilter) {
-        operation === 'expand' && dtreeStore.expandResultsContent()
-        operation === 'collapse' && dtreeStore.collapseResultsContent()
-      }
+      operation === 'expand'
+        ? dtreeStore.expandResultsContent()
+        : dtreeStore.collapseResultsContent()
     }
 
     return (
