@@ -28,7 +28,7 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
     const isActive = item.name === dirinfoStore.selectedDirinfoName
 
     const [isOpenFolder, setIsOpenFolder] = useState<boolean>(
-      !dirinfoStore.isDsClosed(item.name),
+      !dirinfoStore.isFoldedDs(item.name),
     )
 
     const isNullKind = item.kind === null
@@ -44,9 +44,9 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
       if (hasChildren) {
         setIsOpenFolder(opened => {
           if (!(opened && isActive)) {
-            dirinfoStore.openDs(item.name)
+            dirinfoStore.unfoldDs(item.name)
           } else {
-            dirinfoStore.closeDs(item.name)
+            dirinfoStore.foldDs(item.name)
           }
 
           return !(opened && isActive)
