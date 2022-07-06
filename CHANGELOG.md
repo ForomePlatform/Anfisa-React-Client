@@ -1,5 +1,8 @@
 # Change log 
 
+## <small>0.6.100 (7/6/2022)</small>
+
+
 ## <small>0.6.99 (7/6/2022)</small>
 
 
@@ -88,6 +91,7 @@
 ## <small>0.6.75 (6/30/2022)</small>
 
 * fix([FOROME-1219](https://quantori.atlassian.net/browse/FOROME-1219)): dataset creation ([13e3798b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/13e3798b))
+* feat([FOROME-1231](https://quantori.atlassian.net/browse/FOROME-1231)): fix comments ([5b3f3e75](https://github.com/ForomePlatform/Anfisa-React-Client/commit/5b3f3e75))
 
 ## <small>0.6.74 (6/30/2022)</small>
 
@@ -126,6 +130,7 @@
 
 * refactor([FOROME-1253](https://quantori.atlassian.net/browse/FOROME-1253)): unify func modals with dialogs ([1924da23](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1924da23))
 * feat([FOROME-1227](https://quantori.atlassian.net/browse/FOROME-1227)): fix commits ([11dd0386](https://github.com/ForomePlatform/Anfisa-React-Client/commit/11dd0386))
+* feat([FOROME-1231](https://quantori.atlassian.net/browse/FOROME-1231)): change colors in drawer ([4843399e](https://github.com/ForomePlatform/Anfisa-React-Client/commit/4843399e))
 * feat([FOROME-1227](https://quantori.atlassian.net/browse/FOROME-1227)): add loading in zones ([88b57db9](https://github.com/ForomePlatform/Anfisa-React-Client/commit/88b57db9))
 * feat([FOROME-1227](https://quantori.atlassian.net/browse/FOROME-1227)): merge conflicts ([3e3ee5b3](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3e3ee5b3))
 * feat([FOROME-1100](https://quantori.atlassian.net/browse/FOROME-1100)): extract same component ([b46e32be](https://github.com/ForomePlatform/Anfisa-React-Client/commit/b46e32be))
