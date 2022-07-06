@@ -2,7 +2,7 @@ import { makeAutoObservable, reaction, toJS } from 'mobx'
 
 import { t } from '@i18n'
 import { ActionsHistoryStore } from '@store/actions-history'
-import filterDtreesStore from '@store/filter-dtrees'
+import filterDtrees from '@store/filter-dtrees'
 import { TFilteringStatCounts } from '@service-providers/common'
 import { IDsListArguments } from '@service-providers/dataset-level'
 import {
@@ -144,7 +144,7 @@ export class DtreeStore {
     makeAutoObservable(this)
 
     reaction(
-      () => filterDtreesStore.activeDtree,
+      () => filterDtrees.activeDtree,
       dtreeName => {
         if (dtreeName) {
           this.loadDtree(dtreeName)
@@ -248,6 +248,14 @@ export class DtreeStore {
     this.dtreeSet.setQuery(body)
   }
 
+  public loadEmptyTree = async () => {
+    await this.fetchDtreeSetAsync({
+      ds: datasetStore.datasetName,
+      tm: '0',
+      code: 'return False',
+    })
+  }
+
   private loadDtree(dtreeName: string): void {
     this.fetchDtreeSetAsync({
       ds: datasetStore.datasetName,
@@ -278,6 +286,18 @@ export class DtreeStore {
     }
 
     this.setDtreeModifiedState(DtreeModifiedState.NotDtree)
+  }
+
+  public clearAll(): void {
+    this.actionHistory.resetHistory()
+    this.localDtreeCode = ''
+    this._previousDtreeCode = ''
+    this.startDtreeCode = ''
+    this.currentDtreeName = ''
+    filterDtrees.resetActiveDtree()
+    this.loadEmptyTree().then(() => {
+      this.setDtreeModifiedState(DtreeModifiedState.NotDtree)
+    })
   }
 
   // 2. UI functions to display adding / deleting / editing steps
