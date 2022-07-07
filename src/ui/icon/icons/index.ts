@@ -37,6 +37,7 @@ import Loupe from './loupe'
 import Options from './options'
 import Rect from './rect'
 import Redo from './redo'
+import Reload from './reload'
 import Settings from './settings'
 import SettingsFat from './settings-fat'
 import Sort from './sort'
@@ -84,6 +85,7 @@ export const icons = {
   Options,
   Rect,
   Redo,
+  Reload,
   Settings,
   SettingsFat,
   Sort,
