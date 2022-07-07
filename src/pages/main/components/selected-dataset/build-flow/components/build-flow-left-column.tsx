@@ -4,7 +4,6 @@ import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
-import { datasetStore } from '@store/dataset'
 import { Card } from '@ui/card'
 import {
   startFlowOptionsList,
@@ -53,10 +52,9 @@ export const BuildFlowLeftColumn = observer(
             <CardListSection
               title={t('home.buildFlow.candidateSet')}
               optionsList={secondaryDatasets}
-              onSelect={value => {
+              onSelect={value =>
                 selectedDatasetStore.setSecondaryDataset(value)
-                datasetStore.setDatasetName(value)
-              }}
+              }
               selectedItem={selectedDatasetStore.selectedSecondaryDataset}
               style={{ maxHeight: 'calc(100vh - 403px)' }}
             />

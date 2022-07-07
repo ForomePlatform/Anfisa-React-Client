@@ -100,6 +100,10 @@ class SelectedDatasetStore {
       this.selectedSecondaryDataset,
     )
 
+    if (this.selectedSecondaryDataset) {
+      datasetStore.setDatasetName(this.selectedSecondaryDataset)
+    }
+
     history.push(nextPageData.route)
 
     filterStore.setMethod(nextPageData.method as GlbPagesNames)

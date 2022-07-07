@@ -10,11 +10,14 @@ export const getNextPageData = (
 ) => {
   const ds = dsName || datasetStore.datasetName
 
-  const commonRoute = {
-    route: datasetStore.isXL
-      ? `${Routes.Refiner}?ds=${ds}`
-      : `${Routes.WS}?ws=${ds}`,
+  const commonExploreGenomeRoute = {
+    route: `${datasetStore.isXL ? Routes.Refiner : Routes.WS}?ds=${ds}`,
     method: datasetStore.isXL ? GlbPagesNames.Refiner : GlbPagesNames.Table,
+  }
+
+  const commonExploreCandidadteRoute = {
+    route: `${dsName ? Routes.WS : Routes.Refiner}?ds=${ds}`,
+    method: dsName ? GlbPagesNames.Table : GlbPagesNames.Refiner,
   }
 
   const exploreGenomeRoutes = {
@@ -26,11 +29,11 @@ export const getNextPageData = (
       route: `${Routes.Refiner}?ds=${ds}`,
       method: GlbPagesNames.Refiner,
     },
-    'ACMG analysis': commonRoute,
-    'Phenotype based analysis': commonRoute,
-    'Genetic first analysis': commonRoute,
-    'View all variants': commonRoute,
-    'Apply additional preset filter': commonRoute,
+    'ACMG analysis': commonExploreGenomeRoute,
+    'Phenotype based analysis': commonExploreGenomeRoute,
+    'Genetic first analysis': commonExploreGenomeRoute,
+    'View all variants': commonExploreCandidadteRoute,
+    'Apply additional preset filter': commonExploreCandidadteRoute,
   }
 
   return exploreGenomeRoutes[exploreGenomeType]
