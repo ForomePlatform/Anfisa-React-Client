@@ -23,9 +23,12 @@ export const TagsZone = observer(() => {
   const handleApply = () => {
     zoneStore.createSelectedZoneFilter('isTags')
 
-    const tags = zoneStore.isModeWithNotes
-      ? [...zoneStore.selectedTags, '_note']
-      : zoneStore.selectedTags
+    const tags = zoneStore.selectedTags
+
+    if (zoneStore.isModeWithNotes && !tags.includes('_note')) {
+      zoneStore.addLocalTag('_note')
+      tags.push('_note')
+    }
 
     if (zoneStore.isModeNOT) {
       zoneStore.addZone(['_tags', tags, false])
