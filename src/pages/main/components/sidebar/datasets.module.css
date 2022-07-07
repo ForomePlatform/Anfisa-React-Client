@@ -1,0 +1,31 @@
+.datasets {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    padding: 0 16px;
+
+    &__button {
+      padding: 4px;
+      border-radius: 6px;
+      color: theme("colors.white");
+
+      &:hover {
+        background-color: theme("colors.blue.darkHover");
+        color: theme("colors.grey.blue");
+      }
+    }
+
+    &__text {
+      font-weight: 700;
+      font-size: 20px;
+      color: theme("colors.white");
+      line-height: 24px;
+    }
+
+    &__container {
+      display: flex;
+      align-items: center;
+    }
+  }
+}
