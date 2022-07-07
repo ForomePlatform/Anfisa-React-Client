@@ -4,6 +4,7 @@ import { ReactElement, useCallback, useState } from 'react'
 import cn, { Argument } from 'classnames'
 
 import { TUnit } from '@store/stat-units'
+import { DropdownArrow } from '@ui/dropdown-arrow'
 import { PredictionPowerIndicator } from '@components/prediction-power-indicator'
 import { AttributeKinds } from '@service-providers/common'
 import { UnitChart } from '../unit-chart'
@@ -36,7 +37,7 @@ export const UnitsListUnit = ({
         unit.histogram &&
         unit.histogram.length > 0))
 
-  const onClickUnitName = useCallback(
+  const openCharts = useCallback(
     () => setChartVisible(!!hasChart && !isChartVisible),
     [hasChart, isChartVisible],
   )
@@ -44,9 +45,6 @@ export const UnitsListUnit = ({
   return (
     <div className={cn(styles.unit, className)}>
       <div className={styles.unitTitle}>
-        <button className={styles.unitTitle__addButton} onClick={onSelect}>
-          +
-        </button>
         {unit.power && (
           <PredictionPowerIndicator
             className={styles.unitTitle__power}
@@ -57,12 +55,13 @@ export const UnitsListUnit = ({
         <UnitsListUnitName
           tooltip={tooltip}
           name={name}
-          onClick={onClickUnitName}
+          onClick={onSelect}
           className={cn(
             styles.unitTitle__title,
             isDark && styles.unitTitle__title_dark,
           )}
         />
+        <DropdownArrow size="sm" isOpen={isChartVisible} onClick={openCharts} />
       </div>
       {hasChart && isChartVisible && <UnitChart className="mt-2" unit={unit} />}
     </div>

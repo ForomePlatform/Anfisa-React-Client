@@ -9,7 +9,6 @@ interface IContentCodeProps {
   codeResult: string
 }
 
-// eslint-disable-next-line react/display-name
 export const ContentCode = memo(
   ({ codeCondition, codeResult }: IContentCodeProps): ReactElement => (
     <div className={styles.contentCode}>
