@@ -288,16 +288,15 @@ export class DtreeStore {
     this.setDtreeModifiedState(DtreeModifiedState.NotDtree)
   }
 
-  public clearAll(): void {
+  public async clearAll() {
     this.actionHistory.resetHistory()
     this.localDtreeCode = ''
     this._previousDtreeCode = ''
     this.startDtreeCode = ''
     this.currentDtreeName = ''
     filterDtrees.resetActiveDtree()
-    this.loadEmptyTree().then(() => {
-      this.setDtreeModifiedState(DtreeModifiedState.NotDtree)
-    })
+    await this.loadEmptyTree()
+    this.setDtreeModifiedState(DtreeModifiedState.NotDtree)
   }
 
   // 2. UI functions to display adding / deleting / editing steps
