@@ -3,7 +3,6 @@ import styles from './build-flow.module.css'
 import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
-import { ExploreTypes } from '@core/enum/explore-types-enum'
 import selectedDatasetStore from '../selected-dataset.store'
 import { BuildFlowHeader } from './components/build-flow-header'
 import { BuildFlowLeftColumn } from './components/build-flow-left-column'
@@ -21,30 +20,15 @@ export const SelectedDatasetBuildFlow = observer(
       selectedDatasetStore.toggleIsEditionExploreType(false)
     }
 
-    const isGenome = selectedDatasetStore.exploreType === ExploreTypes.Genome
-
     return (
       <div className={styles.buildFlow}>
         <div className={styles.buildFlow__container}>
           <BuildFlowHeader goBack={handleGoBack} />
 
           <div className="flex">
-            <BuildFlowLeftColumn
-              isGenome={isGenome}
-              isEditionExploreType={selectedDatasetStore.isEditionExploreType}
-              onContinue={handleContinueBuildFlow}
-            />
+            <BuildFlowLeftColumn onContinue={handleContinueBuildFlow} />
 
-            <BuildFlowRightColumn
-              isEditionExploreGenome={
-                selectedDatasetStore.isEditionExploreGenome
-              }
-              secondaryDataset={selectedDatasetStore.selectedSecondaryDataset}
-              isEditionExploreCandidate={
-                selectedDatasetStore.isEditionExploreCandidate
-              }
-              exploreCandidateType={selectedDatasetStore.exploreCandidateType}
-            />
+            <BuildFlowRightColumn />
           </div>
         </div>
       </div>

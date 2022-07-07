@@ -4,9 +4,7 @@ import { ReactElement } from 'react'
 import { useHistory } from 'react-router'
 import { observer } from 'mobx-react-lite'
 
-import { ExploreTypes } from '@core/enum/explore-types-enum'
 import { t } from '@i18n'
-import { datasetStore } from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
 import { Routes } from '@router/routes.enum'
 import { CardTitle } from '@ui/card'
@@ -23,8 +21,7 @@ export const BuildFlowHeader = observer(
       history.push(Routes.Root)
     }
 
-    const isGenomeExplore =
-      selectedDatasetStore.exploreType === ExploreTypes.Genome
+    const { selectedSecondaryDataset, datasetName } = selectedDatasetStore
 
     return (
       <div className={styles.buildFlow__header}>
@@ -62,21 +59,9 @@ export const BuildFlowHeader = observer(
           </div>
 
           <div className="flex text-grey-dark">
-            {!selectedDatasetStore.isEditionExploreType && isGenomeExplore && (
-              <>
-                <div className="text-blue-bright mx-1">/</div>
+            <div className="mx-1">/</div>
 
-                <div>{datasetStore.datasetName}</div>
-              </>
-            )}
-
-            {selectedDatasetStore.selectedSecondaryDataset && !isGenomeExplore && (
-              <>
-                <div className="mx-1">/</div>
-
-                <div>{selectedDatasetStore.selectedSecondaryDataset}</div>
-              </>
-            )}
+            <div>{selectedSecondaryDataset || datasetName}</div>
           </div>
         </div>
       </div>

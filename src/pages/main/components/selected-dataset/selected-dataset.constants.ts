@@ -2,7 +2,7 @@ import { ExploreCandidateTypes } from '@core/enum/explore-candidate-types-enum'
 import { ExploreGenomeTypes } from '@core/enum/explore-genome-types-enum'
 import { ExploreTypes } from '@core/enum/explore-types-enum'
 
-export const startWithOptionsList = [
+export const startFlowOptionsList = [
   ExploreTypes.Genome,
   ExploreTypes.Candidate,
 ]

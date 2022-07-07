@@ -5,6 +5,10 @@ import { ExploreGenomeTypes } from '@core/enum/explore-genome-types-enum'
 import { ExploreTypes } from '@core/enum/explore-types-enum'
 import { datasetStore } from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
+import filterStore from '@store/filter'
+import { GlbPagesNames } from '@glb/glb-names'
+import { getNextPageData } from './selected-dataset.utils'
+
 class SelectedDatasetStore {
   public isBuildFlowVisible = false
   public isEditionExploreType = false
@@ -25,6 +29,21 @@ class SelectedDatasetStore {
 
   public get secondaryDatasets(): string[] | undefined {
     return dirinfoStore.dirinfo.data?.dsDict[datasetStore.datasetName].secondary
+  }
+
+  public get datasetName(): string {
+    return datasetStore.datasetName
+  }
+  public get isExploreGenomeTypeVisible(): boolean {
+    return (
+      this.exploreType === ExploreTypes.Genome && !this.isEditionExploreType
+    )
+  }
+
+  public get isExploreCandidateTypeVisible(): boolean {
+    return (
+      this.exploreType === ExploreTypes.Candidate && !this.isEditionExploreType
+    )
   }
 
   public toggleIsBuildFlowVisible(value: boolean) {
@@ -68,6 +87,22 @@ class SelectedDatasetStore {
 
   public toggleIsEditionExploreCandidate(value: boolean) {
     this.isEditionExploreCandidate = value
+  }
+
+  public openNextPage(history: any) {
+    const selectedExploreType =
+      this.exploreType === ExploreTypes.Genome
+        ? this.exploreGenomeType
+        : this.exploreCandidateType
+
+    const nextPageData = getNextPageData(
+      selectedExploreType,
+      this.selectedSecondaryDataset,
+    )
+
+    history.push(nextPageData.route)
+
+    filterStore.setMethod(nextPageData.method as GlbPagesNames)
   }
 }
 

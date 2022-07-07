@@ -4,9 +4,10 @@ import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
+import { datasetStore } from '@store/dataset'
 import { Card } from '@ui/card'
 import {
-  startWithOptionsList,
+  startFlowOptionsList,
   whatsNextOptionsList,
 } from '../../selected-dataset.constants'
 import selectedDatasetStore from '../../selected-dataset.store'
@@ -14,26 +15,23 @@ import { CardListSection } from './card-sections/card-list-section'
 import { CardRadioListSection } from './card-sections/card-radio-list-section'
 
 interface IBuildFlowLeftColumnProps {
-  isGenome: boolean
-  isEditionExploreType: boolean
   onContinue: () => void
 }
 
 export const BuildFlowLeftColumn = observer(
-  ({
-    isGenome,
-    isEditionExploreType,
-    onContinue,
-  }: IBuildFlowLeftColumnProps): ReactElement => {
-    const isEditDisabled =
+  ({ onContinue }: IBuildFlowLeftColumnProps): ReactElement => {
+    const isStartWithEditDisabled =
       !selectedDatasetStore.secondaryDatasets ||
       !!selectedDatasetStore.isEditionExploreType
 
-    const isRedioDisabled =
-      !selectedDatasetStore.secondaryDatasets ||
-      !selectedDatasetStore.isEditionExploreType
+    const startWithOptionsList = !selectedDatasetStore.secondaryDatasets
+      ? startFlowOptionsList.slice(0, 1)
+      : startFlowOptionsList
 
     const { secondaryDatasets } = selectedDatasetStore
+
+    const { isExploreGenomeTypeVisible, isExploreCandidateTypeVisible } =
+      selectedDatasetStore
     return (
       <div className={styles.buildFlow__column}>
         <Card>
@@ -41,8 +39,8 @@ export const BuildFlowLeftColumn = observer(
             title={t('home.startFlow.startWith')}
             optionsList={startWithOptionsList}
             isContinueDisabled={!selectedDatasetStore.isEditionExploreType}
-            isEditDisabled={isEditDisabled}
-            isRadioDisabled={isRedioDisabled}
+            isEditDisabled={isStartWithEditDisabled}
+            isRadioDisabled={!selectedDatasetStore.isEditionExploreType}
             checkedValue={selectedDatasetStore.exploreType}
             onEdit={() => selectedDatasetStore.toggleIsEditionExploreType(true)}
             onChange={value => selectedDatasetStore.setExploreType(value)}
@@ -50,21 +48,22 @@ export const BuildFlowLeftColumn = observer(
           />
         </Card>
 
-        {!isGenome && !isEditionExploreType && (
+        {isExploreCandidateTypeVisible && (
           <Card className="mt-4 px-0">
             <CardListSection
               title={t('home.buildFlow.candidateSet')}
               optionsList={secondaryDatasets}
-              onSelect={value =>
+              onSelect={value => {
                 selectedDatasetStore.setSecondaryDataset(value)
-              }
+                datasetStore.setDatasetName(value)
+              }}
               selectedItem={selectedDatasetStore.selectedSecondaryDataset}
               style={{ maxHeight: 'calc(100vh - 403px)' }}
             />
           </Card>
         )}
 
-        {isGenome && !isEditionExploreType && (
+        {isExploreGenomeTypeVisible && (
           <Card className="mt-4">
             <CardRadioListSection
               title={t('home.buildFlow.whatsNext')}
