@@ -13,14 +13,14 @@ export const ContentCode = memo(
   ({ codeCondition, codeResult }: IContentCodeProps): ReactElement => (
     <div className={styles.contentCode}>
       <div
-        className={styles['content-code__wrapper']}
+        className={styles.contentCode__wrapper}
         data-testid={DecisionTreesResultsDataCy.contentEditor}
       >
         <div dangerouslySetInnerHTML={{ __html: codeCondition }} />
 
         <div
           dangerouslySetInnerHTML={{ __html: codeResult }}
-          className={styles['content-code__result']}
+          className={styles.contentCode__result}
         />
       </div>
     </div>
