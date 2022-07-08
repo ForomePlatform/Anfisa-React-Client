@@ -4,6 +4,7 @@ import { t } from '@i18n'
 import { Dialog } from '@ui/dialog'
 import { Input } from '@ui/input'
 import { ISolutionEntryDescription } from '@service-providers/common'
+import { validatePresetName } from '@utils/validation/validatePresetName'
 
 interface ISolutionCreateDialogProps {
   solutions: ISolutionEntryDescription[] | undefined
@@ -21,15 +22,29 @@ export const SolutionCreateDialog = ({
   onCreate,
 }: ISolutionCreateDialogProps): ReactElement => {
   const [solutionName, setSolutionName] = useState('')
+  const [isValidationError, setIsValidationError] = useState(false)
 
-  const error = useMemo(
+  const isSameNameError = useMemo(
     () => solutions?.some(solution => solution.name === solutionName),
     [solutionName, solutions],
   )
 
+  const hasError = isValidationError || isSameNameError
+  const errorText = isValidationError
+    ? t('filter.notValidName')
+    : t('solutionControl.createDialog.solutionNameAlreadyExists', {
+        controlName,
+        solutionName,
+      })
+
   useEffect(() => {
     !isOpen && setSolutionName('')
   }, [isOpen])
+
+  useEffect(() => {
+    const isValid = !solutionName.length || validatePresetName(solutionName)
+    setIsValidationError(!isValid)
+  }, [solutionName])
 
   return (
     <Dialog
@@ -37,7 +52,7 @@ export const SolutionCreateDialog = ({
       onClose={onClose}
       title={t('solutionControl.createDialog.title', { controlName })}
       applyText={t('general.create')}
-      isApplyDisabled={error || !solutionName}
+      isApplyDisabled={hasError || !solutionName}
       onApply={() => onCreate(solutionName)}
     >
       <Input
@@ -48,13 +63,8 @@ export const SolutionCreateDialog = ({
         })}
         onChange={event => setSolutionName(event.target.value)}
       />
-      {error && (
-        <div className="text-red-secondary text-12">
-          {t('solutionControl.createDialog.solutionNameAlreadyExists', {
-            controlName,
-            solutionName,
-          })}
-        </div>
+      {hasError && (
+        <div className="text-red-secondary text-12">{errorText}</div>
       )}
     </Dialog>
   )
