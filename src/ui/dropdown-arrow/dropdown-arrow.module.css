@@ -1,8 +1,8 @@
 .arrow {
-  border-left: 1px solid;
-  border-bottom: 1px solid;
-  width: 6px;
-  height: 6px;
+  border-left: 2px solid;
+  border-bottom: 2px solid;
+  width: 8px;
+  height: 8px;
   transform-origin: 35% 65%;
   transform: rotate(-45deg);
   transition: transform 0.15s ease-in-out;
@@ -12,8 +12,12 @@
     transform: rotate(135deg);
   }
 
+  &_black {
+    color: theme("colors.blue.darkHover");
+  }
+
   &_sm {
-    width: 4px;
-    height: 4px;
+    width: 6px;
+    height: 6px;
   }
 }

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 import { theme } from '@theme'
 
-const getSize = (size: 'sm' | 'md'): number => (size === 'sm' ? 6 : 8)
+const getSize = (size: 'sm' | 'md'): number => (size === 'sm' ? 6 : 12)
 
 const colors = [theme('colors.grey.blue'), '#fde66b', '#98e18b', '#19af00']
 
@@ -30,9 +30,9 @@ export const PredictionPowerPoint = styled.span<{
   vertical-align: middle;
   line-height: 0;
   overflow: hidden;
-  border-radius: 4px;
+  border-radius: 13px;
 
-  width: ${props => getSize(props.size)}px;
-  height: ${props => getSize(props.size)}px;
+  width: 3px;
+  height: ${({ size }) => getSize(size)}px;
   background-color: ${props => colors[props.colorIndex]};
 `

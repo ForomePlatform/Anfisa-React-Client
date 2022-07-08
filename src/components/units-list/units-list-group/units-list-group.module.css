@@ -29,6 +29,10 @@
   }
 
   &__title {
-    flex: 1 0 auto
+    @apply typography-m;
+
+    font-weight: 500;
+    color: theme("colors.grey.blue");
+    flex: 1 0 auto;
   }
 }
