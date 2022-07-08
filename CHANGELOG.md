@@ -1,11 +1,16 @@
 # Change log 
 
+## <small>0.6.109 (7/8/2022)</small>
+
+
 ## <small>0.6.108 (7/8/2022)</small>
 
 
 ## <small>0.6.107 (7/8/2022)</small>
 
 * fix([FOROME-1290](https://quantori.atlassian.net/browse/FOROME-1290)): add local tag for note (#795) ([705b10ce](https://github.com/ForomePlatform/Anfisa-React-Client/commit/705b10ce))
+* feat([FOROME-1305](https://quantori.atlassian.net/browse/FOROME-1305)): fix css module ([09f9386f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/09f9386f))
+* feat([FOROME-1305](https://quantori.atlassian.net/browse/FOROME-1305)): rework attribute selection ([ec5c618d](https://github.com/ForomePlatform/Anfisa-React-Client/commit/ec5c618d))
 
 ## <small>0.6.106 (7/7/2022)</small>
 
