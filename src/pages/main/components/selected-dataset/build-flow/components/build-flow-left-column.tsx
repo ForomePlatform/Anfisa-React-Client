@@ -11,19 +11,17 @@ import { CardListSection } from './card-sections/card-list-section'
 import { CardRadioListSection } from './card-sections/card-radio-list-section'
 
 export const BuildFlowLeftColumn = observer((): ReactElement => {
-  const { currentStepData, startWithOptionsList } = selectedDatasetStore
+  const { currentStepData } = selectedDatasetStore
   const history = useHistory()
   return (
     <div className={styles.buildFlow__column}>
       {currentStepData.map((data, index) => {
-        const isEditDisabled =
+        const isContinueDisabled =
           !currentStepData[index + 1] || currentStepData[index + 1].hidden
-
-        const optionsList =
-          index === 0 && !selectedDatasetStore.secondaryDatasets
-            ? startWithOptionsList
-            : data.optionsList
-
+        const isEditDisabled =
+          index === 0
+            ? !selectedDatasetStore.secondaryDatasets
+            : isContinueDisabled
         return (
           !data.hidden &&
           index < 2 && (
@@ -37,9 +35,10 @@ export const BuildFlowLeftColumn = observer((): ReactElement => {
               {data.type === 'radioList' ? (
                 <CardRadioListSection
                   title={data.title}
-                  optionsList={optionsList}
+                  optionsList={data.optionsList}
                   description={data.description}
                   isEditDisabled={isEditDisabled}
+                  isContinueDisabled={isContinueDisabled}
                   checkedValue={data.value}
                   onEdit={() => selectedDatasetStore.editWizardData(index)}
                   onContinue={item =>

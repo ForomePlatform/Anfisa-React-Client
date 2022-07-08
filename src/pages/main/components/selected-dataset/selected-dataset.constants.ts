@@ -89,19 +89,6 @@ export const exploreCandidateSteps = [
   },
 ]
 
-export const defaultWizardStep = {
-  stepNo: 1,
-  stepData: [
-    {
-      title: 'Start With',
-      type: 'radioList',
-      value: ExploreTypes.Genome,
-      hidden: false,
-      optionsList: startFlowOptionsList,
-    },
-  ],
-}
-
 export const optionsForOpenButton = [
   'Explore data or build new filter',
   'Build inclusion/exclusion critetira',

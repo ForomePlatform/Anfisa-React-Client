@@ -8,10 +8,8 @@ import dirinfoStore from '@store/dirinfo'
 import filterStore from '@store/filter'
 import { GlbPagesNames } from '@glb/glb-names'
 import {
-  defaultWizardStep,
   exploreCandidateSteps,
   exploreGenomeSteps,
-  startFlowOptionsList,
 } from './selected-dataset.constants'
 import { getNextPageData } from './selected-dataset.utils'
 
@@ -22,6 +20,7 @@ interface IWizardStepData {
   description?: string
   hidden: boolean
   optionsList: string[]
+  hasNoSecondaryDatasets?: boolean
 }
 
 interface IWizardData {
@@ -37,7 +36,7 @@ class SelectedDatasetStore {
   public selectedPreset: string = ''
   public selectedSecondaryDataset: string = ''
 
-  public wizardData: IWizardData[] = [defaultWizardStep]
+  public wizardData: IWizardData[] = []
 
   constructor() {
     makeAutoObservable(this)
@@ -45,6 +44,10 @@ class SelectedDatasetStore {
 
   public get currentStepData() {
     return this.wizardData[this.wizardData.length - 1].stepData
+  }
+
+  public createFirstWizardStep(stepData: IWizardStepData) {
+    this.wizardData = [{ stepNo: 1, stepData: [stepData] }]
   }
 
   public addWizardStep(stepData: IWizardStepData) {
@@ -117,15 +120,9 @@ class SelectedDatasetStore {
   }
 
   public clearWizardData() {
-    this.wizardData = [defaultWizardStep]
+    this.wizardData = []
     this.selectedPreset = ''
     this.selectedSecondaryDataset = ''
-  }
-
-  public get startWithOptionsList() {
-    return !this.secondaryDatasets
-      ? startFlowOptionsList.slice(0, 1)
-      : startFlowOptionsList
   }
 
   public get secondaryDatasets(): string[] | undefined {

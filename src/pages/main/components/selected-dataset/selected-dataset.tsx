@@ -1,4 +1,5 @@
 import { ReactElement } from 'react'
+import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
@@ -13,6 +14,7 @@ export const SelectedDataset = observer((): ReactElement => {
       <span className="m-auto text-grey-blue">{t('home.pickDataset')}</span>
     )
   }
+  console.log(toJS(selectedDatasetStore.wizardData))
 
   return (
     <>

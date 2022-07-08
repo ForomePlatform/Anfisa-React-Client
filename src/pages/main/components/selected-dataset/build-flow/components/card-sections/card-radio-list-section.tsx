@@ -13,6 +13,7 @@ interface ICardRadioListSectionProps {
   checkedValue: string
   description?: string
   isEditDisabled: boolean
+  isContinueDisabled: boolean
   onEdit?: () => void
   onContinue: (selectedItem: string) => void
   onOpen?: (selectedItem: string) => void
@@ -22,6 +23,7 @@ export const CardRadioListSection = ({
   title,
   optionsList,
   isEditDisabled,
+  isContinueDisabled,
   checkedValue,
   description,
   onEdit,
@@ -77,7 +79,7 @@ export const CardRadioListSection = ({
               className="flex items-center"
               checked={option === selectedItem}
               onChange={() => setSelectedItem(option)}
-              disabled={!isEditDisabled}
+              disabled={!isContinueDisabled}
             >
               <div className="ml-1.5">{option}</div>
             </Radio>
@@ -89,13 +91,13 @@ export const CardRadioListSection = ({
             <Button
               text="Open"
               onClick={() => onOpen?.(selectedItem)}
-              disabled={!isEditDisabled}
+              disabled={!isContinueDisabled}
             />
           ) : (
             <Button
               text="Continue"
               onClick={() => onContinue(selectedItem)}
-              disabled={!isEditDisabled}
+              disabled={!isContinueDisabled}
             />
           )}
         </div>
