@@ -42,6 +42,8 @@ export const createShadow = (
     background: getBackground(placement, fromColor, toColor),
   })
 
+  shadow.id = `${placement}Shadow`
+
   container.appendChild(shadow)
 
   return shadow

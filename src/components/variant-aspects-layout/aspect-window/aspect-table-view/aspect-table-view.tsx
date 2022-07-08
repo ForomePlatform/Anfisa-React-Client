@@ -1,6 +1,6 @@
 import style from './aspect-table-view.module.css'
 
-import { MouseEvent, ReactElement } from 'react'
+import { MouseEvent, ReactElement, Ref } from 'react'
 import cn from 'classnames'
 
 import { t } from '@i18n'
@@ -14,11 +14,13 @@ interface IAspectTableViewProps {
   className?: string
   aspect: ITableAspectDescriptor
   shouldAddShadow?: boolean
+  columnRef?: Ref<HTMLTableDataCellElement>
 }
 
 export const AspectTableView = ({
   className,
   aspect,
+  columnRef,
   shouldAddShadow,
 }: IAspectTableViewProps): ReactElement => {
   const { colhead, rows } = aspect
@@ -50,6 +52,7 @@ export const AspectTableView = ({
                       style.firstColumn,
                       shouldAddShadow && 'bg-blue-darkHover',
                     )}
+                    ref={!index ? columnRef : undefined}
                   >
                     <Tooltip
                       maxWidth={600}
