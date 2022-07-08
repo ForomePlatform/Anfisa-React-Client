@@ -1,5 +1,8 @@
 # Change log 
 
+## <small>0.6.110 (7/8/2022)</small>
+
+
 ## <small>0.6.109 (7/8/2022)</small>
 
 
@@ -14,6 +17,7 @@
 
 ## <small>0.6.106 (7/7/2022)</small>
 
+* feat([FOROME-1281](https://quantori.atlassian.net/browse/FOROME-1281)): make fun async ([96523ea8](https://github.com/ForomePlatform/Anfisa-React-Client/commit/96523ea8))
 
 ## <small>0.6.105 (7/6/2022)</small>
 
@@ -52,6 +56,7 @@
 ## <small>0.6.95 (7/6/2022)</small>
 
 * fix([FOROME-1269](https://quantori.atlassian.net/browse/FOROME-1269)): input-numeric with react-number-format (#777) ([bd053091](https://github.com/ForomePlatform/Anfisa-React-Client/commit/bd053091))
+* feat([FOROME-1281](https://quantori.atlassian.net/browse/FOROME-1281)): add clear all button ([927876d3](https://github.com/ForomePlatform/Anfisa-React-Client/commit/927876d3))
 
 ## <small>0.6.94 (7/6/2022)</small>
 
