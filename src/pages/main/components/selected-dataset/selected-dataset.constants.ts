@@ -89,6 +89,11 @@ export const exploreCandidateSteps = [
   },
 ]
 
+export const stepsForXlDatasets = {
+  'Whole genome/exome': exploreGenomeSteps,
+  'Use an existing candidate set': exploreCandidateSteps,
+}
+
 export const optionsForOpenButton = [
   'Explore data or build new filter',
   'Build inclusion/exclusion critetira',

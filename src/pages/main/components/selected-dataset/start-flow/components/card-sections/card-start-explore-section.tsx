@@ -8,26 +8,12 @@ import { Button } from '@ui/button'
 import { CardTitle } from '@ui/card'
 import { Radio } from '@ui/radio'
 import {
-  exploreCandidateSteps,
-  exploreGenomeSteps,
   startFlowOptionsList,
+  stepsForXlDatasets,
 } from '../../../selected-dataset.constants'
 import selectedDatasetStore from '../../../selected-dataset.store'
 
 export const CardStartExploreSection = observer((): ReactElement => {
-  // const handleContinue = (item: string) => {
-  //   selectedDatasetStore.toggleIsBuildFlowVisible(true)
-
-  //   selectedDatasetStore.updateDefaultWizardStep(item)
-  //   selectedDatasetStore.setExploreType(item)
-
-  //   if (item === ExploreTypes.Genome) {
-  //     selectedDatasetStore.addWizardStep(exploreGenomeSteps[0])
-  //   } else {
-  //     selectedDatasetStore.addWizardStep(exploreCandidateSteps[0])
-  //   }
-  // }
-
   const [selectedValue, setSelectedValue] = useState(
     datasetStore.isXL ? ExploreTypes.Genome : ExploreTypes.Candidate,
   )
@@ -39,8 +25,8 @@ export const CardStartExploreSection = observer((): ReactElement => {
   const onContinue = () => {
     selectedDatasetStore.toggleIsBuildFlowVisible(true)
 
-    // selectedDatasetStore.updateDefaultWizardStep(selectedValue)
     selectedDatasetStore.setExploreType(selectedValue)
+
     selectedDatasetStore.createFirstWizardStep({
       title: 'Start with',
       value: selectedValue,
@@ -49,11 +35,8 @@ export const CardStartExploreSection = observer((): ReactElement => {
       hidden: false,
       hasNoSecondaryDatasets: !selectedDatasetStore.secondaryDatasets,
     })
-    if (selectedValue === ExploreTypes.Genome) {
-      selectedDatasetStore.addWizardStep(exploreGenomeSteps[0])
-    } else {
-      selectedDatasetStore.addWizardStep(exploreCandidateSteps[0])
-    }
+
+    selectedDatasetStore.addWizardStep(stepsForXlDatasets[selectedValue][0])
   }
 
   useEffect(() => {

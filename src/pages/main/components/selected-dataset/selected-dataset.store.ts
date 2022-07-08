@@ -7,10 +7,7 @@ import { datasetStore } from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
 import filterStore from '@store/filter'
 import { GlbPagesNames } from '@glb/glb-names'
-import {
-  exploreCandidateSteps,
-  exploreGenomeSteps,
-} from './selected-dataset.constants'
+import { stepsForXlDatasets } from './selected-dataset.constants'
 import { getNextPageData } from './selected-dataset.utils'
 
 interface IWizardStepData {
@@ -90,33 +87,19 @@ class SelectedDatasetStore {
         this.resetFirstWizardSteps()
       }
     } else {
-      if (this.exploreType === ExploreTypes.Genome) {
-        this.addWizardStep(exploreGenomeSteps[index])
-      } else {
-        selectedItem === ExploreCandidateTypes.ApplyFilter &&
-          this.addWizardStep(exploreCandidateSteps[index])
-      }
+      this.addWizardStep(stepsForXlDatasets[this.exploreType][index])
     }
   }
 
   public selectDataset(value: string, index: number) {
     this.setSecondaryDataset(value)
-    this.addWizardStep(exploreCandidateSteps[index])
+    this.addWizardStep(stepsForXlDatasets[this.exploreType][index])
   }
 
   public resetFirstWizardSteps() {
-    if (this.exploreType === ExploreTypes.Genome) {
-      this.addWizardStep(exploreGenomeSteps[0])
-    } else {
-      this.addWizardStep(exploreCandidateSteps[0])
-      if (this.selectedSecondaryDataset) {
-        this.addWizardStep(exploreCandidateSteps[1])
-      }
-    }
-  }
-
-  public updateDefaultWizardStep(item: string) {
-    this.wizardData[0].stepData[0].value = item
+    this.selectedSecondaryDataset
+      ? this.addWizardStep(stepsForXlDatasets[this.exploreType][1])
+      : this.addWizardStep(stepsForXlDatasets[this.exploreType][0])
   }
 
   public clearWizardData() {
