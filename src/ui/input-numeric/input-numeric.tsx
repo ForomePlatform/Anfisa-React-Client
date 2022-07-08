@@ -4,7 +4,6 @@ import { KeyboardEvent, ReactElement, useEffect, useState } from 'react'
 import NumberFormat, { NumberFormatValues } from 'react-number-format'
 import cn, { Argument } from 'classnames'
 
-import { formatNumber } from '@core/format-number'
 import { checkMaxMin } from './input-numeric.utils'
 
 const KEYCODE_UP: number = 38
@@ -48,10 +47,8 @@ export const InputNumeric = ({
   }, [value])
 
   function checkValue(value: number): number {
-    const limitedNum = checkMaxMin(value, maximal, minimal)
-    return isFloat
-      ? +formatNumber(limitedNum).replace(',', '.')
-      : +limitedNum.toFixed(0)
+    const num = isFloat ? value.toPrecision(12) : value
+    return checkMaxMin(+num, maximal, minimal)
   }
 
   function changeValue(newValue: number | null) {
