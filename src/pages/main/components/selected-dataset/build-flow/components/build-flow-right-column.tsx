@@ -41,7 +41,7 @@ export const BuildFlowRightColumn = observer((): ReactElement => {
                   isEditDisabled={isEditDisabled}
                   isContinueDisabled={isEditDisabled}
                   checkedValue={data.value}
-                  onEdit={() => selectedDatasetStore.editWizardData(index)}
+                  onEdit={() => selectedDatasetStore.hideNextSteps(index)}
                   onContinue={item =>
                     selectedDatasetStore.continueEditWizardData(index, item)
                   }

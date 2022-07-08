@@ -36,7 +36,15 @@ export const CardStartExploreSection = observer((): ReactElement => {
       hasNoSecondaryDatasets: !selectedDatasetStore.secondaryDatasets,
     })
 
-    selectedDatasetStore.addWizardStep(stepsForXlDatasets[selectedValue][0])
+    if (datasetStore.isXL) {
+      selectedDatasetStore.addWizardStep(stepsForXlDatasets[selectedValue][0])
+    } else {
+      if (selectedDatasetStore.secondaryDatasets) {
+        selectedDatasetStore.addWizardStep(stepsForXlDatasets[selectedValue][0])
+      } else {
+        selectedDatasetStore.addWizardStep(stepsForXlDatasets[selectedValue][1])
+      }
+    }
   }
 
   useEffect(() => {

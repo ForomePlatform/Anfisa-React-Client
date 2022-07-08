@@ -94,6 +94,10 @@ export const stepsForXlDatasets = {
   'Use an existing candidate set': exploreCandidateSteps,
 }
 
+export const stepsForWsDatasets = {
+  'Use an existing candidate set': exploreCandidateSteps,
+}
+
 export const optionsForOpenButton = [
   'Explore data or build new filter',
   'Build inclusion/exclusion critetira',

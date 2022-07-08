@@ -60,35 +60,44 @@ class SelectedDatasetStore {
     ]
   }
 
-  public editWizardData(index: number) {
-    this.currentStepData.forEach((item, currIndex) => {
-      if (currIndex > index) {
-        item.hidden = true
-      }
-    })
+  public hideNextSteps(index: number) {
+    this.currentStepData.forEach(
+      (item, currIndex) => (item.hidden = currIndex > index),
+    )
+  }
+
+  public showNextSteps() {
+    this.currentStepData.forEach(item => (item.hidden = false))
+  }
+
+  public resetWizard(selectedItem: string, index: number) {
+    this.selectedSecondaryDataset = ''
+    this.setExploreType(selectedItem)
+    this.wizardData.length = index + 1
+    this.resetFirstWizardSteps()
   }
 
   public continueEditWizardData(index: number, selectedItem: string) {
     const hasNextStep = this.currentStepData[index + 1]
-    this.currentStepData[index].value = selectedItem
+    const shouldResetWizard = index === 0 && selectedItem !== this.exploreType
+    const isSpecialDataset =
+      !datasetStore.isXL &&
+      selectedItem === ExploreCandidateTypes.ApplyFilter &&
+      !this.secondaryDatasets
 
     if (hasNextStep && hasNextStep.hidden) {
-      this.currentStepData.forEach((item, currIndex) => {
-        if (currIndex > index) {
-          item.hidden = false
-        }
-      })
+      this.showNextSteps()
 
-      this.currentStepData[index].value = selectedItem
-
-      if (index === 0 && selectedItem !== this.exploreType) {
-        this.setExploreType(selectedItem)
-        this.wizardData.length = index + 1
-        this.resetFirstWizardSteps()
+      if (shouldResetWizard) {
+        this.resetWizard(selectedItem, index)
       }
     } else {
-      this.addWizardStep(stepsForXlDatasets[this.exploreType][index])
+      isSpecialDataset
+        ? this.addWizardStep(stepsForXlDatasets[this.exploreType][2])
+        : this.addWizardStep(stepsForXlDatasets[this.exploreType][index])
     }
+
+    this.currentStepData[index].value = selectedItem
   }
 
   public selectDataset(value: string, index: number) {
