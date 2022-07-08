@@ -1,4 +1,8 @@
 # Change log 
+* fix([FOROME-1290](https://quantori.atlassian.net/browse/FOROME-1290)): add local tag for note (#795) ([705b10ce](https://github.com/ForomePlatform/Anfisa-React-Client/commit/705b10ce))
+
+## <small>0.6.106 (7/7/2022)</small>
+
 
 ## <small>0.6.105 (7/6/2022)</small>
 
