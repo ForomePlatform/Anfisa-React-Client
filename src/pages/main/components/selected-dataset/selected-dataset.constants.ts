@@ -43,3 +43,68 @@ export const relevantPresetsList = [
 
 export const datasetDescription =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+
+export const exploreGenomeSteps = [
+  {
+    title: "What's next?",
+    type: 'radioList',
+    value: ExploreGenomeTypes.ACMG,
+    hidden: false,
+    optionsList: whatsNextOptionsList,
+  },
+
+  {
+    title: 'Relevant presets',
+    type: 'list',
+    value: '',
+    hidden: false,
+    optionsList: relevantPresetsList,
+  },
+]
+
+export const exploreCandidateSteps = [
+  {
+    title: 'Existing candidate set',
+    type: 'list',
+    value: '',
+    hidden: false,
+    optionsList: [],
+  },
+
+  {
+    title: '',
+    type: 'radioList',
+    description: datasetDescription,
+    value: ExploreCandidateTypes.ViewAllVariants,
+    hidden: false,
+    optionsList: exploreCandidateOptionsList,
+  },
+
+  {
+    title: 'Additional preset filters',
+    type: 'list',
+    value: '',
+    hidden: false,
+    optionsList: relevantPresetsList,
+  },
+]
+
+export const defaultWizardStep = {
+  stepNo: 1,
+  stepData: [
+    {
+      title: 'Start With',
+      type: 'radioList',
+      value: ExploreTypes.Genome,
+      hidden: false,
+      optionsList: startFlowOptionsList,
+    },
+  ],
+}
+
+export const optionsForOpenButton = [
+  'Explore data or build new filter',
+  'Build inclusion/exclusion critetira',
+  'View all variants',
+  'Explore data or build new filter',
+]

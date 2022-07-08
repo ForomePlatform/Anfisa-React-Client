@@ -7,24 +7,125 @@ import { datasetStore } from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
 import filterStore from '@store/filter'
 import { GlbPagesNames } from '@glb/glb-names'
+import {
+  defaultWizardStep,
+  exploreCandidateSteps,
+  exploreGenomeSteps,
+  startFlowOptionsList,
+} from './selected-dataset.constants'
 import { getNextPageData } from './selected-dataset.utils'
+
+interface IWizardStepData {
+  title: string
+  type: string
+  value: string
+  description?: string
+  hidden: boolean
+  optionsList: string[]
+}
+
+interface IWizardData {
+  stepNo: number
+  stepData: IWizardStepData[]
+}
+
+type TExploreSubTypes = ExploreGenomeTypes | ExploreCandidateTypes
 
 class SelectedDatasetStore {
   public isBuildFlowVisible = false
-  public isEditionExploreType = false
-  public isEditionExploreGenome = false
-  public isEditionExploreCandidate = false
-
   public exploreType: ExploreTypes = ExploreTypes.Genome
-  public exploreGenomeType: ExploreGenomeTypes = ExploreGenomeTypes.ACMG
-  public exploreCandidateType: ExploreCandidateTypes =
-    ExploreCandidateTypes.ViewAllVariants
-
   public selectedPreset: string = ''
   public selectedSecondaryDataset: string = ''
 
+  public wizardData: IWizardData[] = [defaultWizardStep]
+
   constructor() {
     makeAutoObservable(this)
+  }
+
+  public get currentStepData() {
+    return this.wizardData[this.wizardData.length - 1].stepData
+  }
+
+  public addWizardStep(stepData: IWizardStepData) {
+    this.wizardData = [
+      ...this.wizardData,
+      {
+        stepNo: this.wizardData.length + 1,
+        stepData: [
+          ...this.wizardData[this.wizardData.length - 1].stepData,
+          stepData,
+        ],
+      },
+    ]
+  }
+
+  public editWizardData(index: number) {
+    this.currentStepData.forEach((item, currIndex) => {
+      if (currIndex > index) {
+        item.hidden = true
+      }
+    })
+  }
+
+  public continueEditWizardData(index: number, selectedItem: string) {
+    const hasNextStep = this.currentStepData[index + 1]
+    this.currentStepData[index].value = selectedItem
+
+    if (hasNextStep && hasNextStep.hidden) {
+      this.currentStepData.forEach((item, currIndex) => {
+        if (currIndex > index) {
+          item.hidden = false
+        }
+      })
+
+      this.currentStepData[index].value = selectedItem
+
+      if (index === 0 && selectedItem !== this.exploreType) {
+        this.setExploreType(selectedItem)
+        this.wizardData.length = index + 1
+        this.resetFirstWizardSteps()
+      }
+    } else {
+      if (this.exploreType === ExploreTypes.Genome) {
+        this.addWizardStep(exploreGenomeSteps[index])
+      } else {
+        selectedItem === ExploreCandidateTypes.ApplyFilter &&
+          this.addWizardStep(exploreCandidateSteps[index])
+      }
+    }
+  }
+
+  public selectDataset(value: string, index: number) {
+    this.setSecondaryDataset(value)
+    this.addWizardStep(exploreCandidateSteps[index])
+  }
+
+  public resetFirstWizardSteps() {
+    if (this.exploreType === ExploreTypes.Genome) {
+      this.addWizardStep(exploreGenomeSteps[0])
+    } else {
+      this.addWizardStep(exploreCandidateSteps[0])
+      if (this.selectedSecondaryDataset) {
+        this.addWizardStep(exploreCandidateSteps[1])
+      }
+    }
+  }
+
+  public updateDefaultWizardStep(item: string) {
+    this.wizardData[0].stepData[0].value = item
+  }
+
+  public clearWizardData() {
+    this.wizardData = [defaultWizardStep]
+    this.selectedPreset = ''
+    this.selectedSecondaryDataset = ''
+  }
+
+  public get startWithOptionsList() {
+    return !this.secondaryDatasets
+      ? startFlowOptionsList.slice(0, 1)
+      : startFlowOptionsList
   }
 
   public get secondaryDatasets(): string[] | undefined {
@@ -33,17 +134,6 @@ class SelectedDatasetStore {
 
   public get datasetName(): string {
     return datasetStore.datasetName
-  }
-  public get isExploreGenomeTypeVisible(): boolean {
-    return (
-      this.exploreType === ExploreTypes.Genome && !this.isEditionExploreType
-    )
-  }
-
-  public get isExploreCandidateTypeVisible(): boolean {
-    return (
-      this.exploreType === ExploreTypes.Candidate && !this.isEditionExploreType
-    )
   }
 
   public toggleIsBuildFlowVisible(value: boolean) {
@@ -54,14 +144,6 @@ class SelectedDatasetStore {
     this.exploreType = value as ExploreTypes
   }
 
-  public setExploreGenomeType(value: string) {
-    this.exploreGenomeType = value as ExploreGenomeTypes
-  }
-
-  public setExploreCandidateType(value: string) {
-    this.exploreCandidateType = value as ExploreCandidateTypes
-  }
-
   public setPreset(value: string) {
     this.selectedPreset = value
   }
@@ -70,33 +152,13 @@ class SelectedDatasetStore {
     this.selectedSecondaryDataset = value
   }
 
-  public toggleIsEditionExploreType(value: boolean) {
-    this.isEditionExploreType = value
-    this.setPreset('')
-    this.setSecondaryDataset('')
-    this.toggleIsEditionExploreGenome(false)
-    this.setExploreCandidateType(ExploreCandidateTypes.ViewAllVariants)
-    this.setExploreGenomeType(ExploreGenomeTypes.ACMG)
-    this.toggleIsEditionExploreCandidate(false)
-  }
-
-  public toggleIsEditionExploreGenome(value: boolean) {
-    this.isEditionExploreGenome = value
-    this.setPreset('')
-  }
-
-  public toggleIsEditionExploreCandidate(value: boolean) {
-    this.isEditionExploreCandidate = value
-  }
-
-  public openNextPage(history: any) {
-    const selectedExploreType =
-      this.exploreType === ExploreTypes.Genome
-        ? this.exploreGenomeType
-        : this.exploreCandidateType
+  public openNextPage(history: any, exploreSubType?: string) {
+    const subType = exploreSubType
+      ? exploreSubType
+      : this.currentStepData[this.currentStepData.length - 2].value
 
     const nextPageData = getNextPageData(
-      selectedExploreType,
+      subType as TExploreSubTypes,
       this.selectedSecondaryDataset,
     )
 

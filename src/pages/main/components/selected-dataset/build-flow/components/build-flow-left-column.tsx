@@ -1,88 +1,69 @@
 import styles from '../build-flow.module.css'
 
 import { ReactElement } from 'react'
+import { useHistory } from 'react-router'
+import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
-import { t } from '@i18n'
 import { Card } from '@ui/card'
-import {
-  startFlowOptionsList,
-  whatsNextOptionsList,
-} from '../../selected-dataset.constants'
 import selectedDatasetStore from '../../selected-dataset.store'
 import { CardListSection } from './card-sections/card-list-section'
 import { CardRadioListSection } from './card-sections/card-radio-list-section'
 
-interface IBuildFlowLeftColumnProps {
-  onContinue: () => void
-}
+export const BuildFlowLeftColumn = observer((): ReactElement => {
+  const { currentStepData, startWithOptionsList } = selectedDatasetStore
+  const history = useHistory()
+  return (
+    <div className={styles.buildFlow__column}>
+      {currentStepData.map((data, index) => {
+        const isEditDisabled =
+          !currentStepData[index + 1] || currentStepData[index + 1].hidden
 
-export const BuildFlowLeftColumn = observer(
-  ({ onContinue }: IBuildFlowLeftColumnProps): ReactElement => {
-    const isStartWithEditDisabled =
-      !selectedDatasetStore.secondaryDatasets ||
-      !!selectedDatasetStore.isEditionExploreType
+        const optionsList =
+          index === 0 && !selectedDatasetStore.secondaryDatasets
+            ? startWithOptionsList
+            : data.optionsList
 
-    const startWithOptionsList = !selectedDatasetStore.secondaryDatasets
-      ? startFlowOptionsList.slice(0, 1)
-      : startFlowOptionsList
-
-    const { secondaryDatasets } = selectedDatasetStore
-
-    const { isExploreGenomeTypeVisible, isExploreCandidateTypeVisible } =
-      selectedDatasetStore
-    return (
-      <div className={styles.buildFlow__column}>
-        <Card>
-          <CardRadioListSection
-            title={t('home.startFlow.startWith')}
-            optionsList={startWithOptionsList}
-            isContinueDisabled={!selectedDatasetStore.isEditionExploreType}
-            isEditDisabled={isStartWithEditDisabled}
-            isRadioDisabled={!selectedDatasetStore.isEditionExploreType}
-            checkedValue={selectedDatasetStore.exploreType}
-            onEdit={() => selectedDatasetStore.toggleIsEditionExploreType(true)}
-            onChange={value => selectedDatasetStore.setExploreType(value)}
-            onContinue={onContinue}
-          />
-        </Card>
-
-        {isExploreCandidateTypeVisible && (
-          <Card className="mt-4 px-0">
-            <CardListSection
-              title={t('home.buildFlow.candidateSet')}
-              optionsList={secondaryDatasets}
-              onSelect={value =>
-                selectedDatasetStore.setSecondaryDataset(value)
-              }
-              selectedItem={selectedDatasetStore.selectedSecondaryDataset}
-              style={{ maxHeight: 'calc(100vh - 403px)' }}
-            />
-          </Card>
-        )}
-
-        {isExploreGenomeTypeVisible && (
-          <Card className="mt-4">
-            <CardRadioListSection
-              title={t('home.buildFlow.whatsNext')}
-              optionsList={whatsNextOptionsList}
-              isContinueDisabled={!!selectedDatasetStore.isEditionExploreGenome}
-              isEditDisabled={!selectedDatasetStore.isEditionExploreGenome}
-              isRadioDisabled={!!selectedDatasetStore.isEditionExploreGenome}
-              checkedValue={selectedDatasetStore.exploreGenomeType}
-              onEdit={() =>
-                selectedDatasetStore.toggleIsEditionExploreGenome(false)
-              }
-              onChange={value =>
-                selectedDatasetStore.setExploreGenomeType(value)
-              }
-              onContinue={() =>
-                selectedDatasetStore.toggleIsEditionExploreGenome(true)
-              }
-            />
-          </Card>
-        )}
-      </div>
-    )
-  },
-)
+        return (
+          !data.hidden &&
+          index < 2 && (
+            <Card
+              key={data.title}
+              className={cn(
+                index !== 0 && 'mt-4',
+                data.type === 'list' && 'px-0',
+              )}
+            >
+              {data.type === 'radioList' ? (
+                <CardRadioListSection
+                  title={data.title}
+                  optionsList={optionsList}
+                  description={data.description}
+                  isEditDisabled={isEditDisabled}
+                  checkedValue={data.value}
+                  onEdit={() => selectedDatasetStore.editWizardData(index)}
+                  onContinue={item =>
+                    selectedDatasetStore.continueEditWizardData(index, item)
+                  }
+                  onOpen={item =>
+                    selectedDatasetStore.openNextPage(history, item)
+                  }
+                />
+              ) : (
+                <CardListSection
+                  title={data.title}
+                  optionsList={selectedDatasetStore.secondaryDatasets}
+                  onSelect={value =>
+                    selectedDatasetStore.selectDataset(value, index)
+                  }
+                  selectedItem={selectedDatasetStore.selectedSecondaryDataset}
+                  style={{ maxHeight: 'calc(100vh - 405px)' }}
+                />
+              )}
+            </Card>
+          )
+        )
+      })}
+    </div>
+  )
+})

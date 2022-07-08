@@ -2,95 +2,72 @@ import styles from '../build-flow.module.css'
 
 import { ReactElement } from 'react'
 import { useHistory } from 'react-router'
+import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
-import { ExploreCandidateTypes } from '@core/enum/explore-candidate-types-enum'
-import { ExploreTypes } from '@core/enum/explore-types-enum'
-import { t } from '@i18n'
+import { datasetStore } from '@store/dataset'
 import { Card } from '@ui/card'
-import {
-  datasetDescription,
-  exploreCandidateOptionsList,
-  relevantPresetsList,
-} from '../../selected-dataset.constants'
 import selectedDatasetStore from '../../selected-dataset.store'
 import { CardListSection } from './card-sections/card-list-section'
 import { CardRadioListSection } from './card-sections/card-radio-list-section'
 
 export const BuildFlowRightColumn = observer((): ReactElement => {
-  const {
-    selectedSecondaryDataset,
-    datasetName,
-    isEditionExploreCandidate,
-    isEditionExploreGenome,
-    exploreCandidateType,
-    isEditionExploreType,
-  } = selectedDatasetStore
-
+  const { currentStepData } = selectedDatasetStore
   const history = useHistory()
-
-  const shouldShowAdditionalPresetChoice =
-    exploreCandidateType === ExploreCandidateTypes.ApplyFilter &&
-    isEditionExploreCandidate
-
-  const handleOpen = () => {
-    exploreCandidateType === ExploreCandidateTypes.ApplyFilter &&
-    !isEditionExploreCandidate
-      ? selectedDatasetStore.toggleIsEditionExploreCandidate(true)
-      : selectedDatasetStore.openNextPage(history)
-  }
-
-  const isExploreCandidate =
-    selectedDatasetStore.exploreType === ExploreTypes.Candidate
+  const dsName =
+    selectedDatasetStore.selectedSecondaryDataset || datasetStore.datasetName
 
   return (
     <div className={styles.buildFlow__column}>
-      {isExploreCandidate && !isEditionExploreType && (
-        <Card>
-          <CardRadioListSection
-            title={selectedSecondaryDataset || datasetName}
-            optionsList={exploreCandidateOptionsList}
-            description={datasetDescription}
-            isContinueDisabled={selectedDatasetStore.isEditionExploreCandidate}
-            isRadioDisabled={!!selectedDatasetStore.isEditionExploreCandidate}
-            isEditDisabled={!selectedDatasetStore.isEditionExploreCandidate}
-            checkedValue={selectedDatasetStore.exploreCandidateType}
-            onEdit={() =>
-              selectedDatasetStore.toggleIsEditionExploreCandidate(false)
-            }
-            onChange={value =>
-              selectedDatasetStore.setExploreCandidateType(value)
-            }
-            onContinue={handleOpen}
-          />
-        </Card>
-      )}
+      {currentStepData.map((data, index) => {
+        const isEditDisabled =
+          !currentStepData[index + 1] || currentStepData[index + 1].hidden
 
-      {isEditionExploreGenome && (
-        <Card className="px-0">
-          <CardListSection
-            title={t('home.buildFlow.relevantPresets')}
-            optionsList={relevantPresetsList}
-            onSelect={value => selectedDatasetStore.setPreset(value)}
-            selectedItem={selectedDatasetStore.selectedPreset}
-            onOpen={handleOpen}
-            style={{ maxHeight: 'calc(100vh - 265px)' }}
-          />
-        </Card>
-      )}
-
-      {shouldShowAdditionalPresetChoice && (
-        <Card className="mt-4">
-          <CardListSection
-            title={t('home.buildFlow.additionalPresetFilter')}
-            optionsList={relevantPresetsList}
-            onSelect={value => selectedDatasetStore.setPreset(value)}
-            selectedItem={selectedDatasetStore.selectedPreset}
-            onOpen={handleOpen}
-            style={{ maxHeight: 'calc(100vh - 460px)' }}
-          />
-        </Card>
-      )}
+        return (
+          !data.hidden &&
+          index > 1 && (
+            <Card
+              key={data.title}
+              className={cn(
+                index !== 2 && 'mt-4',
+                data.type === 'list' && 'px-0',
+              )}
+            >
+              {data.type === 'radioList' ? (
+                <CardRadioListSection
+                  title={dsName}
+                  optionsList={data.optionsList}
+                  description={data.description}
+                  isEditDisabled={isEditDisabled}
+                  checkedValue={data.value}
+                  onEdit={() => selectedDatasetStore.editWizardData(index)}
+                  onContinue={item =>
+                    selectedDatasetStore.continueEditWizardData(index, item)
+                  }
+                  onOpen={item =>
+                    selectedDatasetStore.openNextPage(history, item)
+                  }
+                />
+              ) : (
+                <CardListSection
+                  title={data.title}
+                  optionsList={
+                    data.optionsList || selectedDatasetStore.secondaryDatasets
+                  }
+                  onSelect={value => selectedDatasetStore.setPreset(value)}
+                  selectedItem={selectedDatasetStore.selectedPreset}
+                  onOpen={() => selectedDatasetStore.openNextPage(history)}
+                  style={
+                    data.title === 'Relevant presets'
+                      ? { maxHeight: 'calc(100vh - 267px)' }
+                      : { maxHeight: 'calc(100vh - 660px)' }
+                  }
+                />
+              )}
+            </Card>
+          )
+        )
+      })}
     </div>
   )
 })

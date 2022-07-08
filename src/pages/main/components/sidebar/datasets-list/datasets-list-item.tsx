@@ -50,6 +50,7 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
 
       if (selectedDatasetStore.isBuildFlowVisible) {
         selectedDatasetStore.toggleIsBuildFlowVisible(false)
+        selectedDatasetStore.clearWizardData()
       }
 
       if (selectedDatasetStore.exploreType === ExploreTypes.Candidate) {

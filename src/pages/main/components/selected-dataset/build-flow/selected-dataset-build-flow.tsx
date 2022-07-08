@@ -12,12 +12,7 @@ export const SelectedDatasetBuildFlow = observer(
   ({ goBack }: { goBack: () => void }): ReactElement => {
     const handleGoBack = () => {
       goBack()
-      selectedDatasetStore.toggleIsEditionExploreType(false)
-    }
-
-    const handleContinueBuildFlow = () => {
-      selectedDatasetStore.toggleIsBuildFlowVisible(true)
-      selectedDatasetStore.toggleIsEditionExploreType(false)
+      selectedDatasetStore.clearWizardData()
     }
 
     return (
@@ -26,7 +21,7 @@ export const SelectedDatasetBuildFlow = observer(
           <BuildFlowHeader goBack={handleGoBack} />
 
           <div className="flex">
-            <BuildFlowLeftColumn onContinue={handleContinueBuildFlow} />
+            <BuildFlowLeftColumn />
 
             <BuildFlowRightColumn />
           </div>
