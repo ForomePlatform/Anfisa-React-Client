@@ -1,5 +1,8 @@
 # Change log 
 
+## <small>0.6.108 (7/8/2022)</small>
+
+
 ## <small>0.6.107 (7/8/2022)</small>
 
 * fix([FOROME-1290](https://quantori.atlassian.net/browse/FOROME-1290)): add local tag for note (#795) ([705b10ce](https://github.com/ForomePlatform/Anfisa-React-Client/commit/705b10ce))
@@ -21,6 +24,8 @@
 
 ## <small>0.6.101 (7/6/2022)</small>
 
+* feat([FOROME-97](https://quantori.atlassian.net/browse/FOROME-97)): remove dependency ([f33ed180](https://github.com/ForomePlatform/Anfisa-React-Client/commit/f33ed180))
+* feat([FOROME-97](https://quantori.atlassian.net/browse/FOROME-97)): implement scroll shadow component in drawer ([c82c3ceb](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c82c3ceb))
 
 ## <small>0.6.100 (7/6/2022)</small>
 
