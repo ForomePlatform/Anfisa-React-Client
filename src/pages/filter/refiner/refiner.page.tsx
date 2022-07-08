@@ -1,6 +1,6 @@
 import styles from './refiner.page.module.css'
 
-import { ReactElement } from 'react'
+import { ReactElement, useEffect } from 'react'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
@@ -42,6 +42,10 @@ export const RefinerPage = observer((): ReactElement => {
   useDatasetName()
 
   filterPresetsStore.observeHistory.useHook()
+
+  useEffect(() => {
+    return () => filterStore.actionHistory.resetHistory()
+  }, [])
 
   return (
     <div className={styles.refinerPage}>
