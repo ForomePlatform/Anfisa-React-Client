@@ -79,7 +79,15 @@ class SelectedDatasetStore {
     this.selectedSecondaryDataset = ''
     this.setExploreType(selectedItem)
     this.wizardData.length = index + 1
-    this.resetFirstWizardSteps()
+    this.wizardData[0].stepData.length = index + 1
+    this.resetFirstWizardSteps(selectedItem)
+  }
+
+  public resetFirstWizardSteps(selectedItem: string) {
+    const newExploreType = selectedItem as ExploreTypes
+    this.selectedSecondaryDataset
+      ? this.addWizardStep(stepsForXlDatasets[newExploreType][1])
+      : this.addWizardStep(stepsForXlDatasets[newExploreType][0])
   }
 
   public continueEditWizardData(index: number, selectedItem: string) {
@@ -95,6 +103,7 @@ class SelectedDatasetStore {
 
       if (shouldResetWizard) {
         this.resetWizard(selectedItem, index)
+        return
       }
     } else {
       isSpecialDataset
@@ -108,12 +117,6 @@ class SelectedDatasetStore {
   public selectDataset(value: string, index: number) {
     this.setSecondaryDataset(value)
     this.addWizardStep(stepsForXlDatasets[this.exploreType][index])
-  }
-
-  public resetFirstWizardSteps() {
-    this.selectedSecondaryDataset
-      ? this.addWizardStep(stepsForXlDatasets[this.exploreType][1])
-      : this.addWizardStep(stepsForXlDatasets[this.exploreType][0])
   }
 
   public clearWizardData() {
