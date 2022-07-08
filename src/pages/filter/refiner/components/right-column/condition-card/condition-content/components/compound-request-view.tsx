@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import cn from 'classnames'
+import cn, { Argument } from 'classnames'
 
 import { approxOptions } from '@core/approxOptions'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
@@ -8,7 +8,7 @@ import { getDefaultProblemGroups } from '../utils/get-default-problem-groups'
 import { getScenarioValue } from '../utils/get-scenario-value'
 
 interface ICompoundRequestViewProps {
-  className?: string
+  className?: Argument
   filterContent: string[]
   filterExpression: ICompoundRequestArgs
 }
@@ -25,7 +25,7 @@ export const CompoundRequestView = ({
   const request = filterExpression['request']
 
   return (
-    <div className={className}>
+    <div className={cn(className)}>
       <div>
         <div className="text-grey-blue">Approx</div>
 

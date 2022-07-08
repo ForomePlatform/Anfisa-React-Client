@@ -1,5 +1,5 @@
 import { ReactElement } from 'react'
-import cn from 'classnames'
+import cn, { Argument } from 'classnames'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ICustomInheritanceModeArgs } from '@service-providers/common/common.interface'
@@ -7,7 +7,7 @@ import { getDefaultProblemGroups } from '../utils/get-default-problem-groups'
 import { getScenarioValue } from '../utils/get-scenario-value'
 
 interface ICustomInheritanceModeViewProps {
-  className?: string
+  className?: Argument
   filterContent: string[]
   filterExpression: ICustomInheritanceModeArgs
 }
@@ -21,7 +21,7 @@ export const CustomInheritanceModeView = ({
   )
 
   return (
-    <div className={className}>
+    <div className={cn(className)}>
       <div>
         <div className="text-grey-blue">Scenario</div>
 
