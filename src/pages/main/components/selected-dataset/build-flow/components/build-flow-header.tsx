@@ -23,10 +23,22 @@ export const BuildFlowHeader = observer(
 
     const { selectedSecondaryDataset, datasetName } = selectedDatasetStore
 
+    const handleGoBack = () => {
+      if (selectedDatasetStore.actionHistory.historyIndex === 1) {
+        goBack()
+        selectedDatasetStore.actionHistory.resetHistory()
+      } else {
+        selectedDatasetStore.actionHistory.goBackward()
+      }
+    }
+
     return (
       <div className={styles.buildFlow__header}>
         <div className="flex">
-          <div onClick={goBack} className={styles.buildFlow__header__button}>
+          <div
+            onClick={handleGoBack}
+            className={styles.buildFlow__header__button}
+          >
             <Icon
               name="Arrow"
               className={styles.buildFlow__header__button__icon}

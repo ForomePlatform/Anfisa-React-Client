@@ -3,6 +3,7 @@ import { makeAutoObservable } from 'mobx'
 import { ExploreCandidateTypes } from '@core/enum/explore-candidate-types-enum'
 import { ExploreGenomeTypes } from '@core/enum/explore-genome-types-enum'
 import { ExploreTypes } from '@core/enum/explore-types-enum'
+import { ActionsHistoryStore } from '@store/actions-history'
 import { datasetStore } from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
 import filterStore from '@store/filter'
@@ -34,6 +35,9 @@ class SelectedDatasetStore {
   public selectedSecondaryDataset: string = ''
 
   public wizardData: IWizardData[] = []
+  public actionHistory = new ActionsHistoryStore<IWizardData[]>(
+    wizardData => (this.wizardData = wizardData),
+  )
 
   constructor() {
     makeAutoObservable(this)
@@ -45,19 +49,20 @@ class SelectedDatasetStore {
 
   public createFirstWizardStep(stepData: IWizardStepData) {
     this.wizardData = [{ stepNo: 1, stepData: [stepData] }]
+    this.actionHistory.addHistory([{ stepNo: 1, stepData: [stepData] }])
   }
 
   public addWizardStep(stepData: IWizardStepData) {
-    this.wizardData = [
-      ...this.wizardData,
-      {
-        stepNo: this.wizardData.length + 1,
-        stepData: [
-          ...this.wizardData[this.wizardData.length - 1].stepData,
-          stepData,
-        ],
-      },
-    ]
+    const nextStep = {
+      stepNo: this.wizardData.length + 1,
+      stepData: [
+        ...this.wizardData[this.wizardData.length - 1].stepData,
+        stepData,
+      ],
+    }
+    this.wizardData = [...this.wizardData, nextStep]
+
+    this.actionHistory.addHistory([nextStep])
   }
 
   public hideNextSteps(index: number) {
