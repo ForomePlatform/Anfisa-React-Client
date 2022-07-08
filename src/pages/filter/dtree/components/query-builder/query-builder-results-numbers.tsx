@@ -46,6 +46,13 @@ export const QueryBuilderResultsNumbers = observer(
                 value: totalFilteredCounts.rejected,
               })}
             </span>
+            <Divider orientation="vertical" color="light" spacing="dense" />
+            <div
+              className="text-blue-bright font-medium cursor-pointer"
+              onClick={() => dtreeStore.clearAll()}
+            >
+              {t('general.clearAll')}
+            </div>
           </>
         )}
       </div>
