@@ -12,7 +12,7 @@ export const VariantAspectsLayoutGallery = ({
   aspects,
   activeAspect: activeAspectProp,
   onChangeActiveAspect,
-  igvUrl,
+  igvUrlSearchParams,
 }: IVariantAspectsLayoutGalleryProps): ReactElement => {
   const activeAspectIndex = useMemo(
     () =>
@@ -33,7 +33,7 @@ export const VariantAspectsLayoutGallery = ({
             className={styles.aspectWindow}
             isOpen
             aspect={currentAspect}
-            igvUrl={igvUrl}
+            igvUrlSearchParams={igvUrlSearchParams}
           />
         )}
       </div>

@@ -9,6 +9,7 @@ import datasetStore from '@store/dataset/dataset'
 import {
   datasetProvider,
   HgModes,
+  IIgvParams,
   IReccntArguments,
   ITableAspectDescriptor,
   TAspectDescriptor,
@@ -31,7 +32,7 @@ export class VariantAspectsAsyncStore extends BaseAsyncDataStore<
       hg38locus: computed,
       locus: computed,
       genes: computed,
-      igvUrl: computed,
+      igvParams: computed,
     })
   }
 
@@ -64,7 +65,7 @@ export class VariantAspectsAsyncStore extends BaseAsyncDataStore<
     return findElementInRow(rows, 'genes') || VARIANT_WITHOUT_GENES
   }
 
-  public get igvUrl(): string | undefined {
+  public get igvParams(): IIgvParams | undefined {
     const igvUrls = datasetStore.dsInfoData?.igvUrls
 
     if (!igvUrls) {
@@ -95,11 +96,18 @@ export class VariantAspectsAsyncStore extends BaseAsyncDataStore<
       return undefined
     }
 
-    return new URLSearchParams({
+    const igvUrlSearchParams = new URLSearchParams({
       locus,
       names: names.join(','),
       igvUrls: JSON.stringify(igvUrls),
     }).toString()
+
+    return {
+      locus,
+      names: names.join(','),
+      igvUrls,
+      igvUrlSearchParams,
+    }
   }
 
   protected fetch(
