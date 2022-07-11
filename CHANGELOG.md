@@ -1,4 +1,8 @@
 # Change log 
+* fix([FOROME-00](https://quantori.atlassian.net/browse/FOROME-00)): build crush ([7765cca0](https://github.com/ForomePlatform/Anfisa-React-Client/commit/7765cca0))
+
+## <small>0.6.114 (7/11/2022)</small>
+
 * fix([FOROME-1229](https://quantori.atlassian.net/browse/FOROME-1229)): replace igv-page to igv-modal ([a0940570](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a0940570))
 
 ## <small>0.6.113 (7/11/2022)</small>
