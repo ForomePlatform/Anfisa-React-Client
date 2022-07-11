@@ -15,6 +15,7 @@ import { GeneRegionDialog } from './components/gene-region-dialog'
 import { InheritanceModeDialog } from './components/inheritance-mode-dialog'
 import { NumericDialog } from './components/numeric-dialog'
 import { SelectAttributeDialog } from './components/select-attribute-dialog'
+import modalsVisibilityStore from './modals-visibility-store'
 
 export const ModalsContainer = observer(
   (): ReactElement => (
