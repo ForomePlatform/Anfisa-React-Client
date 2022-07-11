@@ -1,4 +1,8 @@
 # Change log 
+* fix([FOROME-1269](https://quantori.atlassian.net/browse/FOROME-1269)): format number method (#794) ([e61998af](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e61998af))
+
+## <small>0.6.112 (7/11/2022)</small>
+
 * fix([FOROME-1306](https://quantori.atlassian.net/browse/FOROME-1306)): set active preset before edit (#800) ([3fa09600](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3fa09600))
 
 ## <small>0.6.111 (7/8/2022)</small>
