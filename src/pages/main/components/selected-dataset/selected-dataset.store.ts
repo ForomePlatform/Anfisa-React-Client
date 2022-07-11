@@ -8,7 +8,10 @@ import { datasetStore } from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
 import filterStore from '@store/filter'
 import { GlbPagesNames } from '@glb/glb-names'
-import { stepsForXlDatasets } from './selected-dataset.constants'
+import {
+  startFlowOptionsList,
+  stepsForXlDatasets,
+} from './selected-dataset.constants'
 import { getNextPageData } from './selected-dataset.utils'
 
 interface IWizardStepData {
@@ -19,7 +22,6 @@ interface IWizardStepData {
   isSpecial?: boolean
   hidden: boolean
   optionsList: string[]
-  hasNoSecondaryDatasets?: boolean
 }
 
 interface IWizardData {
@@ -48,7 +50,15 @@ class SelectedDatasetStore {
     return this.wizardData[this.wizardData.length - 1].stepData
   }
 
-  public createFirstWizardStep(stepData: IWizardStepData) {
+  public createFirstWizardStep(selectedValue: string) {
+    const stepData = {
+      title: 'Start with',
+      value: selectedValue,
+      type: 'radioList',
+      optionsList: startFlowOptionsList,
+      hidden: false,
+    }
+    this.setExploreType(selectedValue)
     this.wizardData = [{ stepNo: 1, stepData: [stepData] }]
     this.actionHistory.addHistory([{ stepNo: 1, stepData: [stepData] }])
   }
@@ -132,7 +142,8 @@ class SelectedDatasetStore {
   }
 
   public get secondaryDatasets(): string[] | undefined {
-    return dirinfoStore.dirinfo.data?.dsDict[datasetStore.datasetName].secondary
+    return dirinfoStore.dirinfo.data?.dsDict[datasetStore.datasetName]
+      ?.secondary
   }
 
   public get datasetName(): string {

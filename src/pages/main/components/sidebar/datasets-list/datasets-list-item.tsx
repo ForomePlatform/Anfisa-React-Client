@@ -65,10 +65,10 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
         dirinfoStore.setDsInfo(item as IDirInfoDatasetDescriptor)
       }
 
+      history.replace(`${Routes.Root}?ds=${isNullKind ? '' : item.name}`)
+
       dirinfoStore.setInfoFrameLink('')
       dirinfoStore.setActiveInfoName('')
-
-      history.replace(`${Routes.Root}?ds=${isNullKind ? '' : item.name}`)
     }
 
     const padding = DEFAULT_DATASET_P + level * LEVEL_DATASET_P

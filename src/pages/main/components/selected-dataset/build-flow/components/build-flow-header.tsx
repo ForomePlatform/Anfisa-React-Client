@@ -5,6 +5,7 @@ import { useHistory } from 'react-router'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
+import { datasetStore } from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
 import { Routes } from '@router/routes.enum'
 import { CardTitle } from '@ui/card'
@@ -15,17 +16,23 @@ import selectedDatasetStore from '../../selected-dataset.store'
 export const BuildFlowHeader = observer(
   ({ goBack }: { goBack: () => void }): ReactElement => {
     const history = useHistory()
+    const isXL = datasetStore.isXL
 
-    const handleGoHome = () => {
+    const handleGoMain = () => {
       goBack()
       history.push(Routes.Root)
+    }
+
+    const handleGoStart = () => {
+      goBack()
+      selectedDatasetStore.actionHistory.resetHistory()
     }
 
     const { selectedSecondaryDataset, datasetName } = selectedDatasetStore
 
     const handleGoBack = () => {
       if (selectedDatasetStore.actionHistory.historyIndex === 1) {
-        goBack()
+        isXL ? goBack() : handleGoMain()
         selectedDatasetStore.actionHistory.resetHistory()
       } else {
         selectedDatasetStore.actionHistory.goBackward()
@@ -55,20 +62,24 @@ export const BuildFlowHeader = observer(
 
         <div className={styles.buildFlow__breadcrumbs}>
           <div
-            onClick={handleGoHome}
+            onClick={handleGoMain}
             className={styles.buildFlow__breadcrumbs__folder}
           >
             {t('home.startFlow.main')}
           </div>
 
-          <div className="text-blue-bright mx-1">/</div>
+          {isXL && (
+            <>
+              <div className="text-blue-bright mx-1">/</div>
 
-          <div
-            onClick={goBack}
-            className={styles.buildFlow__breadcrumbs__folder}
-          >
-            {t('home.startFlow.startFlow')}
-          </div>
+              <div
+                onClick={handleGoStart}
+                className={styles.buildFlow__breadcrumbs__folder}
+              >
+                {t('home.startFlow.startFlow')}
+              </div>
+            </>
+          )}
 
           <div className="flex text-grey-dark">
             <div className="mx-1">/</div>

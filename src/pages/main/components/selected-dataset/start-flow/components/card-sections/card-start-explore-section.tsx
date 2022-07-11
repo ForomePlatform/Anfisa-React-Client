@@ -7,10 +7,7 @@ import { datasetStore } from '@store/dataset'
 import { Button } from '@ui/button'
 import { CardTitle } from '@ui/card'
 import { Radio } from '@ui/radio'
-import {
-  startFlowOptionsList,
-  stepsForXlDatasets,
-} from '../../../selected-dataset.constants'
+import { stepsForXlDatasets } from '../../../selected-dataset.constants'
 import selectedDatasetStore from '../../../selected-dataset.store'
 
 export const CardStartExploreSection = observer((): ReactElement => {
@@ -25,16 +22,7 @@ export const CardStartExploreSection = observer((): ReactElement => {
   const onContinue = () => {
     selectedDatasetStore.toggleIsBuildFlowVisible(true)
 
-    selectedDatasetStore.setExploreType(selectedValue)
-
-    selectedDatasetStore.createFirstWizardStep({
-      title: 'Start with',
-      value: selectedValue,
-      type: 'radioList',
-      optionsList: startFlowOptionsList,
-      hidden: false,
-      hasNoSecondaryDatasets: !selectedDatasetStore.secondaryDatasets,
-    })
+    selectedDatasetStore.createFirstWizardStep(selectedValue)
 
     if (datasetStore.isXL) {
       selectedDatasetStore.addWizardStep(stepsForXlDatasets[selectedValue][0])
@@ -58,8 +46,7 @@ export const CardStartExploreSection = observer((): ReactElement => {
     )
   })
 
-  const isExploreGenomeDisabled =
-    !selectedDatasetStore.secondaryDatasets && !datasetStore.isXL
+  const isExploreGenomeDisabled = !datasetStore.isXL
   const isExploreCandidateDisabled =
     !selectedDatasetStore.secondaryDatasets && datasetStore.isXL
 

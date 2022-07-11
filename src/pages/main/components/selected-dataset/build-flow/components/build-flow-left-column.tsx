@@ -13,11 +13,12 @@ import { CardRadioListSection } from './card-sections/card-radio-list-section'
 export const BuildFlowLeftColumn = observer((): ReactElement => {
   const { currentStepData } = selectedDatasetStore
   const history = useHistory()
+
   return (
     <div
       className={cn(styles.buildFlow__column, styles.buildFlow__column_left)}
     >
-      {currentStepData.map((data, index) => {
+      {currentStepData?.map((data, index) => {
         const isContinueDisabled =
           !currentStepData[index + 1] || currentStepData[index + 1].hidden
         const isEditDisabled =

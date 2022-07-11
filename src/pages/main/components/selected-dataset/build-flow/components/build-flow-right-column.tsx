@@ -32,7 +32,7 @@ export const BuildFlowRightColumn = observer((): ReactElement => {
 
   return (
     <div className={styles.buildFlow__column} ref={divRef}>
-      {currentStepData.map((data, index) => {
+      {currentStepData?.map((data, index) => {
         const isEditDisabled =
           !currentStepData[index + 1] || currentStepData[index + 1].hidden
 
