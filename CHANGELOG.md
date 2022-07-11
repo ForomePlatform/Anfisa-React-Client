@@ -1,4 +1,8 @@
 # Change log 
+* fix([FOROME-1229](https://quantori.atlassian.net/browse/FOROME-1229)): replace igv-page to igv-modal ([a0940570](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a0940570))
+
+## <small>0.6.113 (7/11/2022)</small>
+
 * fix([FOROME-1269](https://quantori.atlassian.net/browse/FOROME-1269)): format number method (#794) ([e61998af](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e61998af))
 
 ## <small>0.6.112 (7/11/2022)</small>
