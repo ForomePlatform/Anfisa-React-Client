@@ -68,6 +68,7 @@ export const exploreCandidateSteps = [
     type: 'list',
     value: '',
     hidden: false,
+    isSpecial: true,
     optionsList: [],
   },
 

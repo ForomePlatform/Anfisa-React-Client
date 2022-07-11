@@ -12,7 +12,9 @@ export const datasetNameByKey =
 
     const item: IDirInfoDatasetDescriptor = dirInfoData.dsDict[key]
 
-    if (!level && (!item || item.ancestors.length > 0)) return null
+    if (!level && (!item || item.ancestors.length > 0)) {
+      return null
+    }
 
     return <DatasetsListItem item={item} key={item.name} level={level} />
   }

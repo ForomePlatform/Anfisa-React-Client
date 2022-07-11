@@ -16,6 +16,7 @@ interface IWizardStepData {
   type: string
   value: string
   description?: string
+  isSpecial?: boolean
   hidden: boolean
   optionsList: string[]
   hasNoSecondaryDatasets?: boolean
@@ -115,8 +116,13 @@ class SelectedDatasetStore {
   }
 
   public selectDataset(value: string, index: number) {
+    if (!this.selectedSecondaryDataset) {
+      this.addWizardStep(stepsForXlDatasets[this.exploreType][index])
+      this.setSecondaryDataset(value)
+      return
+    }
+
     this.setSecondaryDataset(value)
-    this.addWizardStep(stepsForXlDatasets[this.exploreType][index])
   }
 
   public clearWizardData() {

@@ -56,6 +56,7 @@ export const BuildFlowRightColumn = observer((): ReactElement => {
                     data.optionsList || selectedDatasetStore.secondaryDatasets
                   }
                   onSelect={value => selectedDatasetStore.setPreset(value)}
+                  isSpecial={data.isSpecial}
                   selectedItem={selectedDatasetStore.selectedPreset}
                   onOpen={() => selectedDatasetStore.openNextPage(history)}
                   style={

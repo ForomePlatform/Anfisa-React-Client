@@ -46,11 +46,14 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
     }, [])
 
     const handleClick = () => {
+      if (level > 0) return
+
       if (isNullKind && !hasChildren) return
 
       if (selectedDatasetStore.isBuildFlowVisible) {
         selectedDatasetStore.toggleIsBuildFlowVisible(false)
         selectedDatasetStore.clearWizardData()
+        selectedDatasetStore.actionHistory.resetHistory()
       }
 
       if (selectedDatasetStore.exploreType === ExploreTypes.Candidate) {
@@ -78,6 +81,7 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
             'cursor-pointer': hasChildren || !isNullKind,
             'bg-blue-bright hover:bg-blue-hover': isActive,
             'hover:bg-blue-darkHover': !isActive,
+            'cursor-not-allowed': level > 0,
           })}
           style={{ paddingLeft: `${padding}px` }}
         >

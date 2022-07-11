@@ -14,7 +14,9 @@ export const BuildFlowLeftColumn = observer((): ReactElement => {
   const { currentStepData } = selectedDatasetStore
   const history = useHistory()
   return (
-    <div className={styles.buildFlow__column}>
+    <div
+      className={cn(styles.buildFlow__column, styles.buildFlow__column_left)}
+    >
       {currentStepData.map((data, index) => {
         const isContinueDisabled =
           !currentStepData[index + 1] || currentStepData[index + 1].hidden
@@ -51,6 +53,7 @@ export const BuildFlowLeftColumn = observer((): ReactElement => {
               ) : (
                 <CardListSection
                   title={data.title}
+                  isSpecial={data.isSpecial}
                   optionsList={selectedDatasetStore.secondaryDatasets}
                   onSelect={value =>
                     selectedDatasetStore.selectDataset(value, index)
