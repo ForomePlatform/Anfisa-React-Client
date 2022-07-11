@@ -1,6 +1,6 @@
 import styles from '../build-flow.module.css'
 
-import { ReactElement } from 'react'
+import { ReactElement, useEffect, useRef, useState } from 'react'
 import { useHistory } from 'react-router'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
@@ -17,8 +17,21 @@ export const BuildFlowRightColumn = observer((): ReactElement => {
   const dsName =
     selectedDatasetStore.selectedSecondaryDataset || datasetStore.datasetName
 
+  const [maxHeight, setMaxHeight] = useState<string | number>(0)
+  const divRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const rightColumn = divRef.current
+
+    if (rightColumn && rightColumn?.children.length > 1) {
+      setMaxHeight('calc(80vh - 507px')
+    } else {
+      setMaxHeight('calc(100vh - 328px')
+    }
+  }, [currentStepData])
+
   return (
-    <div className={styles.buildFlow__column}>
+    <div className={styles.buildFlow__column} ref={divRef}>
       {currentStepData.map((data, index) => {
         const isEditDisabled =
           !currentStepData[index + 1] || currentStepData[index + 1].hidden
@@ -62,7 +75,7 @@ export const BuildFlowRightColumn = observer((): ReactElement => {
                   style={
                     data.title === 'Relevant presets'
                       ? { maxHeight: 'calc(100vh - 267px)' }
-                      : { maxHeight: 'calc(100vh - 660px)' }
+                      : { maxHeight: maxHeight }
                   }
                 />
               )}

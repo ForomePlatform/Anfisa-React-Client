@@ -59,7 +59,7 @@ export const BuildFlowLeftColumn = observer((): ReactElement => {
                     selectedDatasetStore.selectDataset(value, index)
                   }
                   selectedItem={selectedDatasetStore.selectedSecondaryDataset}
-                  style={{ maxHeight: 'calc(100vh - 405px)' }}
+                  style={{ maxHeight: 'calc(94vh - 358px)' }}
                 />
               )}
             </Card>
