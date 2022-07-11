@@ -5,7 +5,7 @@ import { Button } from '@ui/button'
 import { Card, CardTitle } from '@ui/card'
 import { Icon } from '@ui/icon'
 import { Radio } from '@ui/radio'
-import { optionsForOpenButton } from '../../../selected-dataset.constants'
+import { optionsForOpenButton } from '../../../selected-dataset.data'
 
 interface ICardRadioListSectionProps {
   title: string

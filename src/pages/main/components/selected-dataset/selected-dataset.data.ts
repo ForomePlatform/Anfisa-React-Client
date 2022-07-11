@@ -1,6 +1,8 @@
+import { CardTypes } from '@core/enum/card-types-enum'
 import { ExploreCandidateTypes } from '@core/enum/explore-candidate-types-enum'
 import { ExploreGenomeTypes } from '@core/enum/explore-genome-types-enum'
 import { ExploreTypes } from '@core/enum/explore-types-enum'
+import { t } from '@i18n'
 
 export const startFlowOptionsList = [
   ExploreTypes.Genome,
@@ -46,16 +48,16 @@ export const datasetDescription =
 
 export const exploreGenomeSteps = [
   {
-    title: "What's next?",
-    type: 'radioList',
+    title: t('home.buildFlow.whatsNext'),
+    type: CardTypes.RadioList,
     value: ExploreGenomeTypes.ACMG,
     hidden: false,
     optionsList: whatsNextOptionsList,
   },
 
   {
-    title: 'Relevant presets',
-    type: 'list',
+    title: t('home.buildFlow.relevantPresets'),
+    type: CardTypes.List,
     value: '',
     hidden: false,
     optionsList: relevantPresetsList,
@@ -64,8 +66,8 @@ export const exploreGenomeSteps = [
 
 export const exploreCandidateSteps = [
   {
-    title: 'Existing candidate set',
-    type: 'list',
+    title: t('home.buildFlow.candidateSet'),
+    type: CardTypes.List,
     value: '',
     hidden: false,
     isSpecial: true,
@@ -74,7 +76,7 @@ export const exploreCandidateSteps = [
 
   {
     title: '',
-    type: 'radioList',
+    type: CardTypes.RadioList,
     description: datasetDescription,
     value: ExploreCandidateTypes.ViewAllVariants,
     hidden: false,
@@ -82,20 +84,16 @@ export const exploreCandidateSteps = [
   },
 
   {
-    title: 'Additional preset filters',
-    type: 'list',
+    title: t('home.buildFlow.additionalPresetFilter'),
+    type: CardTypes.List,
     value: '',
     hidden: false,
     optionsList: relevantPresetsList,
   },
 ]
 
-export const stepsForXlDatasets = {
+export const exploreSteps = {
   'Whole genome/exome': exploreGenomeSteps,
-  'Use an existing candidate set': exploreCandidateSteps,
-}
-
-export const stepsForWsDatasets = {
   'Use an existing candidate set': exploreCandidateSteps,
 }
 

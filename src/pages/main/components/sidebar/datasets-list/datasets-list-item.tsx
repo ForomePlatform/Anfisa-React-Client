@@ -4,7 +4,6 @@ import cn from 'classnames'
 import get from 'lodash/get'
 import { observer } from 'mobx-react-lite'
 
-import { ExploreTypes } from '@core/enum/explore-types-enum'
 import { useParams } from '@core/hooks/use-params'
 import dirinfoStore from '@store/dirinfo'
 import { Routes } from '@router/routes.enum'
@@ -54,10 +53,6 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
         selectedDatasetStore.toggleIsBuildFlowVisible(false)
         selectedDatasetStore.clearWizardData()
         selectedDatasetStore.actionHistory.resetHistory()
-      }
-
-      if (selectedDatasetStore.exploreType === ExploreTypes.Candidate) {
-        selectedDatasetStore.setExploreType(ExploreTypes.Genome)
       }
 
       if (hasChildren) {

@@ -1,5 +1,6 @@
 import { makeAutoObservable } from 'mobx'
 
+import { CardTypes } from '@core/enum/card-types-enum'
 import { ExploreCandidateTypes } from '@core/enum/explore-candidate-types-enum'
 import { ExploreGenomeTypes } from '@core/enum/explore-genome-types-enum'
 import { ExploreTypes } from '@core/enum/explore-types-enum'
@@ -8,15 +9,12 @@ import { datasetStore } from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
 import filterStore from '@store/filter'
 import { GlbPagesNames } from '@glb/glb-names'
-import {
-  startFlowOptionsList,
-  stepsForXlDatasets,
-} from './selected-dataset.constants'
+import { exploreSteps, startFlowOptionsList } from './selected-dataset.data'
 import { getNextPageData } from './selected-dataset.utils'
 
 interface IWizardStepData {
   title: string
-  type: string
+  type: CardTypes
   value: string
   description?: string
   isSpecial?: boolean
@@ -54,7 +52,7 @@ class SelectedDatasetStore {
     const stepData = {
       title: 'Start with',
       value: selectedValue,
-      type: 'radioList',
+      type: CardTypes.RadioList,
       optionsList: startFlowOptionsList,
       hidden: false,
     }
@@ -97,8 +95,8 @@ class SelectedDatasetStore {
   public resetFirstWizardSteps(selectedItem: string) {
     const newExploreType = selectedItem as ExploreTypes
     this.selectedSecondaryDataset
-      ? this.addWizardStep(stepsForXlDatasets[newExploreType][1])
-      : this.addWizardStep(stepsForXlDatasets[newExploreType][0])
+      ? this.addWizardStep(exploreSteps[newExploreType][1])
+      : this.addWizardStep(exploreSteps[newExploreType][0])
   }
 
   public continueEditWizardData(index: number, selectedItem: string) {
@@ -118,8 +116,8 @@ class SelectedDatasetStore {
       }
     } else {
       isSpecialDataset
-        ? this.addWizardStep(stepsForXlDatasets[this.exploreType][2])
-        : this.addWizardStep(stepsForXlDatasets[this.exploreType][index])
+        ? this.addWizardStep(exploreSteps[this.exploreType][2])
+        : this.addWizardStep(exploreSteps[this.exploreType][index])
     }
 
     this.currentStepData[index].value = selectedItem
@@ -127,7 +125,7 @@ class SelectedDatasetStore {
 
   public selectDataset(value: string, index: number) {
     if (!this.selectedSecondaryDataset) {
-      this.addWizardStep(stepsForXlDatasets[this.exploreType][index])
+      this.addWizardStep(exploreSteps[this.exploreType][index])
       this.setSecondaryDataset(value)
       return
     }

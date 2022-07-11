@@ -1,6 +1,6 @@
 import dirinfoStore from '@store/dirinfo'
 import { IDirInfoDatasetDescriptor } from '@service-providers/vault-level/vault-level.interface'
-import { SecondaryDsItem } from './card-sections/secondary-ds-item'
+import { SecondaryDsItem } from './secondary-ds-item'
 
 export const secondaryDsNameByKey =
   (

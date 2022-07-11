@@ -7,7 +7,7 @@ import { datasetStore } from '@store/dataset'
 import { Button } from '@ui/button'
 import { CardTitle } from '@ui/card'
 import { Radio } from '@ui/radio'
-import { stepsForXlDatasets } from '../../../selected-dataset.constants'
+import { exploreSteps } from '../../../selected-dataset.data'
 import selectedDatasetStore from '../../../selected-dataset.store'
 
 export const CardStartExploreSection = observer((): ReactElement => {
@@ -25,12 +25,12 @@ export const CardStartExploreSection = observer((): ReactElement => {
     selectedDatasetStore.createFirstWizardStep(selectedValue)
 
     if (datasetStore.isXL) {
-      selectedDatasetStore.addWizardStep(stepsForXlDatasets[selectedValue][0])
+      selectedDatasetStore.addWizardStep(exploreSteps[selectedValue][0])
     } else {
       if (selectedDatasetStore.secondaryDatasets) {
-        selectedDatasetStore.addWizardStep(stepsForXlDatasets[selectedValue][0])
+        selectedDatasetStore.addWizardStep(exploreSteps[selectedValue][0])
       } else {
-        selectedDatasetStore.addWizardStep(stepsForXlDatasets[selectedValue][1])
+        selectedDatasetStore.addWizardStep(exploreSteps[selectedValue][1])
       }
     }
   }

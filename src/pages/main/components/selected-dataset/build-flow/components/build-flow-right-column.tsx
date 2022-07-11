@@ -5,6 +5,7 @@ import { useHistory } from 'react-router'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
+import { CardTypes } from '@core/enum/card-types-enum'
 import { datasetStore } from '@store/dataset'
 import { Card } from '@ui/card'
 import selectedDatasetStore from '../../selected-dataset.store'
@@ -43,10 +44,10 @@ export const BuildFlowRightColumn = observer((): ReactElement => {
               key={data.title}
               className={cn(
                 index !== 2 && 'mt-4',
-                data.type === 'list' && 'px-0',
+                data.type === CardTypes.List && 'px-0',
               )}
             >
-              {data.type === 'radioList' ? (
+              {data.type === CardTypes.RadioList ? (
                 <CardRadioListSection
                   title={dsName}
                   optionsList={data.optionsList}

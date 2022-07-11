@@ -8,7 +8,7 @@ import dirinfoStore from '@store/dirinfo'
 import { Icon } from '@ui/icon'
 import { LEVEL_DATASET_P } from '@pages/main/components/sidebar/datasets-list/datasets-list.constants'
 import { IDirInfoDatasetDescriptor } from '@service-providers/vault-level/vault-level.interface'
-import { secondaryDsNameByKey } from '../secondary-ds-name-by-key'
+import { secondaryDsNameByKey } from './secondary-ds-name-by-key'
 
 interface IDatasetsListItemProps {
   item: IDirInfoDatasetDescriptor
@@ -55,7 +55,7 @@ export const SecondaryDsItem: FC<IDatasetsListItemProps> = observer(
             style={{ paddingLeft: `${padding}px` }}
           >
             <Icon
-              name="File"
+              name={hasChildren ? 'Folder' : 'File'}
               className={cn(isActive ? 'text-white' : 'text-blue-bright')}
             />
 
