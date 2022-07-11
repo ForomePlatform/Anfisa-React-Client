@@ -1,4 +1,8 @@
 # Change log 
+* fix([FOROME-1306](https://quantori.atlassian.net/browse/FOROME-1306)): set active preset before edit (#800) ([3fa09600](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3fa09600))
+
+## <small>0.6.111 (7/8/2022)</small>
+
 
 ## <small>0.6.110 (7/8/2022)</small>
 
@@ -57,6 +61,7 @@
 
 * fix([FOROME-1269](https://quantori.atlassian.net/browse/FOROME-1269)): input-numeric with react-number-format (#777) ([bd053091](https://github.com/ForomePlatform/Anfisa-React-Client/commit/bd053091))
 * feat([FOROME-1281](https://quantori.atlassian.net/browse/FOROME-1281)): add clear all button ([927876d3](https://github.com/ForomePlatform/Anfisa-React-Client/commit/927876d3))
+* fix([FOROME-1312](https://quantori.atlassian.net/browse/FOROME-1312)): fix fr to dt propt message ([d95f6976](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d95f6976))
 
 ## <small>0.6.94 (7/6/2022)</small>
 
