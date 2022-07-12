@@ -1,7 +1,8 @@
 # Change log 
 
-## <small>0.6.1 (7/11/2022)</small>
+## <small>0.6.1 (7/12/2022)</small>
 
+* feat([FOROME-1230](https://quantori.atlassian.net/browse/FOROME-1230)): implement search bar for the drawer ([2e289323](https://github.com/ForomePlatform/Anfisa-React-Client/commit/2e289323))
 * fix([FOROME-00](https://quantori.atlassian.net/browse/FOROME-00)): build crush ([7765cca0](https://github.com/ForomePlatform/Anfisa-React-Client/commit/7765cca0))
 * fix([FOROME-1229](https://quantori.atlassian.net/browse/FOROME-1229)): replace igv-page to igv-modal ([a0940570](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a0940570))
 * fix([FOROME-1269](https://quantori.atlassian.net/browse/FOROME-1269)): format number method (#794) ([e61998af](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e61998af))
