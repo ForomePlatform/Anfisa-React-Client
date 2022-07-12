@@ -1,6 +1,8 @@
 import { MutableRefObject, useEffect } from 'react'
 
-const highlighted = 'bg-blue-tertiary'
+const orangeBg = 'bg-orange-bright'
+const whiteText = 'text-white'
+const foundBySearch = 'bg-yellow-bright'
 
 export const useScrollToItem = (
   className: string,
@@ -8,6 +10,7 @@ export const useScrollToItem = (
 ) => {
   const scrollToItem = () => {
     const searchedNodesList = document.querySelectorAll(className)
+
     const currentNode = searchedNodesList[refIndex.current]
     const prevNode = searchedNodesList[refIndex.current - 1]
     const lastNode = searchedNodesList[searchedNodesList.length - 1]
@@ -17,7 +20,7 @@ export const useScrollToItem = (
     }
 
     if (refIndex.current === 0) {
-      lastNode.classList.remove(highlighted)
+      lastNode.classList.remove(orangeBg, whiteText, foundBySearch)
     }
 
     if (currentNode) {
@@ -27,10 +30,10 @@ export const useScrollToItem = (
       })
 
       if (prevNode) {
-        prevNode.classList.remove(highlighted)
+        prevNode.classList.remove(orangeBg, whiteText)
       }
 
-      currentNode.classList.add(highlighted)
+      currentNode.classList.add(orangeBg, whiteText)
 
       refIndex.current === searchedNodesList.length - 1
         ? (refIndex.current = 0)

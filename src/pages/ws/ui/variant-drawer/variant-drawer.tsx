@@ -1,6 +1,6 @@
 import styles from './variant-drawer.module.css'
 
-import React, { ReactElement, useEffect, useRef, useState } from 'react'
+import { ReactElement, useEffect, useRef, useState } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
@@ -16,6 +16,7 @@ import {
 } from '@components/variant-aspects-layout'
 import { variantDrawerStore } from '@pages/ws/ui/variant-drawer/variant-drawer.store'
 import { VariantDrawerLayoutMode } from './variant-drawer.interface'
+import { getFoundedValuesNumber } from './variant-drawer.utils'
 import { VariantDrawerHeader } from './variant-drawer-header'
 
 interface IVariantDrawerProps {
@@ -51,7 +52,9 @@ export const VariantDrawer = observer(
     const onChange = (value: string) => {
       setSearchValue(value)
 
-      if (value) {
+      const foundedValues = getFoundedValuesNumber(value, aspects)
+
+      if (value && foundedValues) {
         gridHandles.current?.maximizeAll()
       } else {
         gridHandles.current?.minimizeAll()

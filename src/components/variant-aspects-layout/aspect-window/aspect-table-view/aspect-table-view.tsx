@@ -69,7 +69,7 @@ export const AspectTableView = ({
                     >
                       <span
                         className={cn('cursor-auto', {
-                          'aspect-window__content_active border border-blue-bright p-1':
+                          'aspect-window__content_active bg-yellow-bright p-1':
                             isSearched,
                         })}
                         onMouseDownCapture={onMouseDownHandler}
