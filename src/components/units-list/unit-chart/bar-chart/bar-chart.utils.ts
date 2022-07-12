@@ -4,11 +4,11 @@ import { getBounds, getYScaleAndAxis } from '@core/charts'
 import { theme } from '@theme'
 import { SvgChartRenderParams } from '@components/svg-chart/svg-chart'
 import { TVariant } from '@service-providers/common'
+import { colors } from '../pie-chart/pie-chart.utils'
 import { TBarChartData } from '../unit-chart.interface'
 import { getVariantCountsText } from '../utils'
 
 const tickColor = theme('colors.grey.blue')
-const barColor = theme('colors.blue.bright')
 
 const margin = {
   top: 10,
@@ -73,6 +73,15 @@ export const drawBarChart = ({
     ? (item: TVariant) => yScale(Math.max(item[1], 1.413))
     : (item: TVariant) => yScale(item[1])
 
+  const getDifferentBarColors = (index: number) => {
+    if (index < colors.length) {
+      return colors[index]
+    }
+
+    const remainder = Math.floor(index / colors.length)
+    return colors[index - remainder * colors.length]
+  }
+
   chart
     .selectAll('bar')
     .data(data)
@@ -81,7 +90,7 @@ export const drawBarChart = ({
     .attr('y', item => getY(item))
     .attr('width', barWidth)
     .attr('height', item => chartHeight - getY(item))
-    .attr('fill', barColor)
+    .attr('fill', (_, index) => getDifferentBarColors(index))
     .on('mouseover', (event, item) => {
       tooltip.show(event.target, renderTooltip(item))
     })
