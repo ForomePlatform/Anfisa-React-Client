@@ -16,7 +16,10 @@ import { Icon } from '@ui/icon'
 import { Loader } from '@ui/loader'
 import { InputSearch } from '@components/input-search'
 import { VariantAspectsLayoutGallery } from '@components/variant-aspects-layout'
-import { scrollToItem } from '@pages/ws/ui/variant-drawer/variant-drawer.utils'
+import {
+  getFoundedValuesNumber,
+  scrollToItem,
+} from '@pages/ws/ui/variant-drawer/variant-drawer.utils'
 import { TAspectDescriptor } from '@service-providers/dataset-level'
 
 interface IVariantContentProps {
@@ -39,11 +42,13 @@ export const VariantContent = ({
   const [activeAspect, setActiveAspect] = useState('')
 
   const [searchValue, setSearchValue] = useState<string>('')
+  const [foundItems, setFoundItems] = useState<number>(0)
+
   const refIndex = useRef(0)
 
   const onChange = (value: string) => {
     setSearchValue(value)
-
+    setFoundItems(getFoundedValuesNumber(value, aspects))
     if (!value) {
       refIndex.current = 0
     }
@@ -86,6 +91,7 @@ export const VariantContent = ({
               value={searchValue}
               onChange={e => onChange(e.target.value)}
               onFocus={addListener}
+              foundItems={foundItems}
             />
           </div>
 

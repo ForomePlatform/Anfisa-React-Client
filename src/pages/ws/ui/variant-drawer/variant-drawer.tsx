@@ -42,7 +42,7 @@ export const VariantDrawer = observer(
     const gridHandles = useRef<TVariantAspectsGridHandles>(null)
 
     const [searchValue, setSearchValue] = useState<string>('')
-
+    const [foundItems, setFoundItems] = useState<number>(0)
     const refIndex = useRef(0)
 
     const handleChangeActiveAspect = (aspect: string) => {
@@ -53,9 +53,11 @@ export const VariantDrawer = observer(
     const onChange = (value: string) => {
       setSearchValue(value)
 
-      const foundedValues = getFoundedValuesNumber(value, aspects)
+      const foundItems = getFoundedValuesNumber(value, aspects)
 
-      if (value && foundedValues) {
+      setFoundItems(foundItems)
+
+      if (value && foundItems) {
         gridHandles.current?.maximizeAll()
       } else {
         gridHandles.current?.minimizeAll()
@@ -107,6 +109,7 @@ export const VariantDrawer = observer(
               value={searchValue}
               onChange={e => onChange(e.target.value)}
               onFocus={addListener}
+              foundItems={foundItems}
             />
           </div>
 
