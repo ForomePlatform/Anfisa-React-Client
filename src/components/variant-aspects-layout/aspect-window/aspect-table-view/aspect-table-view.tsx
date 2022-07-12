@@ -1,6 +1,6 @@
 import style from './aspect-table-view.module.css'
 
-import { MouseEvent, ReactElement } from 'react'
+import { MouseEvent, ReactElement, Ref } from 'react'
 import cn from 'classnames'
 
 import { t } from '@i18n'
@@ -15,12 +15,14 @@ interface IAspectTableViewProps {
   aspect: ITableAspectDescriptor
   searchValue: string
   shouldAddShadow?: boolean
+  columnRef?: Ref<HTMLTableDataCellElement>
 }
 
 export const AspectTableView = ({
   className,
   aspect,
   searchValue,
+  columnRef,
   shouldAddShadow,
 }: IAspectTableViewProps): ReactElement => {
   const { colhead, rows } = aspect
@@ -43,8 +45,6 @@ export const AspectTableView = ({
             {rows?.map((row, index) => {
               if (!row) return <tr key={index} />
 
-              const blueBg = 'p-3 bg-blue-darkHover'
-
               const shouldShowCount = count && index === 0
 
               const isSearched = searchValue.trim()
@@ -57,9 +57,10 @@ export const AspectTableView = ({
                 <tr key={row.name}>
                   <td
                     className={cn(
-                      'p-3 text-blue-bright whitespace-nowrap sticky left-0',
-                      shouldAddShadow && blueBg,
+                      style.firstColumn,
+                      shouldAddShadow && 'bg-blue-darkHover',
                     )}
+                    ref={!index ? columnRef : undefined}
                   >
                     <Tooltip
                       maxWidth={600}
@@ -85,16 +86,16 @@ export const AspectTableView = ({
                     <td
                       key={cIndex}
                       className={cn(
-                        'py-3 pr-3 font-normal',
+                        'py-3 pr-3 font-normal w-auto',
                         cell[0]?.includes('</a>')
                           ? 'text-blue-bright'
                           : !cell[1]?.includes(AspectCellRenderClass.NoTrHit) &&
-                              'text-grey-blue',
+                              'text-white',
                         style.linkContainer,
                       )}
                     >
                       <span
-                        className="cursor-auto"
+                        className={cn('cursor-auto', style.geneTranscripts)}
                         onMouseDownCapture={onMouseDownHandler}
                         dangerouslySetInnerHTML={{ __html: cell[0] }}
                       />

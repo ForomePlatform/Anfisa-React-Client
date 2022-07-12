@@ -3,9 +3,9 @@ import styles from './dialog.module.css'
 import { ReactElement } from 'react'
 import cn from 'classnames'
 
-import { DialogCard } from '@ui/dialog/dialog-card'
 import { Modal } from '../modal'
 import { IDialogProps } from './dialog.interface'
+import { DialogCard } from './dialog-card'
 
 export const Dialog = ({
   className,

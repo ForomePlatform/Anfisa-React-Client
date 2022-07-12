@@ -26,6 +26,8 @@ class DirInfoStore {
   iframeInfoFullscreen = false
   activeInfoName = ''
 
+  private readonly foldedDatasets = new Set<string>()
+
   readonly dirinfo = new DirInfoAsyncStore()
 
   get dirInfoData() {
@@ -34,6 +36,18 @@ class DirInfoStore {
 
   constructor() {
     makeAutoObservable(this)
+  }
+
+  public foldDs(name: string) {
+    this.foldedDatasets.add(name)
+  }
+
+  public unfoldDs(name: string) {
+    this.foldedDatasets.delete(name)
+  }
+
+  public isFoldedDs(name: string): boolean {
+    return this.foldedDatasets.has(name)
   }
 
   setActiveInfoName(name: string) {
@@ -148,14 +162,6 @@ class DirInfoStore {
     }
 
     return [[]]
-  }
-
-  resetData() {
-    this.selectedDirinfoName = ''
-    this.filterValue = ''
-    this.infoFrameLink = ''
-    this.iframeInfoFullscreen = false
-    this.activeInfoName = ''
   }
 
   deleteDataset(datasetName: string): void {

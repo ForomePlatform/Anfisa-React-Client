@@ -4,11 +4,8 @@ import { ReactElement, useEffect } from 'react'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
-import { pushQueryParams } from '@core/history'
 import { useDatasetName } from '@core/hooks/use-dataset-name'
-import { useParams } from '@core/hooks/use-params'
 import datasetStore from '@store/dataset/dataset'
-import dirInfoStore from '@store/dirinfo'
 import filterStore from '@store/filter'
 import filterPresetsStore from '@store/filter-presets'
 import mainTableStore from '@store/ws/main-table.store'
@@ -17,14 +14,14 @@ import { Header } from '@components/header'
 import { VariantsCount } from '@components/variants-count'
 import { GlbPagesNames } from '@glb/glb-names'
 import { FilterControl } from '@pages/filter/common/filter-control/filter-control'
+import { IgvModal } from '@pages/filter/dtree/components/modals/components/igv'
 import { FilterRefiner } from '@pages/filter/refiner/components/filter-refiner'
 import { FilterControlOptionsNames } from '../common/filter-control/filter-control.const'
+import { viewVariantsStore } from '../common/view-variants/store'
+import modalsVisibilityStore from '../dtree/components/modals/modals-visibility-store'
 import { SolutionControlRefiner } from './components/solution-control-refiner'
-import { applyPreset } from './components/solution-control-refiner/solution-control-refiner.utils'
 
 export const RefinerPage = observer((): ReactElement => {
-  const params = useParams()
-  const presetName = params.get('preset') || ''
   const { isXL } = datasetStore
 
   const { variantCounts, dnaVariantsCounts, transcriptsCounts } =
@@ -47,17 +44,11 @@ export const RefinerPage = observer((): ReactElement => {
 
   useDatasetName()
 
+  filterPresetsStore.observeHistory.useHook()
+
   useEffect(() => {
-    presetName && applyPreset(presetName)
-
-    if (filterPresetsStore.activePreset && !presetName) {
-      pushQueryParams({ preset: filterPresetsStore.activePreset })
-    }
-
-    return () => {
-      dirInfoStore.resetData()
-    }
-  }, [presetName])
+    return () => filterStore.actionHistory.resetHistory()
+  }, [])
 
   return (
     <div className={styles.refinerPage}>
@@ -86,6 +77,11 @@ export const RefinerPage = observer((): ReactElement => {
         goForward={filterStore.actionHistory.goForward}
         goBackward={filterStore.actionHistory.goBackward}
         className={styles.refinerPage__controls}
+      />
+
+      <IgvModal
+        isOpen={modalsVisibilityStore.isIgvModalVisible}
+        igvParams={viewVariantsStore.record.igvParams}
       />
 
       <FilterRefiner className={styles.refinerPage__refiner} />

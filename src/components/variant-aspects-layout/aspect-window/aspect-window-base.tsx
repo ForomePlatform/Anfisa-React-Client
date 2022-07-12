@@ -6,13 +6,14 @@ import {
   ReactElement,
   ReactNode,
   Ref,
+  useEffect,
   useRef,
 } from 'react'
-import ScrollContainer from 'react-indiana-drag-scroll'
 import cn from 'classnames'
 
 import { useForkRef } from '@core/hooks/use-fork-ref'
 import { Icon } from '@ui/icon'
+import { ShadowScroller } from '@ui/shadow-scroller'
 import { IAspectWindowProps } from '@components/variant-aspects-layout/aspect-window/aspect-window.interface'
 import { AspectDescriptorTypes } from '@service-providers/dataset-level/dataset-level.interface'
 import { AspectPreView } from './aspect-pre-view'
@@ -63,6 +64,7 @@ export const AspectWindowBase = ({
   ...divProps
 }: IAspectWindowBaseProps): ReactElement => {
   const contentRef = useRef<HTMLDivElement>(null)
+  const columnRef = useRef<HTMLTableDataCellElement>(null)
   const { shouldAddShadow, handleScroll } = useScrollShadow(contentRef)
 
   const windowRef = useRef<HTMLDivElement>()
@@ -81,13 +83,29 @@ export const AspectWindowBase = ({
         content = (
           <AspectTableView
             aspect={aspect}
-            searchValue={searchValue}
             shouldAddShadow={shouldAddShadow}
+            columnRef={columnRef}
+            searchValue={searchValue}
           />
         )
         break
     }
   }
+
+  useEffect(() => {
+    const margin = columnRef.current?.clientWidth || 0
+    const shadows =
+      contentRef.current?.parentElement?.firstElementChild?.children
+
+    if (!shadows) return
+
+    for (let i = 0; i < shadows.length; i++) {
+      const element = shadows[i]
+      if (element.id === 'leftShadow') {
+        ;(element as HTMLElement).style.left = `${margin}px`
+      }
+    }
+  }, [content])
 
   return (
     <div
@@ -127,8 +145,9 @@ export const AspectWindowBase = ({
           </button>
         )}
       </div>
-      <ScrollContainer
+      <ShadowScroller
         hideScrollbars={false}
+        hideShadows={!isOpen}
         onScroll={handleScroll}
         className={cn(
           styles.aspectWindow__content,
@@ -138,7 +157,7 @@ export const AspectWindowBase = ({
         component={WindowContent}
       >
         {content}
-      </ScrollContainer>
+      </ShadowScroller>
       {children}
     </div>
   )

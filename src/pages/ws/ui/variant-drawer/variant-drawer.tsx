@@ -25,8 +25,10 @@ interface IVariantDrawerProps {
 export const VariantDrawer = observer(
   ({ className }: IVariantDrawerProps): ReactElement => {
     const {
-      record: { igvUrl, isFetching, aspects },
+      record: { aspects, igvParams, isFetching },
     } = variantStore
+
+    const igvUrlSearchParams = igvParams?.igvUrlSearchParams
 
     const {
       layoutMode,
@@ -115,8 +117,8 @@ export const VariantDrawer = observer(
               onChangeLayout={setGridLayout}
               layout={gridLayout}
               handles={gridHandles}
-              igvUrl={igvUrl}
               searchValue={searchValue}
+              igvUrlSearchParams={igvUrlSearchParams}
             />
           )}
           {layoutMode === VariantDrawerLayoutMode.Gallery && (
@@ -125,8 +127,8 @@ export const VariantDrawer = observer(
               aspects={aspects}
               activeAspect={galleryActiveAspect}
               onChangeActiveAspect={handleChangeActiveAspect}
-              igvUrl={igvUrl}
               searchValue={searchValue}
+              igvUrlSearchParams={igvUrlSearchParams}
             />
           )}
         </div>

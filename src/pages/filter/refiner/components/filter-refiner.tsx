@@ -9,7 +9,6 @@ import { FilterRefinerUnits } from './filter-refiner-units'
 import { FilterRefinerViewVariants } from './filter-refiner-view-variants'
 import { SelectedGroup } from './middle-column/selected-group'
 import { QuerySelected } from './right-column/query-selected'
-
 interface IFilterRefinerProps {
   className?: string
 }

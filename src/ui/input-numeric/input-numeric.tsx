@@ -1,9 +1,10 @@
 import styles from './input-numeric.module.css'
 
 import { KeyboardEvent, ReactElement, useEffect, useState } from 'react'
+import NumberFormat, { NumberFormatValues } from 'react-number-format'
 import cn, { Argument } from 'classnames'
 
-import { getNumeric } from './input-numeric.utils'
+import { checkMaxMin } from './input-numeric.utils'
 
 const KEYCODE_UP: number = 38
 const KEYCODE_DOWN: number = 40
@@ -14,9 +15,11 @@ interface IInputNumericProps {
   placeholder?: string
   min?: number
   max?: number
+  step?: number
+  isFloat?: boolean
   disabled?: boolean
   hasErrors?: boolean
-  onChange: (e: number) => void
+  onChange: (e: number | null) => void
 }
 
 export const InputNumeric = ({
@@ -24,35 +27,48 @@ export const InputNumeric = ({
   value,
   min,
   max,
+  step,
+  isFloat,
   disabled,
   hasErrors,
   onChange,
   ...rest
 }: IInputNumericProps): ReactElement => {
-  const [inputValue, setInputValue] = useState<number>(+value)
+  const [inputValue, setInputValue] = useState<number | null>(+value)
+  const [isFocused, setIsFocused] = useState<boolean>(false)
   const minimal = min || 0
   const maximal = max || Infinity
-  const displayValue = value === '' ? value : inputValue.toLocaleString()
+  const valueStep = step || 1
+  const displayValue = value === '' ? value : inputValue
+  let enteredNumber: number | null = inputValue ?? null
 
   useEffect(() => {
     setInputValue(+value)
   }, [value])
 
-  function changeValue(newValue: number | string) {
+  function checkValue(value: number): number {
+    const num = isFloat ? value.toPrecision(12) : value
+    return checkMaxMin(+num, maximal, minimal)
+  }
+
+  function changeValue(newValue: number | null) {
     if (disabled) {
       return
     }
-    const numeric = getNumeric(newValue, minimal, maximal)
-    setInputValue(numeric)
-    onChange(numeric)
+
+    const result = newValue === null ? null : checkValue(newValue)
+    setInputValue(result)
+    onChange(result)
   }
 
   function increase() {
-    changeValue(inputValue + 1)
+    const oldValue = inputValue ?? 0
+    changeValue(oldValue + valueStep)
   }
 
   function decrease() {
-    changeValue(inputValue - 1)
+    const oldValue = inputValue ?? 0
+    changeValue(oldValue - valueStep)
   }
 
   function onKeyDown(e: KeyboardEvent) {
@@ -75,16 +91,29 @@ export const InputNumeric = ({
         styles.inputNumeric,
         className,
         disabled && styles.inputNumeric_disabled,
+        isFocused && styles.inputNumeric_focused,
         hasErrors && styles.inputNumeric_hasErrors,
       )}
     >
       <div className={cn(styles.inputNumeric__inputSection)}>
-        <input
+        <NumberFormat
           className={cn(styles.inputNumeric__input)}
           type="text"
           value={displayValue}
           disabled={disabled}
-          onChange={e => changeValue(e.target.value)}
+          thousandSeparator={' '}
+          onValueChange={(value: NumberFormatValues) => {
+            if (value.floatValue !== inputValue) {
+              enteredNumber = value.floatValue ?? null
+            }
+          }}
+          onFocus={() => {
+            setIsFocused(true)
+          }}
+          onBlur={() => {
+            changeValue(enteredNumber)
+            setIsFocused(false)
+          }}
           onKeyDown={onKeyDown}
           {...rest}
         />

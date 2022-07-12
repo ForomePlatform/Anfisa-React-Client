@@ -16,7 +16,6 @@ interface IInputSearchProps {
   canClearInput?: boolean
 }
 
-// eslint-disable-next-line react/display-name
 export const InputSearch = memo(
   ({ ...rest }: IInputSearchProps): ReactElement => {
     const { className, big = false, canClearInput = true, ...tempRest } = rest
