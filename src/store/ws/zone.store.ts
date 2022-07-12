@@ -202,9 +202,16 @@ class ZoneStore {
     tagName === '_note' && this.setModeWithNotes(false)
 
     if (type === 'fast') {
+      if (this.isModeWithNotes && !this.localTags.includes('_note')) {
+        this.addLocalTag('_note')
+      }
       this.createSelectedZoneFilter('isTags')
 
       this.removeZone(['_tags', this.selectedTags])
+
+      if (this.isModeNOT) {
+        this.zone.find(zone => zone[0] === '_tags')?.push(false)
+      }
     }
   }
 

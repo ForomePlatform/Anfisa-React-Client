@@ -1,10 +1,9 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useState } from 'react'
 import { useHistory } from 'react-router'
 import cn from 'classnames'
 import get from 'lodash/get'
 import { observer } from 'mobx-react-lite'
 
-import { useParams } from '@core/hooks/use-params'
 import dirinfoStore from '@store/dirinfo'
 import { Routes } from '@router/routes.enum'
 import { DatasetName } from '@pages/main/components/sidebar/datasets-list/components/dataset-name'
@@ -20,17 +19,18 @@ import { DatasetType } from './components/dataset-type'
 
 interface IDatasetsListItemProps {
   item: IDirInfoDatasetDescriptor
-  level?: number
+  level: number
 }
 
 export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
-  ({ item, level = 1 }) => {
+  ({ item, level }) => {
     const history = useHistory()
-    const params = useParams()
 
     const isActive = item.name === dirinfoStore.selectedDirinfoName
 
-    const [isOpenFolder, setIsOpenFolder] = useState(isActive)
+    const [isOpenFolder, setIsOpenFolder] = useState<boolean>(
+      !dirinfoStore.isFoldedDs(item.name),
+    )
 
     const isNullKind = item.kind === null
     const secondaryKeys: string[] = get(item, 'secondary', [])
@@ -38,11 +38,6 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
 
     const isActiveParent =
       hasChildren && secondaryKeys.includes(dirinfoStore.selectedDirinfoName)
-
-    useEffect(() => {
-      setIsOpenFolder(secondaryKeys.includes(params.get('ds') || ''))
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
 
     const handleClick = () => {
       if (level > 0) return
@@ -56,7 +51,15 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
       }
 
       if (hasChildren) {
-        setIsOpenFolder(prev => !(prev && isActive))
+        setIsOpenFolder(opened => {
+          if (!(opened && isActive)) {
+            dirinfoStore.unfoldDs(item.name)
+          } else {
+            dirinfoStore.foldDs(item.name)
+          }
+
+          return !(opened && isActive)
+        })
         dirinfoStore.setDsInfo(item as IDirInfoDatasetDescriptor)
       }
 
@@ -67,6 +70,7 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
     }
 
     const padding = DEFAULT_DATASET_P + level * LEVEL_DATASET_P
+
     return (
       <>
         <div

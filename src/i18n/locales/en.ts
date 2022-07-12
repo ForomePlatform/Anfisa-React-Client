@@ -219,6 +219,8 @@ export const en = {
     textAboutSomething: 'Text about something',
     savePreset: 'Save Preset',
     savePredefinedPresetError: '{presetName} is a predefined preset',
+    openInAModalWindow: 'Open in a modal window',
+    openInANewTab: 'Open in a new tab',
   },
   condition: {
     selectAttribute: 'Select attribute',

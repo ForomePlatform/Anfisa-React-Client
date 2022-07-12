@@ -6,6 +6,7 @@
   font-size: 14px;
   line-height: 20px;
   background: theme("colors.white");
+  overflow: hidden;
 
   &_disabled {
     color: theme("colors.grey.blue");
@@ -15,6 +16,10 @@
   &_has-errors {
     border-color: theme("colors.red.light");
     margin-bottom: 16px;
+  }
+
+  &_focused {
+    border-color: theme("colors.blue.bright")
   }
 
   &_disabled &__button {
@@ -49,6 +54,7 @@
     flex-direction: column;
     width: 28px;
     text-align: center;
+    overflow: hidden;
   }
 
   &__button {

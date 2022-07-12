@@ -4,7 +4,6 @@ import { IDirInfoDatasetDescriptor } from '@service-providers/vault-level/vault-
 
 export const datasetNameByKey =
   (level: number = 0) =>
-  // eslint-disable-next-line react/display-name
   (key: string) => {
     const { dirInfoData } = dirinfoStore
 
