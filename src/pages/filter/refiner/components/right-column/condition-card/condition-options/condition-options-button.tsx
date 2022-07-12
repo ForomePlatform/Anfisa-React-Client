@@ -4,10 +4,16 @@ import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
 import { IPopoverButtonBaseProps } from '@ui/popover/popover.interface'
 
-export const RefinerConditionOptionsButton = ({
+interface IConditionOptionsButtonProps extends IPopoverButtonBaseProps {
+  className?: string
+}
+
+export const ConditionOptionsButton = ({
+  className,
   onShowPopover,
-}: IPopoverButtonBaseProps): ReactElement => (
+}: IConditionOptionsButtonProps): ReactElement => (
   <Button
+    className={className}
     variant="text"
     onClick={e => onShowPopover(e.currentTarget)}
     icon={

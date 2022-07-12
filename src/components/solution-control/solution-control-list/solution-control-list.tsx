@@ -44,7 +44,7 @@ export const SolutionControlList = ({
 
     if (isModified) {
       actions.push(
-        <span>
+        <span key="edit">
           <Icon name="Edit" />
         </span>,
       )
@@ -53,6 +53,7 @@ export const SolutionControlList = ({
     if (!standard) {
       actions.push(
         <button
+          key="menu"
           className={styles.contextMenuButton}
           onClick={event => {
             onSelect(name)
