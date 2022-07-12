@@ -1,9 +1,15 @@
 # Change log 
 
+## <small>0.7.1 (7/12/2022)</small>
+
+* feat([FOROME-1303](https://quantori.atlassian.net/browse/FOROME-1303)): implemented drag-n-drop conditions moving in refiner (#785) ([d1ef1934](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d1ef1934))
+
 ## <small>0.6.1 (7/12/2022)</small>
 
 * feat([FOROME-1230](https://quantori.atlassian.net/browse/FOROME-1230)): implement search bar for the drawer ([2e289323](https://github.com/ForomePlatform/Anfisa-React-Client/commit/2e289323))
+* fix([FOROME-1306](https://quantori.atlassian.net/browse/FOROME-1306)): set active preset before edit (#800) ([c781f0d7](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c781f0d7))
 * fix([FOROME-00](https://quantori.atlassian.net/browse/FOROME-00)): build crush ([7765cca0](https://github.com/ForomePlatform/Anfisa-React-Client/commit/7765cca0))
+* fix([FOROME-1269](https://quantori.atlassian.net/browse/FOROME-1269)): format number method (#794) ([9ed39531](https://github.com/ForomePlatform/Anfisa-React-Client/commit/9ed39531))
 * fix([FOROME-1229](https://quantori.atlassian.net/browse/FOROME-1229)): replace igv-page to igv-modal ([a0940570](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a0940570))
 * fix([FOROME-1269](https://quantori.atlassian.net/browse/FOROME-1269)): format number method (#794) ([e61998af](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e61998af))
 * fix([FOROME-1306](https://quantori.atlassian.net/browse/FOROME-1306)): set active preset before edit (#800) ([3fa09600](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3fa09600))
@@ -15,10 +21,12 @@
 * feat([FOROME-97](https://quantori.atlassian.net/browse/FOROME-97)): implement scroll shadow component in drawer ([c82c3ceb](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c82c3ceb))
 * feat([FOROME-1300](https://quantori.atlassian.net/browse/FOROME-1300)): rename methods ([4c066748](https://github.com/ForomePlatform/Anfisa-React-Client/commit/4c066748))
 * feat([FOROME-1295](https://quantori.atlassian.net/browse/FOROME-1295)): fix merge conflicts ([3b375e81](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3b375e81))
+* fix([FOROME-1269](https://quantori.atlassian.net/browse/FOROME-1269)): input-numeric with react-number-format (#777) ([232b71a0](https://github.com/ForomePlatform/Anfisa-React-Client/commit/232b71a0))
 * fix([FOROME-1269](https://quantori.atlassian.net/browse/FOROME-1269)): input-numeric with react-number-format (#777) ([bd053091](https://github.com/ForomePlatform/Anfisa-React-Client/commit/bd053091))
 * feat([FOROME-1281](https://quantori.atlassian.net/browse/FOROME-1281)): add clear all button ([927876d3](https://github.com/ForomePlatform/Anfisa-React-Client/commit/927876d3))
 * fix([FOROME-1312](https://quantori.atlassian.net/browse/FOROME-1312)): fix fr to dt propt message ([d95f6976](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d95f6976))
 * feat([FOROME-1291](https://quantori.atlassian.net/browse/FOROME-1291)): implemented resizable sidebar component (#773) ([9adf1359](https://github.com/ForomePlatform/Anfisa-React-Client/commit/9adf1359))
+* fix([FOROME-1312](https://quantori.atlassian.net/browse/FOROME-1312)): don't show prompt on change dtree to refiner ([f8fbc788](https://github.com/ForomePlatform/Anfisa-React-Client/commit/f8fbc788))
 * feat([FOROME-1297](https://quantori.atlassian.net/browse/FOROME-1297)): remove hours from dataset creation time ([3207e18e](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3207e18e))
 * fix([FOROME-1312](https://quantori.atlassian.net/browse/FOROME-1312)): don't show prompt on change dtree to refiner ([c5f78c46](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c5f78c46))
 * feat([FOROME-1301](https://quantori.atlassian.net/browse/FOROME-1301)): show drawer by default, show Gallery layout by default ([9b5aba1a](https://github.com/ForomePlatform/Anfisa-React-Client/commit/9b5aba1a))
