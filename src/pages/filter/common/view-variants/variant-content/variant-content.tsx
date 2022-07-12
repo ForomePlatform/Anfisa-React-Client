@@ -1,14 +1,22 @@
 import styles from './variant-content.module.css'
 
-import React, { ReactElement, ReactNode, useRef, useState } from 'react'
+import {
+  ReactElement,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import cn from 'classnames'
 
-import { useScrollToItem } from '@core/hooks/use-scroll-to-item'
+// import { useScrollToItem } from '@core/hooks/use-scroll-to-item'
 import { t } from '@i18n'
 import { Icon } from '@ui/icon'
 import { Loader } from '@ui/loader'
 import { InputSearch } from '@components/input-search'
 import { VariantAspectsLayoutGallery } from '@components/variant-aspects-layout'
+import { scrollToItem } from '@pages/ws/ui/variant-drawer/variant-drawer.utils'
 import { TAspectDescriptor } from '@service-providers/dataset-level'
 
 interface IVariantContentProps {
@@ -41,7 +49,24 @@ export const VariantContent = ({
     }
   }
 
-  useScrollToItem('.aspect-window__content_active', refIndex)
+  const detectKey = useCallback((e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      scrollToItem('.aspect-window__content_active', refIndex)
+    }
+  }, [])
+
+  useEffect(() => {
+    return () => {
+      refIndex.current = 0
+      setSearchValue('')
+
+      window.removeEventListener('keydown', detectKey, true)
+    }
+  }, [detectKey])
+
+  const addListener = () => {
+    window.addEventListener('keydown', detectKey, true)
+  }
 
   return (
     <div className={cn(styles.variantContent, className)}>
@@ -60,6 +85,7 @@ export const VariantContent = ({
               placeholder={t('variant.searchThroughTheTabs')}
               value={searchValue}
               onChange={e => onChange(e.target.value)}
+              onFocus={addListener}
             />
           </div>
 

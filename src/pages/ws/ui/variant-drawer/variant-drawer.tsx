@@ -1,10 +1,9 @@
 import styles from './variant-drawer.module.css'
 
-import { ReactElement, useEffect, useRef, useState } from 'react'
+import { ReactElement, useCallback, useEffect, useRef, useState } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
-import { useScrollToItem } from '@core/hooks/use-scroll-to-item'
 import { t } from '@i18n'
 import variantStore from '@store/ws/variant'
 import { Loader } from '@ui/loader'
@@ -16,7 +15,7 @@ import {
 } from '@components/variant-aspects-layout'
 import { variantDrawerStore } from '@pages/ws/ui/variant-drawer/variant-drawer.store'
 import { VariantDrawerLayoutMode } from './variant-drawer.interface'
-import { getFoundedValuesNumber } from './variant-drawer.utils'
+import { getFoundedValuesNumber, scrollToItem } from './variant-drawer.utils'
 import { VariantDrawerHeader } from './variant-drawer-header'
 
 interface IVariantDrawerProps {
@@ -62,12 +61,24 @@ export const VariantDrawer = observer(
       }
     }
 
+    const detectKey = useCallback((e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        scrollToItem('.aspect-window__content_active', refIndex)
+      }
+    }, [])
+
     useEffect(() => {
       setSearchValue('')
       refIndex.current = 0
-    }, [layoutMode])
 
-    useScrollToItem('.aspect-window__content_active', refIndex)
+      return () => {
+        window.removeEventListener('keydown', detectKey, true)
+      }
+    }, [layoutMode, detectKey])
+
+    const addListener = () => {
+      window.addEventListener('keydown', detectKey, true)
+    }
 
     return (
       <div className={cn(styles.drawer, className)}>
@@ -93,6 +104,7 @@ export const VariantDrawer = observer(
               placeholder={t('variant.searchThroughTheTabs')}
               value={searchValue}
               onChange={e => onChange(e.target.value)}
+              onFocus={addListener}
             />
           </div>
 

@@ -11,6 +11,7 @@ interface IInputSearchProps {
   value: string
   className?: Argument
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onFocus?: () => void
   big?: boolean
   canClearInput?: boolean
 }
