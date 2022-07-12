@@ -1,12 +1,11 @@
 const { execSync } = require('child_process')
 const fs = require('fs').promises
 
-const versionRegex = /([\d.\d.\d]+)/
+const versionRegex = /[0-9]+(\.[0-9]+){2}/
 const taskNumberRegex = /(FOROME-\d+)/
 const delimeter = '??'
 const maxBuffer = 50 * 1024 * 1024
 const logFormat = `--pretty=format:'%h${delimeter}%an${delimeter}%ad${delimeter}%s${delimeter}%d'`
-const techAccountName = 'Version Bot'
 const baseJiraUrl = 'https://quantori.atlassian.net/browse/FOROME-'
 const baseGitHubUrl =
   'https://github.com/ForomePlatform/Anfisa-React-Client/commit/'
@@ -31,7 +30,6 @@ const getVersionFormatted = tag => {
   }
 
   const matched = tag.match(versionRegex)
-
   if (matched) {
     return matched[0]
   }
@@ -67,18 +65,19 @@ const parse = rawLog => {
     const isFix = message.includes('fix(')
     const isFeature = message.includes('feat(') || message.includes('feature(')
     const isRefactoring = message.includes('refactor(')
-    const isTechnicalCommit = userName === techAccountName
+    const version = getVersionFormatted(tag)
 
-    if (isTechnicalCommit || isFix || isFeature || isRefactoring) {
+    if (!!version || isFix || isFeature || isRefactoring) {
       acc.push({
         hash,
         userName,
         date: getDateFormatted(date),
         message,
-        tag: isTechnicalCommit ? getVersionFormatted(tag) : undefined,
+        tag: version || undefined,
         isFix,
         isFeature,
         isRefactoring,
+        isTechnical: !isFix && !isFeature && !isRefactoring && !!version,
       })
     }
 
@@ -88,15 +87,34 @@ const parse = rawLog => {
   return parsedLog
 }
 
-const createResult = parsedLog => {
-  let resultText = '# Change log \n'
-  parsedLog.forEach(logItem => {
-    const { tag, date, ...rest } = logItem
-    if (tag) {
-      resultText += `\n## <small>${tag} (${date})</small>\n\n`
-    } else {
-      resultText += formatRow(rest)
+const groupByReleaseVersion = parsedLog => {
+  let temp = []
+
+  const grouped = parsedLog.reduce((acc, logItem) => {
+    const patchVersion = logItem.tag?.split('.')[2]
+
+    if (!logItem.isTechnical) {
+      temp.push(logItem)
     }
+    if (+patchVersion === 0) {
+      acc[logItem.tag] = temp
+      temp = []
+    }
+
+    return acc
+  }, {})
+
+  return grouped
+}
+
+const createResult = groupedLog => {
+  let resultText = '# Change log \n'
+
+  Object.entries(groupedLog).forEach(([version, versionLog]) => {
+    resultText += `\n## <small>${version} (${versionLog[0].date})</small>\n\n`
+    versionLog.forEach(logItem => {
+      resultText += formatRow(logItem)
+    })
   })
 
   return resultText
@@ -122,7 +140,7 @@ const formatRow = ({ message, hash }) => {
 const generate = async () => {
   const gitLog = await fetchLog()
 
-  const result = pipe(parse, createResult)(gitLog)
+  const result = pipe(parse, groupByReleaseVersion, createResult)(gitLog)
 
   await fs.writeFile('CHANGELOG.md', result)
 }
