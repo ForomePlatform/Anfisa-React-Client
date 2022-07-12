@@ -11,13 +11,21 @@ interface IInputSearchProps {
   value: string
   className?: Argument
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
+  onFocus?: () => void
   big?: boolean
   canClearInput?: boolean
+  foundItems?: number
 }
 
 export const InputSearch = memo(
   ({ ...rest }: IInputSearchProps): ReactElement => {
-    const { className, big = false, canClearInput = true, ...tempRest } = rest
+    const {
+      className,
+      big = false,
+      canClearInput = true,
+      foundItems,
+      ...tempRest
+    } = rest
 
     const onClickClearButton = useCallback(
       (event: ChangeEvent<HTMLInputElement>) => {
@@ -36,15 +44,26 @@ export const InputSearch = memo(
           {...tempRest}
         />
 
-        <div className={cn('absolute right-2 flex', big ? 'top-2' : 'top-1.5')}>
-          {canClearInput && tempRest.value && (
-            <Icon
-              name="CloseMD"
-              onClick={onClickClearButton}
-              className={cn('text-grey-blue mr-2 cursor-pointer')}
-            />
+        <div
+          className={cn(
+            'absolute right-2 flex text-grey-blue',
+            big ? 'top-2' : 'top-1.5',
           )}
-          <Icon name="Loupe" className={cn('text-grey-blue ')} />
+        >
+          {canClearInput && tempRest.value && (
+            <>
+              {!!foundItems && (
+                <div className="relative mr-2 text-12">{foundItems} found</div>
+              )}
+
+              <Icon
+                name="CloseMD"
+                onClick={onClickClearButton}
+                className={cn('mr-2 cursor-pointer')}
+              />
+            </>
+          )}
+          <Icon name="Loupe" />
         </div>
       </div>
     )

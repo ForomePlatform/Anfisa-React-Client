@@ -1,11 +1,13 @@
 import styles from './variant-drawer.module.css'
 
-import { ReactElement, useRef } from 'react'
+import { ReactElement, useCallback, useEffect, useRef, useState } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
+import { t } from '@i18n'
 import variantStore from '@store/ws/variant'
 import { Loader } from '@ui/loader'
+import { InputSearch } from '@components/input-search'
 import {
   TVariantAspectsGridHandles,
   VariantAspectsLayoutGallery,
@@ -13,6 +15,7 @@ import {
 } from '@components/variant-aspects-layout'
 import { variantDrawerStore } from '@pages/ws/ui/variant-drawer/variant-drawer.store'
 import { VariantDrawerLayoutMode } from './variant-drawer.interface'
+import { getFoundedValuesNumber, scrollToItem } from './variant-drawer.utils'
 import { VariantDrawerHeader } from './variant-drawer-header'
 
 interface IVariantDrawerProps {
@@ -38,6 +41,49 @@ export const VariantDrawer = observer(
 
     const gridHandles = useRef<TVariantAspectsGridHandles>(null)
 
+    const [searchValue, setSearchValue] = useState<string>('')
+    const [foundItems, setFoundItems] = useState<number>(0)
+    const refIndex = useRef(0)
+
+    const handleChangeActiveAspect = (aspect: string) => {
+      refIndex.current = 0
+      setGalleryActiveAspect(aspect)
+    }
+
+    const onChange = (value: string) => {
+      setSearchValue(value)
+
+      const foundItems = getFoundedValuesNumber(value, aspects)
+
+      setFoundItems(foundItems)
+
+      if (value && foundItems) {
+        gridHandles.current?.maximizeAll()
+      } else {
+        gridHandles.current?.minimizeAll()
+        refIndex.current = 0
+      }
+    }
+
+    const detectKey = useCallback((e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        scrollToItem('.aspect-window__content_active', refIndex)
+      }
+    }, [])
+
+    useEffect(() => {
+      setSearchValue('')
+      refIndex.current = 0
+
+      return () => {
+        window.removeEventListener('keydown', detectKey, true)
+      }
+    }, [layoutMode, detectKey])
+
+    const addListener = () => {
+      window.addEventListener('keydown', detectKey, true)
+    }
+
     return (
       <div className={cn(styles.drawer, className)}>
         <VariantDrawerHeader
@@ -57,6 +103,16 @@ export const VariantDrawer = observer(
               <Loader />
             </div>
           )}
+          <div className={styles.drawer__search}>
+            <InputSearch
+              placeholder={t('variant.searchThroughTheTabs')}
+              value={searchValue}
+              onChange={e => onChange(e.target.value)}
+              onFocus={addListener}
+              foundItems={foundItems}
+            />
+          </div>
+
           {layoutMode == VariantDrawerLayoutMode.Grid && (
             <VariantAspectsLayoutGrid
               className={styles.drawer__layout}
@@ -64,6 +120,7 @@ export const VariantDrawer = observer(
               onChangeLayout={setGridLayout}
               layout={gridLayout}
               handles={gridHandles}
+              searchValue={searchValue}
               igvUrlSearchParams={igvUrlSearchParams}
             />
           )}
@@ -72,7 +129,8 @@ export const VariantDrawer = observer(
               className={styles.drawer__layout}
               aspects={aspects}
               activeAspect={galleryActiveAspect}
-              onChangeActiveAspect={setGalleryActiveAspect}
+              onChangeActiveAspect={handleChangeActiveAspect}
+              searchValue={searchValue}
               igvUrlSearchParams={igvUrlSearchParams}
             />
           )}

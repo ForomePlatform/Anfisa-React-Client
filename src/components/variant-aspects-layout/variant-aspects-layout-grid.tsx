@@ -24,6 +24,7 @@ export const VariantAspectsLayoutGrid = ({
   aspects,
   igvUrlSearchParams,
   handles,
+  searchValue,
 }: IVariantAspectsLayoutGridProps): ReactElement => {
   const rootRef = useRef<HTMLDivElement>(null)
   const [layout, openedWindows] = adaptLayoutForAspects(layoutProp, aspects)
@@ -73,6 +74,7 @@ export const VariantAspectsLayoutGrid = ({
             isOpen={openedWindows.includes(aspect.name)}
             igvUrlSearchParams={igvUrlSearchParams}
             onToggle={handleWindowToggle}
+            searchValue={searchValue}
           />
         ))}
       </ResponsiveGridLayout>
