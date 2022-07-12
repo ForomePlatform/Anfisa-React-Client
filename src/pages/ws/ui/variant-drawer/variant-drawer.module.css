@@ -9,16 +9,27 @@
     flex: 0 0 auto
   }
 
+  &__search {
+    position: sticky;
+    top: 0%;
+    padding: theme("spacing.2") 50% theme("spacing.2") theme("spacing.4");
+    z-index: 100;
+    overflow: hidden;
+    background: theme("colors.blue.lighter");
+  }
+
   &__content {
     position: relative;
     flex: 1 0 0;
     background: theme("colors.blue.lighter");
+    overflow-y: auto;
   }
 
   &__layout {
     position: absolute;
     z-index: 1;
     inset: 0;
+    top: 5%;
     overflow: auto;
   }
 

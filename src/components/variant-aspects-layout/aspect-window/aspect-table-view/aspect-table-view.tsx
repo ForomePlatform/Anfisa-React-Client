@@ -1,6 +1,6 @@
 import style from './aspect-table-view.module.css'
 
-import { MouseEvent, ReactElement } from 'react'
+import { MouseEvent, ReactElement, Ref } from 'react'
 import cn from 'classnames'
 
 import { t } from '@i18n'
@@ -13,12 +13,16 @@ import {
 interface IAspectTableViewProps {
   className?: string
   aspect: ITableAspectDescriptor
+  searchValue: string
   shouldAddShadow?: boolean
+  columnRef?: Ref<HTMLTableDataCellElement>
 }
 
 export const AspectTableView = ({
   className,
   aspect,
+  searchValue,
+  columnRef,
   shouldAddShadow,
 }: IAspectTableViewProps): ReactElement => {
   const { colhead, rows } = aspect
@@ -43,6 +47,12 @@ export const AspectTableView = ({
 
               const shouldShowCount = count && index === 0
 
+              const isSearched = searchValue.trim()
+                ? row.title
+                    .toLocaleLowerCase()
+                    .startsWith(searchValue.toLocaleLowerCase())
+                : false
+
               return (
                 <tr key={row.name}>
                   <td
@@ -50,6 +60,7 @@ export const AspectTableView = ({
                       style.firstColumn,
                       shouldAddShadow && 'bg-blue-darkHover',
                     )}
+                    ref={!index ? columnRef : undefined}
                   >
                     <Tooltip
                       maxWidth={600}
@@ -58,7 +69,10 @@ export const AspectTableView = ({
                       placement="bottom-start"
                     >
                       <span
-                        className="cursor-auto"
+                        className={cn('cursor-auto', {
+                          'aspect-window__content_active bg-yellow-bright p-1':
+                            isSearched,
+                        })}
                         onMouseDownCapture={onMouseDownHandler}
                       >
                         {shouldShowCount

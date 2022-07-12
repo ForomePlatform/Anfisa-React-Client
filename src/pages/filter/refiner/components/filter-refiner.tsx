@@ -9,7 +9,6 @@ import { FilterRefinerUnits } from './filter-refiner-units'
 import { FilterRefinerViewVariants } from './filter-refiner-view-variants'
 import { SelectedGroup } from './middle-column/selected-group'
 import { FilterRightColumn } from './right-column'
-
 interface IFilterRefinerProps {
   className?: string
 }

@@ -1,11 +1,25 @@
 import styles from './variant-content.module.css'
 
-import React, { ReactElement, ReactNode, useState } from 'react'
+import {
+  ReactElement,
+  ReactNode,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react'
 import cn from 'classnames'
 
+// import { useScrollToItem } from '@core/hooks/use-scroll-to-item'
+import { t } from '@i18n'
 import { Icon } from '@ui/icon'
 import { Loader } from '@ui/loader'
+import { InputSearch } from '@components/input-search'
 import { VariantAspectsLayoutGallery } from '@components/variant-aspects-layout'
+import {
+  getFoundedValuesNumber,
+  scrollToItem,
+} from '@pages/ws/ui/variant-drawer/variant-drawer.utils'
 import { TAspectDescriptor } from '@service-providers/dataset-level'
 
 interface IVariantContentProps {
@@ -14,7 +28,7 @@ interface IVariantContentProps {
   onClose: () => void
   isLoading?: boolean
   aspects: TAspectDescriptor[]
-  igvUrl?: string
+  igvUrlSearchParams?: string
 }
 
 export const VariantContent = ({
@@ -23,9 +37,41 @@ export const VariantContent = ({
   onClose,
   isLoading,
   aspects,
-  igvUrl,
+  igvUrlSearchParams,
 }: IVariantContentProps): ReactElement => {
   const [activeAspect, setActiveAspect] = useState('')
+
+  const [searchValue, setSearchValue] = useState<string>('')
+  const [foundItems, setFoundItems] = useState<number>(0)
+
+  const refIndex = useRef(0)
+
+  const onChange = (value: string) => {
+    setSearchValue(value)
+    setFoundItems(getFoundedValuesNumber(value, aspects))
+    if (!value) {
+      refIndex.current = 0
+    }
+  }
+
+  const detectKey = useCallback((e: KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      scrollToItem('.aspect-window__content_active', refIndex)
+    }
+  }, [])
+
+  useEffect(() => {
+    return () => {
+      refIndex.current = 0
+      setSearchValue('')
+
+      window.removeEventListener('keydown', detectKey, true)
+    }
+  }, [detectKey])
+
+  const addListener = () => {
+    window.addEventListener('keydown', detectKey, true)
+  }
 
   return (
     <div className={cn(styles.variantContent, className)}>
@@ -38,13 +84,26 @@ export const VariantContent = ({
       {isLoading ? (
         <Loader className={styles.variantContent__aspects} />
       ) : (
-        <VariantAspectsLayoutGallery
-          className={styles.variantContent__aspects}
-          activeAspect={activeAspect}
-          onChangeActiveAspect={setActiveAspect}
-          aspects={aspects}
-          igvUrl={igvUrl}
-        />
+        <>
+          <div className={styles.variantContent__search}>
+            <InputSearch
+              placeholder={t('variant.searchThroughTheTabs')}
+              value={searchValue}
+              onChange={e => onChange(e.target.value)}
+              onFocus={addListener}
+              foundItems={foundItems}
+            />
+          </div>
+
+          <VariantAspectsLayoutGallery
+            className={styles.variantContent__aspects}
+            activeAspect={activeAspect}
+            onChangeActiveAspect={setActiveAspect}
+            aspects={aspects}
+            igvUrlSearchParams={igvUrlSearchParams}
+            searchValue={searchValue}
+          />
+        </>
       )}
     </div>
   )

@@ -47,8 +47,8 @@ export const InputNumeric = ({
   }, [value])
 
   function checkValue(value: number): number {
-    const limitedNum = checkMaxMin(value, maximal, minimal)
-    return isFloat ? +limitedNum.toFixed(2) : +limitedNum.toFixed(0)
+    const num = isFloat ? value.toPrecision(12) : value
+    return checkMaxMin(+num, maximal, minimal)
   }
 
   function changeValue(newValue: number | null) {
