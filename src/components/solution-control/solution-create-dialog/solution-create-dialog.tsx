@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useMemo, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 
 import { t } from '@i18n'
 import { Dialog } from '@ui/dialog'
@@ -23,11 +23,7 @@ export const SolutionCreateDialog = ({
 }: ISolutionCreateDialogProps): ReactElement => {
   const [solutionName, setSolutionName] = useState('')
   const [isValidationError, setIsValidationError] = useState(false)
-
-  const isSameNameError = useMemo(
-    () => solutions?.some(solution => solution.name === solutionName),
-    [solutionName, solutions],
-  )
+  const [isSameNameError, setIsSameNameError] = useState(false)
 
   const hasError = isValidationError || isSameNameError
   const errorText = isValidationError
@@ -44,7 +40,10 @@ export const SolutionCreateDialog = ({
   useEffect(() => {
     const isValid = !solutionName.length || validatePresetName(solutionName)
     setIsValidationError(!isValid)
-  }, [solutionName])
+    setIsSameNameError(
+      !!solutions?.some(solution => solution.name === solutionName),
+    )
+  }, [solutionName, solutions])
 
   return (
     <Dialog
