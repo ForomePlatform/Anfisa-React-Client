@@ -96,7 +96,7 @@ const groupByReleaseVersion = parsedLog => {
     if (!logItem.isTechnical) {
       temp.push(logItem)
     }
-    if (+patchVersion === 0) {
+    if (+patchVersion === 1) {
       acc[logItem.tag] = temp
       temp = []
     }
