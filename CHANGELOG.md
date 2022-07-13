@@ -15,6 +15,7 @@
 * fix([FOROME-1229](https://quantori.atlassian.net/browse/FOROME-1229)): replace igv-page to igv-modal ([a0940570](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a0940570))
 * fix([FOROME-1269](https://quantori.atlassian.net/browse/FOROME-1269)): format number method (#794) ([e61998af](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e61998af))
 * fix([FOROME-1306](https://quantori.atlassian.net/browse/FOROME-1306)): set active preset before edit (#800) ([3fa09600](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3fa09600))
+* feat([FOROME-12](https://quantori.atlassian.net/browse/FOROME-12)p8): redesign scrollbar ([d6a96fc2](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d6a96fc2))
 * fix([FOROME-1290](https://quantori.atlassian.net/browse/FOROME-1290)): add local tag for note (#795) ([705b10ce](https://github.com/ForomePlatform/Anfisa-React-Client/commit/705b10ce))
 * feat([FOROME-1305](https://quantori.atlassian.net/browse/FOROME-1305)): fix css module ([09f9386f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/09f9386f))
 * feat([FOROME-1305](https://quantori.atlassian.net/browse/FOROME-1305)): rework attribute selection ([ec5c618d](https://github.com/ForomePlatform/Anfisa-React-Client/commit/ec5c618d))
