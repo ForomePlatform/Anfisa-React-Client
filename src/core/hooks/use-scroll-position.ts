@@ -6,7 +6,12 @@ export type TScrollPositionParams = {
 }
 
 export type TReadScrollPosition = () => void
-export type TWriteScrollPosition = () => void
+export type TWriteScrollPosition = (options?: TScrollOptions) => void
+
+type TScrollOptions = {
+  top?: number
+  left?: number
+}
 
 export const useScrollPosition = ({
   elem,
@@ -22,20 +27,17 @@ export const useScrollPosition = ({
     HTMLElement?.scrollTo(scrollOptions)
   }
 
-  const writeScrollPosition: TWriteScrollPosition = (): void => {
-    if (typeof elem === 'string') {
-      const [HTMLElement] = document.querySelectorAll(elem)
+  const writeScrollPosition: TWriteScrollPosition = (
+    options: TScrollOptions = {},
+  ): void => {
+    const element =
+      typeof elem === 'string' ? document.querySelectorAll(elem)[0] : elem
 
-      SessionStoreManager.write(storageId, {
-        top: HTMLElement?.scrollTop,
-        left: HTMLElement?.scrollLeft,
-      })
-    } else if (typeof elem === 'object') {
-      SessionStoreManager.write(storageId, {
-        top: elem?.scrollTop,
-        left: elem?.scrollLeft,
-      })
-    }
+    SessionStoreManager.write(storageId, {
+      top: element?.scrollTop,
+      left: element?.scrollLeft,
+      ...options,
+    })
   }
 
   return [readScrollPosition, writeScrollPosition]
