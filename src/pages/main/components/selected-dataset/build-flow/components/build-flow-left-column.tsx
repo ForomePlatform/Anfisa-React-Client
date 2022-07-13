@@ -1,71 +1,28 @@
 import styles from '../build-flow.module.css'
 
 import { ReactElement } from 'react'
-import { useHistory } from 'react-router'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
-import { CardTypes } from '@core/enum/card-types-enum'
-import { Card } from '@ui/card'
-import selectedDatasetStore from '../../selected-dataset.store'
-import { CardListSection } from './card-sections/card-list-section'
-import { CardRadioListSection } from './card-sections/card-radio-list-section'
+import selectedDatasetCardsStore from '../../selected-dataset-cards.store'
 
 export const BuildFlowLeftColumn = observer((): ReactElement => {
-  const { currentStepData } = selectedDatasetStore
-  const history = useHistory()
+  const { wizardScenario } = selectedDatasetCardsStore
 
   return (
     <div
       className={cn(styles.buildFlow__column, styles.buildFlow__column_left)}
     >
-      {currentStepData?.map((data, index) => {
-        const isContinueDisabled =
-          !currentStepData[index + 1] || currentStepData[index + 1].hidden
-        const isEditDisabled =
-          index === 0
-            ? !selectedDatasetStore.secondaryDatasets
-            : isContinueDisabled
+      {wizardScenario.map((scenario, index) => {
+        const Component = () =>
+          scenario.component({
+            continueDisabled: scenario.continueDisabled,
+            editDisabled: scenario.editDisabled,
+            contentDisabled: scenario.contentDisabled,
+            selectedValue: scenario.value,
+          })
         return (
-          !data.hidden &&
-          index < 2 && (
-            <Card
-              key={data.title}
-              className={cn(
-                index !== 0 && 'mt-4',
-                data.type === CardTypes.List && 'px-0',
-              )}
-            >
-              {data.type === CardTypes.RadioList ? (
-                <CardRadioListSection
-                  title={data.title}
-                  optionsList={data.optionsList}
-                  description={data.description}
-                  isEditDisabled={isEditDisabled}
-                  isContinueDisabled={isContinueDisabled}
-                  checkedValue={data.value}
-                  onEdit={() => selectedDatasetStore.hideNextSteps(index)}
-                  onContinue={item =>
-                    selectedDatasetStore.continueEditWizardData(index, item)
-                  }
-                  onOpen={item =>
-                    selectedDatasetStore.openNextPage(history, item)
-                  }
-                />
-              ) : (
-                <CardListSection
-                  title={data.title}
-                  isSpecial={data.isSpecial}
-                  optionsList={selectedDatasetStore.secondaryDatasets}
-                  onSelect={value =>
-                    selectedDatasetStore.selectDataset(value, index)
-                  }
-                  selectedItem={selectedDatasetStore.selectedSecondaryDataset}
-                  style={{ maxHeight: 'calc(94vh - 358px)' }}
-                />
-              )}
-            </Card>
-          )
+          index < 2 && !scenario.hidden && <Component key={scenario.value} />
         )
       })}
     </div>

@@ -1,4 +1,4 @@
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, toJS } from 'mobx'
 
 import { CardTypes } from '@core/enum/card-types-enum'
 import { ExploreCandidateTypes } from '@core/enum/explore-candidate-types-enum'
@@ -181,6 +181,18 @@ class SelectedDatasetStore {
     history.push(nextPageData.route)
 
     filterStore.setMethod(nextPageData.method as GlbPagesNames)
+  }
+
+  public openWizardFowWsDataset(hasSecondaryDs: boolean) {
+    console.log(hasSecondaryDs)
+
+    this.createFirstWizardStep(ExploreTypes.Candidate)
+
+    hasSecondaryDs
+      ? this.addWizardStep(exploreSteps[ExploreTypes.Candidate][0])
+      : this.addWizardStep(exploreSteps[ExploreTypes.Candidate][1])
+
+    this.toggleIsBuildFlowVisible(true)
   }
 }
 
