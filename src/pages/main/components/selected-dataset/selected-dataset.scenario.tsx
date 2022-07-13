@@ -6,8 +6,8 @@ import { Button } from '@ui/button'
 import { Card, CardTitle } from '@ui/card'
 import { Icon } from '@ui/icon'
 import { Radio } from '@ui/radio'
+import { RelevantPresetsCard } from './cards/presets-card/presets-card'
 import {
-  relevantPresetsList,
   startFlowOptionsList,
   whatsNextOptionsList,
 } from './selected-dataset.data'
@@ -112,48 +112,6 @@ const WhatsNextCard = (props: ICardProps) => {
     </Card>
   )
 }
-
-const RelevantPresetsCard = (props: ICardProps) => (
-  <Card className={'mt-4'}>
-    <CardTitle text={'Relevant presets'} className="text-16 px-4" />
-
-    <div
-      className="mb-4 text-14 overflow-y-auto"
-      style={{ maxHeight: 'calc(100vh - 285px)' }}
-    >
-      {relevantPresetsList.map(preset => {
-        const isSelected = props.selectedValue === preset
-
-        return (
-          <div
-            key={preset}
-            onClick={() => cardsStore.setSelectedPreset(preset, 2)}
-          >
-            <div
-              className={cn(
-                'w-full flex items-center py-2 leading-5 cursor-pointer px-4',
-                isSelected
-                  ? 'bg-blue-bright text-white'
-                  : 'hover:bg-blue-light',
-              )}
-            >
-              <Icon
-                name="File"
-                className={cn(isSelected ? 'text-white' : 'text-blue-bright')}
-              />
-
-              <div className="ml-1.5">{preset}</div>
-            </div>
-          </div>
-        )
-      })}
-    </div>
-
-    <div className="flex justify-end px-4">
-      <Button text="Open" disabled={!cardsStore.selectedPreset} />
-    </div>
-  </Card>
-)
 
 export const firstScenario: IWizardScenario[] = [
   {

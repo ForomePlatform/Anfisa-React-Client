@@ -2,6 +2,7 @@ import { cloneDeep } from 'lodash'
 import { makeAutoObservable, toJS } from 'mobx'
 
 import { ActionsHistoryStore } from '@store/actions-history'
+import { ISolutionWithKind } from './cards/presets-card/utils/add-solution-kind'
 import { firstScenario } from './selected-dataset.scenario'
 
 export interface ICardProps {
@@ -22,9 +23,10 @@ export interface IWizardScenario {
 
 class SelectedDatasetCardsStore {
   public wizardScenario: IWizardScenario[] = firstScenario
+
   public startWithOption = ''
   public whatsNextOption = ''
-  public selectedPreset = ''
+  public selectedPreset?: ISolutionWithKind
 
   public actionHistory = new ActionsHistoryStore<IWizardScenario[]>(
     wizardScenario => (this.wizardScenario = wizardScenario),
@@ -48,9 +50,9 @@ class SelectedDatasetCardsStore {
     this.wizardScenario = clonedWizard
   }
 
-  public setSelectedPreset(selectedPreset: string, index: number) {
+  public setSelectedPreset(selectedPreset: ISolutionWithKind, index: number) {
     const clonedWizard = cloneDeep(this.wizardScenario)
-    clonedWizard[index].value = selectedPreset
+    clonedWizard[index].value = selectedPreset.name
     this.wizardScenario = clonedWizard
 
     this.selectedPreset = selectedPreset
