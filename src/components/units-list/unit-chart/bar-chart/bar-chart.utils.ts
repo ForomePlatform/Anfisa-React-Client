@@ -74,12 +74,7 @@ export const drawBarChart = ({
     : (item: TVariant) => yScale(item[1])
 
   const getDifferentBarColors = (index: number) => {
-    if (index < colors.length) {
-      return colors[index]
-    }
-
-    const remainder = Math.floor(index / colors.length)
-    return colors[index - remainder * colors.length]
+    return colors[index % colors.length]
   }
 
   chart
