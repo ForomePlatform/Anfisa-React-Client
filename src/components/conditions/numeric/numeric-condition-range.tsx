@@ -1,4 +1,10 @@
-import React, { ReactElement, useCallback, useMemo, useState } from 'react'
+import React, {
+  ReactElement,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 
 import { adjustHistogramData } from '@core/histograms'
 import { t } from '@i18n'
@@ -58,9 +64,11 @@ export const NumericConditionRange = ({
   const [minValue, minStrictness, maxValue, maxStrictness, isZeroIncluded] =
     value
 
+  const minValueRef = useRef(0)
+
   const errors = useMemo(
-    () => validateNumericValue(value, min, max),
-    [value, min, max],
+    () => validateNumericValue(value, minValueRef.current, max),
+    [value, max],
   )
 
   const handleRangeSliderChange = useCallback<
@@ -176,6 +184,7 @@ export const NumericConditionRange = ({
         )}
         {min != null && max != null && min < max && (
           <NumericConditionRangeSlider
+            minValueRef={minValueRef}
             className="my-6"
             min={min}
             max={max}
