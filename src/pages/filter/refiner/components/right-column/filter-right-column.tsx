@@ -1,4 +1,4 @@
-import styles from './query-selected.module.css'
+import styles from './filter-right-column.module.css'
 
 import { ReactElement } from 'react'
 import { useHistory } from 'react-router'
@@ -16,15 +16,15 @@ import { Loader } from '@ui/loader'
 import { FilterRefinerStatCounts } from '@pages/filter/refiner/components/right-column/filter-refiner-stat-counts'
 import { TCondition } from '@service-providers/common'
 import { showToast } from '@utils/notifications/showToast'
-import { QueryResults } from './query-results'
+import { FilterConditions } from './filter-conditions'
 
-interface IQuerySelectedProps {
+interface IFilterRightColumnProps {
   className?: string
   onViewVariants: () => void
 }
 
-export const QuerySelected = observer(
-  ({ className, onViewVariants }: IQuerySelectedProps): ReactElement => {
+export const FilterRightColumn = observer(
+  ({ className, onViewVariants }: IFilterRightColumnProps): ReactElement => {
     const history = useHistory()
     const params = useParams()
 
@@ -119,7 +119,7 @@ export const QuerySelected = observer(
         {isConditionsFetching ? (
           <Loader />
         ) : (
-          <QueryResults className={styles.querySelected__conditions} />
+          <FilterConditions className={styles.querySelected__conditions} />
         )}
       </div>
     )

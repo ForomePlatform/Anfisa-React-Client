@@ -22,6 +22,15 @@
     flex: 1 0 auto;
   }
 
+  &__search {
+    position: sticky;
+    top: 0%;
+    padding: theme("spacing.2") 50% theme("spacing.2") theme("spacing.4");
+    z-index: 100;
+    overflow: hidden;
+    background: theme("colors.blue.lighter");
+  }
+
   &__close {
     color: theme("colors.white");
     cursor: pointer;
@@ -35,5 +44,6 @@
     position: relative;
     flex: 1 0 0;
     overflow: hidden;
+    top: -2.5%;
   }
 }

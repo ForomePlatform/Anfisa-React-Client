@@ -46,7 +46,7 @@ export const UnitsListGroup = ({
           <PredictionPowerIndicator className="mr-2" value={power} />
         )}
         <span className={styles.groupHeader__title}>{name}</span>
-        <DropdownArrow isOpen={!isCollapsed} />
+        <DropdownArrow isOpen={!isCollapsed} dark />
       </div>
       {!isCollapsed &&
         attributes.map(unit => (

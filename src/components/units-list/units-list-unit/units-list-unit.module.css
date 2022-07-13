@@ -6,32 +6,18 @@
   display: flex;
   align-items: center;
 
-  &__add-button {
-    flex: 0 0 auto;
-    width: 16px;
-    height: 16px;
-    margin-right: theme("spacing[1.5]");
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: theme("colors.white");
-    background: theme("colors.blue.bright");
-    font-size: 16px;
-    border-radius: 8px;
-    overflow: hidden;
-    cursor: pointer;
-
-    &:hover {
-      background: theme("colors.blue.dark");
-    }
+  &:hover {
+    color: theme("colors.grey.blue");
   }
 
   &__title {
-    flex: 1 0 auto;
+    margin-right: 10px;
     color: theme("colors.black");
     cursor: pointer;
 
     @apply typography-s;
+
+    font-weight: 500;
 
     &:hover {
       color: theme("colors.blue.dark");
@@ -41,7 +27,7 @@
       color: theme("colors.white");
 
       &:hover {
-        color: theme("colors.white");
+        color: theme("colors.grey.blue");
       }
     }
   }

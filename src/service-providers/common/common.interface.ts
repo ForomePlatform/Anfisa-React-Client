@@ -41,6 +41,7 @@ export interface IScenario {
 export interface IInheritanceModeArgs {
   problem_group: string[]
 }
+
 export interface ICustomInheritanceModeArgs {
   scenario: IScenario
 }
@@ -73,13 +74,35 @@ export type TFuncArgs =
   | ICompoundRequestArgs
   | IGeneRegionArgs
 
-export type TFuncCondition = [
+export enum FuncUnits {
+  InheritanceMode = 'Inheritance_Mode',
+  CustomInheritanceMode = 'Custom_Inheritance_Mode',
+  CompoundHet = 'Compound_Het',
+  CompoundRequest = 'Compound_Request',
+  GeneRegion = 'GeneRegion',
+}
+
+export type TFuncConditionArgs<PropertyName extends FuncUnits> = {
+  [FuncUnits.InheritanceMode]: IInheritanceModeArgs
+  [FuncUnits.CompoundHet]: ICompoundHetArgs
+  [FuncUnits.CompoundRequest]: ICompoundRequestArgs
+  [FuncUnits.GeneRegion]: IGeneRegionArgs
+  [FuncUnits.CustomInheritanceMode]: ICustomInheritanceModeArgs
+}[PropertyName]
+
+export type TFuncConditionBase<PropertyName extends string> = [
   conditionType: AttributeKinds.FUNC | AttributeKinds.ERROR,
-  propertyName: string,
+  propertyName: PropertyName,
   joinMode: ConditionJoinMode,
   valueVariants: string[],
-  functionArguments: TFuncArgs,
+  functionArguments: PropertyName extends FuncUnits
+    ? TFuncConditionArgs<PropertyName>
+    : unknown,
 ]
+
+export type TFuncCondition = {
+  [P in FuncUnits]: TFuncConditionBase<P>
+}[FuncUnits]
 
 export type TCondition = TNumericCondition | TEnumCondition | TFuncCondition
 

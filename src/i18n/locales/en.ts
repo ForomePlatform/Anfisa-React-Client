@@ -205,6 +205,9 @@ export const en = {
     textAboutSomething: 'Text about something',
     savePreset: 'Save Preset',
     savePredefinedPresetError: '{presetName} is a predefined preset',
+    searchThroughTheTabs: 'Search through the tabs',
+    openInAModalWindow: 'Open in a modal window',
+    openInANewTab: 'Open in a new tab',
   },
   condition: {
     selectAttribute: 'Select attribute',
@@ -278,6 +281,7 @@ export const en = {
       title: 'Attention! All changes will be lost',
       body: 'Are you sure you want to leave the page without saving the preset?',
     },
+    inactiveField: 'Inactive field',
   },
   dtree: {
     variants: 'variants',

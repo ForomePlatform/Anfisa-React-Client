@@ -1,13 +1,10 @@
-import { ReactElement, useEffect, useRef, useState } from 'react'
+import { ReactElement, useRef, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { useParams } from '@core/hooks/use-params'
+import { IgvContent } from '@pages/igv/ui/igv-content'
 import { NotFoundPage } from '@pages/not-found'
 import { FileMissing } from './ui/file-missing'
-
-export const hg38Folder = 'GRCh38'
-
-const igv = require('igv')
 
 export const IgvPage = observer((): ReactElement => {
   const [isEachFilesMissing, setIsEachFilesMissing] = useState(false)
@@ -16,11 +13,10 @@ export const IgvPage = observer((): ReactElement => {
 
   const params = useParams()
 
-  const stringifiedIgvUrls = params.get('igvUrls')
-
   const locus = params.get('locus')
   const names = params.get('names')
-  const nameList = names?.split(',') ?? []
+  const stringifiedIgvUrls = params.get('igvUrls')
+  const igvUrls: string[] = stringifiedIgvUrls && JSON.parse(stringifiedIgvUrls)
 
   const isCorrectParams = locus && names && stringifiedIgvUrls
 
@@ -28,42 +24,17 @@ export const IgvPage = observer((): ReactElement => {
     return <NotFoundPage />
   }
 
-  useEffect(() => {
-    const igvUrls: string[] = JSON.parse(stringifiedIgvUrls)
-
-    const tracks = nameList
-      .map(name => {
-        const path = igvUrls.find(url => url.includes(name))
-
-        if (!path) return null
-
-        const indexPath = `${path}.bai`
-
-        return {
-          name,
-          url: path,
-          indexURL: indexPath,
-          format: 'bam',
-        }
-      })
-      .filter(element => element)
-
-    const isTracksEmpty = tracks.length === 0
-
-    if (isTracksEmpty) {
-      setIsEachFilesMissing(true)
-    } else {
-      const options = {
-        genome: 'hg38',
-        locus,
-        tracks,
-      }
-
-      igv.createBrowser(ref.current, options)
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  return isEachFilesMissing ? <FileMissing /> : <div ref={ref} />
+  return isEachFilesMissing ? (
+    <FileMissing />
+  ) : (
+    <div ref={ref}>
+      <IgvContent
+        locus={locus}
+        names={names}
+        igvUrls={igvUrls}
+        isOpen={true}
+        setIsEachFilesMissing={setIsEachFilesMissing}
+      />
+    </div>
+  )
 })

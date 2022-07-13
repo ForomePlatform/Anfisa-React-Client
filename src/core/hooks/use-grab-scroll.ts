@@ -3,7 +3,8 @@ import { RefObject, useEffect } from 'react'
 export type ScrollDirection = 'horizontal' | 'vertical' | 'both'
 
 const getMouseDownHandler =
-  (direction: ScrollDirection) => (event: MouseEvent) => {
+  (direction: ScrollDirection, onScroll: (() => void) | undefined) =>
+  (event: MouseEvent) => {
     if (event.button !== 0) {
       return
     }
@@ -23,6 +24,10 @@ const getMouseDownHandler =
       }
       if (direction !== 'vertical') {
         element.scrollLeft = origScrollLeft + origX - event.clientX
+      }
+
+      if (onScroll) {
+        onScroll()
       }
     }
 
@@ -55,18 +60,19 @@ const getMouseDownHandler =
 
 export const useGrabScroll = (
   ref: RefObject<HTMLElement>,
+  onScroll?: () => void,
   direction: ScrollDirection = 'both',
   enabled = true,
 ): void => {
   useEffect(() => {
     const el = ref.current
     if (el && enabled) {
-      const handler = getMouseDownHandler(direction)
+      const handler = getMouseDownHandler(direction, onScroll)
       el.addEventListener('mousedown', handler, {
         capture: true,
       })
 
       return () => el.removeEventListener('mousedown', handler)
     }
-  }, [ref, direction, enabled])
+  }, [ref, direction, enabled, onScroll])
 }

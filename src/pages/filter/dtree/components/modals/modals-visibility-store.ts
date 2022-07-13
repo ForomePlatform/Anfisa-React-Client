@@ -17,6 +17,8 @@ class ModalsVisibilityStore {
   isEnumDialogVisible = false
   isNumericDialogVisible = false
 
+  isIgvModalVisible = false
+
   constructor() {
     makeAutoObservable(this)
   }
@@ -142,6 +144,10 @@ class ModalsVisibilityStore {
 
   public closeGeneRegionDialog = () => {
     this.isGeneRegionDialogVisible = false
+  }
+
+  public toggleIsIgvModalVisible = (value: boolean) => {
+    this.isIgvModalVisible = value
   }
 }
 
