@@ -2,6 +2,7 @@
 
 ## <small>0.7.1 (7/13/2022)</small>
 
+* fix([FOROME-1313](https://quantori.atlassian.net/browse/FOROME-1313)): validation for creating presets (#799) ([2b23011f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/2b23011f))
 * fix([FOROME-1323](https://quantori.atlassian.net/browse/FOROME-1323)): save scroll position in modal (#807) ([82073162](https://github.com/ForomePlatform/Anfisa-React-Client/commit/82073162))
 * feat([FOROME-1303](https://quantori.atlassian.net/browse/FOROME-1303)): implemented drag-n-drop conditions moving in refiner (#785) ([d1ef1934](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d1ef1934))
 
