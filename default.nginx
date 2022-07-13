@@ -1,26 +1,18 @@
-# upstream backend {
-#     # hello is the internal DNS name used by the backend Service inside Kubernetes
-#     server anfisa-backend;
-# }
 server {
     listen 80;
     server_name _;
-
     location /app {
         include uwsgi_params;
         uwsgi_read_timeout 3000;
         uwsgi_buffering off;
         uwsgi_pass anfisa-backend:80;
     }
-
     location ~ /app/ui/images {
         proxy_pass http://anfisa-backend:80;
     }
-
     location ~ /app/ui {
         proxy_pass http://anfisa-backend:80;
     }
-
     location / {
         client_max_body_size 100M;
         proxy_buffering off;
@@ -28,8 +20,4 @@ server {
         root /usr/share/nginx/html/anfisa/;
         try_files $uri $uri/ /index.html;
     }
-    # location /bams {
-    #     root /datatest;
-    #     # autoindex on;
-    # }
 }
