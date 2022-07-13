@@ -6,5 +6,6 @@ COPY . ./
 RUN yarn build
 
 FROM nginx:1.23.0
-COPY default.nginx /etc/nginx/conf.d/default.conf
+# COPY default.nginx /etc/nginx/conf.d/default.conf
+COPY default.conf.template /etc/nginx/templates/default.conf.template
 COPY --from=build /app/build /usr/share/nginx/html/anfisa
