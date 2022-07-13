@@ -1,18 +1,25 @@
+upstream backend {
+    server ${BACKEND};
+}
 server {
     listen 80;
     server_name _;
+
     location /app {
         include uwsgi_params;
         uwsgi_read_timeout 3000;
         uwsgi_buffering off;
-        uwsgi_pass anfisa-backend:80;
+        uwsgi_pass http://backend;
     }
+
     location ~ /app/ui/images {
-        proxy_pass http://anfisa-backend:80;
+        proxy_pass http://backend;
     }
+
     location ~ /app/ui {
-        proxy_pass http://anfisa-backend:80;
+        proxy_pass http://backend;
     }
+
     location / {
         client_max_body_size 100M;
         proxy_buffering off;
@@ -20,4 +27,8 @@ server {
         root /usr/share/nginx/html/anfisa/;
         try_files $uri $uri/ /index.html;
     }
+    # location /bams {
+    #     root /datatest;
+    #     autoindex on;
+    # }
 }
