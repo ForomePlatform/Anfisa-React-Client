@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite'
 
 import { Checkbox } from '@ui/checkbox/checkbox'
-import { MainTableDataCy } from '@components/data-testid/main-table.cy'
+import { MainTableDataCy } from '@data-testid'
 
 interface IZoneListProps {
   zoneItems: string[]

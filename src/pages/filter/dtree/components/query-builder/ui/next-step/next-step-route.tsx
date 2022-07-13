@@ -9,7 +9,7 @@ import dtreeStore from '@store/dtree'
 import stepStore, { ActiveStepOptions } from '@store/dtree/step.store'
 import { Icon } from '@ui/icon'
 import { Tooltip } from '@ui/tooltip'
-import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
+import { DecisionTreesResultsDataCy } from '@data-testid'
 import { StepCount } from '@pages/filter/dtree/components/query-builder/ui/step-count'
 
 const StartAmount = styled.div`

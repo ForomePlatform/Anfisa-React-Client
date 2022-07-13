@@ -16,6 +16,7 @@ import { Icon } from '@ui/icon'
 import { Loader } from '@ui/loader'
 import { InputSearch } from '@components/input-search'
 import { VariantAspectsLayoutGallery } from '@components/variant-aspects-layout'
+import { ReturnedVariantsDataCy } from '@data-testid'
 import {
   getFoundedValuesNumber,
   scrollToItem,
@@ -75,7 +76,10 @@ export const VariantContent = ({
 
   return (
     <div className={cn(styles.variantContent, className)}>
-      <div className={styles.variantContent__header}>
+      <div
+        className={styles.variantContent__header}
+        data-testid={ReturnedVariantsDataCy.returnedVariantsHeader}
+      >
         <div className={styles.variantContent__title}>{title}</div>
         <button className={styles.variantContent__close}>
           <Icon name="Close" onClick={onClose} size={16} />

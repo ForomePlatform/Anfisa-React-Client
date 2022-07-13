@@ -8,20 +8,21 @@ import { Timeouts } from '../shared/timeouts'
 describe('Test on table of returned variants', () => {
   const datasetName = 'PGP3140_wgs_NIST-4_2'
   const xlDatasetName = 'xl_' + datasetName
-  const filterName = '⏚Hearing Loss, v.5'
+  const filterName = '@Hearing Loss, v.5'
 
   it('should show returned variants correctly | test #4', () => {
+    cy.intercept('POST', ApiEndpoints.statUnits).as('statUnits')
     datasetPage.visit(`${Paths.dtree}?ds=${xlDatasetName}`)
-    cy.intercept('POST', ApiEndpoints.dtreeSet).as('selectList')
-    decisionTreesPage.decisionTreeMenu.selectDecision.first().click()
-    cy.wait('@selectList')
+    decisionTreesPage.decisionTreeMenu.selectDecisionTree.click()
 
-    cy.intercept('POST', ApiEndpoints.statUnits).as('decTreeUpload')
-    decisionTreesPage.decisionTreeMenu.selectDecision.getFilter(filterName)
-    cy.wait('@decTreeUpload')
+    decisionTreesPage.decisionTreeMenu.selectDecisionTree.getFilter(filterName)
+    decisionTreesPage.decisionTreeMenu.applyFilter.click()
+    cy.wait('@statUnits')
 
-    decisionTreesPage.decisionTreeResults.stepCard.findStepAndExclude('Step 5')
-    cy.intercept('GET', `${ApiEndpoints.jobStatus}**`).as('jobStatus')
+    const results = decisionTreesPage.decisionTreeResults
+    results.stepCard.findStepAndExclude('Step 5')
+
+    cy.intercept('POST', `${ApiEndpoints.jobStatus}**`).as('jobStatus')
     decisionTreesPage.decisionTreeResults.viewReturnedVariants.click()
     cy.waitJob({ jobAlias: 'jobStatus' })
 
@@ -44,18 +45,21 @@ describe('Test on table of returned variants', () => {
   })
 
   it('should add a new dataset correctly | test #5', () => {
+    cy.intercept('POST', ApiEndpoints.dtreeSet).as('dtreeSet')
+    cy.intercept('POST', ApiEndpoints.statUnits).as('statUnits')
+
     datasetPage.visit(`${Paths.dtree}?ds=${xlDatasetName}`)
-    cy.intercept('POST', ApiEndpoints.dtreeSet).as('selectList')
-    decisionTreesPage.decisionTreeMenu.selectDecision.first().click()
-    cy.wait('@selectList', {
+    decisionTreesPage.decisionTreeMenu.selectDecisionTree.click()
+    decisionTreesPage.decisionTreeMenu.selectDecisionTree.getFilter(filterName)
+    decisionTreesPage.decisionTreeMenu.applyFilter.click()
+    cy.wait('@dtreeSet', {
       timeout: Timeouts.TenSecondsTimeout,
     })
 
-    cy.intercept('POST', ApiEndpoints.statUnits).as('decTreeUpload')
-    decisionTreesPage.decisionTreeMenu.selectDecision.getFilter(filterName)
-    cy.wait('@decTreeUpload', {
+    cy.wait('@statUnits', {
       timeout: Timeouts.TenSecondsTimeout,
     })
+
     decisionTreesPage.decisionTreeMenu.saveDataset.click()
 
     const derivedDataset = 'auto_' + TestData.getRunId()

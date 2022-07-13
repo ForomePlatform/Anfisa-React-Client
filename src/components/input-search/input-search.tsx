@@ -4,7 +4,6 @@ import { ChangeEvent, memo, ReactElement, useCallback } from 'react'
 import cn, { Argument } from 'classnames'
 
 import { Icon } from '@ui/icon'
-import { DecisionTreesResultsDataCy } from '../data-testid/decision-tree-results.cy'
 
 interface IInputSearchProps {
   placeholder?: string
@@ -15,6 +14,7 @@ interface IInputSearchProps {
   big?: boolean
   canClearInput?: boolean
   foundItems?: number
+  dataTestId?: string
 }
 
 export const InputSearch = memo(
@@ -24,6 +24,7 @@ export const InputSearch = memo(
       big = false,
       canClearInput = true,
       foundItems,
+      dataTestId,
       ...tempRest
     } = rest
 
@@ -39,7 +40,7 @@ export const InputSearch = memo(
       <div className={cn('relative', className)}>
         <input
           type="text"
-          data-testid={DecisionTreesResultsDataCy.searchGraphResults}
+          data-testid={dataTestId}
           className={cn(styles.inputSearch, big && styles.inputSearch_big)}
           {...tempRest}
         />

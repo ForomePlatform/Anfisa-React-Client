@@ -3,7 +3,7 @@ import { ReactElement } from 'react'
 import { t } from '@i18n'
 import { Checkbox } from '@ui/checkbox/checkbox'
 import { Loader } from '@ui/loader'
-import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
+import { DecisionTreesResultsDataCy } from '@data-testid'
 
 interface IDisabledVariantsProps {
   isFetching: boolean

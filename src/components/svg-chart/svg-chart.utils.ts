@@ -29,6 +29,7 @@ export class ChartTooltip {
       this.popper.destroy()
     }
 
+    this.tooltip.id = 'chart-tooltip'
     this.tooltip.innerHTML = content
 
     this.popper = createPopper(reference, this.tooltip, {

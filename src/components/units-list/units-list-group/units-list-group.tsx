@@ -6,6 +6,7 @@ import cn from 'classnames'
 import { TUnitGroup } from '@store/stat-units'
 import { DropdownArrow } from '@ui/dropdown-arrow'
 import { PredictionPowerIndicator } from '@components/prediction-power-indicator'
+import { DecisionTreesResultsDataCy } from '@data-testid'
 import { TPropertyStatus } from '@service-providers/common'
 import { UnitsListUnit } from '../units-list-unit'
 
@@ -33,6 +34,7 @@ export const UnitsListGroup = ({
   return (
     <div className={className}>
       <div
+        data-testid={DecisionTreesResultsDataCy.unitGroupName}
         onClick={() => onCollapsedChange(!isCollapsed, name)}
         className={cn(
           styles.groupHeader,

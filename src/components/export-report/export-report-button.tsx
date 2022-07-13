@@ -8,7 +8,7 @@ import operationsStore from '@store/operations'
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
 import { IPopoverButtonBaseProps } from '@ui/popover/popover.interface'
-import { MainTableDataCy } from '../data-testid/main-table.cy'
+import { MainTableDataCy } from '@data-testid'
 
 export const ExportReportButton = observer(
   ({

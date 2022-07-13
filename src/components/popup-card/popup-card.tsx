@@ -4,7 +4,7 @@ import cn, { Argument } from 'classnames'
 import { t } from '@i18n'
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
-import { MainTableDataCy } from '@components/data-testid/main-table.cy'
+import { MainTableDataCy } from '@data-testid'
 
 export interface IPopupCardProps {
   title: string | JSX.Element

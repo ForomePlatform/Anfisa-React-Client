@@ -2,7 +2,7 @@ import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
 import { Button } from '@ui/button'
-import { DecisionTreeModalDataCy } from '@components/data-testid/decision-tree-modal.cy'
+import { DecisionTreeModalDataCy } from '@data-testid'
 import { deleteAttribute } from '@utils/changeAttribute/deleteAttribute'
 
 interface IProps {

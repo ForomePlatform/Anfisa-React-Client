@@ -3,7 +3,7 @@ import { ReactElement, useMemo, useState } from 'react'
 import { t } from '@i18n'
 import { Button } from '@ui/button'
 import { Input } from '@ui/input'
-import { VariantDrawerDataCy } from '@components/data-testid/variant-drawer.cy'
+import { VariantDrawerDataCy } from '@data-testid'
 import { validateTag } from '@utils/validation/validateTag'
 
 interface ICustomTagFormProps {

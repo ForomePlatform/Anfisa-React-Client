@@ -1,12 +1,12 @@
 /* eslint-disable no-undef */
-import { CommonSelectors } from '../../../src/components/data-testid/common-selectors.cy'
+import { CommonSelectors } from '@data-testid'
 import { datasetPage } from '../../page-objects/app/datasets-page'
 import { mainTablePage } from '../../page-objects/app/main-table-page'
 import { variantDrawerPage } from '../../page-objects/app/variant-drawer-page'
 import { TestData } from '../../shared/test-data'
 import { Timeouts } from '../../shared/timeouts'
 
-describe('Regression test of the main table | step 1', () => {
+describe.skip('Regression test of the main table | step 1', () => {
   const link = '/ws?ds=PGP3140_wgs_panel_hl'
   const homozygous = '⏚BGM_Homozygous_Rec'
   const datasetName = 'PGP3140_wgs_panel_hl'

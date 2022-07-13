@@ -19,7 +19,7 @@ import { Dialog } from '@ui/dialog'
 import { IBaseDialogProps } from '@ui/dialog/dialog.interface'
 import { Icon } from '@ui/icon'
 import { Input } from '@ui/input'
-import { DecisionTreesMenuDataCy } from '@components/data-testid/decision-tree-menu.cy'
+import { DecisionTreesMenuDataCy } from '@data-testid'
 import { GlbPagesNames } from '@glb/glb-names'
 import { showToast } from '@utils/notifications/showToast'
 import {

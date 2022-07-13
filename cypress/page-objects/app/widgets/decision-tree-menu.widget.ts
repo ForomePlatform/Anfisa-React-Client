@@ -4,7 +4,8 @@ import { Input } from '../../lib/input'
 import { UIWidget } from '../../lib/ui-widget'
 
 export interface DecisionTreeMenuSelectors {
-  selectDecision: string
+  selectDecisionTree: string
+  applyFilter: string
   decisionActions: string
   loadDecision: string
   selectDropdownElem: string
@@ -21,7 +22,8 @@ export interface DecisionTreeMenuSelectors {
 export interface DecisionTreeLabels {}
 
 export class DecisionTreeWidget extends UIWidget {
-  readonly selectDecision: Button
+  readonly selectDecisionTree: Button
+  readonly applyFilter: Button
   readonly decisionActions: Button
   readonly loadDecision: Button
   readonly selectDropdownElem: Button
@@ -42,13 +44,14 @@ export class DecisionTreeWidget extends UIWidget {
 
     const selectors = options.selectors
 
-    this.selectDecision = new Button(selectors.selectDecision)
+    this.selectDecisionTree = new Button(selectors.selectDecisionTree)
+    this.applyFilter = new Button(selectors.applyFilter)
     this.decisionActions = new Button(selectors.decisionActions)
     this.loadDecision = new Button(selectors.loadDecision)
     this.selectDropdownElem = new Button(selectors.selectDropdownElem)
     this.saveDataset = new Button(selectors.saveDataset)
     this.datasetNameInput = new Input(selectors.datasetNameInput)
-    this.addNewDataset = new Button(selectors.addNewDataset)
+    this.addNewDataset = new Button(selectors.addNewDataset, true)
     this.cancelAddNewDataset = new Button(selectors.cancelAddNewDataset)
     this.textEditor = new Button(selectors.textEditor)
     this.createNew = new Button(selectors.createNew)

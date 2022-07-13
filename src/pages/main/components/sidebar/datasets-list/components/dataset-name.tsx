@@ -2,7 +2,7 @@ import { FC, useEffect, useRef, useState } from 'react'
 import cn, { Argument } from 'classnames'
 
 import { Tooltip } from '@ui/tooltip'
-import { FilterDatasetDataCy } from '@components/data-testid/filter-dataset.cy'
+import { FilterDatasetDataCy } from '@data-testid'
 import { XLBage } from './dataset-bage'
 
 interface IDsNameProps {

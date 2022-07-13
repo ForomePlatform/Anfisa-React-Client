@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
-import { CommonSelectors } from '../../../src/components/data-testid/common-selectors.cy'
-import { DecisionTreesMenuDataCy } from '../../../src/components/data-testid/decision-tree-menu.cy'
-import { DecisionTreeModalDataCy } from '../../../src/components/data-testid/decision-tree-modal.cy'
-import { DecisionTreesResultsDataCy } from '../../../src/components/data-testid/decision-tree-results.cy'
+import {
+  CommonSelectors,
+  DecisionTreeModalDataCy,
+  DecisionTreesMenuDataCy,
+  DecisionTreesResultsDataCy,
+} from '@data-testid'
 import { Helper } from '../../shared/helpers'
 import { BasePage } from '../lib/base-page'
 import { AttributesListWidget } from './widgets/attributes-list.widget'
@@ -19,7 +21,10 @@ class DecisionTreesPage extends BasePage {
     super()
     this.decisionTreeMenu = new DecisionTreeWidget({
       selectors: {
-        selectDecision: `[aria-haspopup = "${DecisionTreesMenuDataCy.selectDecision}"]`,
+        applyFilter: Helper.getDataId(DecisionTreesMenuDataCy.applyFilter),
+        selectDecisionTree: Helper.getDataId(
+          DecisionTreesMenuDataCy.selectDecisionTree,
+        ),
         decisionActions: Helper.getDataId(
           DecisionTreesMenuDataCy.decisionActions,
         ),
@@ -31,7 +36,7 @@ class DecisionTreesPage extends BasePage {
         datasetNameInput: Helper.getDataId(
           DecisionTreesMenuDataCy.datasetNameInput,
         ),
-        addNewDataset: Helper.getDataId(DecisionTreesMenuDataCy.addNewDataset),
+        addNewDataset: DecisionTreesMenuDataCy.addNewDataset,
         cancelAddNewDataset: Helper.getDataId(
           DecisionTreesMenuDataCy.cancelAddNewDataset,
         ),
@@ -45,22 +50,26 @@ class DecisionTreesPage extends BasePage {
     })
     this.decisionTreeResults = new DecisionTreeResultsWidget({
       selectors: {
-        searchGraphResults: Helper.getDataId(
-          DecisionTreesResultsDataCy.searchGraphResults,
+        searchResults: Helper.getDataId(
+          DecisionTreesResultsDataCy.searchResults,
         ),
         searchStepsResults: Helper.getDataId(
           DecisionTreesResultsDataCy.searchStepsResults,
         ),
-        groupGraphHeaders: Helper.getDataId(
-          DecisionTreesResultsDataCy.groupGraphHeaders,
+        unitName: Helper.getDataId(DecisionTreesResultsDataCy.unitName),
+        unitGroupName: Helper.getDataId(
+          DecisionTreesResultsDataCy.unitGroupName,
         ),
-        graphHeaders: Helper.getDataId(DecisionTreesResultsDataCy.graphHeaders),
+        unitChart: Helper.getDataId(DecisionTreesResultsDataCy.unitChart),
+        unitPredictionPower: Helper.getDataId(
+          DecisionTreesResultsDataCy.unitPredictionPower,
+        ),
         stepCard: Helper.getDataId(DecisionTreesResultsDataCy.stepCard),
         excludeInfo: Helper.getDataId(DecisionTreesResultsDataCy.excludeInfo),
         viewReturnedVariants: Helper.getDataId(
           DecisionTreesResultsDataCy.viewReturnedVariants,
         ),
-        treeTooltip: `${CommonSelectors.treeTooltip}`,
+        resultsTitle: Helper.getDataId(DecisionTreesResultsDataCy.resultsTitle),
         addAttribute: Helper.getDataId(DecisionTreesResultsDataCy.addAttrbute),
         joinByLabel: Helper.getDataId(DecisionTreeModalDataCy.joinByLabel),
         optionsMenu: Helper.getDataId(DecisionTreesResultsDataCy.optionsMenu),
@@ -83,10 +92,8 @@ class DecisionTreesPage extends BasePage {
         anyChangeAlert: CommonSelectors.anyChangeAlert,
       },
       labels: {
-        graphHeaders: '',
-        groupGraphHeaders: 'Variant',
         stepCard: 'header3',
-        treeTooltip: 'Show excluded variants for step 5',
+        resultsTitle: 'Showing results for Step 5 (Excluded Variants)',
         joinByLabel: 'Join by AND',
         contentEditor: '',
         modalHeader: 'Edit current Decision Tree code',
@@ -148,7 +155,7 @@ class DecisionTreesPage extends BasePage {
     decisionTreesPage.decisionTreeResults.stepCard.countElements(2)
     decisionTreesPage.decisionTreeResults.addAttribute.eq(1).click()
     decisionTreesPage.attributesList.searchForAttr.eq(0).type('Min_GQ')
-    decisionTreesPage.decisionTreeResults.graphHeaders.eq(0).click()
+    decisionTreesPage.decisionTreeResults.unitName.eq(0).click()
     decisionTreesPage.decisionTreeResults.leftInput.type(min)
     decisionTreesPage.decisionTreeResults.rightInput.type(max)
   }

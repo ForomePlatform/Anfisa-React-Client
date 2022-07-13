@@ -6,7 +6,7 @@ import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
 import stepStore from '@store/dtree/step.store'
 import { Button } from '@ui/button'
-import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
+import { DecisionTreesResultsDataCy } from '@data-testid'
 import { QueryBuilderResultsNumbers } from './query-builder-results-numbers'
 
 interface IQueryBuilderResultsProps {

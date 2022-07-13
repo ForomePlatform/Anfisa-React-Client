@@ -7,8 +7,8 @@ import dtreeStore from '@store/dtree'
 import { Divider } from '@ui/divider'
 import { Icon } from '@ui/icon'
 import { Switch } from '@ui/switch'
-import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
 import { InputSearch } from '@components/input-search/input-search'
+import { DecisionTreesResultsDataCy } from '@data-testid'
 
 interface IQueryBuilderSearchProps {
   value: string

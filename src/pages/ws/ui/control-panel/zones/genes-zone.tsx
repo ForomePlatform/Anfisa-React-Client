@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite'
 import { usePopover } from '@core/hooks/use-popover'
 import { t } from '@i18n'
 import zoneStore from '@store/ws/zone.store'
-import { MainTableDataCy } from '@components/data-testid/main-table.cy'
+import { MainTableDataCy } from '@data-testid'
 import { ZoneButtons } from './components/zone-buttons'
 import { ZonePopover } from './components/zone-popover'
 

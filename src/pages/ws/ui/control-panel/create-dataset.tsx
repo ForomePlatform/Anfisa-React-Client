@@ -3,7 +3,7 @@ import { ReactElement } from 'react'
 import { useModal } from '@core/hooks/use-modal'
 import { t } from '@i18n'
 import { Button } from '@ui/button'
-import { DecisionTreesMenuDataCy } from '@components/data-testid/decision-tree-menu.cy'
+import { DecisionTreesMenuDataCy } from '@data-testid'
 import { CreateDatasetDialog } from '@pages/filter/dtree/components/modals/components/create-dataset-dialog'
 
 export const CreateDataset = (): ReactElement => {

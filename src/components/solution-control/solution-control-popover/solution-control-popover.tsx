@@ -6,6 +6,7 @@ import { t } from '@i18n'
 import { Button } from '@ui/button'
 import { Popover } from '@ui/popover'
 import { IPopoverBaseProps } from '@ui/popover/popover.interface'
+import { DecisionTreesMenuDataCy } from '@data-testid'
 import { popoverOffset } from '@pages/ws/ws.constants'
 import { ISolutionEntryDescription } from '@service-providers/common'
 import { SolutionControlList } from '../solution-control-list'
@@ -79,6 +80,7 @@ export const SolutionControlPopover = ({
             />
           )}
           <Button
+            dataTestId={DecisionTreesMenuDataCy.applyFilter}
             size="xs"
             textSize="sm"
             padding="dense"

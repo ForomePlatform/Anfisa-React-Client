@@ -25,7 +25,7 @@
     width: 16px;
 
     &_delete {
-      color: theme("colors.blue.bright")
+      color: theme("colors.blue.bright");
     }
 
     &_modified {
