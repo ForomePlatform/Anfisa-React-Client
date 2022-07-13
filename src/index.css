@@ -30,19 +30,32 @@
 @tailwind utilities;
 
 ::-webkit-scrollbar {
-  @apply w-2 h-2;
+  background-color: inherit;
+  width: 16px;
 }
 
-::-webkit-scrollbar-corner {
-  @apply bg-grey-light;
-}
-
+/* background of the scrollbar except button or resizer */
 ::-webkit-scrollbar-track {
-  @apply bg-grey-light shadow-scrollbar;
+  background-color: inherit;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-blue-secondary;
+  background-color: theme("colors.grey.blue");
+  border-radius: 16px;
+  background-clip: content-box;
+  border: 4px solid transparent;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+::-webkit-resizer {
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: transparent;
 }
 
 .step-menu-btn {
