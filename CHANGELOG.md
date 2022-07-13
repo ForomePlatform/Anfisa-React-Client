@@ -1,7 +1,8 @@
 # Change log 
 
-## <small>0.7.1 (7/12/2022)</small>
+## <small>0.7.1 (7/13/2022)</small>
 
+* fix([FOROME-1323](https://quantori.atlassian.net/browse/FOROME-1323)): save scroll position in modal (#807) ([82073162](https://github.com/ForomePlatform/Anfisa-React-Client/commit/82073162))
 * feat([FOROME-1303](https://quantori.atlassian.net/browse/FOROME-1303)): implemented drag-n-drop conditions moving in refiner (#785) ([d1ef1934](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d1ef1934))
 
 ## <small>0.6.1 (7/12/2022)</small>
