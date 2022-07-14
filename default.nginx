@@ -24,18 +24,17 @@ server {
         root /usr/share/nginx/html/anfisa/;
         try_files $uri $uri/ /index.html;
     }
+
     location ^~ /.well-known/acme-challenge/ {
         allow all;
     }
 
     error_page 404 = @notfound;
-
     location @notfound {
         return 301 /;
     }
 
     error_page 503 @maintenance;
-
     location @maintenance {
         root /usr/share/nginx/html/;
         rewrite ^(.*)$ /maintenance.html break;
