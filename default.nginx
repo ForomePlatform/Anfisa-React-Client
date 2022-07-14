@@ -24,7 +24,6 @@ server {
         root /usr/share/nginx/html/anfisa/;
         try_files $uri $uri/ /index.html;
     }
-
     location ^~ /.well-known/acme-challenge/ {
         allow all;
     }
