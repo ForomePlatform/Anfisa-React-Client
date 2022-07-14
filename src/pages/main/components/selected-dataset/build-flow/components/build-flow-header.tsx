@@ -21,6 +21,7 @@ export const BuildFlowHeader = observer(
     const handleGoMain = () => {
       goBack()
       history.push(Routes.Root)
+      wizardStore.actionHistory.resetHistory()
     }
 
     const handleGoStart = () => {

@@ -65,6 +65,7 @@ export const scenarioForCandidateSet: IWizardScenario[] = [
     contentDisabled: false,
     value: '',
     title: t('home.buildFlow.candidateSet'),
+    maxHeight: 'calc(100vh - 285px)',
   },
   {
     component: (props: ICardProps) => <DescriptionCard {...props} />,

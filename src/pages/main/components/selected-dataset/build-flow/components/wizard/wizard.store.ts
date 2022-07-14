@@ -1,4 +1,4 @@
-import { cloneDeep } from 'lodash'
+import cloneDeep from 'lodash/cloneDeep'
 import { makeAutoObservable } from 'mobx'
 
 import { ExploreTypes } from '@core/enum/explore-types-enum'
@@ -7,6 +7,7 @@ import { datasetStore } from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
 import {
   scenarioForCandidateSet,
+  scenarioForShortCandidateSet,
   scenarioForWholeGenome,
 } from './wizard-scenarious'
 
@@ -59,13 +60,13 @@ class WizardStore {
       ?.secondary
   }
 
+  public get datasetName(): string {
+    return datasetStore.datasetName
+  }
+
   public setScenario(scenario: IWizardScenario[]) {
     this.wizardScenario = scenario
     this.actionHistory.addHistory(scenario)
-  }
-
-  public resetScenario() {
-    this.wizardScenario = []
   }
 
   public defineAndSetNewScenario() {
@@ -140,10 +141,6 @@ class WizardStore {
     this.hideNextCards(index)
   }
 
-  public get datasetName(): string {
-    return datasetStore.datasetName
-  }
-
   public finishEditCard(index: number) {
     if (this.needToChangeScenario) {
       this.defineAndSetNewScenario()
@@ -171,6 +168,19 @@ class WizardStore {
     const clonedWizard = cloneDeep(this.wizardScenario)
     clonedWizard[index].value = value
     this.wizardScenario = clonedWizard
+  }
+
+  public openWizardForWsDatasets(hasSecondaryDs: boolean) {
+    this.toggleIsWizardVisible(true)
+    const scenario = hasSecondaryDs
+      ? scenarioForCandidateSet
+      : scenarioForShortCandidateSet
+
+    this.setScenario(scenario)
+  }
+
+  public resetScenario() {
+    this.wizardScenario = []
   }
 }
 

@@ -38,6 +38,17 @@ class DirInfoStore {
     makeAutoObservable(this)
   }
 
+  public get xlDatasets(): string[] {
+    const xlDatasets: string[] = []
+
+    if (this.dirInfoData?.dsDict) {
+      Object.values(this.dirInfoData?.dsDict).forEach(
+        item => item.kind === 'xl' && xlDatasets.push(item.name),
+      )
+    }
+    return xlDatasets
+  }
+
   public foldDs(name: string) {
     this.foldedDatasets.add(name)
   }

@@ -1,5 +1,4 @@
-import { ReactElement, useEffect, useState } from 'react'
-import { reaction } from 'mobx'
+import { ReactElement, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { ExploreTypes } from '@core/enum/explore-types-enum'
@@ -15,9 +14,7 @@ import {
 } from '../../../build-flow/components/wizard/wizard-scenarious'
 
 export const CardStartExploreSection = observer((): ReactElement => {
-  const [selectedValue, setSelectedValue] = useState(
-    datasetStore.isXL ? ExploreTypes.Genome : ExploreTypes.Candidate,
-  )
+  const [selectedValue, setSelectedValue] = useState(ExploreTypes.Genome)
   const onChange = (exploreType: ExploreTypes) => {
     setSelectedValue(exploreType)
   }
@@ -40,17 +37,6 @@ export const CardStartExploreSection = observer((): ReactElement => {
       wizardStore.setScenario(scenario)
     }
   }
-
-  useEffect(() => {
-    reaction(
-      () => datasetStore.dsInfoData,
-      data => {
-        setSelectedValue(
-          data?.kind === 'xl' ? ExploreTypes.Genome : ExploreTypes.Candidate,
-        )
-      },
-    )
-  })
 
   const isExploreGenomeDisabled = !datasetStore.isXL
   const isExploreCandidateDisabled =

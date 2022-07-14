@@ -9,8 +9,8 @@ import { DatasetsFieldsList } from './components/dataset-fields-list/dataset-fil
 import { DatasetGeneral } from './components/dataset-general/dataset-general'
 import { DeleteDatasetButton } from './components/delete-dataset-button'
 
-export const SelectedDatasetStartFlow = observer((): ReactElement => {
-  return (
+export const SelectedDatasetStartFlow = observer(
+  (): ReactElement => (
     <div className="flex flex-col flex-grow justify-center">
       <div className="flex flex-col items-start flex-wrap mt-4 px-4">
         <CardTitle
@@ -33,5 +33,5 @@ export const SelectedDatasetStartFlow = observer((): ReactElement => {
         <DatasetsFieldsList />
       </div>
     </div>
-  )
-})
+  ),
+)
