@@ -7,9 +7,10 @@ import { datasetStore } from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
 import { ISolutionWithKind } from '../cards/components/presets-card/utils/add-solution-kind'
 import {
-  scenarioForCandidateSet,
-  scenarioForShortCandidateSet,
-  scenarioForWholeGenome,
+  scenarioForWsCandidateSet,
+  scenarioForWsShortCandidateSet,
+  scenarioForXlCandidateSet,
+  scenarioForXlWholeGenome,
 } from './wizard-scenarious'
 
 export interface ICardProps {
@@ -72,11 +73,11 @@ class WizardStore {
 
   public defineAndSetNewScenario() {
     if (this.startWithOption === ExploreTypes.Genome) {
-      this.setScenario(scenarioForWholeGenome)
+      this.setScenario(scenarioForXlWholeGenome)
     }
 
     if (this.startWithOption === ExploreTypes.Candidate) {
-      this.setScenario(scenarioForCandidateSet)
+      this.setScenario(scenarioForXlCandidateSet)
     }
 
     this.needToChangeScenario = false
@@ -115,6 +116,7 @@ class WizardStore {
     this.selectedDataset = selectedDataset
     const clonedWizard = cloneDeep(this.wizardScenario)
     clonedWizard[index].value = selectedDataset
+    clonedWizard[index + 1].title = selectedDataset
 
     this.wizardScenario = clonedWizard
   }
@@ -174,13 +176,18 @@ class WizardStore {
   public openWizardForWsDatasets(hasSecondaryDs: boolean) {
     this.toggleIsWizardVisible(true)
     const scenario = hasSecondaryDs
-      ? scenarioForCandidateSet
-      : scenarioForShortCandidateSet
+      ? scenarioForWsCandidateSet
+      : scenarioForWsShortCandidateSet
+
+    if (hasSecondaryDs) {
+      scenario[2].title = this.datasetName
+    }
 
     this.setScenario(scenario)
   }
 
   public resetScenario() {
+    this.selectedDataset = ''
     this.wizardScenario = []
   }
 }

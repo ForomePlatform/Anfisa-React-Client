@@ -8,9 +8,10 @@ import { CardTitle } from '@ui/card'
 import { Radio } from '@ui/radio'
 import wizardStore from '../../../build-flow/components/wizard/wizard.store'
 import {
-  scenarioForCandidateSet,
-  scenarioForShortCandidateSet,
-  scenarioForWholeGenome,
+  scenarioForWsCandidateSet,
+  scenarioForWsShortCandidateSet,
+  scenarioForXlCandidateSet,
+  scenarioForXlWholeGenome,
 } from '../../../build-flow/components/wizard/wizard-scenarious'
 
 export const CardStartExploreSection = observer((): ReactElement => {
@@ -25,14 +26,14 @@ export const CardStartExploreSection = observer((): ReactElement => {
     if (datasetStore.isXL) {
       const scenario =
         selectedValue === ExploreTypes.Genome
-          ? scenarioForWholeGenome
-          : scenarioForCandidateSet
+          ? scenarioForXlWholeGenome
+          : scenarioForXlCandidateSet
 
       wizardStore.setScenario(scenario)
     } else {
       const scenario = wizardStore.secondaryDatasets
-        ? scenarioForCandidateSet
-        : scenarioForShortCandidateSet
+        ? scenarioForWsCandidateSet
+        : scenarioForWsShortCandidateSet
 
       wizardStore.setScenario(scenario)
     }

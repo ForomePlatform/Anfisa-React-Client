@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useHistory } from 'react-router'
 import { observer } from 'mobx-react-lite'
 
@@ -5,7 +6,7 @@ import { ExploreGenomeTypes } from '@core/enum/explore-genome-types-enum'
 import { datasetStore } from '@store/dataset'
 import filterStore from '@store/filter'
 import { Button } from '@ui/button'
-import { Card } from '@ui/card'
+import { Card, CardTitle } from '@ui/card'
 import { Radio } from '@ui/radio'
 import { GlbPagesNames } from '@glb/glb-names'
 import { secondaryDsNameByKey } from '../secondary-ds-name-by-key'
@@ -123,37 +124,22 @@ export const WhatsNextCard = (props: ICardProps) => {
 
 export const ExistingCandidatesCard = observer((props: ICardProps) => {
   const secodaryDatasets = wizardStore.secondaryDatasets
-  const onSelect = (ds: string) => wizardStore.setSelectedDataset(ds, props.id)
+  const onSelect = (ds: string) => {
+    wizardStore.setSelectedDataset(ds, props.id)
+    wizardStore.finishEditCard(props.id)
+  }
 
   return (
     <Card className="mt-4 px-0">
-      <CardTitleWithEdit
-        title={props.title}
-        isEditDisabled={props.editDisabled}
-        onEdit={() => wizardStore.editCard(props.id)}
-        className="px-4"
-      />
+      <CardTitle text={props.title} className="text-16 px-4" />
 
       <div
         className="mb-4 text-14 overflow-y-auto"
         style={{ maxHeight: props.maxHeight }}
       >
         {secodaryDatasets?.map(
-          secondaryDsNameByKey(
-            1,
-            onSelect,
-            wizardStore.selectedDataset,
-            props.contentDisabled,
-          ),
+          secondaryDsNameByKey(1, onSelect, wizardStore.selectedDataset),
         )}
-      </div>
-
-      <div className="flex justify-end px-4">
-        <Button
-          text="Continue"
-          onClick={() => wizardStore.finishEditCard(props.id)}
-          disabled={props.continueDisabled}
-        />
       </div>
     </Card>
   )
@@ -172,10 +158,16 @@ export const DescriptionCard = (props: ICardProps) => {
     filterStore.setMethod(nextPageData.method as GlbPagesNames)
   }
 
+  const title = props.title
+
+  useEffect(() => {
+    wizardStore.wizardScenario[props.id].title = title
+  }, [props.id, title])
+
   return (
     <Card className={'mt-4'}>
       <CardTitleWithEdit
-        title={wizardStore.selectedDataset}
+        title={title}
         isEditDisabled={props.editDisabled}
         onEdit={() => wizardStore.editCard(props.id)}
       />

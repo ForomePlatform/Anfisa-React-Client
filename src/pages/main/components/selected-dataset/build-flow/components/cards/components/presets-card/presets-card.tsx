@@ -41,7 +41,7 @@ export const PresetsCard = observer((props: ICardProps) => {
       return (
         <div
           key={preset.name}
-          onClick={() => cardsStore.setSelectedPreset(preset, 2)}
+          onClick={() => cardsStore.setSelectedPreset(preset, props.id)}
         >
           <div
             className={cn(
