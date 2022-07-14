@@ -22,19 +22,20 @@ export const BuildFlowHeader = observer(
       goBack()
       history.push(Routes.Root)
       wizardStore.actionHistory.resetHistory()
+      wizardStore.resetScenario()
     }
 
     const handleGoStart = () => {
       goBack()
       wizardStore.actionHistory.resetHistory()
+      wizardStore.resetScenario()
     }
 
     const { selectedDataset, datasetName } = wizardStore
 
     const handleGoBack = () => {
       if (wizardStore.actionHistory.historyIndex === 0) {
-        isXL ? goBack() : handleGoMain()
-        wizardStore.actionHistory.resetHistory()
+        isXL ? handleGoStart() : handleGoMain()
       } else {
         wizardStore.actionHistory.goBackward()
       }

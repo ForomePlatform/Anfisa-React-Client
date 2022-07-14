@@ -16,7 +16,6 @@ export const MainPage = (): ReactElement => {
   useEffect(() => {
     const handlerAsync = async () => {
       const dsName = params.get('ds') || ''
-
       dirinfoStore.setSelectedDirinfoName(dsName)
       datasetStore.setDatasetName(dsName)
     }

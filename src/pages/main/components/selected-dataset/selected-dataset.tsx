@@ -14,7 +14,7 @@ export const SelectedDataset = observer((): ReactElement => {
     reaction(
       () => datasetStore.datasetName,
       datasetName => {
-        if (!datasetName) {
+        if (!datasetStore.datasetName) {
           return
         }
 
@@ -26,7 +26,7 @@ export const SelectedDataset = observer((): ReactElement => {
           : wizardStore.openWizardForWsDatasets(hasSecondaryDs)
       },
     )
-  })
+  }, [])
 
   if (!dirinfoStore.selectedDirinfoName) {
     return (
