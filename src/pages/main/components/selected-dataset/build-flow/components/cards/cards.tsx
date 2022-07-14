@@ -17,7 +17,7 @@ import {
   whatsNextOptionsList,
 } from '../wizard/wizard.data'
 import wizardStore, { ICardProps } from '../wizard/wizard.store'
-import { getNextPageData } from '../wizard/wizard.utils'
+import { getNextPageData, memorizeLocation } from '../wizard/wizard.utils'
 import { CardTitleWithEdit } from './components/card-edit-title'
 import { CardRadioList } from './components/card-radio-list'
 
@@ -78,6 +78,7 @@ export const WhatsNextCard = (props: ICardProps) => {
       datasetStore.datasetName,
     )
 
+    memorizeLocation(nextPageData.route)
     history.push(nextPageData.route)
     filterStore.setMethod(nextPageData.method as GlbPagesNames)
   }
@@ -168,6 +169,7 @@ export const DescriptionCard = (props: ICardProps) => {
       datasetStore.datasetName,
     )
 
+    memorizeLocation(nextPageData.route)
     history.push(nextPageData.route)
     filterStore.setMethod(nextPageData.method as GlbPagesNames)
   }

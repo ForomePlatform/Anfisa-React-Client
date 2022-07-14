@@ -1,8 +1,11 @@
 import { ExploreCandidateTypes } from '@core/enum/explore-candidate-types-enum'
 import { ExploreGenomeTypes } from '@core/enum/explore-genome-types-enum'
+import { LocalStoreManager } from '@core/storage-management/local-store-manager'
 import { datasetStore } from '@store/dataset'
 import { Routes } from '@router/routes.enum'
 import { GlbPagesNames } from '@glb/glb-names'
+
+export const PREVIOUS_WORK_LOCATION = 'prevWorkLocation'
 
 export const getNextPageData = (
   exploreType: ExploreGenomeTypes | ExploreCandidateTypes,
@@ -41,4 +44,17 @@ export const getNextPageData = (
   }
 
   return routes[exploreType]
+}
+
+export const memorizeLocation = (location: string) => {
+  const locations = LocalStoreManager.read<string[]>(PREVIOUS_WORK_LOCATION)
+
+  if (locations && !locations.includes(location)) {
+    locations.unshift(location)
+    if (locations.length > 5) {
+      locations.pop()
+    }
+  }
+
+  LocalStoreManager.write(PREVIOUS_WORK_LOCATION, locations || [location])
 }
