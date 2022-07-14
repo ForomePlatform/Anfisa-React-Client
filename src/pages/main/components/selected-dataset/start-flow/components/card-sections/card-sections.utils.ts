@@ -15,9 +15,9 @@ export const parseLocation = (location: string) => {
   const isWs = url.pathname === Routes.WS
 
   if (isFilter) {
-    result += 'Filter Refiner'
+    result += 'Simple Filter'
   } else if (isDtree) {
-    result += 'Decision Tree'
+    result += 'Include/Exclude Criteria'
   } else if (isWs) {
     result += 'Table'
   }
