@@ -2,29 +2,36 @@ import { cloneDeep } from 'lodash'
 import { makeAutoObservable, toJS } from 'mobx'
 
 import { ActionsHistoryStore } from '@store/actions-history'
-import { firstScenario } from './selected-dataset.scenario'
+import { datasetStore } from '@store/dataset'
+import dirinfoStore from '@store/dirinfo'
 
 export interface ICardProps {
+  title: string
   selectedValue: string
   contentDisabled: boolean
   continueDisabled: boolean
   editDisabled: boolean
+  maxHeight?: string
 }
 
 export interface IWizardScenario {
   component: (props: ICardProps) => JSX.Element
   hidden: boolean
   value: string
+  title: string
   contentDisabled: boolean
   continueDisabled: boolean
   editDisabled: boolean
+  maxHeight?: string
 }
 
-class SelectedDatasetCardsStore {
-  public wizardScenario: IWizardScenario[] = firstScenario
+class WizardStore {
+  public wizardScenario: IWizardScenario[] = []
   public startWithOption = ''
   public whatsNextOption = ''
+  public descriptionOption = ''
   public selectedPreset = ''
+  public selectedDataset = ''
 
   public actionHistory = new ActionsHistoryStore<IWizardScenario[]>(
     wizardScenario => (this.wizardScenario = wizardScenario),
@@ -32,6 +39,20 @@ class SelectedDatasetCardsStore {
 
   constructor() {
     makeAutoObservable(this)
+  }
+
+  public get secondaryDatasets(): string[] | undefined {
+    return dirinfoStore.dirinfo.data?.dsDict[datasetStore.datasetName]
+      ?.secondary
+  }
+
+  public setScenario(scenario: IWizardScenario[]) {
+    this.wizardScenario = scenario
+    this.actionHistory.addHistory(scenario)
+  }
+
+  public resetScenario() {
+    this.wizardScenario = []
   }
 
   public setStartWithOption(startWithOption: string, index: number) {
@@ -48,12 +69,28 @@ class SelectedDatasetCardsStore {
     this.wizardScenario = clonedWizard
   }
 
+  public setDescriptionOption(descriptionOption: string, index: number) {
+    this.descriptionOption = descriptionOption
+    const clonedWizard = cloneDeep(this.wizardScenario)
+    clonedWizard[index].value = descriptionOption
+    this.wizardScenario = clonedWizard
+  }
+
   public setSelectedPreset(selectedPreset: string, index: number) {
+    this.selectedPreset = selectedPreset
     const clonedWizard = cloneDeep(this.wizardScenario)
     clonedWizard[index].value = selectedPreset
     this.wizardScenario = clonedWizard
+  }
 
-    this.selectedPreset = selectedPreset
+  public setSelectedDataset(selectedDataset: string, index: number) {
+    this.selectedDataset = selectedDataset
+    const clonedWizard = cloneDeep(this.wizardScenario)
+    clonedWizard[index].value = selectedDataset
+
+    console.log(index)
+
+    this.wizardScenario = clonedWizard
   }
 
   public showNextCard(index: number) {
@@ -76,10 +113,15 @@ class SelectedDatasetCardsStore {
     clonedWizard[index].contentDisabled = false
     clonedWizard[index].editDisabled = true
     this.wizardScenario = clonedWizard
+    this.actionHistory.addHistory(clonedWizard)
 
     this.hideNextCards(index)
 
     console.log('after editCard', toJS(this.wizardScenario))
+  }
+
+  public get datasetName(): string {
+    return datasetStore.datasetName
   }
 
   public finishEditCard(index: number) {
@@ -97,6 +139,7 @@ class SelectedDatasetCardsStore {
     }
 
     this.wizardScenario = clonedWizard
+    this.actionHistory.addHistory(clonedWizard)
 
     this.showNextCard(index)
 
@@ -110,4 +153,4 @@ class SelectedDatasetCardsStore {
   }
 }
 
-export default new SelectedDatasetCardsStore()
+export default new WizardStore()

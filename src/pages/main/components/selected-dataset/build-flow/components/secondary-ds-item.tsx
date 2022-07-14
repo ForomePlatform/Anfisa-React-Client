@@ -15,10 +15,11 @@ interface IDatasetsListItemProps {
   level?: number
   onSelect: (value: string) => void
   selectedItem: string
+  disabled?: boolean
 }
 
 export const SecondaryDsItem: FC<IDatasetsListItemProps> = observer(
-  ({ item, level = 1, onSelect, selectedItem }) => {
+  ({ item, level = 1, onSelect, selectedItem, disabled }) => {
     const params = useParams()
 
     const isActive: boolean = item.name === selectedItem
@@ -35,7 +36,9 @@ export const SecondaryDsItem: FC<IDatasetsListItemProps> = observer(
     }, [])
 
     const handleClick = () => {
-      if (isNullKind && !hasChildren) return
+      if ((isNullKind && !hasChildren) || disabled) {
+        return
+      }
       onSelect(item.name)
       if (hasChildren) {
         setIsOpenFolder(prev => !(prev && isActive))
@@ -51,6 +54,8 @@ export const SecondaryDsItem: FC<IDatasetsListItemProps> = observer(
             className={cn(
               'w-full flex items-center py-2 leading-5 cursor-pointer px-4',
               isActive ? 'bg-blue-bright text-white' : 'hover:bg-blue-light',
+              disabled && isActive && 'bg-grey-blue',
+              disabled && 'cursor-not-allowed',
             )}
             style={{ paddingLeft: `${padding}px` }}
           >
@@ -63,10 +68,10 @@ export const SecondaryDsItem: FC<IDatasetsListItemProps> = observer(
           </div>
         </div>
 
-        {isOpenFolder &&
+        {!isOpenFolder &&
           hasChildren &&
           secondaryKeys.map(
-            secondaryDsNameByKey(level + 1, onSelect, selectedItem),
+            secondaryDsNameByKey(level + 1, onSelect, selectedItem, disabled),
           )}
       </>
     )

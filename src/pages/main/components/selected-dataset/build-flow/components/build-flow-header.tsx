@@ -12,6 +12,7 @@ import { CardTitle } from '@ui/card'
 import { Icon } from '@ui/icon'
 import { DatasetCard } from '@components/data-testid/dataset-card.cy'
 import selectedDatasetStore from '../../selected-dataset.store'
+import selectedDatasetCardsStore from '../../wizard.store'
 
 export const BuildFlowHeader = observer(
   ({ goBack }: { goBack: () => void }): ReactElement => {
@@ -25,17 +26,17 @@ export const BuildFlowHeader = observer(
 
     const handleGoStart = () => {
       goBack()
-      selectedDatasetStore.actionHistory.resetHistory()
+      selectedDatasetCardsStore.actionHistory.resetHistory()
     }
 
     const { selectedSecondaryDataset, datasetName } = selectedDatasetStore
 
     const handleGoBack = () => {
-      if (selectedDatasetStore.actionHistory.historyIndex === 1) {
+      if (selectedDatasetCardsStore.actionHistory.historyIndex === 0) {
         isXL ? goBack() : handleGoMain()
-        selectedDatasetStore.actionHistory.resetHistory()
+        selectedDatasetCardsStore.actionHistory.resetHistory()
       } else {
-        selectedDatasetStore.actionHistory.goBackward()
+        selectedDatasetCardsStore.actionHistory.goBackward()
       }
     }
 

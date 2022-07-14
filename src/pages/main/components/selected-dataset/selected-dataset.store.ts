@@ -1,4 +1,4 @@
-import { makeAutoObservable, toJS } from 'mobx'
+import { makeAutoObservable } from 'mobx'
 
 import { CardTypes } from '@core/enum/card-types-enum'
 import { ExploreCandidateTypes } from '@core/enum/explore-candidate-types-enum'

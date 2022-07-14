@@ -7,8 +7,8 @@ export const secondaryDsNameByKey =
     level: number = 0,
     onSelect: (value: string) => void,
     selectedItem: string,
+    disabled?: boolean,
   ) =>
-  // eslint-disable-next-line react/display-name
   (key: string) => {
     const { dirInfoData } = dirinfoStore
 
@@ -23,6 +23,7 @@ export const secondaryDsNameByKey =
         level={level}
         onSelect={onSelect}
         selectedItem={selectedItem}
+        disabled={disabled}
       />
     )
   }

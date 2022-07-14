@@ -1,12 +1,12 @@
 import styles from '../build-flow.module.css'
 
-import { ReactElement, useRef, useState } from 'react'
+import { ReactElement, useRef } from 'react'
 import { observer } from 'mobx-react-lite'
 
-import selectedDatasetCardsStore from '../../selected-dataset-cards.store'
+import wizardStore from '../../wizard.store'
 
 export const BuildFlowRightColumn = observer((): ReactElement => {
-  const { wizardScenario } = selectedDatasetCardsStore
+  const { wizardScenario } = wizardStore
   const divRef = useRef<HTMLDivElement>(null)
 
   // const history = useHistory()
@@ -34,6 +34,8 @@ export const BuildFlowRightColumn = observer((): ReactElement => {
             editDisabled: scenario.editDisabled,
             contentDisabled: scenario.contentDisabled,
             selectedValue: scenario.value,
+            title: scenario.title,
+            maxHeight: scenario.maxHeight,
           })
         return (
           index > 1 && !scenario.hidden && <Component key={scenario.value} />
