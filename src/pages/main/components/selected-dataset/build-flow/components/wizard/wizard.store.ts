@@ -8,7 +8,7 @@ import dirinfoStore from '@store/dirinfo'
 import {
   scenarioForCandidateSet,
   scenarioForWholeGenome,
-} from './selected-dataset.scenario'
+} from './wizard-scenarious'
 
 export interface ICardProps {
   id: number

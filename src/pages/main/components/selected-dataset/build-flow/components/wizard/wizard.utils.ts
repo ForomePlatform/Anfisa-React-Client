@@ -1,8 +1,8 @@
+import { ExploreCandidateTypes } from '@core/enum/explore-candidate-types-enum'
 import { ExploreGenomeTypes } from '@core/enum/explore-genome-types-enum'
 import { datasetStore } from '@store/dataset'
 import { Routes } from '@router/routes.enum'
 import { GlbPagesNames } from '@glb/glb-names'
-import { ExploreCandidateTypes } from './../../../../core/enum/explore-candidate-types-enum'
 
 export const getNextPageData = (
   exploreType: ExploreGenomeTypes | ExploreCandidateTypes,

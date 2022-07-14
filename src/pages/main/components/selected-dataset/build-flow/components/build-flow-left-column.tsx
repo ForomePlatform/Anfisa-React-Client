@@ -4,7 +4,7 @@ import { ReactElement } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
-import wizardStore from '../../wizard.store'
+import wizardStore from './wizard/wizard.store'
 
 export const BuildFlowLeftColumn = observer((): ReactElement => {
   const { wizardScenario } = wizardStore

@@ -7,13 +7,12 @@ import { datasetStore } from '@store/dataset'
 import { Button } from '@ui/button'
 import { CardTitle } from '@ui/card'
 import { Radio } from '@ui/radio'
+import wizardStore from '../../../build-flow/components/wizard/wizard.store'
 import {
   scenarioForCandidateSet,
   scenarioForShortCandidateSet,
   scenarioForWholeGenome,
-} from '../../../selected-dataset.scenario'
-import selectedDatasetStore from '../../../selected-dataset.store'
-import wizardStore from '../../../wizard.store'
+} from '../../../build-flow/components/wizard/wizard-scenarious'
 
 export const CardStartExploreSection = observer((): ReactElement => {
   const [selectedValue, setSelectedValue] = useState(
@@ -55,7 +54,7 @@ export const CardStartExploreSection = observer((): ReactElement => {
 
   const isExploreGenomeDisabled = !datasetStore.isXL
   const isExploreCandidateDisabled =
-    !selectedDatasetStore.secondaryDatasets && datasetStore.isXL
+    !wizardStore.secondaryDatasets && datasetStore.isXL
 
   return (
     <div className="w-1/2 pr-12">

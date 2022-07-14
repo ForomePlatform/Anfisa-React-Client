@@ -5,8 +5,8 @@ import { observer } from 'mobx-react-lite'
 import { t } from '@i18n'
 import dirinfoStore from '@store/dirinfo'
 import { SelectedDatasetBuildFlow } from './build-flow'
+import wizardStore from './build-flow/components/wizard/wizard.store'
 import { SelectedDatasetStartFlow } from './start-flow'
-import wizardStore from './wizard.store'
 
 export const SelectedDataset = observer((): ReactElement => {
   if (!dirinfoStore.selectedDirinfoName) {

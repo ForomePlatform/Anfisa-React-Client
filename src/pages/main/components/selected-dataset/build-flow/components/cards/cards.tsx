@@ -11,6 +11,7 @@ import { Card, CardTitle } from '@ui/card'
 import { Icon } from '@ui/icon'
 import { Radio } from '@ui/radio'
 import { GlbPagesNames } from '@glb/glb-names'
+import { secondaryDsNameByKey } from '../secondary-ds-name-by-key'
 import {
   datasetDescription,
   exploreCandidateOptionsList,
@@ -18,10 +19,9 @@ import {
   relevantPresetsList,
   startFlowOptionsList,
   whatsNextOptionsList,
-} from '../../../selected-dataset.data'
-import { getNextPageData } from '../../../selected-dataset.utils'
-import wizardStore, { ICardProps } from '../../../wizard.store'
-import { secondaryDsNameByKey } from '../secondary-ds-name-by-key'
+} from '../wizard/wizard.data'
+import wizardStore, { ICardProps } from '../wizard/wizard.store'
+import { getNextPageData } from '../wizard/wizard.utils'
 
 export const StartCard = (props: ICardProps) => {
   const isExploreGenomeDisabled = !datasetStore.isXL

@@ -8,7 +8,7 @@ import {
   PresetsCard,
   StartCard,
   WhatsNextCard,
-} from './build-flow/components/cards'
+} from '../cards'
 import { ICardProps, IWizardScenario } from './wizard.store'
 
 export const scenarioForWholeGenome: IWizardScenario[] = [
