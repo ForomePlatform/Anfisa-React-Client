@@ -9,10 +9,10 @@ import { Button } from '@ui/button'
 import { Card, CardTitle } from '@ui/card'
 import { Icon } from '@ui/icon'
 import { Loader } from '@ui/loader'
-import cardsStore, { ICardProps } from '../../selected-dataset-cards.store'
+import cardsStore, { ICardProps } from '../../../wizard/wizard.store'
 import presetsCardStore from './presets-card.store'
 
-export const RelevantPresetsCard = observer((props: ICardProps) => {
+export const PresetsCard = observer((props: ICardProps) => {
   const history = useHistory()
   useEffect(() => {
     presetsCardStore.loadSolutions()
@@ -63,11 +63,11 @@ export const RelevantPresetsCard = observer((props: ICardProps) => {
 
   return (
     <Card className={'mt-4'}>
-      <CardTitle text={'Relevant presets'} className="text-16 px-4" />
+      <CardTitle text={props.title} className="text-16 px-4" />
 
       <div
         className="mb-4 text-14 overflow-y-auto"
-        style={{ maxHeight: 'calc(100vh - 285px)' }}
+        style={{ maxHeight: props.maxHeight }}
       >
         {presetsCardStore.isFetchingSolutions ? (
           <Loader size="m" />

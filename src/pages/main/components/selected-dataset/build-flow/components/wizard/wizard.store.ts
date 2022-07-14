@@ -5,7 +5,7 @@ import { ExploreTypes } from '@core/enum/explore-types-enum'
 import { ActionsHistoryStore } from '@store/actions-history'
 import { datasetStore } from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
-import { ISolutionWithKind } from '../../../cards/presets-card/utils/add-solution-kind'
+import { ISolutionWithKind } from '../cards/components/presets-card/utils/add-solution-kind'
 import {
   scenarioForCandidateSet,
   scenarioForShortCandidateSet,

@@ -5,10 +5,10 @@ import { t } from '@i18n'
 import {
   DescriptionCard,
   ExistingCandidatesCard,
-  PresetsCard,
   StartCard,
   WhatsNextCard,
 } from '../cards'
+import { PresetsCard } from '../cards/components/presets-card/presets-card'
 import { ICardProps, IWizardScenario } from './wizard.store'
 
 export const scenarioForWholeGenome: IWizardScenario[] = [
