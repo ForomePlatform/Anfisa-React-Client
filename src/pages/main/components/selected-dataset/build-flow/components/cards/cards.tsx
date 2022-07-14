@@ -23,54 +23,67 @@ import { getNextPageData } from '../../../selected-dataset.utils'
 import wizardStore, { ICardProps } from '../../../wizard.store'
 import { secondaryDsNameByKey } from '../secondary-ds-name-by-key'
 
-export const StartCard = (props: ICardProps) => (
-  <Card className={'mt-4'}>
-    <>
-      <div className="flex items-center justify-between">
-        <CardTitle text={props.title} className="text-16" />
+export const StartCard = (props: ICardProps) => {
+  const isExploreGenomeDisabled = !datasetStore.isXL
+  const isExploreCandidateDisabled =
+    !wizardStore.secondaryDatasets && datasetStore.isXL
 
-        <Button
-          variant="secondary"
-          style={{ padding: 0 }}
-          icon={
-            <Icon
-              name="Edit"
-              className={cn(
-                'cursor-pointer',
-                props.editDisabled ? 'text-grey-blue' : 'text-blue-bright',
-              )}
-            />
-          }
-          disabled={props.editDisabled}
-          onClick={() => wizardStore.editCard(0)}
-        />
-      </div>
+  const isEditionProhibited =
+    isExploreGenomeDisabled || isExploreCandidateDisabled
 
-      <div className="mt-2 text-14">
-        {startFlowOptionsList.map(option => (
-          <div className="flex mb-2" key={option}>
-            <Radio
-              className="flex items-center"
-              checked={option === props.selectedValue}
-              onChange={() => wizardStore.setStartWithOption(option, 0)}
-              disabled={props.contentDisabled}
-            >
-              <div className="ml-1.5">{option}</div>
-            </Radio>
-          </div>
-        ))}
+  const isEditDisabled = isEditionProhibited ?? props.editDisabled
 
-        <div className="flex justify-end">
+  return (
+    <Card className={'mt-4'}>
+      <>
+        <div className="flex items-center justify-between">
+          <CardTitle text={props.title} className="text-16" />
+
           <Button
-            text="Continue"
-            onClick={() => wizardStore.finishEditCard(0)}
-            disabled={props.continueDisabled}
+            variant="secondary"
+            style={{ padding: 0 }}
+            icon={
+              <Icon
+                name="Edit"
+                className={cn(
+                  'cursor-pointer',
+                  isEditDisabled ? 'text-grey-blue' : 'text-blue-bright',
+                )}
+              />
+            }
+            disabled={isEditDisabled}
+            onClick={() => wizardStore.editCard(props.id)}
           />
         </div>
-      </div>
-    </>
-  </Card>
-)
+
+        <div className="mt-2 text-14">
+          {startFlowOptionsList.map(option => (
+            <div className="flex mb-2" key={option}>
+              <Radio
+                className="flex items-center"
+                checked={option === props.selectedValue}
+                onChange={() =>
+                  wizardStore.setStartWithOption(option, props.id)
+                }
+                disabled={props.contentDisabled}
+              >
+                <div className="ml-1.5">{option}</div>
+              </Radio>
+            </div>
+          ))}
+
+          <div className="flex justify-end">
+            <Button
+              text="Continue"
+              onClick={() => wizardStore.finishEditCard(props.id)}
+              disabled={props.continueDisabled}
+            />
+          </div>
+        </div>
+      </>
+    </Card>
+  )
+}
 
 export const WhatsNextCard = (props: ICardProps) => {
   const history = useHistory()
@@ -103,7 +116,7 @@ export const WhatsNextCard = (props: ICardProps) => {
               />
             }
             disabled={props.editDisabled}
-            onClick={() => wizardStore.editCard(1)}
+            onClick={() => wizardStore.editCard(props.id)}
           ></Button>
         </div>
 
@@ -113,7 +126,9 @@ export const WhatsNextCard = (props: ICardProps) => {
               <Radio
                 className="flex items-center"
                 checked={option === props.selectedValue}
-                onChange={() => wizardStore.setWhatsNextOption(option, 1)}
+                onChange={() =>
+                  wizardStore.setWhatsNextOption(option, props.id)
+                }
                 disabled={props.contentDisabled}
               >
                 <div className="ml-1.5">{option}</div>
@@ -131,7 +146,7 @@ export const WhatsNextCard = (props: ICardProps) => {
             ) : (
               <Button
                 text="Continue"
-                onClick={() => wizardStore.finishEditCard(1)}
+                onClick={() => wizardStore.finishEditCard(props.id)}
                 disabled={props.continueDisabled}
               />
             )}
@@ -168,7 +183,7 @@ export const PresetsCard = (props: ICardProps) => {
           return (
             <div
               key={preset}
-              onClick={() => wizardStore.setSelectedPreset(preset, 2)}
+              onClick={() => wizardStore.setSelectedPreset(preset, props.id)}
             >
               <div
                 className={cn(
@@ -203,7 +218,7 @@ export const PresetsCard = (props: ICardProps) => {
 
 export const ExistingCandidatesCard = observer((props: ICardProps) => {
   const secodaryDatasets = wizardStore.secondaryDatasets
-  const onSelect = (ds: string) => wizardStore.setSelectedDataset(ds, 1)
+  const onSelect = (ds: string) => wizardStore.setSelectedDataset(ds, props.id)
 
   return (
     <Card className="mt-4 px-0">
@@ -223,7 +238,7 @@ export const ExistingCandidatesCard = observer((props: ICardProps) => {
             />
           }
           disabled={props.editDisabled}
-          onClick={() => wizardStore.editCard(1)}
+          onClick={() => wizardStore.editCard(props.id)}
         />
       </div>
 
@@ -244,7 +259,7 @@ export const ExistingCandidatesCard = observer((props: ICardProps) => {
       <div className="flex justify-end px-4">
         <Button
           text="Continue"
-          onClick={() => wizardStore.finishEditCard(1)}
+          onClick={() => wizardStore.finishEditCard(props.id)}
           disabled={props.continueDisabled}
         />
       </div>
@@ -279,11 +294,14 @@ export const DescriptionCard = (props: ICardProps) => {
           icon={
             <Icon
               name="Edit"
-              className={cn('cursor-pointer', 'text-blue-bright')}
+              className={cn(
+                'cursor-pointer',
+                props.editDisabled ? 'text-grey-blue' : 'text-blue-bright',
+              )}
             />
           }
           disabled={props.editDisabled}
-          onClick={() => wizardStore.editCard(2)}
+          onClick={() => wizardStore.editCard(props.id)}
         />
       </div>
 
@@ -306,7 +324,9 @@ export const DescriptionCard = (props: ICardProps) => {
             <Radio
               className="flex items-center"
               checked={option === props.selectedValue}
-              onChange={() => wizardStore.setDescriptionOption(option, 2)}
+              onChange={() =>
+                wizardStore.setDescriptionOption(option, props.id)
+              }
               disabled={props.contentDisabled}
             >
               <div className="ml-1.5">{option}</div>
@@ -324,7 +344,7 @@ export const DescriptionCard = (props: ICardProps) => {
           ) : (
             <Button
               text="Continue"
-              onClick={() => wizardStore.finishEditCard(2)}
+              onClick={() => wizardStore.finishEditCard(props.id)}
               disabled={props.continueDisabled}
             />
           )}

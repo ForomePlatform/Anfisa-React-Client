@@ -14,7 +14,7 @@ import {
 } from '@pages/main/components/sidebar/datasets-list/datasets-list.constants'
 import { datasetNameByKey } from '@pages/main/components/sidebar/datasets-list/datasets-list.utils'
 import { IDirInfoDatasetDescriptor } from '@service-providers/vault-level/vault-level.interface'
-import selectedDatasetStore from '../../selected-dataset/selected-dataset.store'
+import wizardStore from '../../selected-dataset/wizard.store'
 import { DatasetType } from './components/dataset-type'
 
 interface IDatasetsListItemProps {
@@ -44,10 +44,10 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
 
       if (isNullKind && !hasChildren) return
 
-      if (selectedDatasetStore.isBuildFlowVisible) {
-        selectedDatasetStore.toggleIsBuildFlowVisible(false)
-        selectedDatasetStore.clearWizardData()
-        selectedDatasetStore.actionHistory.resetHistory()
+      if (wizardStore.isWizardVisible) {
+        wizardStore.toggleIsWizardVisible(false)
+        wizardStore.resetScenario()
+        wizardStore.actionHistory.resetHistory()
       }
 
       if (hasChildren) {

@@ -16,6 +16,7 @@ export const BuildFlowLeftColumn = observer((): ReactElement => {
       {wizardScenario.map((scenario, index) => {
         const Component = () =>
           scenario.component({
+            id: scenario.id,
             continueDisabled: scenario.continueDisabled,
             editDisabled: scenario.editDisabled,
             contentDisabled: scenario.contentDisabled,

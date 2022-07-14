@@ -9,22 +9,22 @@ import { CardTitle } from '@ui/card'
 import { Radio } from '@ui/radio'
 import {
   scenarioForCandidateSet,
+  scenarioForShortCandidateSet,
   scenarioForWholeGenome,
 } from '../../../selected-dataset.scenario'
 import selectedDatasetStore from '../../../selected-dataset.store'
-import selectedDatasetCardsStore from '../../../wizard.store'
+import wizardStore from '../../../wizard.store'
 
 export const CardStartExploreSection = observer((): ReactElement => {
   const [selectedValue, setSelectedValue] = useState(
     datasetStore.isXL ? ExploreTypes.Genome : ExploreTypes.Candidate,
   )
-
   const onChange = (exploreType: ExploreTypes) => {
     setSelectedValue(exploreType)
   }
 
   const onContinue = () => {
-    selectedDatasetStore.toggleIsBuildFlowVisible(true)
+    wizardStore.toggleIsWizardVisible(true)
 
     if (datasetStore.isXL) {
       const scenario =
@@ -32,9 +32,16 @@ export const CardStartExploreSection = observer((): ReactElement => {
           ? scenarioForWholeGenome
           : scenarioForCandidateSet
 
-      selectedDatasetCardsStore.setScenario(scenario)
+      wizardStore.setScenario(scenario)
+    } else {
+      const scenario = wizardStore.secondaryDatasets
+        ? scenarioForCandidateSet
+        : scenarioForShortCandidateSet
+
+      wizardStore.setScenario(scenario)
     }
   }
+
   useEffect(() => {
     reaction(
       () => datasetStore.dsInfoData,

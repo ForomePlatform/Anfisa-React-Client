@@ -184,8 +184,6 @@ class SelectedDatasetStore {
   }
 
   public openWizardFowWsDataset(hasSecondaryDs: boolean) {
-    console.log(hasSecondaryDs)
-
     this.createFirstWizardStep(ExploreTypes.Candidate)
 
     hasSecondaryDs

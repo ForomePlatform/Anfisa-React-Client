@@ -1,11 +1,17 @@
 import { cloneDeep } from 'lodash'
-import { makeAutoObservable, toJS } from 'mobx'
+import { makeAutoObservable } from 'mobx'
 
+import { ExploreTypes } from '@core/enum/explore-types-enum'
 import { ActionsHistoryStore } from '@store/actions-history'
 import { datasetStore } from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
+import {
+  scenarioForCandidateSet,
+  scenarioForWholeGenome,
+} from './selected-dataset.scenario'
 
 export interface ICardProps {
+  id: number
   title: string
   selectedValue: string
   contentDisabled: boolean
@@ -16,6 +22,7 @@ export interface ICardProps {
 
 export interface IWizardScenario {
   component: (props: ICardProps) => JSX.Element
+  id: number
   hidden: boolean
   value: string
   title: string
@@ -26,12 +33,14 @@ export interface IWizardScenario {
 }
 
 class WizardStore {
+  public isWizardVisible: boolean = false
   public wizardScenario: IWizardScenario[] = []
   public startWithOption = ''
   public whatsNextOption = ''
   public descriptionOption = ''
   public selectedPreset = ''
   public selectedDataset = ''
+  public needToChangeScenario: boolean = false
 
   public actionHistory = new ActionsHistoryStore<IWizardScenario[]>(
     wizardScenario => (this.wizardScenario = wizardScenario),
@@ -39,6 +48,10 @@ class WizardStore {
 
   constructor() {
     makeAutoObservable(this)
+  }
+
+  public toggleIsWizardVisible(value: boolean) {
+    this.isWizardVisible = value
   }
 
   public get secondaryDatasets(): string[] | undefined {
@@ -55,11 +68,24 @@ class WizardStore {
     this.wizardScenario = []
   }
 
+  public defineAndSetNewScenario() {
+    if (this.startWithOption === ExploreTypes.Genome) {
+      this.setScenario(scenarioForWholeGenome)
+    }
+
+    if (this.startWithOption === ExploreTypes.Candidate) {
+      this.setScenario(scenarioForCandidateSet)
+    }
+
+    this.needToChangeScenario = false
+  }
+
   public setStartWithOption(startWithOption: string, index: number) {
     this.startWithOption = startWithOption
     const clonedWizard = cloneDeep(this.wizardScenario)
     clonedWizard[index].value = startWithOption
     this.wizardScenario = clonedWizard
+    this.needToChangeScenario = true
   }
 
   public setWhatsNextOption(whatsNextOption: string, index: number) {
@@ -88,8 +114,6 @@ class WizardStore {
     const clonedWizard = cloneDeep(this.wizardScenario)
     clonedWizard[index].value = selectedDataset
 
-    console.log(index)
-
     this.wizardScenario = clonedWizard
   }
 
@@ -106,8 +130,6 @@ class WizardStore {
   }
 
   public editCard(index: number) {
-    console.log('editCard', index)
-
     const clonedWizard = cloneDeep(this.wizardScenario)
     clonedWizard[index].continueDisabled = false
     clonedWizard[index].contentDisabled = false
@@ -116,8 +138,6 @@ class WizardStore {
     this.actionHistory.addHistory(clonedWizard)
 
     this.hideNextCards(index)
-
-    console.log('after editCard', toJS(this.wizardScenario))
   }
 
   public get datasetName(): string {
@@ -125,7 +145,10 @@ class WizardStore {
   }
 
   public finishEditCard(index: number) {
-    console.log('finishEditCard', index)
+    if (this.needToChangeScenario) {
+      this.defineAndSetNewScenario()
+      return
+    }
 
     const clonedWizard = cloneDeep(this.wizardScenario)
     clonedWizard[index].continueDisabled = true
@@ -142,8 +165,6 @@ class WizardStore {
     this.actionHistory.addHistory(clonedWizard)
 
     this.showNextCard(index)
-
-    console.log('after finishEditCard', toJS(this.wizardScenario))
   }
 
   public changeCardValue(index: number, value: string) {

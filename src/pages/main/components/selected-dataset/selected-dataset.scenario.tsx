@@ -14,6 +14,7 @@ import { ICardProps, IWizardScenario } from './wizard.store'
 export const scenarioForWholeGenome: IWizardScenario[] = [
   {
     component: (props: ICardProps) => <StartCard {...props} />,
+    id: 0,
     hidden: false,
     continueDisabled: true,
     editDisabled: false,
@@ -23,6 +24,7 @@ export const scenarioForWholeGenome: IWizardScenario[] = [
   },
   {
     component: (props: ICardProps) => <WhatsNextCard {...props} />,
+    id: 1,
     hidden: false,
     continueDisabled: false,
     editDisabled: true,
@@ -32,6 +34,7 @@ export const scenarioForWholeGenome: IWizardScenario[] = [
   },
   {
     component: (props: ICardProps) => <PresetsCard {...props} />,
+    id: 2,
     hidden: true,
     continueDisabled: false,
     editDisabled: true,
@@ -45,6 +48,7 @@ export const scenarioForWholeGenome: IWizardScenario[] = [
 export const scenarioForCandidateSet: IWizardScenario[] = [
   {
     component: (props: ICardProps) => <StartCard {...props} />,
+    id: 0,
     hidden: false,
     continueDisabled: true,
     editDisabled: false,
@@ -54,6 +58,7 @@ export const scenarioForCandidateSet: IWizardScenario[] = [
   },
   {
     component: (props: ICardProps) => <ExistingCandidatesCard {...props} />,
+    id: 1,
     hidden: false,
     continueDisabled: false,
     editDisabled: true,
@@ -63,6 +68,7 @@ export const scenarioForCandidateSet: IWizardScenario[] = [
   },
   {
     component: (props: ICardProps) => <DescriptionCard {...props} />,
+    id: 2,
     hidden: true,
     continueDisabled: false,
     editDisabled: true,
@@ -73,12 +79,48 @@ export const scenarioForCandidateSet: IWizardScenario[] = [
 
   {
     component: (props: ICardProps) => <PresetsCard {...props} />,
+    id: 3,
     hidden: true,
     continueDisabled: false,
     editDisabled: true,
     contentDisabled: false,
     value: '',
     title: t('home.buildFlow.additionalPresetFilter'),
-    maxHeight: 'calc(80vh - 527px',
+    maxHeight: 'calc(80vh - 527px)',
+  },
+]
+
+export const scenarioForShortCandidateSet: IWizardScenario[] = [
+  {
+    component: (props: ICardProps) => <StartCard {...props} />,
+    id: 0,
+    hidden: false,
+    continueDisabled: true,
+    editDisabled: false,
+    contentDisabled: true,
+    value: ExploreTypes.Candidate,
+    title: t('home.startFlow.startWith'),
+  },
+  {
+    component: (props: ICardProps) => <DescriptionCard {...props} />,
+    id: 1,
+    hidden: false,
+    continueDisabled: false,
+    editDisabled: true,
+    contentDisabled: false,
+    value: ExploreCandidateTypes.ViewAllVariants,
+    title: '',
+  },
+
+  {
+    component: (props: ICardProps) => <PresetsCard {...props} />,
+    id: 2,
+    hidden: true,
+    continueDisabled: false,
+    editDisabled: true,
+    contentDisabled: false,
+    value: '',
+    title: t('home.buildFlow.additionalPresetFilter'),
+    maxHeight: 'calc(100vh - 285px)',
   },
 ]
