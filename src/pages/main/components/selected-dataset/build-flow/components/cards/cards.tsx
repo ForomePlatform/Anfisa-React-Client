@@ -1,14 +1,11 @@
 import { useHistory } from 'react-router'
-import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { ExploreGenomeTypes } from '@core/enum/explore-genome-types-enum'
 import { datasetStore } from '@store/dataset'
 import filterStore from '@store/filter'
-import { Routes } from '@router/routes.enum'
 import { Button } from '@ui/button'
-import { Card, CardTitle } from '@ui/card'
-import { Icon } from '@ui/icon'
+import { Card } from '@ui/card'
 import { Radio } from '@ui/radio'
 import { GlbPagesNames } from '@glb/glb-names'
 import { secondaryDsNameByKey } from '../secondary-ds-name-by-key'
@@ -16,7 +13,6 @@ import {
   datasetDescription,
   exploreCandidateOptionsList,
   optionsForOpenButton,
-  relevantPresetsList,
   startFlowOptionsList,
   whatsNextOptionsList,
 } from '../wizard/wizard.data'
@@ -121,65 +117,6 @@ export const WhatsNextCard = (props: ICardProps) => {
           </div>
         </div>
       </>
-    </Card>
-  )
-}
-
-export const PresetsCard = (props: ICardProps) => {
-  const history = useHistory()
-
-  const openNextPage = () => {
-    history.push(
-      `${Routes.Refiner}?ds=${
-        wizardStore.selectedDataset || datasetStore.datasetName
-      }`,
-    )
-    filterStore.setMethod(GlbPagesNames.Refiner)
-  }
-
-  return (
-    <Card className={'mt-4 px-0'}>
-      <CardTitle text={props.title} className="text-16 px-4" />
-
-      <div
-        className="mb-4 text-14 overflow-y-auto"
-        style={{ maxHeight: props.maxHeight }}
-      >
-        {relevantPresetsList.map(preset => {
-          const isSelected = props.selectedValue === preset
-
-          return (
-            <div
-              key={preset}
-              onClick={() => wizardStore.setSelectedPreset(preset, props.id)}
-            >
-              <div
-                className={cn(
-                  'w-full flex items-center py-2 leading-5 cursor-pointer px-4',
-                  isSelected
-                    ? 'bg-blue-bright text-white'
-                    : 'hover:bg-blue-light',
-                )}
-              >
-                <Icon
-                  name="File"
-                  className={cn(isSelected ? 'text-white' : 'text-blue-bright')}
-                />
-
-                <div className="ml-1.5">{preset}</div>
-              </div>
-            </div>
-          )
-        })}
-      </div>
-
-      <div className="flex justify-end px-4">
-        <Button
-          text="Open"
-          disabled={!wizardStore.selectedPreset}
-          onClick={openNextPage}
-        />
-      </div>
     </Card>
   )
 }

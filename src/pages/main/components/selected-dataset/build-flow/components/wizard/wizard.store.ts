@@ -5,6 +5,7 @@ import { ExploreTypes } from '@core/enum/explore-types-enum'
 import { ActionsHistoryStore } from '@store/actions-history'
 import { datasetStore } from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
+import { ISolutionWithKind } from '../cards/components/presets-card/utils/add-solution-kind'
 import {
   scenarioForCandidateSet,
   scenarioForShortCandidateSet,
@@ -39,7 +40,7 @@ class WizardStore {
   public startWithOption = ''
   public whatsNextOption = ''
   public descriptionOption = ''
-  public selectedPreset = ''
+  public selectedPreset?: ISolutionWithKind
   public selectedDataset = ''
   public needToChangeScenario: boolean = false
 
@@ -103,10 +104,10 @@ class WizardStore {
     this.wizardScenario = clonedWizard
   }
 
-  public setSelectedPreset(selectedPreset: string, index: number) {
+  public setSelectedPreset(selectedPreset: ISolutionWithKind, index: number) {
     this.selectedPreset = selectedPreset
     const clonedWizard = cloneDeep(this.wizardScenario)
-    clonedWizard[index].value = selectedPreset
+    clonedWizard[index].value = selectedPreset.name
     this.wizardScenario = clonedWizard
   }
 
