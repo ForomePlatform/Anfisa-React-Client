@@ -1,5 +1,4 @@
-import { ReactElement, useEffect, useState } from 'react'
-import { reaction } from 'mobx'
+import { ReactElement, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { ExploreTypes } from '@core/enum/explore-types-enum'
@@ -7,48 +6,41 @@ import { datasetStore } from '@store/dataset'
 import { Button } from '@ui/button'
 import { CardTitle } from '@ui/card'
 import { Radio } from '@ui/radio'
-import { exploreSteps } from '../../../selected-dataset.data'
-import selectedDatasetStore from '../../../selected-dataset.store'
+import wizardStore from '../../../build-flow/components/wizard/wizard.store'
+import {
+  scenarioForCandidateSet,
+  scenarioForShortCandidateSet,
+  scenarioForWholeGenome,
+} from '../../../build-flow/components/wizard/wizard-scenarious'
 
 export const CardStartExploreSection = observer((): ReactElement => {
-  const [selectedValue, setSelectedValue] = useState(
-    datasetStore.isXL ? ExploreTypes.Genome : ExploreTypes.Candidate,
-  )
-
+  const [selectedValue, setSelectedValue] = useState(ExploreTypes.Genome)
   const onChange = (exploreType: ExploreTypes) => {
     setSelectedValue(exploreType)
   }
 
   const onContinue = () => {
-    selectedDatasetStore.toggleIsBuildFlowVisible(true)
-
-    selectedDatasetStore.createFirstWizardStep(selectedValue)
+    wizardStore.toggleIsWizardVisible(true)
 
     if (datasetStore.isXL) {
-      selectedDatasetStore.addWizardStep(exploreSteps[selectedValue][0])
+      const scenario =
+        selectedValue === ExploreTypes.Genome
+          ? scenarioForWholeGenome
+          : scenarioForCandidateSet
+
+      wizardStore.setScenario(scenario)
     } else {
-      if (selectedDatasetStore.secondaryDatasets) {
-        selectedDatasetStore.addWizardStep(exploreSteps[selectedValue][0])
-      } else {
-        selectedDatasetStore.addWizardStep(exploreSteps[selectedValue][1])
-      }
+      const scenario = wizardStore.secondaryDatasets
+        ? scenarioForCandidateSet
+        : scenarioForShortCandidateSet
+
+      wizardStore.setScenario(scenario)
     }
   }
 
-  useEffect(() => {
-    reaction(
-      () => datasetStore.dsInfoData,
-      data => {
-        setSelectedValue(
-          data?.kind === 'xl' ? ExploreTypes.Genome : ExploreTypes.Candidate,
-        )
-      },
-    )
-  })
-
   const isExploreGenomeDisabled = !datasetStore.isXL
   const isExploreCandidateDisabled =
-    !selectedDatasetStore.secondaryDatasets && datasetStore.isXL
+    !wizardStore.secondaryDatasets && datasetStore.isXL
 
   return (
     <div className="w-1/2 pr-12">

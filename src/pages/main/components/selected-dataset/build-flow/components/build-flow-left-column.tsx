@@ -4,10 +4,10 @@ import { ReactElement } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
-import selectedDatasetCardsStore from '../../selected-dataset-cards.store'
+import wizardStore from './wizard/wizard.store'
 
 export const BuildFlowLeftColumn = observer((): ReactElement => {
-  const { wizardScenario } = selectedDatasetCardsStore
+  const { wizardScenario } = wizardStore
 
   return (
     <div
@@ -16,10 +16,13 @@ export const BuildFlowLeftColumn = observer((): ReactElement => {
       {wizardScenario.map((scenario, index) => {
         const Component = () =>
           scenario.component({
+            id: scenario.id,
             continueDisabled: scenario.continueDisabled,
             editDisabled: scenario.editDisabled,
             contentDisabled: scenario.contentDisabled,
             selectedValue: scenario.value,
+            title: scenario.title,
+            maxHeight: scenario.maxHeight,
           })
         return (
           index < 2 && !scenario.hidden && <Component key={scenario.value} />

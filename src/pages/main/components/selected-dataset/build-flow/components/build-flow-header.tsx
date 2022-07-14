@@ -11,7 +11,7 @@ import { Routes } from '@router/routes.enum'
 import { CardTitle } from '@ui/card'
 import { Icon } from '@ui/icon'
 import { DatasetCard } from '@components/data-testid/dataset-card.cy'
-import selectedDatasetStore from '../../selected-dataset.store'
+import wizardStore from './wizard/wizard.store'
 
 export const BuildFlowHeader = observer(
   ({ goBack }: { goBack: () => void }): ReactElement => {
@@ -21,21 +21,22 @@ export const BuildFlowHeader = observer(
     const handleGoMain = () => {
       goBack()
       history.push(Routes.Root)
+      wizardStore.actionHistory.resetHistory()
     }
 
     const handleGoStart = () => {
       goBack()
-      selectedDatasetStore.actionHistory.resetHistory()
+      wizardStore.actionHistory.resetHistory()
     }
 
-    const { selectedSecondaryDataset, datasetName } = selectedDatasetStore
+    const { selectedDataset, datasetName } = wizardStore
 
     const handleGoBack = () => {
-      if (selectedDatasetStore.actionHistory.historyIndex === 1) {
+      if (wizardStore.actionHistory.historyIndex === 0) {
         isXL ? goBack() : handleGoMain()
-        selectedDatasetStore.actionHistory.resetHistory()
+        wizardStore.actionHistory.resetHistory()
       } else {
-        selectedDatasetStore.actionHistory.goBackward()
+        wizardStore.actionHistory.goBackward()
       }
     }
 
@@ -84,7 +85,7 @@ export const BuildFlowHeader = observer(
           <div className="flex text-grey-dark">
             <div className="mx-1">/</div>
 
-            <div>{selectedSecondaryDataset || datasetName}</div>
+            <div>{selectedDataset || datasetName}</div>
           </div>
         </div>
       </div>
