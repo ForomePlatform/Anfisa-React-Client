@@ -27,6 +27,7 @@ export const CardPreviousExploreSection = (): ReactElement => {
     return prevLocations?.map(location => {
       return (
         <span
+          key={location}
           className="text-blue-bright cursor-pointer"
           onClick={() => onClickLocation(location)}
         >
