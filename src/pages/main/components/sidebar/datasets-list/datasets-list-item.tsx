@@ -1,12 +1,10 @@
 import { FC, useState } from 'react'
-import { useHistory } from 'react-router'
 import cn from 'classnames'
 import get from 'lodash/get'
 import { observer } from 'mobx-react-lite'
 
 import { datasetStore } from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
-import { Routes } from '@router/routes.enum'
 import { DatasetName } from '@pages/main/components/sidebar/datasets-list/components/dataset-name'
 import { DatasetTime } from '@pages/main/components/sidebar/datasets-list/components/dataset-time'
 import {
@@ -25,8 +23,6 @@ interface IDatasetsListItemProps {
 
 export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
   ({ item, level }) => {
-    const history = useHistory()
-
     const isActive = item.name === dirinfoStore.selectedDirinfoName
 
     const [isOpenFolder, setIsOpenFolder] = useState<boolean>(

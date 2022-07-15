@@ -8,6 +8,8 @@ import wizardStore from './build-flow/components/wizard/wizard.store'
 import { SelectedDatasetStartFlow } from './start-flow'
 
 export const SelectedDataset = observer((): ReactElement => {
+  const { isFetching } = dirinfoStore.dirinfo
+
   if (!dirinfoStore.selectedDirinfoName) {
     return (
       <span className="m-auto text-grey-blue">{t('home.pickDataset')}</span>
@@ -16,12 +18,16 @@ export const SelectedDataset = observer((): ReactElement => {
 
   return (
     <>
-      {wizardStore.isWizardVisible ? (
-        <SelectedDatasetBuildFlow
-          goBack={() => wizardStore.toggleIsWizardVisible(false)}
-        />
-      ) : (
-        <SelectedDatasetStartFlow />
+      {!isFetching && (
+        <>
+          {wizardStore.isWizardVisible ? (
+            <SelectedDatasetBuildFlow
+              goBack={() => wizardStore.toggleIsWizardVisible(false)}
+            />
+          ) : (
+            <SelectedDatasetStartFlow />
+          )}
+        </>
       )}
     </>
   )
