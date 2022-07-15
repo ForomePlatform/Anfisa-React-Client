@@ -1,7 +1,9 @@
 import { ReactElement, useEffect } from 'react'
-import { reaction } from 'mobx'
+import { reaction, toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
+import { pushQueryParams } from '@core/history'
+import { useParams } from '@core/hooks/use-params'
 import { LocalStoreManager } from '@core/storage-management'
 import { t } from '@i18n'
 import { datasetStore } from '@store/dataset'
@@ -16,6 +18,8 @@ interface ISavedData {
 }
 
 export const SelectedDataset = observer((): ReactElement => {
+  const params = useParams()
+
   useEffect(() => {
     reaction(
       () => datasetStore.datasetName,
@@ -24,24 +28,30 @@ export const SelectedDataset = observer((): ReactElement => {
           return
         }
 
-        const savedData: ISavedData | undefined =
-          LocalStoreManager.read('wizard')
+        const kind = params.get('kind')
+        const isSecondary = params.get('secondary')
 
         let hasSecondaryDs =
           !!dirinfoStore.dirInfoData?.dsDict[datasetName].secondary?.length
 
-        if (savedData && !savedData.isXL) {
-          if (dirinfoStore.dirInfoData) {
-            wizardStore.openWizardForWsDatasets(hasSecondaryDs)
-          } else {
-            hasSecondaryDs = savedData.hasSecondaryDs
-            wizardStore.openWizardForWsDatasets(savedData.hasSecondaryDs)
-          }
+        if (
+          dirinfoStore.dirInfoData &&
+          !dirinfoStore.xlDatasets.includes(datasetName)
+        ) {
+          wizardStore.openWizardForWsDatasets(hasSecondaryDs)
 
-          LocalStoreManager.write('wizard', {
-            isXL: false,
-            hasSecondaryDs,
-          })
+          const kind = 'ws'
+          const secondary = hasSecondaryDs ? 'true' : 'false'
+
+          pushQueryParams({ kind, secondary })
+        } else if (kind && kind !== 'xl') {
+          hasSecondaryDs = isSecondary === 'true'
+          wizardStore.openWizardForWsDatasets(hasSecondaryDs)
+
+          const kind = 'ws'
+          const secondary = hasSecondaryDs ? 'true' : 'false'
+
+          pushQueryParams({ kind, secondary })
         }
       },
     )

@@ -2,14 +2,13 @@ import { ReactElement, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { ExploreTypes } from '@core/enum/explore-types-enum'
+import { pushQueryParams } from '@core/history'
 import { datasetStore } from '@store/dataset'
 import { Button } from '@ui/button'
 import { CardTitle } from '@ui/card'
 import { Radio } from '@ui/radio'
 import wizardStore from '../../../build-flow/components/wizard/wizard.store'
 import {
-  scenarioForWsCandidateSet,
-  scenarioForWsShortCandidateSet,
   scenarioForXlCandidateSet,
   scenarioForXlWholeGenome,
 } from '../../../build-flow/components/wizard/wizard-scenarious'
@@ -22,21 +21,14 @@ export const CardStartExploreSection = observer((): ReactElement => {
 
   const onContinue = () => {
     wizardStore.toggleIsWizardVisible(true)
+    const scenario =
+      selectedValue === ExploreTypes.Genome
+        ? scenarioForXlWholeGenome
+        : scenarioForXlCandidateSet
 
-    if (datasetStore.isXL) {
-      const scenario =
-        selectedValue === ExploreTypes.Genome
-          ? scenarioForXlWholeGenome
-          : scenarioForXlCandidateSet
-
-      wizardStore.setScenario(scenario)
-    } else {
-      const scenario = wizardStore.secondaryDatasets
-        ? scenarioForWsCandidateSet
-        : scenarioForWsShortCandidateSet
-
-      wizardStore.setScenario(scenario)
-    }
+    wizardStore.setScenario(scenario)
+    const kind = 'xl'
+    pushQueryParams({ kind })
   }
 
   const isExploreGenomeDisabled = !datasetStore.isXL
