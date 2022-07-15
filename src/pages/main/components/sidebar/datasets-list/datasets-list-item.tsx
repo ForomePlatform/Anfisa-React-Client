@@ -4,6 +4,7 @@ import cn from 'classnames'
 import get from 'lodash/get'
 import { observer } from 'mobx-react-lite'
 
+import { datasetStore } from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
 import { Routes } from '@router/routes.enum'
 import { DatasetName } from '@pages/main/components/sidebar/datasets-list/components/dataset-name'
@@ -65,9 +66,10 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
         dirinfoStore.setDsInfo(item as IDirInfoDatasetDescriptor)
       }
 
-      history.replace(`${Routes.Root}?ds=${isNullKind ? '' : item.name}`)
-
       const kind = dirinfoStore.xlDatasets.includes(item.name) ? 'xl' : 'ws'
+      const dsName = isNullKind ? '' : item.name
+      datasetStore.setDatasetName(dsName)
+      dirinfoStore.setSelectedDirinfoName(dsName)
 
       wizardStore.setDatasetKind(kind)
 

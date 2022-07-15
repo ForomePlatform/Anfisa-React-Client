@@ -52,7 +52,7 @@ class WizardStore {
   )
 
   readonly observeHistory = createHistoryObserver({
-    foo: {
+    ds: {
       get: () => datasetStore.datasetName ?? '',
       apply: ds => {
         datasetStore.setDatasetName(ds || '')

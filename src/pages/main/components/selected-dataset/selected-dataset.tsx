@@ -22,7 +22,6 @@ export const SelectedDataset = observer((): ReactElement => {
         }
 
         const kind = params.get('kind')
-        console.log('kind', kind)
 
         const hasSecondaryDs =
           !!dirinfoStore.dirInfoData?.dsDict[datasetName].secondary?.length
