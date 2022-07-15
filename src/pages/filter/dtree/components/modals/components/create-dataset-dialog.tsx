@@ -124,8 +124,8 @@ export const CreateDatasetDialog = observer(
     }
 
     const handleOpenDataset = () => {
+      datasetStore.setDatasetName(value)
       isDone && history.push(`${Routes.WS}?ds=${value}`)
-
       onClose()
 
       if (pathName === PatnNameEnum.Ws) {
