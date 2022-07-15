@@ -1,0 +1,9 @@
+.anfisafront-chart
+.azure
+.github
+.storybook
+node_modules
+.git
+.docker*
+Dockerfile*
+*.md
