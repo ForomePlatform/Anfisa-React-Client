@@ -1,7 +1,8 @@
 # Change log 
 
-## <small>0.7.1 (7/13/2022)</small>
+## <small>0.7.1 (7/15/2022)</small>
 
+* fix([FOROME-1332](https://quantori.atlassian.net/browse/FOROME-1332)): range slider min value validation ([1976fe9c](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1976fe9c))
 * fix([FOROME-1313](https://quantori.atlassian.net/browse/FOROME-1313)): validation for creating presets (#799) ([2b23011f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/2b23011f))
 * fix([FOROME-1323](https://quantori.atlassian.net/browse/FOROME-1323)): save scroll position in modal (#807) ([82073162](https://github.com/ForomePlatform/Anfisa-React-Client/commit/82073162))
 * feat([FOROME-1303](https://quantori.atlassian.net/browse/FOROME-1303)): implemented drag-n-drop conditions moving in refiner (#785) ([d1ef1934](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d1ef1934))
@@ -15,6 +16,8 @@
 * fix([FOROME-1229](https://quantori.atlassian.net/browse/FOROME-1229)): replace igv-page to igv-modal ([a0940570](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a0940570))
 * fix([FOROME-1269](https://quantori.atlassian.net/browse/FOROME-1269)): format number method (#794) ([e61998af](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e61998af))
 * fix([FOROME-1306](https://quantori.atlassian.net/browse/FOROME-1306)): set active preset before edit (#800) ([3fa09600](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3fa09600))
+* fix([FOROME-1311](https://quantori.atlassian.net/browse/FOROME-1311)): clear filter on pressing close icon from everyplace ([f08156e3](https://github.com/ForomePlatform/Anfisa-React-Client/commit/f08156e3))
+* fix([FOROME-1311](https://quantori.atlassian.net/browse/FOROME-1311)): clear filter on pressing close icon, from fr to ws page ([accb22e7](https://github.com/ForomePlatform/Anfisa-React-Client/commit/accb22e7))
 * feat([FOROME-12](https://quantori.atlassian.net/browse/FOROME-12)p8): redesign scrollbar ([d6a96fc2](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d6a96fc2))
 * fix([FOROME-1290](https://quantori.atlassian.net/browse/FOROME-1290)): add local tag for note (#795) ([705b10ce](https://github.com/ForomePlatform/Anfisa-React-Client/commit/705b10ce))
 * feat([FOROME-1305](https://quantori.atlassian.net/browse/FOROME-1305)): fix css module ([09f9386f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/09f9386f))
