@@ -38,6 +38,8 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
     const secondaryKeys: string[] = get(item, 'secondary', [])
     const hasChildren = secondaryKeys.length > 0
 
+    wizardStore.observeHistory.useHook()
+
     const isActiveParent =
       hasChildren && secondaryKeys.includes(dirinfoStore.selectedDirinfoName)
 
@@ -74,6 +76,8 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
 
       const kind = dirinfoStore.xlDatasets.includes(item.name) ? 'xl' : 'ws'
       const secondary = 'false'
+
+      wizardStore.setDatasetKind(kind)
 
       pushQueryParams({ kind, secondary })
 

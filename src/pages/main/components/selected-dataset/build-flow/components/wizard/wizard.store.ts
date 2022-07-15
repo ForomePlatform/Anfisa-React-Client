@@ -3,6 +3,7 @@ import { makeAutoObservable } from 'mobx'
 
 import { ExploreTypes } from '@core/enum/explore-types-enum'
 import { ActionsHistoryStore } from '@store/actions-history'
+import { createHistoryObserver } from '@store/common'
 import { datasetStore } from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
 import { ISolutionWithKind } from '../cards/components/presets-card/utils/add-solution-kind'
@@ -44,10 +45,26 @@ class WizardStore {
   public selectedPreset?: ISolutionWithKind
   public selectedDataset = ''
   public needToChangeScenario: boolean = false
+  public datasetKind = ''
 
   public actionHistory = new ActionsHistoryStore<IWizardScenario[]>(
     wizardScenario => (this.wizardScenario = wizardScenario),
   )
+
+  readonly observeHistory = createHistoryObserver({
+    foo: {
+      get: () => datasetStore.datasetName ?? '',
+      apply: ds => {
+        datasetStore.setDatasetName(ds || '')
+      },
+    },
+    bar: {
+      get: () => this.datasetKind ?? '',
+      apply: kind => {
+        this.setDatasetKind(kind || '')
+      },
+    },
+  })
 
   constructor() {
     makeAutoObservable(this)
@@ -193,6 +210,10 @@ class WizardStore {
   public resetScenario() {
     this.selectedDataset = ''
     this.wizardScenario = []
+  }
+
+  public setDatasetKind(newDatasetKind: string) {
+    this.datasetKind = newDatasetKind
   }
 }
 

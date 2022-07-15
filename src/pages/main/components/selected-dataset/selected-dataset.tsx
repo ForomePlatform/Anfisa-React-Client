@@ -28,8 +28,9 @@ export const SelectedDataset = observer((): ReactElement => {
           return
         }
 
-        const kind = params.get('kind')
+        let kind = params.get('kind')
         const isSecondary = params.get('secondary')
+        // console.log('params', kind)
 
         let hasSecondaryDs =
           !!dirinfoStore.dirInfoData?.dsDict[datasetName].secondary?.length
@@ -40,7 +41,7 @@ export const SelectedDataset = observer((): ReactElement => {
         ) {
           wizardStore.openWizardForWsDatasets(hasSecondaryDs)
 
-          const kind = 'ws'
+          kind = 'ws'
           const secondary = hasSecondaryDs ? 'true' : 'false'
 
           pushQueryParams({ kind, secondary })
@@ -48,7 +49,7 @@ export const SelectedDataset = observer((): ReactElement => {
           hasSecondaryDs = isSecondary === 'true'
           wizardStore.openWizardForWsDatasets(hasSecondaryDs)
 
-          const kind = 'ws'
+          kind = 'ws'
           const secondary = hasSecondaryDs ? 'true' : 'false'
 
           pushQueryParams({ kind, secondary })
