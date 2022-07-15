@@ -1,5 +1,5 @@
 import cloneDeep from 'lodash/cloneDeep'
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, reaction } from 'mobx'
 
 import { ExploreTypes } from '@core/enum/explore-types-enum'
 import { ActionsHistoryStore } from '@store/actions-history'
@@ -68,6 +68,28 @@ class WizardStore {
 
   constructor() {
     makeAutoObservable(this)
+
+    reaction(
+      () => this.datasetKind,
+      datasetKind => {
+        if (!datasetStore.datasetName) {
+          return
+        }
+
+        const hasSecondaryDs =
+          !!dirinfoStore.dirInfoData?.dsDict[datasetStore.datasetName].secondary
+            ?.length
+
+        if (
+          dirinfoStore.dirInfoData &&
+          !dirinfoStore.xlDatasets.includes(datasetStore.datasetName)
+        ) {
+          this.openWizardForWsDatasets(hasSecondaryDs)
+        } else if (datasetKind && datasetKind !== 'xl') {
+          this.openWizardForWsDatasets(hasSecondaryDs)
+        }
+      },
+    )
   }
 
   public toggleIsWizardVisible(value: boolean) {

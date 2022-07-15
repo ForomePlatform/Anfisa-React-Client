@@ -5,7 +5,6 @@ export const pushQueryParams = (
 ): void => {
   const url = new URL(window.location.toString())
   const params = new URLSearchParams(url.searchParams)
-  console.log(toJS(newParams))
 
   Object.entries(newParams).forEach(([name, value]) => {
     if (value) {
