@@ -41,7 +41,7 @@ export const StartCard = (props: ICardProps) => {
           onEdit={() => wizardStore.editCard(props.id)}
         />
 
-        <div className="mt-2 text-14">
+        <div className="mt-4 text-14">
           {startFlowOptionsList.map(option => (
             <div className="flex mb-2" key={option}>
               <Radio
@@ -91,7 +91,7 @@ export const WhatsNextCard = (props: ICardProps) => {
           onEdit={() => wizardStore.editCard(props.id)}
         />
 
-        <div className="mt-2 text-14">
+        <div className="mt-4 text-14">
           <CardRadioList
             optionsList={whatsNextOptionsList}
             selectedOption={props.selectedValue}
@@ -134,7 +134,7 @@ export const ExistingCandidatesCard = observer((props: ICardProps) => {
       <CardTitle text={props.title} className="text-16 px-4" />
 
       <div
-        className="mb-4 text-14 overflow-y-auto"
+        className="mb-4 mt-2 text-14 overflow-y-auto"
         style={{ maxHeight: props.maxHeight }}
       >
         {secodaryDatasets?.map(

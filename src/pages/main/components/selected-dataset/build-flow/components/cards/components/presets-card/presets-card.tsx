@@ -62,11 +62,11 @@ export const PresetsCard = observer((props: ICardProps) => {
   }
 
   return (
-    <Card className={'mt-4'}>
+    <Card className={'mt-4 px-0'}>
       <CardTitle text={props.title} className="text-16 px-4" />
 
       <div
-        className="mb-4 text-14 overflow-y-auto"
+        className="mb-4 mt-2 text-14 overflow-y-auto"
         style={{ maxHeight: props.maxHeight }}
       >
         {presetsCardStore.isFetchingSolutions ? (
