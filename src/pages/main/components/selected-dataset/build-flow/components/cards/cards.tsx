@@ -147,7 +147,7 @@ export const ExistingCandidatesCard = observer((props: ICardProps) => {
 
 export const DescriptionCard = (props: ICardProps) => {
   const history = useHistory()
-  const ds = props.title
+  const ds = props.title || datasetStore.datasetName
 
   const openNextPage = () => {
     datasetStore.setDatasetName(ds)
