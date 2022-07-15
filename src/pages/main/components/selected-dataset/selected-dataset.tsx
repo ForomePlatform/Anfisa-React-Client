@@ -1,21 +1,14 @@
 import { ReactElement, useEffect } from 'react'
-import { reaction, toJS } from 'mobx'
+import { reaction } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
-import { pushQueryParams } from '@core/history'
 import { useParams } from '@core/hooks/use-params'
-import { LocalStoreManager } from '@core/storage-management'
 import { t } from '@i18n'
 import { datasetStore } from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
 import { SelectedDatasetBuildFlow } from './build-flow'
 import wizardStore from './build-flow/components/wizard/wizard.store'
 import { SelectedDatasetStartFlow } from './start-flow'
-
-interface ISavedData {
-  isXL: boolean
-  hasSecondaryDs: boolean
-}
 
 export const SelectedDataset = observer((): ReactElement => {
   const params = useParams()
@@ -28,11 +21,10 @@ export const SelectedDataset = observer((): ReactElement => {
           return
         }
 
-        let kind = params.get('kind')
-        const isSecondary = params.get('secondary')
-        // console.log('params', kind)
+        const kind = params.get('kind')
+        console.log('kind', kind)
 
-        let hasSecondaryDs =
+        const hasSecondaryDs =
           !!dirinfoStore.dirInfoData?.dsDict[datasetName].secondary?.length
 
         if (
@@ -40,22 +32,12 @@ export const SelectedDataset = observer((): ReactElement => {
           !dirinfoStore.xlDatasets.includes(datasetName)
         ) {
           wizardStore.openWizardForWsDatasets(hasSecondaryDs)
-
-          kind = 'ws'
-          const secondary = hasSecondaryDs ? 'true' : 'false'
-
-          pushQueryParams({ kind, secondary })
         } else if (kind && kind !== 'xl') {
-          hasSecondaryDs = isSecondary === 'true'
           wizardStore.openWizardForWsDatasets(hasSecondaryDs)
-
-          kind = 'ws'
-          const secondary = hasSecondaryDs ? 'true' : 'false'
-
-          pushQueryParams({ kind, secondary })
         }
       },
     )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   if (!dirinfoStore.selectedDirinfoName) {

@@ -4,8 +4,6 @@ import cn from 'classnames'
 import get from 'lodash/get'
 import { observer } from 'mobx-react-lite'
 
-import { pushQueryParams } from '@core/history'
-import { LocalStoreManager } from '@core/storage-management'
 import dirinfoStore from '@store/dirinfo'
 import { Routes } from '@router/routes.enum'
 import { DatasetName } from '@pages/main/components/sidebar/datasets-list/components/dataset-name'
@@ -67,19 +65,11 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
         dirinfoStore.setDsInfo(item as IDirInfoDatasetDescriptor)
       }
 
-      // LocalStoreManager.write('wizard', {
-      //   isXL: dirinfoStore.xlDatasets.includes(item.name),
-      //   hasSecondaryDs: false,
-      // })
-
       history.replace(`${Routes.Root}?ds=${isNullKind ? '' : item.name}`)
 
       const kind = dirinfoStore.xlDatasets.includes(item.name) ? 'xl' : 'ws'
-      const secondary = 'false'
 
       wizardStore.setDatasetKind(kind)
-
-      pushQueryParams({ kind, secondary })
 
       dirinfoStore.setInfoFrameLink('')
       dirinfoStore.setActiveInfoName('')

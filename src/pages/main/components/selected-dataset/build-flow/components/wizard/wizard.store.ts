@@ -58,7 +58,7 @@ class WizardStore {
         datasetStore.setDatasetName(ds || '')
       },
     },
-    bar: {
+    kind: {
       get: () => this.datasetKind ?? '',
       apply: kind => {
         this.setDatasetKind(kind || '')
