@@ -121,6 +121,10 @@ class WizardStore {
     this.wizardScenario = clonedWizard
   }
 
+  public updateSelectedDataset(ds: string) {
+    this.selectedDataset = ds
+  }
+
   public showNextCard(index: number) {
     if (this.wizardScenario[index + 1]) {
       this.wizardScenario[index + 1].hidden = false

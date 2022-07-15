@@ -147,27 +147,28 @@ export const ExistingCandidatesCard = observer((props: ICardProps) => {
 
 export const DescriptionCard = (props: ICardProps) => {
   const history = useHistory()
+  const ds = props.title
 
   const openNextPage = () => {
+    datasetStore.setDatasetName(ds)
     const nextPageData = getNextPageData(
       props.selectedValue as ExploreGenomeTypes,
-      datasetStore.datasetName,
+      ds,
     )
 
     history.push(nextPageData.route)
     filterStore.setMethod(nextPageData.method as GlbPagesNames)
   }
 
-  const title = props.title
-
   useEffect(() => {
-    wizardStore.wizardScenario[props.id].title = title
-  }, [props.id, title])
+    wizardStore.wizardScenario[props.id].title = ds
+    wizardStore.updateSelectedDataset(ds)
+  }, [props.id, ds])
 
   return (
     <Card className={'mt-4'}>
       <CardTitleWithEdit
-        title={title}
+        title={ds}
         isEditDisabled={props.editDisabled}
         onEdit={() => wizardStore.editCard(props.id)}
       />
