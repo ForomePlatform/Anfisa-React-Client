@@ -17,6 +17,7 @@ interface ISolutionControlPopoverProps extends IPopoverBaseProps {
   onSelect: (solutionName: string) => void
   onModify: (solutionName: string) => void
   onDelete: (solutionName: string) => void
+  controlName: string
   solutions: ISolutionEntryDescription[] | undefined
   modifiedSolution?: string
   selected: string
@@ -26,6 +27,7 @@ export const SolutionControlPopover = ({
   solutions,
   selected,
   modifiedSolution,
+  controlName,
   onSelect,
   onApply,
   onJoin,
@@ -34,6 +36,13 @@ export const SolutionControlPopover = ({
   onClose,
   ...popoverProps
 }: ISolutionControlPopoverProps): ReactElement => {
+  const applyButtonDictionary = {
+    [t('solutionControl.filterPreset')]: t('filter.applyCriterium'),
+    [t('solutionControl.decisionTree')]: t('dtree.applyFilter'),
+  }
+
+  const applyButtonText = applyButtonDictionary[controlName]
+
   return (
     <Popover onClose={onClose} offset={popoverOffset} {...popoverProps}>
       <section className={styles.solutionControlCard}>
@@ -85,7 +94,7 @@ export const SolutionControlPopover = ({
             textSize="sm"
             padding="dense"
             className={styles.solutionControlCard__button}
-            text={t('solutionControl.apply')}
+            text={applyButtonText}
             disabled={!selected}
             onClick={() => {
               onClose?.()

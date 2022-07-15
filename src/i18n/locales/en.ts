@@ -68,7 +68,6 @@ export const en = {
     selectSolution: 'Select {controlName}',
     createEntry: 'Create {solutionName}',
     join: 'Join',
-    apply: 'Apply Filter',
     delete: 'Delete',
     modify: 'Modify',
     createDialog: {
@@ -240,6 +239,7 @@ export const en = {
     functionalUnits: 'Functional Units',
   },
   filter: {
+    applyCriterium: "Apply 'criterium'",
     switcher: 'Only starts with',
     method: 'Filtering method',
     results: 'Results',
