@@ -11,17 +11,17 @@ import { Popover } from '@ui/popover'
 import { IPopoverBaseProps } from '@ui/popover/popover.interface'
 import { DecisionTreesMenuDataCy } from '@data-testid'
 import { popoverOffset } from '@pages/ws/ws.constants'
-import { IVariantDrawerGridPreset } from '../../variant-drawer.interface'
-
-const defaultPresetName = 'List'
+import { IVariantDrawerGridPreset } from '../../../variant-drawer.interface'
+import { defaultPresetName } from '../../../variant-drawer.store'
+import { ContextMenuPopover } from './context-menu-popover'
 
 interface IPresetMenuProps extends IPopoverBaseProps {
   presets: IVariantDrawerGridPreset[]
   selected: string
   onSelect: (presetName: string) => void
   onApply: (presetName: string) => void
-  onDelete: (presetName: string) => void
-  onModify: (presetName: string) => void
+  onDelete: () => void
+  onModify: () => void
   onClose: () => void
 }
 
@@ -48,16 +48,6 @@ export const PresetMenuPopover = ({
 
   const renderActions = (name: string) => {
     const actions: JSX.Element[] = []
-    // const isModified = modifiedSolution && modifiedSolution === name
-    const isModified = false
-
-    if (isModified) {
-      actions.push(
-        <span key="edit">
-          <Icon name="Edit" />
-        </span>,
-      )
-    }
 
     if (name !== defaultPresetName) {
       actions.push(
@@ -92,35 +82,12 @@ export const PresetMenuPopover = ({
           ))}
         </MenuList>
 
-        <Popover
-          isOpen={!!contextMenuItem}
-          anchorEl={contextMenuItem?.element}
-          placement="bottom-end"
-          onClose={closeContextMenu}
-        >
-          <div
-            className={styles.menuCard}
-            onMouseUp={event => event.stopPropagation()}
-          >
-            <MenuList isDense>
-              <MenuListItem
-                label={t('solutionControl.modify')}
-                // disabled={contextMenuItem?.name !== modifiedSolution}
-                onClick={() => {
-                  closeContextMenu()
-                  onModify(contextMenuItem?.name ?? '')
-                }}
-              />
-              <MenuListItem
-                label={t('solutionControl.delete')}
-                onClick={() => {
-                  closeContextMenu()
-                  onDelete(contextMenuItem?.name ?? '')
-                }}
-              />
-            </MenuList>
-          </div>
-        </Popover>
+        <ContextMenuPopover
+          onDelete={onDelete}
+          onModify={onModify}
+          contextMenuItem={contextMenuItem}
+          closeContextMenu={closeContextMenu}
+        />
 
         <footer className={styles.presetMenuCard__actions}>
           <Button

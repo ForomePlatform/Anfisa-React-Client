@@ -9,12 +9,13 @@ import { t } from '@i18n'
 import { Button } from '@ui/button'
 import { Divider } from '@ui/divider'
 import { Icon } from '@ui/icon'
+import { SolutionChangeDialog } from '@components/solution-control/solution-change-dialog'
 import { showToast } from '@utils/notifications'
 import {
   IVariantDrawerGridPreset,
   VariantDrawerLayoutMode,
 } from '../../variant-drawer.interface'
-import { PresetMenuPopover } from './preset-menu-popover'
+import { PresetMenuPopover } from './preset-menu'
 import { SavePresetDialog } from './save-preset-dialog'
 
 interface IDrawerLayoutControlProps {
@@ -47,6 +48,8 @@ export const DrawerLayoutControl = ({
   const [savePresetDialog, openSavePresetDialog, closeSavePresetDialog] =
     useModal()
 
+  const [deleteDialog, openDeleteDialog, closeDeleteDialog] = useModal()
+
   const { popoverAnchor, isPopoverOpen, onToggle, closePopover } = usePopover()
 
   const [selectedPreset, setSelectedPreset] = useState<string>('')
@@ -58,10 +61,14 @@ export const DrawerLayoutControl = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPopoverOpen])
 
-  const handleDeletePreset = (presetName: string) => {
-    onDeleteGridPreset(presetName)
-    showToast(t('variant.actions.delete', { presetName }), 'success')
+  const handleDeletePreset = () => {
+    onDeleteGridPreset(selectedPreset)
+    showToast(
+      t('variant.actions.delete.success', { selectedPreset }),
+      'success',
+    )
     closePopover()
+    closeDeleteDialog()
   }
 
   const handleSavePreset = (presetName: string) => {
@@ -70,9 +77,15 @@ export const DrawerLayoutControl = ({
     closeSavePresetDialog()
   }
 
-  const handleModifyPreset = (presetName: string) => {
-    onModifyGridPreset(presetName)
-    showToast(t('variant.actions.modify', { presetName }), 'success')
+  const handleModifyPreset = () => {
+    onModifyGridPreset(selectedPreset)
+    showToast(t('variant.actions.modify', { selectedPreset }), 'success')
+    closePopover()
+  }
+
+  const handleApplyPreset = (presetName: string) => {
+    onChangeLayoutMode(VariantDrawerLayoutMode.Grid)
+    onChangeGridPreset(presetName)
     closePopover()
   }
 
@@ -134,13 +147,9 @@ export const DrawerLayoutControl = ({
         isOpen={isPopoverOpen}
         presets={gridPresets}
         selected={selectedPreset}
-        onSelect={presetName => setSelectedPreset(presetName)}
-        onApply={presetName => {
-          onChangeLayoutMode(VariantDrawerLayoutMode.Grid)
-          onChangeGridPreset(presetName)
-          closePopover()
-        }}
-        onDelete={handleDeletePreset}
+        onSelect={setSelectedPreset}
+        onApply={handleApplyPreset}
+        onDelete={openDeleteDialog}
         onModify={handleModifyPreset}
         onClose={closePopover}
       />
@@ -153,6 +162,18 @@ export const DrawerLayoutControl = ({
           presets={gridPresets}
         />
       )}
+
+      <SolutionChangeDialog
+        {...deleteDialog}
+        onClose={closeDeleteDialog}
+        onApply={handleDeletePreset}
+        title={t('variant.actions.delete.title')}
+        message={t('variant.actions.delete.message', {
+          selectedPreset,
+        })}
+        applyText={t('variant.actions.delete.confirm')}
+        cancelText={t('variant.actions.delete.cancel')}
+      />
     </div>
   )
 }

@@ -10,6 +10,8 @@ import {
   VariantDrawerPredefinedPresets,
 } from './variant-drawer.interface'
 
+export const defaultPresetName = 'List'
+
 const predefinedPresets: IVariantDrawerGridPreset[] = [
   {
     name: 'List',
@@ -31,10 +33,10 @@ const presetsSortComparator = (
 class VariantDrawerStore {
   public layoutMode: VariantDrawerLayoutMode = VariantDrawerLayoutMode.Gallery
   public galleryActiveAspect = ''
+  public appliedPreset: string | null = null
 
   private customGridPresets: IVariantDrawerGridPreset[]
   private currentGridLayout: TVariantAspectsGridLayout | undefined
-  public appliedPreset: string | null = null
 
   constructor() {
     makeAutoObservable<VariantDrawerStore, 'customGridPresets'>(this, {

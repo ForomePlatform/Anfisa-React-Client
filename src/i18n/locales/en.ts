@@ -207,10 +207,21 @@ export const en = {
     searchThroughTheTabs: 'Search through the tabs',
     openInAModalWindow: 'Open in a modal window',
     openInANewTab: 'Open in a new tab',
+    contextMenuPopover: {
+      delete: 'Delete',
+      modify: 'Modify',
+    },
     actions: {
       save: 'Preset "{presetName}" has been saved',
-      modify: 'Preset "{presetName}" has been modified',
-      delete: 'Preset "{presetName}" has been deleted',
+      modify: 'Preset "{selectedPreset}" has been modified',
+      delete: {
+        title: 'Delete preset',
+        message:
+          'Deleting a preset "{selectedPreset}" will permanently remove it from your system.',
+        cancel: 'No, Keep preset',
+        confirm: 'Yes, Delete preset',
+        success: 'Preset "{selectedPreset}" has been deleted',
+      },
     },
     errors: {
       savePredefinedPresetError: '{presetName} is a predefined preset',
