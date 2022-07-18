@@ -1,0 +1,80 @@
+.dataset-info {
+  grid-column: span 2 / span 2;
+
+  @media (max-width: 1279px) {
+    grid-column: span 3 / span 3;
+  }
+
+  &__table {
+    flex-grow: 1;
+
+    &_row {
+      @apply typography-s;
+
+      border-bottom: 1px solid theme("colors.grey.blue");
+
+      &_title {
+        color: theme("colors.grey.dark") !important;
+        font-weight: 500;
+      }
+
+      & > td {
+        padding: 10px 0;
+        color: theme("colors.blue.dark");
+      }
+    }
+  }
+
+  &__title {
+    margin-top: 32px;
+  }
+
+  &__loader {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+  }
+
+  &__ancestor {
+    &__filter {
+      @apply typography-xs;
+
+      color: theme("colors.blue.dark");
+      margin-bottom: 8px;
+
+      &_name {
+        font-weight: bold;
+      }
+    }
+
+    &__conditions {
+      @apply typography-s;
+
+      & > span {
+        margin-top: 8px;
+        font-family: "Droid Sans Mono", monospace, "Droid Sans Fallback";
+      }
+
+      white-space: pre-wrap;
+      color: theme("colors.grey.dark") !important;
+      display: flex;
+      flex-direction: column;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    &__supply-panel {
+      @apply typography-xs;
+
+      display: flex;
+      flex-direction: column;
+      color: theme("colors.blue.dark") !important;
+
+      & > span {
+        margin-top: 8px;
+      }
+    }
+  }
+}
