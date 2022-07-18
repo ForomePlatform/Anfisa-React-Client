@@ -1,7 +1,8 @@
 # Change log 
 
-## <small>0.7.1 (7/15/2022)</small>
+## <small>0.7.1 (7/18/2022)</small>
 
+* feat([FOROME-1304](https://quantori.atlassian.net/browse/FOROME-1304)): change button text (#814) ([547b3c3f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/547b3c3f))
 * fix([FOROME-1332](https://quantori.atlassian.net/browse/FOROME-1332)): range slider min value validation ([1976fe9c](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1976fe9c))
 * fix([FOROME-1313](https://quantori.atlassian.net/browse/FOROME-1313)): validation for creating presets (#799) ([2b23011f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/2b23011f))
 * fix([FOROME-1323](https://quantori.atlassian.net/browse/FOROME-1323)): save scroll position in modal (#807) ([82073162](https://github.com/ForomePlatform/Anfisa-React-Client/commit/82073162))
