@@ -28,6 +28,8 @@ spec:
             mountPath: /usr/share/nginx/html/Anfisa/env-config.js
             subPath: env-config.js
       serviceAccount: default
+      imagePullSecrets:
+      - name: registry
       volumes:
         - name: config-volume
           configMap:
