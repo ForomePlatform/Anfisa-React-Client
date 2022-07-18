@@ -204,10 +204,18 @@ export const en = {
     noDataToShow: 'No data to show',
     textAboutSomething: 'Text about something',
     savePreset: 'Save Preset',
-    savePredefinedPresetError: '{presetName} is a predefined preset',
     searchThroughTheTabs: 'Search through the tabs',
     openInAModalWindow: 'Open in a modal window',
     openInANewTab: 'Open in a new tab',
+    actions: {
+      save: 'Preset "{presetName}" has been saved',
+      modify: 'Preset "{presetName}" has been modified',
+      delete: 'Preset "{presetName}" has been deleted',
+    },
+    errors: {
+      savePredefinedPresetError: '{presetName} is a predefined preset',
+      presetAlreadyExists: '{presetName} already exists',
+    },
   },
   condition: {
     selectAttribute: 'Select attribute',

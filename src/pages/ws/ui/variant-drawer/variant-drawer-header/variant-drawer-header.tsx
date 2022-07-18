@@ -30,9 +30,12 @@ export const VariantDrawerHeader = observer(
     } = variantStore
     const {
       layoutMode,
-      setLayoutMode,
       gridPresets,
+      appliedPreset,
+      setLayoutMode,
       applyGridPreset,
+      deleteGridPreset,
+      modifyGridPreset,
       saveGridPreset,
     } = variantDrawerStore
 
@@ -100,11 +103,14 @@ export const VariantDrawerHeader = observer(
         <div className="flex items-center my-2">
           <DrawerLayoutControl
             layoutMode={layoutMode}
-            onChangeLayoutMode={setLayoutMode}
             gridPresets={gridPresets}
+            windowsOpenState={windowsOpenState}
+            appliedPreset={appliedPreset}
+            onChangeLayoutMode={setLayoutMode}
             onSaveGridPreset={saveGridPreset}
             onChangeGridPreset={applyGridPreset}
-            windowsOpenState={windowsOpenState}
+            onModifyGridPreset={modifyGridPreset}
+            onDeleteGridPreset={deleteGridPreset}
             onWindowsToggle={onWindowsToggle}
           />
           <Divider orientation="vertical" spacing="dense" />

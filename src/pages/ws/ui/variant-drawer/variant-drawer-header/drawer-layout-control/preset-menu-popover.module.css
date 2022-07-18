@@ -1,0 +1,45 @@
+.preset-menu-card {
+  @apply popup-card;
+
+  width: 220px;
+
+  &__list {
+    overflow: auto;
+    max-height: 252px;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: theme("spacing.3");
+  }
+
+  &__button {
+    margin-left: theme("spacing.2");
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
+.context-menu-button {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+}
+
+.menu-card {
+  @apply popup-card;
+
+  min-width: 80px;
+  margin-top: theme("spacing.1");
+}
+
+.menu-list-item-actions {
+  display: flex;
+  align-items: center;
+}
