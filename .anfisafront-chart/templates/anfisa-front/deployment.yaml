@@ -21,6 +21,9 @@ spec:
       containers:
       - name: {{ .Values.anfisa_front.name }}
         image: {{ .Values.anfisa_front.registry }}
+        env:
+        - name: BACKEND
+          value: http://anfisa-backend:80
         ports:
         - containerPort: 80
         volumeMounts:
