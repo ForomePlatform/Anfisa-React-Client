@@ -22,7 +22,7 @@ export const GenesListZone = observer(() => {
 
   const handleApply = () => {
     zoneStore.createSelectedZoneFilter('isGenesList')
-    zoneStore.addZone(['Panels', zoneStore.selectedGenesList])
+    zoneStore.addZone(['Gene_Lists', zoneStore.selectedGenesList])
     setSearchValue('')
 
     closePopover()

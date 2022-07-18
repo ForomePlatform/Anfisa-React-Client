@@ -17,7 +17,7 @@ export const getShortNumber = (value: number): string => {
   return `${shortedValue} mln`
 }
 
-const colors: string[] = [
+export const colors: string[] = [
   theme('colors.blue.bright'),
   theme('colors.purple.bright'),
   theme('colors.yellow.secondary'),
