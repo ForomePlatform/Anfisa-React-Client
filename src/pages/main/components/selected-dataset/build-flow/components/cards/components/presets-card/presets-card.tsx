@@ -10,6 +10,7 @@ import { Card, CardTitle } from '@ui/card'
 import { Icon } from '@ui/icon'
 import { Loader } from '@ui/loader'
 import cardsStore, { ICardProps } from '../../../wizard/wizard.store'
+import { memorizeLocation } from '../../../wizard/wizard.utils'
 import presetsCardStore from './presets-card.store'
 
 export const PresetsCard = observer((props: ICardProps) => {
@@ -22,16 +23,16 @@ export const PresetsCard = observer((props: ICardProps) => {
     if (!cardsStore.selectedPreset) return
 
     const { kind, name } = cardsStore.selectedPreset
+    let location = ''
 
     if (kind === 'preset') {
-      history.push(
-        `${Routes.Refiner}?ds=${datasetStore.datasetName}&preset=${name}`,
-      )
+      location = `${Routes.Refiner}?ds=${datasetStore.datasetName}&preset=${name}`
     } else if (kind === 'dtree') {
-      history.push(
-        `${Routes.Dtree}?ds=${datasetStore.datasetName}&dtree=${name}`,
-      )
+      location = `${Routes.Dtree}?ds=${datasetStore.datasetName}&dtree=${name}`
     }
+
+    memorizeLocation(location)
+    history.push(location)
   }
 
   const renderPresets = () => {
