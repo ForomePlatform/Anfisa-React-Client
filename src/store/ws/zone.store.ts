@@ -24,7 +24,7 @@ class ZoneStore {
   modeWithNotesSubmitted = false
 
   private readonly geneVariants = new ZoneVariantsAsyncStore('Symbol')
-  private readonly genesListVariants = new ZoneVariantsAsyncStore('Panels')
+  private readonly genesListVariants = new ZoneVariantsAsyncStore('Gene_Lists')
   private readonly sampleVariants = new ZoneVariantsAsyncStore('Has_Variant')
   private readonly tagsSelect = new TagSelectAsyncStore()
 
@@ -164,7 +164,7 @@ class ZoneStore {
     if (type === 'fast') {
       this.createSelectedZoneFilter('isGenesList')
 
-      this.removeZone(['Panels', this.selectedGenesList])
+      this.removeZone(['Gene_Lists', this.selectedGenesList])
     }
   }
 
