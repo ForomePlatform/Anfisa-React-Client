@@ -17,7 +17,6 @@ export const SelectedDatasetStartFlow = observer(
           text={dirinfoStore.selectedDirinfoName}
           dataTestId={DatasetCard.datasetHeader}
           className="mr-3 break-words"
-          style={{ maxWidth: 'calc(100% - 140px)' }}
         />
 
         <CardExploreType />

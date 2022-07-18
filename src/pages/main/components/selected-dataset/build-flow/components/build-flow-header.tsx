@@ -22,23 +22,24 @@ export const BuildFlowHeader = observer(
       goBack()
       history.push(Routes.Root)
       wizardStore.actionHistory.resetHistory()
-      wizardStore.resetScenario()
+      wizardStore.resetWizard()
+      wizardStore.resetDatasetKind()
     }
 
     const handleGoStart = () => {
       goBack()
       wizardStore.actionHistory.resetHistory()
-      wizardStore.resetScenario()
+      wizardStore.resetWizard()
     }
 
     const { selectedDataset, datasetName } = wizardStore
 
     const handleGoBack = () => {
       if (wizardStore.actionHistory.historyIndex === 0) {
-        isXL ? handleGoStart() : handleGoMain()
-      } else {
-        wizardStore.actionHistory.goBackward()
+        return isXL ? handleGoStart() : handleGoMain()
       }
+
+      return wizardStore.actionHistory.goBackward()
     }
 
     return (
@@ -58,7 +59,6 @@ export const BuildFlowHeader = observer(
             text={dirinfoStore.selectedDirinfoName}
             dataTestId={DatasetCard.datasetHeader}
             className="mr-3 break-words"
-            style={{ maxWidth: 'calc(100% - 140px)' }}
           />
         </div>
 

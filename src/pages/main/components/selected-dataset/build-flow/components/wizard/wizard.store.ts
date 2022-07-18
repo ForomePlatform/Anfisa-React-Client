@@ -72,7 +72,7 @@ class WizardStore {
     reaction(
       () => this.datasetKind,
       datasetKind => {
-        if (!datasetStore.datasetName) {
+        if (!datasetKind) {
           return
         }
 
@@ -107,6 +107,7 @@ class WizardStore {
 
   public setScenario(scenario: IWizardScenario[]) {
     this.wizardScenario = scenario
+
     this.actionHistory.addHistory(scenario)
   }
 
@@ -229,13 +230,17 @@ class WizardStore {
     this.setScenario(scenario)
   }
 
-  public resetScenario() {
+  public resetWizard() {
     this.selectedDataset = ''
     this.wizardScenario = []
   }
 
   public setDatasetKind(newDatasetKind: string) {
     this.datasetKind = newDatasetKind
+  }
+
+  public resetDatasetKind() {
+    this.datasetKind = ''
   }
 }
 

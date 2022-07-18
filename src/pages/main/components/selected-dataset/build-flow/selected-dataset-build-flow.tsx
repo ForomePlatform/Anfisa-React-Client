@@ -12,7 +12,7 @@ export const SelectedDatasetBuildFlow = observer(
   ({ goBack }: { goBack: () => void }): ReactElement => {
     const handleGoBack = () => {
       goBack()
-      wizardStore.resetScenario()
+      wizardStore.resetWizard()
     }
 
     return (

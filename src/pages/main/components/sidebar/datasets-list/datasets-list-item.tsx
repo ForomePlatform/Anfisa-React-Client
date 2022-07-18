@@ -43,9 +43,11 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
 
       if (isNullKind && !hasChildren) return
 
-      if (wizardStore.isWizardVisible) {
+      const kind = dirinfoStore.xlDatasets.includes(item.name) ? 'xl' : 'ws'
+
+      if (wizardStore.isWizardVisible && kind !== 'ws') {
         wizardStore.toggleIsWizardVisible(false)
-        wizardStore.resetScenario()
+        wizardStore.resetWizard()
         wizardStore.actionHistory.resetHistory()
       }
 
@@ -62,7 +64,6 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
         dirinfoStore.setDsInfo(item as IDirInfoDatasetDescriptor)
       }
 
-      const kind = dirinfoStore.xlDatasets.includes(item.name) ? 'xl' : 'ws'
       const dsName = isNullKind ? '' : item.name
       datasetStore.setDatasetName(dsName)
       dirinfoStore.setSelectedDirinfoName(dsName)
