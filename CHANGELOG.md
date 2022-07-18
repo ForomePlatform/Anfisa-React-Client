@@ -2,6 +2,7 @@
 
 ## <small>0.7.1 (7/18/2022)</small>
 
+* fix([FOROME-1302](https://quantori.atlassian.net/browse/FOROME-1302)): change enum bar chart colors ([7d4e3390](https://github.com/ForomePlatform/Anfisa-React-Client/commit/7d4e3390))
 * feat([FOROME-1304](https://quantori.atlassian.net/browse/FOROME-1304)): change button text (#814) ([547b3c3f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/547b3c3f))
 * fix([FOROME-1332](https://quantori.atlassian.net/browse/FOROME-1332)): range slider min value validation ([1976fe9c](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1976fe9c))
 * fix([FOROME-1313](https://quantori.atlassian.net/browse/FOROME-1313)): validation for creating presets (#799) ([2b23011f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/2b23011f))
