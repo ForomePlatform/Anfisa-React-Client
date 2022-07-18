@@ -2,6 +2,7 @@
 
 ## <small>0.7.1 (7/18/2022)</small>
 
+* fix([FOROME-1372](https://quantori.atlassian.net/browse/FOROME-1372)): Fixed Gene lists zone (#816) ([287340ef](https://github.com/ForomePlatform/Anfisa-React-Client/commit/287340ef))
 * fix([FOROME-1357](https://quantori.atlassian.net/browse/FOROME-1357)): opening derived dataset ([10b6b0f4](https://github.com/ForomePlatform/Anfisa-React-Client/commit/10b6b0f4))
 * fix([FOROME-1302](https://quantori.atlassian.net/browse/FOROME-1302)): change enum bar chart colors ([7d4e3390](https://github.com/ForomePlatform/Anfisa-React-Client/commit/7d4e3390))
 * feat([FOROME-1304](https://quantori.atlassian.net/browse/FOROME-1304)): change button text (#814) ([547b3c3f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/547b3c3f))
