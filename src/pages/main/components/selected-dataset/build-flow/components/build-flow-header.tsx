@@ -11,6 +11,8 @@ import { Routes } from '@router/routes.enum'
 import { CardTitle } from '@ui/card'
 import { Icon } from '@ui/icon'
 import { DatasetCard } from '@components/data-testid/dataset-card.cy'
+import { isDev } from '@pages/main/main.constants'
+import { OpenViewer } from '../../components/open-viewer'
 import wizardStore from './wizard/wizard.store'
 
 export const BuildFlowHeader = observer(
@@ -44,7 +46,7 @@ export const BuildFlowHeader = observer(
 
     return (
       <div className={styles.buildFlow__header}>
-        <div className="flex">
+        <div className="flex items-center">
           <div
             onClick={handleGoBack}
             className={styles.buildFlow__header__button}
@@ -60,6 +62,8 @@ export const BuildFlowHeader = observer(
             dataTestId={DatasetCard.datasetHeader}
             className="mr-3 break-words"
           />
+
+          {isDev && !datasetStore.isXL && <OpenViewer />}
         </div>
 
         <div className={styles.buildFlow__breadcrumbs}>
