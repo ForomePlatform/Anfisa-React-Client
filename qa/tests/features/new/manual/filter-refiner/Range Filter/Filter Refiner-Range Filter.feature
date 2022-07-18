@@ -80,9 +80,8 @@ Scenario Outline: 04 Filter by range with invalid values (Minimum value < MIN)
 	When user clicks the <Attribute Name>
 	And enters the minimum value of range <Minimum Value>
 	And enters the maximum value of range <Maximum Value>
-	Then the "+ Add Attribute" button should be disabled
-	And the filter should not be applied
-	And the validation message should be displayed
+	Then invalid value should be changed to valid value
+	And "+ Add Attribute" button should be enabled
 
 Examples:
 	| Filter name                  | Minimum value | Maximum value |
@@ -99,9 +98,8 @@ Scenario Outline: 05 Filter by range with invalid values (Maximum value > MAX)
 	When user clicks the <Attribute Name>
 	And enters the minimum value of range <Minimum Value>
 	And enters the maximum value of range <Maximum Value>
-	Then the "+ Add Attribute" button should be disabled
-	And the filter should not be applied
-	And the validation message should be displayed
+	Then invalid value should be changed to valid value
+	And "+ Add Attribute" button should be enabled
 
 Examples:
 	| Attribute Name               | Minimum Value | Maximum Value |
@@ -114,21 +112,7 @@ Examples:
 	| Number_of_clinvar_submitters | 0             | 31            |
 	| Severity                     | -1            | 4             |
 
-Scenario Outline: 06 Filter by range with invalid values (strings)
-	When user clicks the <Attribute Name>
-	And enters the minimum value of range <Minimum Value>
-	And enters the maximum value of range <Maximum Value>
-	Then values should not be written
-	And the "+ Add Attribute" button should be disabled
-	And the filter should not be applied
-
-Examples:
-	| Attribute Name | Minimum Value | Maximum Value |
-	| Num_Samples    | qwerty        | !@#$%^&       |
-	| Num_Genes      | !@#$%^&       | qwerty        |
-	| Start_Pos      | 1 2 3         | {}:"<>        |
-
-Scenario Outline: 07 Clear button
+Scenario Outline: 06 Clear button
 	When user clicks the <Attribute Name>
 	And enters the minimum value of range <Minimum Value>
 	And changes "<" sign with "≤" next to the minimum value
