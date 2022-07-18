@@ -10,8 +10,8 @@ export default {
       <path
         d="M8.5 1L4.11003 9C4.11003 8.82651 1 4.5 1 4.5"
         stroke="#18A0FB"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </Fragment>
   ),

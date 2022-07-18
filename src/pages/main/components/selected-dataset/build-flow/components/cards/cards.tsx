@@ -4,6 +4,7 @@ import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { ExploreGenomeTypes } from '@core/enum/explore-genome-types-enum'
+import { getApiUrl } from '@core/get-api-url'
 import { datasetStore } from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
 import filterStore from '@store/filter'
@@ -181,14 +182,21 @@ export const DescriptionCard = (props: ICardProps) => {
     filterStore.setMethod(nextPageData.method as GlbPagesNames)
   }
 
-  const saveDescription = () => {
+  const saveDescription = async () => {
     setDescriptionSaving(true)
-    console.log(datasetDescription)
-    setTimeout(() => {
+    const response = await fetch(getApiUrl('dsinfo'), {
+      method: 'POST',
+      body: new URLSearchParams({
+        ds: ds,
+        note: datasetDescription,
+      }),
+    })
+    setDescriptionSaving(false)
+
+    if (response?.status === 200) {
       setUpdated(true)
       setEditMode(false)
-      setDescriptionSaving(false)
-    }, 2000)
+    }
   }
 
   useEffect(() => {
