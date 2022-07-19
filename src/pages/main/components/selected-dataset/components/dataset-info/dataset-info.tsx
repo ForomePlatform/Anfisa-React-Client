@@ -24,12 +24,11 @@ export const DatasetInfo: FC<IDatasetInfoProps> = observer(({ className }) => {
 
   const [isExpanded, toggle] = useFullScreenView(id)
 
-  const isLoading = datasetStore.isLoading
-  const info = datasetStore.dsInfoData
+  const { dsInfoData: info, isLoading } = datasetStore
   const versions = info?.meta.versions
   const receipts = info?.receipts
 
-  const versionsRaws = useMemo(
+  const versionsRows = useMemo(
     () =>
       Object.keys(versions || {}).map(
         (key: string): Row<keyof Versions> => ({
@@ -65,7 +64,7 @@ export const DatasetInfo: FC<IDatasetInfoProps> = observer(({ className }) => {
                 </td>
               </tr>
 
-              {versions && versionsRaws.map(renderRow<Versions>(versions))}
+              {versions && versionsRows.map(renderRow<Versions>(versions))}
             </tbody>
           </table>
 

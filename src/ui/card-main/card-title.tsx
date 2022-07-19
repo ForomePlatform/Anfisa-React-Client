@@ -18,15 +18,13 @@ export const CardTitle: FC<ICardTitleProps> = ({
   isExpanded,
   children,
   className,
-}) => {
-  return (
-    <header className={cn(styles.card_header, className)}>
-      <span className={cn(styles.card_header_title)}>{children}</span>
-      {showExpandButton && (
-        <button onClick={onExpand} className={cn(styles.card_header_button)}>
-          <Icon name={isExpanded ? 'Collapse' : 'Expand'} />
-        </button>
-      )}
-    </header>
-  )
-}
+}) => (
+  <header className={cn(styles.card_header, className)}>
+    <span className={cn(styles.card_header_title)}>{children}</span>
+    {showExpandButton && (
+      <button onClick={onExpand} className={cn(styles.card_header_button)}>
+        <Icon name={isExpanded ? 'Collapse' : 'Expand'} />
+      </button>
+    )}
+  </header>
+)

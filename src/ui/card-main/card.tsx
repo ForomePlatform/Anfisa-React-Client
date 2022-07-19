@@ -8,10 +8,8 @@ interface ICardProps {
   className?: Argument
 }
 
-export const Card: FC<ICardProps> = ({ className, children, ...props }) => {
-  return (
-    <section className={cn(styles.card, className)} {...props}>
-      {children}
-    </section>
-  )
-}
+export const Card: FC<ICardProps> = ({ className, children, ...props }) => (
+  <section className={cn(styles.card, className)} {...props}>
+    {children}
+  </section>
+)
