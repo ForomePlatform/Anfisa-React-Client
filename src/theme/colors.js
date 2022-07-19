@@ -25,6 +25,7 @@ module.exports = {
     lighter: '#fafafa',
     disabled: '#e2e7ec',
     tertiary: '#f5f7f9',
+    dark: '#6d8498',
   },
   yellow: {
     bright: '#ffff00',

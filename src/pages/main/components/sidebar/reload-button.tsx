@@ -9,7 +9,7 @@ import { FilterDatasetDataCy } from '@data-testid'
 
 export const ReloadButton: FC = () => (
   <button
-    data-TestId={FilterDatasetDataCy.updateDatasets}
+    data-test-id={FilterDatasetDataCy.updateDatasets}
     onClick={() => dirinfo.dirinfo.invalidate()}
     className={cn(styles.datasets__header__button)}
   >

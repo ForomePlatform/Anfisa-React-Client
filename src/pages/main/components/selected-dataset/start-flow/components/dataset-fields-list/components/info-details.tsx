@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite'
 import dirinfoStore from '@store/dirinfo'
 import { Card } from '@ui/card'
 import { Icon } from '@ui/icon'
-import { IframeInfo } from '@pages/main/components/selected-dataset/components/dataset-fields-list/components/iframe-info'
+import { IframeInfo } from '@pages/main/components/selected-dataset/start-flow/components/dataset-fields-list/components/iframe-info'
 
 export const InfoDetails = observer((): ReactElement => {
   const id = 'IframeInfo'

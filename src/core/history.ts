@@ -1,3 +1,5 @@
+import { toJS } from 'mobx'
+
 export const pushQueryParams = (
   newParams: Record<string, string | null>,
 ): void => {

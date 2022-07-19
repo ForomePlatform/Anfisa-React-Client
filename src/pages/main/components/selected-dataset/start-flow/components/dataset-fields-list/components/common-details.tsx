@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
 import { Card, CardTitle } from '@ui/card'
-import { DatasetField } from '@pages/main/components/selected-dataset/components/dataset-fields-list/components/dataset-filed'
+import { DatasetField } from '@pages/main/components/selected-dataset/start-flow/components/dataset-fields-list/components/dataset-filed'
 import { Versions } from '@service-providers/dataset-level/dataset-level.interface'
 
 interface ICommonDetailsProps {

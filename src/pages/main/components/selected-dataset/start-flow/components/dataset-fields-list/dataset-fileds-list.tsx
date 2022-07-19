@@ -3,8 +3,8 @@ import { observer } from 'mobx-react-lite'
 
 import datasetStore from '@store/dataset/dataset'
 import dirinfoStore from '@store/dirinfo'
-import { CommonDetails } from '@pages/main/components/selected-dataset/components/dataset-fields-list/components/common-details'
-import { InfoDetails } from '@pages/main/components/selected-dataset/components/dataset-fields-list/components/info-details'
+import { CommonDetails } from '@pages/main/components/selected-dataset/start-flow/components/dataset-fields-list/components/common-details'
+import { InfoDetails } from '@pages/main/components/selected-dataset/start-flow/components/dataset-fields-list/components/info-details'
 
 export const DatasetsFieldsList = observer((): ReactElement => {
   const versions = datasetStore.dsInfoData?.meta.versions

@@ -1,11 +1,10 @@
 import { FC, useState } from 'react'
-import { useHistory } from 'react-router'
 import cn from 'classnames'
 import get from 'lodash/get'
 import { observer } from 'mobx-react-lite'
 
+import { datasetStore } from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
-import { Routes } from '@router/routes.enum'
 import { DatasetName } from '@pages/main/components/sidebar/datasets-list/components/dataset-name'
 import { DatasetTime } from '@pages/main/components/sidebar/datasets-list/components/dataset-time'
 import {
@@ -14,6 +13,7 @@ import {
 } from '@pages/main/components/sidebar/datasets-list/datasets-list.constants'
 import { datasetNameByKey } from '@pages/main/components/sidebar/datasets-list/datasets-list.utils'
 import { IDirInfoDatasetDescriptor } from '@service-providers/vault-level/vault-level.interface'
+import wizardStore from '../../selected-dataset/build-flow/components/wizard/wizard.store'
 import { DatasetType } from './components/dataset-type'
 
 interface IDatasetsListItemProps {
@@ -23,8 +23,6 @@ interface IDatasetsListItemProps {
 
 export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
   ({ item, level }) => {
-    const history = useHistory()
-
     const isActive = item.name === dirinfoStore.selectedDirinfoName
 
     const [isOpenFolder, setIsOpenFolder] = useState<boolean>(
@@ -35,11 +33,23 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
     const secondaryKeys: string[] = get(item, 'secondary', [])
     const hasChildren = secondaryKeys.length > 0
 
+    wizardStore.observeHistory.useHook()
+
     const isActiveParent =
       hasChildren && secondaryKeys.includes(dirinfoStore.selectedDirinfoName)
 
     const handleClick = () => {
+      if (level > 0) return
+
       if (isNullKind && !hasChildren) return
+
+      const kind = dirinfoStore.xlDatasets.includes(item.name) ? 'xl' : 'ws'
+
+      if (wizardStore.isWizardVisible && kind !== 'ws') {
+        wizardStore.toggleIsWizardVisible(false)
+        wizardStore.resetWizard()
+        wizardStore.actionHistory.resetHistory()
+      }
 
       if (hasChildren) {
         setIsOpenFolder(opened => {
@@ -54,10 +64,14 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
         dirinfoStore.setDsInfo(item as IDirInfoDatasetDescriptor)
       }
 
+      const dsName = isNullKind ? '' : item.name
+      datasetStore.setDatasetName(dsName)
+      dirinfoStore.setSelectedDirinfoName(dsName)
+
+      wizardStore.setDatasetKind(kind)
+
       dirinfoStore.setInfoFrameLink('')
       dirinfoStore.setActiveInfoName('')
-
-      history.replace(`${Routes.Root}?ds=${isNullKind ? '' : item.name}`)
     }
 
     const padding = DEFAULT_DATASET_P + level * LEVEL_DATASET_P
@@ -71,6 +85,7 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
             'cursor-pointer': hasChildren || !isNullKind,
             'bg-blue-bright hover:bg-blue-hover': isActive,
             'hover:bg-blue-darkHover': !isActive,
+            'cursor-not-allowed': level > 0,
           })}
           style={{ paddingLeft: `${padding}px` }}
         >
