@@ -120,6 +120,15 @@ class WizardStore {
     clonedWizard[index].value = selectedDataset
     clonedWizard[index + 1].title = selectedDataset
 
+    if (clonedWizard[index + 1]) {
+      clonedWizard[index + 1].continueDisabled = false
+      clonedWizard[index + 1].contentDisabled = false
+      clonedWizard[index + 1].editDisabled = true
+      clonedWizard[index + 1].hidden = false
+    }
+
+    this.actionHistory.addHistory(clonedWizard)
+
     this.wizardScenario = clonedWizard
   }
 

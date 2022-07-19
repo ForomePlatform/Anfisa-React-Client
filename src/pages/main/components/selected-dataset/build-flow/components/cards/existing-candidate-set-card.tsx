@@ -10,7 +10,6 @@ export const ExistingCandidatesCard = observer((props: ICardProps) => {
   const secodaryDatasets = wizardStore.secondaryDatasets
   const onSelect = (ds: string) => {
     wizardStore.setSelectedDataset(ds, id)
-    wizardStore.finishEditCard(id)
   }
 
   return (
