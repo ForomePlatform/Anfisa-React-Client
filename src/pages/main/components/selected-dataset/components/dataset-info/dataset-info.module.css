@@ -60,9 +60,11 @@
       @apply typography-s;
 
       & > span {
-        margin-top: 8px;
         border-bottom: 1px solid theme("colors.grey.blue");
+        padding: 6px 0;
+        color: theme("colors.blue.dark") !important;
         font-family: "Droid Sans Mono", "Droid Sans Fallback", monospace;
+        font-weight: 500;
       }
 
       white-space: pre-wrap;
@@ -70,10 +72,6 @@
       display: flex;
       flex-direction: column;
       margin: theme("spacing.1");
-
-      &:last-child {
-        margin-bottom: 0;
-      }
     }
 
     &__supply-panel {
