@@ -3,7 +3,7 @@ import styles from './dataset-info.module.css'
 import cn from 'classnames'
 
 import { t } from '@i18n'
-import { CardTitle } from '@ui/card-main'
+import { CardTitle } from '@ui/card'
 import { IDsInfoReceipt } from '@service-providers/dataset-level'
 import { Row } from './dataset-info.interfaces'
 

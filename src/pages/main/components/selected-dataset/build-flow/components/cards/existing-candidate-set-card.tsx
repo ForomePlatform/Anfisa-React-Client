@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite'
 
-import { Card, CardTitle } from '@ui/card-main'
+import { Card, CardTitle } from '@ui/card'
 import { secondaryDsNameByKey } from '../secondary-ds-name-by-key'
 import { ICardProps } from '../wizard/wizard.interface'
 import wizardStore from '../wizard/wizard.store'

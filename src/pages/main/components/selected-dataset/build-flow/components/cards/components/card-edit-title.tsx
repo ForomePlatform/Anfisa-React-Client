@@ -1,7 +1,7 @@
 import cn, { Argument } from 'classnames'
 
 import { Button } from '@ui/button'
-import { CardTitle } from '@ui/card-main'
+import { CardTitle } from '@ui/card'
 import { Icon } from '@ui/icon'
 
 interface ICardTitleWithEditProps {

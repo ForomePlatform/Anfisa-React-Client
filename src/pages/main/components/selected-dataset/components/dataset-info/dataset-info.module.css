@@ -61,6 +61,7 @@
 
       & > span {
         margin-top: 8px;
+        border-bottom: 1px solid theme("colors.grey.blue");
         font-family: "Droid Sans Mono", "Droid Sans Fallback", monospace;
       }
 
@@ -68,6 +69,7 @@
       color: theme("colors.grey.dark") !important;
       display: flex;
       flex-direction: column;
+      margin: theme("spacing.1");
 
       &:last-child {
         margin-bottom: 0;

@@ -3,7 +3,7 @@ import styles from './card.module.css'
 import { CSSProperties, FC } from 'react'
 import cn, { Argument } from 'classnames'
 
-import { addWordBreaks } from '@ui/card-main/card.utils'
+import { addWordBreaks } from '@ui/card/card.utils'
 import { Icon } from '@ui/icon'
 
 interface ICardTitleProps {

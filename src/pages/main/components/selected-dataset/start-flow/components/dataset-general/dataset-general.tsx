@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 
 import { t } from '@i18n'
-import { CardTitle } from '@ui/card-main'
+import { CardTitle } from '@ui/card'
 import { InfoList } from './components/info-list'
 
 export const DatasetGeneral = (): ReactElement => {

@@ -2,7 +2,7 @@ import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import dirinfoStore from '@store/dirinfo'
-import { Card, CardTitle } from '@ui/card-main'
+import { Card, CardTitle } from '@ui/card'
 import { DatasetCard } from '@data-testid'
 import { isDev } from '@pages/main/main.constants'
 import { OpenViewer } from '../components/open-viewer'

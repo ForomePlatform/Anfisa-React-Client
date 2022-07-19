@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
-import { Card } from '@ui/card-main'
+import { Card } from '@ui/card'
 import { CardPreviousExploreSection } from './card-previous-explore-section'
 import { CardStartExploreSection } from './card-start-explore-section'
 

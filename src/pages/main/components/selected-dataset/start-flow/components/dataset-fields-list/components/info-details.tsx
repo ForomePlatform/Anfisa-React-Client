@@ -2,7 +2,7 @@ import React, { ReactElement, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import dirinfoStore from '@store/dirinfo'
-import { Card } from '@ui/card-main'
+import { Card } from '@ui/card'
 import { Icon } from '@ui/icon'
 import { IframeInfo } from '@pages/main/components/selected-dataset/start-flow/components/dataset-fields-list/components/iframe-info'
 
