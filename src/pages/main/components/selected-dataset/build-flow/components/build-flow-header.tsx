@@ -18,7 +18,8 @@ import wizardStore from './wizard/wizard.store'
 export const BuildFlowHeader = observer(
   ({ goBack }: { goBack: () => void }): ReactElement => {
     const history = useHistory()
-    const isXL = datasetStore.isXL
+    const { isXL, datasetName } = datasetStore
+    const { selectedDataset } = wizardStore
 
     const handleGoMain = () => {
       goBack()
@@ -33,8 +34,6 @@ export const BuildFlowHeader = observer(
       wizardStore.actionHistory.resetHistory()
       wizardStore.resetWizard()
     }
-
-    const { selectedDataset, datasetName } = wizardStore
 
     const handleGoBack = () => {
       if (wizardStore.actionHistory.historyIndex === 0) {

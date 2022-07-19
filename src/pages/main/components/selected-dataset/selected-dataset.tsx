@@ -18,17 +18,14 @@ export const SelectedDataset = observer((): ReactElement => {
 
   return (
     <>
-      {!isFetching && (
-        <>
-          {wizardStore.isWizardVisible ? (
-            <SelectedDatasetBuildFlow
-              goBack={() => wizardStore.toggleIsWizardVisible(false)}
-            />
-          ) : (
-            <SelectedDatasetStartFlow />
-          )}
-        </>
-      )}
+      {!isFetching &&
+        (wizardStore.isWizardVisible ? (
+          <SelectedDatasetBuildFlow
+            goBack={() => wizardStore.toggleIsWizardVisible(false)}
+          />
+        ) : (
+          <SelectedDatasetStartFlow />
+        ))}
     </>
   )
 })

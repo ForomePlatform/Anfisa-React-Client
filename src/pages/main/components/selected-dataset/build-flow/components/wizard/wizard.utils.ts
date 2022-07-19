@@ -34,13 +34,13 @@ export const getNextPageData = (
   }
 
   const routes = {
-    'Build inclusion/exclusion critetira': dtreeRoute,
-    'Apply additional preset filter': refinerRoute,
-    'Explore data or build new filter': refinerRoute,
-    'View all variants': tableRoute,
-    'ACMG analysis': refinerAndTableRoute,
-    'Phenotype based analysis': refinerAndTableRoute,
-    'Genetic first analysis': refinerAndTableRoute,
+    [ExploreGenomeTypes.BuildInclusionExclusion]: dtreeRoute,
+    [ExploreCandidateTypes.ApplyFilter]: refinerRoute,
+    [ExploreCandidateTypes.ExploreData]: refinerRoute,
+    [ExploreCandidateTypes.ViewAllVariants]: tableRoute,
+    [ExploreGenomeTypes.ACMG]: refinerAndTableRoute,
+    [ExploreGenomeTypes.Phenotype]: refinerAndTableRoute,
+    [ExploreGenomeTypes.GeneticAnalysis]: refinerAndTableRoute,
   }
 
   return routes[exploreType]

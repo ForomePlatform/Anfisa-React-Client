@@ -6,35 +6,9 @@ import { ActionsHistoryStore } from '@store/actions-history'
 import { createHistoryObserver } from '@store/common'
 import { datasetStore } from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
-import { ISolutionWithKind } from '../cards/components/presets-card/utils/add-solution-kind'
-import {
-  scenarioForWsCandidateSet,
-  scenarioForWsShortCandidateSet,
-  scenarioForXlCandidateSet,
-  scenarioForXlWholeGenome,
-} from './wizard-scenarious'
-
-export interface ICardProps {
-  id: number
-  title: string
-  selectedValue: string
-  contentDisabled: boolean
-  continueDisabled: boolean
-  editDisabled: boolean
-  maxHeight?: string
-}
-
-export interface IWizardScenario {
-  component: (props: ICardProps) => JSX.Element
-  id: number
-  hidden: boolean
-  value: string
-  title: string
-  contentDisabled: boolean
-  continueDisabled: boolean
-  editDisabled: boolean
-  maxHeight?: string
-}
+import { ISolutionWithKind } from '../cards/presets-card/utils/add-solution-kind'
+import { wizardScenarios } from './scenarios/wizard-scenarious'
+import { IWizardScenario } from './wizard.interface'
 
 class WizardStore {
   public isWizardVisible: boolean = false
@@ -101,10 +75,6 @@ class WizardStore {
       ?.secondary
   }
 
-  public get datasetName(): string {
-    return datasetStore.datasetName
-  }
-
   public setScenario(scenario: IWizardScenario[]) {
     this.wizardScenario = scenario
 
@@ -113,11 +83,11 @@ class WizardStore {
 
   public defineAndSetNewScenario() {
     if (this.startWithOption === ExploreTypes.Genome) {
-      this.setScenario(scenarioForXlWholeGenome)
+      this.setScenario(wizardScenarios.XlWholeGenome)
     }
 
     if (this.startWithOption === ExploreTypes.Candidate) {
-      this.setScenario(scenarioForXlCandidateSet)
+      this.setScenario(wizardScenarios.XlCandidateSet)
     }
 
     this.needToChangeScenario = false
@@ -125,31 +95,23 @@ class WizardStore {
 
   public setStartWithOption(startWithOption: string, index: number) {
     this.startWithOption = startWithOption
-    const clonedWizard = cloneDeep(this.wizardScenario)
-    clonedWizard[index].value = startWithOption
-    this.wizardScenario = clonedWizard
+    this.changeCardValue(index, startWithOption)
     this.needToChangeScenario = true
   }
 
   public setWhatsNextOption(whatsNextOption: string, index: number) {
     this.whatsNextOption = whatsNextOption
-    const clonedWizard = cloneDeep(this.wizardScenario)
-    clonedWizard[index].value = whatsNextOption
-    this.wizardScenario = clonedWizard
+    this.changeCardValue(index, whatsNextOption)
   }
 
   public setDescriptionOption(descriptionOption: string, index: number) {
     this.descriptionOption = descriptionOption
-    const clonedWizard = cloneDeep(this.wizardScenario)
-    clonedWizard[index].value = descriptionOption
-    this.wizardScenario = clonedWizard
+    this.changeCardValue(index, descriptionOption)
   }
 
   public setSelectedPreset(selectedPreset: ISolutionWithKind, index: number) {
     this.selectedPreset = selectedPreset
-    const clonedWizard = cloneDeep(this.wizardScenario)
-    clonedWizard[index].value = selectedPreset.name
-    this.wizardScenario = clonedWizard
+    this.changeCardValue(index, selectedPreset.name)
   }
 
   public setSelectedDataset(selectedDataset: string, index: number) {
@@ -220,11 +182,11 @@ class WizardStore {
   public openWizardForWsDatasets(hasSecondaryDs: boolean) {
     this.toggleIsWizardVisible(true)
     const scenario = hasSecondaryDs
-      ? scenarioForWsCandidateSet
-      : scenarioForWsShortCandidateSet
+      ? wizardScenarios.WsCandidateSet
+      : wizardScenarios.WsShortCandidateSet
 
     if (hasSecondaryDs) {
-      scenario[2].title = this.datasetName
+      scenario[2].title = datasetStore.datasetName
     }
 
     this.setScenario(scenario)

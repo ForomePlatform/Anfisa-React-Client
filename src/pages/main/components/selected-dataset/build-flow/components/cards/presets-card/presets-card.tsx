@@ -9,20 +9,23 @@ import { Button } from '@ui/button'
 import { Card, CardTitle } from '@ui/card'
 import { Icon } from '@ui/icon'
 import { Loader } from '@ui/loader'
-import cardsStore, { ICardProps } from '../../../wizard/wizard.store'
-import { memorizeLocation } from '../../../wizard/wizard.utils'
+import { ICardProps } from '../../wizard/wizard.interface'
+import wizardStore from '../../wizard/wizard.store'
+import { memorizeLocation } from '../../wizard/wizard.utils'
 import presetsCardStore from './presets-card.store'
 
 export const PresetsCard = observer((props: ICardProps) => {
   const history = useHistory()
+  const { title, id, selectedValue, maxHeight } = props
+
   useEffect(() => {
     presetsCardStore.loadSolutions()
   }, [])
 
   const onClickOpen = () => {
-    if (!cardsStore.selectedPreset) return
+    if (!wizardStore.selectedPreset) return
 
-    const { kind, name } = cardsStore.selectedPreset
+    const { kind, name } = wizardStore.selectedPreset
     let location = ''
 
     if (kind === 'preset') {
@@ -37,12 +40,12 @@ export const PresetsCard = observer((props: ICardProps) => {
 
   const renderPresets = () => {
     return presetsCardStore.solutions.map(preset => {
-      const isSelected = props.selectedValue === preset.name
+      const isSelected = selectedValue === preset.name
 
       return (
         <div
           key={preset.name}
-          onClick={() => cardsStore.setSelectedPreset(preset, props.id)}
+          onClick={() => wizardStore.setSelectedPreset(preset, id)}
         >
           <div
             className={cn(
@@ -63,12 +66,12 @@ export const PresetsCard = observer((props: ICardProps) => {
   }
 
   return (
-    <Card className={'mt-4 px-0'}>
-      <CardTitle text={props.title} className="text-16 px-4" />
+    <Card className="mt-4 px-0">
+      <CardTitle text={title} className="text-16 px-4" />
 
       <div
         className="mb-4 mt-2 text-14 overflow-y-auto"
-        style={{ maxHeight: props.maxHeight }}
+        style={{ maxHeight: maxHeight }}
       >
         {presetsCardStore.isFetchingSolutions ? (
           <Loader size="m" />
@@ -81,7 +84,7 @@ export const PresetsCard = observer((props: ICardProps) => {
         <Button
           onClick={onClickOpen}
           text="Open"
-          disabled={!cardsStore.selectedPreset}
+          disabled={!wizardStore.selectedPreset}
         />
       </div>
     </Card>
