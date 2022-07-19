@@ -30,7 +30,6 @@ export const DescriptionCard = (props: ICardProps) => {
   const ds = title || datasetStore.datasetName
 
   const openNextPage = () => {
-    datasetStore.setDatasetName(ds)
     const nextPageData = getNextPageData(
       selectedValue as ExploreGenomeTypes,
       ds,

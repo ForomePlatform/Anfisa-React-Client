@@ -47,9 +47,10 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
 
       if (wizardStore.isWizardVisible && kind !== 'ws') {
         wizardStore.toggleIsWizardVisible(false)
-        wizardStore.resetWizard()
-        wizardStore.actionHistory.resetHistory()
       }
+
+      wizardStore.resetWizard()
+      wizardStore.actionHistory.resetHistory()
 
       if (hasChildren) {
         setIsOpenFolder(opened => {
