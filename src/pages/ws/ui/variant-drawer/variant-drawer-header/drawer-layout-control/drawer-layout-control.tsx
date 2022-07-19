@@ -1,7 +1,7 @@
 import styles from './drawer-layout-control.module.css'
 
 import { ReactElement, useEffect, useState } from 'react'
-import cn from 'classnames'
+import cn, { Argument } from 'classnames'
 
 import { useModal } from '@core/hooks/use-modal'
 import { usePopover } from '@core/hooks/use-popover'
@@ -9,7 +9,7 @@ import { t } from '@i18n'
 import { Button } from '@ui/button'
 import { Divider } from '@ui/divider'
 import { Icon } from '@ui/icon'
-import { SolutionChangeDialog } from '@components/solution-control/solution-change-dialog'
+import { ConfirmDialog } from '@components/confirm-dialog'
 import { showToast } from '@utils/notifications'
 import {
   IVariantDrawerGridPreset,
@@ -23,7 +23,7 @@ interface IDrawerLayoutControlProps {
   gridPresets: IVariantDrawerGridPreset[]
   windowsOpenState: boolean
   appliedPreset: string | null
-  className?: string
+  className?: Argument
   onChangeLayoutMode: (mode: VariantDrawerLayoutMode) => void
   onSaveGridPreset?: (presetName: string) => void
   onChangeGridPreset: (presetName: string) => void
@@ -163,7 +163,7 @@ export const DrawerLayoutControl = ({
         />
       )}
 
-      <SolutionChangeDialog
+      <ConfirmDialog
         {...deleteDialog}
         onClose={closeDeleteDialog}
         onApply={handleDeletePreset}
