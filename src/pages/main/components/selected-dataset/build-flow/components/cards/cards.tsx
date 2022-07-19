@@ -5,6 +5,7 @@ import { observer } from 'mobx-react-lite'
 
 import { ExploreGenomeTypes } from '@core/enum/explore-genome-types-enum'
 import { getApiUrl } from '@core/get-api-url'
+import { t } from '@i18n'
 import { datasetStore } from '@store/dataset'
 import dirinfoStore from '@store/dirinfo'
 import filterStore from '@store/filter'
@@ -13,6 +14,7 @@ import { Card, CardTitle } from '@ui/card'
 import { Icon } from '@ui/icon'
 import { Radio } from '@ui/radio'
 import { GlbPagesNames } from '@glb/glb-names'
+import { showToast } from '@utils/notifications/showToast'
 import { secondaryDsNameByKey } from '../secondary-ds-name-by-key'
 import {
   datasetDescriptionDefault,
@@ -25,6 +27,8 @@ import wizardStore, { ICardProps } from '../wizard/wizard.store'
 import { getNextPageData } from '../wizard/wizard.utils'
 import { CardTitleWithEdit } from './components/card-edit-title'
 import { CardRadioList } from './components/card-radio-list'
+
+let typingTimer: ReturnType<typeof setTimeout>
 
 export const StartCard = (props: ICardProps) => {
   const isExploreGenomeDisabled = !datasetStore.isXL
@@ -154,21 +158,25 @@ export const DescriptionCard = (props: ICardProps) => {
   const ds = props.title || datasetStore.datasetName
 
   const note = dirinfoStore.dirInfoData?.dsDict[ds]?.note
-  const editIcon = note?.length ? (
+  const isOpenButton = optionsForOpenButton.includes(props.selectedValue)
+  const [isEditMode, setEditMode] = useState(false)
+  const [isTyping, setTyping] = useState(false)
+  const [datasetDescription, setDatasetDescription] = useState(
+    note || datasetDescriptionDefault,
+  )
+
+  const editDescriptionIcon = note?.length ? (
     <Icon name="Edit" className={cn('text-blue-bright')} />
   ) : (
     <span className={cn('text-blue-bright')}>+</span>
   )
 
-  const [isEditMode, setEditMode] = useState(false)
-  const [isUpdated, setUpdated] = useState(false)
-  const [isDescriptionSaving, setDescriptionSaving] = useState(false)
-  const [datasetDescription, setDatasetDescription] = useState(
-    note || datasetDescriptionDefault,
+  const saveDescriptionIcon = (
+    <Icon name="Check" className={cn('text-blue-bright')} />
   )
 
-  const onEdit = () => {
-    setEditMode(true)
+  const toggleEditMode = () => {
+    setEditMode(!isEditMode)
   }
 
   const openNextPage = () => {
@@ -182,21 +190,29 @@ export const DescriptionCard = (props: ICardProps) => {
     filterStore.setMethod(nextPageData.method as GlbPagesNames)
   }
 
-  const saveDescription = async () => {
-    setDescriptionSaving(true)
+  const saveDescription = async (description: string) => {
     const response = await fetch(getApiUrl('dsinfo'), {
       method: 'POST',
       body: new URLSearchParams({
         ds: ds,
-        note: datasetDescription,
+        note: description,
       }),
     })
-    setDescriptionSaving(false)
 
-    if (response?.status === 200) {
-      setUpdated(true)
-      setEditMode(false)
+    if (response?.ok) {
+      setTyping(false)
+    } else {
+      showToast(t('error.smthWentWrong'), 'error')
     }
+  }
+
+  const handleChange = (description: string) => {
+    setDatasetDescription(description)
+    setTyping(true)
+    clearTimeout(typingTimer)
+    typingTimer = setTimeout(() => {
+      saveDescription(description)
+    }, 1000)
   }
 
   useEffect(() => {
@@ -216,7 +232,7 @@ export const DescriptionCard = (props: ICardProps) => {
       autoFocus
       defaultValue={note || ''}
       onChange={e => {
-        setDatasetDescription(e.target.value)
+        handleChange(e.target.value)
       }}
     />
   ) : (
@@ -226,20 +242,6 @@ export const DescriptionCard = (props: ICardProps) => {
     >
       {datasetDescription}
     </div>
-  )
-
-  const ContinueButton = optionsForOpenButton.includes(props.selectedValue) ? (
-    <Button
-      text="Open"
-      onClick={openNextPage}
-      disabled={props.continueDisabled}
-    />
-  ) : (
-    <Button
-      text="Continue"
-      onClick={() => wizardStore.finishEditCard(props.id)}
-      disabled={props.continueDisabled}
-    />
   )
 
   return (
@@ -254,17 +256,14 @@ export const DescriptionCard = (props: ICardProps) => {
         <Card className="w-full mt-4 bg-grey-tertiary">
           <div className="flex items-center mb-2">
             <span className="font-bold">Description</span>
-            {!isEditMode && !isUpdated && (
+            {!isTyping && (
               <Button
                 variant="secondary"
                 style={{ padding: 0 }}
                 className={cn('cursor-pointer', 'mx-2')}
-                icon={editIcon}
-                onClick={onEdit}
+                icon={isEditMode ? saveDescriptionIcon : editDescriptionIcon}
+                onClick={toggleEditMode}
               />
-            )}
-            {isUpdated && (
-              <Icon name="Check" className={cn('text-blue-bright', 'mx-2')} />
             )}
           </div>
           {DescriptionBlock}
@@ -274,23 +273,23 @@ export const DescriptionCard = (props: ICardProps) => {
       <div className="mt-2 text-14">
         <CardRadioList
           optionsList={exploreCandidateOptionsList}
-          selectedOption={isEditMode ? '' : props.selectedValue}
+          selectedOption={isTyping ? '' : props.selectedValue}
           onChange={option =>
             wizardStore.setDescriptionOption(option, props.id)
           }
-          isOptionsDisabled={isEditMode || props.contentDisabled}
+          isOptionsDisabled={isTyping || props.contentDisabled}
         />
 
         <div className="flex justify-end">
-          {isEditMode ? (
-            <Button
-              text="Save description"
-              onClick={saveDescription}
-              disabled={isDescriptionSaving}
-            />
-          ) : (
-            ContinueButton
-          )}
+          <Button
+            text={isOpenButton ? 'Open' : 'Continue'}
+            onClick={
+              isOpenButton
+                ? openNextPage
+                : () => wizardStore.finishEditCard(props.id)
+            }
+            disabled={props.continueDisabled || isTyping}
+          />
         </div>
       </div>
     </Card>
