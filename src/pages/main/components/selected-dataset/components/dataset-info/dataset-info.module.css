@@ -52,7 +52,7 @@
 
       & > span {
         margin-top: 8px;
-        font-family: "Droid Sans Mono", monospace, "Droid Sans Fallback";
+        font-family: "Droid Sans Mono", "Droid Sans Fallback", monospace;
       }
 
       white-space: pre-wrap;

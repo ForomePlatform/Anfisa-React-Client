@@ -9,42 +9,42 @@ export const INFO: ReadonlyArray<Row<keyof IDsInfo>> = [
     // @ts-ignore
     field: 'createTime',
     fieldName: 'Created at',
-    render: (it: string) => new Date(it).toISOString(),
+    render: (time: string) => new Date(time).toISOString(),
   },
   {
     field: 'ancestors',
     fieldName: 'Base dataset',
     optional: true,
-    render: (it: string[][]) => {
-      if (it.length === 0) {
+    render: (ancestors: string[][]) => {
+      if (ancestors.length === 0) {
         return null
       }
 
-      return it[0][0]
+      return ancestors[0][0]
     },
   },
   {
     field: 'ancestors',
     fieldName: 'Base loaded at',
     optional: true,
-    render: (it: string[][]) => {
-      if (it.length === 0 || it[0].length !== 3) {
+    render: (ancestors: string[][]) => {
+      if (ancestors.length === 0 || ancestors[0].length !== 3) {
         return null
       }
 
-      return new Date(it[0][2]).toISOString()
+      return new Date(ancestors[0][2]).toISOString()
     },
   },
   {
     field: 'ancestors',
     fieldName: 'Root dataset',
     optional: true,
-    render: (it: string[][]) => {
-      if (it.length === 0) {
+    render: (ancestors: string[][]) => {
+      if (ancestors.length === 0) {
         return null
       }
 
-      return it[it.length - 1][0]
+      return ancestors[ancestors.length - 1][0]
     },
   },
 ]

@@ -2,7 +2,7 @@ import styles from './dataset-info.module.css'
 
 import { FC, useMemo } from 'react'
 import cn, { Argument } from 'classnames'
-import _ from 'lodash'
+import { startCase } from 'lodash'
 import { observer } from 'mobx-react-lite'
 
 import { useFullScreenView } from '@core/hooks/use-fullscreen-view'
@@ -31,9 +31,9 @@ export const DatasetInfo: FC<IDatasetInfoProps> = observer(({ className }) => {
   const versionsRaws = useMemo(
     () =>
       Object.keys(versions || {}).map(
-        (it: string): Row<keyof Versions> => ({
-          fieldName: _.startCase(it),
-          field: it as keyof Versions,
+        (key: string): Row<keyof Versions> => ({
+          fieldName: startCase(key),
+          field: key as keyof Versions,
           optional: true,
         }),
       ),

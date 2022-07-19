@@ -56,6 +56,8 @@ export interface IDsInfoMeta {
 export interface IDsInfoReceipt {
   base: string
   conditions: Array<string | string[]>
+  kind: 'filter' | 'dtree'
+  root: string
   'eval-update-info'?: [string | null, string | null]
   'f-presentation'?: string[]
   'p-presentation'?: [string, number, boolean | null][]
@@ -63,22 +65,20 @@ export interface IDsInfoReceipt {
   'dtree-name'?: string
   'dtree-code'?: string
   'panels-supply'?: { [key: string]: string[] }
-  kind: 'filter' | 'dtree'
-  root: string
 }
 
 export interface IDsInfo extends IBaseDatasetDescriptor {
   meta: IDsInfoMeta
-  receipts?: IDsInfoReceipt[]
   classes: IDsInfoClass[]
   unitGroups: string[]
   cohorts: string[]
   exportMaxCount: number
-  igvUrls?: string[]
   name: string
   note: string
   total: number
   ancestors: any[]
+  igvUrls?: string[]
+  receipts?: IDsInfoReceipt[]
 }
 
 // ds_list

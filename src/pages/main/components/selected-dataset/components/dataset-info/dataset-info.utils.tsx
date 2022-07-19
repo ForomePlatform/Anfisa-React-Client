@@ -8,40 +8,38 @@ import { Row } from './dataset-info.interfaces'
 
 export const renderRow =
   <T,>(info: T) =>
-  (it: Row<keyof T>) => {
-    const value = info[it.field]
+  ({ field, fieldName, render, optional }: Row<keyof T>) => {
+    const value = info[field]
 
-    if (it.optional && (!value || (it.render && !it.render(value)))) {
+    if (optional && (!value || (render && !render(value)))) {
       return null
     }
 
     return (
-      <tr key={it.fieldName} className={cn(styles.datasetInfo__table_row)}>
-        <td className={cn(styles.datasetInfo__table_row_title)}>
-          {it.fieldName}
-        </td>
-        <td>{it.render ? it.render(value) : value}</td>
+      <tr key={fieldName} className={cn(styles.datasetInfo__table_row)}>
+        <td className={cn(styles.datasetInfo__table_row_title)}>{fieldName}</td>
+        <td>{render ? render(value) : value}</td>
       </tr>
     )
   }
 
-export const renderAncestor = (it: IDsInfoReceipt) => {
-  const isFilter = it.kind === 'filter'
+export const renderAncestor = (receipt: IDsInfoReceipt) => {
+  const isFilter = receipt.kind === 'filter'
 
   const title = `${
     isFilter ? 'Filter applied in' : 'Decision tree code applied in'
-  } ${it.base}`
+  } ${receipt.base}`
   const fdPrefix = isFilter ? 'Filter name: ' : 'Tree name: '
-  const fdName = isFilter ? it['filter-name'] : it['dtree-name']
+  const fdName = isFilter ? receipt['filter-name'] : receipt['dtree-name']
   const conditions = isFilter
-    ? it['f-presentation']
-    : it['dtree-code']?.split(/\n/)
+    ? receipt['f-presentation']
+    : receipt['dtree-code']?.split(/\n/)
 
-  const updated = it['eval-update-info']
-  const panelSupply = it['panels-supply']
+  const updated = receipt['eval-update-info']
+  const panelSupply = receipt['panels-supply']
 
   return (
-    <div key={it.base}>
+    <div key={receipt.base}>
       <CardTitle className={cn(styles.datasetInfo__title)}>{title}</CardTitle>
       {fdName && (
         <span className={styles.datasetInfo__ancestor__filter}>
@@ -63,13 +61,13 @@ export const renderAncestor = (it: IDsInfoReceipt) => {
       </div>
       {panelSupply && (
         <div className={styles.datasetInfo__ancestor__supplyPanel}>
-          {Object.entries(panelSupply).map(it => (
-            <span key={it[0]}>
+          {Object.entries(panelSupply).map(panel => (
+            <span key={panel[0]}>
               Supplied panels for type{' '}
               <span className={styles.datasetInfo__ancestor__filter_name}>
-                {it[0]}
+                {panel[0]}
               </span>
-              : {it[1].join(', ')}
+              : {panel[1].join(', ')}
             </span>
           ))}
         </div>
