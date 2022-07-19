@@ -21,13 +21,18 @@ spec:
       containers:
       - name: {{ .Values.anfisa_front.name }}
         image: {{ .Values.anfisa_front.registry }}
+        env:
+        - name: BACKEND
+          value: http://anfisa-backend:80
         ports:
         - containerPort: 80
         volumeMounts:
           - name: config-volume
-            mountPath: /usr/share/nginx/html/Anfisa/env-config.js
+            mountPath: /usr/share/nginx/html/anfisa/env-config.js
             subPath: env-config.js
       serviceAccount: default
+      imagePullSecrets:
+      - name: registry
       volumes:
         - name: config-volume
           configMap:
