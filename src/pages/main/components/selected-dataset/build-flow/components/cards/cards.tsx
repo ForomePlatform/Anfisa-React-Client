@@ -28,6 +28,7 @@ import { getNextPageData } from '../wizard/wizard.utils'
 import { CardTitleWithEdit } from './components/card-edit-title'
 import { CardRadioList } from './components/card-radio-list'
 
+const descriptions: { [key: string]: string } = {}
 let typingTimer: ReturnType<typeof setTimeout>
 
 export const StartCard = (props: ICardProps) => {
@@ -157,7 +158,7 @@ export const DescriptionCard = (props: ICardProps) => {
   const history = useHistory()
   const ds = props.title || datasetStore.datasetName
 
-  const note = dirinfoStore.dirInfoData?.dsDict[ds]?.note
+  const note = descriptions[ds] || dirinfoStore.dirInfoData?.dsDict[ds]?.note
   const isOpenButton = optionsForOpenButton.includes(props.selectedValue)
   const [isEditMode, setEditMode] = useState(false)
   const [isTyping, setTyping] = useState(false)
@@ -208,6 +209,7 @@ export const DescriptionCard = (props: ICardProps) => {
 
   const handleChange = (description: string) => {
     setDatasetDescription(description)
+    descriptions[ds] = description
     setTyping(true)
     clearTimeout(typingTimer)
     typingTimer = setTimeout(() => {
@@ -230,7 +232,11 @@ export const DescriptionCard = (props: ICardProps) => {
         background: 'transparent',
       }}
       autoFocus
-      defaultValue={note || ''}
+      defaultValue={
+        datasetDescription === datasetDescriptionDefault
+          ? ''
+          : datasetDescription
+      }
       onChange={e => {
         handleChange(e.target.value)
       }}
