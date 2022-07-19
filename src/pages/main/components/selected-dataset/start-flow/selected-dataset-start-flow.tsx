@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite'
 
 import dirinfoStore from '@store/dirinfo'
 import { Card, CardTitle } from '@ui/card'
-import { DatasetCard } from '@components/data-testid/dataset-card.cy'
+import { DatasetCard } from '@data-testid'
 import { isDev } from '@pages/main/main.constants'
 import { OpenViewer } from '../components/open-viewer'
 import { CardExploreType } from './components/card-sections/card-explore-type'

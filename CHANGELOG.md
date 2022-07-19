@@ -1,187 +1,62 @@
 # Change log 
+
+## <small>0.7.1 (7/18/2022)</small>
+
+* fix([FOROME-1372](https://quantori.atlassian.net/browse/FOROME-1372)): Fixed Gene lists zone (#816) ([287340ef](https://github.com/ForomePlatform/Anfisa-React-Client/commit/287340ef))
+* fix([FOROME-1357](https://quantori.atlassian.net/browse/FOROME-1357)): opening derived dataset ([10b6b0f4](https://github.com/ForomePlatform/Anfisa-React-Client/commit/10b6b0f4))
+* fix([FOROME-1302](https://quantori.atlassian.net/browse/FOROME-1302)): change enum bar chart colors ([7d4e3390](https://github.com/ForomePlatform/Anfisa-React-Client/commit/7d4e3390))
+* feat([FOROME-1304](https://quantori.atlassian.net/browse/FOROME-1304)): change button text (#814) ([547b3c3f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/547b3c3f))
+* fix([FOROME-1332](https://quantori.atlassian.net/browse/FOROME-1332)): range slider min value validation ([1976fe9c](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1976fe9c))
+* fix([FOROME-1313](https://quantori.atlassian.net/browse/FOROME-1313)): validation for creating presets (#799) ([2b23011f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/2b23011f))
+* fix([FOROME-1323](https://quantori.atlassian.net/browse/FOROME-1323)): save scroll position in modal (#807) ([82073162](https://github.com/ForomePlatform/Anfisa-React-Client/commit/82073162))
+* feat([FOROME-1303](https://quantori.atlassian.net/browse/FOROME-1303)): implemented drag-n-drop conditions moving in refiner (#785) ([d1ef1934](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d1ef1934))
+
+## <small>0.6.1 (7/12/2022)</small>
+
+* feat([FOROME-1230](https://quantori.atlassian.net/browse/FOROME-1230)): implement search bar for the drawer ([2e289323](https://github.com/ForomePlatform/Anfisa-React-Client/commit/2e289323))
+* fix([FOROME-1306](https://quantori.atlassian.net/browse/FOROME-1306)): set active preset before edit (#800) ([c781f0d7](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c781f0d7))
 * fix([FOROME-00](https://quantori.atlassian.net/browse/FOROME-00)): build crush ([7765cca0](https://github.com/ForomePlatform/Anfisa-React-Client/commit/7765cca0))
-
-## <small>0.6.114 (7/11/2022)</small>
-
+* fix([FOROME-1269](https://quantori.atlassian.net/browse/FOROME-1269)): format number method (#794) ([9ed39531](https://github.com/ForomePlatform/Anfisa-React-Client/commit/9ed39531))
 * fix([FOROME-1229](https://quantori.atlassian.net/browse/FOROME-1229)): replace igv-page to igv-modal ([a0940570](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a0940570))
-
-## <small>0.6.113 (7/11/2022)</small>
-
 * fix([FOROME-1269](https://quantori.atlassian.net/browse/FOROME-1269)): format number method (#794) ([e61998af](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e61998af))
-
-## <small>0.6.112 (7/11/2022)</small>
-
 * fix([FOROME-1306](https://quantori.atlassian.net/browse/FOROME-1306)): set active preset before edit (#800) ([3fa09600](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3fa09600))
-
-## <small>0.6.111 (7/8/2022)</small>
-
-
-## <small>0.6.110 (7/8/2022)</small>
-
-
-## <small>0.6.109 (7/8/2022)</small>
-
-
-## <small>0.6.108 (7/8/2022)</small>
-
-
-## <small>0.6.107 (7/8/2022)</small>
-
+* fix([FOROME-1311](https://quantori.atlassian.net/browse/FOROME-1311)): clear filter on pressing close icon from everyplace ([f08156e3](https://github.com/ForomePlatform/Anfisa-React-Client/commit/f08156e3))
+* fix([FOROME-1311](https://quantori.atlassian.net/browse/FOROME-1311)): clear filter on pressing close icon, from fr to ws page ([accb22e7](https://github.com/ForomePlatform/Anfisa-React-Client/commit/accb22e7))
+* feat([FOROME-12](https://quantori.atlassian.net/browse/FOROME-12)p8): redesign scrollbar ([d6a96fc2](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d6a96fc2))
 * fix([FOROME-1290](https://quantori.atlassian.net/browse/FOROME-1290)): add local tag for note (#795) ([705b10ce](https://github.com/ForomePlatform/Anfisa-React-Client/commit/705b10ce))
 * feat([FOROME-1305](https://quantori.atlassian.net/browse/FOROME-1305)): fix css module ([09f9386f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/09f9386f))
 * feat([FOROME-1305](https://quantori.atlassian.net/browse/FOROME-1305)): rework attribute selection ([ec5c618d](https://github.com/ForomePlatform/Anfisa-React-Client/commit/ec5c618d))
-
-## <small>0.6.106 (7/7/2022)</small>
-
 * feat([FOROME-1281](https://quantori.atlassian.net/browse/FOROME-1281)): make fun async ([96523ea8](https://github.com/ForomePlatform/Anfisa-React-Client/commit/96523ea8))
-
-## <small>0.6.105 (7/6/2022)</small>
-
-
-## <small>0.6.104 (7/6/2022)</small>
-
-
-## <small>0.6.103 (7/6/2022)</small>
-
-
-## <small>0.6.102 (7/6/2022)</small>
-
-
-## <small>0.6.101 (7/6/2022)</small>
-
 * feat([FOROME-97](https://quantori.atlassian.net/browse/FOROME-97)): remove dependency ([f33ed180](https://github.com/ForomePlatform/Anfisa-React-Client/commit/f33ed180))
 * feat([FOROME-97](https://quantori.atlassian.net/browse/FOROME-97)): implement scroll shadow component in drawer ([c82c3ceb](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c82c3ceb))
-
-## <small>0.6.100 (7/6/2022)</small>
-
-
-## <small>0.6.99 (7/6/2022)</small>
-
-
-## <small>0.6.98 (7/6/2022)</small>
-
-
-## <small>0.6.97 (7/6/2022)</small>
-
 * feat([FOROME-1300](https://quantori.atlassian.net/browse/FOROME-1300)): rename methods ([4c066748](https://github.com/ForomePlatform/Anfisa-React-Client/commit/4c066748))
-
-## <small>0.6.96 (7/6/2022)</small>
-
 * feat([FOROME-1295](https://quantori.atlassian.net/browse/FOROME-1295)): fix merge conflicts ([3b375e81](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3b375e81))
-
-## <small>0.6.95 (7/6/2022)</small>
-
+* fix([FOROME-1269](https://quantori.atlassian.net/browse/FOROME-1269)): input-numeric with react-number-format (#777) ([232b71a0](https://github.com/ForomePlatform/Anfisa-React-Client/commit/232b71a0))
 * fix([FOROME-1269](https://quantori.atlassian.net/browse/FOROME-1269)): input-numeric with react-number-format (#777) ([bd053091](https://github.com/ForomePlatform/Anfisa-React-Client/commit/bd053091))
 * feat([FOROME-1281](https://quantori.atlassian.net/browse/FOROME-1281)): add clear all button ([927876d3](https://github.com/ForomePlatform/Anfisa-React-Client/commit/927876d3))
 * fix([FOROME-1312](https://quantori.atlassian.net/browse/FOROME-1312)): fix fr to dt propt message ([d95f6976](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d95f6976))
-
-## <small>0.6.94 (7/6/2022)</small>
-
 * feat([FOROME-1291](https://quantori.atlassian.net/browse/FOROME-1291)): implemented resizable sidebar component (#773) ([9adf1359](https://github.com/ForomePlatform/Anfisa-React-Client/commit/9adf1359))
-
-## <small>0.6.93 (7/4/2022)</small>
-
-
-## <small>0.6.92 (7/4/2022)</small>
-
-
-## <small>0.6.91 (7/4/2022)</small>
-
+* fix([FOROME-1312](https://quantori.atlassian.net/browse/FOROME-1312)): don't show prompt on change dtree to refiner ([f8fbc788](https://github.com/ForomePlatform/Anfisa-React-Client/commit/f8fbc788))
 * feat([FOROME-1297](https://quantori.atlassian.net/browse/FOROME-1297)): remove hours from dataset creation time ([3207e18e](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3207e18e))
 * fix([FOROME-1312](https://quantori.atlassian.net/browse/FOROME-1312)): don't show prompt on change dtree to refiner ([c5f78c46](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c5f78c46))
-
-## <small>0.6.90 (7/1/2022)</small>
-
-
-## <small>0.6.89 (7/1/2022)</small>
-
-
-## <small>0.6.88 (7/1/2022)</small>
-
-
-## <small>0.6.87 (7/1/2022)</small>
-
-
-## <small>0.6.86 (7/1/2022)</small>
-
-
-## <small>0.6.85 (7/1/2022)</small>
-
-
-## <small>0.6.84 (7/1/2022)</small>
-
-
-## <small>0.6.83 (7/1/2022)</small>
-
-
-## <small>0.6.82 (7/1/2022)</small>
-
-
-## <small>0.6.81 (7/1/2022)</small>
-
-
-## <small>0.6.80 (7/1/2022)</small>
-
-
-## <small>0.6.79 (7/1/2022)</small>
-
 * feat([FOROME-1301](https://quantori.atlassian.net/browse/FOROME-1301)): show drawer by default, show Gallery layout by default ([9b5aba1a](https://github.com/ForomePlatform/Anfisa-React-Client/commit/9b5aba1a))
 * feat([FOROME-1300](https://quantori.atlassian.net/browse/FOROME-1300)): make datasets unfolded in the beggining ([3b279622](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3b279622))
-
-## <small>0.6.78 (6/30/2022)</small>
-
 * fix([FOROME-1274](https://quantori.atlassian.net/browse/FOROME-1274)): saving preset on ws-page after reloading (#764) ([08d2f914](https://github.com/ForomePlatform/Anfisa-React-Client/commit/08d2f914))
 * feat([FOROME-1295](https://quantori.atlassian.net/browse/FOROME-1295)): add reload button, loader for list and new design button for manupalitng ds ([7b4291d2](https://github.com/ForomePlatform/Anfisa-React-Client/commit/7b4291d2))
-
-## <small>0.6.77 (6/30/2022)</small>
-
 * feat([FOROME-1293](https://quantori.atlassian.net/browse/FOROME-1293)) Added changelog generator (#772) ([72fe8d06](https://github.com/ForomePlatform/Anfisa-React-Client/commit/72fe8d06))
 * feat([FOROME-1295](https://quantori.atlassian.net/browse/FOROME-1295)): add reload icon ([e882e395](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e882e395))
-
-## <small>0.6.76 (6/30/2022)</small>
-
 * feat([FOROME-1224](https://quantori.atlassian.net/browse/FOROME-1224)): save preset button outside dropdown (#761) ([f62a528f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/f62a528f))
-
-## <small>0.6.75 (6/30/2022)</small>
-
 * fix([FOROME-1219](https://quantori.atlassian.net/browse/FOROME-1219)): dataset creation ([13e3798b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/13e3798b))
 * feat([FOROME-1231](https://quantori.atlassian.net/browse/FOROME-1231)): fix comments ([5b3f3e75](https://github.com/ForomePlatform/Anfisa-React-Client/commit/5b3f3e75))
-
-## <small>0.6.74 (6/30/2022)</small>
-
 * feat([FOROME-1271](https://quantori.atlassian.net/browse/FOROME-1271)): implemented base history observer helper (#771) ([4676a6b3](https://github.com/ForomePlatform/Anfisa-React-Client/commit/4676a6b3))
-
-## <small>0.6.73 (6/29/2022)</small>
-
 * fix([FOROME-1280](https://quantori.atlassian.net/browse/FOROME-1280)): enum modals and panels height ([9971be63](https://github.com/ForomePlatform/Anfisa-React-Client/commit/9971be63))
-
-## <small>0.6.72 (6/29/2022)</small>
-
-
-## <small>0.6.71 (6/28/2022)</small>
-
 * fix([FOROME-1265](https://quantori.atlassian.net/browse/FOROME-1265)): Changed copy for view variants btn (#759) ([79581c0f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/79581c0f))
-
-## <small>0.6.70 (6/28/2022)</small>
-
 * feat([FOROME-1100](https://quantori.atlassian.net/browse/FOROME-1100)): fix comments ([e363fed0](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e363fed0))
-
-## <small>0.6.69 (6/28/2022)</small>
-
 * refactor([FOROME-1260](https://quantori.atlassian.net/browse/FOROME-1260)): implemented async stores for zones (#760) ([479dd0ff](https://github.com/ForomePlatform/Anfisa-React-Client/commit/479dd0ff))
 * feat([FOROME-1227](https://quantori.atlassian.net/browse/FOROME-1227)): fix comments ([c29e2e16](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c29e2e16))
 * feat([FOROME-1227](https://quantori.atlassian.net/browse/FOROME-1227)): fix commits ([9246d661](https://github.com/ForomePlatform/Anfisa-React-Client/commit/9246d661))
-
-## <small>0.6.68 (6/27/2022)</small>
-
 * fix([FOROME-1272](https://quantori.atlassian.net/browse/FOROME-1272)): saving dtree data between switching FR,DT ([f8e0a323](https://github.com/ForomePlatform/Anfisa-React-Client/commit/f8e0a323))
-
-## <small>0.6.67 (6/27/2022)</small>
-
 * fix([FOROME-1277](https://quantori.atlassian.net/browse/FOROME-1277)): reset ws-page in case of 0 variants ([be08c1f9](https://github.com/ForomePlatform/Anfisa-React-Client/commit/be08c1f9))
-
-## <small>0.6.66 (6/27/2022)</small>
-
 * refactor([FOROME-1253](https://quantori.atlassian.net/browse/FOROME-1253)): unify func modals with dialogs ([1924da23](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1924da23))
 * feat([FOROME-1227](https://quantori.atlassian.net/browse/FOROME-1227)): fix commits ([11dd0386](https://github.com/ForomePlatform/Anfisa-React-Client/commit/11dd0386))
 * feat([FOROME-1231](https://quantori.atlassian.net/browse/FOROME-1231)): change colors in drawer ([4843399e](https://github.com/ForomePlatform/Anfisa-React-Client/commit/4843399e))
@@ -189,175 +64,57 @@
 * feat([FOROME-1227](https://quantori.atlassian.net/browse/FOROME-1227)): merge conflicts ([3e3ee5b3](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3e3ee5b3))
 * feat([FOROME-1100](https://quantori.atlassian.net/browse/FOROME-1100)): extract same component ([b46e32be](https://github.com/ForomePlatform/Anfisa-React-Client/commit/b46e32be))
 * feat([FOROME-1100](https://quantori.atlassian.net/browse/FOROME-1100)): add modal for modying preset ([897bfd0e](https://github.com/ForomePlatform/Anfisa-React-Client/commit/897bfd0e))
-
-## <small>0.6.65 (6/24/2022)</small>
-
 * refactor([FOROME-1232](https://quantori.atlassian.net/browse/FOROME-1232)): unify ws-page popovers ([2c621159](https://github.com/ForomePlatform/Anfisa-React-Client/commit/2c621159))
 * feat([FOROME-1227](https://quantori.atlassian.net/browse/FOROME-1227)): add loader in fr attributes ([a87ef33a](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a87ef33a))
 * feat([FOROME-1227](https://quantori.atlassian.net/browse/FOROME-1227)): add loader in solution control page ([5764d6ae](https://github.com/ForomePlatform/Anfisa-React-Client/commit/5764d6ae))
 * feat([FOROME-1227](https://quantori.atlassian.net/browse/FOROME-1227)): add some changes in fr and dt progress bar ([ec5fb759](https://github.com/ForomePlatform/Anfisa-React-Client/commit/ec5fb759))
 * feat([FOROME-1227](https://quantori.atlassian.net/browse/FOROME-1227)): add progress bar in dt and fr ([481139ec](https://github.com/ForomePlatform/Anfisa-React-Client/commit/481139ec))
 * feat([FOROME-1227](https://quantori.atlassian.net/browse/FOROME-1227)): final version of progress bar ([fb3890f5](https://github.com/ForomePlatform/Anfisa-React-Client/commit/fb3890f5))
-
-## <small>0.6.64 (6/24/2022)</small>
-
 * feat([FOROME-1259](https://quantori.atlassian.net/browse/FOROME-1259)): fixed merge problems ([5634f30b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/5634f30b))
-
-## <small>0.6.63 (6/24/2022)</small>
-
 * feat([FOROME-1259](https://quantori.atlassian.net/browse/FOROME-1259)): implemented saving for main table layout (#749) ([d6f0a776](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d6f0a776))
 * feat([FOROME-1226](https://quantori.atlassian.net/browse/FOROME-1226)): added Tooltip component for UI kit (#757) ([207e4b32](https://github.com/ForomePlatform/Anfisa-React-Client/commit/207e4b32))
 * feat([FOROME-1227](https://quantori.atlassian.net/browse/FOROME-1227)): add progress bar ([2050b74f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/2050b74f))
-
-## <small>0.6.62 (6/23/2022)</small>
-
 * feat([FOROME-1255](https://quantori.atlassian.net/browse/FOROME-1255)): Added modified icon to modified presets (#756) ([df662faf](https://github.com/ForomePlatform/Anfisa-React-Client/commit/df662faf))
 * feat([FOROME-1254](https://quantori.atlassian.net/browse/FOROME-1254)): Added preset and dtree to URL (#750) ([d2a49a67](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d2a49a67))
-
-## <small>0.6.61 (6/23/2022)</small>
-
 * fix([FOROME-1182](https://quantori.atlassian.net/browse/FOROME-1182)): table filtration by tags, notes ([907641c3](https://github.com/ForomePlatform/Anfisa-React-Client/commit/907641c3))
-
-## <small>0.6.60 (6/23/2022)</small>
-
 * fix([FOROME-1186](https://quantori.atlassian.net/browse/FOROME-1186)): fixed bar with value of 1 for logarithmic bar charts (#754) ([86dcccdc](https://github.com/ForomePlatform/Anfisa-React-Client/commit/86dcccdc))
-
-## <small>0.6.59 (6/22/2022)</small>
-
-
-## <small>0.6.58 (6/22/2022)</small>
-
-
-## <small>0.6.57 (6/22/2022)</small>
-
 * fix([FOROME-1076](https://quantori.atlassian.net/browse/FOROME-1076)): fixed main table controls layout (#752) ([91127f5a](https://github.com/ForomePlatform/Anfisa-React-Client/commit/91127f5a))
-
-## <small>0.6.56 (6/22/2022)</small>
-
 * fix([FOROME-1236](https://quantori.atlassian.net/browse/FOROME-1236)): change hasTooltip flag (#753) ([92d503ba](https://github.com/ForomePlatform/Anfisa-React-Client/commit/92d503ba))
-
-## <small>0.6.55 (6/22/2022)</small>
-
-
-## <small>0.6.54 (6/22/2022)</small>
-
 * feat([FOROME-1094](https://quantori.atlassian.net/browse/FOROME-1094)): add cursor class name (#736) ([9e0c21aa](https://github.com/ForomePlatform/Anfisa-React-Client/commit/9e0c21aa))
 * feat([FOROME-1173](https://quantori.atlassian.net/browse/FOROME-1173)): change design of footer ([23f588ed](https://github.com/ForomePlatform/Anfisa-React-Client/commit/23f588ed))
-
-## <small>0.6.53 (6/21/2022)</small>
-
 * refactor([FOROME-1243](https://quantori.atlassian.net/browse/FOROME-1243)): unify popovers ([2c049d8e](https://github.com/ForomePlatform/Anfisa-React-Client/commit/2c049d8e))
 * feat([FOROME-1173](https://quantori.atlassian.net/browse/FOROME-1173)): fix app freezing ([7cc57055](https://github.com/ForomePlatform/Anfisa-React-Client/commit/7cc57055))
-
-## <small>0.6.52 (6/21/2022)</small>
-
-
-## <small>0.6.51 (6/21/2022)</small>
-
 * feat([FOROME-1173](https://quantori.atlassian.net/browse/FOROME-1173)): fix footer ([f646774f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/f646774f))
 * feat([FOROME-1173](https://quantori.atlassian.net/browse/FOROME-1173)): remove import ([b9c6b1a5](https://github.com/ForomePlatform/Anfisa-React-Client/commit/b9c6b1a5))
 * feat([FOROME-1173](https://quantori.atlassian.net/browse/FOROME-1173)): move folders to ui ([e533784a](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e533784a))
-* [RELEASE] 0.6.50 ([4028b245](https://github.com/ForomePlatform/Anfisa-React-Client/commit/4028b245))
 * fix([FOROME-1216](https://quantori.atlassian.net/browse/FOROME-1216)): change key value ([a884f8fa](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a884f8fa))
-
-## <small>0.6.49 (6/20/2022)</small>
-
-
-## <small>0.6.48 (6/20/2022)</small>
-
 * feat([FOROME-1223](https://quantori.atlassian.net/browse/FOROME-1223)): Added prompt on exit / reworked cross behavior (#741) ([19ee656d](https://github.com/ForomePlatform/Anfisa-React-Client/commit/19ee656d))
 * fix([FOROME-1216](https://quantori.atlassian.net/browse/FOROME-1216)): add more opropriate way to save value ([130148c8](https://github.com/ForomePlatform/Anfisa-React-Client/commit/130148c8))
-
-## <small>0.6.47 (6/20/2022)</small>
-
 * refactor([FOROME-1218](https://quantori.atlassian.net/browse/FOROME-1218)): refactored main table (#737) ([3a1c1039](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3a1c1039))
-
-## <small>0.6.46 (6/20/2022)</small>
-
-
-## <small>0.6.45 (6/20/2022)</small>
-
-
-## <small>0.6.44 (6/17/2022)</small>
-
 * fix([FOROME-1248](https://quantori.atlassian.net/browse/FOROME-1248)): fix FR func panels requests ([fb8f26e1](https://github.com/ForomePlatform/Anfisa-React-Client/commit/fb8f26e1))
-
-## <small>0.6.43 (6/16/2022)</small>
-
 * refactor([FOROME-1211](https://quantori.atlassian.net/browse/FOROME-1211)): unify modal and panel for gene region ([961c4a9e](https://github.com/ForomePlatform/Anfisa-React-Client/commit/961c4a9e))
 * feat([FOROME-1173](https://quantori.atlassian.net/browse/FOROME-1173)): fix conflicts ([35c4e54f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/35c4e54f))
-
-## <small>0.6.42 (6/16/2022)</small>
-
 * fix([FOROME-00](https://quantori.atlassian.net/browse/FOROME-00)): shemes for csv/excel export ([25fb84d7](https://github.com/ForomePlatform/Anfisa-React-Client/commit/25fb84d7))
-
-## <small>0.6.41 (6/16/2022)</small>
-
-
-## <small>0.6.40 (6/15/2022)</small>
-
 * refactor([FOROME-1187](https://quantori.atlassian.net/browse/FOROME-1187)): unify modal and panel for compound request ([6ca6f5d3](https://github.com/ForomePlatform/Anfisa-React-Client/commit/6ca6f5d3))
 * fix([FOROME-1216](https://quantori.atlassian.net/browse/FOROME-1216)): add raw saving value ([fe56f14c](https://github.com/ForomePlatform/Anfisa-React-Client/commit/fe56f14c))
-
-## <small>0.6.39 (6/15/2022)</small>
-
 * fix([FOROME-1191](https://quantori.atlassian.net/browse/FOROME-1191)): change clear-all button logic (#735) ([1cc4b3b4](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1cc4b3b4))
-
-## <small>0.6.38 (6/15/2022)</small>
-
 * refactor([FOROME-1200](https://quantori.atlassian.net/browse/FOROME-1200)): implemented async stores for tags and notes in drawer (#721) ([6e614490](https://github.com/ForomePlatform/Anfisa-React-Client/commit/6e614490))
-
-## <small>0.6.37 (6/14/2022)</small>
-
 * refactor([FOROME-1233](https://quantori.atlassian.net/browse/FOROME-1233)): customize-table popover ([10895dcc](https://github.com/ForomePlatform/Anfisa-React-Client/commit/10895dcc))
-
-## <small>0.6.36 (6/14/2022)</small>
-
 * feat([FOROME-1207](https://quantori.atlassian.net/browse/FOROME-1207)): move to ui folder and add storybook ([6bde0ac5](https://github.com/ForomePlatform/Anfisa-React-Client/commit/6bde0ac5))
-
-## <small>0.6.35 (6/14/2022)</small>
-
 * refactor([FOROME-1185](https://quantori.atlassian.net/browse/FOROME-1185)): unify modal and panel for compound het ([d2b1478e](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d2b1478e))
-
-## <small>0.6.34 (6/14/2022)</small>
-
 * fix([FOROME-1197](https://quantori.atlassian.net/browse/FOROME-1197)): export datasets from FR, table ([1b6629a2](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1b6629a2))
-
-## <small>0.6.33 (6/14/2022)</small>
-
 * fix([FOROME-1192](https://quantori.atlassian.net/browse/FOROME-1192)): linked clear all button in FR with undo-redo ([afb03a45](https://github.com/ForomePlatform/Anfisa-React-Client/commit/afb03a45))
-
-## <small>0.6.32 (6/13/2022)</small>
-
 * fix([FOROME-00](https://quantori.atlassian.net/browse/FOROME-00)): removed header counter for enum panels ([77c29d24](https://github.com/ForomePlatform/Anfisa-React-Client/commit/77c29d24))
-
-## <small>0.6.31 (6/13/2022)</small>
-
 * feat([FOROME-1207](https://quantori.atlassian.net/browse/FOROME-1207)): add one style item ([4bdb3cdc](https://github.com/ForomePlatform/Anfisa-React-Client/commit/4bdb3cdc))
 * feat([FOROME-1207](https://quantori.atlassian.net/browse/FOROME-1207)): add loading animation in button ([3f893fba](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3f893fba))
-
-## <small>0.6.30 (6/13/2022)</small>
-
-
-## <small>0.6.29 (6/13/2022)</small>
-
-
-## <small>0.6.28 (6/13/2022)</small>
-
 * fix([FOROME-1212](https://quantori.atlassian.net/browse/FOROME-1212)): remove useless component and extract close icon ([499d1ea8](https://github.com/ForomePlatform/Anfisa-React-Client/commit/499d1ea8))
 * fix([FOROME-1204](https://quantori.atlassian.net/browse/FOROME-1204)): place checkboxes in col ([697ab5cf](https://github.com/ForomePlatform/Anfisa-React-Client/commit/697ab5cf))
 * feat([FOROME-1173](https://quantori.atlassian.net/browse/FOROME-1173)): fix after merge conflicts ([42af38e8](https://github.com/ForomePlatform/Anfisa-React-Client/commit/42af38e8))
-
-## <small>0.6.27 (6/13/2022)</small>
-
 * fix([FOROME-1212](https://quantori.atlassian.net/browse/FOROME-1212)): fix css module ([d175ceb6](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d175ceb6))
 * fix([FOROME-1212](https://quantori.atlassian.net/browse/FOROME-1212)): fix some buttons styles ([47249705](https://github.com/ForomePlatform/Anfisa-React-Client/commit/47249705))
 * fix([FOROME-1212](https://quantori.atlassian.net/browse/FOROME-1212)): fix some buttons styles ([3b3900e4](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3b3900e4))
 * fix([FOROME-1204](https://quantori.atlassian.net/browse/FOROME-1204)): fix file ([0601c656](https://github.com/ForomePlatform/Anfisa-React-Client/commit/0601c656))
 * fix([FOROME-1204](https://quantori.atlassian.net/browse/FOROME-1204)): disable modify button if dataset is't chosen ([40b6e8fa](https://github.com/ForomePlatform/Anfisa-React-Client/commit/40b6e8fa))
-
-## <small>0.6.26 (6/10/2022)</small>
-
 * feat([FOROME-894](https://quantori.atlassian.net/browse/FOROME-894)): change modals structure using the Dialog component ([6975a412](https://github.com/ForomePlatform/Anfisa-React-Client/commit/6975a412))
 * fix([FOROME-1123](https://quantori.atlassian.net/browse/FOROME-1123)): add default value ([a1ae91f0](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a1ae91f0))
 * fix([FOROME-1175](https://quantori.atlassian.net/browse/FOROME-1175)): fix link margins ([1b8f0fda](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1b8f0fda))
@@ -369,9 +126,6 @@
 * feat([FOROME-1173](https://quantori.atlassian.net/browse/FOROME-1173)): changes based on comments ([7fda4918](https://github.com/ForomePlatform/Anfisa-React-Client/commit/7fda4918))
 * feat([FOROME-1173](https://quantori.atlassian.net/browse/FOROME-1173)): add fixes in in pagination page ([44283b39](https://github.com/ForomePlatform/Anfisa-React-Client/commit/44283b39))
 * fix([FOROME-00](https://quantori.atlassian.net/browse/FOROME-00)): hotfix for custom inh modal closing ([1e199e47](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1e199e47))
-
-## <small>0.6.25 (6/9/2022)</small>
-
 * fix([FOROME-1138](https://quantori.atlassian.net/browse/FOROME-1138)): fixed gene_region and compound_het attributes addition in dtree (#707) ([59d95c34](https://github.com/ForomePlatform/Anfisa-React-Client/commit/59d95c34))
 * feat([FOROME-1173](https://quantori.atlassian.net/browse/FOROME-1173)): implement component in enum list in fr ([abfcd489](https://github.com/ForomePlatform/Anfisa-React-Client/commit/abfcd489))
 * feat([FOROME-1173](https://quantori.atlassian.net/browse/FOROME-1173)): fix story file ([a2250857](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a2250857))
@@ -400,6 +154,9 @@
 * feat([FOROME-1135](https://quantori.atlassian.net/browse/FOROME-1135)): Sorting standard presets (#686) ([b26d0bde](https://github.com/ForomePlatform/Anfisa-React-Client/commit/b26d0bde))
 * fix([FOROME-00](https://quantori.atlassian.net/browse/FOROME-00)): hotfix for  showing FR panel in redactor mode (#688) ([722451e0](https://github.com/ForomePlatform/Anfisa-React-Client/commit/722451e0))
 * feat([FOROME-1078](https://quantori.atlassian.net/browse/FOROME-1078)): supported new API for functional attributes in `ds_stat` and `dtree_stat` methods (#676) ([7181bd79](https://github.com/ForomePlatform/Anfisa-React-Client/commit/7181bd79))
+
+## <small>0.5.1 (6/2/2022)</small>
+
 * fix([FOROME-1087](https://quantori.atlassian.net/browse/FOROME-1087)): fix activating final step ([1090a8ad](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1090a8ad))
 * fix([FOROME-1108](https://quantori.atlassian.net/browse/FOROME-1108)): Fixed checkbox layout (#682) ([ee055c5b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/ee055c5b))
 * fix([FOROME-1113](https://quantori.atlassian.net/browse/FOROME-1113)): Crash when choose dataset (#681) ([f2386298](https://github.com/ForomePlatform/Anfisa-React-Client/commit/f2386298))
@@ -524,6 +281,9 @@
 * refactor([FOROME-933](https://quantori.atlassian.net/browse/FOROME-933)): add types & remove useless function call ([ac07dd25](https://github.com/ForomePlatform/Anfisa-React-Client/commit/ac07dd25))
 * feat([FOROME-936](https://quantori.atlassian.net/browse/FOROME-936)): reduced maximum items for bar chart (#609) ([7d4bc80e](https://github.com/ForomePlatform/Anfisa-React-Client/commit/7d4bc80e))
 * feat([FOROME-916](https://quantori.atlassian.net/browse/FOROME-916)): fix comments ([5765c2ff](https://github.com/ForomePlatform/Anfisa-React-Client/commit/5765c2ff))
+
+## <small>0.4.1 (5/4/2022)</small>
+
 * refactor([FOROME-933](https://quantori.atlassian.net/browse/FOROME-933)): remove condition from props ([9362a059](https://github.com/ForomePlatform/Anfisa-React-Client/commit/9362a059))
 * fix([FOROME-933](https://quantori.atlassian.net/browse/FOROME-933)): change index for make condition active ([7da5de1e](https://github.com/ForomePlatform/Anfisa-React-Client/commit/7da5de1e))
 * refactor([FOROME-933](https://quantori.atlassian.net/browse/FOROME-933)): use PopperButton for open conditions options popup ([d18df5f5](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d18df5f5))
@@ -603,6 +363,9 @@
 * feat([FOROME-841](https://quantori.atlassian.net/browse/FOROME-841)): problems with showing changes ([a816c209](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a816c209))
 * fix([FOROME-884](https://quantori.atlassian.net/browse/FOROME-884)): hide igv button when we dont have igv-urls for dataset ([8b849ca4](https://github.com/ForomePlatform/Anfisa-React-Client/commit/8b849ca4))
 * fix([FOROME-837](https://quantori.atlassian.net/browse/FOROME-837)): use filteredStepData instead of stepData in step components ([21953cd0](https://github.com/ForomePlatform/Anfisa-React-Client/commit/21953cd0))
+
+## <small>0.3.1 (4/18/2022)</small>
+
 * fix([FOROME-871](https://quantori.atlassian.net/browse/FOROME-871)): redesign "TRANSCRIPTS" window in Drawer ([4275b3c2](https://github.com/ForomePlatform/Anfisa-React-Client/commit/4275b3c2))
 * refactor([FOROME-837](https://quantori.atlassian.net/browse/FOROME-837)): remove getStepData from dtreeStore ([552ab7ae](https://github.com/ForomePlatform/Anfisa-React-Client/commit/552ab7ae))
 * feat([FOROME-841](https://quantori.atlassian.net/browse/FOROME-841)): use common radio button instead custom ([9c5a090a](https://github.com/ForomePlatform/Anfisa-React-Client/commit/9c5a090a))
@@ -668,6 +431,9 @@
 * feat([FOROME-703](https://quantori.atlassian.net/browse/FOROME-703)): add icon for showing tooltips ([cfa667aa](https://github.com/ForomePlatform/Anfisa-React-Client/commit/cfa667aa))
 * fix([FOROME-819](https://quantori.atlassian.net/browse/FOROME-819)): add a routing to the main page when clicking on the cross ([b08eedd1](https://github.com/ForomePlatform/Anfisa-React-Client/commit/b08eedd1))
 * feat([FOROME-829](https://quantori.atlassian.net/browse/FOROME-829)): added support for disabling min/max validation in numeric attributes (#540) ([f17b4787](https://github.com/ForomePlatform/Anfisa-React-Client/commit/f17b4787))
+
+## <small>0.2.1 (4/6/2022)</small>
+
 * fix([FOROME-796](https://quantori.atlassian.net/browse/FOROME-796)): change call of tabReport request after loading mainTable ([94158be0](https://github.com/ForomePlatform/Anfisa-React-Client/commit/94158be0))
 * fix([FOROME-761](https://quantori.atlassian.net/browse/FOROME-761)): create file for constants ([eb383f3b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/eb383f3b))
 * feat([FOROME-711](https://quantori.atlassian.net/browse/FOROME-711)): remove uneccessary useeffect and state ([37b6fc5c](https://github.com/ForomePlatform/Anfisa-React-Client/commit/37b6fc5c))
@@ -779,6 +545,9 @@
 * fix([FOROME-621](https://quantori.atlassian.net/browse/FOROME-621)): add toast for modify,delete & join preset ([e69723d9](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e69723d9))
 * fix([FOROME-681](https://quantori.atlassian.net/browse/FOROME-681)): remove unused reccnt request ([7181575d](https://github.com/ForomePlatform/Anfisa-React-Client/commit/7181575d))
 * feat([FOROME-223](https://quantori.atlassian.net/browse/FOROME-223)): added loader for export button (#441) ([801738ae](https://github.com/ForomePlatform/Anfisa-React-Client/commit/801738ae))
+
+## <small>0.1.1 (2/21/2022)</small>
+
 * feat([FOROME-353](https://quantori.atlassian.net/browse/FOROME-353)): add modals for table samples ([2642a1eb](https://github.com/ForomePlatform/Anfisa-React-Client/commit/2642a1eb))
 * feat([FOROME-675](https://quantori.atlassian.net/browse/FOROME-675)): add 404 (Not found) page ([5ff2d0ec](https://github.com/ForomePlatform/Anfisa-React-Client/commit/5ff2d0ec))
 * fix([FOROME-641](https://quantori.atlassian.net/browse/FOROME-641)): reset stat func data in inh mode's modals ([a5fb7021](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a5fb7021))
@@ -860,145 +629,3 @@
 * fix([FOROME-364](https://quantori.atlassian.net/browse/FOROME-364)): added select all button ([1e36942a](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1e36942a))
 * fix([FOROME-542](https://quantori.atlassian.net/browse/FOROME-542)): incorrect preset, attrs adding on refiner ([321a5723](https://github.com/ForomePlatform/Anfisa-React-Client/commit/321a5723))
 * fix([FOROME-544](https://quantori.atlassian.net/browse/FOROME-544)): remove ws_list method from refiner with xl_datasets ([3c1ee45c](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3c1ee45c))
-* fix([FOROME-500](https://quantori.atlassian.net/browse/FOROME-500)): remove husky folder ([37d1381b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/37d1381b))
-* fix([FOROME-505](https://quantori.atlassian.net/browse/FOROME-505)): notes creation error ([7cdb79ab](https://github.com/ForomePlatform/Anfisa-React-Client/commit/7cdb79ab))
-* fix([FOROME-358](https://quantori.atlassian.net/browse/FOROME-358)): drawer blocks layout ([3eabd1c7](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3eabd1c7))
-* fix([FOROME-501](https://quantori.atlassian.net/browse/FOROME-501)): selec-modal-buttoms margin ([357dbedb](https://github.com/ForomePlatform/Anfisa-React-Client/commit/357dbedb))
-* feat([FOROME-500](https://quantori.atlassian.net/browse/FOROME-500)) add front-end app version ([850a3c08](https://github.com/ForomePlatform/Anfisa-React-Client/commit/850a3c08))
-* feat([FOROME-546](https://quantori.atlassian.net/browse/FOROME-546)): add igv service to anfisa ([8b0fb27a](https://github.com/ForomePlatform/Anfisa-React-Client/commit/8b0fb27a))
-* fix([FOROME-500](https://quantori.atlassian.net/browse/FOROME-500)): remove pre-commit ([90b74da0](https://github.com/ForomePlatform/Anfisa-React-Client/commit/90b74da0))
-* fix([FOROME-500](https://quantori.atlassian.net/browse/FOROME-500)): add folder husky permission ([4c2e0f53](https://github.com/ForomePlatform/Anfisa-React-Client/commit/4c2e0f53))
-* feat([FOROME-500](https://quantori.atlassian.net/browse/FOROME-500)) add front-end app version ([bc780777](https://github.com/ForomePlatform/Anfisa-React-Client/commit/bc780777))
-* fix([FOROME-500](https://quantori.atlassian.net/browse/FOROME-500)): add permission and delete pre-push due to windows err ([de967fb7](https://github.com/ForomePlatform/Anfisa-React-Client/commit/de967fb7))
-* feat([FOROME-500](https://quantori.atlassian.net/browse/FOROME-500)) add front-end app version ([47af531d](https://github.com/ForomePlatform/Anfisa-React-Client/commit/47af531d))
-* feat([FOROME-500](https://quantori.atlassian.net/browse/FOROME-500)) add front-end app version ([f9b08aac](https://github.com/ForomePlatform/Anfisa-React-Client/commit/f9b08aac))
-* feat([FOROME-500](https://quantori.atlassian.net/browse/FOROME-500)) add front-end app version ([485f718b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/485f718b))
-* fix([FOROME-00](https://quantori.atlassian.net/browse/FOROME-00)): adding attrs on refiner page ([fc7fbae3](https://github.com/ForomePlatform/Anfisa-React-Client/commit/fc7fbae3))
-* fix([FOROME-515](https://quantori.atlassian.net/browse/FOROME-515)): cooperation main-table and refiner ([54442685](https://github.com/ForomePlatform/Anfisa-React-Client/commit/54442685))
-* fix([FOROME-511](https://quantori.atlassian.net/browse/FOROME-511)): preset loading ([eeaf91c8](https://github.com/ForomePlatform/Anfisa-React-Client/commit/eeaf91c8))
-* feat([FOROME-00](https://quantori.atlassian.net/browse/FOROME-00)): add error boundary to refiner page ([fea86651](https://github.com/ForomePlatform/Anfisa-React-Client/commit/fea86651))
-* fix([FOROME-508](https://quantori.atlassian.net/browse/FOROME-508)): jumping UI on refiner page ([6281c2ae](https://github.com/ForomePlatform/Anfisa-React-Client/commit/6281c2ae))
-* feat([FOROME-435](https://quantori.atlassian.net/browse/FOROME-435)): add validation for refiner gene-region ([855e696f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/855e696f))
-* fix([FOROME-397](https://quantori.atlassian.net/browse/FOROME-397)) fix filter tags section variants with notes option ([8b344e0a](https://github.com/ForomePlatform/Anfisa-React-Client/commit/8b344e0a))
-* fix([FOROME-446](https://quantori.atlassian.net/browse/FOROME-446)): text-editor closing ([a765eb47](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a765eb47))
-* fix([FOROME-475](https://quantori.atlassian.net/browse/FOROME-475)): unable to change the include/exclude mode of the 1st step ([4c10c3b7](https://github.com/ForomePlatform/Anfisa-React-Client/commit/4c10c3b7))
-* fix([FOROME-350](https://quantori.atlassian.net/browse/FOROME-350)): expanding variants on dtree ([85d3cae2](https://github.com/ForomePlatform/Anfisa-React-Client/commit/85d3cae2))
-* feat([FOROME-301](https://quantori.atlassian.net/browse/FOROME-301)) add refiner as particular page ([40a3f0f4](https://github.com/ForomePlatform/Anfisa-React-Client/commit/40a3f0f4))
-* feat([FOROME-301](https://quantori.atlassian.net/browse/FOROME-301)) add refiner as particular page ([e8ab0770](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e8ab0770))
-* fix([FOROME-473](https://quantori.atlassian.net/browse/FOROME-473)): add rq-id for statunits in filter refiner ([325d47b7](https://github.com/ForomePlatform/Anfisa-React-Client/commit/325d47b7))
-* fix([FOROME-454](https://quantori.atlassian.net/browse/FOROME-454)): fix wrong load data from statunits ([9659bfdd](https://github.com/ForomePlatform/Anfisa-React-Client/commit/9659bfdd))
-* fix([FOROME-444](https://quantori.atlassian.net/browse/FOROME-444)): make all drawers layouts dynamic ([dc9620e0](https://github.com/ForomePlatform/Anfisa-React-Client/commit/dc9620e0))
-* fix([FOROME-0](https://quantori.atlassian.net/browse/FOROME-0)): refiner scroll height ([2a52c802](https://github.com/ForomePlatform/Anfisa-React-Client/commit/2a52c802))
-* fix([FOROME-0](https://quantori.atlassian.net/browse/FOROME-0)): buttons text color ([7e835294](https://github.com/ForomePlatform/Anfisa-React-Client/commit/7e835294))
-* feat([FOROME-00](https://quantori.atlassian.net/browse/FOROME-00)): update cypress tests ([f7480385](https://github.com/ForomePlatform/Anfisa-React-Client/commit/f7480385))
-* feat([FOROME-0](https://quantori.atlassian.net/browse/FOROME-0)): add progress-bar-webpack-plugin ([04f2dbe1](https://github.com/ForomePlatform/Anfisa-React-Client/commit/04f2dbe1))
-* fix([FOROME-422](https://quantori.atlassian.net/browse/FOROME-422)): fix transitions between refiner and main table ([fd4edf7b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/fd4edf7b))
-* fix(FOFOME-380): make select values visible ([aaf62e61](https://github.com/ForomePlatform/Anfisa-React-Client/commit/aaf62e61))
-* feat([FOROME-425](https://quantori.atlassian.net/browse/FOROME-425)): add error boundary ([f93dadaa](https://github.com/ForomePlatform/Anfisa-React-Client/commit/f93dadaa))
-* fix([FOROME-391](https://quantori.atlassian.net/browse/FOROME-391)): relocate refiner list tooltips ([ac1a1745](https://github.com/ForomePlatform/Anfisa-React-Client/commit/ac1a1745))
-* fix([FOROME-427](https://quantori.atlassian.net/browse/FOROME-427)): divide search blocks on dtree page ([ea8cbbab](https://github.com/ForomePlatform/Anfisa-React-Client/commit/ea8cbbab))
-* fix([FOROME-390](https://quantori.atlassian.net/browse/FOROME-390)): correct calculate stepIndexForApi ([f2c60c9f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/f2c60c9f))
-* feat([FOROME-332](https://quantori.atlassian.net/browse/FOROME-332)): add validation for refiner range panels ([f94ab6f1](https://github.com/ForomePlatform/Anfisa-React-Client/commit/f94ab6f1))
-* fix([FOROME-0](https://quantori.atlassian.net/browse/FOROME-0)): filter page list search ([6fe4d5df](https://github.com/ForomePlatform/Anfisa-React-Client/commit/6fe4d5df))
-* fix([FOROME-0](https://quantori.atlassian.net/browse/FOROME-0)): dataset saving ([59b20284](https://github.com/ForomePlatform/Anfisa-React-Client/commit/59b20284))
-* fix([FOROME-420](https://quantori.atlassian.net/browse/FOROME-420)): hotfix refiner route ([d3dbc05f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d3dbc05f))
-* fix([FOROME-420](https://quantori.atlassian.net/browse/FOROME-420)): hotfix refiner route ([2943709a](https://github.com/ForomePlatform/Anfisa-React-Client/commit/2943709a))
-* fix([FOROME-420](https://quantori.atlassian.net/browse/FOROME-420)): hotfix refiner route ([47facaf8](https://github.com/ForomePlatform/Anfisa-React-Client/commit/47facaf8))
-* fix([FOROME-0](https://quantori.atlassian.net/browse/FOROME-0)): error with transition from main-table to refiner ([097fce65](https://github.com/ForomePlatform/Anfisa-React-Client/commit/097fce65))
-* fix([FOROME-0](https://quantori.atlassian.net/browse/FOROME-0)): filter page height ([569b712d](https://github.com/ForomePlatform/Anfisa-React-Client/commit/569b712d))
-* fix([FOROME-0](https://quantori.atlassian.net/browse/FOROME-0)): change local to session storage ([4d154ff7](https://github.com/ForomePlatform/Anfisa-React-Client/commit/4d154ff7))
-* fix([FOROME-399](https://quantori.atlassian.net/browse/FOROME-399)): drawer error ([e11a88b3](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e11a88b3))
-* fix([FOROME-400](https://quantori.atlassian.net/browse/FOROME-400)): remove empty attrs from filter page ([175d0ff9](https://github.com/ForomePlatform/Anfisa-React-Client/commit/175d0ff9))
-* fix([FOROME-00](https://quantori.atlassian.net/browse/FOROME-00)): remove button from decision tree ([e50a4226](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e50a4226))
-* fix([FOROME-329](https://quantori.atlassian.net/browse/FOROME-329)): editing custom-inh-mode func ([39885821](https://github.com/ForomePlatform/Anfisa-React-Client/commit/39885821))
-* fix([FOROME-282](https://quantori.atlassian.net/browse/FOROME-282)): reseting filters on main-table ([d3e2cbbc](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d3e2cbbc))
-* fix([FOROME-331](https://quantori.atlassian.net/browse/FOROME-331)): refiner enum checkboxes ([5bda017f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/5bda017f))
-* feat([FOROME-268](https://quantori.atlassian.net/browse/FOROME-268)): add validation for preset name ([92fdad19](https://github.com/ForomePlatform/Anfisa-React-Client/commit/92fdad19))
-* fix([FOROME-379](https://quantori.atlassian.net/browse/FOROME-379)): problem with export ([e52c1b5c](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e52c1b5c))
-* fix([FOROME-341](https://quantori.atlassian.net/browse/FOROME-341)): filter-refiner func attrs ([a0c37706](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a0c37706))
-* fix([FOROME-0](https://quantori.atlassian.net/browse/FOROME-0)): customize dnd ([3e478e16](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3e478e16))
-* fix([FOROME-317](https://quantori.atlassian.net/browse/FOROME-317)): customize table button func ([4631696f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/4631696f))
-* feat(FOROME: 323: add the ability to add filter CustomInheraitanceMode ([1f76eee4](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1f76eee4))
-* fix([FOROME-322](https://quantori.atlassian.net/browse/FOROME-322)): remove excess requests on filter page ([3bca1888](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3bca1888))
-* fix(FOROME: 313): accepted and rejected variants ([f23e3462](https://github.com/ForomePlatform/Anfisa-React-Client/commit/f23e3462))
-* fix([FOROME-302](https://quantori.atlassian.net/browse/FOROME-302)): fix zone filters ux ([7c240c0a](https://github.com/ForomePlatform/Anfisa-React-Client/commit/7c240c0a))
-* fix([FOROME-310](https://quantori.atlassian.net/browse/FOROME-310)): drawer behaviour ([fefb5ff8](https://github.com/ForomePlatform/Anfisa-React-Client/commit/fefb5ff8))
-* fix([FOROME-277](https://quantori.atlassian.net/browse/FOROME-277)): reset zone filters data ([ed04d822](https://github.com/ForomePlatform/Anfisa-React-Client/commit/ed04d822))
-* feat([FOROME-306](https://quantori.atlassian.net/browse/FOROME-306)): add drawer tags validation ([3a95219d](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3a95219d))
-* fix([FOROME-0](https://quantori.atlassian.net/browse/FOROME-0)): readme update ([cb948193](https://github.com/ForomePlatform/Anfisa-React-Client/commit/cb948193))
-* fix([FOROME-00](https://quantori.atlassian.net/browse/FOROME-00)): view variants modal header annotation ([b9f9df34](https://github.com/ForomePlatform/Anfisa-React-Client/commit/b9f9df34))
-* feat([FOROME-292](https://quantori.atlassian.net/browse/FOROME-292)): dataset name validation ([2729b2b1](https://github.com/ForomePlatform/Anfisa-React-Client/commit/2729b2b1))
-* fix([FOROME-303](https://quantori.atlassian.net/browse/FOROME-303)): load decision tree function ([36f8ddc2](https://github.com/ForomePlatform/Anfisa-React-Client/commit/36f8ddc2))
-* fix([FOROME-0](https://quantori.atlassian.net/browse/FOROME-0)): main table data error ([cead8677](https://github.com/ForomePlatform/Anfisa-React-Client/commit/cead8677))
-* fix([FOROME-270](https://quantori.atlassian.net/browse/FOROME-270)) get back header variants amount ([e9531811](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e9531811))
-* fix([FOROME-270](https://quantori.atlassian.net/browse/FOROME-270)) remove excess api calls ([d98f1d8d](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d98f1d8d))
-* feat([FOROME-270](https://quantori.atlassian.net/browse/FOROME-270)): add refiner route from main + url ([5258c094](https://github.com/ForomePlatform/Anfisa-React-Client/commit/5258c094))
-* feat([FOROME-183](https://quantori.atlassian.net/browse/FOROME-183)) fix header layout according mockup ([9668d615](https://github.com/ForomePlatform/Anfisa-React-Client/commit/9668d615))
-* fix([FOROME-271](https://quantori.atlassian.net/browse/FOROME-271)): fix values of charts ([53a82b12](https://github.com/ForomePlatform/Anfisa-React-Client/commit/53a82b12))
-* fix([FOROME-0](https://quantori.atlassian.net/browse/FOROME-0)): reset button color ([b40383e0](https://github.com/ForomePlatform/Anfisa-React-Client/commit/b40383e0))
-* fix([FOROME-0](https://quantori.atlassian.net/browse/FOROME-0)): zone tags-list refreshing ([1eeb9ac0](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1eeb9ac0))
-* fix([FOROME-275](https://quantori.atlassian.net/browse/FOROME-275)): scrolling drawer variants after selection ([693f202c](https://github.com/ForomePlatform/Anfisa-React-Client/commit/693f202c))
-* fix([FOROME-254](https://quantori.atlassian.net/browse/FOROME-254)): adding step by text-editor ([1c287aad](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1c287aad))
-* fix([FOROME-265](https://quantori.atlassian.net/browse/FOROME-265)): ablitity to delete empty step ([aeabf143](https://github.com/ForomePlatform/Anfisa-React-Client/commit/aeabf143))
-* fix([FOROME-236](https://quantori.atlassian.net/browse/FOROME-236)): fix varians list uploading ([24b68e02](https://github.com/ForomePlatform/Anfisa-React-Client/commit/24b68e02))
-* fix([FOROME-236](https://quantori.atlassian.net/browse/FOROME-236)): fix varians list uploading ([5b00680b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/5b00680b))
-* fix([FOROME-0](https://quantori.atlassian.net/browse/FOROME-0)): tags in drawer ([6b4996df](https://github.com/ForomePlatform/Anfisa-React-Client/commit/6b4996df))
-* fix([FOROME-236](https://quantori.atlassian.net/browse/FOROME-236)): fix varians list uploading ([5b6fb83f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/5b6fb83f))
-* feat([FOROME-262](https://quantori.atlassian.net/browse/FOROME-262)): add dataset creation to ws-page ([bf772a59](https://github.com/ForomePlatform/Anfisa-React-Client/commit/bf772a59))
-* fix([FOROME-263](https://quantori.atlassian.net/browse/FOROME-263)): creation custom tags with notes ([15f3148c](https://github.com/ForomePlatform/Anfisa-React-Client/commit/15f3148c))
-* fix([FOROME-0](https://quantori.atlassian.net/browse/FOROME-0)): dtree attributes list search ([305bc4c9](https://github.com/ForomePlatform/Anfisa-React-Client/commit/305bc4c9))
-* fix([FOROME-264](https://quantori.atlassian.net/browse/FOROME-264)): number should indicate the number of the step chosen ([bd17dc75](https://github.com/ForomePlatform/Anfisa-React-Client/commit/bd17dc75))
-* fix([FOROME-244](https://quantori.atlassian.net/browse/FOROME-244)): crashes after selection a specific filter in filter refiner ([4320764a](https://github.com/ForomePlatform/Anfisa-React-Client/commit/4320764a))
-* fix([FOROME-0](https://quantori.atlassian.net/browse/FOROME-0)): reseting zone filter after drawer tag is applied ([48aec6fe](https://github.com/ForomePlatform/Anfisa-React-Client/commit/48aec6fe))
-* feat([FOROME-260](https://quantori.atlassian.net/browse/FOROME-260)): add undo and redo btns ([0cf2c6f9](https://github.com/ForomePlatform/Anfisa-React-Client/commit/0cf2c6f9))
-* fix([FOROME-261](https://quantori.atlassian.net/browse/FOROME-261)): transition between pages ([38b9bbd6](https://github.com/ForomePlatform/Anfisa-React-Client/commit/38b9bbd6))
-* fix([FOROME-0](https://quantori.atlassian.net/browse/FOROME-0)):dataset creation with multiple zone filters ([5b8891bd](https://github.com/ForomePlatform/Anfisa-React-Client/commit/5b8891bd))
-* fix([FOROME-0](https://quantori.atlassian.net/browse/FOROME-0)): dataset creation ([dde5ea80](https://github.com/ForomePlatform/Anfisa-React-Client/commit/dde5ea80))
-* fix([FOROME-249](https://quantori.atlassian.net/browse/FOROME-249)): displaying exclude / include variants data ([ce2d42fe](https://github.com/ForomePlatform/Anfisa-React-Client/commit/ce2d42fe))
-* fix([FOROME-258](https://quantori.atlassian.net/browse/FOROME-258)): getting / sending data in func modals ([492ff3a2](https://github.com/ForomePlatform/Anfisa-React-Client/commit/492ff3a2))
-* fix([FOROME-256](https://quantori.atlassian.net/browse/FOROME-256)): dont continue sending dtree-counts with previous rq-id ([565a2f6e](https://github.com/ForomePlatform/Anfisa-React-Client/commit/565a2f6e))
-* fix([FOROME-251](https://quantori.atlassian.net/browse/FOROME-251)): dont continue sending statunits when active step has chenged ([e60b6e0d](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e60b6e0d))
-* fix([FOROME-252](https://quantori.atlassian.net/browse/FOROME-252)): search on dtree page ([1869b837](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1869b837))
-* fix([FOROME-236](https://quantori.atlassian.net/browse/FOROME-236)): fix upload after filtering ([82aae30a](https://github.com/ForomePlatform/Anfisa-React-Client/commit/82aae30a))
-* fix([FOROME-236](https://quantori.atlassian.net/browse/FOROME-236)): fix upload after filtering ([22fe8d8b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/22fe8d8b))
-* fix([FOROME-248](https://quantori.atlassian.net/browse/FOROME-248)): correct display join ([f7970354](https://github.com/ForomePlatform/Anfisa-React-Client/commit/f7970354))
-* fix([FOROME-236](https://quantori.atlassian.net/browse/FOROME-236)): fix upload after filtering ([5017490b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/5017490b))
-* fix([FOROME-246](https://quantori.atlassian.net/browse/FOROME-246)): dataset creation ([5b6c2366](https://github.com/ForomePlatform/Anfisa-React-Client/commit/5b6c2366))
-* feat([FOROME-243](https://quantori.atlassian.net/browse/FOROME-243)): add clarifying modal ([f044a908](https://github.com/ForomePlatform/Anfisa-React-Client/commit/f044a908))
-* fix([FOROME-250](https://quantori.atlassian.net/browse/FOROME-250)): remove outside click from attr modals ([acaad065](https://github.com/ForomePlatform/Anfisa-React-Client/commit/acaad065))
-* feat([FOROME-240](https://quantori.atlassian.net/browse/FOROME-240)): add fetch stat units sync ([ffea0342](https://github.com/ForomePlatform/Anfisa-React-Client/commit/ffea0342))
-* fix([FOROME-247](https://quantori.atlassian.net/browse/FOROME-247)): export on main table ([b70f0836](https://github.com/ForomePlatform/Anfisa-React-Client/commit/b70f0836))
-* fix([FOROME-241](https://quantori.atlassian.net/browse/FOROME-241)): searches on dtree page ([5e2cca43](https://github.com/ForomePlatform/Anfisa-React-Client/commit/5e2cca43))
-* fix([FOROME-236](https://quantori.atlassian.net/browse/FOROME-236)): fix report async upload ([059fd466](https://github.com/ForomePlatform/Anfisa-React-Client/commit/059fd466))
-* fix([FOROME-239](https://quantori.atlassian.net/browse/FOROME-239)): enum modals search field ([394ffb6e](https://github.com/ForomePlatform/Anfisa-React-Client/commit/394ffb6e))
-* feat([FOROME-239](https://quantori.atlassian.net/browse/FOROME-239)): add search to enum modals ([6f5ede25](https://github.com/ForomePlatform/Anfisa-React-Client/commit/6f5ede25))
-* fix([FOROME-237](https://quantori.atlassian.net/browse/FOROME-237)): fix conflict ([f9757c0f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/f9757c0f))
-* fix([FOROME-237](https://quantori.atlassian.net/browse/FOROME-237)): fix dtree mobx out-of-bounds ([0f1c9ad6](https://github.com/ForomePlatform/Anfisa-React-Client/commit/0f1c9ad6))
-* feat([FOROME-233](https://quantori.atlassian.net/browse/FOROME-233)): add functions to create/modify/delete dtrees ([5e95460f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/5e95460f))
-* feat([FOROME-234](https://quantori.atlassian.net/browse/FOROME-234)): add requests for func attributes ([18cde9c8](https://github.com/ForomePlatform/Anfisa-React-Client/commit/18cde9c8))
-* fix([FOROME-238](https://quantori.atlassian.net/browse/FOROME-238)) bug with infinite loader on func attr modals ([139911c1](https://github.com/ForomePlatform/Anfisa-React-Client/commit/139911c1))
-* feat([FOROME-231](https://quantori.atlassian.net/browse/FOROME-231)): block view variants btns and add tooltip ([59c8bdf6](https://github.com/ForomePlatform/Anfisa-React-Client/commit/59c8bdf6))
-* fix([FOROME-204](https://quantori.atlassian.net/browse/FOROME-204)): fix conflict ([466b8dd5](https://github.com/ForomePlatform/Anfisa-React-Client/commit/466b8dd5))
-* feat([FOROME-131](https://quantori.atlassian.net/browse/FOROME-131)): label for func attrs ([55f55aa0](https://github.com/ForomePlatform/Anfisa-React-Client/commit/55f55aa0))
-* feat([FOROME-204](https://quantori.atlassian.net/browse/FOROME-204)): add defer renderer wrapper ([356893e6](https://github.com/ForomePlatform/Anfisa-React-Client/commit/356893e6))
-* fix([FOROME-235](https://quantori.atlassian.net/browse/FOROME-235)):sending correct data on ws page ([a39794e6](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a39794e6))
-* fix([FOROME-138](https://quantori.atlassian.net/browse/FOROME-138)) expand, collapse buttons work ([d8b4d6af](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d8b4d6af))
-* feat([FOROME-226](https://quantori.atlassian.net/browse/FOROME-226)): insert step attr from left dtree column ([bd79483a](https://github.com/ForomePlatform/Anfisa-React-Client/commit/bd79483a))
-* fix([FOROME-224](https://quantori.atlassian.net/browse/FOROME-224)): opening xl-dataset on ws-page ([1bcb41f9](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1bcb41f9))
-* feat([FOROME-230](https://quantori.atlassian.net/browse/FOROME-230)): add visual display of the selected include/exclude variants of step ([ca709d41](https://github.com/ForomePlatform/Anfisa-React-Client/commit/ca709d41))
-* feat([FOROME-225](https://quantori.atlassian.net/browse/FOROME-225)): create step from left dtree column ([b19bbe87](https://github.com/ForomePlatform/Anfisa-React-Client/commit/b19bbe87))
-* fix([FOROME-232](https://quantori.atlassian.net/browse/FOROME-232)): updating data on ws-page ([e25833f5](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e25833f5))
-* refactor([FOROME-229](https://quantori.atlassian.net/browse/FOROME-229)): modals for func attrs ([e2d8b328](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e2d8b328))
-* feat([FOROME-204](https://quantori.atlassian.net/browse/FOROME-204)): add defer renderer wrapper ([f2360397](https://github.com/ForomePlatform/Anfisa-React-Client/commit/f2360397))
-* feat([FOROME-217](https://quantori.atlassian.net/browse/FOROME-217)): add modals for func attrs ([59e50b4b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/59e50b4b))
-* feat([FOROME-210](https://quantori.atlassian.net/browse/FOROME-210)): add replace and join for attribute ([6d757fc4](https://github.com/ForomePlatform/Anfisa-React-Client/commit/6d757fc4))
-* fix([FOROME-222](https://quantori.atlassian.net/browse/FOROME-222)): move to filter refinder after click Edit Filter btn ([2798a83d](https://github.com/ForomePlatform/Anfisa-React-Client/commit/2798a83d))
-* fix([FOROME-221](https://quantori.atlassian.net/browse/FOROME-221)): add check for make step active ([1b875a4c](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1b875a4c))
-* fix([FOROME-211](https://quantori.atlassian.net/browse/FOROME-211)): open step option on first step empty step and dtree stat for last empty step ([137c31e7](https://github.com/ForomePlatform/Anfisa-React-Client/commit/137c31e7))
-* fix([FOROME-209](https://quantori.atlassian.net/browse/FOROME-209)): getting data for editing modals ([91f2493b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/91f2493b))
-* fix([FOROME-208](https://quantori.atlassian.net/browse/FOROME-208)): getting data on ws-page ([e6b73f11](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e6b73f11))
-* feat([FOROME-161](https://quantori.atlassian.net/browse/FOROME-161)): add step for new tree ([fd4e6b37](https://github.com/ForomePlatform/Anfisa-React-Client/commit/fd4e6b37))
-* feat([FOROME-206](https://quantori.atlassian.net/browse/FOROME-206)): add linter hook ([9af44c11](https://github.com/ForomePlatform/Anfisa-React-Client/commit/9af44c11))
-* feat([FOROME-184](https://quantori.atlassian.net/browse/FOROME-184)): added text-editor ([6e305532](https://github.com/ForomePlatform/Anfisa-React-Client/commit/6e305532))
-* fix(ws infinite scroll): add infinite scroll for ws table ([FOROME-197](https://quantori.atlassian.net/browse/FOROME-197)) ([eeae6760](https://github.com/ForomePlatform/Anfisa-React-Client/commit/eeae6760))
-* fix(ws infinite scroll): add infinite scroll for ws table ([FOROME-197](https://quantori.atlassian.net/browse/FOROME-197)) ([1608d2c6](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1608d2c6))

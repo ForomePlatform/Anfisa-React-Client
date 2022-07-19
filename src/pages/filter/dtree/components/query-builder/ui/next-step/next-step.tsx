@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite'
 import styled from 'styled-components'
 
 import stepStore, { ActiveStepOptions } from '@store/dtree/step.store'
-import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
+import { DecisionTreesResultsDataCy } from '@data-testid'
 import { NextStepContent } from './next-step-content'
 import { NextStepHeader } from './next-step-header'
 import { NextStepRoute } from './next-step-route'

@@ -15,6 +15,7 @@ export interface IAspectWindowProps<
   isOpen: boolean
   isMovable?: boolean
   isResizable?: boolean
+  searchValue: string
   igvUrlSearchParams?: string
   onToggle?: (params: TWindowToggleHandleParams) => void
 }

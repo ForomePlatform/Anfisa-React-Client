@@ -13,6 +13,7 @@ import {
 interface IAspectTableViewProps {
   className?: string
   aspect: ITableAspectDescriptor
+  searchValue: string
   shouldAddShadow?: boolean
   columnRef?: Ref<HTMLTableDataCellElement>
 }
@@ -20,6 +21,7 @@ interface IAspectTableViewProps {
 export const AspectTableView = ({
   className,
   aspect,
+  searchValue,
   columnRef,
   shouldAddShadow,
 }: IAspectTableViewProps): ReactElement => {
@@ -45,6 +47,12 @@ export const AspectTableView = ({
 
               const shouldShowCount = count && index === 0
 
+              const isSearched = searchValue.trim()
+                ? row.title
+                    .toLocaleLowerCase()
+                    .startsWith(searchValue.toLocaleLowerCase())
+                : false
+
               return (
                 <tr key={row.name}>
                   <td
@@ -61,7 +69,10 @@ export const AspectTableView = ({
                       placement="bottom-start"
                     >
                       <span
-                        className="cursor-auto"
+                        className={cn('cursor-auto', {
+                          'aspect-window__content_active bg-yellow-bright p-1':
+                            isSearched,
+                        })}
                         onMouseDownCapture={onMouseDownHandler}
                       >
                         {shouldShowCount

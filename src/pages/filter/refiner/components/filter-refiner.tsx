@@ -8,7 +8,7 @@ import mainTableStore from '@store/ws/main-table.store'
 import { FilterRefinerUnits } from './filter-refiner-units'
 import { FilterRefinerViewVariants } from './filter-refiner-view-variants'
 import { SelectedGroup } from './middle-column/selected-group'
-import { QuerySelected } from './right-column/query-selected'
+import { FilterRightColumn } from './right-column'
 interface IFilterRefinerProps {
   className?: string
 }
@@ -29,7 +29,7 @@ export const FilterRefiner = ({
 
       <SelectedGroup className={styles.filterRefiner__currentAttribute} />
 
-      <QuerySelected
+      <FilterRightColumn
         className={styles.filterRefiner__results}
         onViewVariants={openViewVariantsModal}
       />

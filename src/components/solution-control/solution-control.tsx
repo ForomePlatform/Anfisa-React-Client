@@ -81,6 +81,7 @@ export const SolutionControl = ({
       <SolutionControlPopover
         isOpen={isPopoverOpen}
         onClose={closePopover}
+        controlName={controlName}
         anchorEl={popoverAnchor}
         solutions={solutions}
         modifiedSolution={modifiedSolution}

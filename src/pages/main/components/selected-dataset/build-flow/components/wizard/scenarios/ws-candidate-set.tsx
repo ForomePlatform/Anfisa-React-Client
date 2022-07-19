@@ -51,6 +51,6 @@ export const wsCandidateSet: IWizardScenario[] = [
     contentDisabled: false,
     value: '',
     title: t('home.buildFlow.additionalPresetFilter'),
-    maxHeight: 'calc(90vh - 500px)',
+    maxHeight: 'calc(100vh - 585px)',
   },
 ]

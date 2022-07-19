@@ -1,7 +1,7 @@
 import { useModal } from '@core/hooks/use-modal'
 import { t } from '@i18n'
 import { Button } from '@ui/button'
-import { DecisionTreesMenuDataCy } from '@components/data-testid/decision-tree-menu.cy'
+import { DecisionTreesMenuDataCy } from '@data-testid'
 import { TextEditorDialog } from '../modals/components/text-editor-dialog'
 
 export const TextEditorButton = () => {

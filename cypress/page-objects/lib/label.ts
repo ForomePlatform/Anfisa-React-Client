@@ -1,3 +1,5 @@
+import { isNil } from 'lodash'
+
 import { UIElement } from './ui-element'
 
 export class Label extends UIElement {
@@ -9,8 +11,7 @@ export class Label extends UIElement {
   }
 
   checkLabelText(text?: string) {
-    const defaultText = this.labelText !== '' ? this.labelText : text
-
+    const defaultText = isNil(text) || text === '' ? this.labelText : text
     return this.getElement().should('have.text', defaultText)
   }
 }

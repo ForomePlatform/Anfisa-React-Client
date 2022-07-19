@@ -78,6 +78,8 @@ export const FilterControl = observer(
       } else if (referrer === GlbPagesNames.Table) {
         history.push(`${Routes.WS}?ds=${dsName}`)
       }
+
+      filterStore.clearConditions()
     }
 
     return (

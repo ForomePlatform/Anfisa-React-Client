@@ -44,6 +44,7 @@ export interface IAspectWindowBaseProps extends IAspectWindowProps {
   className?: string
   title?: ReactNode
   titleAdornment?: ReactNode
+  searchValue: string
   content?: TContentRenderFn
 }
 
@@ -59,6 +60,7 @@ export const AspectWindowBase = ({
   isResizable,
   children,
   onToggle,
+  searchValue,
   ...divProps
 }: IAspectWindowBaseProps): ReactElement => {
   const contentRef = useRef<HTMLDivElement>(null)
@@ -83,6 +85,7 @@ export const AspectWindowBase = ({
             aspect={aspect}
             shouldAddShadow={shouldAddShadow}
             columnRef={columnRef}
+            searchValue={searchValue}
           />
         )
         break

@@ -4,7 +4,7 @@ import cn from 'classnames'
 import { formatNumber } from '@core/format-number'
 import { t } from '@i18n'
 import { CircleDivider } from '@ui/divider'
-import { MainTableDataCy } from '@components/data-testid/main-table.cy'
+import { MainTableDataCy } from '@data-testid'
 
 interface IVariantsCountProps {
   variantCounts?: number | null

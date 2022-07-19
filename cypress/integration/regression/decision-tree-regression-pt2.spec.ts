@@ -2,7 +2,7 @@ import { datasetPage } from '../../page-objects/app/datasets-page'
 import { decisionTreesPage } from '../../page-objects/app/decision-trees-page'
 import { Timeouts } from '../../shared/timeouts'
 
-describe('Regression test of the decision tree', () => {
+describe.skip('Regression test of the decision tree', () => {
   const includedVariants = '+5,041,176'
   const datasetName = 'xl_PGP3140_wgs_NIST-4_2'
   const filterName = '⏚Hearing Loss, v.5'
@@ -11,7 +11,7 @@ describe('Regression test of the decision tree', () => {
 
   it('should expand all | step 18', () => {
     decisionTreesPage.searchForCallers(datasetName)
-    decisionTreesPage.decisionTreeResults.graphHeaders.eq(0).click()
+    decisionTreesPage.decisionTreeResults.unitName.eq(0).click()
     decisionTreesPage.selectAllAttributes(selectAll)
     cy.wait('@applyAttributes').its('response.statusCode').should('eq', 200)
     decisionTreesPage.decisionTreeResults.excludeInfo
@@ -27,7 +27,7 @@ describe('Regression test of the decision tree', () => {
     decisionTreesPage.attributesList.searchForAttr
       .eq(0)
       .type('Compound_Request')
-    decisionTreesPage.decisionTreeResults.graphHeaders.eq(0).click()
+    decisionTreesPage.decisionTreeResults.unitName.eq(0).click()
     decisionTreesPage.decisionTreeResults.selectReset.select(
       'Autosomal Dominant',
     )
@@ -41,7 +41,7 @@ describe('Regression test of the decision tree', () => {
   })
   it('should collapse charts | step 20', () => {
     decisionTreesPage.searchForCallers(datasetName)
-    decisionTreesPage.decisionTreeResults.graphHeaders.eq(0).click()
+    decisionTreesPage.decisionTreeResults.unitName.eq(0).click()
     decisionTreesPage.selectAllAttributes(selectAll)
     decisionTreesPage.decisionTreeResults.excludeInfo
       .first()
@@ -51,7 +51,7 @@ describe('Regression test of the decision tree', () => {
   })
   it('should expand collapsed charts | step 21', () => {
     decisionTreesPage.searchForCallers(datasetName)
-    decisionTreesPage.decisionTreeResults.graphHeaders.eq(0).click()
+    decisionTreesPage.decisionTreeResults.unitName.eq(0).click()
     decisionTreesPage.selectAllAttributes(selectAll)
     decisionTreesPage.decisionTreeResults.excludeInfo
       .first()
@@ -64,7 +64,7 @@ describe('Regression test of the decision tree', () => {
 
   it('should open text editor | step 22', () => {
     decisionTreesPage.searchForCallers(datasetName)
-    decisionTreesPage.decisionTreeResults.graphHeaders.eq(0).click()
+    decisionTreesPage.decisionTreeResults.unitName.eq(0).click()
     decisionTreesPage.selectAllAttributes(selectAll)
     decisionTreesPage.decisionTreeResults.excludeInfo
       .first()
@@ -92,12 +92,12 @@ describe('Regression test of the decision tree', () => {
     // decisionTreesPage.decisionTreeResults.stepCard.countElements(2)
     // decisionTreesPage.decisionTreeResults.addAttribute.eq(1).click()
     cy.intercept('POST', '/app/dtree_set').as('selectList')
-    decisionTreesPage.decisionTreeMenu.selectDecision.first().click()
+    decisionTreesPage.decisionTreeMenu.selectDecisionTree.first().click()
     cy.wait('@selectList', {
       timeout: Timeouts.TenSecondsTimeout,
     })
     cy.intercept('POST', '/app/statunits').as('decTreeUpload')
-    decisionTreesPage.decisionTreeMenu.selectDecision.getFilter(filterName)
+    decisionTreesPage.decisionTreeMenu.selectDecisionTree.getFilter(filterName)
     cy.wait('@decTreeUpload', {
       timeout: Timeouts.TenSecondsTimeout,
     })
@@ -119,31 +119,31 @@ describe('Regression test of the decision tree', () => {
 
   it('should apply decision tree preset | step 25', () => {
     datasetPage.visit(`/filter?ds=${datasetName}`)
-    decisionTreesPage.decisionTreeMenu.selectDecision.first().click()
+    decisionTreesPage.decisionTreeMenu.selectDecisionTree.first().click()
     cy.intercept('POST', '/app/statunits').as('decTreeUpload')
-    decisionTreesPage.decisionTreeMenu.selectDecision.getFilter(filterName)
+    decisionTreesPage.decisionTreeMenu.selectDecisionTree.getFilter(filterName)
     decisionTreesPage.decisionTreeResults.stepCard.countElements(18)
     cy.wait('@decTreeUpload')
   })
 
   it('should show changes made in decision tree | step 26', () => {
     datasetPage.visit(`/filter?ds=${datasetName}`)
-    decisionTreesPage.decisionTreeMenu.selectDecision.first().click()
+    decisionTreesPage.decisionTreeMenu.selectDecisionTree.first().click()
     cy.intercept('POST', '/app/statunits').as('decTreeUpload')
-    decisionTreesPage.decisionTreeMenu.selectDecision.getFilter(filterName)
+    decisionTreesPage.decisionTreeMenu.selectDecisionTree.getFilter(filterName)
     decisionTreesPage.decisionTreeResults.stepCard.countElements(18)
     cy.wait('@decTreeUpload')
     decisionTreesPage.decisionTreeResults.addAttribute.first().click()
     decisionTreesPage.attributesList.searchForAttr
       .eq(0)
       .type('Compound_Request')
-    decisionTreesPage.decisionTreeResults.graphHeaders.eq(0).click()
+    decisionTreesPage.decisionTreeResults.unitName.eq(0).click()
     decisionTreesPage.decisionTreeResults.selectReset.select(
       'Homozygous Recessive/X-linked',
     )
     decisionTreesPage.attributesList.replaceButton.click()
     cy.wait('@decTreeUpload')
-    decisionTreesPage.decisionTreeResults.searchGraphResults
+    decisionTreesPage.decisionTreeResults.searchResults
       .eq(1)
       .type('Compound_Request')
     decisionTreesPage.decisionTreeResults.stepCard.countElements(1)
@@ -151,7 +151,7 @@ describe('Regression test of the decision tree', () => {
 
   it('should create new decision tree | step 27', () => {
     decisionTreesPage.searchForCallers(datasetName)
-    decisionTreesPage.decisionTreeResults.graphHeaders.eq(0).click()
+    decisionTreesPage.decisionTreeResults.unitName.eq(0).click()
     decisionTreesPage.selectAllAttributes(selectAll)
     decisionTreesPage.decisionTreeMenu.createNew.click()
     decisionTreesPage.decisionTreeMenu.newDecisionTreeNameInput.type(
@@ -169,8 +169,8 @@ describe('Regression test of the decision tree', () => {
         )
       },
     )
-    decisionTreesPage.decisionTreeMenu.selectDecision.first().click()
-    decisionTreesPage.decisionTreeMenu.selectDecision.element.should(
+    decisionTreesPage.decisionTreeMenu.selectDecisionTree.first().click()
+    decisionTreesPage.decisionTreeMenu.selectDecisionTree.element.should(
       'contain',
       decisionTreeName,
     )
@@ -179,10 +179,10 @@ describe('Regression test of the decision tree', () => {
   it('should modify created decision tree | step 28', () => {
     datasetPage.visit(`/filter?ds=${datasetName}`)
     cy.intercept('POST', '/app/dtree_set').as('selectList')
-    decisionTreesPage.decisionTreeMenu.selectDecision.first().click()
+    decisionTreesPage.decisionTreeMenu.selectDecisionTree.first().click()
     cy.wait('@selectList')
     cy.intercept('POST', '/app/statunits').as('decTreeUpload')
-    decisionTreesPage.decisionTreeMenu.selectDecision.getFilter(
+    decisionTreesPage.decisionTreeMenu.selectDecisionTree.getFilter(
       decisionTreeName,
     )
     cy.wait('@decTreeUpload')
@@ -191,7 +191,7 @@ describe('Regression test of the decision tree', () => {
     decisionTreesPage.decisionTreeResults.stepCard.countElements(2)
     decisionTreesPage.decisionTreeResults.addAttribute.eq(1).click()
     decisionTreesPage.attributesList.searchForAttr.eq(0).type('Min_GQ')
-    decisionTreesPage.decisionTreeResults.graphHeaders.eq(0).click()
+    decisionTreesPage.decisionTreeResults.unitName.eq(0).click()
     decisionTreesPage.decisionTreeResults.leftInput.type('10')
     decisionTreesPage.decisionTreeResults.rightInput.type('100')
     decisionTreesPage.attributesList.addSelectedAttributes.click()
@@ -223,10 +223,10 @@ describe('Regression test of the decision tree', () => {
   it('should delete created decision tree | step 29', () => {
     datasetPage.visit(`/filter?ds=${datasetName}`)
     cy.intercept('POST', '/app/dtree_set').as('selectList')
-    decisionTreesPage.decisionTreeMenu.selectDecision.first().click()
+    decisionTreesPage.decisionTreeMenu.selectDecisionTree.first().click()
     cy.wait('@selectList')
     cy.intercept('POST', '/app/statunits').as('decTreeUpload')
-    decisionTreesPage.decisionTreeMenu.selectDecision.getFilter(
+    decisionTreesPage.decisionTreeMenu.selectDecisionTree.getFilter(
       decisionTreeName,
     )
     cy.wait('@decTreeUpload')
@@ -245,7 +245,7 @@ describe('Regression test of the decision tree', () => {
         )
       },
     )
-    decisionTreesPage.decisionTreeMenu.selectDecision.element
+    decisionTreesPage.decisionTreeMenu.selectDecisionTree.element
       .contains(decisionTreeName)
       .should('not.exist')
   })

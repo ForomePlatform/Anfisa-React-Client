@@ -4,7 +4,7 @@ import React, { ReactElement } from 'react'
 import cn from 'classnames'
 
 import { t } from '@i18n'
-import { ReturnedVariantsDataCy } from '@components/data-testid/returned-variants'
+import { ReturnedVariantsDataCy } from '@data-testid'
 import { IRecordDescriptor } from '@service-providers/common'
 
 interface IVariantsListTableProps {

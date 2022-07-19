@@ -10,8 +10,9 @@ import modalsVisibilityStore from '../modals-visibility-store'
 
 export const SelectAttributeDialog = observer((): ReactElement => {
   const { isLoading } = dtreeStore.stat
+  const isOpen = modalsVisibilityStore.isSelectAttributeDialogVisible
 
-  const [readScrollPosition] = useScrollPosition({
+  const [readScrollPosition, writeScrollPosition] = useScrollPosition({
     elem: '#attributes-container',
     storageId: 'attributesModalScrollPos',
   })
@@ -19,12 +20,17 @@ export const SelectAttributeDialog = observer((): ReactElement => {
   useEffect(() => {
     readScrollPosition()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [isOpen])
+
+  const onClose = () => {
+    modalsVisibilityStore.closeSelectAttributeDialog()
+    writeScrollPosition({ top: 0 })
+  }
 
   return (
     <Dialog
-      isOpen={modalsVisibilityStore.isSelectAttributeDialogVisible}
-      onClose={modalsVisibilityStore.closeSelectAttributeDialog}
+      isOpen={isOpen}
+      onClose={onClose}
       title={t('condition.selectAttribute')}
       width="m"
       style={{ top: '50%' }}

@@ -6,6 +6,7 @@ import { TAspectDescriptor } from '@service-providers/dataset-level/dataset-leve
 export interface IVariantAspectsLayoutBaseProps {
   className?: string
   aspects: TAspectDescriptor[]
+  searchValue: string
   igvUrlSearchParams?: string
 }
 

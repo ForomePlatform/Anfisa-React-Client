@@ -8,6 +8,7 @@ import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
 import stepStore from '@store/dtree/step.store'
 import { UnitsList } from '@components/units-list'
+import { DecisionTreesResultsDataCy } from '@data-testid'
 import modalsVisibilityStore from '@pages/filter/dtree/components/modals/modals-visibility-store'
 import { AttributeKinds, TPropertyStatus } from '@service-providers/common'
 
@@ -33,7 +34,10 @@ const DtreeUnitsListSubHeader = observer(() => {
   )
 
   return (
-    <div className="text-blue-bright font-medium">
+    <div
+      className="text-blue-bright font-medium"
+      data-testid={DecisionTreesResultsDataCy.resultsTitle}
+    >
       {activeStep &&
         (activeStep.isFinalStep
           ? t('dtree.showingResultsForFinalStep')

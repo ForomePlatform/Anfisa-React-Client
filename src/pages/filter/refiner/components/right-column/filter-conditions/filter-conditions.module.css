@@ -1,0 +1,43 @@
+.root {
+  overflow-y: auto;
+
+  &__card {
+    position: relative;
+
+    &_dragging {
+      opacity: 0.25;
+    }
+
+    &_placeholder {
+      &::before {
+        content: "";
+        position: absolute;
+        top: -2px;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: theme("colors.blue.bright");
+        opacity: 0.5;
+      }
+    }
+
+    &:first-of-type&_placeholder::before {
+      top: 0
+    }
+
+    &:last-of-type&_placeholder::before {
+      top: auto;
+      bottom: 0
+    }
+  }
+}
+
+.draggable-condition {
+  position: absolute;
+  z-index: 3000;
+  background: theme("colors.blue.light");
+  left: 0;
+  top: 0;
+  opacity: 0.75;
+  box-shadow: 0 0 2px theme("colors.blue.active");
+}

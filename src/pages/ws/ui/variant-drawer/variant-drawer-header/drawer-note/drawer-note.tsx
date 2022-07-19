@@ -5,7 +5,7 @@ import { t } from '@i18n'
 import variantStore from '@store/ws/variant'
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
-import { VariantDrawerDataCy } from '@components/data-testid/variant-drawer.cy'
+import { VariantDrawerDataCy } from '@data-testid'
 import { NotePopover } from './note-popover'
 
 export const DrawerNote = observer(() => {

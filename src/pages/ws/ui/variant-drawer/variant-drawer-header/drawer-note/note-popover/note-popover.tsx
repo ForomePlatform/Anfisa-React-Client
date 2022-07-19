@@ -14,7 +14,7 @@ import { useResizeTextAreaHeight } from '@core/hooks/use-resize-text-area-height
 import { t } from '@i18n'
 import { Button } from '@ui/button'
 import { IPopoverProps } from '@ui/popover/popover.interface'
-import { VariantDrawerDataCy } from '@components/data-testid/variant-drawer.cy'
+import { VariantDrawerDataCy } from '@data-testid'
 import { validateNotes } from '@utils/validation/validateNotes'
 import { DrawerPopover } from '../../drawer-popover'
 

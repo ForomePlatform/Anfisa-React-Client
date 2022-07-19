@@ -1,5 +1,4 @@
-import { CommonSelectors } from '../../../src/components/data-testid/common-selectors.cy'
-import { FilterRefiner } from '../../../src/components/data-testid/filter-refiner.cy'
+import { CommonSelectors, FilterRefiner } from '@data-testid'
 import { Helper } from '../../shared/helpers'
 import { BasePage } from '../lib/base-page'
 import { FilterRefinerMenuWidget } from './widgets/filter-refiner.widget'

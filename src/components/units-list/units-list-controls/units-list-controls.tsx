@@ -6,6 +6,7 @@ import cn from 'classnames'
 import { t } from '@i18n'
 import { Icon } from '@ui/icon'
 import { InputSearch } from '@components/input-search'
+import { DecisionTreesResultsDataCy } from '@data-testid'
 
 interface IUnitsListControlsProps {
   className?: string
@@ -25,6 +26,7 @@ export const UnitsListControls = ({
   return (
     <div className={cn(styles.controls, className)}>
       <InputSearch
+        dataTestId={DecisionTreesResultsDataCy.searchResults}
         className={styles.controls__search}
         placeholder={t('filter.searchForAField')}
         value={filterValue}

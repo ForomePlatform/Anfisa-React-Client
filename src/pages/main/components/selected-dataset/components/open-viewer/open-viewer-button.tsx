@@ -4,7 +4,7 @@ import { t } from '@i18n'
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
 import { IPopoverButtonBaseProps } from '@ui/popover/popover.interface'
-import { DatasetInfoDataCy } from '@components/data-testid/dataset-info.cy'
+import { DatasetInfoDataCy } from '@data-testid'
 
 export const OpenViewerButton = ({
   isOpen,

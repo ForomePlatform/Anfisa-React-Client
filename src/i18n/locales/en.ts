@@ -68,7 +68,6 @@ export const en = {
     selectSolution: 'Select {controlName}',
     createEntry: 'Create {solutionName}',
     join: 'Join',
-    apply: 'Apply Filter',
     delete: 'Delete',
     modify: 'Modify',
     createDialog: {
@@ -219,6 +218,7 @@ export const en = {
     textAboutSomething: 'Text about something',
     savePreset: 'Save Preset',
     savePredefinedPresetError: '{presetName} is a predefined preset',
+    searchThroughTheTabs: 'Search through the tabs',
     openInAModalWindow: 'Open in a modal window',
     openInANewTab: 'Open in a new tab',
   },
@@ -253,6 +253,7 @@ export const en = {
     functionalUnits: 'Functional Units',
   },
   filter: {
+    applyCriterium: 'Apply criterium',
     switcher: 'Only starts with',
     method: 'Filtering method',
     results: 'Results',
@@ -294,6 +295,7 @@ export const en = {
       title: 'Attention! All changes will be lost',
       body: 'Are you sure you want to leave the page without saving the preset?',
     },
+    inactiveField: 'Inactive field',
   },
   dtree: {
     variants: 'variants',

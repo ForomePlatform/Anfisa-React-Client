@@ -5,7 +5,7 @@ import cn from 'classnames'
 
 import dirinfo from '@store/dirinfo'
 import { Icon } from '@ui/icon'
-import { FilterDatasetDataCy } from '@components/data-testid/filter-dataset.cy'
+import { FilterDatasetDataCy } from '@data-testid'
 
 export const ReloadButton: FC = () => (
   <button

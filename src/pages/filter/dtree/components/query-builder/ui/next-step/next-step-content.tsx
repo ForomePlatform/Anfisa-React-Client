@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import { t } from '@i18n'
 import stepStore, { ActiveStepOptions } from '@store/dtree/step.store'
-import { DecisionTreesResultsDataCy } from '@components/data-testid/decision-tree-results.cy'
+import { DecisionTreesResultsDataCy } from '@data-testid'
 import modalsVisibilityStore from '../../../modals/modals-visibility-store'
 import { ContentCode } from './content-code/content-code'
 import { NextStepContentItem } from './next-step-content-item'

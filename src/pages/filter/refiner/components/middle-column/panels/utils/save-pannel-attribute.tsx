@@ -3,6 +3,7 @@ import filterStore from '@store/filter'
 import {
   AttributeKinds,
   TFuncArgs,
+  TFuncCondition,
   TNumericConditionBounds,
 } from '@service-providers/common'
 import { getConditionJoinMode } from '@utils/getConditionJoinMode'
@@ -36,7 +37,7 @@ export const savePanelAttribute = ({
         getConditionJoinMode(mode),
         selectedVariants!,
         param!,
-      ])
+      ] as TFuncCondition)
       break
 
     case AttributeKinds.NUMERIC:

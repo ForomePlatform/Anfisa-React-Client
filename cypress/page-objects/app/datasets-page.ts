@@ -1,6 +1,8 @@
-import { DatasetCard } from '../../../src/components/data-testid/dataset-card.cy'
-import { DatasetInfoDataCy } from '../../../src/components/data-testid/dataset-info.cy'
-import { FilterDatasetDataCy } from '../../../src/components/data-testid/filter-dataset.cy'
+import {
+  DatasetCard,
+  DatasetInfoDataCy,
+  FilterDatasetDataCy,
+} from '@data-testid'
 import { Helper } from '../../shared/helpers'
 import { BasePage } from '../lib/base-page'
 import { DatasetInfoWidget } from './widgets/dataset-info.widget'

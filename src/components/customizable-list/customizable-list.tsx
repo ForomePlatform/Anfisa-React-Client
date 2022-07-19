@@ -8,7 +8,7 @@ import {
   NotDraggingStyle,
 } from 'react-beautiful-dnd'
 
-import { MainTableDataCy } from '@components/data-testid/main-table.cy'
+import { MainTableDataCy } from '@data-testid'
 import { CustomizableListItem } from './components'
 import { TCustomizableListItem } from './customizable-list.interface'
 import { reorderItems, toggleItem } from './customizable-list.utils'

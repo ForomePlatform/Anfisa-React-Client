@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
 import { Sidebar } from '@ui/sidebar'
-import { FilterDatasetDataCy } from '@components/data-testid/filter-dataset.cy'
+import { FilterDatasetDataCy } from '@data-testid'
 import { ReloadButton } from '@pages/main/components/sidebar/reload-button'
 import { HandleDataset } from '../handle-dataset'
 import { DatasetsList } from './datasets-list/datasets-list'

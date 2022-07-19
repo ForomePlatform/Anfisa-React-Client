@@ -1,7 +1,8 @@
-import { CommonSelectors } from '../../src/components/data-testid/common-selectors.cy'
+import { CommonSelectors } from '@data-testid'
 import { datasetPage } from '../page-objects/app/datasets-page'
 import { mainTablePage } from '../page-objects/app/main-table-page'
 import { variantDrawerPage } from '../page-objects/app/variant-drawer-page'
+import { ApiEndpoints } from '../shared/constants'
 import { Timeouts } from '../shared/timeouts'
 
 const today = new Date()
@@ -11,8 +12,12 @@ const time =
 
 const dateTime = time
 
-describe('Open saved dataset in MainTable', () => {
-  const datasetName = 'xl_PGP3140_wgs_NIST-4_2'
+describe.skip('Open saved dataset in MainTable', () => {
+  const datasetName = 'PGP3140_wgs_NIST-4_2'
+  const autoDataset = 'Dataset_from_autotests'
+  const datasetsGroup = 'Datasets'
+  // const xlDatasetName = 'xl_' + datasetName
+
   const presetName = '⏚SEQaBOO_Hearing_Quick'
   const variants1 = 'Variants: 41'
   const variants2 = 'Variants: 24'
@@ -23,35 +28,41 @@ describe('Open saved dataset in MainTable', () => {
 
   it('should open saved on previous step dataset and open it in main table', () => {
     datasetPage.visit()
-    datasetPage.leftPanel.leftPanelHeader.checkLabelText('Datasets')
-    datasetPage.leftPanel.datasetsListElem.getButtonByText(datasetName).click()
-    datasetPage.leftPanel.leftPanelHeader.checkLabelText('Datasets')
-    datasetPage.leftPanel.datasetsListElem
-      .getButtonByText('Dataset_from_autotests')
-      .click()
-    cy.waitUntil(() =>
-      datasetPage.datasetInfo.datasetHeader.element.then(el => {
-        return el.text() === 'Dataset_from_autotests'
-      }),
-    )
-    datasetPage.datasetInfo.openInViewer.click()
-    datasetPage.datasetInfo.viewerOption.contains('Main Table').click()
-    cy.url().should('include', '/ws?ds=Dataset_from_autotests')
+
+    const leftPanel = datasetPage.leftPanel
+    leftPanel.leftPanelHeader.checkLabelText(datasetsGroup)
+    leftPanel.datasetsListElem.getButtonByText(datasetName).click()
+
+    leftPanel.leftPanelHeader.checkLabelText(datasetsGroup)
+    leftPanel.datasetsListElem.getButtonByText(autoDataset).click()
+
+    const info = datasetPage.datasetInfo
+    info.datasetHeader.haveText(autoDataset)
+
+    info.openInViewer.click()
+    info.viewerOption.contains('Main Table').click()
+    cy.url().should('include', `/ws?ds=${autoDataset}`)
   })
 
   it('should select preset in main table | test #6', () => {
-    mainTablePage.visit('/ws?ds=Dataset_from_autotests')
-    mainTablePage.mainTable.selectPreset.click()
-    cy.intercept('POST', '/app/tab_report').as('loadPreset')
-    mainTablePage.mainTable.numVariants.haveText(variants1)
-    mainTablePage.mainTable.preset.getButtonByText(presetName).click()
-    cy.wait('@loadPreset').its('response.statusCode').should('eq', 200)
-    mainTablePage.mainTable.numVariants.haveText(variants2)
-    mainTablePage.mainTable.addSample.click()
-    mainTablePage.mainTable.checkbox.variantMainTableCheckbox('proband [HG002]')
-    mainTablePage.mainTable.applyButton.click()
-    mainTablePage.mainTable.numVariants.haveText('Variants: 8')
-    cy.wait('@loadPreset').its('response.statusCode').should('eq', 200)
+    mainTablePage.visit(`/ws?ds=${autoDataset}`)
+    const mainTable = mainTablePage.mainTable
+
+    mainTable.selectPreset.click()
+    cy.intercept('POST', ApiEndpoints.tabReport).as('tabReport')
+
+    mainTable.numVariants.haveText(variants1)
+    mainTable.selectPreset.click()
+    mainTable.selectPreset.contains(presetName).click()
+    cy.wait('@tabReport').its('response.statusCode').should('eq', 200)
+
+    mainTable.numVariants.haveText(variants2)
+    mainTable.addSample.click()
+    mainTable.checkboxListElement.contains('proband [HG002]').click()
+
+    mainTable.applyButton.click()
+    mainTable.numVariants.haveText('Variants: 8')
+    cy.wait('@tabReport').its('response.statusCode').should('eq', 200)
   })
 
   it('should add custom tag to the variant | test #8/1', () => {
@@ -95,7 +106,7 @@ describe('Open saved dataset in MainTable', () => {
     mainTablePage.mainTable.numVariants.haveText('Variants: 1')
     mainTablePage.mainTable.tableRow.getButtonByText('p.M541L').click()
     variantDrawerPage.variantDrawer.addNote.click()
-    cy.intercept('POST', '/app/ws_tags?ds=Dataset_from_autotests&rec=**').as(
+    cy.intercept('POST', `${ApiEndpoints.wsTags}?ds=${autoDataset}&rec=**`).as(
       'addNote',
     )
     variantDrawerPage.variantDrawer.fillSpace.type(
@@ -127,7 +138,7 @@ describe('Open saved dataset in MainTable', () => {
     )
     variantDrawerPage.variantDrawer.tagInput.type(forSecondaryReview)
     variantDrawerPage.variantDrawer.addCustomTag.forceClick()
-    cy.intercept('POST', '/app/ws_tags').as('addTags')
+    cy.intercept('POST', ApiEndpoints.wsTags).as('addTags')
     variantDrawerPage.variantDrawer.saveTags.forceClick()
     cy.wait('@addTags').its('response.statusCode').should('eq', 200)
     variantDrawerPage.variantDrawer.addedTag.contains(forSecondaryReview)
@@ -150,7 +161,7 @@ describe('Open saved dataset in MainTable', () => {
     variantDrawerPage.variantDrawer.fillSpace.type(
       'MS, 11/10/21: more common in Ashkenazi Jews than in other populations, is not present in ClinVar',
     )
-    cy.intercept('POST', '/app/ws_tags?ds=Dataset_from_autotests&rec=**').as(
+    cy.intercept('POST', `${ApiEndpoints.wsTags}?ds=${autoDataset}&rec=**`).as(
       'addNote',
     )
     variantDrawerPage.variantDrawer.saveNote.forceClick()
@@ -181,7 +192,7 @@ describe('Open saved dataset in MainTable', () => {
       'Likely Benign',
       Timeouts.TenSecondsTimeout,
     )
-    cy.intercept('POST', '/app/ws_tags').as('addTags')
+    cy.intercept('POST', ApiEndpoints.wsTags).as('addTags')
     variantDrawerPage.variantDrawer.saveTags.forceClick()
     cy.wait('@addTags').its('response.statusCode').should('eq', 200)
     variantDrawerPage.variantDrawer.addedTag.contains('Likely Benign')
@@ -206,7 +217,7 @@ describe('Open saved dataset in MainTable', () => {
     variantDrawerPage.variantDrawer.fillSpace.type(
       'MS, 11/10/21: DM in HGMD but benign in ClinVar, common in AS',
     )
-    cy.intercept('POST', '/app/ws_tags?ds=Dataset_from_autotests&rec=**').as(
+    cy.intercept('POST', `${ApiEndpoints.wsTags}?ds=${autoDataset}&rec=**`).as(
       'addNote',
     )
     variantDrawerPage.variantDrawer.saveNote.forceClick()
@@ -237,7 +248,7 @@ describe('Open saved dataset in MainTable', () => {
       'For_secondary_review',
       Timeouts.TenSecondsTimeout,
     )
-    cy.intercept('POST', '/app/ws_tags').as('addTags')
+    cy.intercept('POST', ApiEndpoints.wsTags).as('addTags')
     variantDrawerPage.variantDrawer.saveTags.forceClick()
     cy.wait('@addTags').its('response.statusCode').should('eq', 200)
     variantDrawerPage.variantDrawer.addedTag.contains('For_secondary_review')
@@ -260,7 +271,7 @@ describe('Open saved dataset in MainTable', () => {
     variantDrawerPage.variantDrawer.fillSpace.type(
       'MS, 11/10/21:  coding in NDUFS3 only, a very rare variant that does not have any clinical annotations, but  It does have damaging in-silico predictions from Polyphen and SIFT',
     )
-    cy.intercept('POST', '/app/ws_tags?ds=Dataset_from_autotests&rec=**').as(
+    cy.intercept('POST', `${ApiEndpoints.wsTags}?ds=${autoDataset}&rec=**`).as(
       'addNote',
     )
     variantDrawerPage.variantDrawer.saveNote.forceClick()
@@ -291,7 +302,7 @@ describe('Open saved dataset in MainTable', () => {
       'Likely Benign',
       Timeouts.TenSecondsTimeout,
     )
-    cy.intercept('POST', '/app/ws_tags').as('addTags')
+    cy.intercept('POST', ApiEndpoints.wsTags).as('addTags')
     variantDrawerPage.variantDrawer.saveTags.forceClick()
     cy.wait('@addTags').its('response.statusCode').should('eq', 200)
     variantDrawerPage.variantDrawer.addedTag.contains('Likely Benign')
@@ -323,7 +334,7 @@ describe('Open saved dataset in MainTable', () => {
       Timeouts.TenSecondsTimeout,
     )
 
-    cy.intercept('POST', '/app/ws_tags').as('addTags')
+    cy.intercept('POST', ApiEndpoints.wsTags).as('addTags')
     variantDrawerPage.variantDrawer.saveTags.forceClick()
     cy.wait('@addTags').its('response.statusCode').should('eq', 200)
     variantDrawerPage.variantDrawer.addedTag.contains('Likely Benign')
@@ -347,7 +358,7 @@ describe('Open saved dataset in MainTable', () => {
     variantDrawerPage.variantDrawer.fillSpace.type(
       'MS, 11/10/21:  a damaging prediction by Polyphen HDIV',
     )
-    cy.intercept('POST', '/app/ws_tags?ds=Dataset_from_autotests&rec=**').as(
+    cy.intercept('POST', `${ApiEndpoints.wsTags}?ds=${autoDataset}&rec=**`).as(
       'addNote',
     )
     variantDrawerPage.variantDrawer.saveNote.forceClick()
@@ -378,7 +389,7 @@ describe('Open saved dataset in MainTable', () => {
       'Likely Benign',
       Timeouts.TenSecondsTimeout,
     )
-    cy.intercept('POST', '/app/ws_tags').as('addTags')
+    cy.intercept('POST', ApiEndpoints.wsTags).as('addTags')
     variantDrawerPage.variantDrawer.saveTags.forceClick()
     cy.wait('@addTags').its('response.statusCode').should('eq', 200)
     variantDrawerPage.variantDrawer.addedTag.contains('Likely Benign')
@@ -405,7 +416,7 @@ describe('Open saved dataset in MainTable', () => {
     )
     variantDrawerPage.variantDrawer.tagInput.type(benign)
     variantDrawerPage.variantDrawer.addCustomTag.forceClick()
-    cy.intercept('POST', '/app/ws_tags').as('addTags')
+    cy.intercept('POST', ApiEndpoints.wsTags).as('addTags')
     variantDrawerPage.variantDrawer.saveTags.forceClick()
     cy.wait('@addTags').its('response.statusCode').should('eq', 200)
     variantDrawerPage.variantDrawer.addedTag.contains(benign)
@@ -428,7 +439,7 @@ describe('Open saved dataset in MainTable', () => {
     variantDrawerPage.variantDrawer.fillSpace.type(
       'MS, 11/10/21: it is possibly de-novo',
     )
-    cy.intercept('POST', '/app/ws_tags?ds=Dataset_from_autotests&rec=**').as(
+    cy.intercept('POST', `${ApiEndpoints.wsTags}?ds=${autoDataset}&rec=**`).as(
       'addNote',
     )
     variantDrawerPage.variantDrawer.saveNote.forceClick()
@@ -443,7 +454,7 @@ describe('Open saved dataset in MainTable', () => {
     mainTablePage.mainTable.checkbox.variantMainTableCheckbox(
       'Benign/Likely benign',
     )
-    cy.intercept('POST', '/app/ws_list').as('addTag')
+    cy.intercept('POST', ApiEndpoints.wsList).as('addTag')
     mainTablePage.mainTable.applyButton.forceClick()
     cy.wait('@addTag').its('response.statusCode').should('eq', 200)
     mainTablePage.mainTable.tableRow.element
@@ -452,31 +463,31 @@ describe('Open saved dataset in MainTable', () => {
   })
 
   it('should save Excel file | test #17', () => {
-    mainTablePage.visit('/ws?ds=Dataset_from_autotests')
+    mainTablePage.visit(`/ws?ds=${autoDataset}`)
     mainTablePage.mainTable.selectPreset.click()
-    cy.intercept('POST', '/app/tab_report').as('loadPreset')
+    cy.intercept('POST', ApiEndpoints.tabReport).as('loadPreset')
     mainTablePage.mainTable.preset
       .getButtonByText('⏚SEQaBOO_Hearing_Quick')
       .click()
     cy.wait('@loadPreset')
-    cy.intercept('GET', '/app/excel/Dataset_from_autotests_**.xlsx').as(
+    cy.intercept('GET', `${ApiEndpoints.excel}/${autoDataset}_**.xlsx`).as(
       'reportDownload',
     )
     mainTablePage.mainTable.exportReport.click()
     mainTablePage.mainTable.exportExcel.click()
     cy.wait('@reportDownload')
-    cy.readFile('./cypress/downloads/Dataset_from_autotests.xlsx').should(
-      'exist',
-    )
+    cy.readFile(`./cypress/downloads/${autoDataset}.xlsx`).should('exist')
   })
 
   function loginWithPreset() {
-    mainTablePage.visit('/ws?ds=Dataset_from_autotests')
+    mainTablePage.visit(`/ws?ds=${autoDataset}`)
+    cy.intercept('POST', ApiEndpoints.wsList).as('wsList')
+    cy.intercept('POST', ApiEndpoints.tabReport).as('tabReport')
+    cy.wait('@wsList')
+
     mainTablePage.mainTable.selectPreset.click()
-    cy.intercept('POST', '/app/tab_report').as('loadPreset')
-    mainTablePage.mainTable.numVariants.haveText(variants1)
-    mainTablePage.mainTable.preset.getButtonByText(presetName).click()
-    cy.wait('@loadPreset')
+    mainTablePage.mainTable.selectPreset.contains(presetName).click()
+    cy.wait('@tabReport')
     mainTablePage.mainTable.numVariants.haveText(variants2)
   }
 })

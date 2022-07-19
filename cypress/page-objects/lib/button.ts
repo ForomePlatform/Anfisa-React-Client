@@ -1,4 +1,4 @@
-import { CommonSelectors } from '../../../src/components/data-testid/common-selectors.cy'
+import { CommonSelectors } from '@data-testid'
 import { UIElement } from './ui-element'
 
 export class Button extends UIElement {
@@ -16,6 +16,6 @@ export class Button extends UIElement {
   }
 
   getFilter(text: string) {
-    return cy.get(CommonSelectors.preset).contains(text).click()
+    cy.get(CommonSelectors.menuItem).contains(text).click()
   }
 }

@@ -12,6 +12,7 @@ interface IBarChartProps {
   totalItems: number
   width?: number
   height?: number
+  dataTestId?: string
 }
 
 export const BarChart = ({
@@ -19,10 +20,12 @@ export const BarChart = ({
   totalItems,
   width,
   height,
+  dataTestId,
 }: IBarChartProps): ReactElement => {
   return (
     <div>
       <SvgChart
+        data-testid={dataTestId}
         className={styles.barChart}
         width={width}
         height={height}
