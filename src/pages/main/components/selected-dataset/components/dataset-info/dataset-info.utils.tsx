@@ -2,6 +2,7 @@ import styles from './dataset-info.module.css'
 
 import cn from 'classnames'
 
+import { t } from '@i18n'
 import { CardTitle } from '@ui/card-main'
 import { IDsInfoReceipt } from '@service-providers/dataset-level'
 import { Row } from './dataset-info.interfaces'
@@ -26,10 +27,12 @@ export const renderRow =
 export const renderAncestor = (receipt: IDsInfoReceipt) => {
   const isFilter = receipt.kind === 'filter'
 
-  const title = `${
-    isFilter ? 'Filter applied in' : 'Decision tree code applied in'
-  } ${receipt.base}`
-  const fdPrefix = isFilter ? 'Filter name: ' : 'Tree name: '
+  const title = `${t(
+    `home.infoPanel.filter.${isFilter ? 'filterHeader' : 'dtreeHeader'}`,
+  )} ${receipt.base}`
+  const fdPrefix = t(
+    `home.infoPanel.filter.${isFilter ? 'filterName' : 'dtreeName'}`,
+  )
   const fdName = isFilter ? receipt['filter-name'] : receipt['dtree-name']
   const conditions = isFilter
     ? receipt['f-presentation']
@@ -49,7 +52,11 @@ export const renderAncestor = (receipt: IDsInfoReceipt) => {
           </span>
           {updated?.every(Boolean) && (
             <>
-              &nbsp;updated at {updated[0]} from {updated[1]}
+              &nbsp;
+              {t('home.infoPanel.filter.updated', {
+                at: updated[0],
+                from: updated[1],
+              })}
             </>
           )}
         </span>
@@ -63,7 +70,7 @@ export const renderAncestor = (receipt: IDsInfoReceipt) => {
         <div className={styles.datasetInfo__ancestor__supplyPanel}>
           {Object.entries(panelSupply).map(panel => (
             <span key={panel[0]}>
-              Supplied panels for type{' '}
+              {t('home.infoPanel.filter.suppliedPanels')}
               <span className={styles.datasetInfo__ancestor__filter_name}>
                 {panel[0]}
               </span>

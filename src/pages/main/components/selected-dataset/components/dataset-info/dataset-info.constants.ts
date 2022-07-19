@@ -1,19 +1,20 @@
+import { t } from '@i18n'
 import { IDsInfo } from '@service-providers/dataset-level'
 import { Row } from './dataset-info.interfaces'
 
 export const INFO: ReadonlyArray<Row<keyof IDsInfo>> = [
-  { field: 'name', fieldName: 'Name' },
-  { field: 'kind', fieldName: 'Kind' },
-  { field: 'total', fieldName: 'Variants' },
+  { field: 'name', fieldName: t('home.infoPanel.info.name') },
+  { field: 'kind', fieldName: t('home.infoPanel.info.kind') },
+  { field: 'total', fieldName: t('home.infoPanel.info.variants') },
   {
     // @ts-ignore
     field: 'createTime',
-    fieldName: 'Created at',
+    fieldName: t('home.infoPanel.info.cratedAt'),
     render: (time: string) => new Date(time).toISOString(),
   },
   {
     field: 'ancestors',
-    fieldName: 'Base dataset',
+    fieldName: t('home.infoPanel.info.baseDataset'),
     optional: true,
     render: (ancestors: string[][]) => {
       if (ancestors.length === 0) {
@@ -25,7 +26,7 @@ export const INFO: ReadonlyArray<Row<keyof IDsInfo>> = [
   },
   {
     field: 'ancestors',
-    fieldName: 'Base loaded at',
+    fieldName: t('home.infoPanel.info.baseLoaded'),
     optional: true,
     render: (ancestors: string[][]) => {
       if (ancestors.length === 0 || ancestors[0].length !== 3) {
@@ -37,7 +38,7 @@ export const INFO: ReadonlyArray<Row<keyof IDsInfo>> = [
   },
   {
     field: 'ancestors',
-    fieldName: 'Root dataset',
+    fieldName: t('home.infoPanel.info.rootDataset'),
     optional: true,
     render: (ancestors: string[][]) => {
       if (ancestors.length === 0) {

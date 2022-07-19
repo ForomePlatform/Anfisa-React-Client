@@ -6,6 +6,7 @@ import { startCase } from 'lodash'
 import { observer } from 'mobx-react-lite'
 
 import { useFullScreenView } from '@core/hooks/use-fullscreen-view'
+import { t } from '@i18n'
 import datasetStore from '@store/dataset/dataset'
 import { Card, CardTitle } from '@ui/card-main'
 import { Loader } from '@ui/loader'
@@ -43,7 +44,7 @@ export const DatasetInfo: FC<IDatasetInfoProps> = observer(({ className }) => {
   return (
     <Card id={id} className={cn(styles.datasetInfo, className)}>
       <CardTitle showExpandButton onExpand={toggle} isExpanded={isExpanded}>
-        Info
+        {t('home.infoPanel.title')}
       </CardTitle>
 
       {isLoading && (
@@ -59,7 +60,7 @@ export const DatasetInfo: FC<IDatasetInfoProps> = observer(({ className }) => {
               <tr>
                 <td colSpan={2}>
                   <CardTitle className={cn(styles.datasetInfo__title)}>
-                    Annotation sources versions
+                    {t('home.infoPanel.annotations')}
                   </CardTitle>
                 </td>
               </tr>
