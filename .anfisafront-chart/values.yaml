@@ -9,9 +9,13 @@ ingress:
 
 # ------------------------------------------------------------------------------
 # anfisa_front:
-# ------------------------------------------------------------------------------
+# ------------------------------------------------------------------------------ 
 anfisa_front:
   name: __anfisaFrontName__
-  registry: __anfisaFrontRegistry__:__Build.BuildNumber__
-#  branch: __anfisaFrontBranch__
+  registry: __azdevops_agent_registry__:__Build.BuildNumber__
+  branch: __anfisaFrontBranch__
   url_backend: https://__anfisaFrontIngressHost__/app
+
+secret_token:
+  name: registry
+  azp_token: __azp_token__
