@@ -3,14 +3,13 @@ import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
 import dirinfoStore from '@store/dirinfo'
-import { Card, CardTitle } from '@ui/card'
-import { DatasetCard } from '@data-testid'
-import { DatasetsFieldsList } from './components/dataset-fields-list/dataset-fileds-list'
-import { DatasetGeneral } from './components/dataset-general/dataset-general'
-import { OpenViewer } from './components/open-viewer'
-import { DeleteDatasetButton } from './delete-dataset-button'
+import { SelectedDatasetBuildFlow } from './build-flow'
+import wizardStore from './build-flow/components/wizard/wizard.store'
+import { SelectedDatasetStartFlow } from './start-flow'
 
 export const SelectedDataset = observer((): ReactElement => {
+  const { isFetching } = dirinfoStore.dirinfo
+
   if (!dirinfoStore.selectedDirinfoName) {
     return (
       <span className="m-auto text-grey-blue">{t('home.pickDataset')}</span>
@@ -18,26 +17,15 @@ export const SelectedDataset = observer((): ReactElement => {
   }
 
   return (
-    <div className="flex-grow justify-center flex flex-col">
-      <div className="flex items-center flex-wrap mt-4 ml-4">
-        <CardTitle
-          text={dirinfoStore.selectedDirinfoName}
-          dataTestId={DatasetCard.datasetHeader}
-          className="mr-3 break-words"
-          style={{ maxWidth: 'calc(100% - 140px)' }}
-        />
-
-        <OpenViewer />
-      </div>
-      <div className="flex-grow grid gap-4 grid-cols-3 p-4 overflow-auto">
-        <Card className="col-span-1 xl:col-span-3">
-          <DatasetGeneral />
-
-          <DeleteDatasetButton className="mt-5" />
-        </Card>
-
-        <DatasetsFieldsList />
-      </div>
-    </div>
+    <>
+      {!isFetching &&
+        (wizardStore.isWizardVisible ? (
+          <SelectedDatasetBuildFlow
+            goBack={() => wizardStore.toggleIsWizardVisible(false)}
+          />
+        ) : (
+          <SelectedDatasetStartFlow />
+        ))}
+    </>
   )
 })
