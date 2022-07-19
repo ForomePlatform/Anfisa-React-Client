@@ -10,7 +10,7 @@ ingress:
 # ------------------------------------------------------------------------------
 # anfisa_front:
 # ------------------------------------------------------------------------------ 
- anfisa_front:
+anfisa_front:
   name: __anfisaFrontName__
   registry: __azdevops_agent_registry__:__Build.BuildNumber__
   branch: __anfisaFrontBranch__
