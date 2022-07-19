@@ -4,7 +4,7 @@ import { FC, RefObject } from 'react'
 import cn, { Argument } from 'classnames'
 
 interface ICardProps {
-  innerRef: RefObject<HTMLElement>
+  innerRef?: RefObject<HTMLElement>
   className?: Argument
 }
 

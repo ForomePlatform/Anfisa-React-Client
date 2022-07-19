@@ -42,7 +42,14 @@ export const DatasetInfo: FC<IDatasetInfoProps> = observer(({ className }) => {
 
   return (
     <Card innerRef={ref} className={cn(styles.datasetInfo, className)}>
-      <CardTitle showExpandButton onExpand={toggle} isExpanded={isExpanded}>
+      <CardTitle
+        size="sm"
+        showExpandButton
+        onExpand={toggle}
+        isExpanded={isExpanded}
+        className={styles.datasetInfo__title}
+        style={{ marginTop: '0' }}
+      >
         {t('home.infoPanel.title')}
       </CardTitle>
 
@@ -58,7 +65,10 @@ export const DatasetInfo: FC<IDatasetInfoProps> = observer(({ className }) => {
 
               <tr>
                 <td colSpan={2}>
-                  <CardTitle className={cn(styles.datasetInfo__title)}>
+                  <CardTitle
+                    size="sm"
+                    className={cn(styles.datasetInfo__title)}
+                  >
                     {t('home.infoPanel.annotations')}
                   </CardTitle>
                 </td>

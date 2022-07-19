@@ -43,7 +43,9 @@ export const renderAncestor = (receipt: IDsInfoReceipt) => {
 
   return (
     <div key={receipt.base}>
-      <CardTitle className={cn(styles.datasetInfo__title)}>{title}</CardTitle>
+      <CardTitle size="sm" className={cn(styles.datasetInfo__title)}>
+        {title}
+      </CardTitle>
       {fdName && (
         <span className={styles.datasetInfo__ancestor__filter}>
           {fdPrefix}

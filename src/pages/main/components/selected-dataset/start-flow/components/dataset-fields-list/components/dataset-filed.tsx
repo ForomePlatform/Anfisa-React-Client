@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 import cn, { Argument } from 'classnames'
 
-import { Card, CardTitle } from '@ui/card'
+import { Card, CardTitle } from '@ui/card-main'
 
 interface IDatasetFieldProps {
   label: string

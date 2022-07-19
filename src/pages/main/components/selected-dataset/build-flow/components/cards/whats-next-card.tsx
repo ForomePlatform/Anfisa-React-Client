@@ -4,7 +4,7 @@ import { ExploreGenomeTypes } from '@core/enum/explore-genome-types-enum'
 import { datasetStore } from '@store/dataset'
 import filterStore from '@store/filter'
 import { Button } from '@ui/button'
-import { Card } from '@ui/card'
+import { Card } from '@ui/card-main'
 import { GlbPagesNames } from '@glb/glb-names'
 import {
   optionsForOpenButton,

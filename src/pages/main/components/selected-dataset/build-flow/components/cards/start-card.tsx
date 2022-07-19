@@ -1,6 +1,6 @@
 import { datasetStore } from '@store/dataset'
 import { Button } from '@ui/button'
-import { Card } from '@ui/card'
+import { Card } from '@ui/card-main'
 import { Radio } from '@ui/radio'
 import { startFlowOptionsList } from '../wizard/wizard.data'
 import { ICardProps } from '../wizard/wizard.interface'

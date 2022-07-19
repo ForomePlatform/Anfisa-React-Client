@@ -1,23 +1,17 @@
 .card {
-  background-color: theme("colors.white");
-  width: 100%;
-  height: 100%;
   border-radius: theme("spacing.2");
   box-shadow: theme("boxShadow.mainCard");
   padding: theme("spacing.4");
-  overflow: scroll;
-  display: flex;
-  flex-direction: column;
-  scrollbar-gutter: stable;
 
   &_header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
-
     &_title {
-      @apply typography-m;
+      &_md {
+        @apply typography-l;
+      }
+
+      &_xs {
+        @apply typography-m;
+      }
 
       font-weight: bold;
       flex-grow: 1;
