@@ -9,7 +9,7 @@ import { Row } from './dataset-info.interfaces'
 
 export const renderRow =
   <T,>(info: T) =>
-  ({ field, fieldName, render, optional }: Row<keyof T>) => {
+  ({ field, fieldName, render, optional }: Row<keyof T>, i: number) => {
     const value = info[field]
 
     if (optional && (!value || (render && !render(value)))) {
@@ -17,7 +17,7 @@ export const renderRow =
     }
 
     return (
-      <tr key={fieldName} className={cn(styles.datasetInfo__table_row)}>
+      <tr key={fieldName + i} className={cn(styles.datasetInfo__table_row)}>
         <td className={cn(styles.datasetInfo__table_row_title)}>{fieldName}</td>
         <td>{render ? render(value) : value}</td>
       </tr>

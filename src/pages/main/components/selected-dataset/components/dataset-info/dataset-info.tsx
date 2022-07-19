@@ -1,6 +1,6 @@
 import styles from './dataset-info.module.css'
 
-import { FC, useMemo } from 'react'
+import { FC, useMemo, useRef } from 'react'
 import cn, { Argument } from 'classnames'
 import { startCase } from 'lodash'
 import { observer } from 'mobx-react-lite'
@@ -20,9 +20,9 @@ interface IDatasetInfoProps {
 }
 
 export const DatasetInfo: FC<IDatasetInfoProps> = observer(({ className }) => {
-  const id = 'InfoDetailsContaoner'
+  const ref = useRef<HTMLElement>(null)
 
-  const [isExpanded, toggle] = useFullScreenView(id)
+  const [isExpanded, toggle] = useFullScreenView(ref)
 
   const { dsInfoData: info, isLoading } = datasetStore
   const versions = info?.meta.versions
@@ -41,7 +41,7 @@ export const DatasetInfo: FC<IDatasetInfoProps> = observer(({ className }) => {
   )
 
   return (
-    <Card id={id} className={cn(styles.datasetInfo, className)}>
+    <Card innerRef={ref} className={cn(styles.datasetInfo, className)}>
       <CardTitle showExpandButton onExpand={toggle} isExpanded={isExpanded}>
         {t('home.infoPanel.title')}
       </CardTitle>

@@ -1,13 +1,13 @@
-import { useCallback, useEffect, useState } from 'react'
+import { RefObject, useCallback, useEffect, useState } from 'react'
 
 export const useFullScreenView = (
-  id: string,
+  ref: RefObject<HTMLElement>,
   callback?: (v: boolean) => void,
 ): [boolean, () => void] => {
   const [isExpanded, setIsExpanded] = useState(false)
 
   const toggleStoreFullScreen = useCallback(() => {
-    const element = document.querySelector(`#${id}`)
+    const element = ref.current
 
     if (!element) return
 
@@ -15,7 +15,7 @@ export const useFullScreenView = (
 
     setIsExpanded(fullscreenEnabled)
     callback && callback(fullscreenEnabled)
-  }, [callback, id])
+  }, [callback, ref])
 
   useEffect(() => {
     document.addEventListener('fullscreenchange', toggleStoreFullScreen)
@@ -25,7 +25,7 @@ export const useFullScreenView = (
   }, [toggleStoreFullScreen])
 
   const toggle = () => {
-    const element = document.querySelector(`#${id}`)
+    const element = ref.current
 
     if (!element) return
 
