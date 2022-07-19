@@ -20,7 +20,6 @@ import { IBaseDialogProps } from '@ui/dialog/dialog.interface'
 import { Icon } from '@ui/icon'
 import { Input } from '@ui/input'
 import { DecisionTreesMenuDataCy } from '@data-testid'
-import { GlbPagesNames } from '@glb/glb-names'
 import { showToast } from '@utils/notifications/showToast'
 import {
   noFirstNumberPattern,
@@ -39,28 +38,29 @@ export const CreateDatasetDialog = observer(
 
     useEffect(() => {
       if (isOpen) {
-        const { variantCounts } = mainTableStore.fixedStatAmount
         const { conditions } = filterStore
+        const dtreeAcceptedVariants = dtreeStore.totalFilteredCounts?.accepted
+        const refinerAcceptedVariants =
+          filterStore.stat.filteredCounts?.variants
+        const mainTableVariants = mainTableStore.fixedStatAmount.variantCounts
 
         if (
-          pathName === PatnNameEnum.Filter &&
-          filterStore.method === GlbPagesNames.Dtree &&
-          dtreeStore.acceptedVariants === 0
+          pathName === PatnNameEnum.FilterDtree &&
+          dtreeAcceptedVariants === 0
         ) {
           setError(DatasetCreationErrorsEnum.EmptyDataset)
           return
         }
 
         if (
-          pathName === PatnNameEnum.Filter &&
-          filterStore.method === GlbPagesNames.Refiner &&
-          variantCounts === 0
+          pathName === PatnNameEnum.FilterRefiner &&
+          refinerAcceptedVariants === 0
         ) {
           setError(DatasetCreationErrorsEnum.EmptyDataset)
           return
         }
 
-        if (pathName === PatnNameEnum.Ws && variantCounts === 0) {
+        if (pathName === PatnNameEnum.Ws && mainTableVariants === 0) {
           setError(DatasetCreationErrorsEnum.EmptyDataset)
           return
         }
@@ -186,15 +186,13 @@ export const CreateDatasetDialog = observer(
             <span className="text-12 text-red-secondary mt-2">{error}</span>
           </div>
 
-          {!isDone &&
-            pathName !== PatnNameEnum.Filter &&
-            filterStore.method !== GlbPagesNames.Refiner && (
-              <div className="mt-5 flex items-center">
-                <Icon name="Attention" className="mr-2 text-red-light" />
+          {!isDone && pathName === PatnNameEnum.Ws && (
+            <div className="mt-5 flex items-center">
+              <Icon name="Attention" className="mr-2 text-red-light" />
 
-                <span className="text-12">{t('dsCreation.attention')}</span>
-              </div>
-            )}
+              <span className="text-12">{t('dsCreation.attention')}</span>
+            </div>
+          )}
 
           <span className="mt-2 text-14">
             {operations.savingStatus[1]}
