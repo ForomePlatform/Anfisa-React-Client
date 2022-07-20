@@ -1,6 +1,6 @@
 ﻿@regression
 Feature: Filter Refiner, Filter by Custom_Inheritance_Mode
-
+@smoke
 Scenario: 01 The "Custom_Inheritance_Mode" filter is displayed
 	Given the Filter Refiner for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
 	When user clicks on "+" button near functional Units
@@ -8,11 +8,11 @@ Scenario: 01 The "Custom_Inheritance_Mode" filter is displayed
 	Then Settings for the "Custom_Inheritance_Mode" should be displayed
 	And "Reset" value should be empty
 	And "Scenario" values  HG002, HG003, HG004 should be empty
-
+@smoke
 Scenario: 02 The "Reset" value equals "Homozygous/X-linked"
 	Given The "Custom_Inheritance_Mode" functional attribute was displayed
 	When user checks check-box of the "Homozygous/X-linked"
-	And clicks on "+Add Attribute" button
+	And clicks on "+ Add Attribute" button
 	Then "Scenario" values should be HG002=2, HG003=0-1, HG004=0-1
 	And the number of variants should be equal to "227768".
 

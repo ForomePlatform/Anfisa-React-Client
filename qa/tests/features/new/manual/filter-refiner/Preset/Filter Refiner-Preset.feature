@@ -73,3 +73,11 @@ Scenario: 07 Delete a custom preset
 	And clicks on "Delete" option
 	And user clicks on "Yes, Delete Filter Preset" button
 	Then the preset should be deleted
+
+Scenario: 08 Cancel deleting a custom preset
+	Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
+	When user clicks the "Select Filter Preset" drop-down
+	And clicks on three dots near the custom preset
+	And clicks on "Delete" option
+	And user clicks on "No, Keep Filter Preset" button
+	Then the preset should not be deleted
