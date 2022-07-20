@@ -122,7 +122,7 @@ export const en = {
         name: 'Name',
         kind: 'Kind',
         variants: 'Variants',
-        cratedAt: 'Created At',
+        createdAt: 'Created At',
         baseDataset: 'Base dataset',
         baseLoaded: 'Base loaded at',
         rootDataset: 'Base dataset',

@@ -9,7 +9,7 @@ export const INFO: ReadonlyArray<Row<keyof IDsInfo>> = [
   {
     // @ts-ignore
     field: 'createTime',
-    fieldName: t('home.infoPanel.info.cratedAt'),
+    fieldName: t('home.infoPanel.info.createdAt'),
     render: (time: string) => new Date(time).toISOString(),
   },
   {
