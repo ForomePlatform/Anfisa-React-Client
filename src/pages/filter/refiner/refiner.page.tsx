@@ -42,6 +42,10 @@ export const RefinerPage = observer((): ReactElement => {
     ? modifiedPreset === activePreset
     : !filterStore.isConditionsEmpty
 
+  const allVariants = isXL
+    ? toJS(datasetStore.dsInfoData?.total)
+    : variantCounts
+
   useDatasetName()
 
   filterPresetsStore.observeHistory.useHook()
@@ -54,9 +58,7 @@ export const RefinerPage = observer((): ReactElement => {
     <div className={styles.refinerPage}>
       <Header className={styles.refinerPage__header}>
         <VariantsCount
-          variantCounts={
-            isXL ? toJS(datasetStore.dsInfoData?.total) : variantCounts
-          }
+          variantCounts={allVariants}
           transcriptsCounts={transcriptsCounts}
           dnaVariantsCounts={dnaVariantsCounts}
           showDnaVariants={!isXL}
@@ -69,6 +71,7 @@ export const RefinerPage = observer((): ReactElement => {
       <FilterControl
         pageName={FilterControlOptionsNames[GlbPagesNames.Refiner]}
         SolutionControl={SolutionControlRefiner}
+        countOfVariants={allVariants || 0}
         createSolutionEntry={createPreset}
         availableSolutionEntries={availableSolutionEntries}
         isBackwardAllowed={filterStore.actionHistory.isBackwardAllowed}

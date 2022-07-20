@@ -9,6 +9,7 @@ export interface IFilterControlProps {
   isForwardAllowed: boolean
   isBackwardAllowed: boolean
   isEntryCreationAllowed: boolean
+  countOfVariants: number
   pageName: FilterControlOptionsNames
   goForward: () => void
   goBackward: () => void

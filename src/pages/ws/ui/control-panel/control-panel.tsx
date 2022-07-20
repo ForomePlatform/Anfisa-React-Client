@@ -2,6 +2,7 @@ import styles from './control-panel.module.css'
 
 import { ReactElement } from 'react'
 
+import filterStore from '@store/filter'
 import { Divider } from '@ui/divider'
 import { CreateDataset } from './create-dataset'
 import { CustomizeTable } from './customize-table'
@@ -39,7 +40,7 @@ export const ControlPanel = (): ReactElement => (
     </div>
 
     <div className={styles.controlPanel__save}>
-      <CreateDataset />
+      <CreateDataset disabled={!filterStore.isFilterTouched} />
     </div>
   </div>
 )

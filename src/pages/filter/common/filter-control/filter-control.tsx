@@ -36,6 +36,7 @@ export const FilterControl = observer(
     isForwardAllowed,
     isEntryCreationAllowed,
     isBackwardAllowed,
+    countOfVariants,
     pageName,
     goForward,
     goBackward,
@@ -82,6 +83,9 @@ export const FilterControl = observer(
       filterStore.clearConditions()
     }
 
+    const createDisabled =
+      !filterStore.isFilterTouched || countOfVariants > 9000
+
     return (
       <div
         className={cn(
@@ -123,7 +127,7 @@ export const FilterControl = observer(
 
             <Divider orientation="vertical" className="h-[75%]" />
 
-            <CreateDataset />
+            <CreateDataset disabled={createDisabled} />
           </div>
 
           <div className="flex items-center">

@@ -117,6 +117,7 @@ export const DtreePage = observer((): ReactElement => {
           createSolutionEntry={createDtree}
           availableSolutionEntries={availableSolutionEntries}
           isEntryCreationAllowed={isEntryCreationAllowed}
+          countOfVariants={getFiltersValue('all') || 0}
           isBackwardAllowed={dtreeStore.actionHistory.isBackwardAllowed}
           isForwardAllowed={dtreeStore.actionHistory.isForwardAllowed}
           goForward={dtreeStore.actionHistory.goForward}
