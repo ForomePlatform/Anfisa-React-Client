@@ -1,0 +1,8 @@
+.description-card {
+  &__field {
+    height: 14vh;
+    outline: none;
+    width: 100%;
+    background: transparent;
+  }
+}

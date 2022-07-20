@@ -1,3 +1,5 @@
+import styles from './description-card.module.css'
+
 import { useEffect, useState } from 'react'
 import { useHistory } from 'react-router'
 import cn from 'classnames'
@@ -16,15 +18,13 @@ import { showToast } from '@utils/notifications/showToast'
 import {
   exploreCandidateOptionsList,
   optionsForOpenButton,
-} from '../wizard/wizard.data'
-import { ICardProps } from '../wizard/wizard.interface'
-import wizardStore from '../wizard/wizard.store'
-import { getNextPageData, memorizeLocation } from '../wizard/wizard.utils'
-import { CardTitleWithEdit } from './components/card-edit-title'
-import { CardRadioList } from './components/card-radio-list'
+} from '../../wizard/wizard.data'
+import { ICardProps } from '../../wizard/wizard.interface'
+import wizardStore from '../../wizard/wizard.store'
+import { getNextPageData, memorizeLocation } from '../../wizard/wizard.utils'
+import { CardTitleWithEdit } from '../components/card-edit-title'
+import { CardRadioList } from '../components/card-radio-list'
 
-const datasetDescriptionDefault =
-  'No description available at the moment. You can add description by clicking the plus icon above.'
 const descriptions: { [key: string]: string } = {}
 let typingTimer: ReturnType<typeof setTimeout>
 
@@ -45,18 +45,12 @@ export const DescriptionCard = (props: ICardProps) => {
   const [isEditMode, setEditMode] = useState(false)
   const [isTyping, setTyping] = useState(false)
   const [datasetDescription, setDatasetDescription] = useState(
-    note || datasetDescriptionDefault,
+    note || t('home.datasetDescriptionDefault'),
   )
-
-  const editDescriptionIcon = note?.length ? (
-    <Icon name="Edit" className={cn('text-blue-bright')} />
-  ) : (
-    <span className={cn('text-blue-bright')}>+</span>
-  )
-
-  const saveDescriptionIcon = (
-    <Icon name="Check" className={cn('text-blue-bright')} />
-  )
+  const fieldDefaultValue =
+    datasetDescription === t('home.datasetDescriptionDefault')
+      ? ''
+      : datasetDescription
 
   const toggleEditMode = () => {
     setEditMode(!isEditMode)
@@ -104,36 +98,8 @@ export const DescriptionCard = (props: ICardProps) => {
     wizardStore.updateSelectedDataset(ds)
   }, [id, ds])
 
-  const DescriptionBlock = isEditMode ? (
-    <textarea
-      className="text-12"
-      style={{
-        height: '14vh',
-        outline: 'none',
-        width: '100%',
-        background: 'transparent',
-      }}
-      autoFocus
-      defaultValue={
-        datasetDescription === datasetDescriptionDefault
-          ? ''
-          : datasetDescription
-      }
-      onChange={e => {
-        handleChange(e.target.value)
-      }}
-    />
-  ) : (
-    <div
-      className="text-12 overflow-y-auto"
-      style={{ maxHeight: '14vh', outline: 'none' }}
-    >
-      {datasetDescription}
-    </div>
-  )
-
   return (
-    <Card className="mt-4">
+    <Card className={cn(styles.descriptionCard, 'mt-4')}>
       <CardTitleWithEdit
         title={ds}
         isEditDisabled={editDisabled}
@@ -146,15 +112,37 @@ export const DescriptionCard = (props: ICardProps) => {
             <span className="font-bold">Description</span>
             {!isTyping && (
               <Button
-                variant="secondary"
+                variant="text"
                 style={{ padding: 0 }}
-                className={cn('cursor-pointer', 'mx-2')}
-                icon={isEditMode ? saveDescriptionIcon : editDescriptionIcon}
+                className={cn('cursor-pointer', 'text-blue-bright', 'mx-2')}
+                icon={
+                  !isEditMode && !note?.length ? (
+                    <span>+</span>
+                  ) : (
+                    <Icon name={isEditMode ? 'Check' : 'Edit'} />
+                  )
+                }
                 onClick={toggleEditMode}
               />
             )}
           </div>
-          {DescriptionBlock}
+          {isEditMode ? (
+            <textarea
+              className={cn(styles.descriptionCard__field, 'text-12')}
+              autoFocus
+              defaultValue={fieldDefaultValue}
+              onChange={e => {
+                handleChange(e.target.value)
+              }}
+            />
+          ) : (
+            <div
+              className="text-12 overflow-y-auto"
+              style={{ maxHeight: '14vh', outline: 'none' }}
+            >
+              {datasetDescription}
+            </div>
+          )}
         </Card>
       </div>
 

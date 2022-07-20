@@ -104,6 +104,8 @@ export const en = {
     general: 'General',
     base: 'Derived from {name}',
     pickDataset: 'Select dataset',
+    datasetDescriptionDefault:
+      'No description available at the moment. You can add description by clicking the plus icon above.',
     table: 'Main Table',
     dtree: 'Decision Tree Panel',
     refiner: 'Filter Refiner',
