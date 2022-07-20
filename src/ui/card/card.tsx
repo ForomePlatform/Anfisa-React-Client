@@ -1,6 +1,6 @@
 import styles from './card.module.css'
 
-import { CSSProperties, forwardRef, ReactElement, ReactNode, Ref } from 'react'
+import { CSSProperties, forwardRef, ReactElement, ReactNode } from 'react'
 import cn, { Argument } from 'classnames'
 
 interface ICardProps {

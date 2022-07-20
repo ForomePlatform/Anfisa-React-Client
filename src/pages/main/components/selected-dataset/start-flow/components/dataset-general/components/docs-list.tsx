@@ -1,8 +1,6 @@
 import { ReactElement } from 'react'
-import { Argument } from 'classnames'
 
 import { t } from '@i18n'
-import { Divider } from '@ui/divider'
 import { TDocumentDescriptor } from '@service-providers/common'
 import { InfoTextItem } from './info-text-item'
 
