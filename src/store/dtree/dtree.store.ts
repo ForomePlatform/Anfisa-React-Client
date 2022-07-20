@@ -3,7 +3,6 @@ import { makeAutoObservable, reaction, toJS } from 'mobx'
 import { t } from '@i18n'
 import { ActionsHistoryStore } from '@store/actions-history'
 import filterDtreesStore from '@store/filter-dtrees'
-import { TFilteringStatCounts } from '@service-providers/common'
 import { IDsListArguments } from '@service-providers/dataset-level'
 import {
   DtreeSetPointKinds,
@@ -165,8 +164,12 @@ export class DtreeStore {
     )
   }
 
-  get statAmount(): TFilteringStatCounts | undefined {
-    return this.stat.filteredCounts
+  public get totalCounts() {
+    const variantCounts = this.stat.totalCounts?.variants
+    const dnaVariantsCounts = this.stat.totalCounts?.transcripts
+    const transcriptsCounts = this.stat.totalCounts?.transcribedVariants
+
+    return { variantCounts, dnaVariantsCounts, transcriptsCounts }
   }
 
   get isXl(): boolean {

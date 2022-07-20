@@ -162,6 +162,14 @@ export class FilterStore {
     return this._presetModifiedState === PresetModifiedState.NotPreset
   }
 
+  public get totalCounts() {
+    const variantCounts = this.stat.totalCounts?.variants
+    const dnaVariantsCounts = this.stat.totalCounts?.transcripts
+    const transcriptsCounts = this.stat.totalCounts?.transcribedVariants
+
+    return { variantCounts, dnaVariantsCounts, transcriptsCounts }
+  }
+
   public get viewVariantsQuery(): IDsListArguments | undefined {
     if (this.datasetName) {
       return {
