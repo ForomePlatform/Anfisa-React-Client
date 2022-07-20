@@ -42,7 +42,6 @@ const DtreeUnitsListSubHeader = observer(() => {
         (activeStep.isFinalStep
           ? t('dtree.showingResultsForFinalStep')
           : t('dtree.showingResultsForStep') + ' ' + activeStep.step)}
-
       {shouldShowVariantsPrompt && returnedVariantsPrompt}
     </div>
   )
@@ -50,7 +49,12 @@ const DtreeUnitsListSubHeader = observer(() => {
 
 export const DtreeUnitsList = observer(
   ({ className, isModal, listContainerId }: IDtreeUnitsList): ReactElement => {
-    const { unitGroups, functionalUnits } = dtreeStore.stat
+    const {
+      unitGroups,
+      functionalUnits,
+      isFetching: isFetchingStat,
+    } = dtreeStore.stat
+    const { isFetching: isFetchingSet } = dtreeStore.dtreeSet
 
     const [, writeScrollPosition] = useScrollPosition({
       elem: '#attributes-container',
@@ -112,6 +116,7 @@ export const DtreeUnitsList = observer(
         isDark={!isModal}
         withCharts={!isModal}
         subHeader={!isModal && <DtreeUnitsListSubHeader />}
+        isLoading={isFetchingSet || isFetchingStat}
         groups={unitGroups}
         functionalUnits={functionalUnits}
         onSelect={handleUnitSelect}
