@@ -54,7 +54,7 @@ export const CreateDatasetDialog = observer(
 
         if (
           pathName === PatnNameEnum.FilterRefiner &&
-          refinerAcceptedVariants === 0
+          (refinerAcceptedVariants === 0 || conditions.length === 0)
         ) {
           setError(DatasetCreationErrorsEnum.EmptyDataset)
           return
