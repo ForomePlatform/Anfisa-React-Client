@@ -26,6 +26,9 @@ import {
 import { IFilterControlProps } from './filter-control.interface'
 import { SolutionSelect } from './solution-select'
 
+//TODO - we need to receive this number from backend
+const XL_COUNT_OF_VARIANTS = 9000
+
 export const FilterControl = observer(
   ({
     SolutionControl,
@@ -84,7 +87,7 @@ export const FilterControl = observer(
     }
 
     const createDisabled =
-      !filterStore.isFilterTouched || countOfVariants > 9000
+      !filterStore.isFilterTouched || countOfVariants > XL_COUNT_OF_VARIANTS
 
     return (
       <div
