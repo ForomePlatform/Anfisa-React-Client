@@ -10,13 +10,41 @@
     grid-column: span 3 / span 3;
   }
 
+  &__title {
+    margin-top: 32px;
+    margin-bottom: 16px;
+    font-weight: bold;
+    color: theme("colors.blue.dark");
+
+    &_first {
+      margin-top: 0;
+    }
+  }
+
+  &_header {
+    display: flex;
+    justify-content: space-between;
+
+    &_button {
+      padding: 2px;
+      border-radius: theme("spacing.1");
+      color: theme("colors.grey.blue");
+      width: fit-content;
+      height: fit-content;
+
+      &:hover {
+        background-color: theme("colors.grey.disabled");
+      }
+    }
+  }
+
   &__table {
     flex-grow: 1;
 
     &_row {
       @apply typography-s;
 
-      border-bottom: 1px solid theme("colors.grey.blue");
+      border-bottom: 2px solid theme("colors.grey.disabled");
 
       &_title {
         color: theme("colors.grey.dark") !important;
@@ -30,14 +58,6 @@
     }
   }
 
-  &__title {
-    margin-top: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
-  }
-
   &__loader {
     flex-grow: 1;
     display: flex;
@@ -46,10 +66,11 @@
 
   &__ancestor {
     &__filter {
-      @apply typography-xs;
+      @apply typography-s;
 
       color: theme("colors.blue.dark");
       margin-bottom: 8px;
+      font-weight: 500;
 
       &_name {
         font-weight: bold;
@@ -60,7 +81,7 @@
       @apply typography-s;
 
       & > span {
-        border-bottom: 1px solid theme("colors.grey.blue");
+        border-bottom: 1px solid theme("colors.grey.disabled");
         padding: 6px 0;
         color: theme("colors.blue.dark") !important;
         font-family: "Droid Sans Mono", "Droid Sans Fallback", monospace;
@@ -71,7 +92,7 @@
       color: theme("colors.grey.dark") !important;
       display: flex;
       flex-direction: column;
-      margin: theme("spacing.1");
+      margin: theme("spacing.1") theme("spacing.4");
     }
 
     &__supply-panel {

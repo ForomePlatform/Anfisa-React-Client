@@ -16,17 +16,18 @@ export const InfoTextItem = ({
   isActive,
   isTitleBaseInfo,
   className,
+  onClick,
   ...rest
 }: IInfoTextItemProps): ReactElement => {
   return (
     <div
+      onClick={isClickable ? onClick : undefined}
       className={cn(
         'py-2 leading-16px',
         {
-          'text-blue-bright underline cursor-pointer': isClickable,
-          'bg-blue-bright bg-opacity-10': isActive,
-          'text-grey-blue font-medium border-t border-grey-light':
-            isTitleBaseInfo,
+          'text-blue-bright underline cursor-pointer px-4': isClickable,
+          'bg-blue-bright bg-opacity-10': isActive && isClickable,
+          'text-grey-blue font-medium mx-4': isTitleBaseInfo,
         },
         className,
       )}

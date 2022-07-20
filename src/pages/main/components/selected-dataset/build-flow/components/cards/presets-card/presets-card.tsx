@@ -66,7 +66,7 @@ export const PresetsCard = observer((props: ICardProps) => {
   }
 
   return (
-    <Card className="mt-4 px-0">
+    <Card className="mt-4" style={{ paddingLeft: 0, paddingRight: 0 }}>
       <CardTitle text={title} className="text-16 px-4" />
 
       <div

@@ -1,30 +1,23 @@
 .card {
   border-radius: theme("spacing.2");
-  box-shadow: theme("boxShadow.mainCard");
+  box-shadow: theme("boxShadow.card");
   padding: theme("spacing.4");
 
   &_header {
     &_title {
       &_md {
         @apply typography-l;
+
+        line-height: 24px;
+        font-weight: bold;
+        color: theme("colors.blue.dark");
       }
 
       &_xs {
-        @apply typography-m;
-      }
+        @apply typography-s;
 
-      font-weight: bold;
-      flex-grow: 1;
-      color: theme("colors.blue.dark");
-    }
-
-    &_button {
-      padding: 2px;
-      border-radius: theme("spacing.1");
-      color: theme("colors.grey.blue");
-
-      &:hover {
-        background-color: theme("colors.grey.disabled");
+        line-height: 16px;
+        margin-bottom: 12px;
       }
     }
   }

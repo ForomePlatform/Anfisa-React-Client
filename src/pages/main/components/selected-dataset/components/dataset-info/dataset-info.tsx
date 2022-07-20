@@ -9,6 +9,7 @@ import { useFullScreenView } from '@core/hooks/use-fullscreen-view'
 import { t } from '@i18n'
 import datasetStore from '@store/dataset/dataset'
 import { Card, CardTitle } from '@ui/card'
+import { Icon } from '@ui/icon'
 import { Loader } from '@ui/loader'
 import { IDsInfo, Versions } from '@service-providers/dataset-level'
 import { INFO } from './dataset-info.constants'
@@ -20,7 +21,7 @@ interface IDatasetInfoProps {
 }
 
 export const DatasetInfo: FC<IDatasetInfoProps> = observer(({ className }) => {
-  const ref = useRef<HTMLElement>(null)
+  const ref = useRef<HTMLDivElement>(null)
 
   const [isExpanded, toggle] = useFullScreenView(ref)
 
@@ -41,17 +42,23 @@ export const DatasetInfo: FC<IDatasetInfoProps> = observer(({ className }) => {
   )
 
   return (
-    <Card innerRef={ref} className={cn(styles.datasetInfo, className)}>
-      <CardTitle
-        size="sm"
-        showExpandButton
-        onExpand={toggle}
-        isExpanded={isExpanded}
-        className={styles.datasetInfo__title}
-        style={{ marginTop: '0' }}
+    <Card ref={ref} className={cn(styles.datasetInfo, className)}>
+      <header
+        className={cn(
+          styles.datasetInfo_header,
+          styles.datasetInfo__title,
+          styles.datasetInfo__title_first,
+        )}
       >
-        {t('home.infoPanel.title')}
-      </CardTitle>
+        <CardTitle text={t('home.infoPanel.title')} size="sm" />
+
+        <button
+          onClick={toggle}
+          className={cn(styles.datasetInfo_header_button)}
+        >
+          <Icon name={isExpanded ? 'Collapse' : 'Expand'} />
+        </button>
+      </header>
 
       {isLoading && (
         <Loader size="m" className={cn(styles.datasetInfo__loader)} />
@@ -66,11 +73,10 @@ export const DatasetInfo: FC<IDatasetInfoProps> = observer(({ className }) => {
               <tr>
                 <td colSpan={2}>
                   <CardTitle
+                    text={t('home.infoPanel.annotations')}
                     size="sm"
                     className={cn(styles.datasetInfo__title)}
-                  >
-                    {t('home.infoPanel.annotations')}
-                  </CardTitle>
+                  />
                 </td>
               </tr>
 

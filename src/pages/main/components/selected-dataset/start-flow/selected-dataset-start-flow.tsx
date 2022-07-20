@@ -29,7 +29,10 @@ export const SelectedDatasetStartFlow = observer(
       </div>
 
       <div className="flex-grow grid gap-4 grid-cols-3 p-4 overflow-y-auto">
-        <Card className="col-span-1 xl:col-span-3">
+        <Card
+          className="col-span-1 xl:col-span-3"
+          style={{ paddingLeft: 0, paddingRight: 0 }}
+        >
           <DatasetGeneral />
 
           <DeleteDatasetButton className="mt-5" />

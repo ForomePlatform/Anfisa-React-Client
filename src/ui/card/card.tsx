@@ -1,15 +1,18 @@
 import styles from './card.module.css'
 
-import { FC, RefObject } from 'react'
+import { CSSProperties, forwardRef, ReactElement, ReactNode, Ref } from 'react'
 import cn, { Argument } from 'classnames'
 
 interface ICardProps {
-  innerRef?: RefObject<HTMLElement>
   className?: Argument
+  children?: ReactElement | ReactNode
+  style?: CSSProperties
 }
 
-export const Card: FC<ICardProps> = ({ innerRef, className, children }) => (
-  <section ref={innerRef} className={cn(styles.card, className)}>
-    {children}
-  </section>
+export const Card = forwardRef(
+  ({ children, className, style = {} }: ICardProps): ReactElement => (
+    <div className={cn(styles.card, className)} style={style}>
+      {children}
+    </div>
+  ),
 )
