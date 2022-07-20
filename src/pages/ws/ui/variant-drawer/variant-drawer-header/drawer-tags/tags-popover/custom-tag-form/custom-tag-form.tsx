@@ -31,7 +31,7 @@ export const CustomTagForm = ({
       <Input
         isModal
         value={value}
-        onChange={event => setValue(event.target.value.trim())}
+        onChange={event => setValue(event.target.value)}
       />
 
       <div className="flex justify-end items-center pt-2">
@@ -42,7 +42,7 @@ export const CustomTagForm = ({
         )}
         <Button
           text={t('variant.addCustomTag')}
-          disabled={!value || !!errorMessage}
+          disabled={!value.trim() || !!errorMessage}
           className="justify-self-end"
           onClick={handleSubmit}
           dataTestId={VariantDrawerDataCy.addCustomTag}
