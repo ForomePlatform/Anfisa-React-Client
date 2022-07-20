@@ -2,6 +2,7 @@
 
 ## <small>0.7.1 (7/20/2022)</small>
 
+* fix([FOROME-1376](https://quantori.atlassian.net/browse/FOROME-1376)): freeze filter page header variant numbers ([b1132ba7](https://github.com/ForomePlatform/Anfisa-React-Client/commit/b1132ba7))
 * fix([FOROME-1383](https://quantori.atlassian.net/browse/FOROME-1383)): dtree ds creation in xl ([08aff902](https://github.com/ForomePlatform/Anfisa-React-Client/commit/08aff902))
 * fix([FOROME-00](https://quantori.atlassian.net/browse/FOROME-00)): remove wizard logs error ([3733bdb1](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3733bdb1))
 * fix([FOROME-1335](https://quantori.atlassian.net/browse/FOROME-1335)): change arrows color (#819) ([e2b780d6](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e2b780d6))
