@@ -9,9 +9,9 @@ export const useDatasetName = () => {
   const history = useHistory()
 
   useEffect(() => {
-    if (!datasetStore.datasetName) {
-      const dsName = params.get('ds')
+    const dsName = params.get('ds')
 
+    if (!datasetStore.datasetName || datasetStore.datasetName !== dsName) {
       if (!dsName) {
         history.push(Routes.Root)
 

@@ -43,12 +43,20 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
 
       if (isNullKind && !hasChildren) return
 
+      if (datasetStore.datasetName === item.name) {
+        return
+      }
+
       const kind = dirinfoStore.xlDatasets.includes(item.name) ? 'xl' : 'ws'
 
-      if (wizardStore.isWizardVisible && kind !== 'ws') {
+      if (wizardStore.isWizardVisible && kind === 'xl') {
         wizardStore.toggleIsWizardVisible(false)
         wizardStore.resetWizard()
         wizardStore.actionHistory.resetHistory()
+      } else {
+        if (wizardStore.actionHistory.historyIndex !== -1) {
+          wizardStore.actionHistory.resetHistory()
+        }
       }
 
       if (hasChildren) {

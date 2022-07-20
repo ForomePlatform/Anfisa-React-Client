@@ -1,7 +1,10 @@
 # Change log 
 
-## <small>0.7.1 (7/19/2022)</small>
+## <small>0.7.1 (7/20/2022)</small>
 
+* fix([FOROME-00](https://quantori.atlassian.net/browse/FOROME-00)): remove wizard logs error ([3733bdb1](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3733bdb1))
+* fix([FOROME-1335](https://quantori.atlassian.net/browse/FOROME-1335)): change arrows color (#819) ([e2b780d6](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e2b780d6))
+* fix([FOROME-00](https://quantori.atlassian.net/browse/FOROME-00)): hotfix for wizard routing ([262097ad](https://github.com/ForomePlatform/Anfisa-React-Client/commit/262097ad))
 * feat([FOROME-1309](https://quantori.atlassian.net/browse/FOROME-1309)): add wizard ([1c02a038](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1c02a038))
 * fix([FOROME-1372](https://quantori.atlassian.net/browse/FOROME-1372)): Fixed Gene lists zone (#816) ([287340ef](https://github.com/ForomePlatform/Anfisa-React-Client/commit/287340ef))
 * fix([FOROME-1357](https://quantori.atlassian.net/browse/FOROME-1357)): opening derived dataset ([10b6b0f4](https://github.com/ForomePlatform/Anfisa-React-Client/commit/10b6b0f4))
