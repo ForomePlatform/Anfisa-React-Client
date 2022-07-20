@@ -84,6 +84,7 @@ export const DescriptionCard = (props: ICardProps) => {
 
     if (response?.ok) {
       setTyping(false)
+      descriptions[ds] = description
     } else {
       showToast(t('error.smthWentWrong'), 'error')
     }
@@ -91,7 +92,6 @@ export const DescriptionCard = (props: ICardProps) => {
 
   const handleChange = (description: string) => {
     setDatasetDescription(description)
-    descriptions[ds] = description
     setTyping(true)
     clearTimeout(typingTimer)
     typingTimer = setTimeout(() => {
