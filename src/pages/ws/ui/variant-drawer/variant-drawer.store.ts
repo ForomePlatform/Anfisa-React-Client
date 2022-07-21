@@ -3,21 +3,13 @@ import { makeAutoObservable, observable, reaction, toJS } from 'mobx'
 
 import { LocalStoreManager } from '@core/storage-management/local-store-manager'
 import { TVariantAspectsGridLayout } from '@components/variant-aspects-layout'
+import { predefinedPresets } from './variant-drawer.data'
 import {
   IVariantDrawerData,
   IVariantDrawerGridPreset,
   VariantDrawerLayoutMode,
   VariantDrawerPredefinedPresets,
 } from './variant-drawer.interface'
-
-export const defaultPresetName = 'List'
-
-const predefinedPresets: IVariantDrawerGridPreset[] = [
-  {
-    name: 'List',
-    predefinedName: VariantDrawerPredefinedPresets.List,
-  },
-]
 
 const presetsSortComparator = (
   a: IVariantDrawerGridPreset,
@@ -88,6 +80,9 @@ class VariantDrawerStore {
         switch (preset.predefinedName) {
           case VariantDrawerPredefinedPresets.List:
             this.currentGridLayout = []
+            break
+          case VariantDrawerPredefinedPresets.Preset1:
+            this.currentGridLayout = preset.layout
             break
         }
       } else if (preset.layout) {
