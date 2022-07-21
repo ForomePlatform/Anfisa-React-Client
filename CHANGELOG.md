@@ -1,7 +1,10 @@
 # Change log 
 
-## <small>0.7.1 (7/20/2022)</small>
+## <small>0.7.1 (7/21/2022)</small>
 
+* fix([FOROME-1349](https://quantori.atlassian.net/browse/FOROME-1349)): ds creation ([b1163249](https://github.com/ForomePlatform/Anfisa-React-Client/commit/b1163249))
+* fix([FOROME-1332](https://quantori.atlassian.net/browse/FOROME-1332)): fixed min value validation ([3a7fb3be](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3a7fb3be))
+* feat([FOROME-1326](https://quantori.atlassian.net/browse/FOROME-1326)): add an ability to delete and modify drawer presets ([9020c3fa](https://github.com/ForomePlatform/Anfisa-React-Client/commit/9020c3fa))
 * fix([FOROME-1376](https://quantori.atlassian.net/browse/FOROME-1376)): freeze filter page header variant numbers ([b1132ba7](https://github.com/ForomePlatform/Anfisa-React-Client/commit/b1132ba7))
 * fix([FOROME-1383](https://quantori.atlassian.net/browse/FOROME-1383)): dtree ds creation in xl ([08aff902](https://github.com/ForomePlatform/Anfisa-React-Client/commit/08aff902))
 * fix([FOROME-00](https://quantori.atlassian.net/browse/FOROME-00)): remove wizard logs error ([3733bdb1](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3733bdb1))
