@@ -157,13 +157,15 @@ class DirInfoStore {
       clonedAncestors[0][1] &&
       clonedAncestors[0][1][1]
     ) {
-      clonedAncestors[0][1][1] = clonedAncestors[0][1][1].map((item: any) => {
+      const formatedData = clonedAncestors[0][1][1].map((item: any) => {
         if (item[0] === 'Info') {
           item[0] = 'Base Info'
         }
 
         return item
       })
+
+      clonedAncestors[0][1][1] = formatedData
 
       return clonedAncestors
     }
