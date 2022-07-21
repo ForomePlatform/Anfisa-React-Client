@@ -1,4 +1,5 @@
 export enum PatnNameEnum {
   Ws = '/ws',
-  Filter = '/filter',
+  FilterDtree = '/filter/dtree',
+  FilterRefiner = '/filter/refiner',
 }
