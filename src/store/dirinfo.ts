@@ -131,12 +131,12 @@ class DirInfoStore {
           return 1
         }
 
-        if (!firstElemnt?.['create-time'] || !secondElement?.['create-time']) {
+        if (!firstElemnt['create-time'] || !secondElement['create-time']) {
           return 1
         }
 
-        const aDate = new Date(firstElemnt?.['create-time'])
-        const bDate = new Date(secondElement?.['create-time'])
+        const aDate = new Date(firstElemnt['create-time'])
+        const bDate = new Date(secondElement['create-time'])
 
         return this.sortDirections.CreatedAt === SortDirection.ASC
           ? +aDate - +bDate
