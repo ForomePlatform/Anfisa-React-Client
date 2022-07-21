@@ -141,6 +141,7 @@ export const en = {
     searchColumns: 'Search',
     columns: 'Columns',
     customizeTable: 'Customize Table',
+    macroTagging: 'Macro Tagging',
     copied: 'Copied successfully',
     editFilters: 'Edit Filters',
     gene: 'Gene',

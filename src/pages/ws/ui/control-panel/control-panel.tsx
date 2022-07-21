@@ -3,6 +3,7 @@ import styles from './control-panel.module.css'
 import { ReactElement } from 'react'
 
 import { Divider } from '@ui/divider'
+import { MacroTagging } from '@pages/ws/ui/control-panel/macro-tagging/macro-tagging'
 import { CreateDataset } from './create-dataset'
 import { CustomizeTable } from './customize-table'
 import { EditFilter } from './edit-filter'
@@ -36,6 +37,10 @@ export const ControlPanel = (): ReactElement => (
 
         <TagsZone />
       </div>
+
+      <Divider orientation="vertical" />
+
+      <MacroTagging />
     </div>
 
     <div className={styles.controlPanel__save}>

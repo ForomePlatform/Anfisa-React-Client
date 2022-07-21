@@ -1,0 +1,16 @@
+.macro-tagging {
+  &__button-icon {
+    &_arrow {
+      transition-property: transform;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-duration: 150ms;
+      transform: rotate(-90deg);
+
+      &_opened {
+        transform: rotate(90deg);
+      }
+    }
+
+    color: theme("colors.blue.bright");
+  }
+}

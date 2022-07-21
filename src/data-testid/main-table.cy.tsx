@@ -14,4 +14,5 @@ export const MainTableDataCy = {
   searchColumn: 'search-input',
   checkboxListElement: 'checkbox-list-element',
   customizeTableList: 'draggable-list-element',
+  macroTagging: 'macro-tagging',
 }
