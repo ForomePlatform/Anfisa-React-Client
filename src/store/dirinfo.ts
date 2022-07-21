@@ -39,14 +39,11 @@ class DirInfoStore {
   }
 
   public get xlDatasets(): string[] {
-    const xlDatasets: string[] = []
-
-    if (this.dirInfoData?.dsDict) {
-      Object.values(this.dirInfoData?.dsDict).forEach(
-        item => item.kind === 'xl' && xlDatasets.push(item.name),
-      )
-    }
-    return xlDatasets
+    return this.dirInfoData?.dsDict
+      ? Object.values(this.dirInfoData?.dsDict)
+          .filter(item => item?.kind === 'xl')
+          .map(item => item!.name)
+      : []
   }
 
   public foldDs(name: string) {
@@ -127,19 +124,19 @@ class DirInfoStore {
 
     if (this.sortType === SortDatasets.CreatedAt) {
       keys.sort((a, b) => {
-        if (!this.dirInfoData?.dsDict[a] || !this.dirInfoData?.dsDict[b]) {
+        const firstElemnt = this.dirInfoData?.dsDict[a]
+        const secondElement = this.dirInfoData?.dsDict[b]
+
+        if (!firstElemnt || !secondElement) {
           return 1
         }
 
-        if (
-          !this.dirInfoData?.dsDict[a]['create-time'] ||
-          !this.dirInfoData?.dsDict[b]['create-time']
-        ) {
+        if (!firstElemnt['create-time'] || !secondElement['create-time']) {
           return 1
         }
 
-        const aDate = new Date(this.dirInfoData?.dsDict[a]['create-time'])
-        const bDate = new Date(this.dirInfoData?.dsDict[b]['create-time'])
+        const aDate = new Date(firstElemnt['create-time'])
+        const bDate = new Date(secondElement['create-time'])
 
         return this.sortDirections.CreatedAt === SortDirection.ASC
           ? +aDate - +bDate
