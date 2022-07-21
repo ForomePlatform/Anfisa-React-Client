@@ -3,22 +3,16 @@
   box-shadow: theme("boxShadow.card");
   padding: theme("spacing.4");
 
-  &_header {
-    &_title {
-      &_md {
-        @apply typography-l;
+  &_title {
+    font-weight: 700 !important;
+    color: theme("colors.blue.dark");
 
-        line-height: 24px;
-        font-weight: bold;
-        color: theme("colors.blue.dark");
-      }
+    &_md {
+      @apply typography-l;
+    }
 
-      &_xs {
-        @apply typography-s;
-
-        line-height: 16px;
-        margin-bottom: 12px;
-      }
+    &_sm {
+      @apply typography-m;
     }
   }
 }

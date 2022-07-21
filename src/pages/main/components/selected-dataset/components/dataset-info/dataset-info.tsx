@@ -51,7 +51,7 @@ export const DatasetInfo: FC<IDatasetInfoProps> = observer(({ className }) => {
           styles.datasetInfo__title_first,
         )}
       >
-        <CardTitle text={t('home.infoPanel.title')} size="sm" />
+        <CardTitle text={t('home.infoPanel.title')} />
 
         <button
           onClick={toggle}
@@ -65,7 +65,7 @@ export const DatasetInfo: FC<IDatasetInfoProps> = observer(({ className }) => {
         <Loader size="m" className={cn(styles.datasetInfo__loader)} />
       ) : (
         <>
-          <table>
+          <table className={cn(styles.datasetInfo__table)}>
             <tbody>
               <TableRows info={info} rows={INFO} />
 
@@ -73,7 +73,6 @@ export const DatasetInfo: FC<IDatasetInfoProps> = observer(({ className }) => {
                 <td colSpan={2}>
                   <CardTitle
                     text={t('home.infoPanel.annotations')}
-                    size="sm"
                     className={cn(styles.datasetInfo__title)}
                   />
                 </td>

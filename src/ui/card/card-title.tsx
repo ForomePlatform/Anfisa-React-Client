@@ -16,18 +16,14 @@ interface ICardTitleProps {
 export const CardTitle = ({
   text,
   className,
-  size = 'md',
+  size = 'sm',
   dataTestId,
   style = {},
 }: ICardTitleProps): ReactElement => {
   return (
     <div
       data-test-id={dataTestId}
-      className={cn(
-        styles.card_header_title,
-        styles[`card_header_title_${size}`],
-        className,
-      )}
+      className={cn(styles.card_title, styles[`card_title_${size}`], className)}
       dangerouslySetInnerHTML={{ __html: addWordBreaks(text) }}
       style={style}
     ></div>

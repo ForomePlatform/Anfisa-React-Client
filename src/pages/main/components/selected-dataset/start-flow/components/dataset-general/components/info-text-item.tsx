@@ -25,9 +25,11 @@ export const InfoTextItem = ({
       className={cn(
         'py-2 leading-16px',
         {
-          'text-blue-bright underline cursor-pointer px-4': isClickable,
+          'text-blue-bright cursor-pointer px-4 text-md font-normal':
+            isClickable,
           'bg-blue-bright bg-opacity-10': isActive && isClickable,
-          'text-grey-blue font-medium mx-4': isTitleBaseInfo,
+          'text-grey-blue font-medium mx-4 text-sm font-medium':
+            isTitleBaseInfo,
         },
         className,
       )}
