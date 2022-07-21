@@ -51,8 +51,8 @@ class WizardStore {
         }
 
         const hasSecondaryDs =
-          !!dirinfoStore.dirInfoData?.dsDict[datasetStore.datasetName].secondary
-            ?.length
+          !!dirinfoStore.dirInfoData?.dsDict[datasetStore.datasetName]
+            ?.secondary?.length
 
         if (
           dirinfoStore.dirInfoData &&
