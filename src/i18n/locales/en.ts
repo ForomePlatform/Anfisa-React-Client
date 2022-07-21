@@ -142,6 +142,10 @@ export const en = {
     columns: 'Columns',
     customizeTable: 'Customize Table',
     macroTagging: 'Macro Tagging',
+    macroTagsModal: {
+      title: 'Macro Tags',
+      apply: 'Action',
+    },
     copied: 'Copied successfully',
     editFilters: 'Edit Filters',
     gene: 'Gene',

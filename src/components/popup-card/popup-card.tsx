@@ -1,6 +1,6 @@
 import styles from './popup-card.module.css'
 
-import React from 'react'
+import React, { ReactNode } from 'react'
 import cn, { Argument } from 'classnames'
 
 import { t } from '@i18n'
@@ -18,7 +18,7 @@ export interface IPopupCardProps {
   isApplyDisabled?: boolean
   isLoading?: boolean
   additionalBottomButton?: Element
-  applyPrepend?: Element
+  applyAppend?: ReactNode
 }
 
 export const PopupCard = ({
@@ -32,7 +32,7 @@ export const PopupCard = ({
   isLoading,
   isApplyDisabled = false,
   additionalBottomButton,
-  applyPrepend,
+  applyAppend,
 }: React.PropsWithChildren<IPopupCardProps>) => (
   <section className={cn(styles.popupCard, className)}>
     <header className={cn(styles.popupCard__header)}>
@@ -67,7 +67,7 @@ export const PopupCard = ({
           className={styles.popupCard__footer_buttonContainer_button}
           onClick={onApply}
           dataTestId={MainTableDataCy.applyButton}
-          prepend={applyPrepend}
+          append={applyAppend}
         />
       </div>
     </footer>
