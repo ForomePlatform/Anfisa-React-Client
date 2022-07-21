@@ -61,11 +61,9 @@ export const DatasetInfo: FC<IDatasetInfoProps> = observer(({ className }) => {
         </button>
       </header>
 
-      {isLoading && (
+      {isLoading ? (
         <Loader size="m" className={cn(styles.datasetInfo__loader)} />
-      )}
-
-      {!isLoading && info && (
+      ) : (
         <>
           <table>
             <tbody>
