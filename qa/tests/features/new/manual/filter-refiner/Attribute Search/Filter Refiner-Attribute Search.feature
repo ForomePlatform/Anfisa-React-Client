@@ -21,7 +21,7 @@ Examples:
 
 
 Scenario Outline: 02 Search attribute name by substring
-	When user inputs the part of "<Attr_Substring>" in the search field
+	When user inputs the part of <Attr_Substring> in the search field
 	Then the fields should be filtered
 
 Examples:
@@ -31,7 +31,7 @@ Examples:
 	| criteria       | Clinvar_criteria_provided |
 
 Scenario Outline: 03 Search attribute name by upper-case
-	When user enters "<AttrInUpperCase>" in upper-case in the search field
+	When user enters <AttrInUpperCase> in upper-case in the search field
 	Then the attributes should be filtered
 
 Examples:

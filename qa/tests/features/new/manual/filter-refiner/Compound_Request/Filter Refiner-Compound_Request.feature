@@ -59,7 +59,7 @@ Scenario: 06 XL dataset - 2 rows
 Scenario: 07 XL dataset - 5 rows
 	Given the Filter Refiner for the "xl_PGP3140_wgs_NIST-4_2" was opened
 	And "Compound_Request" functional attribute was displayed
-	When user selects Homozygous Recessive / X-Linked" check-box
+	When user selects "Homozygous Recessive / X-Linked" check-box
 	And enters "1" in the "Minimal count of events" input
 	And clicks "Add" button to add the second row
 	And selects the "Autosomal Dominant" check-box
@@ -131,7 +131,7 @@ Scenario Outline: 14 Secondary dataset - shared gene
 	And "Compound_Request" functional attribute was displayed
 	When user selects <approx drop-down value>
 	And selects <Inheritance mode> check-box
-	And clicks on "+Add Attribute" button
+	And clicks on "+ Add Attribute" button
 	Then variants list should be filtered by Compound_Request
 	And number of variants should be equal to <Variants Number>
 
