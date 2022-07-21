@@ -28,9 +28,9 @@ export const SelectedDatasetStartFlow = observer(
         <CardExploreType />
       </div>
 
-      <div className="flex-grow grid gap-4 grid-cols-3 p-4 overflow-y-auto">
+      <div className="flex-grow grid gap-4 grid-cols-4 p-4 overflow-y-auto">
         <Card
-          className="col-span-1 xl:col-span-3"
+          className="col-span-2"
           style={{ paddingLeft: 0, paddingRight: 0 }}
         >
           <DatasetGeneral />

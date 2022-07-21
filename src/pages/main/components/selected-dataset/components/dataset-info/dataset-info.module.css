@@ -1,13 +1,9 @@
 .dataset-info {
-  grid-column: span 2 / span 1;
+  grid-column: span 2 / span 2;
   overflow: auto;
   display: flex;
   flex-direction: column;
   background-color: theme("colors.white");
-
-  @media (max-width: 1279px) {
-    grid-column: span 3 / span 3;
-  }
 
   &__title {
     margin-top: 32px;

@@ -36,7 +36,7 @@ export const InfoDetails = observer((): ReactElement => {
   }, [])
 
   return (
-    <Card className="flex flex-col col-span-2 xl:col-span-3">
+    <Card className="flex flex-col col-span-2">
       <div className="flex justify-end mb-3">
         <Icon
           name="FullScreen"
