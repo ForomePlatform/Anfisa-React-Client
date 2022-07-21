@@ -11,7 +11,7 @@ interface IFilterRefinerUnitsProps {
 export const FilterRefinerUnits = observer(
   ({ className }: IFilterRefinerUnitsProps) => {
     const {
-      stat: { unitGroups, functionalUnits },
+      stat: { unitGroups, functionalUnits, isFetching },
     } = filterStore
     const { functionalConditions } = filterRefinerUnitsStore
 
@@ -23,6 +23,7 @@ export const FilterRefinerUnits = observer(
         groups={unitGroups}
         functionalUnits={functionalUnits}
         functionalConditions={functionalConditions}
+        isLoading={isFetching}
         onSelect={({ name }) => {
           filterStore.setAttributeToAdd(name)
         }}
