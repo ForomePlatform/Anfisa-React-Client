@@ -106,8 +106,9 @@ export const UnitsList = ({
         )}
         id={listContainerId}
       >
-        {isLoading && <Loader />}
-        {!isLoading &&
+        {isLoading ? (
+          <Loader />
+        ) : (
           filteredGroups.length &&
           filteredGroups.map(group => (
             <UnitsListGroup
@@ -119,7 +120,8 @@ export const UnitsList = ({
               unitsGroup={group}
               onSelect={onSelect}
             />
-          ))}
+          ))
+        )}
         {!isLoading && !filteredGroups.length && t('general.noResultsFound')}
       </div>
     </div>
