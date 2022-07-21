@@ -39,14 +39,12 @@ class DirInfoStore {
   }
 
   public get xlDatasets(): string[] {
-    const xlDatasets: string[] = []
-
-    if (this.dirInfoData?.dsDict) {
-      Object.values(this.dirInfoData?.dsDict).forEach(
-        item => item.kind === 'xl' && xlDatasets.push(item.name),
-      )
-    }
-    return xlDatasets
+    return this.dirInfoData?.dsDict
+      ? Object.values(this.dirInfoData?.dsDict)
+          .filter(Boolean)
+          .filter(item => item.kind === 'xl')
+          .map(item => item.name)
+      : []
   }
 
   public foldDs(name: string) {
@@ -159,15 +157,13 @@ class DirInfoStore {
       clonedAncestors[0][1] &&
       clonedAncestors[0][1][1]
     ) {
-      const formatedData = clonedAncestors[0][1][1].map((item: any) => {
+      clonedAncestors[0][1][1] = clonedAncestors[0][1][1].map((item: any) => {
         if (item[0] === 'Info') {
           item[0] = 'Base Info'
         }
 
         return item
       })
-
-      clonedAncestors[0][1][1] = formatedData
 
       return clonedAncestors
     }
