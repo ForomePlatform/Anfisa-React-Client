@@ -11,10 +11,11 @@ import datasetStore from '@store/dataset/dataset'
 import { Card, CardTitle } from '@ui/card'
 import { Icon } from '@ui/icon'
 import { Loader } from '@ui/loader'
-import { IDsInfo, Versions } from '@service-providers/dataset-level'
+import { Ancestors } from '@pages/main/components/selected-dataset/components/dataset-info/components/ancestors'
+import { TableRows } from '@pages/main/components/selected-dataset/components/dataset-info/components/table-rows'
+import { Versions } from '@service-providers/dataset-level'
 import { INFO } from './dataset-info.constants'
 import { Row } from './dataset-info.interfaces'
-import { renderAncestor, renderRow } from './dataset-info.utils'
 
 interface IDatasetInfoProps {
   className?: Argument
@@ -68,7 +69,7 @@ export const DatasetInfo: FC<IDatasetInfoProps> = observer(({ className }) => {
         <>
           <table>
             <tbody>
-              {INFO.map(renderRow<IDsInfo>(info))}
+              <TableRows info={info} rows={INFO} />
 
               <tr>
                 <td colSpan={2}>
@@ -80,11 +81,11 @@ export const DatasetInfo: FC<IDatasetInfoProps> = observer(({ className }) => {
                 </td>
               </tr>
 
-              {versions && versionsRows.map(renderRow<Versions>(versions))}
+              <TableRows info={versions} rows={versionsRows} />
             </tbody>
           </table>
 
-          {receipts && receipts.map(renderAncestor)}
+          <Ancestors receipts={receipts} />
         </>
       )}
     </Card>
