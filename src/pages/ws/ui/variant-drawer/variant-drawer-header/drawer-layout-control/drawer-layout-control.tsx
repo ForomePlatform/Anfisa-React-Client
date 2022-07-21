@@ -1,28 +1,34 @@
 import styles from './drawer-layout-control.module.css'
 
-import { ReactElement, useState } from 'react'
-import cn from 'classnames'
+import { ReactElement, useEffect, useState } from 'react'
+import cn, { Argument } from 'classnames'
 
 import { useModal } from '@core/hooks/use-modal'
+import { usePopover } from '@core/hooks/use-popover'
 import { t } from '@i18n'
 import { Button } from '@ui/button'
 import { Divider } from '@ui/divider'
 import { Icon } from '@ui/icon'
+import { ConfirmDialog } from '@components/confirm-dialog'
+import { showToast } from '@utils/notifications'
 import {
   IVariantDrawerGridPreset,
   VariantDrawerLayoutMode,
 } from '../../variant-drawer.interface'
-import { PresetMenu } from './preset-menu'
+import { PresetMenuPopover } from './preset-menu'
 import { SavePresetDialog } from './save-preset-dialog'
 
 interface IDrawerLayoutControlProps {
-  className?: string
   layoutMode: VariantDrawerLayoutMode
-  onChangeLayoutMode: (mode: VariantDrawerLayoutMode) => void
   gridPresets: IVariantDrawerGridPreset[]
+  windowsOpenState: boolean
+  appliedPreset: string | null
+  className?: Argument
+  onChangeLayoutMode: (mode: VariantDrawerLayoutMode) => void
   onSaveGridPreset?: (presetName: string) => void
   onChangeGridPreset: (presetName: string) => void
-  windowsOpenState: boolean
+  onModifyGridPreset: (presetName: string) => void
+  onDeleteGridPreset: (presetName: string) => void
   onWindowsToggle: (state: boolean) => void
 }
 
@@ -30,19 +36,57 @@ export const DrawerLayoutControl = ({
   className,
   gridPresets,
   layoutMode,
+  appliedPreset,
   onChangeLayoutMode,
   onSaveGridPreset,
   onChangeGridPreset,
+  onModifyGridPreset,
+  onDeleteGridPreset,
   windowsOpenState,
   onWindowsToggle,
 }: IDrawerLayoutControlProps): ReactElement => {
-  const [presetMenuAnchorEl, setPresetMenuAnchorEl] =
-    useState<HTMLElement | null>(null)
   const [savePresetDialog, openSavePresetDialog, closeSavePresetDialog] =
     useModal()
 
-  const closePresetMenu = () => {
-    setPresetMenuAnchorEl(null)
+  const [deleteDialog, openDeleteDialog, closeDeleteDialog] = useModal()
+
+  const { popoverAnchor, isPopoverOpen, onToggle, closePopover } = usePopover()
+
+  const [selectedPreset, setSelectedPreset] = useState<string>('')
+
+  useEffect(() => {
+    if (isPopoverOpen && selectedPreset !== appliedPreset) {
+      setSelectedPreset(appliedPreset || '')
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPopoverOpen])
+
+  const handleDeletePreset = () => {
+    onDeleteGridPreset(selectedPreset)
+    showToast(
+      t('variant.actions.delete.success', { selectedPreset }),
+      'success',
+    )
+    closePopover()
+    closeDeleteDialog()
+  }
+
+  const handleSavePreset = (presetName: string) => {
+    onSaveGridPreset?.(presetName)
+    showToast(t('variant.actions.save', { presetName }), 'success')
+    closeSavePresetDialog()
+  }
+
+  const handleModifyPreset = () => {
+    onModifyGridPreset(selectedPreset)
+    showToast(t('variant.actions.modify', { selectedPreset }), 'success')
+    closePopover()
+  }
+
+  const handleApplyPreset = (presetName: string) => {
+    onChangeLayoutMode(VariantDrawerLayoutMode.Grid)
+    onChangeGridPreset(presetName)
+    closePopover()
   }
 
   return (
@@ -59,13 +103,16 @@ export const DrawerLayoutControl = ({
             onClick={openSavePresetDialog}
           />
         )}
+
       <button
         className={styles.layoutControl__button}
         onClick={() => onWindowsToggle(!windowsOpenState)}
       >
         <Icon name={windowsOpenState ? 'Collapse' : 'Expand'} size={20} />
       </button>
+
       <Divider orientation="vertical" spacing="dense" />
+
       <button
         className={cn(
           styles.layoutControl__button,
@@ -73,11 +120,13 @@ export const DrawerLayoutControl = ({
             styles.layoutControl__button_active,
           styles.gridPresetButton,
         )}
-        onClick={event => setPresetMenuAnchorEl(event.currentTarget)}
+        onClick={event => onToggle(event.currentTarget)}
       >
         <Icon name="List" />
+
         <Icon name="ArrowDownXs" className={styles.gridPresetButton__arrow} />
       </button>
+
       <button
         className={cn(
           styles.layoutControl__button,
@@ -85,32 +134,46 @@ export const DrawerLayoutControl = ({
             styles.layoutControl__button_active,
           'ml-2',
         )}
-        onClick={() => onChangeLayoutMode(VariantDrawerLayoutMode.Gallery)}
+        onClick={() => {
+          onChangeLayoutMode(VariantDrawerLayoutMode.Gallery)
+          setSelectedPreset('')
+        }}
       >
         <Icon name="Gallery" size={20} />
       </button>
-      <PresetMenu
-        isOpen={!!presetMenuAnchorEl}
-        onClose={closePresetMenu}
-        anchorEl={presetMenuAnchorEl}
+
+      <PresetMenuPopover
+        anchorEl={popoverAnchor}
+        isOpen={isPopoverOpen}
         presets={gridPresets}
-        onSelect={presetName => {
-          onChangeLayoutMode(VariantDrawerLayoutMode.Grid)
-          onChangeGridPreset(presetName)
-          closePresetMenu()
-        }}
+        selected={selectedPreset}
+        onSelect={setSelectedPreset}
+        onApply={handleApplyPreset}
+        onDelete={openDeleteDialog}
+        onModify={handleModifyPreset}
+        onClose={closePopover}
       />
+
       {onSaveGridPreset && (
         <SavePresetDialog
           {...savePresetDialog}
           onClose={closeSavePresetDialog}
-          onSave={presetName => {
-            onSaveGridPreset(presetName)
-            closeSavePresetDialog()
-          }}
+          onSave={handleSavePreset}
           presets={gridPresets}
         />
       )}
+
+      <ConfirmDialog
+        {...deleteDialog}
+        onClose={closeDeleteDialog}
+        onApply={handleDeletePreset}
+        title={t('variant.actions.delete.title')}
+        message={t('variant.actions.delete.message', {
+          selectedPreset,
+        })}
+        applyText={t('variant.actions.delete.confirm')}
+        cancelText={t('variant.actions.delete.cancel')}
+      />
     </div>
   )
 }

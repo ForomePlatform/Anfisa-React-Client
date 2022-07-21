@@ -1,0 +1,25 @@
+.preset-menu-card {
+  @apply popup-card;
+
+  width: 220px;
+
+  &__list {
+    overflow: auto;
+    max-height: 252px;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: theme("spacing.3");
+  }
+
+  &__button {
+    margin-left: theme("spacing.2");
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}

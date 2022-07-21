@@ -10,6 +10,8 @@ import {
   VariantDrawerPredefinedPresets,
 } from './variant-drawer.interface'
 
+export const defaultPresetName = 'List'
+
 const predefinedPresets: IVariantDrawerGridPreset[] = [
   {
     name: 'List',
@@ -31,10 +33,10 @@ const presetsSortComparator = (
 class VariantDrawerStore {
   public layoutMode: VariantDrawerLayoutMode = VariantDrawerLayoutMode.Gallery
   public galleryActiveAspect = ''
+  public appliedPreset: string | null = null
 
-  private readonly customGridPresets: IVariantDrawerGridPreset[]
+  private customGridPresets: IVariantDrawerGridPreset[]
   private currentGridLayout: TVariantAspectsGridLayout | undefined
-  private appliedPreset: string | null = null
 
   constructor() {
     makeAutoObservable<VariantDrawerStore, 'customGridPresets'>(this, {
@@ -110,6 +112,20 @@ class VariantDrawerStore {
     }
 
     this.appliedPreset = presetName
+  }
+
+  public readonly deleteGridPreset = (presetName: string) => {
+    this.customGridPresets = this.customGridPresets.filter(
+      preset => preset.name !== presetName,
+    )
+  }
+
+  public readonly modifyGridPreset = (presetName: string) => {
+    this.customGridPresets.map((preset, index) => {
+      if (preset.name === presetName) {
+        this.customGridPresets[index].layout = this.currentGridLayout
+      }
+    })
   }
 
   public readonly setGalleryActiveAspect = (aspect: string): void => {
