@@ -3,6 +3,7 @@ import styles from './units-list.module.css'
 import { ReactNode, useState } from 'react'
 import cn from 'classnames'
 
+import { t } from '@i18n'
 import { TFunctionalUnit, TUnitGroups } from '@store/stat-units'
 import { Loader } from '@ui/loader'
 import { ProgressBar } from '@ui/progress-bar'
@@ -18,6 +19,7 @@ export interface IUnitsListProps {
   isModal?: boolean
   isDark?: boolean
   withCharts?: boolean
+  isLoading?: boolean
   fetchedAmount: number
   subHeader?: ReactNode
   groups: TUnitGroups
@@ -39,6 +41,7 @@ export const UnitsList = ({
   functionalUnits,
   functionalConditions,
   fetchedAmount,
+  isLoading = false,
   onSelect,
   onFunctionalConditionSelect,
   onFunctionalConditionDelete,
@@ -99,13 +102,14 @@ export const UnitsList = ({
         className={cn(
           styles.unitsList__list,
           isModal && styles.unitsList__list_modal,
-          !filteredGroups.length && styles.unitsList__list_empty,
+          isLoading && styles.unitsList__list_loading,
         )}
         id={listContainerId}
       >
-        {!filteredGroups.length ? (
+        {isLoading ? (
           <Loader />
         ) : (
+          filteredGroups.length &&
           filteredGroups.map(group => (
             <UnitsListGroup
               key={group.name}
@@ -118,6 +122,7 @@ export const UnitsList = ({
             />
           ))
         )}
+        {!isLoading && !filteredGroups.length && t('general.noResultsFound')}
       </div>
     </div>
   )

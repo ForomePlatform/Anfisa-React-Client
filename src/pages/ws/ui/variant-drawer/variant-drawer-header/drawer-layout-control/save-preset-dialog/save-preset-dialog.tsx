@@ -26,7 +26,11 @@ export const SavePresetDialog = ({
         preset => preset.predefinedName && preset.name === presetName,
       )
     ) {
-      return t('variant.savePredefinedPresetError', { presetName })
+      return t('variant.errors.savePredefinedPresetError', { presetName })
+    }
+
+    if (presets.some(preset => preset.name === presetName)) {
+      return t('variant.errors.presetAlreadyExists', { presetName })
     }
 
     return null

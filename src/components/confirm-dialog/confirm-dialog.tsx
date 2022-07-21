@@ -1,9 +1,9 @@
 import { FC } from 'react'
 
 import { Dialog } from '@ui/dialog'
-import { ISolutionChangeDialogProps } from './solution-change-dialog.interfaces'
+import { IConfirmDialogProps } from './confirm-dialog.interfaces'
 
-export const SolutionChangeDialog: FC<ISolutionChangeDialogProps> = ({
+export const ConfirmDialog: FC<IConfirmDialogProps> = ({
   isOpen,
   onClose,
   onApply,
