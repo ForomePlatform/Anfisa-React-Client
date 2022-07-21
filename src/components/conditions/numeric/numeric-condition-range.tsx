@@ -1,10 +1,4 @@
-import React, {
-  ReactElement,
-  useCallback,
-  useMemo,
-  useRef,
-  useState,
-} from 'react'
+import React, { ReactElement, useCallback, useMemo, useState } from 'react'
 
 import { adjustHistogramData } from '@core/histograms'
 import { t } from '@i18n'
@@ -15,6 +9,7 @@ import { DecisionTreeModalDataCy } from '@data-testid'
 import { NumericPropertyStatusSubKinds } from '@service-providers/common/common.interface'
 import { INumericConditionProps } from './numeric-condition.interface'
 import {
+  getFixedMinValue,
   getIsZeroSkipped,
   getLimitedRangeInitialState,
   NumericValueErrorType,
@@ -44,13 +39,11 @@ export const NumericConditionRange = ({
   )
 
   const [scale] = (attrData['render-mode'] || '').split(',')
-  const {
-    min: attrMin,
-    max: attrMax,
-    histogram,
-    'sub-kind': subKind,
-  } = attrData
-  const min = isLimitedRange ? attrMin : undefined
+  const { max: attrMax, histogram, 'sub-kind': subKind } = attrData
+
+  const [minStep, setMinStep] = useState(0)
+
+  const min = isLimitedRange ? getFixedMinValue(minStep) : undefined
   const max = isLimitedRange ? attrMax : undefined
 
   const histogramData = useMemo(
@@ -64,11 +57,9 @@ export const NumericConditionRange = ({
   const [minValue, minStrictness, maxValue, maxStrictness, isZeroIncluded] =
     value
 
-  const minValueRef = useRef(0)
-
   const errors = useMemo(
-    () => validateNumericValue(value, minValueRef.current, max),
-    [value, max],
+    () => validateNumericValue(value, minStep, max),
+    [value, minStep, max],
   )
 
   const handleRangeSliderChange = useCallback<
@@ -184,7 +175,6 @@ export const NumericConditionRange = ({
         )}
         {min != null && max != null && min < max && (
           <NumericConditionRangeSlider
-            minValueRef={minValueRef}
             className="my-6"
             min={min}
             max={max}
@@ -197,6 +187,7 @@ export const NumericConditionRange = ({
               isZeroIncluded ? RangeSliderSide.Left : RangeSliderSide.None
             }
             onChange={handleRangeSliderChange}
+            setMinStep={setMinStep}
           />
         )}
       </div>

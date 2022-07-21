@@ -1,4 +1,4 @@
-import React, { MutableRefObject, ReactElement } from 'react'
+import React, { ReactElement } from 'react'
 
 import {
   IRangeSliderProps,
@@ -12,7 +12,6 @@ import { getHistogram } from './utils'
 
 export interface INumericConditionRangeSliderProps {
   className?: string
-  minValueRef: MutableRefObject<number>
   min: number
   max: number
   isFloat: boolean
@@ -22,12 +21,12 @@ export interface INumericConditionRangeSliderProps {
   value: TExtendedNumericConditionValue
   disabled: RangeSliderSide
   onChange: IRangeSliderProps['onChange']
+  setMinStep: (value: number) => void
 }
 
 export const NumericConditionRangeSlider = React.memo(
   ({
     className,
-    minValueRef,
     min,
     max,
     isFloat,
@@ -37,6 +36,7 @@ export const NumericConditionRangeSlider = React.memo(
     value,
     disabled,
     onChange,
+    setMinStep,
   }: INumericConditionRangeSliderProps): ReactElement | null => {
     const [minValue, minStrictness, maxValue, maxStrictness] = value
     const [histogram, histogramStep] = getHistogram({
@@ -49,7 +49,7 @@ export const NumericConditionRangeSlider = React.memo(
     })
 
     if (histogramStep) {
-      minValueRef.current = histogramStep
+      setMinStep(histogramStep)
     }
 
     let strict = RangeSliderSide.None

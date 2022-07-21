@@ -1,0 +1,6 @@
+.menu-card {
+  @apply popup-card;
+
+  min-width: 80px;
+  margin-top: theme("spacing.1");
+}

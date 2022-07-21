@@ -8,7 +8,6 @@ import { useDatasetName } from '@core/hooks/use-dataset-name'
 import { useParams } from '@core/hooks/use-params'
 import datasetStore from '@store/dataset/dataset'
 import dtreeStore from '@store/dtree'
-import filterStore from '@store/filter'
 import filterDtreesStore from '@store/filter-dtrees'
 import { Header } from '@components/header'
 import { VariantsCount } from '@components/variants-count'
@@ -62,39 +61,8 @@ export const DtreePage = observer((): ReactElement => {
     return () => dtreeStore.actionHistory.resetHistory()
   }, [dsName, dtreeName])
 
-  const getFiltersValue = (type: string) => {
-    if (type === 'all') {
-      if (isXL) return toJS(datasetStore.dsInfoData?.total)
-
-      if (filterStore.method === GlbPagesNames.Dtree) {
-        return dtreeStore.statAmount?.variants
-      }
-
-      if (filterStore.method === GlbPagesNames.Refiner) {
-        return filterStore.stat.filteredCounts?.variants
-      }
-    }
-
-    if (type === 'transcribedVariants') {
-      if (filterStore.method === GlbPagesNames.Dtree) {
-        return dtreeStore.statAmount?.transcribedVariants
-      }
-
-      if (filterStore.method === GlbPagesNames.Refiner) {
-        return filterStore.stat.filteredCounts?.variants
-      }
-    }
-
-    if (type === 'transcripts') {
-      if (filterStore.method === GlbPagesNames.Dtree) {
-        return dtreeStore.statAmount?.transcripts
-      }
-
-      if (filterStore.method === GlbPagesNames.Refiner) {
-        return filterStore.stat.filteredCounts?.transcripts
-      }
-    }
-  }
+  const { variantCounts, dnaVariantsCounts, transcriptsCounts } =
+    dtreeStore.totalCounts
 
   return (
     <>
@@ -103,9 +71,11 @@ export const DtreePage = observer((): ReactElement => {
       <div className={styles.dtreePage}>
         <Header className={styles.dtreePage__header}>
           <VariantsCount
-            variantCounts={getFiltersValue('all')}
-            transcriptsCounts={getFiltersValue('transcripts')}
-            dnaVariantsCounts={getFiltersValue('transcribedVariants')}
+            variantCounts={
+              isXL ? toJS(datasetStore.dsInfoData?.total) : variantCounts
+            }
+            transcriptsCounts={transcriptsCounts}
+            dnaVariantsCounts={dnaVariantsCounts}
             showDnaVariants={!isXL}
             showTranscripts={!isXL}
           />

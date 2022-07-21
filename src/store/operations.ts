@@ -81,10 +81,7 @@ class OperationsStore {
     }
   }
 
-  async saveDatasetAsync(
-    wsName: string,
-    pathName: string,
-  ): Promise<{ ok: boolean; message?: string }> {
+  async saveDatasetAsync(wsName: string, pathName: string) {
     this.resetIsCreationOver()
 
     const params: IDs2WsArguments = {
@@ -104,7 +101,7 @@ class OperationsStore {
           : mainTableStore.fixedStatAmount.variantCounts) ?? 0
       params.conditions = filterStore.conditions
     } else {
-      compareValue = dtreeStore.acceptedVariants
+      compareValue = dtreeStore.totalFilteredCounts?.accepted ?? 0
       params.code = dtreeStore.dtreeCode
     }
 

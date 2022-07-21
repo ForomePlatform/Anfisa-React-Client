@@ -217,10 +217,29 @@ export const en = {
     noDataToShow: 'No data to show',
     textAboutSomething: 'Text about something',
     savePreset: 'Save Preset',
-    savePredefinedPresetError: '{presetName} is a predefined preset',
     searchThroughTheTabs: 'Search through the tabs',
     openInAModalWindow: 'Open in a modal window',
     openInANewTab: 'Open in a new tab',
+    contextMenuPopover: {
+      delete: 'Delete',
+      modify: 'Modify',
+    },
+    actions: {
+      save: 'Preset "{presetName}" has been saved',
+      modify: 'Preset "{selectedPreset}" has been modified',
+      delete: {
+        title: 'Delete preset',
+        message:
+          'Deleting a preset "{selectedPreset}" will permanently remove it from your system.',
+        cancel: 'No, Keep preset',
+        confirm: 'Yes, Delete preset',
+        success: 'Preset "{selectedPreset}" has been deleted',
+      },
+    },
+    errors: {
+      savePredefinedPresetError: '{presetName} is a predefined preset',
+      presetAlreadyExists: '{presetName} already exists',
+    },
   },
   condition: {
     selectAttribute: 'Select attribute',
