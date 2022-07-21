@@ -2,6 +2,7 @@
 
 ## <small>0.7.1 (7/21/2022)</small>
 
+* fix([FOROME-1333](https://quantori.atlassian.net/browse/FOROME-1333)): no results message (#828) ([dd7af174](https://github.com/ForomePlatform/Anfisa-React-Client/commit/dd7af174))
 * fix([FOROME-1377](https://quantori.atlassian.net/browse/FOROME-1377)): typing space symbol in creating drawer custom tag ([bda01ab0](https://github.com/ForomePlatform/Anfisa-React-Client/commit/bda01ab0))
 * fix([FOROME-1349](https://quantori.atlassian.net/browse/FOROME-1349)): ds creation ([b1163249](https://github.com/ForomePlatform/Anfisa-React-Client/commit/b1163249))
 * fix([FOROME-1332](https://quantori.atlassian.net/browse/FOROME-1332)): fixed min value validation ([3a7fb3be](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3a7fb3be))
