@@ -3,7 +3,8 @@
 @layer base {
   * {
     /* W3C standard just for Firefox */
-    scrollbar-width: thin;
+    scrollbar-width: auto;
+    scrollbar-color: theme("colors.grey.blue") transparent;
   }
 
   html {
