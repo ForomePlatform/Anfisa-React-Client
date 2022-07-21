@@ -16,10 +16,22 @@ export class FilterStatFuncStore extends BaseStatFuncStore<
   }
 
   protected fetch(query: IStatFuncQuery): Promise<IStatFunc> {
+    let conditions = filterStore.conditions
+
+    if (
+      filterStore.selectedConditionIndex >= 0 &&
+      filterStore.conditions[filterStore.selectedConditionIndex]
+    ) {
+      conditions = filterStore.conditions.slice(
+        0,
+        filterStore.selectedConditionIndex,
+      )
+    }
+
     return filteringProvider
       .getStatFunc({
         ds: datasetStore.datasetName,
-        conditions: filterStore.conditions,
+        conditions,
         rq_id: String(Date.now()),
         unit: query.unit,
         param: query.param,
