@@ -52,7 +52,7 @@ export const DocsList = ({
                   {doc[1].map(item => (
                     <InfoTextItem
                       isClickable
-                      className={baseDatasetName ? 'px-4' : 'px-4'}
+                      className="px-4"
                       isActive={activeName === item[0]}
                       key={item[0]}
                       onClick={() => onClick(item)}
