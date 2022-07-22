@@ -35,6 +35,7 @@ import Info from './info'
 import Lines from './lines'
 import List from './list'
 import Loupe from './loupe'
+import MiniPlus from './mini-plus'
 import Options from './options'
 import Rect from './rect'
 import Redo from './redo'
@@ -84,6 +85,7 @@ export const icons = {
   Lines,
   List,
   Loupe,
+  MiniPlus,
   Options,
   Rect,
   Redo,

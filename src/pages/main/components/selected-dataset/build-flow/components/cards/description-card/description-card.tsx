@@ -44,6 +44,7 @@ export const DescriptionCard = (props: ICardProps) => {
   const isOpenButton = optionsForOpenButton.includes(selectedValue)
   const [isEditMode, setEditMode] = useState(false)
   const [isTyping, setTyping] = useState(false)
+  const [isSaving, setSaving] = useState(false)
   const [datasetDescription, setDatasetDescription] = useState(
     note || t('home.datasetDescriptionDefault'),
   )
@@ -51,6 +52,13 @@ export const DescriptionCard = (props: ICardProps) => {
     datasetDescription === t('home.datasetDescriptionDefault')
       ? ''
       : datasetDescription
+
+  const getEditIconName = () => {
+    if (!isEditMode && !note?.length) {
+      return 'MiniPlus'
+    }
+    return isEditMode ? 'Check' : 'Edit'
+  }
 
   const toggleEditMode = () => {
     setEditMode(!isEditMode)
@@ -76,9 +84,11 @@ export const DescriptionCard = (props: ICardProps) => {
       }),
     })
 
+    setSaving(false)
     if (response?.ok) {
       setTyping(false)
       descriptions[ds] = description
+      showToast(t('home.datasetDescriptionSaved'), 'success')
     } else {
       showToast(t('error.smthWentWrong'), 'error')
     }
@@ -87,6 +97,7 @@ export const DescriptionCard = (props: ICardProps) => {
   const handleChange = (description: string) => {
     setDatasetDescription(description)
     setTyping(true)
+    setSaving(true)
     clearTimeout(typingTimer)
     typingTimer = setTimeout(() => {
       saveDescription(description)
@@ -112,15 +123,11 @@ export const DescriptionCard = (props: ICardProps) => {
             <span className="font-bold">Description</span>
             {!isTyping && (
               <Button
-                variant="text"
-                style={{ padding: 0 }}
-                className={cn('cursor-pointer', 'text-blue-bright', 'mx-2')}
+                variant="secondary"
+                size="xs"
+                className={cn('cursor-pointer', 'mx-2')}
                 icon={
-                  !isEditMode && !note?.length ? (
-                    <span>+</span>
-                  ) : (
-                    <Icon name={isEditMode ? 'Check' : 'Edit'} />
-                  )
+                  <Icon name={getEditIconName()} className="text-blue-bright" />
                 }
                 onClick={toggleEditMode}
               />
@@ -161,6 +168,7 @@ export const DescriptionCard = (props: ICardProps) => {
               isOpenButton ? openNextPage : () => wizardStore.finishEditCard(id)
             }
             disabled={continueDisabled || isTyping}
+            isLoading={isSaving}
           />
         </div>
       </div>
