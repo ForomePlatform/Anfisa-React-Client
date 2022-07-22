@@ -2,13 +2,14 @@
 Feature: Main table, variants list
   As the Anfisa user I want to see variants list on the Main Table page
 
-  Scenario: 01 Choose secondary dataset with drop down menu
+Scenario: 01 Choose secondary dataset with drop down menu
 
 	Given "Main table" for the "PGP3140_wgs_panel_hl" dataset was opened
 	When User clicks "Select secondary..." drop-down menu
 	And List of secondary datasets of the "PGP3140_wgs_panel_hl" dataset is displayed
 	And User clicks any of secondary dataset
-	Then the Main Table page should be updated for the selected secondary dataset
+	Then Main Table page should be updated for the selected secondary dataset
+	And Variants should be filtered according to secondary dataset
 	
 Scenario: 02 Change secondary dataset with drop down menu
 

@@ -1,55 +1,57 @@
-@regression
 Feature: Main table, Dataset Creation
-    As the Anfisa user I want to create a new dataset based on the variants on the Main Table page
+As the Anfisa user I want to create a new dataset based on the variants on the Main Table page
 
-Scenario: 01 Save a new dataset
-
+Background: 
 	Given Main Table for "PGP3140_wgs_panel_hl" dataset was opened
+
+@smoke
+@regression
+Scenario: 01 Save a new dataset with preset
+
 	When User clicks "Select Filter Preset"
 	And Clicks "@SEQaBOO_Hearing_Loss_v_5" preset
 	And User clicks "Create Derive DS"
 	And Writes valid name for the dataset
 	And clicks "Add dataset"
 	Then Dataset should be saved
+	And Panel with "Open It" button should be shown
 
-Scenario: 02 Save a new dataset with applied filters
+@smoke
+@regression
+Scenario: 02 Open newly created dataset with "Open It" button
 
-	Given "@SEQaBOO_Hearing_Loss_v_5" preset was applied
-	When User clicks "Edit filters" button
-	And Clicks "Callers" attribute
-	And Chooses "BGM_CMPD_HET" value
-	And Clicks "+Add Attribute" button
-	And Clicks "View variants" button
-	And Clicks "OK" on data saving message 
+	Given User applied preset
+	And Opened "Create Derived DS" dialog
+	And Typed correct data and clicked "Create"
+	And Waited until "Open It" button was shown
+	When User clicks "Open It" button
+	Then Main table of created dataset should be opened
+	And Variants should correspond to created dataset
+
+@regression
+Scenario: 03 Try to save dataset with only zone filters
+
+	When User clicks "+ Add Gene"
+	And Checks "ABCD1" check-box
+	And Clicks "Apply" 
 	And User clicks "Create Derive DS"
-	And Writes valid name for the dataset
-	And Clicks "Add dataset"
-	Then Dataset should be saved
+	Then User should not be able to write name for dataset
+	And "Add Dataset" button should be disabled
+	And Validation message should be shown
 
-Scenario: 03 Save dataset with more than 2000 variants
-
-	Given Main table of "PGP3140_wgs_panel_hl" dataset was opened
-	When User clicks "Edit filters" button
-	And Clicks "Variant_Class" attribute
-	And Checks "SNV" value
-	And Clicks "+Add Attribute" button
-	And Clicks "View variants" button
-	And Clicks "OK" on data saving message 
-	And Clicks "Create Derive DS"
-	And Writes valid name for the dataset
-	And Clicks "Add dataset"
-	Then Dataset should be saved.
-
+@regression
 Scenario: 04 Save a new dataset without any applied filters
 
-	Given Main table of "PGP3140_wgs_panel_hl" dataset was opened
 	When User clicks "Create Derive DS" without applying Filter Preset or Filter Refiner condition
 	Then User should not be able to write name for dataset
+	And "Add Dataset" button should be disabled
+	And Validation message should be shown
 
+@regression
 Scenario: 05 Save a new dataset with filter by Gene And preset
 
-	Given "@InSilico_Possibly_Damaging" preset was applied
-	When Clicks "+Add Gene" button
+	Given User applied "@InSilico_Possibly_Damaging" preset
+	When User clicks "+Add Gene" button
 	And User checks "ABHD12" gene
 	And Clicks "Apply" button
 	And Clicks "Create Derive DS"
@@ -57,9 +59,10 @@ Scenario: 05 Save a new dataset with filter by Gene And preset
 	And Clicks "Add dataset"
 	Then Dataset should be saved
 
+@regression
 Scenario: 06 Save a new dataset with filter by Gene List And preset
 
-	Given "@InSilico_Possibly_Damaging" preset was applied
+	Given User applied "@InSilico_Possibly_Damaging" preset
 	When Clicks "+Add Gene List" button
 	And Clicks "All_Hearing_Loss" gene list
 	And Clicks "Apply" button
@@ -68,9 +71,10 @@ Scenario: 06 Save a new dataset with filter by Gene List And preset
 	And Clicks "Add dataset"
 	Then Dataset should be saved
 
+@regression
 Scenario: 07 Save a new dataset with filter by Sample And preset
 
-	Given "@InSilico_Possibly_Damaging" preset was applied
+	Given User applied "@InSilico_Possibly_Damaging" preset
 	When Clicks "+Add Samples" button
 	And User checks "mother [NA24143]" sample
 	And Clicks "Apply" button
@@ -79,9 +83,10 @@ Scenario: 07 Save a new dataset with filter by Sample And preset
 	And Clicks "Add dataset"
 	Then Dataset should be saved
 
+@regression
 Scenario: 08 Save a new dataset with filter by Tag And preset
 
-	Given "@InSilico_Possibly_Damaging" preset was applied
+	Given User applied "@InSilico_Possibly_Damaging" preset
 	When User clicks "+Add Tag" button
 	And Checks "Previously categorized" tag
 	And Clicks "Apply" button
@@ -90,65 +95,53 @@ Scenario: 08 Save a new dataset with filter by Tag And preset
 	And Clicks "Add dataset"
 	Then Dataset should be saved
 
+@regression
 Scenario: 09 Try to create a dataset without name
 
-	Given "@InSilico_Possibly_Damaging" preset was applied
+	Given User applied "@InSilico_Possibly_Damaging" preset
 	When User clicks "Create Derive DS"
 	And Writes no name for the dataset
-	Then "Add dataset" button should be disabled when there is not name written
+	Then "Add dataset" button should be disabled
 
+@regression
 Scenario: 10 Try to create a dataset with duplicated name (dataset with this name already exists)
 
-	Given "@InSilico_Possibly_Damaging" preset was applied
+	Given User applied "@InSilico_Possibly_Damaging" preset
 	When User clicks "Create Derive DS"
 	And Writes name for the dataset that already exists
 	And Clicks "Add dataset"
 	Then Dataset should not be created
 	And Validation message should be shown
+ 
+@regression
+Scenario Outline: 11 Try to create a dataset with invalid name "<Name1>"
 
-Scenario: 11 Try to create a dataset with long name (more than 250 chars)
-
-	Given "@InSilico_Possibly_Damaging" preset was applied
+	Given User applied "@InSilico_Possibly_Damaging" preset
 	When User clicks "Create Derive DS"
-	And Writes the name for a dataset with more than 250 characters
+	And Writes the name "<Name1>" for a dataset
 	Then "Add dataset" button should be disabled
 	And Validation message should be shown 
 
-Scenario: 12 Try to create dataset with spaces in the name
+Examples: 
+	| Name1     |
+	| For!@#    |
+	| 123Forome |
+	| For ome   |
+	|251_random_characters| #type 251 random symbols here
+			  
 
-	Given "@InSilico_Possibly_Damaging" preset was applied
-	When User clicks "Create Derive DS"
-	And Writes name for a dataset with Space
-	Then "Add dataset" button should be disabled
-	And Validation message should be shown 
 
-Scenario: 13 Try to create dataset with special chars in the name
+Scenario: 12 Cancel dataset
 
-	Given "@InSilico_Possibly_Damaging" preset was applied
-	When User clicks "Create Derive DS"
-	And Writes name for dataset with special character( -_+)
-	Then "Add dataset" button should be disabled
-	And Validation message should be shown 
-
-Scenario: 14 Try to create dataset with name that begins from a number
-
-	Given "@InSilico_Possibly_Damaging" preset was applied
-	When User clicks "Create Derive DS"
-	And Writes name for the dataset which begins with a number (5asd)
-	Then "Add dataset" button should be disabled
-	And Validation message should be shown 
-
-Scenario: 15 Cancel dataset
-
-	Given "@InSilico_Possibly_Damaging" preset was applied
+	Given User applied "@InSilico_Possibly_Damaging" preset
 	When User clicks "Create Derive DS"
 	And Writes valid name for the dataset
 	And Clicks "Cancel"
 	Then Dataset should be canceled
 
-Scenario: 16 Creation dataset process cannot be canceled
+Scenario: 13 Creation dataset process cannot be canceled
 
-	Given "@InSilico_Possibly_Damaging" preset was applied
+	Given User applied "@InSilico_Possibly_Damaging" preset
 	When User clicks "Create Derive DS"
 	And Enters valid name for the dataset
 	And Clicks "Add dataset"
