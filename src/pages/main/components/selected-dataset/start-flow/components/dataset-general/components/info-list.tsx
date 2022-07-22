@@ -14,6 +14,11 @@ export const InfoList = observer((): ReactElement | null => {
   const handleClickAsync = async (doc: any, isBaseInfo?: boolean) => {
     dirinfoStore.setActiveInfoName(doc[0])
 
+    if (doc[0] === 'Info') {
+      dirinfoStore.setInfoFrameLink('')
+      return
+    }
+
     if (doc[2]) {
       if (doc[2].image) {
         dirinfoStore.setInfoFrameLink(

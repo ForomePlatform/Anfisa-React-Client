@@ -31,11 +31,12 @@ export interface Versions {
   annotations: string
   annotations_build: string
   annotations_date: string
+  pipeline_date: string
   bcftools_annotate_version: string
   gatk: string
   gatk_select_variants: string
-  pipeline: string
-  reference: string
+  pipeline: string | null
+  reference: string | null
   vep_version: string
 }
 
@@ -52,17 +53,32 @@ export interface IDsInfoMeta {
   [key: string]: unknown
 }
 
+export interface IDsInfoReceipt {
+  base: string
+  conditions: Array<string | string[]>
+  kind: 'filter' | 'dtree'
+  root: string
+  'eval-update-info'?: [string | null, string | null]
+  'f-presentation'?: string[]
+  'p-presentation'?: [string, number, boolean | null][]
+  'filter-name'?: string
+  'dtree-name'?: string
+  'dtree-code'?: string
+  'panels-supply'?: { [key: string]: string[] }
+}
+
 export interface IDsInfo extends IBaseDatasetDescriptor {
   meta: IDsInfoMeta
   classes: IDsInfoClass[]
   unitGroups: string[]
   cohorts: string[]
   exportMaxCount: number
-  igvUrls?: string[]
   name: string
   note: string
   total: number
   ancestors: any[]
+  igvUrls?: string[]
+  receipts?: IDsInfoReceipt[]
 }
 
 // ds_list

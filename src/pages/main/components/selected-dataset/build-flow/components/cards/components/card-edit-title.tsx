@@ -18,7 +18,7 @@ export const CardTitleWithEdit = ({
   className,
 }: ICardTitleWithEditProps) => (
   <div className={cn('flex items-center justify-between', className)}>
-    <CardTitle text={title} className="text-16" />
+    <CardTitle text={title} />
 
     <Button
       variant="secondary"

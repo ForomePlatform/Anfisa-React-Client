@@ -4,7 +4,7 @@ import get from 'lodash/get'
 import { observer } from 'mobx-react-lite'
 
 import { datasetStore } from '@store/dataset'
-import dirinfoStore from '@store/dirinfo'
+import dirinfoStore, { BASE_INFO_NAME } from '@store/dirinfo'
 import { DatasetName } from '@pages/main/components/sidebar/datasets-list/components/dataset-name'
 import { DatasetTime } from '@pages/main/components/sidebar/datasets-list/components/dataset-time'
 import {
@@ -79,7 +79,7 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
       wizardStore.setDatasetKind(kind)
 
       dirinfoStore.setInfoFrameLink('')
-      dirinfoStore.setActiveInfoName('')
+      dirinfoStore.setActiveInfoName(BASE_INFO_NAME)
     }
 
     const padding = DEFAULT_DATASET_P + level * LEVEL_DATASET_P
