@@ -30,11 +30,11 @@ export const Card = forwardRef(
     className,
     isNeedToAnimate,
   }: CardProps): ReactElement => {
-    const [isOpen, setIsopen] = useState(false)
+    const [isMounted, setIsMounted] = useState(false)
     const cardRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
-      window.setTimeout(() => setIsopen(true), 0)
+      window.setTimeout(() => setIsMounted(true), 0)
     }, [])
 
     const renderCard = (state = '') => {
@@ -58,7 +58,7 @@ export const Card = forwardRef(
     return isNeedToAnimate ? (
       <Transition
         appear
-        in={isOpen}
+        in={isMounted}
         timeout={TRANSITION_DURATION}
         nodeRef={cardRef}
       >
