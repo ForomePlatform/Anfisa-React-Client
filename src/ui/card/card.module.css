@@ -1,11 +1,11 @@
 .card {
-  border-radius: theme("spacing.2");
-  box-shadow: theme("boxShadow.card");
-  padding: theme("spacing.4");
+  border-radius: theme('spacing.2');
+  box-shadow: theme('boxShadow.card');
+  padding: theme('spacing.4');
 
   &_title {
     font-weight: 700 !important;
-    color: theme("colors.blue.dark");
+    color: theme('colors.blue.dark');
 
     &_md {
       @apply typography-l;
@@ -14,5 +14,17 @@
     &_sm {
       @apply typography-m;
     }
+  }
+
+  &_entering,
+  &_entered {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  &_exiting,
+  &_exited {
+    opacity: 0;
+    transform: translateY(40px);
   }
 }

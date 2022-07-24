@@ -46,7 +46,10 @@ export const DescriptionCard = (props: ICardProps) => {
   }, [id, ds])
 
   return (
-    <Card className="mt-4">
+    <Card
+      isNeedToAnimate={wizardStore.isNeedToAnimateCard(id)}
+      className="mt-4"
+    >
       <CardTitleWithEdit
         title={ds}
         isEditDisabled={editDisabled}
