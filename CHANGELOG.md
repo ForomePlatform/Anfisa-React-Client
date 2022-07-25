@@ -1,7 +1,8 @@
 # Change log 
 
-## <small>0.7.1 (7/21/2022)</small>
+## <small>0.7.1 (7/25/2022)</small>
 
+* fix([FOROME-1375](https://quantori.atlassian.net/browse/FOROME-1375)): final step include/exclude ([28d368ad](https://github.com/ForomePlatform/Anfisa-React-Client/commit/28d368ad))
 * fix([FOROME-1333](https://quantori.atlassian.net/browse/FOROME-1333)): dont show zero ammount of results (hotfix) (#836) ([6c1c155b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/6c1c155b))
 * fix([FOROME-1391](https://quantori.atlassian.net/browse/FOROME-1391)): remove unnecessary null check ([55ab3cd6](https://github.com/ForomePlatform/Anfisa-React-Client/commit/55ab3cd6))
 * fix([FOROME-1391](https://quantori.atlassian.net/browse/FOROME-1391)): add possible null to object ([13b688e5](https://github.com/ForomePlatform/Anfisa-React-Client/commit/13b688e5))
