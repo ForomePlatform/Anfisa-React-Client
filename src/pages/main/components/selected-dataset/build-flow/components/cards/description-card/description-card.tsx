@@ -1,20 +1,17 @@
 import styles from './description-card.module.css'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useHistory } from 'react-router'
 import cn from 'classnames'
+import { observer } from 'mobx-react-lite'
 
 import { ExploreGenomeTypes } from '@core/enum/explore-genome-types-enum'
-import { getApiUrl } from '@core/get-api-url'
-import { t } from '@i18n'
 import { datasetStore } from '@store/dataset'
-import dirinfoStore from '@store/dirinfo'
 import filterStore from '@store/filter'
 import { Button } from '@ui/button'
 import { Card } from '@ui/card'
 import { Icon } from '@ui/icon'
 import { GlbPagesNames } from '@glb/glb-names'
-import { showToast } from '@utils/notifications/showToast'
 import {
   exploreCandidateOptionsList,
   optionsForOpenButton,
@@ -24,11 +21,9 @@ import wizardStore from '../../wizard/wizard.store'
 import { getNextPageData, memorizeLocation } from '../../wizard/wizard.utils'
 import { CardTitleWithEdit } from '../components/card-edit-title'
 import { CardRadioList } from '../components/card-radio-list'
+import descriptionCardStore from './description-card.store'
 
-const descriptions: { [key: string]: string } = {}
-let typingTimer: ReturnType<typeof setTimeout>
-
-export const DescriptionCard = (props: ICardProps) => {
+export const DescriptionCard = observer((props: ICardProps) => {
   const {
     title,
     id,
@@ -39,30 +34,19 @@ export const DescriptionCard = (props: ICardProps) => {
   } = props
   const history = useHistory()
   const ds = title || datasetStore.datasetName
+  const {
+    isEditMode,
+    isTyping,
+    isSaving,
+    datasetDescription,
+    fieldDefaultValue,
+    editIconName,
+    setDsName,
+    toggleEditMode,
+    handleChange,
+  } = descriptionCardStore
 
-  const note = descriptions[ds] || dirinfoStore.dirInfoData?.dsDict[ds]?.note
   const isOpenButton = optionsForOpenButton.includes(selectedValue)
-  const [isEditMode, setEditMode] = useState(false)
-  const [isTyping, setTyping] = useState(false)
-  const [isSaving, setSaving] = useState(false)
-  const [datasetDescription, setDatasetDescription] = useState(
-    note || t('home.datasetDescriptionDefault'),
-  )
-  const fieldDefaultValue =
-    datasetDescription === t('home.datasetDescriptionDefault')
-      ? ''
-      : datasetDescription
-
-  const getEditIconName = () => {
-    if (!isEditMode && !note?.length) {
-      return 'MiniPlus'
-    }
-    return isEditMode ? 'Check' : 'Edit'
-  }
-
-  const toggleEditMode = () => {
-    setEditMode(!isEditMode)
-  }
 
   const openNextPage = () => {
     const nextPageData = getNextPageData(
@@ -75,38 +59,11 @@ export const DescriptionCard = (props: ICardProps) => {
     filterStore.setMethod(nextPageData.method as GlbPagesNames)
   }
 
-  const saveDescription = async (description: string) => {
-    const response = await fetch(getApiUrl('dsinfo'), {
-      method: 'POST',
-      body: new URLSearchParams({
-        ds: ds,
-        note: description,
-      }),
-    })
-
-    setSaving(false)
-    if (response?.ok) {
-      setTyping(false)
-      descriptions[ds] = description
-      showToast(t('home.datasetDescriptionSaved'), 'success')
-    } else {
-      showToast(t('error.smthWentWrong'), 'error')
-    }
-  }
-
-  const handleChange = (description: string) => {
-    setDatasetDescription(description)
-    setTyping(true)
-    setSaving(true)
-    clearTimeout(typingTimer)
-    typingTimer = setTimeout(() => {
-      saveDescription(description)
-    }, 1000)
-  }
-
   useEffect(() => {
     wizardStore.wizardScenario[id].title = ds
     wizardStore.updateSelectedDataset(ds)
+    setDsName(ds)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, ds])
 
   return (
@@ -126,9 +83,7 @@ export const DescriptionCard = (props: ICardProps) => {
                 variant="secondary"
                 size="xs"
                 className={cn('cursor-pointer', 'mx-2')}
-                icon={
-                  <Icon name={getEditIconName()} className="text-blue-bright" />
-                }
+                icon={<Icon name={editIconName} className="text-blue-bright" />}
                 onClick={toggleEditMode}
               />
             )}
@@ -174,4 +129,4 @@ export const DescriptionCard = (props: ICardProps) => {
       </div>
     </Card>
   )
-}
+})
