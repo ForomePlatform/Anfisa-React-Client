@@ -20,6 +20,7 @@ export interface IButtonProps {
     | 'tertiary'
     | 'primary-dark'
     | 'diestruction'
+    | 'no-border'
   className?: Argument
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void
   onMouseUp?: (event: MouseEvent<HTMLButtonElement>) => void

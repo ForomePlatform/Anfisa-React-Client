@@ -102,6 +102,11 @@
     }
   }
 
+  &_no-border {
+    @apply button_text;
+    border: none;
+  }
+
   &_secondary,
   &_secondary-dark {
     background-color: inherit;

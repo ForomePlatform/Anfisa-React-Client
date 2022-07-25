@@ -24,14 +24,14 @@ export const StartCard = (props: ICardProps) => {
   const isEditionProhibited =
     isExploreGenomeDisabled || isExploreCandidateDisabled
 
-  const isEditDisabled = isEditionProhibited ?? editDisabled
+  const isEditShown = !isEditionProhibited && !editDisabled
 
   return (
     <Card className="mt-4">
       <>
         <CardTitleWithEdit
           title={title}
-          isEditDisabled={isEditDisabled}
+          isEditShown={isEditShown}
           onEdit={() => wizardStore.editCard(id)}
         />
 

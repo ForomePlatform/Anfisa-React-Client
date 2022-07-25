@@ -42,7 +42,7 @@ export const WhatsNextCard = (props: ICardProps) => {
       <>
         <CardTitleWithEdit
           title={title}
-          isEditDisabled={editDisabled}
+          isEditShown={!editDisabled}
           onEdit={() => wizardStore.editCard(id)}
         />
 

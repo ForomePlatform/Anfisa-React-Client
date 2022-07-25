@@ -49,7 +49,7 @@ export const DescriptionCard = (props: ICardProps) => {
     <Card className="mt-4">
       <CardTitleWithEdit
         title={ds}
-        isEditDisabled={editDisabled}
+        isEditShown={!editDisabled}
         onEdit={() => wizardStore.editCard(id)}
       />
 
