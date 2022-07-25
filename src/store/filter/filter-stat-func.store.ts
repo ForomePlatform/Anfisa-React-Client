@@ -16,17 +16,7 @@ export class FilterStatFuncStore extends BaseStatFuncStore<
   }
 
   protected fetch(query: IStatFuncQuery): Promise<IStatFunc> {
-    let conditions = filterStore.conditions
-
-    if (
-      filterStore.selectedConditionIndex >= 0 &&
-      filterStore.conditions[filterStore.selectedConditionIndex]
-    ) {
-      conditions = filterStore.conditions.slice(
-        0,
-        filterStore.selectedConditionIndex,
-      )
-    }
+    const conditions = filterStore.prevConditions || filterStore.conditions
 
     return filteringProvider
       .getStatFunc({
