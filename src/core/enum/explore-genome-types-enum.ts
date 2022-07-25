@@ -3,5 +3,5 @@ export enum ExploreGenomeTypes {
   Phenotype = 'Phenotype based analysis',
   GeneticAnalysis = 'Genetic first analysis',
   ExploreData = 'Explore data or build new filter',
-  BuildInclusionExclusion = 'Build inclusion/exclusion critetira',
+  BuildInclusionExclusion = 'Build inclusion/exclusion criteria',
 }
