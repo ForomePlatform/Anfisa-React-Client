@@ -1,15 +1,14 @@
 import { FC } from 'react'
 
 import { t } from '@i18n'
-import { SolutionChangeDialog } from '@components/solution-control/solution-change-dialog/solution-change-dialog'
-import { ISolutionChangeModalProps } from '@components/solution-control/solution-change-dialog/solution-change-dialog.interfaces'
+import { ConfirmDialog, IConfirmModalProps } from '@components/confirm-dialog'
 
-export const SolutionModifyDialog: FC<ISolutionChangeModalProps> = ({
+export const SolutionModifyDialog: FC<IConfirmModalProps> = ({
   solutionName,
   controlName,
   ...rest
 }) => (
-  <SolutionChangeDialog
+  <ConfirmDialog
     message={t('solutionControl.modifyDialog.message', {
       controlName,
       solutionName,

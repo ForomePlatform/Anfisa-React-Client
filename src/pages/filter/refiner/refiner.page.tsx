@@ -8,7 +8,6 @@ import { useDatasetName } from '@core/hooks/use-dataset-name'
 import datasetStore from '@store/dataset/dataset'
 import filterStore from '@store/filter'
 import filterPresetsStore from '@store/filter-presets'
-import mainTableStore from '@store/ws/main-table.store'
 import { ExportReport } from '@components/export-report'
 import { Header } from '@components/header'
 import { VariantsCount } from '@components/variants-count'
@@ -25,7 +24,7 @@ export const RefinerPage = observer((): ReactElement => {
   const { isXL } = datasetStore
 
   const { variantCounts, dnaVariantsCounts, transcriptsCounts } =
-    mainTableStore.fixedStatAmount
+    filterStore.totalCounts
 
   const { availablePresets: availableSolutionEntries, activePreset } =
     filterPresetsStore

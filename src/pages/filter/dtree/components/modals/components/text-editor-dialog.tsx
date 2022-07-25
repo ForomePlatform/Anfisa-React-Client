@@ -62,6 +62,7 @@ export const TextEditorDialog = observer(
         } else {
           dtreeStore.setStartDtreeCode()
           setCode(dtreeStore.dtreeCode)
+          setError(emptyError)
         }
       }
     }, [isOpen])

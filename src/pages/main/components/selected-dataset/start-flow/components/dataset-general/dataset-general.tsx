@@ -9,10 +9,9 @@ export const DatasetGeneral = (): ReactElement => {
     <div className="text-sm">
       <CardTitle
         text={t('home.general')}
-        className="mr-3 break-words"
+        className="mr-3 mb-3 px-4 break-words"
         style={{ maxWidth: 'calc(100% - 140px)' }}
       />
-      <div className="leading-18px font-medium text-grey-blue">{}</div>
 
       <InfoList />
     </div>

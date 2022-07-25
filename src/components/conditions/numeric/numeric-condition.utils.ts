@@ -318,3 +318,12 @@ export const getLimitedRangeInitialState = (
       ((left != null && left > max) || (right != null && right > max)))
   )
 }
+
+export const getFixedMinValue = (value: number) => {
+  if (typeof value !== 'number') {
+    return
+  }
+
+  const zeroIndex = value.toString().lastIndexOf('0')
+  return +value.toFixed(zeroIndex + 1)
+}

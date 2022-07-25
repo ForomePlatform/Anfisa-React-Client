@@ -110,6 +110,27 @@ export const en = {
     table: 'Main Table',
     dtree: 'Decision Tree Panel',
     refiner: 'Filter Refiner',
+    infoPanel: {
+      title: 'Info',
+      annotations: 'Annotation sources versions',
+      filter: {
+        filterHeader: 'Filter applied in',
+        dtreeHeader: 'Decision tree code applied in',
+        filterName: 'Filter name: ',
+        dtreeName: 'Tree name: ',
+        updated: 'updated at {at} from {from}',
+        suppliedPanels: 'Supplied panels for type ',
+      },
+      info: {
+        name: 'Name',
+        kind: 'Kind',
+        variants: 'Variants',
+        createdAt: 'Created At',
+        baseDataset: 'Base dataset',
+        baseLoaded: 'Base loaded at',
+        rootDataset: 'Base dataset',
+      },
+    },
     modals: {
       importDataset: 'Import Dataset',
       exportDataset: 'Export Dataset',
@@ -220,10 +241,29 @@ export const en = {
     noDataToShow: 'No data to show',
     textAboutSomething: 'Text about something',
     savePreset: 'Save Preset',
-    savePredefinedPresetError: '{presetName} is a predefined preset',
     searchThroughTheTabs: 'Search through the tabs',
     openInAModalWindow: 'Open in a modal window',
     openInANewTab: 'Open in a new tab',
+    contextMenuPopover: {
+      delete: 'Delete',
+      modify: 'Modify',
+    },
+    actions: {
+      save: 'Preset "{presetName}" has been saved',
+      modify: 'Preset "{selectedPreset}" has been modified',
+      delete: {
+        title: 'Delete preset',
+        message:
+          'Deleting a preset "{selectedPreset}" will permanently remove it from your system.',
+        cancel: 'No, Keep preset',
+        confirm: 'Yes, Delete preset',
+        success: 'Preset "{selectedPreset}" has been deleted',
+      },
+    },
+    errors: {
+      savePredefinedPresetError: '{presetName} is a predefined preset',
+      presetAlreadyExists: '{presetName} already exists',
+    },
   },
   condition: {
     selectAttribute: 'Select attribute',

@@ -61,7 +61,7 @@
       max-height: 70vh;
     }
 
-    &_empty {
+    &_loading {
       display: flex;
       align-items: center;
     }

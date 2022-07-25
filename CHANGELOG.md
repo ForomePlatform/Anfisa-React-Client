@@ -1,8 +1,26 @@
 # Change log 
 
-## <small>0.7.1 (7/19/2022)</small>
+## <small>0.7.1 (7/25/2022)</small>
 
+* fix([FOROME-1402](https://quantori.atlassian.net/browse/FOROME-1402)): whats next card option spelling ([1a1ad307](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1a1ad307))
+* fix([FOROME-1375](https://quantori.atlassian.net/browse/FOROME-1375)): final step include/exclude ([28d368ad](https://github.com/ForomePlatform/Anfisa-React-Client/commit/28d368ad))
+* fix([FOROME-1333](https://quantori.atlassian.net/browse/FOROME-1333)): dont show zero ammount of results (hotfix) (#836) ([6c1c155b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/6c1c155b))
+* fix([FOROME-1391](https://quantori.atlassian.net/browse/FOROME-1391)): remove unnecessary null check ([55ab3cd6](https://github.com/ForomePlatform/Anfisa-React-Client/commit/55ab3cd6))
+* fix([FOROME-1391](https://quantori.atlassian.net/browse/FOROME-1391)): add possible null to object ([13b688e5](https://github.com/ForomePlatform/Anfisa-React-Client/commit/13b688e5))
+* fix([FOROME-1391](https://quantori.atlassian.net/browse/FOROME-1391)): revert idea changes ([a140cc68](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a140cc68))
+* fix([FOROME-1391](https://quantori.atlassian.net/browse/FOROME-1391)): check xl datasets ([dd97c5ee](https://github.com/ForomePlatform/Anfisa-React-Client/commit/dd97c5ee))
+* fix([FOROME-1333](https://quantori.atlassian.net/browse/FOROME-1333)): no results message (#828) ([dd7af174](https://github.com/ForomePlatform/Anfisa-React-Client/commit/dd7af174))
+* fix([FOROME-1377](https://quantori.atlassian.net/browse/FOROME-1377)): typing space symbol in creating drawer custom tag ([bda01ab0](https://github.com/ForomePlatform/Anfisa-React-Client/commit/bda01ab0))
+* fix([FOROME-1349](https://quantori.atlassian.net/browse/FOROME-1349)): ds creation ([b1163249](https://github.com/ForomePlatform/Anfisa-React-Client/commit/b1163249))
+* fix([FOROME-1332](https://quantori.atlassian.net/browse/FOROME-1332)): fixed min value validation ([3a7fb3be](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3a7fb3be))
+* feat([FOROME-1326](https://quantori.atlassian.net/browse/FOROME-1326)): add an ability to delete and modify drawer presets ([9020c3fa](https://github.com/ForomePlatform/Anfisa-React-Client/commit/9020c3fa))
+* fix([FOROME-1376](https://quantori.atlassian.net/browse/FOROME-1376)): freeze filter page header variant numbers ([b1132ba7](https://github.com/ForomePlatform/Anfisa-React-Client/commit/b1132ba7))
+* fix([FOROME-1383](https://quantori.atlassian.net/browse/FOROME-1383)): dtree ds creation in xl ([08aff902](https://github.com/ForomePlatform/Anfisa-React-Client/commit/08aff902))
+* fix([FOROME-00](https://quantori.atlassian.net/browse/FOROME-00)): remove wizard logs error ([3733bdb1](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3733bdb1))
+* fix([FOROME-1335](https://quantori.atlassian.net/browse/FOROME-1335)): change arrows color (#819) ([e2b780d6](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e2b780d6))
 * fix([FOROME-00](https://quantori.atlassian.net/browse/FOROME-00)): hotfix for wizard routing ([262097ad](https://github.com/ForomePlatform/Anfisa-React-Client/commit/262097ad))
+* fix([FOROME-1314](https://quantori.atlassian.net/browse/FOROME-1314)): remove import ([171fd48d](https://github.com/ForomePlatform/Anfisa-React-Client/commit/171fd48d))
+* fix([FOROME-1314](https://quantori.atlassian.net/browse/FOROME-1314)): remove error on exit modal ([6e62c67a](https://github.com/ForomePlatform/Anfisa-React-Client/commit/6e62c67a))
 * feat([FOROME-1309](https://quantori.atlassian.net/browse/FOROME-1309)): add wizard ([1c02a038](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1c02a038))
 * fix([FOROME-1372](https://quantori.atlassian.net/browse/FOROME-1372)): Fixed Gene lists zone (#816) ([287340ef](https://github.com/ForomePlatform/Anfisa-React-Client/commit/287340ef))
 * fix([FOROME-1357](https://quantori.atlassian.net/browse/FOROME-1357)): opening derived dataset ([10b6b0f4](https://github.com/ForomePlatform/Anfisa-React-Client/commit/10b6b0f4))

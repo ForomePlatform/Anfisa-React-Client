@@ -1,0 +1,19 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: {{ include "anfisa-front.fullname" . }}
+  labels:
+    {{- include "anfisa-front.labels" . | nindent 4 }}
+spec:
+  host: anfisa-test.asset-forome-0b8a4e8de101bcbaf4eafc441eda83b3-0000.us-south.containers.appdomain.cloud
+  path: /
+  to:
+    kind: Service
+    name: {{ include "anfisa-front.fullname" . }}
+    weight: 100
+  port:
+    targetPort: 80
+  tls:
+    insecureEdgeTerminationPolicy: Allow
+    termination: edge
+  wildcardPolicy: None

@@ -4,7 +4,7 @@ import get from 'lodash/get'
 import { observer } from 'mobx-react-lite'
 
 import { datasetStore } from '@store/dataset'
-import dirinfoStore from '@store/dirinfo'
+import dirinfoStore, { BASE_INFO_NAME } from '@store/dirinfo'
 import { DatasetName } from '@pages/main/components/sidebar/datasets-list/components/dataset-name'
 import { DatasetTime } from '@pages/main/components/sidebar/datasets-list/components/dataset-time'
 import {
@@ -43,14 +43,21 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
 
       if (isNullKind && !hasChildren) return
 
-      const kind = dirinfoStore.xlDatasets.includes(item.name) ? 'xl' : 'ws'
-
-      if (wizardStore.isWizardVisible && kind !== 'ws') {
-        wizardStore.toggleIsWizardVisible(false)
+      if (datasetStore.datasetName === item.name) {
+        return
       }
 
-      wizardStore.resetWizard()
-      wizardStore.actionHistory.resetHistory()
+      const kind = dirinfoStore.xlDatasets.includes(item.name) ? 'xl' : 'ws'
+
+      if (wizardStore.isWizardVisible && kind === 'xl') {
+        wizardStore.toggleIsWizardVisible(false)
+        wizardStore.resetWizard()
+        wizardStore.actionHistory.resetHistory()
+      } else {
+        if (wizardStore.actionHistory.historyIndex !== -1) {
+          wizardStore.actionHistory.resetHistory()
+        }
+      }
 
       if (hasChildren) {
         setIsOpenFolder(opened => {
@@ -72,7 +79,7 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
       wizardStore.setDatasetKind(kind)
 
       dirinfoStore.setInfoFrameLink('')
-      dirinfoStore.setActiveInfoName('')
+      dirinfoStore.setActiveInfoName(BASE_INFO_NAME)
     }
 
     const padding = DEFAULT_DATASET_P + level * LEVEL_DATASET_P

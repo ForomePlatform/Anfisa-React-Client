@@ -13,7 +13,11 @@ export const secondaryDsNameByKey =
 
     if (!dirInfoData) return null
 
-    const item: IDirInfoDatasetDescriptor = dirInfoData.dsDict[key]
+    const item: IDirInfoDatasetDescriptor | null = dirInfoData.dsDict[key]
+
+    if (!item) {
+      return null
+    }
 
     return (
       <SecondaryDsItem

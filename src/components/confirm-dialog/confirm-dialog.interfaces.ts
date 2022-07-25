@@ -1,4 +1,4 @@
-export interface ISolutionChangeDialogProps {
+export interface IConfirmDialogProps {
   isOpen?: boolean
   onClose: () => void
   onApply: () => void
@@ -8,9 +8,9 @@ export interface ISolutionChangeDialogProps {
   applyText: string
 }
 
-export interface ISolutionChangeModalProps
+export interface IConfirmModalProps
   extends Omit<
-    ISolutionChangeDialogProps,
+    IConfirmDialogProps,
     'message' | 'title' | 'cancelText' | 'applyText'
   > {
   solutionName?: string

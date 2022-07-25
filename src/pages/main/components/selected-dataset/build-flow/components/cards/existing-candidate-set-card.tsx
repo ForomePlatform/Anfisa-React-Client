@@ -13,8 +13,8 @@ export const ExistingCandidatesCard = observer((props: ICardProps) => {
   }
 
   return (
-    <Card className="mt-4 px-0">
-      <CardTitle text={title} className="text-16 px-4" />
+    <Card className="mt-4" style={{ paddingLeft: 0, paddingRight: 0 }}>
+      <CardTitle text={title} className="px-4" />
 
       <div
         className="mb-4 mt-2 text-14 overflow-y-auto"
