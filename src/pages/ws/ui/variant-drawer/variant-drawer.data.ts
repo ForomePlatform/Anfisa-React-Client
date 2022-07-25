@@ -3,7 +3,7 @@ import {
   VariantDrawerPredefinedPresets,
 } from './variant-drawer.interface'
 
-export const defaultPresetsNames = ['List', 'Preset 1']
+export const defaultPresetsNames = ['List', 'Cards View']
 
 export const predefinedPresets: IVariantDrawerGridPreset[] = [
   {
@@ -11,8 +11,8 @@ export const predefinedPresets: IVariantDrawerGridPreset[] = [
     predefinedName: VariantDrawerPredefinedPresets.List,
   },
   {
-    name: 'Preset 1',
-    predefinedName: VariantDrawerPredefinedPresets.Preset1,
+    name: 'Cards View',
+    predefinedName: VariantDrawerPredefinedPresets.CardsView,
     layout: [
       {
         w: 2,
