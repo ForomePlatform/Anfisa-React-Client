@@ -13,7 +13,7 @@ import {
 import { Transition } from 'react-transition-group'
 import cn, { Argument } from 'classnames'
 
-interface CardProps {
+interface ICardProps {
   children?: ReactElement | ReactNode
   className?: Argument
   innerRef?: Ref<HTMLDivElement>
@@ -29,7 +29,7 @@ export const Card = forwardRef(
     children,
     className,
     isNeedToAnimate,
-  }: CardProps): ReactElement => {
+  }: ICardProps): ReactElement => {
     const [isMounted, setIsMounted] = useState(false)
     const cardRef = useRef<HTMLDivElement>(null)
 
@@ -37,23 +37,21 @@ export const Card = forwardRef(
       window.setTimeout(() => setIsMounted(true), 0)
     }, [])
 
-    const renderCard = (state = '') => {
-      return (
-        <div
-          ref={innerRef ? innerRef : cardRef}
-          className={cn(
-            'shadow-card p-4 rounded-lg',
-            className,
-            styles[`card_${state}`],
-          )}
-          style={{
-            transitionDuration: `${TRANSITION_DURATION}ms`,
-          }}
-        >
-          {children}
-        </div>
-      )
-    }
+    const renderCard = (state = '') => (
+      <div
+        ref={innerRef ? innerRef : cardRef}
+        className={cn(
+          'p-4 shadow-card rounded-lg',
+          className,
+          styles[`card_${state}`],
+        )}
+        style={{
+          transitionDuration: `${TRANSITION_DURATION}ms`,
+        }}
+      >
+        {children}
+      </div>
+    )
 
     return isNeedToAnimate ? (
       <Transition
