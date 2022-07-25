@@ -48,6 +48,10 @@ export class DatasetStore {
     const hgModeValue = meta?.modes?.[0]
     return hgModeValue
   }
+
+  public get isLoading(): boolean {
+    return this.dsInfo.isLoading
+  }
 }
 
 export default new DatasetStore()

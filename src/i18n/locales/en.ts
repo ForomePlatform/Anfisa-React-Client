@@ -107,6 +107,27 @@ export const en = {
     table: 'Main Table',
     dtree: 'Decision Tree Panel',
     refiner: 'Filter Refiner',
+    infoPanel: {
+      title: 'Info',
+      annotations: 'Annotation sources versions',
+      filter: {
+        filterHeader: 'Filter applied in',
+        dtreeHeader: 'Decision tree code applied in',
+        filterName: 'Filter name: ',
+        dtreeName: 'Tree name: ',
+        updated: 'updated at {at} from {from}',
+        suppliedPanels: 'Supplied panels for type ',
+      },
+      info: {
+        name: 'Name',
+        kind: 'Kind',
+        variants: 'Variants',
+        createdAt: 'Created At',
+        baseDataset: 'Base dataset',
+        baseLoaded: 'Base loaded at',
+        rootDataset: 'Base dataset',
+      },
+    },
     modals: {
       importDataset: 'Import Dataset',
       exportDataset: 'Export Dataset',

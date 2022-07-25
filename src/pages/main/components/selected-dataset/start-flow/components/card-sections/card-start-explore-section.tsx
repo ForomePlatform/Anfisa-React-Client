@@ -33,7 +33,7 @@ export const CardStartExploreSection = observer((): ReactElement => {
     <div className="w-1/2 pr-12">
       <>
         <div className="flex items-center justify-between">
-          <CardTitle text={'Start with'} className="text-16" />
+          <CardTitle text={'Start with'} />
         </div>
 
         <div className="mt-2 text-14">

@@ -109,7 +109,7 @@ export const UnitsList = ({
         {isLoading ? (
           <Loader />
         ) : (
-          filteredGroups.length &&
+          !!filteredGroups.length &&
           filteredGroups.map(group => (
             <UnitsListGroup
               key={group.name}

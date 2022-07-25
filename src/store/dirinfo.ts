@@ -12,6 +12,7 @@ import { showToast } from '@utils/notifications'
 import { DirInfoAsyncStore } from './common/dirinfo.async.store'
 
 type SortDirectionsType = Record<SortDatasets, SortDirection>
+export const BASE_INFO_NAME = 'Info'
 
 class DirInfoStore {
   selectedDirinfoName = ''
@@ -24,7 +25,7 @@ class DirInfoStore {
   }
   infoFrameLink: string | string[] = ''
   iframeInfoFullscreen = false
-  activeInfoName = ''
+  activeInfoName = BASE_INFO_NAME
 
   private readonly foldedDatasets = new Set<string>()
 

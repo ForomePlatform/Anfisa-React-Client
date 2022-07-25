@@ -13,5 +13,13 @@ export const createCodeFrags = (points: IDtreeSetPoint[]): ICodeFrags[] => {
       }),
   )
 
+  const finalStepFrag = {
+    condition: '',
+    result: undefined,
+    decision: points[points.length - 1]?.decision,
+  }
+
+  codeFrags.push(finalStepFrag)
+
   return codeFrags
 }

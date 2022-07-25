@@ -3,7 +3,8 @@
 @layer base {
   * {
     /* W3C standard just for Firefox */
-    scrollbar-width: thin;
+    scrollbar-width: auto;
+    scrollbar-color: theme("colors.grey.blue") transparent;
   }
 
   html {
@@ -32,11 +33,13 @@
 ::-webkit-scrollbar {
   background-color: inherit;
   width: 16px;
+  border-radius: inherit;
 }
 
 /* background of the scrollbar except button or resizer */
 ::-webkit-scrollbar-track {
   background-color: inherit;
+  border-radius: inherit;
 }
 
 ::-webkit-scrollbar-thumb {
