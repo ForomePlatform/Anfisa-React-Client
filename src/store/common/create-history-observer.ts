@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { $mobx, comparer, computed, runInAction } from 'mobx'
 
 import { getQueryParams, pushQueryParams } from '@core/history'
+import { getIsNullish } from '@utils/getIsNullish'
 
 export type THistoryObserverEntry = {
   get: () => string | null
@@ -65,7 +66,10 @@ export const createHistoryObserver = <T extends string>(
 
       if (!comparer.shallow(historyState, newValue)) {
         handlePopState = false
-        pushQueryParams(newValue)
+        if (!getIsNullish(newValue)) {
+          pushQueryParams(newValue)
+        }
+
         handlePopState = true
       }
     })
