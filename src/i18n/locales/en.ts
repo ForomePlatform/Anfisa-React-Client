@@ -294,6 +294,7 @@ export const en = {
   },
   filter: {
     applyCriterium: 'Apply criterium',
+    applyPreset: 'Apply preset',
     switcher: 'Only starts with',
     method: 'Filtering method',
     results: 'Results',
