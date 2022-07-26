@@ -208,6 +208,17 @@ export class FilterStore {
     return undefined
   }
 
+  public get prevConditions(): TCondition[] | null {
+    if (
+      this.selectedConditionIndex >= 0 &&
+      this.conditions[this.selectedConditionIndex]
+    ) {
+      return this.conditions.slice(0, this.selectedConditionIndex)
+    }
+
+    return null
+  }
+
   public addCondition(condition: TCondition): number {
     this._conditions.push(condition)
 
