@@ -4,6 +4,7 @@ import { ReactElement, useEffect } from 'react'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
+import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
 import { useDatasetName } from '@core/hooks/use-dataset-name'
 import datasetStore from '@store/dataset/dataset'
 import filterStore from '@store/filter'
@@ -15,6 +16,7 @@ import { GlbPagesNames } from '@glb/glb-names'
 import { FilterControl } from '@pages/filter/common/filter-control/filter-control'
 import { IgvModal } from '@pages/filter/dtree/components/modals/components/igv'
 import { FilterRefiner } from '@pages/filter/refiner/components/filter-refiner'
+import dashboardStore, { Dashboard } from '../common/dashboard'
 import { FilterControlOptionsNames } from '../common/filter-control/filter-control.const'
 import { viewVariantsStore } from '../common/view-variants/store'
 import modalsVisibilityStore from '../dtree/components/modals/modals-visibility-store'
@@ -83,7 +85,11 @@ export const RefinerPage = observer((): ReactElement => {
         igvParams={viewVariantsStore.record.igvParams}
       />
 
-      <FilterRefiner className={styles.refinerPage__refiner} />
+      {dashboardStore.viewType === ViewTypeDashboard.List ? (
+        <FilterRefiner className={styles.refinerPage__refiner} />
+      ) : (
+        <Dashboard />
+      )}
     </div>
   )
 })

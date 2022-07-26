@@ -448,4 +448,10 @@ export const en = {
   paginationList: {
     footer: '{ from } — { to } / { length }',
   },
+
+  dashboard: {
+    dashboard: 'Dashboard',
+    showInCharts: 'Show in charts',
+    searchForAField: 'Search for a field',
+  },
 }
