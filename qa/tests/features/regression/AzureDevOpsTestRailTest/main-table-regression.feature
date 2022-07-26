@@ -2,7 +2,7 @@ Feature: Main Table
 #    Main table should be opened
 
 @tc:112909
-Scenario: 01 Open Main Table
+Scenario: 01 Open Main Table (1)
 	Given Anfisa main page was loaded
 	When User clicks "PGP3140_wgs_panel_hl" dataset on the left panel
 	And clicks "Open" drop-down
