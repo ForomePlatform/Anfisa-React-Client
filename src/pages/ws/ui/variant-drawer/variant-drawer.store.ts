@@ -76,8 +76,11 @@ class VariantDrawerStore {
 
   public readonly setGridLayout = (layout: TVariantAspectsGridLayout): void => {
     this.currentGridLayout = layout
+    this.setIsAbleToModify(layout)
+  }
 
-    this.customGridPresets.map(
+  public readonly setIsAbleToModify = (layout: TVariantAspectsGridLayout) => {
+    this.customGridPresets.forEach(
       preset =>
         (preset.isAbleToModify =
           JSON.stringify(preset.layout) !== JSON.stringify(layout)),
