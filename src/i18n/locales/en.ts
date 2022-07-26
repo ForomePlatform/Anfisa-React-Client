@@ -166,6 +166,10 @@ export const en = {
     macroTagsModal: {
       title: 'Macro Tags',
       apply: 'Action',
+      menu: {
+        apply: 'Apply to All',
+        remove: 'Remove from All',
+      },
     },
     copied: 'Copied successfully',
     editFilters: 'Edit Filters',

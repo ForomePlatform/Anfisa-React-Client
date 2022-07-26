@@ -1,6 +1,6 @@
 import styles from './popup-card.module.css'
 
-import React, { ReactNode } from 'react'
+import React, { MouseEvent, ReactNode } from 'react'
 import cn, { Argument } from 'classnames'
 
 import { t } from '@i18n'
@@ -14,7 +14,7 @@ export interface IPopupCardProps {
   applyText?: string
   className?: Argument
   onClose?: () => void
-  onApply?: () => void
+  onApply?: (event: MouseEvent<HTMLButtonElement>) => void
   isApplyDisabled?: boolean
   isLoading?: boolean
   additionalBottomButton?: Element
@@ -48,7 +48,7 @@ export const PopupCard = ({
     <div className={styles.popupCard__content}>{children}</div>
 
     <footer className={styles.popupCard__footer}>
-      {additionalBottomButton && additionalBottomButton}
+      <div>{additionalBottomButton && additionalBottomButton}</div>
 
       <div className={styles.popupCard__footer_buttonContainer}>
         <Button

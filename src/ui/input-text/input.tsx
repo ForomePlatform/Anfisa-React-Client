@@ -132,7 +132,10 @@ export const Input: FC<IInputProps> = ({
               <Icon
                 name="Close"
                 size={16}
-                className={styles.input__iconClose}
+                className={cn(
+                  styles.input__iconClose,
+                  append && styles.input__iconClose_withIcon,
+                )}
                 onClick={onClear}
               />
             )}

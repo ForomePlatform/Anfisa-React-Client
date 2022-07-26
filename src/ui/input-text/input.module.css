@@ -81,9 +81,12 @@
   }
 
   &__icon-close {
-    margin-right: 10px;
     color: theme("colors.grey.blue");
     cursor: pointer;
+
+    &_with-icon {
+      margin-right: 10px;
+    }
   }
 
   &__icon_container {
