@@ -72,21 +72,21 @@
     }
   }
 
+  &_no-border {
+    border: none
+  }
+
   &_icon-only {
-    border-width: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     border-radius: 4px;
-  }
-
-  &_icon-only&_sm {
-    padding: 8px 10px;
-  }
-
-  &_icon-only&_md {
-    padding: 12px 14px;
+    padding: 0;
   }
 
   &_icon-only&_xs {
-    padding: 7px 8px;
+    width: 20px;
+    height: 20px;
   }
 
   &_text {
