@@ -1,4 +1,5 @@
 import { ReactElement, useEffect, useMemo, useState } from 'react'
+import noop from 'lodash/noop'
 
 import { t } from '@i18n'
 import { Dialog } from '@ui/dialog'
@@ -20,6 +21,11 @@ export const SavePresetDialog = ({
 }: ISavePresetDialogProps): ReactElement => {
   const [presetName, setPresetName] = useState('')
 
+  const onClickSave = (name: string) => {
+    setPresetName('')
+    onSave(name)
+  }
+
   const error = useMemo(() => {
     if (
       presets.some(
@@ -31,6 +37,10 @@ export const SavePresetDialog = ({
 
     if (presets.some(preset => preset.name === presetName)) {
       return t('variant.errors.presetAlreadyExists', { presetName })
+    }
+
+    if (presetName.length > 20) {
+      return t('variant.errors.presetIsTooLong', { presetName })
     }
 
     return null
@@ -49,7 +59,7 @@ export const SavePresetDialog = ({
       onClose={onClose}
       title={t('variant.savePreset')}
       applyText={t('general.save')}
-      onApply={() => onSave(presetName)}
+      onApply={() => (error ? noop() : onClickSave(presetName))}
       isApplyDisabled={!presetName || !!error}
     >
       <Input
