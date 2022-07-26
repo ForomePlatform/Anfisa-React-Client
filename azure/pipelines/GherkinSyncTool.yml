@@ -1,0 +1,86 @@
+trigger:
+  branches:
+    include:
+      - gherkinSyncTool-CI
+  paths:
+    include:
+      - qa/tests/features/regression/AzureDevOpsTestRailTest/*
+  
+pool:
+  name: $(azdevopsPoolName)
+  demands:
+  - Agent.Name -equals $(azdevopsAgentName)
+  
+variables:
+- group: GherkinSyncTool
+
+parameters:
+- name: gherkinSyncBranch
+  default: gherkinSyncTool-CI
+
+jobs:
+
+  - job: GherkinSync
+    displayName: "Run GherkinSyncTool"
+    condition: eq(variables['Build.SourceBranch'], 'refs/heads/${{ parameters.gherkinSyncBranch }}')
+    workspace:
+      clean: all
+
+    steps:
+      - checkout: self
+        clean: true
+        persistCredentials: true
+
+      - task: Bash@3
+        displayName: "GherkinSync: Run"
+        env:
+          Branch: ${{ parameters.gherkinSyncBranch }}
+          BaseDirectory: $(testCasesDirectory)
+          TagIdPrefix: $(gherkinTagIdPrefix)
+          FormattingSettings__TagIndentation: $(gherkinTagIndentation)
+          TestRailSettings__Projectid: $(testRailProjectId)
+          TestRailSettings__SuiteId: $(testRailSuiteId)
+          TestRailSettings__TemplateId: $(testRailTemplateId)
+          TestRailSettings__GherkinSyncToolId: $(gherkinSyncToolId)
+          TestRailSettings__BaseUrl: $(testRailBaseURL)
+          TestRailSettings__Username: $(testRailUsername)
+          TestRailSettings__Password: $(testRailPassword)
+          TestRailSettings__RetriesCount: $(testRailRetriesCount)
+          TestRailSettings__PauseBetweenRetriesSeconds: $(testRailPauseBetweenRetriesSeconds)
+
+        inputs:
+          targetType: "inline"
+          script: |
+            printenv
+            git checkout $Branch
+            git status
+
+            git config --global user.email $(gitUserEmail)
+            git config --global user.name $(gitUserName)
+
+            dotnet tool update -g gherkinsynctool
+            export PATH="$PATH:$HOME/.dotnet/tools"
+
+            GherkinSyncTool sync --testrail
+
+      - task: Bash@3
+        displayName: "GherkinSync: Push changes to the repository"
+        condition: always()
+        env:
+          Branch: ${{ parameters.gherkinSyncBranch }}
+        inputs:
+          targetType: "inline"
+          script: |
+
+            git config --global user.email $(gitUserEmail)
+            git config --global user.name $(gitUserName)
+
+            git add .
+            git commit -m $(gitCommitMessage)
+            git show -s --format=%s
+            git remote -v
+
+            git push origin $Branch
+
+            git config --global --unset user.name
+            git config --global --unset user.email
