@@ -2,6 +2,7 @@ import { action, makeAutoObservable, reaction, runInAction } from 'mobx'
 
 import { t } from '@i18n'
 import dirinfoStore from '@store/dirinfo'
+import { TIcons } from '@ui/icon/icons'
 import datasetProvider from '@service-providers/dataset-level/dataset.provider'
 import { showToast } from '@utils/notifications/showToast'
 import { descriptionCardAsyncStore } from './description-card.async.store'
@@ -36,7 +37,7 @@ export class DescriptionCardStore {
     )
   }
 
-  public get datasetDescription() {
+  public get datasetDescription(): string {
     return (
       this._descriptions[this._dsName] ||
       this.note ||
@@ -44,11 +45,11 @@ export class DescriptionCardStore {
     )
   }
 
-  public get fieldDefaultValue() {
+  public get fieldDefaultValue(): string {
     return !this.note.length ? '' : this.datasetDescription
   }
 
-  public get editIconName() {
+  public get editIconName(): TIcons {
     if (!this.isEditMode && !this.note?.length) {
       return 'MiniPlus'
     }
@@ -59,13 +60,13 @@ export class DescriptionCardStore {
     this._dsName = dsName
   }
 
-  public reset = () => {
+  public reset = (): void => {
     this.isEditMode = false
     this.isTyping = false
     this.isSaving = false
   }
 
-  public toggleEditMode = () => {
+  public toggleEditMode = (): void => {
     this.isEditMode = !this.isEditMode
   }
 
