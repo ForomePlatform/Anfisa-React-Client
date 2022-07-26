@@ -91,7 +91,7 @@ export const Input: FC<IInputProps> = ({
         (prependContainer.current?.clientWidth || 0) + 22
       }px`
     }
-  }, [prepend, showAppend])
+  }, [prepend, showAppend, prependContainer, appendContainer])
 
   return (
     <div className={styles.input__container}>
