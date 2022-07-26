@@ -7,12 +7,58 @@
     flex: 1 0 auto;
   }
 
-  &__button {
+  &__button__list-size {
     margin-left: theme("spacing.2");
     color: theme("colors.grey.blue");
 
     &:hover {
       color: theme("colors.blue.bright");
+    }
+  }
+
+  &__button-view {
+    display: flex;
+    align-items: center;
+    padding: 3px 7px;
+    border: 1px solid theme("colors.grey.dark");
+    cursor: pointer;
+
+    &__list {
+      position: relative;
+      right: -1px;
+      margin-left: 5px;
+      border-top-left-radius: 0.25rem;
+      border-bottom-left-radius: 0.25rem;
+    }
+
+    &__tile {
+      border-top-right-radius: 0.25rem;
+      border-bottom-right-radius: 0.25rem;
+    }
+
+    &:hover {
+      border-color: theme("colors.blue.bright");
+
+      div {
+        color: theme("colors.white");
+      }
+    }
+
+    &_active {
+      background: theme("colors.blue.dark");
+      border-color: theme("colors.blue.bright");
+      z-index: 10;
+
+      div {
+        color: theme("colors.white");
+      }
+    }
+
+    &__content {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: theme("colors.grey.blue");
     }
   }
 }
