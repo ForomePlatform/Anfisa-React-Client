@@ -1,7 +1,9 @@
 # Change log 
 
-## <small>0.7.1 (7/25/2022)</small>
+## <small>0.7.1 (7/26/2022)</small>
 
+* fix([FOROME-1381](https://quantori.atlassian.net/browse/FOROME-1381)): FR inheritance mode edition ([534a637b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/534a637b))
+* fix([FOROME-1380](https://quantori.atlassian.net/browse/FOROME-1380)): reset active preset ([c6d48378](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c6d48378))
 * fix([FOROME-1402](https://quantori.atlassian.net/browse/FOROME-1402)): whats next card option spelling ([1a1ad307](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1a1ad307))
 * fix([FOROME-1375](https://quantori.atlassian.net/browse/FOROME-1375)): final step include/exclude ([28d368ad](https://github.com/ForomePlatform/Anfisa-React-Client/commit/28d368ad))
 * fix([FOROME-1333](https://quantori.atlassian.net/browse/FOROME-1333)): dont show zero ammount of results (hotfix) (#836) ([6c1c155b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/6c1c155b))

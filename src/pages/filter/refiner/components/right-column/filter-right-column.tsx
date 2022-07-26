@@ -10,6 +10,7 @@ import { useParams } from '@core/hooks/use-params'
 import { t } from '@i18n'
 import datasetStore from '@store/dataset/dataset'
 import filterStore from '@store/filter'
+import filterPresetsStore from '@store/filter-presets'
 import { Routes } from '@router/routes.enum'
 import { Button } from '@ui/button'
 import { Loader } from '@ui/loader'
@@ -50,6 +51,7 @@ export const FilterRightColumn = observer(
     }
 
     const clearAlSelectedFilters = () => {
+      filterPresetsStore.resetActivePreset()
       filterStore.clearConditions()
       filterStore.actionHistory.addHistory(
         filterStore.conditions as TCondition[],
