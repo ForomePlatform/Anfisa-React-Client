@@ -26,7 +26,7 @@ export class DescriptionCardStore {
     )
   }
 
-  private get note(): string {
+  public get note(): string {
     return (
       this._descriptions[this._dsName] ||
       dirinfoStore.dirInfoData?.dsDict[this._dsName]?.note ||
@@ -35,11 +35,7 @@ export class DescriptionCardStore {
   }
 
   public get datasetDescription(): string {
-    return (
-      this._descriptions[this._dsName] ||
-      this.note ||
-      t('home.datasetDescriptionDefault')
-    )
+    return this.note || t('home.datasetDescriptionDefault')
   }
 
   public get fieldDefaultValue(): string {

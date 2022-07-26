@@ -35,6 +35,7 @@ export const DescriptionCard = observer((props: ICardProps) => {
   const history = useHistory()
   const ds = title || datasetStore.datasetName
   const {
+    note,
     isEditMode,
     isTyping,
     datasetDescription,
@@ -99,8 +100,11 @@ export const DescriptionCard = observer((props: ICardProps) => {
             />
           ) : (
             <div
-              className="text-12 overflow-y-auto"
-              style={{ maxHeight: '14vh', outline: 'none' }}
+              className={cn(
+                styles.descriptionCard__text,
+                !note && styles.descriptionCard__text_empty,
+                'text-12 overflow-y-auto',
+              )}
             >
               {datasetDescription}
             </div>
