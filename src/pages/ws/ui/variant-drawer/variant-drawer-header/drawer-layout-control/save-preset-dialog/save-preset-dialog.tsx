@@ -22,8 +22,10 @@ export const SavePresetDialog = ({
   const [presetName, setPresetName] = useState('')
 
   const onClickSave = (name: string) => {
-    setPresetName('')
-    onSave(name)
+    if (!error) {
+      setPresetName('')
+      onSave(name)
+    }
   }
 
   const error = useMemo(() => {
@@ -59,7 +61,7 @@ export const SavePresetDialog = ({
       onClose={onClose}
       title={t('variant.savePreset')}
       applyText={t('general.save')}
-      onApply={() => (error ? noop() : onClickSave(presetName))}
+      onApply={() => onClickSave(presetName)}
       isApplyDisabled={!presetName || !!error}
     >
       <Input
