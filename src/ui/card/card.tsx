@@ -13,6 +13,8 @@ import {
 import { Transition } from 'react-transition-group'
 import cn, { Argument } from 'classnames'
 
+import { useForkRef } from '@core/hooks/use-fork-ref'
+
 interface ICardProps {
   children?: ReactElement | ReactNode
   className?: Argument
@@ -32,6 +34,7 @@ export const Card = forwardRef(
   }: ICardProps): ReactElement => {
     const [isMounted, setIsMounted] = useState(false)
     const cardRef = useRef<HTMLDivElement>(null)
+    const ref = useForkRef(cardRef, innerRef)
 
     useEffect(() => {
       window.setTimeout(() => setIsMounted(true), 0)
@@ -39,12 +42,8 @@ export const Card = forwardRef(
 
     const renderCard = (state = '') => (
       <div
-        ref={innerRef ? innerRef : cardRef}
-        className={cn(
-          'p-4 shadow-card rounded-lg',
-          className,
-          styles[`card_${state}`],
-        )}
+        ref={ref}
+        className={cn(styles.card, className, styles[`card_${state}`])}
         style={{
           transitionDuration: `${TRANSITION_DURATION}ms`,
         }}
@@ -58,7 +57,7 @@ export const Card = forwardRef(
         appear
         in={isMounted}
         timeout={TRANSITION_DURATION}
-        nodeRef={cardRef}
+        nodeRef={ref}
       >
         {state => {
           return renderCard(state)
