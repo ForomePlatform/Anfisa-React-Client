@@ -5,19 +5,16 @@ import dirinfoStore from '@store/dirinfo'
 import { TIcons } from '@ui/icon/icons'
 import datasetProvider from '@service-providers/dataset-level/dataset.provider'
 import { showToast } from '@utils/notifications/showToast'
-import { descriptionCardAsyncStore } from './description-card.async.store'
 
 export class DescriptionCardStore {
   public activeDtree: string = ''
 
-  private readonly descriptionCard = new descriptionCardAsyncStore()
   private _dsName = ''
   private _descriptions: { [key: string]: string } = {}
   private _typingTimer: ReturnType<typeof setTimeout> | undefined
 
   isEditMode = false
   isTyping = false
-  isSaving = false
 
   constructor() {
     makeAutoObservable(this, { setDsName: action })
@@ -63,7 +60,6 @@ export class DescriptionCardStore {
   public reset = (): void => {
     this.isEditMode = false
     this.isTyping = false
-    this.isSaving = false
   }
 
   public toggleEditMode = (): void => {
@@ -73,7 +69,6 @@ export class DescriptionCardStore {
   public handleChange = (description: string) => {
     const dsName = this._dsName
     this.isTyping = true
-    this.isSaving = true
     this._typingTimer && clearTimeout(this._typingTimer)
     this._typingTimer = setTimeout(() => {
       this.saveDescription(dsName, description)
@@ -89,13 +84,11 @@ export class DescriptionCardStore {
       .then(() => {
         runInAction(() => {
           this.isTyping = false
-          this.isSaving = false
           this._descriptions[ds] = description
         })
         showToast(t('home.datasetDescriptionSaved'), 'success')
       })
       .catch(() => {
-        this.isSaving = false
         showToast(t('error.smthWentWrong'), 'error')
       })
   }

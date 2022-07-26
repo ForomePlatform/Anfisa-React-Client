@@ -37,7 +37,6 @@ export const DescriptionCard = observer((props: ICardProps) => {
   const {
     isEditMode,
     isTyping,
-    isSaving,
     datasetDescription,
     fieldDefaultValue,
     editIconName,
@@ -78,15 +77,16 @@ export const DescriptionCard = observer((props: ICardProps) => {
         <Card className="w-full mt-4 bg-grey-tertiary">
           <div className="flex items-center mb-2">
             <span className="font-bold">Description</span>
-            {!isTyping && (
-              <Button
-                variant="secondary"
-                size="xs"
-                className={cn('cursor-pointer', 'mx-2')}
-                icon={<Icon name={editIconName} className="text-blue-bright" />}
-                onClick={toggleEditMode}
-              />
-            )}
+            <Button
+              variant="secondary"
+              size="xs"
+              className={cn('cursor-pointer', 'mx-2')}
+              icon={<Icon name={editIconName} className="text-blue-bright" />}
+              loaderColor="default"
+              isLoading={isTyping}
+              disabled={isTyping}
+              onClick={toggleEditMode}
+            />
           </div>
           {isEditMode ? (
             <textarea
@@ -123,7 +123,6 @@ export const DescriptionCard = observer((props: ICardProps) => {
               isOpenButton ? openNextPage : () => wizardStore.finishEditCard(id)
             }
             disabled={continueDisabled || isTyping}
-            isLoading={isSaving}
           />
         </div>
       </div>
