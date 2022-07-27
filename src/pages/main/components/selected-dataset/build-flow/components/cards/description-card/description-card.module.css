@@ -1,0 +1,19 @@
+.description-card {
+  &__field {
+    height: 100px;
+    outline: none;
+    border: 1px solid theme("colors.grey.disabled");
+    border-radius: theme("borderRadius.DEFAULT");
+    padding: 8px;
+    width: 100%;
+    background: transparent;
+  }
+
+  &__text {
+    max-height: 100px;
+
+    &_empty {
+      color: theme("colors.grey.dark")
+    }
+  }
+}

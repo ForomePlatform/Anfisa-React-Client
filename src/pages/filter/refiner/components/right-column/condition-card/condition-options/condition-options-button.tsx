@@ -16,6 +16,7 @@ export const ConditionOptionsButton = ({
     className={className}
     variant="text"
     onClick={e => onShowPopover(e.currentTarget)}
+    noBorder
     icon={
       <Icon
         name="Options"
