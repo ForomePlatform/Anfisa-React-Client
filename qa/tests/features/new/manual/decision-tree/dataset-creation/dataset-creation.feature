@@ -16,7 +16,16 @@ Scenario: 01 Create dataset
 	And validation message should be displayed in bottom right corner
 
 @regression
-Scenario: 02 Create dataset: empty name
+@smoke
+Scenario: 02 The "Open it" button
+	Given derived dataset with "@Hearing Loss, v.5" decision tree was created 
+	And "Add new dataset" dialog was displayed
+	When user clicks "Open it" button 
+	Then the "Main Table" should be opened
+	And number of variants should be equal to 41
+
+@regression
+Scenario: 03 Create dataset: empty name
 	Given "@Hearing Loss, v.5" decision tree was loaded
 	When user clicks "Create Derive DS" button
 	And "Add new dataset" dialog is displayed
@@ -24,7 +33,7 @@ Scenario: 02 Create dataset: empty name
 	Then "Add dataset" button should be disabled
 
 @regression
-Scenario: 03 Create dataset: duplicated name
+Scenario: 04 Create dataset: duplicated name
 	Given "@Hearing Loss, v.5" decision tree was loaded
 	When user clicks "Create Derive DS" button
 	And "Add new dataset" dialog is displayed
@@ -34,7 +43,7 @@ Scenario: 03 Create dataset: duplicated name
 	And the validation message should be displayed
 
 @regression
-Scenario: 04 Create dataset: long name
+Scenario: 05 Create dataset: long name
 	Given "@Hearing Loss, v.5" decision tree was loaded
 	When user clicks "Create Derive DS" button
 	And "Add new dataset" dialog is displayed
@@ -43,7 +52,7 @@ Scenario: 04 Create dataset: long name
 	And the validation message should be displayed
 
 @regression
-Scenario: 05 Create dataset with invalid "<InvalidDatasetName>"
+Scenario: 06 Create dataset with invalid "<InvalidDatasetName>"
 	Given "@Hearing Loss, v.5" decision tree was loaded
 	When user clicks "Create Derive DS" button
 	And "Add new dataset" dialog is displayed
@@ -58,7 +67,7 @@ Examples:
 	| te st da ta set    |
 
 @regression
-Scenario: 06 Create dataset: too many variants
+Scenario: 07 Create dataset: too many variants
 	When user clicks "+ Add Attribute" button
 	And clicks "Callers" attribute
 	And checks the "GATK_DE_NOVO" check-box
@@ -69,7 +78,7 @@ Scenario: 06 Create dataset: too many variants
 	Then "Add dataset" button should be disabled
 	And the validation message should be displayed
 
-Scenario: 07 Cancel dataset creation
+Scenario: 08 Cancel dataset creation
 	Given "@Hearing Loss, v.5" decision tree was loaded
 	When user clicks "Create Derive DS" button
 	And "Add new dataset" dialog is displayed
@@ -78,7 +87,7 @@ Scenario: 07 Cancel dataset creation
 	Then dataset should be saved
 	And message in bottom right corner should be displayed
 
-Scenario: 08 Close Create Dataset dialog during creation
+Scenario: 09 Close Create Dataset dialog during creation
 	Given "@Hearing Loss, v.5" decision tree was loaded
 	When user clicks "Create Derive DS" button
 	And "Add new dataset" dialog is displayed
@@ -89,7 +98,7 @@ Scenario: 08 Close Create Dataset dialog during creation
 
 @regression
 @smoke
-Scenario: 9 Save Dataset with more than 2000 Variants
+Scenario: 10 Save Dataset with more than 2000 Variants
 	When user clicks "+ Add attribute" button on the first step
 	And clicks"Callers" attribute
 	And checks the "GATK_HOMOZYGOUS" check-box

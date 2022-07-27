@@ -21,10 +21,10 @@ Scenario Outline: 02 Search by invalid "<InvalidNameField>" value
 	Then empty result should be shown
 
 Examples:
-	| ValidNameField |
-	| rECallers      |
-	| 1Multiallelic  |
-	| _SIFT          |
+	| InvalidNameField |
+	| rECallers        |
+	| 1Multiallelic    |
+	| _SIFT            |
 
 @regression
 Scenario Outline: 03 Search by attribute's substring "<AttributeSubstr>" value

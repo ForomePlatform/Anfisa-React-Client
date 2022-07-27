@@ -18,14 +18,15 @@ Examples:
 	| Region_Worst   |
 
 @regression
-Scenario Outline: 02 Search by invalid value
+Scenario Outline: 02 Search by invalid "<InvalidNameField>" value
 	Given "@BGM Research" was loaded
 	When user inputs "<InvalidNameField>" in algorithm search field
 	Then nothing should be shown
 
 Examples:
-	| ValidNameField |
-	| Anfisa         |
+	| InvalidNameField |
+	| Anfisa           |
+	| Proband_invalid  |
 
 Scenario Outline: 03 Search by "<PartValidNameField>" substring
 	Given "@BGM Research" was loaded
@@ -37,14 +38,10 @@ Examples:
 	| Prob               |
 	| Regio              |
 
-Scenario Outline: 04 Search by upper case
+Scenario: 04 Search by upper case
 	Given "@BGM Research" was loaded
-	When user inputs "<ValidNameFieldUpperCase>" in algorithm search field
+	When user inputs "CALLERS" in algorithm search field
 	Then the field should be filtered
-
-Examples:
-	| ValidNameFieldUpperCase |
-	| CALLERS                 |
 
 Scenario Outline: 05 Search by valid "<ValidNameFilter>" value
 	Given "@BGM Research" was loaded
