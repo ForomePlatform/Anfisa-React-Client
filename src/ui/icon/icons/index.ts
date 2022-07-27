@@ -10,6 +10,7 @@ import ArrowUpS from './arrow-up-s'
 import ArrowUpXs from './arrow-up-xs'
 import ArrowsOut from './arrows-out'
 import Attention from './attention'
+import Check from './check'
 import Circle from './circle'
 import Close from './close'
 import CloseMD from './close-md'
@@ -34,6 +35,7 @@ import Info from './info'
 import Lines from './lines'
 import List from './list'
 import Loupe from './loupe'
+import MiniPlus from './mini-plus'
 import Options from './options'
 import Rect from './rect'
 import Redo from './redo'
@@ -58,6 +60,7 @@ export const icons = {
   ArrowUpS,
   ArrowsOut,
   Attention,
+  Check,
   Circle,
   Close,
   CloseMD,
@@ -82,6 +85,7 @@ export const icons = {
   Lines,
   List,
   Loupe,
+  MiniPlus,
   Options,
   Rect,
   Redo,
