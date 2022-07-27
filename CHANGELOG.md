@@ -1,7 +1,8 @@
 # Change log 
 
-## <small>0.7.1 (7/26/2022)</small>
+## <small>0.7.1 (7/27/2022)</small>
 
+* fix([FOROME-1394](https://quantori.atlassian.net/browse/FOROME-1394)): routing between FR,WS pages with ds creation ([68c61824](https://github.com/ForomePlatform/Anfisa-React-Client/commit/68c61824))
 * fix([FOROME-1381](https://quantori.atlassian.net/browse/FOROME-1381)): FR inheritance mode edition ([534a637b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/534a637b))
 * fix([FOROME-1380](https://quantori.atlassian.net/browse/FOROME-1380)): reset active preset ([c6d48378](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c6d48378))
 * fix([FOROME-1402](https://quantori.atlassian.net/browse/FOROME-1402)): whats next card option spelling ([1a1ad307](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1a1ad307))
