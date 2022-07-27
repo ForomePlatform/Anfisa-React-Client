@@ -2,6 +2,7 @@ import styles from './control-panel.module.css'
 
 import { ReactElement } from 'react'
 
+import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
 import { Divider } from '@ui/divider'
 import { CreateDataset } from './create-dataset'
@@ -40,7 +41,12 @@ export const ControlPanel = (): ReactElement => (
     </div>
 
     <div className={styles.controlPanel__save}>
-      <CreateDataset disabled={!filterStore.isFilterTouched} />
+      <CreateDataset
+        disabled={
+          filterStore.conditions.length === 0 &&
+          dtreeStore.dtreeStepIndices.length === 0
+        }
+      />
     </div>
   </div>
 )

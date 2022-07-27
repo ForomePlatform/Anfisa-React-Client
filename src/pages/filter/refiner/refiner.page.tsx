@@ -13,7 +13,10 @@ import { ExportReport } from '@components/export-report'
 import { Header } from '@components/header'
 import { VariantsCount } from '@components/variants-count'
 import { GlbPagesNames } from '@glb/glb-names'
-import { FilterControl } from '@pages/filter/common/filter-control/filter-control'
+import {
+  FilterControl,
+  XL_COUNT_OF_VARIANTS,
+} from '@pages/filter/common/filter-control/filter-control'
 import { IgvModal } from '@pages/filter/dtree/components/modals/components/igv'
 import { FilterRefiner } from '@pages/filter/refiner/components/filter-refiner'
 import { FilterControlOptionsNames } from '../common/filter-control/filter-control.const'
@@ -33,6 +36,8 @@ export const RefinerPage = observer((): ReactElement => {
   const createPreset = (presetName: string): void => {
     filterPresetsStore.createPreset(presetName, filterStore.conditions)
   }
+
+  const filterCounts = filterStore.stat.filteredCounts
 
   const modifiedPreset = filterStore.isPresetModified
     ? filterPresetsStore.activePreset
@@ -71,12 +76,16 @@ export const RefinerPage = observer((): ReactElement => {
       <FilterControl
         pageName={FilterControlOptionsNames[GlbPagesNames.Refiner]}
         SolutionControl={SolutionControlRefiner}
-        countOfVariants={allVariants || 0}
         createSolutionEntry={createPreset}
         availableSolutionEntries={availableSolutionEntries}
         isBackwardAllowed={filterStore.actionHistory.isBackwardAllowed}
         isForwardAllowed={filterStore.actionHistory.isForwardAllowed}
         isEntryCreationAllowed={isEntryCreationAllowed}
+        disabledCreateDataset={
+          filterStore.conditions.length === 0 ||
+          !filterCounts ||
+          filterCounts.variants > XL_COUNT_OF_VARIANTS
+        }
         goForward={filterStore.actionHistory.goForward}
         goBackward={filterStore.actionHistory.goBackward}
         className={styles.refinerPage__controls}

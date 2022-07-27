@@ -27,7 +27,7 @@ import { IFilterControlProps } from './filter-control.interface'
 import { SolutionSelect } from './solution-select'
 
 //TODO - we need to receive this number from backend
-const XL_COUNT_OF_VARIANTS = 9000
+export const XL_COUNT_OF_VARIANTS = 9000
 
 export const FilterControl = observer(
   ({
@@ -39,7 +39,7 @@ export const FilterControl = observer(
     isForwardAllowed,
     isEntryCreationAllowed,
     isBackwardAllowed,
-    countOfVariants,
+    disabledCreateDataset,
     pageName,
     goForward,
     goBackward,
@@ -86,9 +86,6 @@ export const FilterControl = observer(
       filterStore.clearConditions()
     }
 
-    const createDisabled =
-      !filterStore.isFilterTouched || countOfVariants > XL_COUNT_OF_VARIANTS
-
     return (
       <div
         className={cn(
@@ -130,7 +127,7 @@ export const FilterControl = observer(
 
             <Divider orientation="vertical" className="h-[75%]" />
 
-            <CreateDataset disabled={createDisabled} />
+            <CreateDataset disabled={disabledCreateDataset} />
           </div>
 
           <div className="flex items-center">
