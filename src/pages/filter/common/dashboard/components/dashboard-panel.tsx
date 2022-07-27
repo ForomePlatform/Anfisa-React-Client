@@ -6,6 +6,7 @@ import cn, { Argument } from 'classnames'
 import difference from 'lodash/difference'
 
 import { DashboardGroupTypes } from '@core/enum/dashboard-group-types-enum'
+import { FnLabel } from '@components/fn-label'
 import { PredictionPowerIndicator } from '@components/prediction-power-indicator'
 import {
   DASHBOARD_LAYOUT_COLS,
@@ -41,7 +42,7 @@ export const DashboardPanel = ({
       x: index < 4 ? index : index % 4,
       y: index < 4 ? 0 : Math.floor(index / 4),
       w: 1,
-      h: 1,
+      h: group.units.length + 1,
     }))
   }, [mainGroups])
 
@@ -66,26 +67,61 @@ export const DashboardPanel = ({
       <ResponsiveGridLayout
         layout={layout}
         cols={DASHBOARD_LAYOUT_COLS}
-        rowHeight={DASHBOARD_LAYOUT_ROW_HEIGHT}
         containerPadding={DASHBOARD_LAYOUT_CONTAINER_PADDING}
         margin={DASHBOARD_LAYOUT_MARGIN}
-        isResizable={false}
+        rowHeight={DASHBOARD_LAYOUT_ROW_HEIGHT}
+        isResizable={true}
+        className="border border-white flex-1 overflow-y-auto overflow-x-hidden"
       >
         {mainGroups.map((group, index) => (
-          <div className={styles.panel__tab} key={group.name}>
-            <PredictionPowerIndicator
-              className="mr-2 rounded"
-              value={group.power || 0}
-            />
+          <div key={group.name} className="flex flex-col">
+            <div className={styles.panel__tab}>
+              <div className={styles.panel__tab__header}>
+                {group.name === 'Functional Units' ? (
+                  <FnLabel className="mr-2" />
+                ) : (
+                  <PredictionPowerIndicator
+                    className="mr-2 rounded"
+                    value={group.power || 0}
+                  />
+                )}
 
-            <div
-              className={styles.panel__tab__title}
-              onClick={() => {
-                changeGroupPlace(DashboardGroupTypes.Main, group.name, index)
-              }}
-            >
-              {group.name}
+                <div
+                  className={styles.panel__tab__header__title}
+                  onClick={() => {
+                    changeGroupPlace(
+                      DashboardGroupTypes.Main,
+                      group.name,
+                      index,
+                    )
+                  }}
+                >
+                  {group.name}
+                </div>
+              </div>
             </div>
+
+            {group.units.map(unit => (
+              <div
+                key={unit.name}
+                className={cn(
+                  styles.panel__tab,
+                  styles.panel__tab_light,
+                  'mt-2',
+                )}
+              >
+                <div className={styles.panel__tab__header}>
+                  <PredictionPowerIndicator
+                    className="mr-2 rounded"
+                    value={0}
+                  />
+
+                  <div className={styles.panel__tab__header__title}>
+                    {unit.name}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         ))}
       </ResponsiveGridLayout>
@@ -99,10 +135,14 @@ export const DashboardPanel = ({
               changeGroupPlace(DashboardGroupTypes.Spare, group.name, index)
             }
           >
-            <PredictionPowerIndicator
-              className="mr-2 rounded"
-              value={group.power || 0}
-            />
+            {group.name === 'Functional Units' ? (
+              <FnLabel className="mr-2" />
+            ) : (
+              <PredictionPowerIndicator
+                className="mr-2 rounded"
+                value={group.power || 0}
+              />
+            )}
 
             <div className={styles.panel__sparePanel__tab__title}>
               {group.name}
