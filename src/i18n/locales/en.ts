@@ -170,6 +170,8 @@ export const en = {
         apply: 'Apply to All',
         remove: 'Remove from All',
       },
+      toastApplied: 'Tag was successfully set',
+      toastRemoved: 'Tag was successfully removed',
     },
     copied: 'Copied successfully',
     editFilters: 'Edit Filters',
