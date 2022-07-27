@@ -25,6 +25,10 @@ import { SolutionControlRefiner } from './components/solution-control-refiner'
 export const RefinerPage = observer((): ReactElement => {
   const { isXL } = datasetStore
 
+  const {
+    stat: { unitGroups, functionalUnits, isFetching },
+  } = filterStore
+
   const { variantCounts, dnaVariantsCounts, transcriptsCounts } =
     filterStore.totalCounts
 
@@ -86,9 +90,18 @@ export const RefinerPage = observer((): ReactElement => {
       />
 
       {dashboardStore.viewType === ViewTypeDashboard.List ? (
-        <FilterRefiner className={styles.refinerPage__refiner} />
+        <FilterRefiner
+          className={styles.refinerPage__refiner}
+          groups={unitGroups}
+          functionalUnits={functionalUnits}
+          isFetching={isFetching}
+        />
       ) : (
-        <Dashboard />
+        <Dashboard
+          groups={unitGroups}
+          functionalUnits={functionalUnits}
+          isFetching={isFetching}
+        />
       )}
     </div>
   )
