@@ -35,65 +35,80 @@ Scenario: 03 Try to save dataset with only zone filters
 	And Checks "ABCD1" check-box
 	And Clicks "Apply" 
 	And User clicks "Create Derive DS"
-	Then User should not be able to write name for dataset
-	And "Add Dataset" button should be disabled
+	Then "Add Dataset" button should be disabled
 	And Validation message should be shown
 
 @regression
 Scenario: 04 Save a new dataset without any applied filters
 
 	When User clicks "Create Derive DS" without applying Filter Preset or Filter Refiner condition
-	Then User should not be able to write name for dataset
-	And "Add Dataset" button should be disabled
+	Then "Add Dataset" button should be disabled
 	And Validation message should be shown
 
 @regression
-Scenario: 05 Save a new dataset with filter by Gene And preset
+Scenario: 05 Save a new dataset with filter by "Gene" And preset
 
 	Given User applied "@InSilico_Possibly_Damaging" preset
+	And 45 variants are shown
 	When User clicks "+Add Gene" button
 	And User checks "ABHD12" gene
 	And Clicks "Apply" button
+	And 1 variant is shown
 	And Clicks "Create Derive DS"
 	And Writes valid name for the dataset
 	And Clicks "Add dataset"
-	Then Dataset should be saved
+	And Clicks "Open It"
+	Then Main table of newly created dataset should be opened
+	And 45 variant should be shown again
 
 @regression
-Scenario: 06 Save a new dataset with filter by Gene List And preset
+Scenario: 06 Save a new dataset with filter by "Gene List" And preset
 
 	Given User applied "@InSilico_Possibly_Damaging" preset
+	And 45 variants are shown
 	When Clicks "+Add Gene List" button
 	And Clicks "All_Hearing_Loss" gene list
 	And Clicks "Apply" button
+	And 38 variants are shown
 	And Clicks "Create Derive DS"
 	And Writes name for the dataset
 	And Clicks "Add dataset"
-	Then Dataset should be saved
+	And Clicks "Open It"
+	Then Main table of newly created dataset should be opened
+	And 45 variant should be shown again
 
 @regression
-Scenario: 07 Save a new dataset with filter by Sample And preset
+Scenario: 07 Save a new dataset with filter by "Sample" And preset
 
 	Given User applied "@InSilico_Possibly_Damaging" preset
+	And 45 variants are shown
 	When Clicks "+Add Samples" button
 	And User checks "mother [NA24143]" sample
 	And Clicks "Apply" button
+	And 24 variants are shown
 	And Clicks "Create Derive DS"
 	And Writes valid name for the dataset
 	And Clicks "Add dataset"
-	Then Dataset should be saved
+	And Clicks "Open It"
+	Then Main table of newly created dataset should be opened
+	And 45 variant should be shown again
 
 @regression
-Scenario: 08 Save a new dataset with filter by Tag And preset
+Scenario: 08 Save a new dataset with filter by "Tag" And preset
 
 	Given User applied "@InSilico_Possibly_Damaging" preset
-	When User clicks "+Add Tag" button
-	And Checks "Previously categorized" tag
+	And 45 variants are shown
+	When User adds custom tag to the first variant
+	And User clicks "+Add Tag" button
+	And Checks newly created custom tag
 	And Clicks "Apply" button
+	And 1 variant is shown
 	And Clicks "Create Derive DS"
 	And Writes valid name for the dataset
 	And Clicks "Add dataset"
-	Then Dataset should be saved
+	And Clicks "Open It"
+	Then Main table of newly created dataset should be opened
+	And 45 variant should be shown again
 
 @regression
 Scenario: 09 Try to create a dataset without name
@@ -129,8 +144,6 @@ Examples:
 	| For ome   |
 	|251_random_characters| #type 251 random symbols here
 			  
-
-
 Scenario: 12 Cancel dataset
 
 	Given User applied "@InSilico_Possibly_Damaging" preset

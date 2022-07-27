@@ -15,9 +15,9 @@ Scenario: 02 Apply a preset
 
 	Given Presets drop-down menu was opened
 	When User clicks "@SEQaBOO_Hearing_Loss_v_5" preset
-	Then Preset should be applied
-	And Preset name should be written instead of "Select Filter Preset"
-	And Written and shown variants should be filtered
+	Then Preset name should be written instead of "Select Filter Preset"
+	And Number of displayed variants in table should be changed to 22
+	And Number of variants/transcripts in top right corner changes to 22/211
 
 Scenario: 03 Apply the same preset
 
