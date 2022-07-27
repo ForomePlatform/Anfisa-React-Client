@@ -199,6 +199,7 @@ export const en = {
       'Attention: Zone filters (Gene, Gene List, Sample, Tags) do not participate in dataset creation',
     addDataset: 'Add dataset',
     tooManyVariants: 'The number of variants should be less than 9000',
+    openIt: 'Open it',
   },
   mainTable: {
     gene: 'Gene',
