@@ -457,5 +457,6 @@ export const en = {
     dashboard: 'Dashboard',
     showInCharts: 'Show in charts',
     searchForAField: 'Search for a field',
+    shownFirst40: 'Shown first 40 of {variantsLeft} variants',
   },
 }

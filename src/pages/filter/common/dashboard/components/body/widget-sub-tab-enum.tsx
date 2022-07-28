@@ -1,15 +1,14 @@
 import { ReactElement } from 'react'
 
-// TODO: fix any type
-export interface IWidgetSubTabUnitProps {
+export interface IWidgetSubTabEnumProps {
   variantName: string
   variantValue: number
 }
 
-export const WidgetSubTabUnit = ({
+export const WidgetSubTabEnum = ({
   variantName,
   variantValue,
-}: IWidgetSubTabUnitProps): ReactElement => {
+}: IWidgetSubTabEnumProps): ReactElement => {
   return (
     <>
       <div className="w-full flex items-center justify-between mb-3 last:mb-1 text-white text-12">
