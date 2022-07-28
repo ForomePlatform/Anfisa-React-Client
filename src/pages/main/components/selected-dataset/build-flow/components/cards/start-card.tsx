@@ -27,37 +27,38 @@ export const StartCard = (props: ICardProps) => {
   const isEditDisabled = isEditionProhibited ?? editDisabled
 
   return (
-    <Card className="mt-4">
-      <>
-        <CardTitleWithEdit
-          title={title}
-          isEditDisabled={isEditDisabled}
-          onEdit={() => wizardStore.editCard(id)}
-        />
+    <Card
+      className="mt-4"
+      isNeedToAnimate={wizardStore.isNeedToAnimateCard(id)}
+    >
+      <CardTitleWithEdit
+        title={title}
+        isEditDisabled={isEditDisabled}
+        onEdit={() => wizardStore.editCard(id)}
+      />
 
-        <div className="mt-4 text-14">
-          {startFlowOptionsList.map(option => (
-            <div className="flex mb-2" key={option}>
-              <Radio
-                className="flex items-center"
-                checked={option === selectedValue}
-                onChange={() => wizardStore.setStartWithOption(option, id)}
-                disabled={contentDisabled}
-              >
-                <div className="ml-1.5">{option}</div>
-              </Radio>
-            </div>
-          ))}
-
-          <div className="flex justify-end">
-            <Button
-              text="Continue"
-              onClick={() => wizardStore.finishEditCard(id)}
-              disabled={continueDisabled}
-            />
+      <div className="mt-4 text-14">
+        {startFlowOptionsList.map(option => (
+          <div className="flex mb-2" key={option}>
+            <Radio
+              className="flex items-center"
+              checked={option === selectedValue}
+              onChange={() => wizardStore.setStartWithOption(option, id)}
+              disabled={contentDisabled}
+            >
+              <div className="ml-1.5">{option}</div>
+            </Radio>
           </div>
+        ))}
+
+        <div className="flex justify-end">
+          <Button
+            text="Continue"
+            onClick={() => wizardStore.finishEditCard(id)}
+            disabled={continueDisabled}
+          />
         </div>
-      </>
+      </div>
     </Card>
   )
 }
