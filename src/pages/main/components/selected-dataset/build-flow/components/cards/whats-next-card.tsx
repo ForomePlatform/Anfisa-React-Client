@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 import { useHistory } from 'react-router'
+import { runInAction } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
 import {
@@ -46,9 +47,14 @@ export const WhatsNextCard = observer((props: ICardProps) => {
   )
 
   useEffect(() => {
-    wizardStore.whatsNextOption = selectedValue as TExploreGenomeKeys
+    runInAction(() => {
+      wizardStore.whatsNextOption = selectedValue as TExploreGenomeKeys
+    })
 
-    return () => (wizardStore.whatsNextOption = undefined)
+    return () =>
+      runInAction(() => {
+        wizardStore.whatsNextOption = undefined
+      })
   }, [selectedValue])
 
   return (
