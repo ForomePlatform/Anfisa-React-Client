@@ -58,7 +58,10 @@ export const WhatsNextCard = observer((props: ICardProps) => {
   }, [selectedValue])
 
   return (
-    <Card className="mt-4">
+    <Card
+      isNeedToAnimate={wizardStore.isNeedToAnimateCard(id)}
+      className="mt-4"
+    >
       <>
         <CardTitleWithEdit
           title={title}

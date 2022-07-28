@@ -70,7 +70,11 @@ export const PresetsCard = observer((props: ICardProps) => {
   }
 
   return (
-    <Card className="mt-4" style={{ paddingLeft: 0, paddingRight: 0 }}>
+    <Card
+      isNeedToAnimate={wizardStore.isNeedToAnimateCard(id)}
+      className="mt-4"
+      style={{ paddingLeft: 0, paddingRight: 0 }}
+    >
       <CardTitle text={title} className="px-4" />
 
       <div
