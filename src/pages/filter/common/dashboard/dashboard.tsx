@@ -3,8 +3,8 @@ import styles from './dashboard.module.css'
 import { ReactElement } from 'react'
 
 import { Loader } from '@ui/loader'
-import { DashboardHeader } from './components/dashboard-header'
-import { DashboardPanel } from './components/dashboard-panel'
+import { DashboardBody } from './components/body'
+import { DashboardHeader } from './components/header'
 import { IDashboardProps } from './dashboard.interfaces'
 import dashboardStore from './index'
 
@@ -22,7 +22,7 @@ export const Dashboard = ({
     <div className={styles.dashboard}>
       <DashboardHeader />
 
-      {isFetching ? <Loader /> : <DashboardPanel groups={extenderGroups} />}
+      {isFetching ? <Loader /> : <DashboardBody groups={extenderGroups} />}
     </div>
   )
 }

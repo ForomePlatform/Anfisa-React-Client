@@ -8,7 +8,7 @@ import { t } from '@i18n'
 import { Icon } from '@ui/icon'
 import { Switch } from '@ui/switch'
 import { InputSearch } from '@components/input-search'
-import dashboardStore from '../../dashboard'
+import dashboardStore from '../../../dashboard'
 
 export const DashboardHeader = (): ReactElement => {
   const handleSwitch = () => {

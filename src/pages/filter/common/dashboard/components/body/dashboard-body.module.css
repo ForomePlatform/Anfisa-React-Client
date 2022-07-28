@@ -1,4 +1,4 @@
-.panel {
+.body {
   position: relative;
   display: flex;
   flex: 1;
@@ -11,7 +11,7 @@
     height: 36px;
     display: flex;
     align-items: center;
-    padding: theme("padding.2") theme("padding.4");
+    padding: 0 theme("padding.4");
     background: theme("colors.blue.darkHover");
     border-radius: theme("borderRadius.DEFAULT");
     cursor: grab;
@@ -24,7 +24,15 @@
       display: flex;
       align-items: center;
 
+      &_main {
+        display: flex;
+        flex: 1;
+        align-items: center;
+        justify-content: space-between;
+      }
+
       &__title {
+        line-height: 3px;
         font-size: theme("fontSize.16");
         font-weight: theme("fontWeight.medium");
         color: theme("colors.white");
@@ -53,6 +61,7 @@
       cursor: pointer;
 
       &__title {
+        line-height: 3px;
         font-size: theme("fontSize.16");
         font-weight: theme("fontWeight.medium");
         color: theme("colors.white");

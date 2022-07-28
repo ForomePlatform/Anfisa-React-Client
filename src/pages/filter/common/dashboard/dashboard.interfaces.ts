@@ -9,3 +9,9 @@ export interface IExtendedTUnitGroups {
   units: TUnit[] | IFuncPropertyStatus[]
   power?: number
 }
+
+export interface IChangeGroupPlaceProps {
+  groupType: string
+  groupName: string
+  groupIndex: number
+}

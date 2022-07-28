@@ -25,6 +25,7 @@ import Edit from './edit'
 import Ellipsis from './ellipsis'
 import Expand from './expand'
 import Export from './export'
+import Favorites from './favorites'
 import File from './file'
 import Filter from './filter'
 import Folder from './folder'
@@ -75,6 +76,7 @@ export const icons = {
   Ellipsis,
   Export,
   Expand,
+  Favorites,
   File,
   Filter,
   Folder,
