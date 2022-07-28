@@ -1,5 +1,4 @@
 import { ReactElement, useEffect, useMemo, useState } from 'react'
-import noop from 'lodash/noop'
 
 import { t } from '@i18n'
 import { Dialog } from '@ui/dialog'
