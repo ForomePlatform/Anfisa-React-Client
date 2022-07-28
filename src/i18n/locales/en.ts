@@ -264,6 +264,7 @@ export const en = {
     errors: {
       savePredefinedPresetError: '{presetName} is a predefined preset',
       presetAlreadyExists: '{presetName} already exists',
+      presetIsTooLong: 'The name cannot be longer than 20 symbols',
     },
   },
   condition: {
