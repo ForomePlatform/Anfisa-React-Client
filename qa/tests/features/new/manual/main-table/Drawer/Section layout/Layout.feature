@@ -6,13 +6,13 @@ Background:
 	And Variant drawer for the first variant was opened
 
 @regression
-Scenario: 16 Change Sections layout
+Scenario: 01 Change Sections layout
 
 	When User clicks square-shaped sign near "X" button
 	Then Sections layout should be changed
 
 @regression
-Scenario: 17 Change section layout to list-form again
+Scenario: 02 Change section layout to list-form again
 
 	Given Sections layout was changed from list-form to expanded view
 	When User clicks down-arrow sign near the "X" button
@@ -21,7 +21,7 @@ Scenario: 17 Change section layout to list-form again
 	Then Sections layout should be changed to list
 
 @regression
-Scenario: 18 Save sections preset
+Scenario: 03 Save sections preset
 
 	When User expands one of the sections using a down-arrow button at the end of the section header
 	And Clicks "Save preset"
@@ -31,7 +31,7 @@ Scenario: 18 Save sections preset
 	And It should be shown in the list drop-down menu
 
 @regression
-Scenario: 19 Open Saved section preset
+Scenario: 04 Open Saved section preset
 
 	Given Section preset was saved
 	When User clicks down-arrow sign near the "X" button
