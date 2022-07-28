@@ -39,6 +39,12 @@ export const changeStep = (
   const defaultLocation = isBooleanAction ? stepIndex + 1 : stepIndex
   const location = isFinalStepIndex && isEmptyTree ? stepIndex : defaultLocation
 
+  const shouldResetAllData = index === 0 && stepStore.steps.length === 2
+
+  if (shouldResetAllData) {
+    dtreeStore.clearAll()
+  }
+
   dtreeStore.resetLocalDtreeCode()
 
   dtreeStore.fetchDtreeSetAsync({

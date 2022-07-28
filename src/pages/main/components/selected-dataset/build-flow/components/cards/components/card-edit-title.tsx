@@ -22,7 +22,7 @@ export const CardTitleWithEdit = ({
 
     <Button
       variant="secondary"
-      style={{ padding: 0 }}
+      noBorder
       icon={
         <Icon
           name="Edit"

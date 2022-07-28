@@ -113,6 +113,10 @@ class StepStore {
     option: ActiveStepOptions,
     indexForApi: string,
   ) => {
+    if (!this._steps[index]) {
+      return
+    }
+
     this._steps.forEach(element => {
       element.isActive = false
       element.isReturnedVariantsActive = false
