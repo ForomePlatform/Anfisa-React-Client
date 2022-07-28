@@ -4,9 +4,11 @@ import { IFuncPropertyStatus } from '@service-providers/common'
 
 export interface IDashboardProps extends IUnitsProps {}
 
+// TODO: remove any
+
 export interface IExtendedTUnitGroups {
   name: string
-  units: TUnit[] | IFuncPropertyStatus[]
+  units: any[]
   power?: number
 }
 
