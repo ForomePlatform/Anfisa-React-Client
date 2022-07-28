@@ -1,5 +1,5 @@
-import { ExploreCandidateTypes } from '@core/enum/explore-candidate-types-enum'
-import { ExploreTypes } from '@core/enum/explore-types-enum'
+import { ExploreCandidateKeys } from '@core/enum/explore-candidate-types-enum'
+import { ExploreTypesDictionary } from '@core/enum/explore-types-enum'
 import { t } from '@i18n'
 import {
   DescriptionCard,
@@ -17,7 +17,7 @@ export const xlCandidateSet: IWizardScenario[] = [
     continueDisabled: true,
     editDisabled: false,
     contentDisabled: true,
-    value: ExploreTypes.Candidate,
+    value: ExploreTypesDictionary.Candidate,
     title: t('home.startFlow.startWith'),
   },
   {
@@ -38,7 +38,7 @@ export const xlCandidateSet: IWizardScenario[] = [
     continueDisabled: false,
     editDisabled: true,
     contentDisabled: false,
-    value: ExploreCandidateTypes.ViewAllVariants,
+    value: ExploreCandidateKeys.ViewAllVariants,
     title: '',
   },
 

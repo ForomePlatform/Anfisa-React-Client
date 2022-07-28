@@ -1,22 +1,25 @@
+import { useEffect } from 'react'
 import { useHistory } from 'react-router'
+import { observer } from 'mobx-react-lite'
 
-import { ExploreGenomeTypes } from '@core/enum/explore-genome-types-enum'
+import {
+  ExploreGenomeTypesDictionary,
+  TExploreGenomeKeys,
+} from '@core/enum/explore-genome-types-enum'
 import { datasetStore } from '@store/dataset'
 import filterStore from '@store/filter'
 import { Button } from '@ui/button'
 import { Card } from '@ui/card'
 import { GlbPagesNames } from '@glb/glb-names'
-import {
-  optionsForOpenButton,
-  whatsNextOptionsList,
-} from '../wizard/wizard.data'
+import { optionsForOpenButton } from '../wizard/wizard.data'
 import { ICardProps } from '../wizard/wizard.interface'
 import wizardStore from '../wizard/wizard.store'
 import { getNextPageData, memorizeLocation } from '../wizard/wizard.utils'
 import { CardTitleWithEdit } from './components/card-edit-title'
+import { useRadioListData } from './components/card-radio.hooks'
 import { CardRadioList } from './components/card-radio-list'
 
-export const WhatsNextCard = (props: ICardProps) => {
+export const WhatsNextCard = observer((props: ICardProps) => {
   const history = useHistory()
   const {
     title,
@@ -29,7 +32,7 @@ export const WhatsNextCard = (props: ICardProps) => {
 
   const openNextPage = () => {
     const nextPageData = getNextPageData(
-      selectedValue as ExploreGenomeTypes,
+      selectedValue as TExploreGenomeKeys,
       datasetStore.datasetName,
     )
 
@@ -37,6 +40,17 @@ export const WhatsNextCard = (props: ICardProps) => {
     history.push(nextPageData.route)
     filterStore.setMethod(nextPageData.method as GlbPagesNames)
   }
+
+  const radioListData = useRadioListData<TExploreGenomeKeys>(
+    ExploreGenomeTypesDictionary,
+  )
+
+  useEffect(() => {
+    wizardStore.whatsNextOption = selectedValue as TExploreGenomeKeys
+
+    return () => (wizardStore.whatsNextOption = undefined)
+  }, [selectedValue])
+
   return (
     <Card className="mt-4">
       <>
@@ -47,10 +61,10 @@ export const WhatsNextCard = (props: ICardProps) => {
         />
 
         <div className="mt-4 text-14">
-          <CardRadioList
-            optionsList={whatsNextOptionsList}
+          <CardRadioList<TExploreGenomeKeys>
+            data={radioListData}
             selectedOption={selectedValue}
-            onChange={option => wizardStore.setWhatsNextOption(option, id)}
+            onChange={value => wizardStore.setWhatsNextOption(value, id)}
             isOptionsDisabled={contentDisabled}
           />
 
@@ -73,4 +87,4 @@ export const WhatsNextCard = (props: ICardProps) => {
       </>
     </Card>
   )
-}
+})

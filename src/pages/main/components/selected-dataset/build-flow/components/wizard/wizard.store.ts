@@ -1,7 +1,8 @@
 import cloneDeep from 'lodash/cloneDeep'
 import { makeAutoObservable, reaction } from 'mobx'
 
-import { ExploreTypes } from '@core/enum/explore-types-enum'
+import { TExploreGenomeKeys } from '@core/enum/explore-genome-types-enum'
+import { ExploreTypesDictionary } from '@core/enum/explore-types-enum'
 import { ActionsHistoryStore } from '@store/actions-history'
 import { createHistoryObserver } from '@store/common'
 import { datasetStore } from '@store/dataset'
@@ -14,7 +15,7 @@ class WizardStore {
   public isWizardVisible: boolean = false
   public wizardScenario: IWizardScenario[] = []
   public startWithOption = ''
-  public whatsNextOption = ''
+  public whatsNextOption?: TExploreGenomeKeys
   public descriptionOption = ''
   public selectedPreset?: ISolutionWithKind
   public selectedDataset = ''
@@ -82,11 +83,11 @@ class WizardStore {
   }
 
   public defineAndSetNewScenario() {
-    if (this.startWithOption === ExploreTypes.Genome) {
+    if (this.startWithOption === ExploreTypesDictionary.Genome) {
       this.setScenario(wizardScenarios.XlWholeGenome)
     }
 
-    if (this.startWithOption === ExploreTypes.Candidate) {
+    if (this.startWithOption === ExploreTypesDictionary.Candidate) {
       this.setScenario(wizardScenarios.XlCandidateSet)
     }
 
@@ -99,7 +100,10 @@ class WizardStore {
     this.needToChangeScenario = true
   }
 
-  public setWhatsNextOption(whatsNextOption: string, index: number) {
+  public setWhatsNextOption(
+    whatsNextOption: TExploreGenomeKeys,
+    index: number,
+  ) {
     this.whatsNextOption = whatsNextOption
     this.changeCardValue(index, whatsNextOption)
   }

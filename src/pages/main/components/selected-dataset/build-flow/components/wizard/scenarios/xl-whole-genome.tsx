@@ -1,5 +1,5 @@
-import { ExploreGenomeTypes } from '@core/enum/explore-genome-types-enum'
-import { ExploreTypes } from '@core/enum/explore-types-enum'
+import { ExploreGenomeKeys } from '@core/enum/explore-genome-types-enum'
+import { ExploreTypesDictionary } from '@core/enum/explore-types-enum'
 import { t } from '@i18n'
 import { PresetsCard, StartCard, WhatsNextCard } from '../../cards'
 import { ICardProps, IWizardScenario } from '../wizard.interface'
@@ -12,7 +12,7 @@ export const xlWholeGenome: IWizardScenario[] = [
     continueDisabled: true,
     editDisabled: false,
     contentDisabled: true,
-    value: ExploreTypes.Genome,
+    value: ExploreTypesDictionary.Genome,
     title: t('home.startFlow.startWith'),
   },
   {
@@ -22,7 +22,7 @@ export const xlWholeGenome: IWizardScenario[] = [
     continueDisabled: false,
     editDisabled: true,
     contentDisabled: false,
-    value: ExploreGenomeTypes.ACMG,
+    value: ExploreGenomeKeys.ACMGSecondary,
     title: t('home.buildFlow.whatsNext'),
   },
   {

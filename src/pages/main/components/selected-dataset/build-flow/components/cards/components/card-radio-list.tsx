@@ -1,30 +1,35 @@
 import { Radio } from '@ui/radio'
+import { ICardRadioItem, TDisabledOptions } from './card-radio-list.interface'
 
-interface ICardRadioListProps {
-  optionsList: string[]
+interface ICardRadioListProps<T extends string> {
+  data: ICardRadioItem<T>[]
   selectedOption: string
-  onChange: (option: string) => void
-  isOptionsDisabled: boolean
+  onChange: (option: T) => void
+  isOptionsDisabled?: boolean
+  disabledOptions?: TDisabledOptions<T>
 }
 
-export const CardRadioList = ({
-  optionsList,
+export const CardRadioList = function <T extends string>({
+  data,
   selectedOption,
   onChange,
   isOptionsDisabled,
-}: ICardRadioListProps) => (
-  <>
-    {optionsList.map(option => (
-      <div className="flex mb-2" key={option}>
-        <Radio
-          className="flex items-center"
-          checked={option === selectedOption}
-          onChange={() => onChange(option)}
-          disabled={isOptionsDisabled}
-        >
-          <div className="ml-1.5">{option}</div>
-        </Radio>
-      </div>
-    ))}
-  </>
-)
+  disabledOptions,
+}: ICardRadioListProps<T>) {
+  return (
+    <>
+      {data.map(({ label, value }) => (
+        <div className="flex mb-2" key={value}>
+          <Radio
+            className="flex items-center"
+            checked={value === selectedOption}
+            onChange={() => onChange(value)}
+            disabled={isOptionsDisabled || disabledOptions?.[value]}
+          >
+            <div className="ml-1.5">{label}</div>
+          </Radio>
+        </div>
+      ))}
+    </>
+  )
+}

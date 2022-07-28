@@ -5,21 +5,23 @@ import { useHistory } from 'react-router'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
-import { ExploreGenomeTypes } from '@core/enum/explore-genome-types-enum'
+import {
+  ExploreCandidateTypesDictionary,
+  TExploreCandidateKeys,
+} from '@core/enum/explore-candidate-types-enum'
+import { TExploreGenomeKeys } from '@core/enum/explore-genome-types-enum'
 import { datasetStore } from '@store/dataset'
 import filterStore from '@store/filter'
 import { Button } from '@ui/button'
 import { Card } from '@ui/card'
 import { Icon } from '@ui/icon'
 import { GlbPagesNames } from '@glb/glb-names'
-import {
-  exploreCandidateOptionsList,
-  optionsForOpenButton,
-} from '../../wizard/wizard.data'
+import { optionsForOpenButton } from '../../wizard/wizard.data'
 import { ICardProps } from '../../wizard/wizard.interface'
 import wizardStore from '../../wizard/wizard.store'
 import { getNextPageData, memorizeLocation } from '../../wizard/wizard.utils'
 import { CardTitleWithEdit } from '../components/card-edit-title'
+import { useRadioListData } from '../components/card-radio.hooks'
 import { CardRadioList } from '../components/card-radio-list'
 import descriptionCardStore from './description-card.store'
 
@@ -50,7 +52,7 @@ export const DescriptionCard = observer((props: ICardProps) => {
 
   const openNextPage = () => {
     const nextPageData = getNextPageData(
-      selectedValue as ExploreGenomeTypes,
+      selectedValue as TExploreGenomeKeys,
       ds,
     )
 
@@ -65,6 +67,10 @@ export const DescriptionCard = observer((props: ICardProps) => {
     setDsName(ds)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, ds])
+
+  const radioListData = useRadioListData<TExploreCandidateKeys>(
+    ExploreCandidateTypesDictionary,
+  )
 
   return (
     <Card className={cn(styles.descriptionCard, 'mt-4')}>
@@ -113,8 +119,8 @@ export const DescriptionCard = observer((props: ICardProps) => {
       </div>
 
       <div className="mt-2 text-14">
-        <CardRadioList
-          optionsList={exploreCandidateOptionsList}
+        <CardRadioList<TExploreCandidateKeys>
+          data={radioListData}
           selectedOption={isTyping ? '' : selectedValue}
           onChange={option => wizardStore.setDescriptionOption(option, id)}
           isOptionsDisabled={isTyping || contentDisabled}
