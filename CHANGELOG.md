@@ -1,7 +1,9 @@
 # Change log 
 
-## <small>0.7.1 (7/27/2022)</small>
+## <small>0.7.1 (7/28/2022)</small>
 
+* fix([FOROME-1174](https://quantori.atlassian.net/browse/FOROME-1174)): Added preset max length (#846) ([8886dee9](https://github.com/ForomePlatform/Anfisa-React-Client/commit/8886dee9))
+* feat([FOROME-1399](https://quantori.atlassian.net/browse/FOROME-1399)): Added animation for cards (#840) ([ee94c157](https://github.com/ForomePlatform/Anfisa-React-Client/commit/ee94c157))
 * feat([FOROME-1319](https://quantori.atlassian.net/browse/FOROME-1319)): add dataset descriptions (#825) ([bf7c9f40](https://github.com/ForomePlatform/Anfisa-React-Client/commit/bf7c9f40))
 * fix([FOROME-1392](https://quantori.atlassian.net/browse/FOROME-1392)): disable modifying preset without changes ([d3cf0a30](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d3cf0a30))
 * fix([FOROME-1394](https://quantori.atlassian.net/browse/FOROME-1394)): routing between FR,WS pages with ds creation ([68c61824](https://github.com/ForomePlatform/Anfisa-React-Client/commit/68c61824))

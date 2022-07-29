@@ -37,8 +37,12 @@ export const WhatsNextCard = (props: ICardProps) => {
     history.push(nextPageData.route)
     filterStore.setMethod(nextPageData.method as GlbPagesNames)
   }
+
   return (
-    <Card className="mt-4">
+    <Card
+      isNeedToAnimate={wizardStore.isNeedToAnimateCard(id)}
+      className="mt-4"
+    >
       <>
         <CardTitleWithEdit
           title={title}
