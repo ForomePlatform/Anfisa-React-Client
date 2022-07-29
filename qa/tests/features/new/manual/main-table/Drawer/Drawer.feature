@@ -98,60 +98,81 @@ Scenario: 09 Delete note
 	Then The note should be deleted
 	And "+ Add" button should be shown near "Notes" instead of document sign
 
-@regression
-Scenario Outline: 10 Search "<Parameter_Name>" in Variant drawer
+	@regression
+Scenario Outline: 10 Search with valid "<Parameter_Name>" in variant drawer
 
-	When User writes "<Parameter_Name>" in the search field
+	When User writes "<Parameter_Name>" in the variant drawer search field
 	Then Searched parameter should be highlighted in yellow
 
 Examples: 
-	| Parameter_Name   |
-	| Gene             |
-	| worst annotation |
-	| Canonical        |
+	| Parameter_Name |
+	| Gene           |
+	| GENE           |
+	| worst anno     |
+	| Canon          |
 
 @regression
-Scenario: 11 Open Gnomad URL
+Scenario Outline: 11 Search with invalid "<Invalid_Name>" in variant drawer
+
+	When User writes "<Invalid_Name>" in the variant drawer search field
+	Then All section should stay closed
+	And Nothing should be found
+
+Examples: 
+	| Invalid_Name |
+	| Genne        |
+	| Cannonical   |
+	| @asdd        |
+	| 123          |
+
+Scenario: 12 Delete searched parameter in variant drawer
+
+	Given Parameter was searched in variant drawer 
+	When User clicks "X" button at the end of search field
+	Then Written parameter should be deleted
+
+@regression
+Scenario: 13 Open Gnomad URL
 
 	When User expands "GNOMAD" section using a button at the end of the section header
 	And Clicks the value of the URL parameter
 	Then https://gnomad.broadinstitute.org/ should be opened for the selected variant
 
 @regression
-Scenario: 12 Expand all sections
+Scenario: 14 Expand all sections
 
 	When  User clicks the "Expand" button (four side-directed arrows) 
 	Then All sections should be expanded
 
 @regression
-Scenario: 13 Collapse all sections
+Scenario: 15 Collapse all sections
 
 	Given All sections were expanded
 	When User clicks the "Collapse" button (Four inside-directed arrows) 
 	Then Expanded sections should be collapsed
 
 @regression
-Scenario: 14 Replace a section
+Scenario: 16 Replace a section
 
 	When User drag-and-drops a section by clicking the section
 	And Moves the section to another place
 	Then Section place should be changed
 
 @regression
-Scenario: 15 Change section size
+Scenario: 17 Change section size
 
 	When User drags the button at the right bottom corner of the section
 	And Moves the cursor to the left
 	Then Section size should be changed
 
 @regression
-Scenario: 16 Change variant drawers with Up-down arrows
+Scenario: 18 Change variant drawers with Up-down arrows
 
 	When User clicks Up/down arrow near the variant name
 	Then User should be able to change variant drawers
 
 @regression
-Scenario: 17 Close variant drawer
+Scenario: 19 Close variant drawer
 
 	When User clicks "X" button at the end of header
 	Then Variant drawer should be closed
