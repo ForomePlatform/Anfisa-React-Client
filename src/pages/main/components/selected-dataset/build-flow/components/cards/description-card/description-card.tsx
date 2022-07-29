@@ -67,7 +67,10 @@ export const DescriptionCard = observer((props: ICardProps) => {
   }, [id, ds])
 
   return (
-    <Card className={cn(styles.descriptionCard, 'mt-4')}>
+    <Card
+      isNeedToAnimate={wizardStore.isNeedToAnimateCard(id)}
+      className={cn(styles.descriptionCard, 'mt-4')}
+    >
       <CardTitleWithEdit
         title={ds}
         isEditDisabled={editDisabled}
