@@ -12,9 +12,11 @@ export const WidgetSubTabEnum = ({
   return (
     <>
       <div className="w-full flex items-center justify-between mb-3 last:mb-1 text-white text-12">
-        <div className="flex">{variantName}</div>
+        <div className="truncate" style={{ maxWidth: '65%' }}>
+          {variantName}
+        </div>
 
-        <div className="flex text-grey-blue">
+        <div className="truncate text-grey-blue" style={{ maxWidth: '30%' }}>
           {variantValue} {variantValue > 1 ? 'variants' : 'variant'}
         </div>
       </div>

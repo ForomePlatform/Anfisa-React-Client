@@ -11,17 +11,17 @@ import {
 } from '../../dashboard.interfaces'
 
 export interface IFooterPanelProps {
-  groups: IExtendedTUnitGroups[]
+  spareTabs: IExtendedTUnitGroups[]
   onChange: (props: IChangeGroupPlaceProps) => void
 }
 
 export const FooterPanel = ({
-  groups,
+  spareTabs,
   onChange,
 }: IFooterPanelProps): ReactElement => {
   return (
     <div className={styles.body__sparePanel}>
-      {groups.map((group, index) => (
+      {spareTabs.map((group, index) => (
         <div
           className={styles.body__sparePanel__tab}
           key={group.name}

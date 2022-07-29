@@ -7,34 +7,30 @@ import { t } from '@i18n'
 import { Icon } from '@ui/icon'
 import { PredictionPowerIndicator } from '@components/prediction-power-indicator'
 import { AttributeKinds } from '@service-providers/common'
+import { IWidgetSubTabProps } from '../../dashboard.interfaces'
 import { WidgetSubTabEnum } from './widget-sub-tab-enum'
 import { WidgetSubTabNumeric } from './widget-sub-tab-numeric'
-
-// TODO: fix any type
-export interface IWidgetSubTabProps {
-  unit: any
-  id: string
-  tabIndex: number
-  isAllTabsOpened: boolean
-  changeSubTabLayout: (index: number, id: string, isUnitOpened: boolean) => void
-}
 
 export const WidgetSubTab = ({
   unit,
   id,
   tabIndex,
   isAllTabsOpened,
-  changeSubTabLayout,
+  onChangeSubTabHeight,
 }: IWidgetSubTabProps): ReactElement => {
   const [isUnitOpened, openUnit, closeUnit] = useToggle(false)
 
   const handleToggleUnit = () => {
     if (isUnitOpened) {
       closeUnit()
-      changeSubTabLayout(tabIndex, id, isUnitOpened)
+      onChangeSubTabHeight({ index: tabIndex, id, isOpen: isUnitOpened })
     } else {
       openUnit()
-      setTimeout(() => changeSubTabLayout(tabIndex, id, isUnitOpened), 0)
+      setTimeout(
+        () =>
+          onChangeSubTabHeight({ index: tabIndex, id, isOpen: isUnitOpened }),
+        0,
+      )
     }
   }
 

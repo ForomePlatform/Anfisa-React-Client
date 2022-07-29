@@ -3,39 +3,30 @@ import styles from './dashboard-body.module.css'
 import { ReactElement } from 'react'
 
 import { useToggle } from '@core/hooks/use-toggle'
-import {
-  IChangeGroupPlaceProps,
-  IExtendedTUnitGroups,
-} from '../../dashboard.interfaces'
+import { IWidgetTabProps } from '../../dashboard.interfaces'
 import { WidgetSubTab } from './widget-sub-tab'
 import { WidgetTabHeader } from './widget-tab-header'
-
-export interface IWidgetTabProps {
-  group: IExtendedTUnitGroups
-  index: number
-  id: string
-  onChange: (props: IChangeGroupPlaceProps) => void
-  changeSubTabLayout: (index: number, id: string, isUnitOpened: boolean) => void
-  changeTabLayout: (index: number, id: string, isUnitOpened: boolean) => void
-}
 
 export const WidgetTab = ({
   group,
   index,
   id,
-  onChange,
-  changeSubTabLayout,
-  changeTabLayout,
+  onChangeTabPlace,
+  onChangeSubTabHeight,
+  onChangeTabHeight,
 }: IWidgetTabProps): ReactElement => {
   const [isAllTabsOpened, openAllTabs, closeAllTabs] = useToggle(false)
 
   const toggleTabs = () => {
     if (isAllTabsOpened) {
       closeAllTabs()
-      changeTabLayout(index, id, isAllTabsOpened)
+      onChangeTabHeight({ index, id, isOpen: isAllTabsOpened })
     } else {
       openAllTabs()
-      setTimeout(() => changeTabLayout(index, id, isAllTabsOpened), 0)
+      setTimeout(
+        () => onChangeTabHeight({ index, id, isOpen: isAllTabsOpened }),
+        0,
+      )
     }
   }
 
@@ -46,7 +37,7 @@ export const WidgetTab = ({
           group={group}
           index={index}
           isAllTabsOpened={isAllTabsOpened}
-          onChange={onChange}
+          onChange={onChangeTabPlace}
           onToggle={toggleTabs}
         />
       </div>
@@ -59,7 +50,7 @@ export const WidgetTab = ({
               id={`widget-sub-tab_${unit.name}`}
               tabIndex={index}
               isAllTabsOpened={isAllTabsOpened}
-              changeSubTabLayout={changeSubTabLayout}
+              onChangeSubTabHeight={onChangeSubTabHeight}
             />
           </div>
         )
