@@ -2,6 +2,7 @@
 
 ## <small>0.7.1 (7/29/2022)</small>
 
+* feat([FOROME-1367](https://quantori.atlassian.net/browse/FOROME-1367)): made create derived dataset button disabled on empty conditions or too much variants exist (#831) ([e79895f4](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e79895f4))
 * feat([FOROME-1420](https://quantori.atlassian.net/browse/FOROME-1420)): Fixing card shadow (#851) ([33b74eef](https://github.com/ForomePlatform/Anfisa-React-Client/commit/33b74eef))
 * fix([FOROME-1174](https://quantori.atlassian.net/browse/FOROME-1174)): Added preset max length (#846) ([8886dee9](https://github.com/ForomePlatform/Anfisa-React-Client/commit/8886dee9))
 * feat([FOROME-1399](https://quantori.atlassian.net/browse/FOROME-1399)): Added animation for cards (#840) ([ee94c157](https://github.com/ForomePlatform/Anfisa-React-Client/commit/ee94c157))
