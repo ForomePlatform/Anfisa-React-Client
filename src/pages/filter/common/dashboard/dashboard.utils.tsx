@@ -16,7 +16,7 @@ export const getStartLayout = (groups: IExtendedTUnitGroups[]): Layout[] => {
   }))
 }
 
-export const getNewGroupLayout = (
+export const getNewTabLayout = (
   tabsLength: number,
   group: IExtendedTUnitGroups,
 ): Layout => {
@@ -34,22 +34,22 @@ export const getLayoutOnTabHeightChange = (
 ): Layout[] => {
   const { id, index, isOpen, mainTabsLayout } = props
 
-  const item = document.getElementById(id)
+  const tab = document.getElementById(id)
+  const tabChildren = tab?.children
   const clonedLayout = cloneDeep(mainTabsLayout)
-  const children = item?.children
 
   let height = 0
 
-  if (children) {
-    for (const child of children) {
-      height += child.getBoundingClientRect().height
+  if (tabChildren) {
+    for (const tabChild of tabChildren) {
+      height += tabChild.getBoundingClientRect().height
     }
   }
 
-  if (!isOpen && children) {
+  if (!isOpen && tabChildren) {
     clonedLayout[index].h = (height - 12) / 44
-  } else if (isOpen && children) {
-    clonedLayout[index].h = children.length - 1
+  } else if (isOpen && tabChildren) {
+    clonedLayout[index].h = tabChildren.length - 1
   }
 
   return clonedLayout
@@ -60,14 +60,14 @@ export const getLayoutOnSubTabHeightChange = (
 ): Layout[] => {
   const { id, index, isOpen, mainTabsLayout } = props
 
-  const item = document.getElementById(id)
-  const itemHeight = item?.getBoundingClientRect().height
+  const subTab = document.getElementById(id)
+  const subTabHeight = subTab?.getBoundingClientRect().height
   const clonedLayout = cloneDeep(mainTabsLayout)
 
-  if (itemHeight && !isOpen) {
-    clonedLayout[index].h = (itemHeight - 36) / 44 + clonedLayout[index].h
-  } else if (itemHeight && isOpen) {
-    clonedLayout[index].h = clonedLayout[index].h - (itemHeight - 36) / 44
+  if (subTabHeight && !isOpen) {
+    clonedLayout[index].h = (subTabHeight - 36) / 44 + clonedLayout[index].h
+  } else if (subTabHeight && isOpen) {
+    clonedLayout[index].h = clonedLayout[index].h - (subTabHeight - 36) / 44
   }
 
   return clonedLayout

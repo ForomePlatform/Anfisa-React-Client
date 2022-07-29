@@ -42,7 +42,7 @@ export const WidgetTabHeader = ({
     </div>
 
     <div
-      className="flex items-center h-3 cursor-pointer"
+      className={styles.tab__header__controls}
       onClick={e => {
         e.preventDefault()
         e.stopPropagation()

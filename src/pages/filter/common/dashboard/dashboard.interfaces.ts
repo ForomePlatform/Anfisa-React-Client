@@ -1,4 +1,5 @@
 import { Layout } from 'react-grid-layout'
+import { Argument } from 'classnames'
 
 import { TUnit } from '@store/stat-units'
 import { IUnitsProps } from '@pages/filter/refiner/refiner.interfaces'
@@ -9,6 +10,11 @@ import {
 } from '@service-providers/common'
 
 export interface IDashboardProps extends IUnitsProps {}
+
+export interface IDashboardBodyProps {
+  groups: IExtendedTUnitGroups[]
+  className?: Argument
+}
 
 export interface IExtendedTUnitGroups {
   name: string
@@ -63,4 +69,9 @@ export interface IWidgetTabHeaderProps {
   isAllTabsOpened?: boolean
   onChange: (props: IChangeGroupPlaceProps) => void
   onToggle: () => void
+}
+
+export interface IFooterPanelProps {
+  spareTabs: IExtendedTUnitGroups[]
+  onChange: (props: IChangeGroupPlaceProps) => void
 }

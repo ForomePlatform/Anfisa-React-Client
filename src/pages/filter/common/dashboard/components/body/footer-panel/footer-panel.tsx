@@ -1,28 +1,20 @@
-import styles from './spare-panel.module.css'
+import styles from './footer-panel.module.css'
 
 import { ReactElement } from 'react'
 
 import { DashboardGroupTypes } from '@core/enum/dashboard-group-types-enum'
 import { FnLabel } from '@components/fn-label'
 import { PredictionPowerIndicator } from '@components/prediction-power-indicator'
-import {
-  IChangeGroupPlaceProps,
-  IExtendedTUnitGroups,
-} from '../../../dashboard.interfaces'
-
-export interface IFooterPanelProps {
-  spareTabs: IExtendedTUnitGroups[]
-  onChange: (props: IChangeGroupPlaceProps) => void
-}
+import { IFooterPanelProps } from '../../../dashboard.interfaces'
 
 export const FooterPanel = ({
   spareTabs,
   onChange,
 }: IFooterPanelProps): ReactElement => (
-  <div className={styles.sparePanel}>
+  <div className={styles.footerPanel}>
     {spareTabs.map((group, index) => (
       <div
-        className={styles.sparePanel__tab}
+        className={styles.footerPanel__tab}
         key={group.name}
         onClick={() =>
           onChange({
@@ -41,7 +33,7 @@ export const FooterPanel = ({
           />
         )}
 
-        <div className={styles.sparePanel__tab__title}>{group.name}</div>
+        <div className={styles.footerPanel__tab__title}>{group.name}</div>
       </div>
     ))}
   </div>

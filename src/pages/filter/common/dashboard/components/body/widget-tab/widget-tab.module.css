@@ -20,5 +20,12 @@
       color: theme("colors.white");
       cursor: pointer;
     }
+
+    &__controls {
+      display: flex;
+      align-items: center;
+      height: theme("height.3");
+      cursor: pointer;
+    }
   }
 }

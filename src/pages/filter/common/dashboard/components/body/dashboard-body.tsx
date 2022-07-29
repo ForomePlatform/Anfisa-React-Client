@@ -2,7 +2,7 @@ import styles from './dashboard-body.module.css'
 
 import { ReactElement, useState } from 'react'
 import GridLayout, { WidthProvider } from 'react-grid-layout'
-import cn, { Argument } from 'classnames'
+import cn from 'classnames'
 import difference from 'lodash/difference'
 
 import { DashboardGroupTypes } from '@core/enum/dashboard-group-types-enum'
@@ -15,21 +15,17 @@ import {
 import {
   IChangeGroupPlaceProps,
   IChangeHeightProps,
+  IDashboardBodyProps,
   IExtendedTUnitGroups,
 } from '../../dashboard.interfaces'
 import {
   getLayoutOnSubTabHeightChange,
   getLayoutOnTabHeightChange,
-  getNewGroupLayout,
+  getNewTabLayout,
   getStartLayout,
 } from '../../dashboard.utils'
 import { FooterPanel } from './footer-panel'
 import { WidgetTab } from './widget-tab'
-
-export interface IDashboardBodyProps {
-  groups: IExtendedTUnitGroups[]
-  className?: Argument
-}
 
 const ResponsiveGridLayout = WidthProvider(GridLayout)
 
@@ -61,9 +57,8 @@ export const DashboardBody = ({
       setSpareTabs(prev => prev.filter((_, index) => index !== groupIndex))
       setMainTabs(prev => [...prev, selectedGroup!])
 
-      const tabsLength = mainTabs.length
-      const newLyaoutItem = getNewGroupLayout(tabsLength, selectedGroup!)
-      setMainTabsLayout(prev => [...prev, newLyaoutItem])
+      const newTabLayout = getNewTabLayout(mainTabs.length, selectedGroup!)
+      setMainTabsLayout(prev => [...prev, newTabLayout])
     }
   }
 
@@ -95,15 +90,13 @@ export const DashboardBody = ({
         containerPadding={DASHBOARD_LAYOUT_CONTAINER_PADDING}
         margin={DASHBOARD_LAYOUT_MARGIN}
         rowHeight={DASHBOARD_LAYOUT_ROW_HEIGHT}
-        // uncomment to check layout
-        // isResizable={true}
-        className="flex-1 overflow-y-auto overflow-x-hidden"
+        className={styles.body__gridLayout}
       >
         {mainTabs.map((group, index) => (
           <div
             key={group.name}
-            className="flex flex-col"
             id={`widget-tab-${group.name}`}
+            className={styles.body__gridLayout__widgetsContainer}
           >
             <WidgetTab
               group={group}
