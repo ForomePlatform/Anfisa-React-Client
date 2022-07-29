@@ -17,15 +17,15 @@ export const DropdownArrow = ({
   ...htmlProps
 }: IDropdownArrowProps): ReactElement => {
   return (
-    <span
-      className={cn(
-        styles.arrow,
-        isOpen && styles.arrow_open,
-        styles[`arrow_${size}`],
-        dark && styles.arrow_black,
-        className,
-      )}
-      {...htmlProps}
-    />
+    <span className={cn(styles.dropdownArrow, className)} {...htmlProps}>
+      <span
+        className={cn(
+          styles.dropdownArrow__arrow,
+          isOpen && styles.dropdownArrow__arrow_open,
+          styles[`dropdownArrow__arrow_${size}`],
+          dark && styles.dropdownArrow__arrow_black,
+        )}
+      />
+    </span>
   )
 }
