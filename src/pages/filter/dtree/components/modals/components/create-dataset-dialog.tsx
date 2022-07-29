@@ -94,7 +94,6 @@ export const CreateDatasetDialog = observer(
       }
 
       zoneStore.resetAllSelectedItems()
-      isDone && history.push(`${Routes.WS}?ds=${value}`)
     }
 
     const handleClose = () => {
@@ -128,10 +127,6 @@ export const CreateDatasetDialog = observer(
       isDone && history.push(`${Routes.WS}?ds=${value}`)
       onClose()
 
-      if (pathName === PatnNameEnum.Ws) {
-        datasetStore.setDatasetName(value)
-      }
-
       operations.resetSavingStatus()
 
       zoneStore.clearZone()
@@ -160,14 +155,18 @@ export const CreateDatasetDialog = observer(
       setValue(name)
     }
 
+    const applyText = isDone
+      ? t('dsCreation.openIt')
+      : t('dsCreation.addDataset')
+
     return (
       <Dialog
         isOpen={isOpen}
         onClose={handleClose}
         title={t('dsCreation.addDatasetTitle')}
-        applyText={t('dsCreation.addDataset')}
+        applyText={applyText}
         isApplyDisabled={!value.trim() || error.length > 0}
-        onApply={saveDatasetAsync}
+        onApply={isDone ? handleOpenDataset : saveDatasetAsync}
         isLoading={!operations.isCreationOver}
         width="s"
       >
@@ -194,18 +193,7 @@ export const CreateDatasetDialog = observer(
             </div>
           )}
 
-          <span className="mt-2 text-14">
-            {operations.savingStatus[1]}
-
-            {isDone && (
-              <span
-                className="ml-2 mt-1 text-14 text-blue-bright cursor-pointer"
-                onClick={handleOpenDataset}
-              >
-                {'Open It'}
-              </span>
-            )}
-          </span>
+          <span className="mt-2 text-14">{operations.savingStatus[1]}</span>
         </div>
       </Dialog>
     )

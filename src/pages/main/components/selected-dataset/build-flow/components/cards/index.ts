@@ -1,4 +1,4 @@
-export * from './description-card'
+export * from './description-card/description-card'
 export * from './existing-candidate-set-card'
 export * from './start-card'
 export * from './whats-next-card'

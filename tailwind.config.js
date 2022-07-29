@@ -60,7 +60,7 @@ module.exports = {
     },
     boxShadow: {
       input: '0px 2px 8px rgba(146, 201, 245, 0.25)',
-      card: '0 2px 8px rgb(105, 105, 105, 0.25)',
+      card: '0 1px 5px rgb(105, 105, 105, 0.3)',
       dark: '0px 0px 4px rgba(167, 167, 167, 0.75)',
       scrollbar: `4px 4px 4px 0px ${themeColors.grey.blue}40 inset`,
     },
