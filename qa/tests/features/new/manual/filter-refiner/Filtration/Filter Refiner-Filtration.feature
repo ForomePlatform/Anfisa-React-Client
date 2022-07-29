@@ -1,9 +1,10 @@
 ﻿@regression
 Feature: Filter Refiner Filtration
+
 @smoke
 Scenario Outline: 01 Only "Not" mode (sub-kind = "status")
 	Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
-	When user clicks on <Attribute Name>
+	When user clicks on "<Attribute Name>"
 	Then the "Not" check-box should be displayed
 	And "All" check-box should not be displayed
 
@@ -23,7 +24,7 @@ Scenario: 02 Filtration with "Not" mode
 
 Scenario Outline: 03 "Not" + "All" mode (sub-kind = "multi")
 	Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
-	When user clicks on <Attribute Name>
+	When user clicks on "<Attribute Name>"
 	Then the "Not" check-box should be displayed
 	And "All" check-box should be displayed
 
@@ -34,8 +35,8 @@ Examples:
 
 Scenario Outline: 04 Filtration with "All" mode
 	Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
-	When user clicks on  <Attribute Name>
-	And clicks <First Value> and <Second Value>
+	When user clicks on  "<Attribute Name>"
+	And clicks "<First Value>" and "<Second Value>"
 	And clicks on "+ Add Attribute" button
 	And number of variants equal to <Number without All>
 	And user clicks attribute in the right part of the screen

@@ -5,7 +5,7 @@ Feature: Filter Refiner Search Field
 Scenario Outline: 01 load a preset for XL dataset
 	Given "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
 	When user clicks on "Select Filter Preset" drop-down
-	And selects the preset <Preset Name>
+	And selects the preset "<Preset Name>"
 	And clicks on "Apply Filter" button
 	Then the selected preset should be loaded
 
@@ -18,7 +18,7 @@ Examples:
 Scenario Outline: 02 load a preset for Secondary dataset
 	Given the "Filter Refiner" for the "PGP3140_wgs_panel_hl" dataset was opened
 	When user clicks on "Select Filter Preset" drop-down
-	And selects the preset <Preset Name>
+	And selects the preset "<Preset Name>"
 	And clicks on "Apply Filter" button
 	Then the selected preset should be loaded
 
@@ -32,7 +32,7 @@ Scenario Outline: 03 Create a preset
 	Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
 	And Callers attribute with "GATK_HOMOZYGOUS" value was added
 	When user clicks on "Create Preset"
-	And enters the <Preset Name>
+	And enters the "<Preset Name>"
 	And clicks on "Create" button
 	Then the preset should be created
 	And information message should be appeared

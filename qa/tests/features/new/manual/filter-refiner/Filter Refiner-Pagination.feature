@@ -3,11 +3,7 @@
 Feature: Filter Refiner Pagination
 
 Background:
-	Given Anfisa Main page was opened
-	When User clicks on xl_PGP3140_wgs_NIST-4_2 dataset
-	And clicks on "Open" drop-down
-	And selects Filter Refiner
-	Then Filter refiner for xl_PGP3140_wgs_NIST-4_2 dataset should be opened
+	Given "Filter refiner" for "xl_PGP3140_wgs_NIST-4_2" dataset was opened
 
 Scenario: 01 Search with pagination
 	When user clicks the "Symbol" attribute
@@ -18,7 +14,7 @@ Scenario: 01 Search with pagination
 	And list of values with "10" should be displayed
 
 Scenario Outline: 02 No pagination
-	When user clicks the <Attribute Name> with number of values <= 8
+	When user clicks the "<Attribute Name>" with number of values <= 8
 	Then the pagination should not be present in the middle part of the screen
 	And full list of values should be displayed
 
@@ -28,7 +24,7 @@ Examples:
 	| Region_Worst   |
 
 Scenario Outline: 03 Pagination
-	When user clicks the <Attribute Name> with number of values > 8
+	When user clicks the "<Attribute Name>" with number of values > 8
 	Then the pagination should be present in the middle part of the screen
 
 Examples:

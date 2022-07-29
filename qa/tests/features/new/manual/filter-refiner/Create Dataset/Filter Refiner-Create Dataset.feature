@@ -1,12 +1,14 @@
 ﻿@regression
 Feature: Filter Refiner Dataset Creation
 @smoke
-Scenario: 01 Open filter refiner for Secondary dataset
-	Given Anfisa main page was loaded
-	When User clicks "PGP3140_wgs_panel_hl" dataset on the left panel
-	And clicks "Open" drop-down
-	And clicks "Filter Refiner" in "Open" drop-down
-	Then Filter Refiner for Secondary dataset should be opened
+
+Scenario: 01 Create dataset: valid name
+	Given Filter Refiner for "xl_PGP3140_wgs_NIST-4_2" dataset was opened
+	And Some Filter with less than 9000 variants was loaded
+	And "Add new dataset" dialog was displayed
+	When user enters valid name for the dataset
+	And clicks on "Add dataset" button
+	Then dataset should be created
 
 Scenario: 02 Create dataset: empty name
 	Given Filter Refiner for "xl_PGP3140_wgs_NIST-4_2" dataset was opened
@@ -82,41 +84,3 @@ Scenario: 11 Close "Add new dataset" dialog during creation
 	And clicks on "X" button
 	Then creation process should not be canceled
 	And Validation message should appear
-
-
-
-
-
-#Scenario: 02 Create dataset: empty name
-#	Given Filter Refiner for "xl_PGP3140_wgs_NIST-4_2" dataset was opened
-#	When The user loads some Filters
-#	And clicks on "Create Derived DS" button
-#	And user doesn't enter a name for the dataset
-#	Then "Add dataset" button should be disabled
-#
-#Scenario: 03 Create dataset: duplicated name
-#	Given Filter Refiner for "xl_PGP3140_wgs_NIST-4_2" dataset was opened
-#	When The user loads some Filters
-#	And clicks on "Create Derived DS" button
-#	And enters name for the dataset that already exists
-#	And clicks "Add dataset" button
-#	Then dataset should not be created with a duplicated name
-#	And validation message should be displayed
-#
-#Scenario: 04  Create dataset: long name
-#	Given Filter Refiner for "xl_PGP3140_wgs_NIST-4_2" dataset was opened
-#	When The user loads some Filters
-#	And clicks on "Create Derived DS" button
-#	And enters name for a dataset with more than 255 characters.
-#	Then "Add dataset" button should be disabled
-#	And validation message should be displayed
-#
-#Scenario: 05 Create dataset: start with numeric
-#	Given Filter Refiner for "xl_PGP3140_wgs_NIST-4_2" dataset was opened
-#	When The user loads some Filters
-#	And clicks on "Create Derived DS" button
-#	And enters name for a dataset with name "1anfisa"
-#	Then "Add dataset" button should be disabled
-#	And validation message should be displayed
-
-

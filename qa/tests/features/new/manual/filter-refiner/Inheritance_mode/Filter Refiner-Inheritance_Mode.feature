@@ -1,30 +1,32 @@
 ﻿@regression
 Feature: Filter Refiner, Filter by Inheritance_Mode
 
-Background: Select Inheritance_Mode for XL dataset
-	Given the Filter Refiner for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
-	When user clicks "+" button near Functional Units
-	And clicks the "Inheritance_Mode" Functional attribute
-	Then "Inheritance_Mode" Functional attribute is selected
-
 Scenario: 01 Group is not selected
-	When doesn't selects any problem group check-box
+	Given the Filter Refiner for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
+	When user clicks on "+" button near Functional Units
+	And selects "Inheritance_Mode" Functional attribute
+	And doesn't select any problem group check-box
 	Then the "+ Add Attribute" button should be disabled
 	And the filter should not be applied
 
 Scenario: 02 Inheritance mode is not selected
-	When user selects the "HG002" problem group check-box
+	Given the Filter Refiner for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
+	When user clicks on "+" button near Functional Units
+	And selects "Inheritance_Mode" Functional attribute
+	And selects the "HG002" problem group check-box
 	And doesn't check any inheritance mode
-	And clicks the "+ Add Attribute" button
 	Then "+ Add Attribute" button should be disabled
 	And the filter should not be applied
 
 Scenario Outline: 03 Add one problem group with "Homozygous Recessive"
-	When user selects the <Problem Group> check-box
+	Given the Filter Refiner for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
+	When user clicks on "+" button near Functional Units
+	And selects "Inheritance_Mode" Functional attribute
+	And selects the "<Problem Group>" check-box
 	And selects the check-box "Homozygous Recessive"
 	And clicks the "+ Add Attribute" button
-	Then variants list should be selected by <Problem Group> and "Homozygous Recessive"
-	And number of variants should be equal to <Variants Number>
+	Then variants list should be selected by "<Problem Group>" and "Homozygous Recessive"
+	And number of variants should be equal to "<Variants Number>"
 
 Examples:
 	| Problem Group | Variants Number |
@@ -33,11 +35,14 @@ Examples:
 	| HG004         | 449785          |
 
 Scenario Outline: 04 Add one problem group with "Autosomal Dominant"
-	When user selects the <Problem Group> check-box
+	Given the Filter Refiner for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
+	When user clicks on "+" button near Functional Units
+	And selects "Inheritance_Mode" Functional attribute
+	And selects the "<Problem Group>" check-box
 	And selects the check-box "Autosomal Dominant"
 	And clicks the "+ Add Attribute" button
-	Then variants list should be selected by <Problem Group> and "Homozygous Recessive"
-	And number of variants should be equal to <Variants Number>
+	Then variants list should be selected by "<Problem Group>" and "Homozygous Recessive"
+	And number of variants should be equal to "<Variants Number>"
 
 Examples:
 	| Problem Group | Variants Number |
@@ -47,11 +52,14 @@ Examples:
 
 	
 Scenario Outline: 05 Add one problem group with "Compensational"
-	When user selects the <Problem Group> check-box
+	Given the Filter Refiner for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
+	When user clicks on "+" button near Functional Units
+	And selects "Inheritance_Mode" Functional attribute
+	And selects the "<Problem Group>" check-box
 	And selects the check-box "Compensational"
 	And clicks the "+ Add Attribute" button
-	Then variants list should be selected by <Problem Group> and "Homozygous Recessive"
-	And number of variants should be equal to <Variants Number>
+	Then variants list should be selected by "<Problem Group>" and "Homozygous Recessive"
+	And number of variants should be equal to "<Variants Number>"
 
 Examples:
 	| Problem Group | Variants Number |
@@ -60,12 +68,15 @@ Examples:
 	| HG004         | 826667          |
 
 Scenario Outline: 06 Add few problem groups
-	When user clicks on <Problem Group #1> and <Problem Group #2> check-boxes
-	And clicks on <Inheritance Mode> check-box
+	Given the Filter Refiner for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
+	When user clicks on "+" button near Functional Units
+	And selects "Inheritance_Mode" Functional attribute
+	And clicks on "<Problem Group #1>" and "<Problem Group #2>" check-boxes
+	And clicks on "<Inheritance Mode>" check-box
 	And clicks on "+ Add Attribute" button
-	Then <Problem Group #1> and <Problem Group #2> should be selected
-	And variants list should be filtered by these problem groups and <Inheritance Mode>
-	And number of variants should be equal to <Variants Number>
+	Then "<Problem Group #1>" and "<Problem Group #2>" should be selected
+	And variants list should be filtered by these problem groups and "<Inheritance Mode>"
+	And number of variants should be equal to "<Variants Number>"
 
 Examples:
 	| Problem Group #1 | Problem Group #2 | Inheritance Mode     | Variants Number |
@@ -74,12 +85,15 @@ Examples:
 	| HG003            | HG004            | Compensational       | 80695           |
 
 Scenario Outline: 07 Add one problem group with few Inheritance Modes
-	When user clicks on <Problem Group>
-	And selects the check-boxes <Mode #1> and <Mode #2>
+	Given the Filter Refiner for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
+	When user clicks on "+" button near Functional Units
+	And selects "Inheritance_Mode" Functional attribute
+	And clicks on "<Problem Group>"
+	And selects the check-boxes "<Mode #1>" and "<Mode #2>"
 	And clicks the "+ Add Attribute" button
-	Then <Problem Group> should be selected
-	And variants list should be filtered by the problem group and <Mode #1> and <Mode #2>
-	And number of variants should be equal to <Variants Number>
+	Then "<Problem Group>" should be selected
+	And variants list should be filtered by the problem group and "<Mode #1>" and "<Mode #2>"
+	And number of variants should be equal to "<Variants Number>"
 
 Examples:
 	| Problem Group | Mode #1              | Mode #2            | Variants Number |
@@ -88,12 +102,15 @@ Examples:
 	| HG004         | Homozygous Recessive | Compensational     | 1276452         |
 
 Scenario Outline: 08 Filter by Inheritance Modes for Secondary dataset
-	When user clicks on <Problem Group>
-	And selects the check-boxes <Mode #1> and <Mode #2>
+	Given the Filter Refiner for the "PGP3140_wgs_panel_hl" dataset was opened
+	When user clicks on "+" button near Functional Units
+	And selects "Inheritance_Mode" Functional attribute
+	And clicks on "<Problem Group>"
+	And selects the check-boxes "<Mode #1>" and "<Mode #2>"
 	And clicks the "+ Add Attribute" button
-	Then <Problem Group> should be selected
-	And variants list should be filtered by the problem group and <Mode #1> and <Mode #2>
-	And number of variants should be equal to <Variants Number>
+	Then "<Problem Group>" should be selected
+	And variants list should be filtered by the problem group and "<Mode #1>" and "<Mode #2>"
+	And number of variants should be equal to "<Variants Number>"
 
 Examples:
 	| Problem Group | Mode #1              | Mode #2            | Variants Number |
@@ -102,9 +119,11 @@ Examples:
 	| NA24385       | X-linked             | Compensational     | 139             |
 
 Scenario Outline: 09 Clear button
-	When user selects the <Problem Group>
-	And selects the <Mode Name> inheritance mode
-	And clicks on "+ Add Attribute" button
+	Given the Filter Refiner for the "PGP3140_wgs_panel_hl" dataset was opened
+	When user clicks on "+" button near Functional Units
+	And selects "Inheritance_Mode" Functional attribute
+	And selects the "<Problem Group>"
+	And selects the "<Mode Name>" inheritance mode
 	And the filter is applied
 	And the user clicks on "Clear" button
 	Then the filter should be cleared
@@ -116,15 +135,18 @@ Examples:
 	| NA24385      | X-linked             |
 
 Scenario Outline: 10 Select All
-	When user selects the <Problem Group>
+	Given the Filter Refiner for the "PGP3140_wgs_panel_hl" dataset was opened
+	When user clicks on "+" button near Functional Units
+	And selects "Inheritance_Mode" Functional attribute
+	And selects the "<Problem Group>"
 	And clicks the "Select All" button
 	And all modes are checked
 	And the user clicks on "+ Add Attribute" button
 	And the filter is applied
 	And the user clicks on "Clear" button
-	Then <Problem Group> should be selected
+	Then "<Problem Group>" should be selected
 	And variants list should be filtered by the problem group and all modes
-	And number of variants should be equal to <Variants Number>
+	And number of variants should be equal to "<Variants Number>"
 
 Examples:
 	| Problem Group | Variants Number |
@@ -133,13 +155,19 @@ Examples:
 	| NA24385       | 239             |
 
 Scenario: 11 Clear All
-	When user selects the "NA24149" problem group
+	Given the Filter Refiner for the "PGP3140_wgs_panel_hl" dataset was opened
+	When user clicks on "+" button near Functional Units
+	And selects "Inheritance_Mode" Functional attribute
+	And selects the "NA24149" problem group
 	And checks all inheritance modes manually
 	And clicks on "Clear All" button
 	Then all modes should be unchecked
 
 Scenario: 12 Reset
-	When user selects the "NA24149" problem group
+	Given the Filter Refiner for the "PGP3140_wgs_panel_hl" dataset was opened
+	When user clicks on "+" button near Functional Units
+	And selects "Inheritance_Mode" Functional attribute
+	And selects the "NA24149" problem group
 	And checks "Homozygous Recessive" and "Autosomal Dominant" modes
 	And clicks the "Reset" button
 	Then all modes should be unchecked

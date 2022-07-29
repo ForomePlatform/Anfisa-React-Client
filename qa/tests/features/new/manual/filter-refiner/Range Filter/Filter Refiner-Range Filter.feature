@@ -1,21 +1,18 @@
 ﻿@regression
 Feature: Filter Refiner, Filter by range attribute
 
-Background: Given Anfisa main page was opened
-	When user clicks on "xl_PGP3140_wgs_NIST-4_2" dataset
-	And clicks on "Open" drop-down
-	And selects Filter Refiner
-	Then "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" dataset should be opened
+Background:
+	Given "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 
 Scenario Outline: 01 Filter by range, middle - XL dataset
-	When user clicks on <Attribute Name>
-	And enters the minimum value of range <Minimum Value>
+	When user clicks on "<Attribute Name>"
+	And enters the minimum value of range "<Minimum Value>"
 	And changes "<" sign with "≤" next to the minimum value
-	And enters the maximum value of range <Maximum Value>
+	And enters the maximum value of range "<Maximum Value>"
 	And clicks the "+ Add Attribute" button to apply the filter
 	Then filter should be applied
-	And the range <Minimum Value> <= <Attribute Name> <= <Maximum Value> should be displayed in the right part of the screen
-	And number of variants should be equal to <Variants Number>
+	And the range "<Minimum Value>" <= "<Attribute Name>" <= "<Maximum Value>" should be displayed in the right part of the screen
+	And number of variants should be equal to "<Variants Number>"
 	And the "View Variants" dialog can be opened
 	And the "Full List" view should be disabled
 
@@ -31,14 +28,14 @@ Examples:
 	| Severity                     | 1             | 2             | 52248          |
 
 Scenario Outline: 02 Filter by range, boundary values - XL dataset
-	When user clicks the <Attribute Name>
-	And enters the minimum value of range <Minimum Value>
+	When user clicks the "<Attribute Name>"
+	And enters the minimum value of range "<Minimum Value>"
 	And changes "<" sign with "≤" next to the minimum value
-	And enters the maximum value of range <Maximum Value>
+	And enters the maximum value of range "<Maximum Value>"
 	And clicks the "+ Add Attribute" button to apply the filter
 	Then filter should be applied
-	And the range <Minimum Value> <= <Attribute Name> <= <Maximum Value> should be displayed in the right part of the screen
-	And number of variants should be equal to <Variants Number>
+	And the range "<Minimum Value>" <= "<Attribute Name>" <= "<Maximum Value>" should be displayed in the right part of the screen
+	And number of variants should be equal to "<Variants Number>"
 	And the "View Variants" dialog can be opened
 	And the "Full List" view should be disabled
 
@@ -54,20 +51,20 @@ Examples:
 	| Severity                     | -1            | 3             | 5628753        |
 
 Scenario Outline: 03 Filter by two ranges, XL dataset
-	When user clicks the <Attribute Name#1>
-	And enters the minimum value of range <MIN #1>
+	When user clicks the "<Attribute Name#1>"
+	And enters the minimum value of range "<MIN #1>"
 	And changes "<" sign with "≤" next to the minimum value
-	And enters the maximum value of range <MAX #1>
+	And enters the maximum value of range "<MAX #1>"
 	And clicks the "+ Add Attribute" button to apply the filter
-	And clicks the <Attribute Name#2>
-	And enters the minimum value of range <MIN #2>
+	And clicks the "<Attribute Name#2>"
+	And enters the minimum value of range "<MIN #2>"
 	And changes "<" sign with "≤" next to the minimum value
-	And enters the maximum value of range <MAX #2>
+	And enters the maximum value of range "<MAX #2>"
 	And clicks the "+ Add Attribute" button to apply the filter
 	Then both filters should be applied
-	And the range <MIN #1> <= <Attribute Name#1> <= <MAX #1> should be displayed in the right part of the screen
-	And the range <MIN #2> <= <Attribute Name#2> <= <MAX #2> should be displayed in the right part of the screen
-	And the variants number should be equal to <Variants Number>
+	And the range "<MIN #1>" <= "<Attribute Name#1>" <= "<MAX #1>" should be displayed in the right part of the screen
+	And the range "<MIN #2>" <= "<Attribute Name#2>" <= "<MAX #2>" should be displayed in the right part of the screen
+	And the variants number should be equal to "<Variants Number>"
 	And the "View Variants" dialog can be opened
 	And the "Full List" view should be disabled
 
@@ -77,9 +74,9 @@ Examples:
 
 
 Scenario Outline: 04 Filter by range with invalid values (Minimum value < MIN)
-	When user clicks the <Attribute Name>
-	And enters the minimum value of range <Minimum Value>
-	And enters the maximum value of range <Maximum Value>
+	When user clicks the "<Attribute Name>"
+	And enters the minimum value of range "<Minimum Value>"
+	And enters the maximum value of range "<Maximum Value>"
 	Then invalid value should be changed to valid value
 	And "+ Add Attribute" button should be enabled
 
@@ -95,9 +92,9 @@ Examples:
 	| Severity                     | -2            | 3             |
 
 Scenario Outline: 05 Filter by range with invalid values (Maximum value > MAX)
-	When user clicks the <Attribute Name>
-	And enters the minimum value of range <Minimum Value>
-	And enters the maximum value of range <Maximum Value>
+	When user clicks the "<Attribute Name>"
+	And enters the minimum value of range "<Minimum Value>"
+	And enters the maximum value of range "<Maximum Value>"
 	Then invalid value should be changed to valid value
 	And "+ Add Attribute" button should be enabled
 
@@ -113,10 +110,10 @@ Examples:
 	| Severity                     | -1            | 4             |
 
 Scenario Outline: 06 Clear button
-	When user clicks the <Attribute Name>
-	And enters the minimum value of range <Minimum Value>
+	When user clicks the "<Attribute Name>"
+	And enters the minimum value of range "<Minimum Value>"
 	And changes "<" sign with "≤" next to the minimum value
-	And enters the maximum value of range <Maximum Value>
+	And enters the maximum value of range "<Maximum Value>"
 	And clicks the "+ Add Attribute" button to apply the filter
 	And the filter is applied
 	And the user clicks the "Clear" button

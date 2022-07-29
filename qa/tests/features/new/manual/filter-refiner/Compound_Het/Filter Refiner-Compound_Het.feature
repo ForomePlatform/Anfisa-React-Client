@@ -1,16 +1,16 @@
 ﻿@regression
 @smoke
-Feature: Filter Refiner, Filter by Compound_Request
+Feature: Filter Refiner, Filter by Compound_Het
 
-Scenario Outline: 01 Secondary dataset
+Scenario Outline: 01 Filtering by Compound_Het Value in WS dataset
 	Given the Filter Refiner for the "PGP3140_wgs_panel_hl" dataset was opened
 	When the user clicks "+" button near Functional Units
-	And selects "Compound_het" functional attribute
-	And selects the <Compound Het_Value> in the drop-down
+	And selects "Compound_Het" functional attribute
+	And selects the "<Compound_Het Value>" in the drop-down
 	And clicks the "+ Add Attribute" button
 	Then Compound_Het should be added to the right part of the page
-	And variants list should be filtered by <Compound Het Value>
-	And number of variants should be equal to <Variants Number>
+	And variants list should be filtered by "<Compound_Het Value>"
+	And number of variants should be equal to "<Variants Number>"
 
 Examples:
 	| Compound_Het Value           | Variants Number |
@@ -20,13 +20,15 @@ Examples:
 
 Scenario Outline: 02 Secondary Dataset - Not Mode
 	Given the Filter Refiner for the "PGP3140_wgs_panel_hl" dataset was opened
-	And "Compound_Het" Functional attribute was displayed
-	When user selects the <Compound_Het Value> in the drop-down
+	And user clicks "+" button near Functional Units
+	And selects "Compound_het" functional attribute
+	When user selects the "<Compound_Het Value>" in the drop-down
 	And clicks on "Not" check-box
 	And clicks on "+ Add Attribute" button
 	Then Compound_Het should be added to the right part of the page
-	And variants list should be filtered by <Compound Het Value>
-	And number of variants should be equal to <Variants Number with NOT mode>
+	And it has "not" flag
+	And variants list should be filtered by "<Compound Het Value>"
+	And number of variants should be equal to "<Variants Number with NOT mode>"
 
 Examples:
 	| Compound_Het Value           | Variants Number with NOT Mode |
@@ -42,8 +44,7 @@ Scenario: 03 Secondary Dataset - Clear button
 	And clicks on "+ Add Attribute" button
 	And clicks on  "Clear" button
 	And clicks on "Save Changes" button
-	Then the "Compound_Het" filter should be cleared
-	And number of variants should be reset to 260
+	Then "Not" check-box should be discarded
 
 Scenario: 04 Primary dataset
 	Given the Filter Refiner for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
