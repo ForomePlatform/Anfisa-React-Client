@@ -1,12 +1,15 @@
 import styles from './widget-sub-tab.module.css'
 
-import { Fragment, ReactElement, useEffect } from 'react'
+import { ReactElement, useEffect, useMemo } from 'react'
 
 import { useToggle } from '@core/hooks/use-toggle'
-import { t } from '@i18n'
 import { Icon } from '@ui/icon'
 import { PredictionPowerIndicator } from '@components/prediction-power-indicator'
-import { AttributeKinds } from '@service-providers/common'
+import {
+  AttributeKinds,
+  IEnumPropertyStatus,
+  INumericPropertyStatus,
+} from '@service-providers/common'
 import { IWidgetSubTabProps } from '../../../../../dashboard.interfaces'
 import { WidgetSubTabEnum } from './components/widget-sub-tab-enum'
 import { WidgetSubTabNumeric } from './components/widget-sub-tab-numeric'
@@ -39,38 +42,31 @@ export const WidgetSubTab = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAllTabsOpened])
 
-  const renderEnumUnit = () => {
-    const variantsLeft = unit.variants.length - 40
+  const renderEnumUnit = () => (
+    <WidgetSubTabEnum unit={unit as IEnumPropertyStatus} />
+  )
 
-    return unit.variants?.map(
-      ([variantName, variantValue]: any, index: number) => (
-        <Fragment key={variantName + variantValue}>
-          {index < 41 && (
-            <WidgetSubTabEnum
-              variantName={variantName}
-              variantValue={variantValue}
-            />
-          )}
+  const renderNumericUnit = () => (
+    <WidgetSubTabNumeric unit={unit as INumericPropertyStatus} />
+  )
 
-          {index === 40 && (
-            <div className={styles.subTab__footer}>
-              {t('dashboard.shownFirst40', { variantsLeft })}
-            </div>
-          )}
-        </Fragment>
-      ),
-    )
-  }
-
-  const renderNumericUnit = () => {
-    return <WidgetSubTabNumeric min={unit.min} max={unit.max} />
-  }
+  const predictionPowerValue = useMemo(() => {
+    if ('power' in unit) {
+      return unit.power?.value
+    }
+    return 0
+  }, [unit])
 
   return (
     <div className={styles.subTab} id={id}>
       <div className={styles.subTab__header}>
         <div className="flex items-center">
-          <PredictionPowerIndicator className="mr-2 rounded" value={0} />
+          {unit.kind !== AttributeKinds.FUNC && (
+            <PredictionPowerIndicator
+              className="mr-2 rounded"
+              value={predictionPowerValue || 0}
+            />
+          )}
 
           <div className={styles.subTab__header__title}>{unit.name}</div>
         </div>

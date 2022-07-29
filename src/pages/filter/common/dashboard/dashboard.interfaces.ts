@@ -2,15 +2,17 @@ import { Layout } from 'react-grid-layout'
 
 import { TUnit } from '@store/stat-units'
 import { IUnitsProps } from '@pages/filter/refiner/refiner.interfaces'
-import { IFuncPropertyStatus } from '@service-providers/common'
+import {
+  IEnumPropertyStatus,
+  IFuncPropertyStatus,
+  INumericPropertyStatus,
+} from '@service-providers/common'
 
 export interface IDashboardProps extends IUnitsProps {}
 
-// TODO: remove any
-
 export interface IExtendedTUnitGroups {
   name: string
-  units: any[]
+  units: TUnit[] | IFuncPropertyStatus[]
   power?: number
 }
 
@@ -39,9 +41,8 @@ export interface IWidgetTabProps {
   onChangeSubTabHeight: ({ index, id, isOpen }: IChangeHeightProps) => void
 }
 
-// TODO: fix any type
 export interface IWidgetSubTabProps {
-  unit: any
+  unit: TUnit | IFuncPropertyStatus
   id: string
   tabIndex: number
   isAllTabsOpened: boolean
@@ -49,13 +50,11 @@ export interface IWidgetSubTabProps {
 }
 
 export interface IWidgetSubTabNumericProps {
-  min: number
-  max: number
+  unit: INumericPropertyStatus
 }
 
 export interface IWidgetSubTabEnumProps {
-  variantName: string
-  variantValue: number
+  unit: IEnumPropertyStatus
 }
 
 export interface IWidgetTabHeaderProps {
