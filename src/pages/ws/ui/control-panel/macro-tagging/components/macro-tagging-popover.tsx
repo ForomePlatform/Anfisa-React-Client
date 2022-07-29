@@ -12,6 +12,7 @@ import { Icon } from '@ui/icon'
 import { Input } from '@ui/input-text'
 import { Popover } from '@ui/popover'
 import { IPopoverBaseProps } from '@ui/popover/popover.interface'
+import { ConfirmDialog } from '@components/confirm-dialog'
 import { PopperMenu } from '@components/popper-menu/popper-menu'
 import { PopperMenuItem } from '@components/popper-menu/popper-menu-item'
 import { PopupCard } from '@components/popup-card/popup-card'
@@ -26,6 +27,7 @@ export const MacroTaggingPopover: FC<IPopoverBaseProps> = observer(
   ({ isOpen, anchorEl, onClose }) => {
     const [tag, setTag] = useState<string>('')
     const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [isOpenedCD, setIsOpenedCD] = useState<boolean>(false)
 
     const {
       isPopoverOpen: isMenuOpen,
@@ -37,94 +39,117 @@ export const MacroTaggingPopover: FC<IPopoverBaseProps> = observer(
     const onChange = (e: ChangeEvent<HTMLInputElement>) =>
       setTag(e.target.value)
 
-    const onClickMacroAction = (move: MacroTaggingActions) => () => {
-      const params: IMacroTaggingArguments = {
-        ds: datasetStore.datasetName,
-        tag,
-      }
+    const onClickMacroAction =
+      (move: MacroTaggingActions, confirmed?: false) => () => {
+        if (move === MacroTaggingActions.Remove && confirmed === false) {
+          setIsOpenedCD(true)
+          return
+        }
 
-      if (move === MacroTaggingActions.Remove) {
-        params.off = true
-      }
+        const params: IMacroTaggingArguments = {
+          ds: datasetStore.datasetName,
+          tag,
+        }
 
-      setIsLoading(true)
-      onCloseMenu()
-      onClose!()
-      wsDatasetProvider.updateMacroTagging(params).then(() => {
-        mainTableStore.wsList.invalidate()
-        setIsLoading(false)
-        setTag('')
-        showToast(
-          t(
-            move !== MacroTaggingActions.Remove
-              ? 'ds.macroTagsModal.toastApplied'
-              : 'ds.macroTagsModal.toastRemoved',
-          ),
-          'success',
-          {
-            position: 'top-right',
-            autoClose: 3500,
-            style: { top: 40 },
-          },
-        )
-      })
-    }
+        if (move === MacroTaggingActions.Remove) {
+          params.off = true
+        }
+
+        setIsLoading(true)
+        onCloseMenu()
+        onClose!()
+        wsDatasetProvider.updateMacroTagging(params).then(() => {
+          mainTableStore.wsList.invalidate()
+          setIsLoading(false)
+          setTag('')
+          showToast(
+            t(
+              move !== MacroTaggingActions.Remove
+                ? 'ds.macroTagsModal.toastApplied'
+                : 'ds.macroTagsModal.toastRemoved',
+            ),
+            'success',
+            {
+              position: 'top-right',
+              autoClose: 3500,
+              style: { top: 40 },
+            },
+          )
+        })
+      }
 
     return (
-      <Popover
-        isOpen={isOpen}
-        anchorEl={anchorEl}
-        onClose={onClose}
-        className={styles.macroTagging__popover}
-      >
-        <PopupCard
-          title={t('ds.macroTagsModal.title')}
+      <>
+        <Popover
+          isOpen={isOpen}
+          anchorEl={anchorEl}
           onClose={onClose}
-          onApply={e => onToggle(e.currentTarget)}
-          isApplyDisabled={tag === ''}
-          isLoading={isLoading}
-          applyText={t('ds.macroTagsModal.apply')}
-          applyAppend={
-            <Icon
-              name="Arrow"
-              className={cn(
-                styles.macroTagging__buttonIcon_arrow,
-                isMenuOpen && styles.macroTagging__buttonIcon_arrow_opened,
-              )}
-            />
-          }
+          className={styles.macroTagging__popover}
         >
-          <Input
-            onChange={onChange}
-            value={tag}
-            shape="brick"
-            placeholder="Tag name"
-            size="m"
-          />
-          <Popover
-            onClose={onCloseMenu}
-            isOpen={isMenuOpen}
-            anchorEl={menuAnchor}
-            placement="bottom"
-            className={styles.macroTagging__menu}
+          <PopupCard
+            title={t('ds.macroTagsModal.title')}
+            onClose={onClose}
+            onApply={e => onToggle(e.currentTarget)}
+            isApplyDisabled={tag === ''}
+            isLoading={isLoading}
+            applyText={t('ds.macroTagsModal.apply')}
+            applyAppend={
+              <Icon
+                name="Arrow"
+                className={cn(
+                  styles.macroTagging__buttonIcon_arrow,
+                  isMenuOpen && styles.macroTagging__buttonIcon_arrow_opened,
+                )}
+              />
+            }
           >
-            <PopperMenu>
-              <PopperMenuItem
-                onClick={onClickMacroAction(MacroTaggingActions.Apply)}
-                className={styles.macroTagging__menu__item_first}
-              >
-                {t('ds.macroTagsModal.menu.apply')}
-              </PopperMenuItem>
-              <PopperMenuItem
-                onClick={onClickMacroAction(MacroTaggingActions.Remove)}
-                className={styles.macroTagging__menu__item_last}
-              >
-                {t('ds.macroTagsModal.menu.remove')}
-              </PopperMenuItem>
-            </PopperMenu>
-          </Popover>
-        </PopupCard>
-      </Popover>
+            <Input
+              onChange={onChange}
+              value={tag}
+              shape="brick"
+              placeholder="Tag name"
+              size="m"
+            />
+            <Popover
+              onClose={onCloseMenu}
+              isOpen={isMenuOpen}
+              anchorEl={menuAnchor}
+              placement="bottom"
+              className={styles.macroTagging__menu}
+            >
+              <PopperMenu>
+                <PopperMenuItem
+                  onClick={onClickMacroAction(MacroTaggingActions.Apply)}
+                  className={styles.macroTagging__menu__item_first}
+                >
+                  {t('ds.macroTagsModal.menu.apply')}
+                </PopperMenuItem>
+                <PopperMenuItem
+                  onClick={onClickMacroAction(
+                    MacroTaggingActions.Remove,
+                    false,
+                  )}
+                  className={styles.macroTagging__menu__item_last}
+                >
+                  {t('ds.macroTagsModal.menu.remove')}
+                </PopperMenuItem>
+              </PopperMenu>
+            </Popover>
+          </PopupCard>
+        </Popover>
+        <ConfirmDialog
+          isOpen={isOpenedCD}
+          onClose={() => {
+            setIsOpenedCD(false)
+            onCloseMenu()
+          }}
+          onApply={onClickMacroAction(MacroTaggingActions.Remove)}
+          message={t('ds.macroTagsModal.confirmDialog.message', { tag })}
+          title={t('ds.macroTagsModal.confirmDialog.title')}
+          cancelText={t('general.cancel')}
+          applyText={t('general.delete')}
+        />
+      </>
     )
   },
 )

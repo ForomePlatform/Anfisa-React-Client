@@ -173,6 +173,10 @@ export const en = {
         apply: 'Apply to All',
         remove: 'Remove from All',
       },
+      confirmDialog: {
+        title: 'Confirmation',
+        message: 'Delete {tag} from all genes?',
+      },
       toastApplied: 'Tag has been successfully set',
       toastRemoved: 'Tag has been successfully removed',
     },
