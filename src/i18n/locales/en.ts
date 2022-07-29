@@ -293,7 +293,7 @@ export const en = {
     functionalUnits: 'Functional Units',
   },
   filter: {
-    applyCriterium: 'Apply criterium',
+    applyCondition: 'Apply condition',
     applyPreset: 'Apply preset',
     switcher: 'Only starts with',
     method: 'Filtering method',
