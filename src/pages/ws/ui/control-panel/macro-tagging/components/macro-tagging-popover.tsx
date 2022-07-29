@@ -15,7 +15,7 @@ import { IPopoverBaseProps } from '@ui/popover/popover.interface'
 import { PopperMenu } from '@components/popper-menu/popper-menu'
 import { PopperMenuItem } from '@components/popper-menu/popper-menu-item'
 import { PopupCard } from '@components/popup-card/popup-card'
-import { MacroTaggingMoves } from '@pages/ws/ui/control-panel/macro-tagging/macro-tagging.constants'
+import { MacroTaggingActions } from '@pages/ws/ui/control-panel/macro-tagging/macro-tagging.constants'
 import {
   IMacroTaggingArguments,
   wsDatasetProvider,
@@ -37,13 +37,13 @@ export const MacroTaggingPopover: FC<IPopoverBaseProps> = observer(
     const onChange = (e: ChangeEvent<HTMLInputElement>) =>
       setTag(e.target.value)
 
-    const macroTag = (move: MacroTaggingMoves) => () => {
+    const onClickMacroAction = (move: MacroTaggingActions) => () => {
       const params: IMacroTaggingArguments = {
         ds: datasetStore.datasetName,
         tag,
       }
 
-      if (move === MacroTaggingMoves.Remove) {
+      if (move === MacroTaggingActions.Remove) {
         params.off = true
       }
 
@@ -56,7 +56,7 @@ export const MacroTaggingPopover: FC<IPopoverBaseProps> = observer(
         setTag('')
         showToast(
           t(
-            move !== MacroTaggingMoves.Remove
+            move !== MacroTaggingActions.Remove
               ? 'ds.macroTagsModal.toastApplied'
               : 'ds.macroTagsModal.toastRemoved',
           ),
@@ -110,13 +110,13 @@ export const MacroTaggingPopover: FC<IPopoverBaseProps> = observer(
           >
             <PopperMenu>
               <PopperMenuItem
-                onClick={macroTag(MacroTaggingMoves.Apply)}
+                onClick={onClickMacroAction(MacroTaggingActions.Apply)}
                 className={styles.macroTagging__menu__item_first}
               >
                 {t('ds.macroTagsModal.menu.apply')}
               </PopperMenuItem>
               <PopperMenuItem
-                onClick={macroTag(MacroTaggingMoves.Remove)}
+                onClick={onClickMacroAction(MacroTaggingActions.Remove)}
                 className={styles.macroTagging__menu__item_last}
               >
                 {t('ds.macroTagsModal.menu.remove')}

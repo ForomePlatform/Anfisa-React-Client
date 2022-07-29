@@ -1,4 +1,4 @@
-export enum MacroTaggingMoves {
+export enum MacroTaggingActions {
   Apply,
   Remove,
 }
