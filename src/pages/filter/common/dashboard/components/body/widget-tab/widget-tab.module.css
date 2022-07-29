@@ -4,7 +4,7 @@
   padding: 0 theme("padding.4");
   background: theme("colors.blue.darkHover");
   border-radius: theme("borderRadius.DEFAULT");
-  cursor: grab;
+  cursor: pointer;
 
   &__header {
     @apply typography-m;

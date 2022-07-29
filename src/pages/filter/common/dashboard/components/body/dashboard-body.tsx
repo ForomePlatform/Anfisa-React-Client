@@ -69,6 +69,7 @@ export const DashboardBody = ({
       isOpen,
       mainTabsLayout,
     })
+
     setMainTabsLayout(newLayout)
   }
 
@@ -90,7 +91,10 @@ export const DashboardBody = ({
         containerPadding={DASHBOARD_LAYOUT_CONTAINER_PADDING}
         margin={DASHBOARD_LAYOUT_MARGIN}
         rowHeight={DASHBOARD_LAYOUT_ROW_HEIGHT}
+        draggableHandle="[data-drag-handle]"
+        isResizable={false}
         className={styles.body__gridLayout}
+        onLayoutChange={layout => setMainTabsLayout(layout)}
       >
         {mainTabs.map((group, index) => (
           <div

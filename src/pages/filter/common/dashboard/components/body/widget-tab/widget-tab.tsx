@@ -2,6 +2,7 @@ import styles from './widget-tab.module.css'
 
 import { ReactElement } from 'react'
 
+import { DashboardGroupTypes } from '@core/enum/dashboard-group-types-enum'
 import { useToggle } from '@core/hooks/use-toggle'
 import { IWidgetTabProps } from '../../../dashboard.interfaces'
 import { WidgetSubTab } from './components/widget-sub-tab'
@@ -17,7 +18,7 @@ export const WidgetTab = ({
 }: IWidgetTabProps): ReactElement => {
   const [isAllTabsOpened, openAllTabs, closeAllTabs] = useToggle(false)
 
-  const toggleTabs = () => {
+  const handleToggleTabs = () => {
     if (isAllTabsOpened) {
       closeAllTabs()
       onChangeTabHeight({ index, id, isOpen: isAllTabsOpened })
@@ -30,20 +31,26 @@ export const WidgetTab = ({
     }
   }
 
+  const changeTabPlace = () => {
+    onChangeTabPlace({
+      groupType: DashboardGroupTypes.Main,
+      groupName: group.name,
+      groupIndex: index,
+    })
+  }
+
   return (
     <>
-      <div className={styles.tab}>
+      <div className={styles.tab} onClick={changeTabPlace}>
         <WidgetTabHeader
           group={group}
-          index={index}
           isAllTabsOpened={isAllTabsOpened}
-          onChange={onChangeTabPlace}
-          onToggle={toggleTabs}
+          onToggle={handleToggleTabs}
         />
       </div>
 
       {group.units.map(unit => (
-        <div key={unit.name}>
+        <div key={unit.name} className="cursor-grab" data-drag-handle={true}>
           <WidgetSubTab
             unit={unit}
             id={`widget-sub-tab_${unit.name}`}

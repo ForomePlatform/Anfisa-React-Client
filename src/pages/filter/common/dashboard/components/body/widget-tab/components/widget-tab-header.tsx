@@ -2,7 +2,6 @@ import styles from '../widget-tab.module.css'
 
 import { ReactElement } from 'react'
 
-import { DashboardGroupTypes } from '@core/enum/dashboard-group-types-enum'
 import { Divider } from '@ui/divider'
 import { Icon } from '@ui/icon'
 import { FnLabel } from '@components/fn-label'
@@ -11,9 +10,7 @@ import { IWidgetTabHeaderProps } from '@pages/filter/common/dashboard/dashboard.
 
 export const WidgetTabHeader = ({
   group,
-  index,
   isAllTabsOpened,
-  onChange,
   onToggle,
 }: IWidgetTabHeaderProps): ReactElement => (
   <div className={styles.tab__header}>
@@ -27,18 +24,7 @@ export const WidgetTabHeader = ({
         />
       )}
 
-      <div
-        className={styles.tab__header__title}
-        onClick={() => {
-          onChange({
-            groupType: DashboardGroupTypes.Main,
-            groupName: group.name,
-            groupIndex: index,
-          })
-        }}
-      >
-        {group.name}
-      </div>
+      <div className={styles.tab__header__title}>{group.name}</div>
     </div>
 
     <div

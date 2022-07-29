@@ -65,9 +65,7 @@ export interface IWidgetSubTabEnumProps {
 
 export interface IWidgetTabHeaderProps {
   group: IExtendedTUnitGroups
-  index: number
   isAllTabsOpened?: boolean
-  onChange: (props: IChangeGroupPlaceProps) => void
   onToggle: () => void
 }
 
