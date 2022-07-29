@@ -95,7 +95,8 @@ export const DashboardBody = ({
         containerPadding={DASHBOARD_LAYOUT_CONTAINER_PADDING}
         margin={DASHBOARD_LAYOUT_MARGIN}
         rowHeight={DASHBOARD_LAYOUT_ROW_HEIGHT}
-        isResizable={true}
+        // uncomment to check layout
+        // isResizable={true}
         className="flex-1 overflow-y-auto overflow-x-hidden"
       >
         {mainTabs.map((group, index) => (

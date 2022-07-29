@@ -1,0 +1,72 @@
+.sub-tab {
+  @apply typography-s;
+
+  height: auto;
+  min-height: 36px;
+  display: flex;
+  flex-flow: column wrap;
+  align-items: center;
+  padding: 0 theme("padding.4");
+  margin-top: 8px;
+  background: theme("colors.blue.secondary");
+  border-radius: theme("borderRadius.DEFAULT");
+  cursor: grab;
+
+  &__header {
+    height: 36px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    &__title {
+      font-weight: theme("fontWeight.medium");
+      color: theme("colors.white");
+      cursor: pointer;
+    }
+  }
+
+  &__unit-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: column wrap;
+    padding-left: theme("padding.1");
+
+    &__unit {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: theme("margin.3");
+      color: theme("colors.white");
+      font-size: theme("fontSize.12");
+
+      &:last-child {
+        margin-bottom: theme("margin.1");
+      }
+
+      &__name {
+        max-width: 65%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      &__value {
+        max-width: 30%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: theme("colors.grey.blue");
+      }
+    }
+  }
+
+  &__footer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    color: theme("colors.grey.blue")
+  }
+}

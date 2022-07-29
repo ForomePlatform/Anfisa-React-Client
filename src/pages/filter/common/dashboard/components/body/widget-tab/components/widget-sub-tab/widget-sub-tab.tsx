@@ -1,4 +1,4 @@
-import styles from './dashboard-body.module.css'
+import styles from './widget-sub-tab.module.css'
 
 import { Fragment, ReactElement, useEffect } from 'react'
 
@@ -7,9 +7,9 @@ import { t } from '@i18n'
 import { Icon } from '@ui/icon'
 import { PredictionPowerIndicator } from '@components/prediction-power-indicator'
 import { AttributeKinds } from '@service-providers/common'
-import { IWidgetSubTabProps } from '../../dashboard.interfaces'
-import { WidgetSubTabEnum } from './widget-sub-tab-enum'
-import { WidgetSubTabNumeric } from './widget-sub-tab-numeric'
+import { IWidgetSubTabProps } from '../../../../../dashboard.interfaces'
+import { WidgetSubTabEnum } from './components/widget-sub-tab-enum'
+import { WidgetSubTabNumeric } from './components/widget-sub-tab-numeric'
 
 export const WidgetSubTab = ({
   unit,
@@ -39,7 +39,7 @@ export const WidgetSubTab = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAllTabsOpened])
 
-  const renderEnumFilter = () => {
+  const renderEnumUnit = () => {
     const variantsLeft = unit.variants.length - 40
 
     return unit.variants?.map(
@@ -53,7 +53,7 @@ export const WidgetSubTab = ({
           )}
 
           {index === 40 && (
-            <div className="w-full flex justify-center text-grey-blue">
+            <div className={styles.subTab__footer}>
               {t('dashboard.shownFirst40', { variantsLeft })}
             </div>
           )}
@@ -62,36 +62,32 @@ export const WidgetSubTab = ({
     )
   }
 
-  const renderNumericFilter = () => {
+  const renderNumericUnit = () => {
     return <WidgetSubTabNumeric min={unit.min} max={unit.max} />
   }
 
   return (
-    <>
-      <div className={styles.body__subTab} id={id}>
-        <div className={styles.body__subTab__header}>
-          <div className="flex items-center">
-            <PredictionPowerIndicator className="mr-2 rounded" value={0} />
+    <div className={styles.subTab} id={id}>
+      <div className={styles.subTab__header}>
+        <div className="flex items-center">
+          <PredictionPowerIndicator className="mr-2 rounded" value={0} />
 
-            <div className={styles.body__subTab__header__title}>
-              {unit.name}
-            </div>
-          </div>
-
-          <Icon
-            name={isUnitOpened ? 'ArrowDownS' : 'ArrowUpS'}
-            className="h-4 text-white hover:text-blue-bright cursor-pointer"
-            onClick={handleToggleUnit}
-          />
+          <div className={styles.subTab__header__title}>{unit.name}</div>
         </div>
 
-        {isUnitOpened && (
-          <div className="w-full flex justify-start flex-wrap pl-1 flex-column">
-            {unit.kind === AttributeKinds.ENUM && renderEnumFilter()}
-            {unit.kind === AttributeKinds.NUMERIC && renderNumericFilter()}
-          </div>
-        )}
+        <Icon
+          name={isUnitOpened ? 'ArrowDownS' : 'ArrowUpS'}
+          className="h-4 text-white hover:text-blue-bright cursor-pointer"
+          onClick={handleToggleUnit}
+        />
       </div>
-    </>
+
+      {isUnitOpened && (
+        <div className={styles.subTab__unitContainer}>
+          {unit.kind === AttributeKinds.ENUM && renderEnumUnit()}
+          {unit.kind === AttributeKinds.NUMERIC && renderNumericUnit()}
+        </div>
+      )}
+    </div>
   )
 }

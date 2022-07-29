@@ -47,3 +47,21 @@ export interface IWidgetSubTabProps {
   isAllTabsOpened: boolean
   onChangeSubTabHeight: ({ index, id, isOpen }: IChangeHeightProps) => void
 }
+
+export interface IWidgetSubTabNumericProps {
+  min: number
+  max: number
+}
+
+export interface IWidgetSubTabEnumProps {
+  variantName: string
+  variantValue: number
+}
+
+export interface IWidgetTabHeaderProps {
+  group: IExtendedTUnitGroups
+  index: number
+  isAllTabsOpened?: boolean
+  onChange: (props: IChangeGroupPlaceProps) => void
+  onToggle: () => void
+}

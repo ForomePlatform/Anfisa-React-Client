@@ -1,11 +1,11 @@
-import styles from './dashboard-body.module.css'
+import styles from './widget-tab.module.css'
 
 import { ReactElement } from 'react'
 
 import { useToggle } from '@core/hooks/use-toggle'
-import { IWidgetTabProps } from '../../dashboard.interfaces'
-import { WidgetSubTab } from './widget-sub-tab'
-import { WidgetTabHeader } from './widget-tab-header'
+import { IWidgetTabProps } from '../../../dashboard.interfaces'
+import { WidgetSubTab } from './components/widget-sub-tab'
+import { WidgetTabHeader } from './components/widget-tab-header'
 
 export const WidgetTab = ({
   group,
@@ -32,7 +32,7 @@ export const WidgetTab = ({
 
   return (
     <>
-      <div className={styles.body__tab}>
+      <div className={styles.tab}>
         <WidgetTabHeader
           group={group}
           index={index}
@@ -42,19 +42,17 @@ export const WidgetTab = ({
         />
       </div>
 
-      {group.units.map(unit => {
-        return (
-          <div key={unit.name}>
-            <WidgetSubTab
-              unit={unit}
-              id={`widget-sub-tab_${unit.name}`}
-              tabIndex={index}
-              isAllTabsOpened={isAllTabsOpened}
-              onChangeSubTabHeight={onChangeSubTabHeight}
-            />
-          </div>
-        )
-      })}
+      {group.units.map(unit => (
+        <div key={unit.name}>
+          <WidgetSubTab
+            unit={unit}
+            id={`widget-sub-tab_${unit.name}`}
+            tabIndex={index}
+            isAllTabsOpened={isAllTabsOpened}
+            onChangeSubTabHeight={onChangeSubTabHeight}
+          />
+        </div>
+      ))}
     </>
   )
 }
