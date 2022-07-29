@@ -1,7 +1,6 @@
 import cloneDeep from 'lodash/cloneDeep'
 import { makeAutoObservable, reaction, runInAction, toJS } from 'mobx'
 
-import { pushQueryParams } from '@core/history'
 import { t } from '@i18n'
 import { ActionsHistoryStore } from '@store/actions-history'
 import datasetStore from '@store/dataset/dataset'
@@ -90,7 +89,6 @@ export class FilterStore {
       presetName => {
         if (presetName) {
           this.loadPreset(presetName)
-          this.updateURLWithPresetName(presetName)
         } else {
           this.resetPreset()
         }
@@ -206,6 +204,17 @@ export class FilterStore {
       })
     }
     return undefined
+  }
+
+  public get prevConditions(): TCondition[] | null {
+    if (
+      this.selectedConditionIndex >= 0 &&
+      this.conditions[this.selectedConditionIndex]
+    ) {
+      return this.conditions.slice(0, this.selectedConditionIndex)
+    }
+
+    return null
   }
 
   public addCondition(condition: TCondition): number {
@@ -369,9 +378,5 @@ export class FilterStore {
     }
 
     this.setPresetModifiedState(PresetModifiedState.NotPreset)
-  }
-
-  private updateURLWithPresetName(preset: string) {
-    pushQueryParams({ preset })
   }
 }

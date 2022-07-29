@@ -104,6 +104,9 @@ export const en = {
     general: 'General',
     base: 'Derived from {name}',
     pickDataset: 'Select dataset',
+    datasetDescriptionDefault:
+      'No description available at the moment. You can add description by clicking the plus icon above.',
+    datasetDescriptionSaved: 'Description has been saved',
     table: 'Main Table',
     dtree: 'Decision Tree Panel',
     refiner: 'Filter Refiner',
@@ -199,6 +202,7 @@ export const en = {
       'Attention: Zone filters (Gene, Gene List, Sample, Tags) do not participate in dataset creation',
     addDataset: 'Add dataset',
     tooManyVariants: 'The number of variants should be less than 9000',
+    openIt: 'Open it',
   },
   mainTable: {
     gene: 'Gene',
@@ -260,6 +264,7 @@ export const en = {
     errors: {
       savePredefinedPresetError: '{presetName} is a predefined preset',
       presetAlreadyExists: '{presetName} already exists',
+      presetIsTooLong: 'The name cannot be longer than 20 symbols',
     },
   },
   condition: {

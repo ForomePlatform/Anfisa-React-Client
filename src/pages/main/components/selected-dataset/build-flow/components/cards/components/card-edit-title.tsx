@@ -20,12 +20,7 @@ export const CardTitleWithEdit = ({
     <CardTitle text={title} />
 
     {isEditShown && (
-      <Button
-        text="Edit choice"
-        variant="no-border"
-        style={{ padding: 0 }}
-        onClick={onEdit}
-      />
+      <Button variant="no-border" text="Edit choice" onClick={onEdit} />
     )}
   </div>
 )

@@ -20,6 +20,13 @@ export const SavePresetDialog = ({
 }: ISavePresetDialogProps): ReactElement => {
   const [presetName, setPresetName] = useState('')
 
+  const onClickSave = (name: string) => {
+    if (!error) {
+      setPresetName('')
+      onSave(name)
+    }
+  }
+
   const error = useMemo(() => {
     if (
       presets.some(
@@ -31,6 +38,10 @@ export const SavePresetDialog = ({
 
     if (presets.some(preset => preset.name === presetName)) {
       return t('variant.errors.presetAlreadyExists', { presetName })
+    }
+
+    if (presetName.length > 20) {
+      return t('variant.errors.presetIsTooLong', { presetName })
     }
 
     return null
@@ -49,7 +60,7 @@ export const SavePresetDialog = ({
       onClose={onClose}
       title={t('variant.savePreset')}
       applyText={t('general.save')}
-      onApply={() => onSave(presetName)}
+      onApply={() => onClickSave(presetName)}
       isApplyDisabled={!presetName || !!error}
     >
       <Input

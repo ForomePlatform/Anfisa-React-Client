@@ -12,6 +12,7 @@ interface IContextMenuPopoverProps extends IPopoverBaseProps {
     name: string
     element: HTMLElement
   } | null
+  isModifyDisabled?: boolean
   closeContextMenu: () => void
   onDelete: () => void
   onModify: () => void
@@ -19,6 +20,7 @@ interface IContextMenuPopoverProps extends IPopoverBaseProps {
 
 export const ContextMenuPopover = ({
   contextMenuItem,
+  isModifyDisabled,
   closeContextMenu,
   onDelete,
   onModify,
@@ -40,6 +42,7 @@ export const ContextMenuPopover = ({
             closeContextMenu()
             onModify()
           }}
+          disabled={isModifyDisabled}
         />
 
         <MenuListItem

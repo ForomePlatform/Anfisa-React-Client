@@ -76,6 +76,15 @@ class VariantDrawerStore {
 
   public readonly setGridLayout = (layout: TVariantAspectsGridLayout): void => {
     this.currentGridLayout = layout
+    this.setIsAbleToModify(layout)
+  }
+
+  public readonly setIsAbleToModify = (layout: TVariantAspectsGridLayout) => {
+    this.customGridPresets.forEach(
+      preset =>
+        (preset.isAbleToModify =
+          JSON.stringify(preset.layout) !== JSON.stringify(layout)),
+    )
   }
 
   public readonly applyGridPreset = (presetName: string) => {
@@ -103,6 +112,7 @@ class VariantDrawerStore {
     const preset = {
       name: presetName,
       layout: this.currentGridLayout,
+      isAbleToModify: false,
     }
 
     if (presetIndex < 0) {
@@ -124,6 +134,7 @@ class VariantDrawerStore {
     this.customGridPresets.map((preset, index) => {
       if (preset.name === presetName) {
         this.customGridPresets[index].layout = this.currentGridLayout
+        this.customGridPresets[index].isAbleToModify = false
       }
     })
   }

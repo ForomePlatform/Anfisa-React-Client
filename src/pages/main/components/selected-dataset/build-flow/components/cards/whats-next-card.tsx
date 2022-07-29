@@ -37,8 +37,12 @@ export const WhatsNextCard = (props: ICardProps) => {
     history.push(nextPageData.route)
     filterStore.setMethod(nextPageData.method as GlbPagesNames)
   }
+
   return (
-    <Card className="mt-4">
+    <Card
+      isNeedToAnimate={wizardStore.isNeedToAnimateCard(id)}
+      className="mt-4"
+    >
       <>
         <CardTitleWithEdit
           title={title}
@@ -54,21 +58,23 @@ export const WhatsNextCard = (props: ICardProps) => {
             isOptionsDisabled={contentDisabled}
           />
 
-          <div className="flex justify-end">
-            {optionsForOpenButton.includes(selectedValue) ? (
-              <Button
-                text="Open"
-                onClick={openNextPage}
-                disabled={continueDisabled}
-              />
-            ) : (
-              <Button
-                text="Continue"
-                onClick={() => wizardStore.finishEditCard(id)}
-                disabled={continueDisabled}
-              />
-            )}
-          </div>
+          {editDisabled && (
+            <div className="flex justify-end">
+              {optionsForOpenButton.includes(selectedValue) ? (
+                <Button
+                  text="Open"
+                  onClick={openNextPage}
+                  disabled={continueDisabled}
+                />
+              ) : (
+                <Button
+                  text="Continue"
+                  onClick={() => wizardStore.finishEditCard(id)}
+                  disabled={continueDisabled}
+                />
+              )}
+            </div>
+          )}
         </div>
       </>
     </Card>
