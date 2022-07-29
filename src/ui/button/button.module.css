@@ -69,6 +69,7 @@
     &:disabled {
       background-color: theme("colors.blue.lighter");
       border-color: theme("colors.blue.lighter");
+      color: theme("colors.blue.dark");
     }
   }
 

@@ -1,7 +1,10 @@
 import styles from './control-panel.module.css'
 
 import { ReactElement } from 'react'
+import { observer } from 'mobx-react-lite'
 
+import dtreeStore from '@store/dtree'
+import filterStore from '@store/filter'
 import { Divider } from '@ui/divider'
 import { MacroTagging } from '@pages/ws/ui/control-panel/macro-tagging/macro-tagging'
 import { CreateDataset } from './create-dataset'
@@ -13,38 +16,45 @@ import { GenesZone } from './zones/genes-zone'
 import { SamplesZone } from './zones/samples-zone'
 import { TagsZone } from './zones/tags-zone'
 
-export const ControlPanel = (): ReactElement => (
-  <div className={styles.controlPanel}>
-    <div className={styles.controlPanel__controls}>
-      <SelectPreset />
+export const ControlPanel = observer((): ReactElement => {
+  return (
+    <div className={styles.controlPanel}>
+      <div className={styles.controlPanel__controls}>
+        <SelectPreset />
 
-      <Divider orientation="vertical" />
+        <Divider orientation="vertical" />
 
-      <EditFilter />
+        <EditFilter />
 
-      <Divider orientation="vertical" />
+        <Divider orientation="vertical" />
 
-      <CustomizeTable />
+        <CustomizeTable />
 
-      <Divider orientation="vertical" />
+        <Divider orientation="vertical" />
 
-      <div className={styles.controlPanel__zones}>
-        <GenesZone />
+        <div className={styles.controlPanel__zones}>
+          <GenesZone />
 
-        <GenesListZone />
+          <GenesListZone />
 
-        <SamplesZone />
+          <SamplesZone />
 
-        <TagsZone />
+          <TagsZone />
+        </div>
+
+        <Divider orientation="vertical" />
+
+        <MacroTagging />
       </div>
 
-      <Divider orientation="vertical" />
-
-      <MacroTagging />
+      <div className={styles.controlPanel__save}>
+        <CreateDataset
+          disabled={
+            filterStore.conditions.length === 0 &&
+            dtreeStore.dtreeStepIndices.length === 0
+          }
+        />
+      </div>
     </div>
-
-    <div className={styles.controlPanel__save}>
-      <CreateDataset />
-    </div>
-  </div>
-)
+  )
+})
