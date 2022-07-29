@@ -20,80 +20,82 @@ import { CardTitleWithEdit } from './components/card-edit-title'
 import { useRadioListData } from './components/card-radio.hooks'
 import { CardRadioList } from './components/card-radio-list'
 
-export const WhatsNextCard = observer((props: ICardProps) => {
-  const history = useHistory()
-  const {
-    title,
-    id,
-    selectedValue,
-    contentDisabled,
-    continueDisabled,
-    editDisabled,
-  } = props
+export const WhatsNextCard = observer(
+  (props: ICardProps<TExploreGenomeKeys>) => {
+    const history = useHistory()
+    const {
+      title,
+      id,
+      selectedValue,
+      contentDisabled,
+      continueDisabled,
+      editDisabled,
+    } = props
 
-  const openNextPage = () => {
-    const nextPageData = getNextPageData(
-      selectedValue as TExploreGenomeKeys,
-      datasetStore.datasetName,
+    const openNextPage = () => {
+      const nextPageData = getNextPageData(
+        selectedValue,
+        datasetStore.datasetName,
+      )
+
+      memorizeLocation(nextPageData.route)
+      history.push(nextPageData.route)
+      filterStore.setMethod(nextPageData.method as GlbPagesNames)
+    }
+
+    const radioListData = useRadioListData<TExploreGenomeKeys>(
+      ExploreGenomeTypesDictionary,
     )
 
-    memorizeLocation(nextPageData.route)
-    history.push(nextPageData.route)
-    filterStore.setMethod(nextPageData.method as GlbPagesNames)
-  }
-
-  const radioListData = useRadioListData<TExploreGenomeKeys>(
-    ExploreGenomeTypesDictionary,
-  )
-
-  useEffect(() => {
-    runInAction(() => {
-      wizardStore.whatsNextOption = selectedValue as TExploreGenomeKeys
-    })
-
-    return () =>
+    useEffect(() => {
       runInAction(() => {
-        wizardStore.whatsNextOption = undefined
+        wizardStore.whatsNextOption = selectedValue as TExploreGenomeKeys
       })
-  }, [selectedValue])
 
-  return (
-    <Card
-      isNeedToAnimate={wizardStore.isNeedToAnimateCard(id)}
-      className="mt-4"
-    >
-      <>
-        <CardTitleWithEdit
-          title={title}
-          isEditDisabled={editDisabled}
-          onEdit={() => wizardStore.editCard(id)}
-        />
+      return () =>
+        runInAction(() => {
+          wizardStore.whatsNextOption = undefined
+        })
+    }, [selectedValue])
 
-        <div className="mt-4 text-14">
-          <CardRadioList<TExploreGenomeKeys>
-            data={radioListData}
-            selectedOption={selectedValue}
-            onChange={value => wizardStore.setWhatsNextOption(value, id)}
-            isOptionsDisabled={contentDisabled}
+    return (
+      <Card
+        isNeedToAnimate={wizardStore.isNeedToAnimateCard(id)}
+        className="mt-4"
+      >
+        <>
+          <CardTitleWithEdit
+            title={title}
+            isEditDisabled={editDisabled}
+            onEdit={() => wizardStore.editCard(id)}
           />
 
-          <div className="flex justify-end">
-            {optionsForOpenButton.includes(selectedValue) ? (
-              <Button
-                text="Open"
-                onClick={openNextPage}
-                disabled={continueDisabled}
-              />
-            ) : (
-              <Button
-                text="Continue"
-                onClick={() => wizardStore.finishEditCard(id)}
-                disabled={continueDisabled}
-              />
-            )}
+          <div className="mt-4 text-14">
+            <CardRadioList<TExploreGenomeKeys>
+              data={radioListData}
+              selectedOption={selectedValue}
+              onChange={value => wizardStore.setWhatsNextOption(value, id)}
+              isOptionsDisabled={contentDisabled}
+            />
+
+            <div className="flex justify-end">
+              {optionsForOpenButton.includes(selectedValue) ? (
+                <Button
+                  text="Open"
+                  onClick={openNextPage}
+                  disabled={continueDisabled}
+                />
+              ) : (
+                <Button
+                  text="Continue"
+                  onClick={() => wizardStore.finishEditCard(id)}
+                  disabled={continueDisabled}
+                />
+              )}
+            </div>
           </div>
-        </div>
-      </>
-    </Card>
-  )
-})
+        </>
+      </Card>
+    )
+  },
+)

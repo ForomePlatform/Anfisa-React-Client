@@ -1,4 +1,5 @@
 import { ExploreCandidateKeys } from '@core/enum/explore-candidate-types-enum'
+import { TExploreGenomeKeys } from '@core/enum/explore-genome-types-enum'
 import { ExploreTypesDictionary } from '@core/enum/explore-types-enum'
 import { t } from '@i18n'
 import {
@@ -32,7 +33,9 @@ export const wsCandidateSet: IWizardScenario[] = [
     maxHeight: 'calc(100vh - 285px)',
   },
   {
-    component: (props: ICardProps) => <DescriptionCard {...props} />,
+    component: (props: ICardProps) => (
+      <DescriptionCard {...(props as ICardProps<TExploreGenomeKeys>)} />
+    ),
     id: 2,
     hidden: false,
     continueDisabled: false,

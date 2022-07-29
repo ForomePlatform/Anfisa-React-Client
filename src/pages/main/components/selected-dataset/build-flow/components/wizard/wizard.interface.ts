@@ -2,10 +2,10 @@ import { TExploreCandidateKeys } from '@core/enum/explore-candidate-types-enum'
 import { TExploreGenomeKeys } from '@core/enum/explore-genome-types-enum'
 import { GlbPagesNames } from '@glb/glb-names'
 
-export interface ICardProps {
+export interface ICardProps<SelectedValue = string> {
   id: number
   title: string
-  selectedValue: string
+  selectedValue: SelectedValue
   contentDisabled: boolean
   continueDisabled: boolean
   editDisabled: boolean

@@ -1,4 +1,7 @@
-import { ExploreGenomeKeys } from '@core/enum/explore-genome-types-enum'
+import {
+  ExploreGenomeKeys,
+  TExploreGenomeKeys,
+} from '@core/enum/explore-genome-types-enum'
 import { ExploreTypesDictionary } from '@core/enum/explore-types-enum'
 import { t } from '@i18n'
 import { PresetsCard, StartCard, WhatsNextCard } from '../../cards'
@@ -16,7 +19,9 @@ export const xlWholeGenome: IWizardScenario[] = [
     title: t('home.startFlow.startWith'),
   },
   {
-    component: (props: ICardProps) => <WhatsNextCard {...props} />,
+    component: (props: ICardProps) => (
+      <WhatsNextCard {...(props as ICardProps<TExploreGenomeKeys>)} />
+    ),
     id: 1,
     hidden: false,
     continueDisabled: false,
