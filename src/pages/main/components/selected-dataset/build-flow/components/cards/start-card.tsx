@@ -24,7 +24,7 @@ export const StartCard = (props: ICardProps) => {
   const isEditionProhibited =
     isExploreGenomeDisabled || isExploreCandidateDisabled
 
-  const isEditDisabled = isEditionProhibited ?? editDisabled
+  const isEditShown = !isEditionProhibited && !editDisabled
 
   return (
     <Card
@@ -33,7 +33,7 @@ export const StartCard = (props: ICardProps) => {
     >
       <CardTitleWithEdit
         title={title}
-        isEditDisabled={isEditDisabled}
+        isEditShown={isEditShown}
         onEdit={() => wizardStore.editCard(id)}
       />
 
@@ -51,13 +51,15 @@ export const StartCard = (props: ICardProps) => {
           </div>
         ))}
 
-        <div className="flex justify-end">
-          <Button
-            text="Continue"
-            onClick={() => wizardStore.finishEditCard(id)}
-            disabled={continueDisabled}
-          />
-        </div>
+        {!isEditShown && (
+          <div className="flex justify-end">
+            <Button
+              text="Continue"
+              onClick={() => wizardStore.finishEditCard(id)}
+              disabled={continueDisabled}
+            />
+          </div>
+        )}
       </div>
     </Card>
   )

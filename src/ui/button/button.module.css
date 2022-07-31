@@ -105,6 +105,12 @@
     }
   }
 
+  &_no-border {
+    @apply button_text;
+    border: none;
+    padding: 0;
+  }
+
   &_secondary,
   &_secondary-dark {
     background-color: inherit;
