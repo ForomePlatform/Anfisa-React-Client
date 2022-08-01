@@ -66,7 +66,7 @@ export const WhatsNextCard = observer(
         <>
           <CardTitleWithEdit
             title={title}
-            isEditShown={editDisabled}
+            isEditShown={!editDisabled}
             onEdit={() => wizardStore.editCard(id)}
           />
 
