@@ -20,6 +20,7 @@ export interface IButtonProps {
     | 'tertiary'
     | 'primary-dark'
     | 'diestruction'
+    | 'no-border'
   loaderColor?: 'default' | 'white'
   className?: Argument
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void
@@ -29,7 +30,6 @@ export interface IButtonProps {
   prepend?: ReactNode
   icon?: ReactNode
   isLoading?: boolean
-  noBorder?: boolean
   refEl?: any
   dataTestId?: string
   style?: CSSProperties
@@ -51,7 +51,6 @@ export const Button: FC<IButtonProps> = ({
   prepend,
   icon,
   isLoading = false,
-  noBorder = false,
   refEl,
   dataTestId,
   style = {},
@@ -64,7 +63,6 @@ export const Button: FC<IButtonProps> = ({
     styles[`button_${variant}`],
     styles[`button_${padding}`],
     isOnlyIcon && styles.button_iconOnly,
-    noBorder && styles.button_noBorder,
     className,
   )
 

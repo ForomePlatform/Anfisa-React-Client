@@ -66,7 +66,7 @@ export const WhatsNextCard = observer(
         <>
           <CardTitleWithEdit
             title={title}
-            isEditDisabled={editDisabled}
+            isEditShown={editDisabled}
             onEdit={() => wizardStore.editCard(id)}
           />
 
@@ -78,21 +78,23 @@ export const WhatsNextCard = observer(
               isOptionsDisabled={contentDisabled}
             />
 
-            <div className="flex justify-end">
-              {optionsForOpenButton.includes(selectedValue) ? (
-                <Button
-                  text="Open"
-                  onClick={openNextPage}
-                  disabled={continueDisabled}
-                />
-              ) : (
-                <Button
-                  text="Continue"
-                  onClick={() => wizardStore.finishEditCard(id)}
-                  disabled={continueDisabled}
-                />
-              )}
-            </div>
+            {editDisabled && (
+              <div className="flex justify-end">
+                {optionsForOpenButton.includes(selectedValue) ? (
+                  <Button
+                    text="Open"
+                    onClick={openNextPage}
+                    disabled={continueDisabled}
+                  />
+                ) : (
+                  <Button
+                    text="Continue"
+                    onClick={() => wizardStore.finishEditCard(id)}
+                    disabled={continueDisabled}
+                  />
+                )}
+              </div>
+            )}
           </div>
         </>
       </Card>
