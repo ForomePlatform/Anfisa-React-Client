@@ -19,7 +19,7 @@ export const WidgetSubTab = ({
   unit,
   id,
   tabIndex,
-  isUnitInSearch,
+  disabled,
   isAllTabsOpened,
   onChangeSubTabHeight,
 }: IWidgetSubTabProps): ReactElement => {
@@ -61,7 +61,7 @@ export const WidgetSubTab = ({
 
   return (
     <div
-      className={cn(styles.subTab, !isUnitInSearch && styles.subTab_disabled)}
+      className={cn(styles.subTab, disabled && styles.subTab_disabled)}
       id={id}
     >
       <div className={styles.subTab__header}>

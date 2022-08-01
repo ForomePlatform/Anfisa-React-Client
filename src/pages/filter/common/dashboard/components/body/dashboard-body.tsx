@@ -6,6 +6,7 @@ import cn from 'classnames'
 import difference from 'lodash/difference'
 
 import { DashboardGroupTypes } from '@core/enum/dashboard-group-types-enum'
+import { t } from '@i18n'
 import {
   DASHBOARD_LAYOUT_COLS,
   DASHBOARD_LAYOUT_CONTAINER_PADDING,
@@ -102,6 +103,8 @@ export const DashboardBody = ({
         {mainTabs.map((group, index) => {
           const groupName = group.name.toLowerCase()
 
+          const isFunc = group.name === t('unitsList.functionalUnits')
+
           const isGroupInSearch = filteredGroups.some(group =>
             group.name.toLowerCase().startsWith(groupName),
           )
@@ -117,6 +120,7 @@ export const DashboardBody = ({
                 index={index}
                 id={`widget-tab-${group.name}`}
                 isGroupInSearch={isGroupInSearch}
+                isFunc={isFunc}
                 onChangeTabPlace={changeTabPlace}
                 onChangeTabHeight={changeTabHeight}
                 onChangeSubTabHeight={changeSubTabHeight}
@@ -126,7 +130,11 @@ export const DashboardBody = ({
         })}
       </ResponsiveGridLayout>
 
-      <FooterPanel spareTabs={spareTabs} onChange={changeTabPlace} />
+      <FooterPanel
+        spareTabs={spareTabs}
+        filteredGroups={filteredGroups}
+        onChange={changeTabPlace}
+      />
     </div>
   )
 }

@@ -15,6 +15,7 @@ export const WidgetTab = ({
   index,
   id,
   isGroupInSearch,
+  isFunc,
   onChangeTabPlace,
   onChangeSubTabHeight,
   onChangeTabHeight,
@@ -45,7 +46,10 @@ export const WidgetTab = ({
   return (
     <>
       <div
-        className={cn(styles.tab, !isGroupInSearch && styles.tab_disabled)}
+        className={cn(
+          styles.tab,
+          !isGroupInSearch && !isFunc && styles.tab_disabled,
+        )}
         onClick={changeTabPlace}
       >
         <WidgetTabHeader
@@ -69,7 +73,7 @@ export const WidgetTab = ({
               unit={unit}
               id={`widget-sub-tab_${unit.name}`}
               tabIndex={index}
-              isUnitInSearch={isUnitInSearch}
+              disabled={!isUnitInSearch && !isFunc}
               isAllTabsOpened={isAllTabsOpened}
               onChangeSubTabHeight={onChangeSubTabHeight}
             />

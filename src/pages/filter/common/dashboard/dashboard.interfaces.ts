@@ -45,6 +45,7 @@ export interface IWidgetTabProps {
   index: number
   id: string
   isGroupInSearch: boolean
+  isFunc: boolean
   onChangeTabPlace: (props: IChangeGroupPlaceProps) => void
   onChangeTabHeight: ({ index, id, isOpen }: IChangeHeightProps) => void
   onChangeSubTabHeight: ({ index, id, isOpen }: IChangeHeightProps) => void
@@ -54,7 +55,7 @@ export interface IWidgetSubTabProps {
   unit: TUnit | IFuncPropertyStatus
   id: string
   tabIndex: number
-  isUnitInSearch: boolean
+  disabled: boolean
   isAllTabsOpened: boolean
   onChangeSubTabHeight: ({ index, id, isOpen }: IChangeHeightProps) => void
 }
@@ -75,6 +76,7 @@ export interface IWidgetTabHeaderProps {
 
 export interface IFooterPanelProps {
   spareTabs: IExtendedTUnitGroups[]
+  filteredGroups: TUnitGroups
   onChange: (props: IChangeGroupPlaceProps) => void
 }
 
