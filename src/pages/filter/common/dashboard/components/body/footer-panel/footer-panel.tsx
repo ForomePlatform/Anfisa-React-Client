@@ -3,6 +3,7 @@ import styles from './footer-panel.module.css'
 import { ReactElement } from 'react'
 
 import { DashboardGroupTypes } from '@core/enum/dashboard-group-types-enum'
+import { Icon } from '@ui/icon'
 import { FnLabel } from '@components/fn-label'
 import { PredictionPowerIndicator } from '@components/prediction-power-indicator'
 import { IFooterPanelProps } from '../../../dashboard.interfaces'
@@ -24,16 +25,23 @@ export const FooterPanel = ({
           })
         }
       >
-        {group.name === 'Functional Units' ? (
-          <FnLabel className="mr-2" />
-        ) : (
-          <PredictionPowerIndicator
-            className="mr-2 rounded"
-            value={group.power || 0}
-          />
-        )}
+        <div className="flex items-center">
+          {group.name === 'Functional Units' ? (
+            <FnLabel className="mr-2" />
+          ) : (
+            <PredictionPowerIndicator
+              className="mr-2 rounded"
+              value={group.power || 0}
+            />
+          )}
 
-        <div className={styles.footerPanel__tab__title}>{group.name}</div>
+          <div className={styles.footerPanel__tab__title}>{group.name}</div>
+        </div>
+
+        <Icon
+          name="Favorites"
+          className="text-grey-blue hover:text-yellow-secondary"
+        />
       </div>
     ))}
   </div>

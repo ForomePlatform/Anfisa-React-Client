@@ -73,3 +73,8 @@ export interface IFooterPanelProps {
   spareTabs: IExtendedTUnitGroups[]
   onChange: (props: IChangeGroupPlaceProps) => void
 }
+
+export interface IColsHeight {
+  h: number
+  x: number
+}

@@ -9,6 +9,7 @@ import {
   HIDDEN_RESIZE_HEIGHT,
 } from './dashboard.constants'
 import {
+  IColsHeight,
   IExtendedTUnitGroups,
   IGetLayoutOnHeightChange,
 } from './dashboard.interfaces'
@@ -25,19 +26,42 @@ export const getStartLayout = (groups: IExtendedTUnitGroups[]): Layout[] => {
   }))
 }
 
-export const getNewTabLayout = (
-  tabsLength: number,
-  group: IExtendedTUnitGroups,
-): Layout => {
-  const cols = DASHBOARD_LAYOUT_COLS
+const getSortedColsHeight = (layout: Layout[]): IColsHeight[] => {
+  const colsHeight: IColsHeight[] = []
+  const clonedLayout = cloneDeep(layout)
 
-  return {
+  for (let i = 0; i < DASHBOARD_LAYOUT_COLS; i++) {
+    colsHeight.push({ h: 0, x: i })
+  }
+
+  clonedLayout.forEach(layout => {
+    colsHeight[layout.x].h += layout.h
+  })
+
+  const sortedColsHeight = colsHeight.sort((col1, col2) => col1.h - col2.h)
+
+  return sortedColsHeight
+}
+
+export const getNewTabLayout = (
+  group: IExtendedTUnitGroups,
+  mainTabsLayout: Layout[],
+): Layout[] => {
+  const clonedLayout = cloneDeep(mainTabsLayout)
+
+  const colsHeight = getSortedColsHeight(mainTabsLayout)
+
+  const newLayout = {
     i: group.name,
-    x: tabsLength < cols ? tabsLength : tabsLength % cols,
-    y: tabsLength < cols ? 0 : Math.floor(tabsLength / cols),
+    x: colsHeight[0].x,
+    y: colsHeight[0].h + 1,
     w: 1,
     h: group.units.length + 1,
   }
+
+  clonedLayout.push(newLayout)
+
+  return clonedLayout
 }
 
 export const getLayoutOnTabHeightChange = (

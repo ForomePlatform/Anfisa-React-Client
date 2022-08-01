@@ -1,7 +1,7 @@
 import styles from './dashboard-body.module.css'
 
 import { ReactElement, useState } from 'react'
-import GridLayout, { WidthProvider } from 'react-grid-layout'
+import GridLayout, { Layout, WidthProvider } from 'react-grid-layout'
 import cn from 'classnames'
 import difference from 'lodash/difference'
 
@@ -39,8 +39,9 @@ export const DashboardBody = ({
   const [spareTabs, setSpareTabs] = useState<IExtendedTUnitGroups[]>(
     difference(groups, mainTabs),
   )
-
-  const [mainTabsLayout, setMainTabsLayout] = useState(getStartLayout(mainTabs))
+  const [mainTabsLayout, setMainTabsLayout] = useState<Layout[]>(
+    getStartLayout(mainTabs),
+  )
 
   const changeTabPlace = ({
     groupType,
@@ -51,14 +52,15 @@ export const DashboardBody = ({
 
     if (groupType === DashboardGroupTypes.Main) {
       setMainTabs(prev => prev.filter((_, index) => index !== groupIndex))
-      setSpareTabs(prev => [...prev, selectedGroup!])
+      setSpareTabs(prev => [selectedGroup!, ...prev])
       setMainTabsLayout(prev => prev.filter(group => group.i !== groupName))
     } else {
       setSpareTabs(prev => prev.filter((_, index) => index !== groupIndex))
       setMainTabs(prev => [...prev, selectedGroup!])
 
-      const newTabLayout = getNewTabLayout(mainTabs.length, selectedGroup!)
-      setMainTabsLayout(prev => [...prev, newTabLayout])
+      const newTabLayout = getNewTabLayout(selectedGroup!, mainTabsLayout)
+
+      setMainTabsLayout(newTabLayout)
     }
   }
 
