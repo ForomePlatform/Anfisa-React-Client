@@ -50,10 +50,10 @@ spec:
             httpGet:
               path: /
               port: http
-          volumeMounts:
-          - name: front-env-config
-            mountPath: /usr/share/nginx/html/anfisa/env-config.js
-            subPath: env-config.js
+          # volumeMounts:
+          # - name: front-env-config
+          #   mountPath: /usr/share/nginx/html/anfisa/env-config.js
+          #   subPath: env-config.js
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -68,9 +68,9 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      volumes:
-        - name: front-env-config
-          configMap:
-            name: front-env-config
-            defaultMode: 0666
+      # volumes:
+      #   - name: front-env-config
+      #     configMap:
+      #       name: front-env-config
+      #       defaultMode: 0666
       restartPolicy: Always
