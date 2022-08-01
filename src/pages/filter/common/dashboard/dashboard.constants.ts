@@ -12,3 +12,5 @@ export const DASHBOARD_LAYOUT_MARGIN: [number, number] = [
   DASHBOARD_LAYOUT_SPACING,
 ]
 export const DASHBOARD_LAYOUT_CONTAINER_PADDING: [number, number] = [16, 16]
+
+export const MAX_SUB_TAB_ROWS_AMOUNT = 40

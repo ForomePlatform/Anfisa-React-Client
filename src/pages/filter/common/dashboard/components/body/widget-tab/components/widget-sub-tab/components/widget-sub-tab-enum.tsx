@@ -3,12 +3,15 @@ import styles from '../widget-sub-tab.module.css'
 import { Fragment, ReactElement } from 'react'
 
 import { t } from '@i18n'
+import { MAX_SUB_TAB_ROWS_AMOUNT } from '@pages/filter/common/dashboard/dashboard.constants'
 import { IWidgetSubTabEnumProps } from '@pages/filter/common/dashboard/dashboard.interfaces'
 
 export const WidgetSubTabEnum = ({
   unit,
 }: IWidgetSubTabEnumProps): ReactElement => {
-  const variantsLeft = unit.variants ? unit.variants.length - 40 : null
+  const variantsLeft = unit.variants
+    ? unit.variants.length - MAX_SUB_TAB_ROWS_AMOUNT
+    : null
 
   return (
     <>
