@@ -8,6 +8,7 @@ import { t } from '@i18n'
 import { Icon } from '@ui/icon'
 import { InputSearch } from '@components/input-search'
 import { DecisionTreesResultsDataCy } from '@data-testid'
+import { UnitsViewSwitch } from './components'
 
 interface IUnitsListControlsProps {
   className?: string
@@ -44,30 +45,9 @@ export const UnitsListControls = ({
       <Icon name={isAllCollapsed ? 'Expand' : 'Collapse'} size={20} />
     </button>
 
-    <button
-      className={cn(
-        styles.controls__buttonView,
-        styles.controls__buttonView__list,
-        isListView && styles.controls__buttonView_active,
-      )}
-      onClick={() => onToggleViewType(ViewTypeDashboard.List)}
-    >
-      <div className={cn(styles.controls__buttonView__content)}>
-        <Icon name="List" size={16} />
-      </div>
-    </button>
-
-    <button
-      className={cn(
-        styles.controls__buttonView,
-        styles.controls__buttonView__tile,
-        !isListView && styles.controls__buttonView_active,
-      )}
-      onClick={() => onToggleViewType(ViewTypeDashboard.Tile)}
-    >
-      <div className={cn(styles.controls__buttonView__content)}>
-        <Icon name="Tile" />
-      </div>
-    </button>
+    <UnitsViewSwitch
+      isListView={isListView}
+      onToggleViewType={onToggleViewType}
+    />
   </div>
 )
