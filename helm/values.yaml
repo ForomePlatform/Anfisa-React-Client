@@ -8,7 +8,7 @@ fullnameOverride: ""
 replicaCount: 1
 
 image:
-  repository: forome.azurecr.io/forome-front
+  repository: forome.azurecr.io/__azRepository__
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: __appVersion__
