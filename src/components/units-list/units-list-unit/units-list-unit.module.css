@@ -6,10 +6,6 @@
   display: flex;
   align-items: center;
 
-  &:hover {
-    color: theme("colors.grey.blue");
-  }
-
   &__title {
     margin-right: 4px;
     color: theme("colors.black");
@@ -26,6 +22,18 @@
     &_dark {
       color: theme("colors.white");
 
+      &:hover {
+        color: theme("colors.grey.blue");
+      }
+    }
+  }
+
+  &__arrow {
+    &:hover {
+      color: theme("colors.grey.blue");
+    }
+
+    &_dark {
       &:hover {
         color: theme("colors.grey.blue");
       }
