@@ -13,13 +13,15 @@ image:
   # Overrides the image tag whose default is the chart appVersion.
   tag: __appVersion__
 
-url_backend: __ingressHost__/app
+# url_backend: __ingressHost__/app
 # git_uri: https://github.com/ForomePlatform/Anfisa-React-Client.git
 # git_branch: release-v.0.7.0
 
 env:
-  - name: BACKEND
+  - name: URL_BACKEND
     value: http://anfisa-backend
+  - name: REACT_APP_URL_BACKEND
+    value: __ingressHost__/app
 
 imagePullSecrets:
   - name: anfisa-front-registry
