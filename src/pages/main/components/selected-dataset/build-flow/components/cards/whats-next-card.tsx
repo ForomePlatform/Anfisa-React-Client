@@ -25,6 +25,7 @@ export const WhatsNextCard = (props: ICardProps) => {
     contentDisabled,
     continueDisabled,
     editDisabled,
+    position,
   } = props
 
   const openNextPage = () => {
@@ -42,6 +43,7 @@ export const WhatsNextCard = (props: ICardProps) => {
     <Card
       isNeedToAnimate={wizardStore.isNeedToAnimateCard(id)}
       className="mt-4"
+      position={position}
     >
       <>
         <CardTitleWithEdit

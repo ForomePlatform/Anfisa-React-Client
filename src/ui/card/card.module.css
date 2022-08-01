@@ -1,7 +1,10 @@
 .card {
+  display: flex;
+  flex-direction: column;
   border-radius: theme('spacing.2');
   box-shadow: theme('boxShadow.card');
   padding: theme('spacing.4');
+  width: calc(50% - 2rem) ;
 
   &_title {
     font-weight: 700 !important;
@@ -26,5 +29,19 @@
   &_exited {
     opacity: 0;
     transform: translateY(40px);
+  }
+
+  &_position-right {
+    float: right;
+    clear: right;
+  }
+
+  &_position-left {
+    float: left;
+    clear: left;
+  }
+
+  &_position-stretch {
+    width: 100%;
   }
 }

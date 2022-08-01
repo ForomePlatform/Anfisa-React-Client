@@ -16,7 +16,7 @@ import presetsCardStore from './presets-card.store'
 
 export const PresetsCard = observer((props: ICardProps) => {
   const history = useHistory()
-  const { title, id, selectedValue, maxHeight } = props
+  const { title, id, selectedValue, maxHeight, position } = props
 
   useEffect(() => {
     presetsCardStore.loadSolutions()
@@ -70,6 +70,7 @@ export const PresetsCard = observer((props: ICardProps) => {
       isNeedToAnimate={wizardStore.isNeedToAnimateCard(id)}
       className="mt-4"
       style={{ paddingLeft: 0, paddingRight: 0 }}
+      position={position}
     >
       <CardTitle text={title} className="px-4" />
 

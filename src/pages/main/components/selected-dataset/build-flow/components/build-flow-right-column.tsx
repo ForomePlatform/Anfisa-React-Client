@@ -18,12 +18,13 @@ export const BuildFlowRightColumn = observer((): ReactElement => {
             continueDisabled: scenario.continueDisabled,
             editDisabled: scenario.editDisabled,
             contentDisabled: scenario.contentDisabled,
-            selectedValue: scenario.value,
+            selectedValue: scenario.selectedValue,
             title: scenario.title,
             maxHeight: scenario.maxHeight,
           })
         return (
-          index > 1 && !scenario.hidden && <Component key={scenario.value} />
+          index > 1 &&
+          !scenario.hidden && <Component key={scenario.selectedValue} />
         )
       })}
     </div>

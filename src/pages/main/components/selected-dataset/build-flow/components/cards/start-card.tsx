@@ -15,6 +15,7 @@ export const StartCard = (props: ICardProps) => {
     contentDisabled,
     continueDisabled,
     editDisabled,
+    position,
   } = props
 
   const isExploreGenomeDisabled = !datasetStore.isXL
@@ -30,6 +31,7 @@ export const StartCard = (props: ICardProps) => {
     <Card
       className="mt-4"
       isNeedToAnimate={wizardStore.isNeedToAnimateCard(id)}
+      position={position}
     >
       <CardTitleWithEdit
         title={title}

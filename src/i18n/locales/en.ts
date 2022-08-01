@@ -152,6 +152,9 @@ export const en = {
       whatsNext: "What's next?",
       relevantPresets: 'Relevant presets',
       additionalPresetFilter: 'Additional preset filters',
+      simpleFilter: 'Simple Filter',
+      inclusionExclusion: 'Inclusion/Exclusion Criteria',
+      viewVariants: 'View Variants',
     },
   },
   ds: {

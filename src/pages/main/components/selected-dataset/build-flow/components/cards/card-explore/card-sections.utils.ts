@@ -1,13 +1,15 @@
+import { t } from '@i18n'
 import { Routes } from '@router/routes.enum'
 
 export const parseLocation = (location: string) => {
   const addDelimeter = (str: string) => {
     return str + ' | '
   }
+  const {
+    location: { protocol, host },
+  } = window
 
-  const url = new URL(
-    `${window.location.protocol}${window.location.host}${location}`,
-  )
+  const url = new URL(`${protocol}${host}${location}`)
   let result = ''
 
   const isFilter = url.pathname === Routes.Refiner
@@ -15,11 +17,11 @@ export const parseLocation = (location: string) => {
   const isWs = url.pathname === Routes.WS
 
   if (isFilter) {
-    result += 'Simple Filter'
+    result += t('home.buildFlow.simpleFilter')
   } else if (isDtree) {
-    result += 'Include/Exclude Criteria'
+    result += t('home.buildFlow.inclusionExclusion')
   } else if (isWs) {
-    result += 'Table'
+    result += t('home.buildFlow.viewVariants')
   }
 
   result = addDelimeter(result)
