@@ -21,7 +21,7 @@ env:
   - name: URL_BACKEND
     value: http://anfisa-backend
   - name: REACT_APP_URL_BACKEND
-    value: __ingressHost__/app
+    value: https://__ingressHost__/app
 
 imagePullSecrets:
   - name: anfisa-front-registry
