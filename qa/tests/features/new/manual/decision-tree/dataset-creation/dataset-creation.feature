@@ -6,6 +6,7 @@ Background:
 
 @regression
 @smoke
+@tc:113037
 Scenario: 01 Create dataset
 	Given "@Hearing Loss, v.5" decision tree was loaded
 	When clicks "Create Derive DS" button
@@ -17,6 +18,7 @@ Scenario: 01 Create dataset
 
 @regression
 @smoke
+@tc:113038
 Scenario: 02 The "Open it" button
 	Given derived dataset with "@Hearing Loss, v.5" decision tree was created 
 	And "Add new dataset" dialog was displayed
@@ -25,6 +27,7 @@ Scenario: 02 The "Open it" button
 	And number of variants should be equal to 41
 
 @regression
+@tc:113039
 Scenario: 03 Create dataset: empty name
 	Given "@Hearing Loss, v.5" decision tree was loaded
 	When user clicks "Create Derive DS" button
@@ -33,6 +36,7 @@ Scenario: 03 Create dataset: empty name
 	Then "Add dataset" button should be disabled
 
 @regression
+@tc:113040
 Scenario: 04 Create dataset: duplicated name
 	Given "@Hearing Loss, v.5" decision tree was loaded
 	When user clicks "Create Derive DS" button
@@ -43,6 +47,7 @@ Scenario: 04 Create dataset: duplicated name
 	And the validation message should be displayed
 
 @regression
+@tc:113041
 Scenario: 05 Create dataset: long name
 	Given "@Hearing Loss, v.5" decision tree was loaded
 	When user clicks "Create Derive DS" button
@@ -52,6 +57,7 @@ Scenario: 05 Create dataset: long name
 	And the validation message should be displayed
 
 @regression
+@tc:113042
 Scenario: 06 Create dataset with invalid "<InvalidDatasetName>"
 	Given "@Hearing Loss, v.5" decision tree was loaded
 	When user clicks "Create Derive DS" button
@@ -67,6 +73,7 @@ Examples:
 	| te st da ta set    |
 
 @regression
+@tc:113043
 Scenario: 07 Create dataset: too many variants
 	When user clicks "+ Add Attribute" button
 	And clicks "Callers" attribute
@@ -78,6 +85,7 @@ Scenario: 07 Create dataset: too many variants
 	Then "Add dataset" button should be disabled
 	And the validation message should be displayed
 
+@tc:113044
 Scenario: 08 Cancel dataset creation
 	Given "@Hearing Loss, v.5" decision tree was loaded
 	When user clicks "Create Derive DS" button
@@ -87,6 +95,7 @@ Scenario: 08 Cancel dataset creation
 	Then dataset should be saved
 	And message in bottom right corner should be displayed
 
+@tc:113045
 Scenario: 09 Close Create Dataset dialog during creation
 	Given "@Hearing Loss, v.5" decision tree was loaded
 	When user clicks "Create Derive DS" button
@@ -98,6 +107,7 @@ Scenario: 09 Close Create Dataset dialog during creation
 
 @regression
 @smoke
+@tc:113046
 Scenario: 10 Save Dataset with more than 2000 Variants
 	When user clicks "+ Add attribute" button on the first step
 	And clicks"Callers" attribute
