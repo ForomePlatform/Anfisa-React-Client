@@ -47,7 +47,7 @@ podSecurityContext:
   # fsGroup: 2000
 
 securityContext:
-  runAsUser: 101
+  runAsUser: 0
   # capabilities:
   #   drop:
   #   - ALL
