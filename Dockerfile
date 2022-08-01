@@ -5,7 +5,7 @@ RUN yarn install
 COPY . ./
 RUN yarn build
 
-FROM nginx:1.23-alpine
+FROM nginx:1.23.1-alpine
 COPY --chown=nginx:nginx --from=build /app/build /usr/share/nginx/html/anfisa
 COPY --chown=nginx:nginx maintenance.html /usr/share/nginx/html/
 COPY --chown=nginx:nginx docker/default.conf.template /etc/nginx/templates/
@@ -20,5 +20,5 @@ RUN chmod +x /docker-entrypoint.d/*.sh && \
     chown -R nginx:nginx /var/log/nginx && \
     chmod -R 755 /var/log/nginx; \
     chown -R nginx:nginx /etc/nginx/conf.d
-# RUN touch /var/run/nginx.pid && chown -R nginx:nginx /var/run/nginx.pid
-# USER nginx
+RUN touch /var/run/nginx.pid && chown -R nginx:nginx /var/run/nginx.pid
+USER nginx
