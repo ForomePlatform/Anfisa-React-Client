@@ -1,6 +1,7 @@
 import styles from './widget-sub-tab.module.css'
 
 import { ReactElement, useEffect, useMemo } from 'react'
+import cn from 'classnames'
 
 import { useToggle } from '@core/hooks/use-toggle'
 import { Icon } from '@ui/icon'
@@ -18,6 +19,7 @@ export const WidgetSubTab = ({
   unit,
   id,
   tabIndex,
+  isUnitInSearch,
   isAllTabsOpened,
   onChangeSubTabHeight,
 }: IWidgetSubTabProps): ReactElement => {
@@ -58,7 +60,10 @@ export const WidgetSubTab = ({
   }, [unit])
 
   return (
-    <div className={styles.subTab} id={id}>
+    <div
+      className={cn(styles.subTab, !isUnitInSearch && styles.subTab_disabled)}
+      id={id}
+    >
       <div className={styles.subTab__header}>
         <div className="flex items-center">
           {unit.kind !== AttributeKinds.FUNC && (

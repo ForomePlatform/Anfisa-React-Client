@@ -1,6 +1,7 @@
 import styles from './widget-tab.module.css'
 
 import { ReactElement } from 'react'
+import cn from 'classnames'
 
 import { DashboardGroupTypes } from '@core/enum/dashboard-group-types-enum'
 import { useToggle } from '@core/hooks/use-toggle'
@@ -10,8 +11,10 @@ import { WidgetTabHeader } from './components/widget-tab-header'
 
 export const WidgetTab = ({
   group,
+  filteredGroups,
   index,
   id,
+  isGroupInSearch,
   onChangeTabPlace,
   onChangeSubTabHeight,
   onChangeTabHeight,
@@ -41,7 +44,10 @@ export const WidgetTab = ({
 
   return (
     <>
-      <div className={styles.tab} onClick={changeTabPlace}>
+      <div
+        className={cn(styles.tab, !isGroupInSearch && styles.tab_disabled)}
+        onClick={changeTabPlace}
+      >
         <WidgetTabHeader
           group={group}
           isAllTabsOpened={isAllTabsOpened}
@@ -49,17 +55,27 @@ export const WidgetTab = ({
         />
       </div>
 
-      {group.units.map(unit => (
-        <div key={unit.name} className="cursor-grab" data-drag-handle={true}>
-          <WidgetSubTab
-            unit={unit}
-            id={`widget-sub-tab_${unit.name}`}
-            tabIndex={index}
-            isAllTabsOpened={isAllTabsOpened}
-            onChangeSubTabHeight={onChangeSubTabHeight}
-          />
-        </div>
-      ))}
+      {group.units.map(unit => {
+        const unitName = unit.name.toLowerCase()
+        const isUnitInSearch = filteredGroups.some(group =>
+          group.attributes?.some(attr =>
+            attr.name.toLowerCase().startsWith(unitName),
+          ),
+        )
+
+        return (
+          <div key={unit.name} data-drag-handle={true}>
+            <WidgetSubTab
+              unit={unit}
+              id={`widget-sub-tab_${unit.name}`}
+              tabIndex={index}
+              isUnitInSearch={isUnitInSearch}
+              isAllTabsOpened={isAllTabsOpened}
+              onChangeSubTabHeight={onChangeSubTabHeight}
+            />
+          </div>
+        )
+      })}
     </>
   )
 }

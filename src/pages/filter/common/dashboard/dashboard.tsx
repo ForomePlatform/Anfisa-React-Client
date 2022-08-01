@@ -3,6 +3,7 @@ import styles from './dashboard.module.css'
 import { ReactElement } from 'react'
 
 import { Loader } from '@ui/loader'
+import { useFilteredUnits } from '@components/units-list/units-lilst.utils'
 import { DashboardBody } from './components/body'
 import { DashboardHeader } from './components/header'
 import { IDashboardProps } from './dashboard.interfaces'
@@ -18,11 +19,21 @@ export const Dashboard = ({
     functionalUnits,
   )
 
+  const { filterValue, setFilterValue, filteredGroups } =
+    useFilteredUnits(groups)
+
   return (
     <div className={styles.dashboard}>
-      <DashboardHeader />
+      <DashboardHeader filterValue={filterValue} onChange={setFilterValue} />
 
-      {isFetching ? <Loader /> : <DashboardBody groups={extenderGroups} />}
+      {isFetching ? (
+        <Loader />
+      ) : (
+        <DashboardBody
+          groups={extenderGroups}
+          filteredGroups={filteredGroups}
+        />
+      )}
     </div>
   )
 }

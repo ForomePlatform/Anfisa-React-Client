@@ -6,6 +6,11 @@
   border-radius: theme("borderRadius.DEFAULT");
   cursor: pointer;
 
+  &_disabled {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
   &__header {
     @apply typography-m;
 

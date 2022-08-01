@@ -1,7 +1,7 @@
 import { Layout } from 'react-grid-layout'
 import { Argument } from 'classnames'
 
-import { TUnit } from '@store/stat-units'
+import { TUnit, TUnitGroups } from '@store/stat-units'
 import { IUnitsProps } from '@pages/filter/refiner/refiner.interfaces'
 import {
   IEnumPropertyStatus,
@@ -13,6 +13,7 @@ export interface IDashboardProps extends IUnitsProps {}
 
 export interface IDashboardBodyProps {
   groups: IExtendedTUnitGroups[]
+  filteredGroups: TUnitGroups
   className?: Argument
 }
 
@@ -40,8 +41,10 @@ export interface IGetLayoutOnHeightChange extends IChangeHeightProps {
 
 export interface IWidgetTabProps {
   group: IExtendedTUnitGroups
+  filteredGroups: TUnitGroups
   index: number
   id: string
+  isGroupInSearch: boolean
   onChangeTabPlace: (props: IChangeGroupPlaceProps) => void
   onChangeTabHeight: ({ index, id, isOpen }: IChangeHeightProps) => void
   onChangeSubTabHeight: ({ index, id, isOpen }: IChangeHeightProps) => void
@@ -51,6 +54,7 @@ export interface IWidgetSubTabProps {
   unit: TUnit | IFuncPropertyStatus
   id: string
   tabIndex: number
+  isUnitInSearch: boolean
   isAllTabsOpened: boolean
   onChangeSubTabHeight: ({ index, id, isOpen }: IChangeHeightProps) => void
 }

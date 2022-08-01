@@ -10,6 +10,12 @@
   margin-top: 8px;
   background: theme("colors.blue.secondary");
   border-radius: theme("borderRadius.DEFAULT");
+  cursor: grab;
+
+  &_disabled {
+    opacity: 0.3;
+    pointer-events: none;
+  }
 
   &__header {
     height: 36px;

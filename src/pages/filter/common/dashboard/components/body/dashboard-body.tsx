@@ -31,6 +31,7 @@ const ResponsiveGridLayout = WidthProvider(GridLayout)
 
 export const DashboardBody = ({
   groups,
+  filteredGroups,
   className,
 }: IDashboardBodyProps): ReactElement => {
   const [mainTabs, setMainTabs] = useState<IExtendedTUnitGroups[]>(
@@ -98,22 +99,31 @@ export const DashboardBody = ({
         className={styles.body__gridLayout}
         onLayoutChange={layout => setMainTabsLayout(layout)}
       >
-        {mainTabs.map((group, index) => (
-          <div
-            key={group.name}
-            id={`widget-tab-${group.name}`}
-            className={styles.body__gridLayout__widgetsContainer}
-          >
-            <WidgetTab
-              group={group}
-              index={index}
+        {mainTabs.map((group, index) => {
+          const groupName = group.name.toLowerCase()
+
+          const isGroupInSearch = filteredGroups.some(group =>
+            group.name.toLowerCase().startsWith(groupName),
+          )
+          return (
+            <div
+              key={group.name}
               id={`widget-tab-${group.name}`}
-              onChangeTabPlace={changeTabPlace}
-              onChangeTabHeight={changeTabHeight}
-              onChangeSubTabHeight={changeSubTabHeight}
-            />
-          </div>
-        ))}
+              className={styles.body__gridLayout__widgetsContainer}
+            >
+              <WidgetTab
+                group={group}
+                filteredGroups={filteredGroups}
+                index={index}
+                id={`widget-tab-${group.name}`}
+                isGroupInSearch={isGroupInSearch}
+                onChangeTabPlace={changeTabPlace}
+                onChangeTabHeight={changeTabHeight}
+                onChangeSubTabHeight={changeSubTabHeight}
+              />
+            </div>
+          )
+        })}
       </ResponsiveGridLayout>
 
       <FooterPanel spareTabs={spareTabs} onChange={changeTabPlace} />
