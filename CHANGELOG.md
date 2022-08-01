@@ -1,7 +1,8 @@
 # Change log 
 
-## <small>0.7.1 (7/31/2022)</small>
+## <small>0.7.1 (8/1/2022)</small>
 
+* fix([FOROME-1373](https://quantori.atlassian.net/browse/FOROME-1373)): invalidate spaces in preset names (#848) ([a0e2a5d2](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a0e2a5d2))
 * feat([FOROME-1410](https://quantori.atlassian.net/browse/FOROME-1410)): Reworked edit behavior (#843) ([8ad5038e](https://github.com/ForomePlatform/Anfisa-React-Client/commit/8ad5038e))
 * feat([FOROME-1367](https://quantori.atlassian.net/browse/FOROME-1367)): made create derived dataset button disabled on empty conditions or too much variants exist (#831) ([e79895f4](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e79895f4))
 * feat([FOROME-1420](https://quantori.atlassian.net/browse/FOROME-1420)): Fixing card shadow (#851) ([33b74eef](https://github.com/ForomePlatform/Anfisa-React-Client/commit/33b74eef))
