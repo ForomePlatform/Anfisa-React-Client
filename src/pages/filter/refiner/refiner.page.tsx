@@ -13,7 +13,10 @@ import { ExportReport } from '@components/export-report'
 import { Header } from '@components/header'
 import { VariantsCount } from '@components/variants-count'
 import { GlbPagesNames } from '@glb/glb-names'
-import { FilterControl } from '@pages/filter/common/filter-control/filter-control'
+import {
+  FilterControl,
+  XL_COUNT_OF_VARIANTS,
+} from '@pages/filter/common/filter-control/filter-control'
 import { IgvModal } from '@pages/filter/dtree/components/modals/components/igv'
 import { FilterRefiner } from '@pages/filter/refiner/components/filter-refiner'
 import dashboardStore, { Dashboard } from '../common/dashboard'
@@ -39,6 +42,8 @@ export const RefinerPage = observer((): ReactElement => {
     filterPresetsStore.createPreset(presetName, filterStore.conditions)
   }
 
+  const filterCounts = filterStore.stat.filteredCounts
+
   const modifiedPreset = filterStore.isPresetModified
     ? filterPresetsStore.activePreset
     : undefined
@@ -46,6 +51,10 @@ export const RefinerPage = observer((): ReactElement => {
   const isEntryCreationAllowed = activePreset
     ? modifiedPreset === activePreset
     : !filterStore.isConditionsEmpty
+
+  const allVariants = isXL
+    ? toJS(datasetStore.dsInfoData?.total)
+    : variantCounts
 
   useDatasetName()
 
@@ -59,9 +68,7 @@ export const RefinerPage = observer((): ReactElement => {
     <div className={styles.refinerPage}>
       <Header className={styles.refinerPage__header}>
         <VariantsCount
-          variantCounts={
-            isXL ? toJS(datasetStore.dsInfoData?.total) : variantCounts
-          }
+          variantCounts={allVariants}
           transcriptsCounts={transcriptsCounts}
           dnaVariantsCounts={dnaVariantsCounts}
           showDnaVariants={!isXL}
@@ -79,6 +86,11 @@ export const RefinerPage = observer((): ReactElement => {
         isBackwardAllowed={filterStore.actionHistory.isBackwardAllowed}
         isForwardAllowed={filterStore.actionHistory.isForwardAllowed}
         isEntryCreationAllowed={isEntryCreationAllowed}
+        disabledCreateDataset={
+          filterStore.conditions.length === 0 ||
+          !filterCounts ||
+          filterCounts.variants > XL_COUNT_OF_VARIANTS
+        }
         goForward={filterStore.actionHistory.goForward}
         goBackward={filterStore.actionHistory.goBackward}
         className={styles.refinerPage__controls}
