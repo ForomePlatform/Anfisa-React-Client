@@ -1,5 +1,6 @@
 import { makeAutoObservable, toJS } from 'mobx'
 
+import { TExploreGenomeKeys } from '@core/enum/explore-genome-types-enum'
 import datasetStore from '@store/dataset/dataset'
 import { DtreeSetAsyncStore } from '@store/dtree/dtree-set.async.store'
 import { AvailablePresetsAsyncStore } from '@store/filter-presets/available-presets.async.store'
@@ -48,6 +49,14 @@ class PresetsCardStore {
   public loadSolutions() {
     this.loadPresets()
     this.loadDTrees()
+  }
+
+  public getSolutionsByRubric(rubric?: TExploreGenomeKeys) {
+    if (rubric) {
+      return this.solutions.filter(solution => solution.rubric === rubric)
+    } else {
+      return this.solutions
+    }
   }
 }
 

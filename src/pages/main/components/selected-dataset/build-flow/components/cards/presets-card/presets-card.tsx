@@ -39,34 +39,42 @@ export const PresetsCard = observer((props: ICardProps) => {
   }
 
   const renderPresets = () => {
-    return presetsCardStore.solutions.map(preset => {
-      const isSelected = selectedValue === preset.name
+    return presetsCardStore
+      .getSolutionsByRubric(wizardStore.whatsNextOption)
+      .map(preset => {
+        const isSelected = selectedValue === preset.name
 
-      return (
-        <div
-          key={preset.name}
-          onClick={() => wizardStore.setSelectedPreset(preset, id)}
-        >
+        return (
           <div
-            className={cn(
-              'w-full flex items-center py-2 leading-5 cursor-pointer px-4',
-              isSelected ? 'bg-blue-bright text-white' : 'hover:bg-blue-light',
-            )}
+            key={preset.name}
+            onClick={() => wizardStore.setSelectedPreset(preset, id)}
           >
-            <Icon
-              name="File"
-              className={cn(isSelected ? 'text-white' : 'text-blue-bright')}
-            />
+            <div
+              className={cn(
+                'w-full flex items-center py-2 leading-5 cursor-pointer px-4',
+                isSelected
+                  ? 'bg-blue-bright text-white'
+                  : 'hover:bg-blue-light',
+              )}
+            >
+              <Icon
+                name="File"
+                className={cn(isSelected ? 'text-white' : 'text-blue-bright')}
+              />
 
-            <div className="ml-1.5">{preset.name}</div>
+              <div className="ml-1.5">{preset.name}</div>
+            </div>
           </div>
-        </div>
-      )
-    })
+        )
+      })
   }
 
   return (
-    <Card className="mt-4" style={{ paddingLeft: 0, paddingRight: 0 }}>
+    <Card
+      isNeedToAnimate={wizardStore.isNeedToAnimateCard(id)}
+      className="mt-4"
+      style={{ paddingLeft: 0, paddingRight: 0 }}
+    >
       <CardTitle text={title} className="px-4" />
 
       <div

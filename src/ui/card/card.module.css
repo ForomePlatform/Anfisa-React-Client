@@ -15,4 +15,16 @@
       @apply typography-m;
     }
   }
+
+  &_entering,
+  &_entered {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  &_exiting,
+  &_exited {
+    opacity: 0;
+    transform: translateY(40px);
+  }
 }

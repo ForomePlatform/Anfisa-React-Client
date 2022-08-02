@@ -63,6 +63,10 @@ export const UnitsListUnit = ({
         />
         {unit.power && (
           <DropdownArrow
+            className={cn(
+              styles.unitTitle__arrow,
+              isDark && styles.unitTitle__arrow_dark,
+            )}
             size="sm"
             isOpen={isChartVisible}
             onClick={openCharts}

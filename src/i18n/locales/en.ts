@@ -264,6 +264,7 @@ export const en = {
     errors: {
       savePredefinedPresetError: '{presetName} is a predefined preset',
       presetAlreadyExists: '{presetName} already exists',
+      presetIsTooLong: 'The name cannot be longer than 20 symbols',
     },
   },
   condition: {
@@ -297,7 +298,8 @@ export const en = {
     functionalUnits: 'Functional Units',
   },
   filter: {
-    applyCriterium: 'Apply criterium',
+    applyCondition: 'Apply condition',
+    applyPreset: 'Apply preset',
     switcher: 'Only starts with',
     method: 'Filtering method',
     results: 'Results',

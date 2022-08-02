@@ -2,38 +2,25 @@ import cn, { Argument } from 'classnames'
 
 import { Button } from '@ui/button'
 import { CardTitle } from '@ui/card'
-import { Icon } from '@ui/icon'
 
 interface ICardTitleWithEditProps {
   title: string
-  isEditDisabled?: boolean
   onEdit: () => void
   className?: Argument
+  isEditShown?: boolean
 }
 
 export const CardTitleWithEdit = ({
   title,
-  isEditDisabled,
   onEdit,
   className,
+  isEditShown = false,
 }: ICardTitleWithEditProps) => (
   <div className={cn('flex items-center justify-between', className)}>
     <CardTitle text={title} />
 
-    <Button
-      variant="secondary"
-      noBorder
-      icon={
-        <Icon
-          name="Edit"
-          className={cn(
-            'cursor-pointer',
-            isEditDisabled ? 'text-grey-blue' : 'text-blue-bright',
-          )}
-        />
-      }
-      disabled={isEditDisabled}
-      onClick={onEdit}
-    />
+    {isEditShown && (
+      <Button variant="no-border" text="Edit choice" onClick={onEdit} />
+    )}
   </div>
 )
