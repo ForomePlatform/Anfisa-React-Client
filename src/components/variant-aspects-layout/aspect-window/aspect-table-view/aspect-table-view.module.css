@@ -18,6 +18,7 @@
 }
 
 .first-column {
+  background: theme("colors.blue.dark");
   padding: 12px;
   width: 1px;
   max-width: fit-content !important;

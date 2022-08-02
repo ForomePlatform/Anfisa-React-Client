@@ -27,6 +27,15 @@ export const WSPage = observer((): ReactElement => {
   const stringifyedConditions = params.get('conditions')
   const { conditions } = filterStore
 
+  const {
+    tabReport: { pages },
+    fixedStatAmount: { variantCounts, dnaVariantsCounts, transcriptsCounts },
+  } = mainTableStore
+
+  const firstVariant = pages[0]?.data?.[0]._no || 0
+
+  const { isVariantShown, variantNo: selectedVariantNo } = variantStore
+
   useEffect(() => {
     if (stringifyedConditions && !conditions.length) {
       const conditions: TCondition[] = JSON.parse(stringifyedConditions)
@@ -37,10 +46,12 @@ export const WSPage = observer((): ReactElement => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const { variantCounts, dnaVariantsCounts, transcriptsCounts } =
-    mainTableStore.fixedStatAmount
-
-  const { isVariantShown, variantNo: selectedVariantNo } = variantStore
+  useEffect(() => {
+    if (isVariantShown) {
+      variantStore.showVariant(firstVariant)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [firstVariant])
 
   return (
     <>

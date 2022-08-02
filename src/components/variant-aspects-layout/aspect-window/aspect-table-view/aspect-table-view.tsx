@@ -25,13 +25,16 @@ export const AspectTableView = ({
   columnRef,
   shouldAddShadow,
 }: IAspectTableViewProps): ReactElement => {
-  const { colhead, rows } = aspect
+  const { rows } = aspect
+  const notApplicableCounter =
+    rows.length &&
+    rows[0].cells.filter(cell =>
+      cell[1].includes(AspectCellRenderClass.NoTrHit),
+    )?.length
 
   const onMouseDownHandler = (event: MouseEvent) => {
     event.stopPropagation()
   }
-
-  const count = colhead?.[0]?.[1]
 
   return (
     <div className={className}>
@@ -40,72 +43,76 @@ export const AspectTableView = ({
           {t('variant.noDataToShow')}
         </div>
       ) : (
-        <table className="min-w-full">
-          <tbody>
-            {rows?.map((row, index) => {
-              if (!row) return <tr key={index} />
-
-              const shouldShowCount = count && index === 0
-
-              const isSearched = searchValue.trim()
-                ? row.title
-                    .toLocaleLowerCase()
-                    .startsWith(searchValue.toLocaleLowerCase())
-                : false
-
-              return (
-                <tr key={row.name}>
-                  <td
-                    className={cn(
-                      style.firstColumn,
-                      shouldAddShadow && 'bg-blue-darkHover',
-                    )}
-                    ref={!index ? columnRef : undefined}
-                  >
-                    <Tooltip
-                      maxWidth={600}
-                      theme="light"
-                      title={row.tooltip}
-                      placement="bottom-start"
-                    >
-                      <span
-                        className={cn('cursor-auto', {
-                          'aspect-window__content_active bg-yellow-bright p-1':
-                            isSearched,
-                        })}
-                        onMouseDownCapture={onMouseDownHandler}
-                      >
-                        {shouldShowCount
-                          ? `${row.title} [${count}]`
-                          : row.title}
-                      </span>
-                    </Tooltip>
-                  </td>
-
-                  {row.cells.map((cell, cIndex) => (
-                    <td
-                      key={cIndex}
-                      className={cn(
-                        'py-3 pr-3 font-normal w-auto',
-                        cell[0]?.includes('</a>')
-                          ? 'text-blue-bright'
-                          : !cell[1]?.includes(AspectCellRenderClass.NoTrHit) &&
-                              'text-white',
-                        style.linkContainer,
-                      )}
-                    >
-                      <span
-                        className={cn('cursor-auto', style.geneTranscripts)}
-                        onMouseDownCapture={onMouseDownHandler}
-                        dangerouslySetInnerHTML={{ __html: cell[0] }}
-                      />
-                    </td>
-                  ))}
-                </tr>
-              )
+        <>
+          <div className="p-3">
+            {t('mainTable.transcriptsNotApplicable', {
+              counter: notApplicableCounter,
             })}
-          </tbody>
-        </table>
+          </div>
+          <table className="min-w-full">
+            <tbody>
+              {rows?.map((row, index) => {
+                if (!row) return <tr key={index} />
+
+                const isSearched = searchValue.trim()
+                  ? row.title
+                      .toLocaleLowerCase()
+                      .startsWith(searchValue.toLocaleLowerCase())
+                  : false
+
+                return (
+                  <tr key={row.name}>
+                    <td
+                      className={cn(
+                        style.firstColumn,
+                        shouldAddShadow && 'bg-blue-darkHover',
+                      )}
+                      ref={!index ? columnRef : undefined}
+                    >
+                      <Tooltip
+                        maxWidth={600}
+                        theme="light"
+                        title={row.tooltip}
+                        placement="bottom-start"
+                      >
+                        <span
+                          className={cn('cursor-auto', {
+                            'aspect-window__content_active bg-yellow-bright p-1':
+                              isSearched,
+                          })}
+                          onMouseDownCapture={onMouseDownHandler}
+                        >
+                          {row.title}
+                        </span>
+                      </Tooltip>
+                    </td>
+
+                    {row.cells.map((cell, cIndex) => (
+                      <td
+                        key={cIndex}
+                        className={cn(
+                          'py-3 pr-3 font-normal w-auto',
+                          cell[0]?.includes('</a>')
+                            ? 'text-blue-bright'
+                            : !cell[1]?.includes(
+                                AspectCellRenderClass.NoTrHit,
+                              ) && 'text-white',
+                          style.linkContainer,
+                        )}
+                      >
+                        <span
+                          className={cn('cursor-auto', style.geneTranscripts)}
+                          onMouseDownCapture={onMouseDownHandler}
+                          dangerouslySetInnerHTML={{ __html: cell[0] }}
+                        />
+                      </td>
+                    ))}
+                  </tr>
+                )
+              })}
+            </tbody>
+          </table>
+        </>
       )}
     </div>
   )
