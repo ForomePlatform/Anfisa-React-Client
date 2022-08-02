@@ -12,7 +12,10 @@ import filterDtreesStore from '@store/filter-dtrees'
 import { Header } from '@components/header'
 import { VariantsCount } from '@components/variants-count'
 import { GlbPagesNames } from '@glb/glb-names'
-import { FilterControl } from '../common/filter-control/filter-control'
+import {
+  FilterControl,
+  XL_COUNT_OF_VARIANTS,
+} from '../common/filter-control/filter-control'
 import { FilterControlOptionsNames } from '../common/filter-control/filter-control.const'
 import { SolutionControlDtree } from './components/control-panel/solution-control-dtree'
 import { TextEditorButton } from './components/control-panel/text-editor-button'
@@ -82,6 +85,11 @@ export const DtreePage = observer((): ReactElement => {
         </Header>
 
         <FilterControl
+          disabledCreateDataset={
+            dtreeStore.dtreeStepIndices.length === 0 ||
+            !dtreeStore.totalFilteredCounts ||
+            dtreeStore.totalFilteredCounts.accepted > XL_COUNT_OF_VARIANTS
+          }
           pageName={FilterControlOptionsNames[GlbPagesNames.Dtree]}
           SolutionControl={SolutionControlDtree}
           createSolutionEntry={createDtree}

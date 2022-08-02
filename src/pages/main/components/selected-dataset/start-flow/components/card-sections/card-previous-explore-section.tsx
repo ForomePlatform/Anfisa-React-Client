@@ -38,7 +38,7 @@ export const CardPreviousExploreSection = (): ReactElement => {
   }
 
   return (
-    <div className="w-1/2">
+    <div className="w-1/2 pl-[24px]">
       <CardTitle text={t('home.startFlow.prevWorkWith')} />
 
       <div className="mt-1 text-14 text-grey-dark flex flex-col">

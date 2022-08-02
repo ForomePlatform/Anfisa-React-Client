@@ -69,6 +69,7 @@
     &:disabled {
       background-color: theme("colors.blue.lighter");
       border-color: theme("colors.blue.lighter");
+      color: theme("colors.blue.dark");
     }
   }
 
@@ -102,6 +103,12 @@
       background-color: transparent;
       color: theme("colors.blue.dark");
     }
+  }
+
+  &_no-border {
+    @apply button_text;
+    border: none;
+    padding: 0;
   }
 
   &_secondary,
