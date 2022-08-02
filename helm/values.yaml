@@ -9,9 +9,8 @@ replicaCount: 1
 
 image:
   repository: forome.azurecr.io/__azRepository__
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
   tag: __appVersion__
+  pullPolicy: IfNotPresent
 
 # url_backend: __ingressHost__/app
 # git_uri: https://github.com/ForomePlatform/Anfisa-React-Client.git
@@ -88,11 +87,11 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
+# autoscaling:
+#   enabled: false
+#   minReplicas: 1
+#   maxReplicas: 100
+#   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
 nodeSelector: {}

@@ -19,6 +19,12 @@ spec:
       {{- end }}
       labels:
         {{- include "anfisa-front.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/name: {{ template "name" . }}
+        helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/version: {{ .Chart.AppVersion }}
+        app.kubernetes.io/component: frontend
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
