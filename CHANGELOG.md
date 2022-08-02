@@ -2,6 +2,7 @@
 
 ## <small>0.7.1 (8/2/2022)</small>
 
+* fix([FOROME-1407](https://quantori.atlassian.net/browse/FOROME-1407)): remove useless unfold icons (#849) ([8e6a0c25](https://github.com/ForomePlatform/Anfisa-React-Client/commit/8e6a0c25))
 * fix([FOROME-1408](https://quantori.atlassian.net/browse/FOROME-1408)): increase clickable area for dropdown arrow (#852) ([5c2440b6](https://github.com/ForomePlatform/Anfisa-React-Client/commit/5c2440b6))
 * fix([FOROME-1415](https://quantori.atlassian.net/browse/FOROME-1415)): Supported preset rubrics (#850) ([d13c2347](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d13c2347))
 * fix([FOROME-1397](https://quantori.atlassian.net/browse/FOROME-1397)): rename buttons (#844) ([82ba7a6d](https://github.com/ForomePlatform/Anfisa-React-Client/commit/82ba7a6d))
