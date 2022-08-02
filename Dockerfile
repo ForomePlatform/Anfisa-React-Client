@@ -15,7 +15,6 @@ COPY docker/99-envconfigsubst.sh /docker-entrypoint.d/
 WORKDIR /usr/share/nginx/html/anfisa
 RUN chmod +x /docker-entrypoint.d/*.sh && \
     chown -R nginx:nginx /usr/share/nginx/html/anfisa && \
-    # chmod -R 755 /usr/share/nginx/html/anfisa && \
     chown -R nginx:nginx /var/cache/nginx && \
     chown -R nginx:nginx /var/log/nginx && \
     chmod -R 755 /var/log/nginx; \
