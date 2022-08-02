@@ -5,9 +5,7 @@ metadata:
   labels:
     {{- include "anfisa-front.labels" . | nindent 4 }}
 spec:
-  # {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  # {{- end }}
   selector:
     matchLabels:
       {{- include "anfisa-front.selectorLabels" . | nindent 6 }}
@@ -19,7 +17,7 @@ spec:
       {{- end }}
       labels:
         {{- include "anfisa-front.selectorLabels" . | nindent 8 }}
-        app.kubernetes.io/name: {{ template "name" . }}
+        app.kubernetes.io/name: {{ include "anfisa-front.fullname" . }}
         helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
         app.kubernetes.io/managed-by: {{ .Release.Service }}
         app.kubernetes.io/instance: {{ .Release.Name }}
