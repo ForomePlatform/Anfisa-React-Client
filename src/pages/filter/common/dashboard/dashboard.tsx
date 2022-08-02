@@ -1,9 +1,8 @@
 import styles from './dashboard.module.css'
 
-import { ReactElement } from 'react'
+import { ReactElement, useState } from 'react'
 
 import { Loader } from '@ui/loader'
-import { useFilteredUnits } from '@components/units-list/units-lilst.utils'
 import { DashboardBody } from './components/body'
 import { DashboardHeader } from './components/header'
 import { IDashboardProps } from './dashboard.interfaces'
@@ -14,13 +13,19 @@ export const Dashboard = ({
   functionalUnits,
   isFetching,
 }: IDashboardProps): ReactElement => {
-  const extenderGroups = dashboardStore.geExtendedGroups(
+  const extendedGroups = dashboardStore.geExtendedGroups(
     groups,
     functionalUnits,
   )
 
-  const { filterValue, setFilterValue, filteredGroups } =
-    useFilteredUnits(groups)
+  const [filterValue, setFilterValue] = useState('')
+
+  const preparedFilterValue = filterValue.toLowerCase()
+
+  const filteredGroups = dashboardStore.getFilteredGroups(
+    extendedGroups,
+    preparedFilterValue,
+  )
 
   return (
     <div className={styles.dashboard}>
@@ -30,7 +35,7 @@ export const Dashboard = ({
         <Loader />
       ) : (
         <DashboardBody
-          groups={extenderGroups}
+          groups={extendedGroups}
           filteredGroups={filteredGroups}
         />
       )}

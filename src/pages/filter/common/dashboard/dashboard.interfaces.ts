@@ -1,7 +1,7 @@
 import { Layout } from 'react-grid-layout'
 import { Argument } from 'classnames'
 
-import { TUnit, TUnitGroups } from '@store/stat-units'
+import { TStatusWithPredictionPower, TUnit } from '@store/stat-units'
 import { IUnitsProps } from '@pages/filter/refiner/refiner.interfaces'
 import {
   IEnumPropertyStatus,
@@ -11,16 +11,22 @@ import {
 
 export interface IDashboardProps extends IUnitsProps {}
 
+type TExtendedUnit =
+  | TStatusWithPredictionPower<INumericPropertyStatus>
+  | TStatusWithPredictionPower<IEnumPropertyStatus>
+  | IFuncPropertyStatus
+
 export interface IDashboardBodyProps {
   groups: IExtendedTUnitGroups[]
-  filteredGroups: TUnitGroups
+  filteredGroups: IExtendedTUnitGroups[]
   className?: Argument
 }
 
 export interface IExtendedTUnitGroups {
   name: string
-  units: TUnit[] | IFuncPropertyStatus[]
+  units: TExtendedUnit[]
   power?: number
+  attributes?: TExtendedUnit[]
 }
 
 export interface IChangeGroupPlaceProps {
@@ -41,11 +47,10 @@ export interface IGetLayoutOnHeightChange extends IChangeHeightProps {
 
 export interface IWidgetTabProps {
   group: IExtendedTUnitGroups
-  filteredGroups: TUnitGroups
+  filteredGroups: IExtendedTUnitGroups[]
   index: number
   id: string
   isGroupInSearch: boolean
-  isFunc: boolean
   onChangeTabPlace: (props: IChangeGroupPlaceProps) => void
   onChangeTabHeight: ({ index, id, isOpen }: IChangeHeightProps) => void
   onChangeSubTabHeight: ({ index, id, isOpen }: IChangeHeightProps) => void
@@ -76,7 +81,7 @@ export interface IWidgetTabHeaderProps {
 
 export interface IFooterPanelProps {
   spareTabs: IExtendedTUnitGroups[]
-  filteredGroups: TUnitGroups
+  filteredGroups: IExtendedTUnitGroups[]
   onChange: (props: IChangeGroupPlaceProps) => void
 }
 

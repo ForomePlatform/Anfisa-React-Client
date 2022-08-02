@@ -67,5 +67,4 @@ Default.args = {
     ],
   },
   filteredGroups: [],
-  isFunc: false,
 }

@@ -6,7 +6,6 @@ import cn from 'classnames'
 import difference from 'lodash/difference'
 
 import { DashboardGroupTypes } from '@core/enum/dashboard-group-types-enum'
-import { t } from '@i18n'
 import {
   DASHBOARD_LAYOUT_COLS,
   DASHBOARD_LAYOUT_CONTAINER_PADDING,
@@ -103,9 +102,7 @@ export const DashboardBody = ({
         {mainTabs.map((group, index) => {
           const groupName = group.name.toLowerCase()
 
-          const isFunc = group.name === t('unitsList.functionalUnits')
-
-          const isGroupInSearch = filteredGroups.some(group =>
+          const isGroupInSearch = filteredGroups.some((group: any) =>
             group.name.toLowerCase().startsWith(groupName),
           )
           return (
@@ -120,7 +117,6 @@ export const DashboardBody = ({
                 index={index}
                 id={`widget-tab-${group.name}`}
                 isGroupInSearch={isGroupInSearch}
-                isFunc={isFunc}
                 onChangeTabPlace={changeTabPlace}
                 onChangeTabHeight={changeTabHeight}
                 onChangeSubTabHeight={changeSubTabHeight}

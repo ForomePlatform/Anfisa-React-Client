@@ -4,7 +4,6 @@ import { ReactElement } from 'react'
 import cn from 'classnames'
 
 import { DashboardGroupTypes } from '@core/enum/dashboard-group-types-enum'
-import { t } from '@i18n'
 import { Icon } from '@ui/icon'
 import { FnLabel } from '@components/fn-label'
 import { PredictionPowerIndicator } from '@components/prediction-power-indicator'
@@ -18,7 +17,6 @@ export const FooterPanel = ({
   <div className={styles.footerPanel}>
     {spareTabs.map((group, index) => {
       const groupName = group.name.toLowerCase()
-      const isFunc = group.name === t('unitsList.functionalUnits')
 
       const isGroupInSearch = filteredGroups.some(group =>
         group.name.toLowerCase().startsWith(groupName),
@@ -27,7 +25,7 @@ export const FooterPanel = ({
         <div
           className={cn(
             styles.footerPanel__tab,
-            !isGroupInSearch && !isFunc && styles.footerPanel__tab_disabled,
+            !isGroupInSearch && styles.footerPanel__tab_disabled,
           )}
           key={group.name}
           onClick={() =>
