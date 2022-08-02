@@ -7,7 +7,7 @@
     flex: 1 0 auto;
   }
 
-  &__button__list-size {
+  &__button_list-size {
     margin-left: theme("spacing.2");
     color: theme("colors.grey.blue");
 
@@ -23,7 +23,7 @@
     border: 1px solid theme("colors.grey.dark");
     cursor: pointer;
 
-    &__list {
+    &_list {
       position: relative;
       right: -1px;
       margin-left: 5px;
@@ -31,7 +31,7 @@
       border-bottom-left-radius: 0.25rem;
     }
 
-    &__tile {
+    &_tile {
       border-top-right-radius: 0.25rem;
       border-bottom-right-radius: 0.25rem;
     }

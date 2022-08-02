@@ -39,7 +39,7 @@ export const UnitsListControls = ({
     />
 
     <button
-      className={styles.controls__button__listSize}
+      className={styles.controls__button_listSize}
       onClick={onToggleListSize}
     >
       <Icon name={isAllCollapsed ? 'Expand' : 'Collapse'} size={20} />

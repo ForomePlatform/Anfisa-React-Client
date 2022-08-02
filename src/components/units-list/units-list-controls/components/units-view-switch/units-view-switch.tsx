@@ -19,7 +19,7 @@ export const UnitsViewSwitch = ({
     <button
       className={cn(
         styles.controls__buttonView,
-        styles.controls__buttonView__list,
+        styles.controls__buttonView_list,
         isListView && styles.controls__buttonView_active,
       )}
       onClick={() => onToggleViewType(ViewTypeDashboard.List)}
@@ -32,7 +32,7 @@ export const UnitsViewSwitch = ({
     <button
       className={cn(
         styles.controls__buttonView,
-        styles.controls__buttonView__tile,
+        styles.controls__buttonView_tile,
         !isListView && styles.controls__buttonView_active,
       )}
       onClick={() => onToggleViewType(ViewTypeDashboard.Tile)}
