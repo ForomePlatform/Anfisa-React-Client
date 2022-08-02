@@ -7,3 +7,4 @@ node_modules
 .docker*
 Dockerfile*
 *.md
+helm
