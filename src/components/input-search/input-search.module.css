@@ -23,7 +23,7 @@
     color: theme("colors.white");
 
     &::placeholder {
-      color: theme("colors.white");
+      color: theme("colors.grey.blue");
     }
   }
 }
