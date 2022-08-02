@@ -4,8 +4,7 @@ import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
 import { TUnitGroups } from '@store/stat-units'
 import { IFuncPropertyStatus } from '@service-providers/common'
 import { IExtendedTUnitGroups } from './dashboard.interfaces'
-
-export default class DashboardStore {
+export class DashboardStore {
   public viewType: ViewTypeDashboard = ViewTypeDashboard.List
 
   constructor() {
