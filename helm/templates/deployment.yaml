@@ -5,9 +5,7 @@ metadata:
   labels:
     {{- include "anfisa-front.labels" . | nindent 4 }}
 spec:
-  {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
-  {{- end }}
   selector:
     matchLabels:
       {{- include "anfisa-front.selectorLabels" . | nindent 6 }}
@@ -19,6 +17,12 @@ spec:
       {{- end }}
       labels:
         {{- include "anfisa-front.selectorLabels" . | nindent 8 }}
+        app.kubernetes.io/name: {{ include "anfisa-front.fullname" . }}
+        helm.sh/chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+        app.kubernetes.io/managed-by: {{ .Release.Service }}
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/version: {{ .Chart.AppVersion }}
+        app.kubernetes.io/component: frontend
     spec:
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
@@ -50,10 +54,10 @@ spec:
             httpGet:
               path: /
               port: http
-          volumeMounts:
-          - name: front-env-config
-            mountPath: /usr/share/nginx/html/anfisa/env-config.js
-            subPath: env-config.js
+          # volumeMounts:
+          # - name: front-env-config
+          #   mountPath: /usr/share/nginx/html/anfisa/env-config.js
+          #   subPath: env-config.js
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
@@ -68,9 +72,9 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      volumes:
-        - name: front-env-config
-          configMap:
-            name: front-env-config
-            defaultMode: 0666
+      # volumes:
+      #   - name: front-env-config
+      #     configMap:
+      #       name: front-env-config
+      #       defaultMode: 0666
       restartPolicy: Always

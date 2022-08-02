@@ -8,18 +8,19 @@ fullnameOverride: ""
 replicaCount: 1
 
 image:
-  repository: forome.azurecr.io/forome-front
-  pullPolicy: IfNotPresent
-  # Overrides the image tag whose default is the chart appVersion.
+  repository: forome.azurecr.io/__azRepository__
   tag: __appVersion__
+  pullPolicy: IfNotPresent
 
-url_backend: __ingressHost__/app
+# url_backend: __ingressHost__/app
 # git_uri: https://github.com/ForomePlatform/Anfisa-React-Client.git
 # git_branch: release-v.0.7.0
 
 env:
-  - name: BACKEND
+  - name: URL_BACKEND
     value: http://anfisa-backend
+  - name: REACT_APP_URL_BACKEND
+    value: https://__ingressHost__/app
 
 imagePullSecrets:
   - name: anfisa-front-registry
@@ -86,11 +87,11 @@ resources: {}
   #   cpu: 100m
   #   memory: 128Mi
 
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
+# autoscaling:
+#   enabled: false
+#   minReplicas: 1
+#   maxReplicas: 100
+#   targetCPUUtilizationPercentage: 80
   # targetMemoryUtilizationPercentage: 80
 
 nodeSelector: {}
