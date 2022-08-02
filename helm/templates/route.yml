@@ -1,3 +1,6 @@
+{{- if .Values.ingress.enabled -}}
+{{- $fullName := include "anfisa-front.fullname" . -}}
+{{- $svcPort := .Values.service.port -}}
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
@@ -5,11 +8,14 @@ metadata:
   labels:
     {{- include "anfisa-front.labels" . | nindent 4 }}
 spec:
-  host: anfisa-test.asset-forome-0b8a4e8de101bcbaf4eafc441eda83b3-0000.us-south.containers.appdomain.cloud
-  path: /
+  {{- range .Values.ingress.hosts }}
+  host: {{ .host | quote }}
+  {{- range .paths }}
+  path: {{ .path }}
+  {{- end }}
   to:
     kind: Service
-    name: {{ include "anfisa-front.fullname" . }}
+    name: {{ $fullName }}
     weight: 100
   port:
     targetPort: 80
@@ -17,3 +23,5 @@ spec:
     insecureEdgeTerminationPolicy: Allow
     termination: edge
   wildcardPolicy: None
+  {{- end }}
+{{- end }}

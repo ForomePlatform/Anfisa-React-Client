@@ -1,7 +1,8 @@
 import cloneDeep from 'lodash/cloneDeep'
 import { makeAutoObservable, reaction } from 'mobx'
 
-import { ExploreTypes } from '@core/enum/explore-types-enum'
+import { TExploreGenomeKeys } from '@core/enum/explore-genome-types-enum'
+import { ExploreTypesDictionary } from '@core/enum/explore-types-enum'
 import { ActionsHistoryStore } from '@store/actions-history'
 import { createHistoryObserver } from '@store/common'
 import { datasetStore } from '@store/dataset'
@@ -12,9 +13,10 @@ import { IWizardScenario } from './wizard.interface'
 
 class WizardStore {
   public isWizardVisible: boolean = false
+  private prevWizardScenario: IWizardScenario[] = []
   public wizardScenario: IWizardScenario[] = []
   public startWithOption = ''
-  public whatsNextOption = ''
+  public whatsNextOption?: TExploreGenomeKeys
   public descriptionOption = ''
   public selectedPreset?: ISolutionWithKind
   public selectedDataset = ''
@@ -24,6 +26,14 @@ class WizardStore {
   public actionHistory = new ActionsHistoryStore<IWizardScenario[]>(
     wizardScenario => (this.wizardScenario = wizardScenario),
   )
+
+  private get scenarioActiveCards() {
+    return this.wizardScenario.filter(card => !card.hidden).length
+  }
+
+  private get prevScenarioActiveCards() {
+    return this.prevWizardScenario.filter(card => !card.hidden).length
+  }
 
   readonly observeHistory = createHistoryObserver({
     ds: {
@@ -76,17 +86,20 @@ class WizardStore {
   }
 
   public setScenario(scenario: IWizardScenario[]) {
+    this.prevWizardScenario = cloneDeep(this.wizardScenario)
+
     this.wizardScenario = scenario
 
     this.actionHistory.addHistory(scenario)
   }
 
   public defineAndSetNewScenario() {
-    if (this.startWithOption === ExploreTypes.Genome) {
+    this.prevWizardScenario = []
+    if (this.startWithOption === ExploreTypesDictionary.Genome) {
       this.setScenario(wizardScenarios.XlWholeGenome)
     }
 
-    if (this.startWithOption === ExploreTypes.Candidate) {
+    if (this.startWithOption === ExploreTypesDictionary.Candidate) {
       this.setScenario(wizardScenarios.XlCandidateSet)
     }
 
@@ -99,7 +112,10 @@ class WizardStore {
     this.needToChangeScenario = true
   }
 
-  public setWhatsNextOption(whatsNextOption: string, index: number) {
+  public setWhatsNextOption(
+    whatsNextOption: TExploreGenomeKeys,
+    index: number,
+  ) {
     this.whatsNextOption = whatsNextOption
     this.changeCardValue(index, whatsNextOption)
   }
@@ -127,9 +143,7 @@ class WizardStore {
       clonedWizard[index + 1].hidden = false
     }
 
-    this.actionHistory.addHistory(clonedWizard)
-
-    this.wizardScenario = clonedWizard
+    this.setScenario(clonedWizard)
   }
 
   public updateSelectedDataset(ds: string) {
@@ -142,21 +156,22 @@ class WizardStore {
     }
   }
 
-  public hideNextCards(index: number) {
-    this.wizardScenario.forEach(
-      (scenario, currIndex) => (scenario.hidden = currIndex > index),
-    )
+  private hideNextCards(index: number, wizard: IWizardScenario[]) {
+    return wizard.map((scenario, currIndex) => {
+      scenario.hidden = currIndex > index
+      return scenario
+    })
   }
 
   public editCard(index: number) {
-    const clonedWizard = cloneDeep(this.wizardScenario)
+    let clonedWizard = cloneDeep(this.wizardScenario)
     clonedWizard[index].continueDisabled = false
     clonedWizard[index].contentDisabled = false
     clonedWizard[index].editDisabled = true
+    clonedWizard = this.hideNextCards(index, clonedWizard)
     this.wizardScenario = clonedWizard
+    this.prevWizardScenario = clonedWizard
     this.actionHistory.addHistory(clonedWizard)
-
-    this.hideNextCards(index)
   }
 
   public finishEditCard(index: number) {
@@ -185,7 +200,7 @@ class WizardStore {
   public changeCardValue(index: number, value: string) {
     const clonedWizard = cloneDeep(this.wizardScenario)
     clonedWizard[index].value = value
-    this.wizardScenario = clonedWizard
+    this.setScenario(clonedWizard)
   }
 
   public openWizardForWsDatasets(hasSecondaryDs: boolean) {
@@ -212,6 +227,17 @@ class WizardStore {
 
   public resetDatasetKind() {
     this.datasetKind = ''
+  }
+
+  public isNeedToAnimateCard(id: number) {
+    if (this.wizardScenario.length === 1) {
+      return true
+    }
+
+    return (
+      this.scenarioActiveCards > this.prevScenarioActiveCards &&
+      id + 1 === this.scenarioActiveCards
+    )
   }
 }
 

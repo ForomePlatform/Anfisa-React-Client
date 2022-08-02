@@ -1,0 +1,6 @@
+.dashboard {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  background: theme("colors.blue.lighter");
+}
