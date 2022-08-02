@@ -63,7 +63,7 @@ class WsDatasetSupportProvider extends ServiceProviderBase {
     )
   }
 
-  public updateMicroTagging(
+  public updateMacroTagging(
     params: IMacroTaggingArguments,
   ): Promise<IMacroTagging> {
     return this.post<IMacroTagging>('/macro_tagging', params).then(

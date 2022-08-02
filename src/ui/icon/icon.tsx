@@ -12,6 +12,7 @@ interface IconItem {
 }
 
 export interface IIconProps {
+  id?: string
   name: TIcons
   size?: number
   stroke?: boolean
@@ -26,6 +27,7 @@ export interface IIconProps {
 export const Icon = forwardRef<SVGSVGElement, IIconProps>(
   (
     {
+      id,
       name,
       size,
       stroke,
@@ -65,6 +67,7 @@ export const Icon = forwardRef<SVGSVGElement, IIconProps>(
     return (
       <svg
         ref={ref}
+        id={id}
         data-testid={dataTestId}
         width={width}
         height={height}
