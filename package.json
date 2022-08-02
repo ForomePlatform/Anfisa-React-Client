@@ -126,6 +126,7 @@
     "eject": "react-scripts eject",
     "cy:open": "cypress open --e2e",
     "cy:run": "cypress run --e2e",
+    "cy:run-junit": "cypress run --e2e --reporter junit --reporter-options 'mochaFile=results/cypress-test-[hash].xml,toConsole=true'"
     "storybook": "start-storybook -p 6006 -s public",
     "build-storybook": "build-storybook -s public",
     "create:changelog": "node ./tools/generate-changelog.js"
