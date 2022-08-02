@@ -1,5 +1,6 @@
-import { ExploreCandidateTypes } from '@core/enum/explore-candidate-types-enum'
-import { ExploreTypes } from '@core/enum/explore-types-enum'
+import { ExploreCandidateKeys } from '@core/enum/explore-candidate-types-enum'
+import { TExploreGenomeKeys } from '@core/enum/explore-genome-types-enum'
+import { ExploreTypesDictionary } from '@core/enum/explore-types-enum'
 import { t } from '@i18n'
 import {
   DescriptionCard,
@@ -17,7 +18,7 @@ export const wsCandidateSet: IWizardScenario[] = [
     continueDisabled: true,
     editDisabled: false,
     contentDisabled: true,
-    value: ExploreTypes.Candidate,
+    value: ExploreTypesDictionary.Candidate,
     title: t('home.startFlow.startWith'),
   },
   {
@@ -32,13 +33,15 @@ export const wsCandidateSet: IWizardScenario[] = [
     maxHeight: 'calc(100vh - 285px)',
   },
   {
-    component: (props: ICardProps) => <DescriptionCard {...props} />,
+    component: (props: ICardProps) => (
+      <DescriptionCard {...(props as ICardProps<TExploreGenomeKeys>)} />
+    ),
     id: 2,
     hidden: false,
     continueDisabled: false,
     editDisabled: true,
     contentDisabled: false,
-    value: ExploreCandidateTypes.ViewAllVariants,
+    value: ExploreCandidateKeys.ViewAllVariants,
     title: '',
   },
 

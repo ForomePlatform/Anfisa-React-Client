@@ -33,7 +33,7 @@ export const renderPanelControls = ({
       text={
         initialCondition
           ? t('condition.saveChanges')
-          : t('condition.addAttribute')
+          : t('filter.applyCondition')
       }
       onClick={saveAttribute}
       disabled={disabled}
