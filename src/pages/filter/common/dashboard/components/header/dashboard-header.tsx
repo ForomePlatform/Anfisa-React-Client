@@ -8,6 +8,7 @@ import { t } from '@i18n'
 import { Icon } from '@ui/icon'
 import { Switch } from '@ui/switch'
 import { InputSearch } from '@components/input-search'
+import { UnitsViewSwitch } from '@components/units-list/units-list-controls/components'
 import dashboardStore from '../../../dashboard'
 
 interface IDashboardHeaderProps {
@@ -19,6 +20,8 @@ export const DashboardHeader = ({
   filterValue,
   onChange,
 }: IDashboardHeaderProps): ReactElement => {
+  const { viewType, toggleViewType } = dashboardStore
+
   const handleSwitch = () => {
     //
   }
@@ -33,23 +36,10 @@ export const DashboardHeader = ({
         <div className={styles.header__title}>{t('dashboard.dashboard')}</div>
 
         <div className={cn(styles.header__container, 'ml-1')}>
-          <button
-            className={styles.header__controls__button}
-            onClick={() =>
-              dashboardStore.toggleViewType(ViewTypeDashboard.List)
-            }
-          >
-            <Icon name="List" size={20} />
-          </button>
-
-          <button
-            className={styles.header__controls__button}
-            onClick={() =>
-              dashboardStore.toggleViewType(ViewTypeDashboard.Tile)
-            }
-          >
-            <Icon name="Gallery" size={20} />
-          </button>
+          <UnitsViewSwitch
+            isListView={viewType === ViewTypeDashboard.List}
+            onToggleViewType={toggleViewType}
+          />
         </div>
       </div>
 

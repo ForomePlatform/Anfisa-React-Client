@@ -4,6 +4,7 @@ import { ReactElement, useEffect } from 'react'
 import { toJS } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
+import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
 import { useDatasetName } from '@core/hooks/use-dataset-name'
 import { useParams } from '@core/hooks/use-params'
 import datasetStore from '@store/dataset/dataset'
@@ -12,6 +13,7 @@ import filterDtreesStore from '@store/filter-dtrees'
 import { Header } from '@components/header'
 import { VariantsCount } from '@components/variants-count'
 import { GlbPagesNames } from '@glb/glb-names'
+import dashboardStore, { Dashboard } from '../common/dashboard'
 import {
   FilterControl,
   XL_COUNT_OF_VARIANTS,
@@ -28,6 +30,8 @@ export const DtreePage = observer((): ReactElement => {
   const { isXL } = datasetStore
 
   const { availableDtrees: availableSolutionEntries } = filterDtreesStore
+
+  const { unitGroups, functionalUnits, isFetching } = dtreeStore.stat
 
   const createDtree = (treeName: string): void => {
     filterDtreesStore.createDtree(treeName)
@@ -103,7 +107,15 @@ export const DtreePage = observer((): ReactElement => {
           TextEditorButton={TextEditorButton}
         />
 
-        <QueryBuilder className={styles.dtreePage__queryBuilder} />
+        {dashboardStore.viewType === ViewTypeDashboard.List ? (
+          <QueryBuilder className={styles.dtreePage__queryBuilder} />
+        ) : (
+          <Dashboard
+            groups={unitGroups}
+            functionalUnits={functionalUnits}
+            isFetching={isFetching}
+          />
+        )}
       </div>
     </>
   )

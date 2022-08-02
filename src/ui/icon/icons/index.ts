@@ -46,6 +46,7 @@ import SettingsFat from './settings-fat'
 import Sort from './sort'
 import ThreadAdd from './thread-add'
 import ThreadClose from './thread-close'
+import Tile from './tile'
 import Undo from './undo'
 
 export const icons = {
@@ -97,6 +98,7 @@ export const icons = {
   Sort,
   ThreadAdd,
   ThreadClose,
+  Tile,
   Undo,
 }
 

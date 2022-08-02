@@ -8,52 +8,46 @@ import { t } from '@i18n'
 import { Icon } from '@ui/icon'
 import { InputSearch } from '@components/input-search'
 import { DecisionTreesResultsDataCy } from '@data-testid'
-import dashboardStore from '@pages/filter/common/dashboard'
+import { UnitsViewSwitch } from './components'
 
 interface IUnitsListControlsProps {
   className?: string
   filterValue: string
+  isAllCollapsed: boolean
+  isListView: boolean
+  onToggleViewType: (viewType: ViewTypeDashboard) => void
+  onToggleListSize: () => void
   onFilterValueChange: (value: string) => void
-  onExpand: () => void
-  onCollapse: () => void
 }
 
 export const UnitsListControls = ({
   className,
   filterValue,
+  isListView,
+  isAllCollapsed,
+  onToggleViewType,
+  onToggleListSize,
   onFilterValueChange,
-  onExpand,
-  onCollapse,
-}: IUnitsListControlsProps): ReactElement => {
-  return (
-    <div className={cn(styles.controls, className)}>
-      <InputSearch
-        dataTestId={DecisionTreesResultsDataCy.searchResults}
-        className={styles.controls__search}
-        placeholder={t('filter.searchForAField')}
-        value={filterValue}
-        onChange={e => onFilterValueChange(e.target.value)}
-      />
-      <button className={styles.controls__button} onClick={onExpand}>
-        <Icon name="Expand" size={20} />
-      </button>
-      <button className={styles.controls__button} onClick={onCollapse}>
-        <Icon name="Collapse" size={20} />
-      </button>
+}: IUnitsListControlsProps): ReactElement => (
+  <div className={cn(styles.controls, className)}>
+    <InputSearch
+      dataTestId={DecisionTreesResultsDataCy.searchResults}
+      className={styles.controls__search}
+      placeholder={t('filter.searchForAField')}
+      value={filterValue}
+      onChange={e => onFilterValueChange(e.target.value)}
+    />
 
-      <button
-        className={styles.controls__button}
-        onClick={() => dashboardStore.toggleViewType(ViewTypeDashboard.List)}
-      >
-        <Icon name="List" size={20} />
-      </button>
+    <button
+      className={styles.controls__button_listSize}
+      onClick={onToggleListSize}
+    >
+      <Icon name={isAllCollapsed ? 'Expand' : 'Collapse'} size={20} />
+    </button>
 
-      <button
-        className={styles.controls__button}
-        onClick={() => dashboardStore.toggleViewType(ViewTypeDashboard.Tile)}
-      >
-        <Icon name="Gallery" size={20} />
-      </button>
-    </div>
-  )
-}
+    <UnitsViewSwitch
+      isListView={isListView}
+      onToggleViewType={onToggleViewType}
+    />
+  </div>
+)
