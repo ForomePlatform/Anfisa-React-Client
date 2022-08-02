@@ -5,6 +5,7 @@ Feature: Main table, Concatenation of Zone filters
 Background:
 	Given "Main table" of the WS dataset was opened
 
+@tc:113922
 Scenario: 01 "Gene" + "Gene List"
 
     When User clicks "+ Add Gene" button
@@ -15,6 +16,7 @@ Scenario: 01 "Gene" + "Gene List"
     And clicks "Apply" button
     Then Variants list should be filtered by selected "Gene" and gene list
 
+@tc:113923
 Scenario: 02 "Gene" + "Samples"
 
     When User clicks "+ Add Gene" button
@@ -25,6 +27,7 @@ Scenario: 02 "Gene" + "Samples"
     And Clicks "Apply" button
     Then Variants list should be filtered by selected "Gene" and "Samples"
 
+@tc:113924
 Scenario: 03 "Gene" + "Tag"
 
     When User clicks "+ Add Gene" button 
@@ -35,6 +38,7 @@ Scenario: 03 "Gene" + "Tag"
     And Clicks "Apply" button
     Then Variants list should be filtered by selected "Gene" and "Tag"
 
+@tc:113925
 Scenario: 04 "Gene list" + "Samples"
 
     When User clicks "+ Add Gene List" button
@@ -45,6 +49,7 @@ Scenario: 04 "Gene list" + "Samples"
     And Clicks "Apply" button
     Then Variants list should be filtered by selected "Gene list" and "Samples"
 
+@tc:113926
 Scenario: 05 "Gene list" + "Tag"
 
     When User clicks "+ Add Gene List" button
@@ -55,6 +60,7 @@ Scenario: 05 "Gene list" + "Tag"
     And Clicks the "Apply" button
     Then Variants list should be filtered by selected "Gene list" and "Tag"
 
+@tc:113927
 Scenario: 06 "Samples" + "Tag" 
 
     When User clicks "+ Add "Samples"" button
@@ -66,6 +72,7 @@ Scenario: 06 "Samples" + "Tag"
     Then Variants list should be filtered by selected "Samples" and "Tag"
 
 @smoke
+@tc:113928
 Scenario: 07 "Gene" + "Gene List" + "Samples"s + "Tag"
 
     When User clicks "+ Add Gene" button

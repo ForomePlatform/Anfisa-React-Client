@@ -7,6 +7,7 @@ Background:
 
 @smoke
 @regression
+@tc:113878
 Scenario: 01 Add already existing tag
 
 	When User clicks "+ Add" button near Tags
@@ -15,6 +16,7 @@ Scenario: 01 Add already existing tag
 	Then Chosen tag should be added
 	And Added tag should be shown near "Tags"
 	
+@tc:113879
 Scenario: 02 Cancel tag's adding
 
 	When User Clicks "+Add" button near "Tags"
@@ -25,6 +27,7 @@ Scenario: 02 Cancel tag's adding
 
 @smoke
 @regression
+@tc:113880
 Scenario Outline:03 Add custom tag with valid "<Name_one>"
 
 	When User Clicks "+Add" button near "Tags"
@@ -40,6 +43,7 @@ Examples:
 	| For ome   |
 
 @regression
+@tc:113881
 Scenario Outline:04 Custom tag with invalid "<Name_tag>"
 
 	When User Clicks "+Add" button near "Tags"
@@ -54,6 +58,7 @@ Examples:
 
 
 @regression
+@tc:113882
 Scenario: 05 Delete custom tag
 
 	Given Custom tag was added to the first variant only
@@ -63,6 +68,7 @@ Scenario: 05 Delete custom tag
 	Then Tag should not be shown near "Tags"
 	And Custom tag should be deleted from tag list also
 
+@tc:113883
 Scenario:06 Cancel custom tag
 
 	Given Tag adding dialog was opened 
@@ -73,6 +79,7 @@ Scenario:06 Cancel custom tag
 
 @smoke
 @regression
+@tc:113884
 Scenario: 07 Save note
 
 	When User clicks "+ Add" button near "Notes"
@@ -82,6 +89,7 @@ Scenario: 07 Save note
 	And Near "Notes" should appear document sign instead of "+ Add" button
 
 @regression
+@tc:113885
 Scenario: 08 View saved note
 
 	Given Note was saved
@@ -89,6 +97,7 @@ Scenario: 08 View saved note
 	Then Saved note should be shown
 
 @regression	
+@tc:113886
 Scenario: 09 Delete note
 
 	Given Note was saved
@@ -99,6 +108,7 @@ Scenario: 09 Delete note
 	And "+ Add" button should be shown near "Notes" instead of document sign
 
 @regression
+@tc:113887
 Scenario Outline: 10 Search "<Parameter_Name>" in Variant drawer
 
 	When User writes "<Parameter_Name>" in the search field
@@ -111,6 +121,7 @@ Examples:
 	| Canonical        |
 
 @regression
+@tc:113888
 Scenario: 11 Open Gnomad URL
 
 	When User expands "GNOMAD" section using a button at the end of the section header
@@ -118,12 +129,14 @@ Scenario: 11 Open Gnomad URL
 	Then https://gnomad.broadinstitute.org/ should be opened for the selected variant
 
 @regression
+@tc:113889
 Scenario: 12 Expand all sections
 
 	When  User clicks the "Expand" button (four side-directed arrows) 
 	Then All sections should be expanded
 
 @regression
+@tc:113890
 Scenario: 13 Collapse all sections
 
 	Given All sections were expanded
@@ -131,6 +144,7 @@ Scenario: 13 Collapse all sections
 	Then Expanded sections should be collapsed
 
 @regression
+@tc:113891
 Scenario: 14 Replace a section
 
 	When User drag-and-drops a section by clicking the section
@@ -138,6 +152,7 @@ Scenario: 14 Replace a section
 	Then Section place should be changed
 
 @regression
+@tc:113892
 Scenario: 15 Change section size
 
 	When User drags the button at the right bottom corner of the section
@@ -145,12 +160,14 @@ Scenario: 15 Change section size
 	Then Section size should be changed
 
 @regression
+@tc:113893
 Scenario: 16 Change variant drawers with Up-down arrows
 
 	When User clicks Up/down arrow near the variant name
 	Then User should be able to change variant drawers
 
 @regression
+@tc:113894
 Scenario: 17 Close variant drawer
 
 	When User clicks "X" button at the end of header

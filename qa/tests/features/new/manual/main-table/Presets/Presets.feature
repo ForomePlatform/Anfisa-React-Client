@@ -4,6 +4,7 @@ Feature: Main table, Presets
 Background: 
 	Given Main table of "PGP3140_wgs_panel_hl" dataset was opened
 
+@tc:113895
 Scenario: 01 List of presets
 
 	When  User clicks "Select Filter Preset" drop down menu
@@ -11,6 +12,7 @@ Scenario: 01 List of presets
 
 @regression
 @smoke
+@tc:113896
 Scenario: 02 Apply a preset
 
 	Given Presets drop-down menu was opened
@@ -19,6 +21,7 @@ Scenario: 02 Apply a preset
 	And Number of displayed variants in table should be changed to 22
 	And Number of variants/transcripts in top right corner changes to 22/211
 
+@tc:113897
 Scenario: 03 Apply the same preset
 
 	Given "@SEQaBOO_Hearing_Loss_v_5" preset was applied
@@ -27,6 +30,7 @@ Scenario: 03 Apply the same preset
 	Then Preset should stay applied
 
 @regression		
+@tc:113898
 Scenario: 04 Apply another preset
 
 	Given "@SEQaBOO_Hearing_Loss_v_5" preset was applied
@@ -36,6 +40,7 @@ Scenario: 04 Apply another preset
 
 
 @regression
+@tc:113899
 Scenario: 05 No data
 
 	When User clicks "Select Filter Preset" drop down menu
@@ -45,6 +50,7 @@ Scenario: 05 No data
 	And "Reset filters" button should be presented
 
 @regression
+@tc:113900
 Scenario: 06 Reset filters
 
 	Given "@BGM_Compound_Het" preset was applied

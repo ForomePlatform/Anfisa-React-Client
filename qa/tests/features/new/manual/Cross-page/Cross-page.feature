@@ -1,6 +1,7 @@
 @regression
 Feature: Main table, Apply filter and cross pages
 
+@tc:113857
 Scenario: 01 Save a new dataset with applied filters
 
 	Given Main table of "PGP3140_wgs_panel_hl" dataset was opened

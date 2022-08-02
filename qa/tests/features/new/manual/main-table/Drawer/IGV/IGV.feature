@@ -2,6 +2,7 @@
 Feature: Main table, Drawer, IGV
 As the Anfisa user I want to see Variants IGV
 
+@tc:113916
 Scenario: 01 Open IGV
 
 	Given Main table of "PGP3140_BGM_RedButton" dataset was opened
@@ -9,6 +10,7 @@ Scenario: 01 Open IGV
 	When  Clicks "Open IGV" button at the end of "GENERAL" section
 	Then IGV should be opened in a new tab
 
+@tc:113917
 Scenario: 02 The "Open IGV" button is not present for variant without IGV
 
 	Given Main Table of "PGP3140_wgs_panel_hl" dataset was opened

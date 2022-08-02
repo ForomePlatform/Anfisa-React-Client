@@ -6,12 +6,14 @@ Feature: Main table, Table customization
 	Given Main table of "PGP3140_wgs_panel_hl" dataset was opened
 	And Variant drawer was closed with "X" button
 
+@tc:113908
 Scenario: 01 No "Gene" and "Variants" columns
 
 	When Clicks "Customize table" button
 	Then Customize table dialog should be opened
     And "Gene" And "Variant" columns should not be presented
 
+@tc:113909
 Scenario: 02 Compact view
 
 	Given Customize table dialog was opened
@@ -19,6 +21,7 @@ Scenario: 02 Compact view
 	And Clicks "Apply" button
 	Then Compact View should be shown.
 
+@tc:113910
 Scenario: 03 Cozy view
 
 	Given Customize table dialog was opened
@@ -27,6 +30,7 @@ Scenario: 03 Cozy view
 	Then Cozy View should be shown.
 
 @smoke
+@tc:113911
 Scenario: 04 Clear all columns
 
 	Given Customize table dialog was opened
@@ -35,6 +39,7 @@ Scenario: 04 Clear all columns
 	Then All columns should be cleared, only "Gene" And "Variant" columns should be displayed.
 
 @smoke
+@tc:113912
 Scenario: 05 Select all columns
 
 	Given Customize table dialog was opened
@@ -43,6 +48,7 @@ Scenario: 05 Select all columns
 	And Clicks "Apply" button
 	Then All columns should be displayed on the screen.
 
+@tc:113913
 Scenario: 06 Turn off one column
 
 	Given Customize table dialog was opened
@@ -50,6 +56,7 @@ Scenario: 06 Turn off one column
 	And Clicks "Apply" button
 	Then chosen column should not be shown on screen
 
+@tc:113914
 Scenario: 07 Turn on one column
 
 	Given Customize table dialog was opened
@@ -58,6 +65,7 @@ Scenario: 07 Turn on one column
 	And Clicks "Apply" button
 	Then chosen column should be turned on
 
+@tc:113915
 Scenario: 08 Move column
 
 	Given Customize table dialog was opened

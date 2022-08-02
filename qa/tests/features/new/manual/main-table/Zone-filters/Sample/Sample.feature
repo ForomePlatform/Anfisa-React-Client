@@ -4,6 +4,7 @@ As the Anfisa user I want to filter variants list by "Samples"
 Background:
 	Given "Main Table" of "PGP3140_wgs_panel_hl" dataset was opened
 
+@tc:113968
 Scenario: 01 Select a "Samples" without applying
 
 	When User clicks "+ Add Samples" button
@@ -14,6 +15,7 @@ Scenario: 01 Select a "Samples" without applying
 
 @smoke
 @regression
+@tc:113969
 Scenario: 02 Add filter by one "Samples"
 
 	Given "+ Add Samples" dialog was opened
@@ -23,6 +25,7 @@ Scenario: 02 Add filter by one "Samples"
 	And Selected "Samples" should be shown instead of "+ Add Samples" button
 
 @regression
+@tc:113970
 Scenario: 03  Add filter by a few "Samples"s
 
 	Given "+ Add Samples" dialog was opened
@@ -31,6 +34,7 @@ Scenario: 03  Add filter by a few "Samples"s
 	Then Variants list should be filtered by selected "Samples"s
 
 @regression
+@tc:113971
 Scenario: 04 Edit filter
 
 	Given Few "Samples"s were added
@@ -40,6 +44,7 @@ Scenario: 04 Edit filter
 	Then Variants list should be filtered by newly selected "Samples"s
 
 @regression
+@tc:113972
 Scenario: 05 Clear All
 
 	Given Few "Samples"s were added
@@ -50,6 +55,7 @@ Scenario: 05 Clear All
 	And All variants from dataset should be shown
 
 @regression
+@tc:113973
 Scenario: 06 Cancel or "X"
 
 	Given "+ Add Samples" dialog was opened
@@ -58,6 +64,7 @@ Scenario: 06 Cancel or "X"
 	Then Variants should not be filtered by "Samples"s (no filter's changed)
 
 @regression
+@tc:113974
 Scenario: 07 Clear applied "Samples" with "X" button
 
     Given One "Samples" was applied
@@ -66,6 +73,7 @@ Scenario: 07 Clear applied "Samples" with "X" button
 	And Variants should be filtered
 
 @regression
+@tc:113975
 Scenario: 08 Search by valid "Samples" name
 
 	Given "+ Add Samples" dialog was opened
@@ -73,6 +81,7 @@ Scenario: 08 Search by valid "Samples" name
 	Then The "Samples" should be searched
 
 @regression
+@tc:113976
 Scenario: 09 Search by "Samples" (substring)
 
 	Given "+ Add Samples" dialog was opened
@@ -80,6 +89,7 @@ Scenario: 09 Search by "Samples" (substring)
 	Then The "Samples" should be searched
 
 @regression
+@tc:113977
 Scenario: 10 Search by "Samples" (lower-case)
 
 	Given "+ Add Samples" dialog was opened
@@ -87,6 +97,7 @@ Scenario: 10 Search by "Samples" (lower-case)
 	Then The "Samples" should be searched
 
 @regression
+@tc:113978
 Scenario: 11 Search by "Samples" (upper-case)
 
 	Given "+ Add Samples" dialog was opened
@@ -94,6 +105,7 @@ Scenario: 11 Search by "Samples" (upper-case)
 	Then The "Samples" should be searched
 
 @regression
+@tc:113979
 Scenario: 12 Search by random row
 
 	Given "+ Add Samples" dialog was opened
