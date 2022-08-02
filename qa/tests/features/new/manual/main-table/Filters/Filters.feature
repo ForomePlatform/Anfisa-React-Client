@@ -5,13 +5,13 @@ Feature: Main table, Filters
 Background: 
 	Given Main table of "PGP3140_wgs_panel_hl" dataset was opened
 
-@tc:113874
+@tc:114109
 Scenario: 01 Open the "Filter Refiner" from the "Main Table" 
 
 	When  User clicks "Edit Filters" button
 	Then Filter Refiner should be opened.
 		
-@tc:113875
+@tc:114110
 Scenario: 02 Apply filter
 
 	Given "Filter Refiner" was opened from the "Main Table"
@@ -23,7 +23,7 @@ Scenario: 02 Apply filter
 	Then Main table should be opened
 	And Variants should be filtered
 		
-@tc:113876
+@tc:114111
 Scenario: 03 Apply few filters
 
 	Given "Filter Refiner" was opened from the "Main Table"
@@ -38,7 +38,7 @@ Scenario: 03 Apply few filters
 	Then Main table should be opened
 	And Variants should be filtered by chosen filters
 
-@tc:113877
+@tc:114112
 Scenario: 04 Close Filter Refiner without applying
 
 	Given "Filter Refiner" was opened from the "Main Table"

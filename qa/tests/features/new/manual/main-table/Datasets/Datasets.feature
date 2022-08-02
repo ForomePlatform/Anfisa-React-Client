@@ -6,7 +6,7 @@ Background:
 
 @smoke
 @regression
-@tc:113858
+@tc:114093
 Scenario: 01 Save a new dataset with preset
 
 	When User clicks "Select Filter Preset"
@@ -19,7 +19,7 @@ Scenario: 01 Save a new dataset with preset
 
 @smoke
 @regression
-@tc:113859
+@tc:114094
 Scenario: 02 Open newly created dataset with "Open It" button
 
 	Given User applied preset
@@ -31,7 +31,7 @@ Scenario: 02 Open newly created dataset with "Open It" button
 	And Variants should correspond to created dataset
 
 @regression
-@tc:113860
+@tc:114095
 Scenario: 03 Try to save dataset with only zone filters
 
 	When User clicks "+ Add Gene"
@@ -42,7 +42,7 @@ Scenario: 03 Try to save dataset with only zone filters
 	And Validation message should be shown
 
 @regression
-@tc:113861
+@tc:114096
 Scenario: 04 Save a new dataset without any applied filters
 
 	When User clicks "Create Derive DS" without applying Filter Preset or Filter Refiner condition
@@ -50,7 +50,7 @@ Scenario: 04 Save a new dataset without any applied filters
 	And Validation message should be shown
 
 @regression
-@tc:113862
+@tc:114097
 Scenario: 05 Save a new dataset with filter by "Gene" And preset
 
 	Given User applied "@InSilico_Possibly_Damaging" preset
@@ -67,7 +67,7 @@ Scenario: 05 Save a new dataset with filter by "Gene" And preset
 	And 45 variant should be shown again
 
 @regression
-@tc:113863
+@tc:114098
 Scenario: 06 Save a new dataset with filter by "Gene List" And preset
 
 	Given User applied "@InSilico_Possibly_Damaging" preset
@@ -84,7 +84,7 @@ Scenario: 06 Save a new dataset with filter by "Gene List" And preset
 	And 45 variant should be shown again
 
 @regression
-@tc:113864
+@tc:114099
 Scenario: 07 Save a new dataset with filter by "Sample" And preset
 
 	Given User applied "@InSilico_Possibly_Damaging" preset
@@ -101,7 +101,7 @@ Scenario: 07 Save a new dataset with filter by "Sample" And preset
 	And 45 variant should be shown again
 
 @regression
-@tc:113865
+@tc:114100
 Scenario: 08 Save a new dataset with filter by "Tag" And preset
 
 	Given User applied "@InSilico_Possibly_Damaging" preset
@@ -119,7 +119,7 @@ Scenario: 08 Save a new dataset with filter by "Tag" And preset
 	And 45 variant should be shown again
 
 @regression
-@tc:113866
+@tc:114101
 Scenario: 09 Try to create a dataset without name
 
 	Given User applied "@InSilico_Possibly_Damaging" preset
@@ -128,7 +128,7 @@ Scenario: 09 Try to create a dataset without name
 	Then "Add dataset" button should be disabled
 
 @regression
-@tc:113867
+@tc:114102
 Scenario: 10 Try to create a dataset with duplicated name (dataset with this name already exists)
 
 	Given User applied "@InSilico_Possibly_Damaging" preset
@@ -139,7 +139,7 @@ Scenario: 10 Try to create a dataset with duplicated name (dataset with this nam
 	And Validation message should be shown
  
 @regression
-@tc:113868
+@tc:114103
 Scenario Outline: 11 Try to create a dataset with invalid name "<Name1>"
 
 	Given User applied "@InSilico_Possibly_Damaging" preset
@@ -155,7 +155,7 @@ Examples:
 	| For ome   |
 	|251_random_characters| #type 251 random symbols here
 			  
-@tc:113869
+@tc:114104
 Scenario: 12 Cancel dataset
 
 	Given User applied "@InSilico_Possibly_Damaging" preset
@@ -164,7 +164,7 @@ Scenario: 12 Cancel dataset
 	And Clicks "Cancel"
 	Then Dataset should be canceled
 
-@tc:113870
+@tc:114105
 Scenario: 13 Creation dataset process cannot be canceled
 
 	Given User applied "@InSilico_Possibly_Damaging" preset

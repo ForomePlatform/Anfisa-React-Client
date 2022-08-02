@@ -6,21 +6,21 @@ Background:
 
 @regression
 @smoke
-@tc:113802
+@tc:114038
 Scenario: 01 Text editor can be opened without data in the tree
 	When user clicks "Text editor" button
 	Then the "Text editor" dialog should be opened
 	And "return False" row should be present in the dialog
 
 @regression
-@tc:113803
+@tc:114039
 Scenario: 02 Dark mode can be turned on
 	Given "Text editor" was opened
 	When user pushes the "dark mode" switch
 	Then the "dark mode" should be turned on in the dialog
 
 @regression
-@tc:113804
+@tc:114040
 Scenario: 03 Dark mode is saved after dialog is closed
 	Given "dark mode" was turned on in "Text editor" dialog
 	When user closes "Text editor" dialog
@@ -28,14 +28,14 @@ Scenario: 03 Dark mode is saved after dialog is closed
 	Then "dark mode" should be turned on
 
 @regression
-@tc:113805
+@tc:114041
 Scenario: 04 Dark mode can be turned off
 	Given "dark mode" was turned on in "Text editor" dialog
 	When user pushes the "dark mode" switch again
 	Then "dark mode" should be off
 
 @regression
-@tc:113806
+@tc:114042
 Scenario: 05 Light mode is saved after dialog is closed
 	Given "dark mode" was turned off
 	When user closes "Text editor" dialog
@@ -43,7 +43,7 @@ Scenario: 05 Light mode is saved after dialog is closed
 	Then "dark mode" should be turned off
 
 @regression
-@tc:113807
+@tc:114043
 Scenario: 06 Close via Cross button
 	Given "Text editor" was opened
 	When user enters the following source code manually
@@ -57,7 +57,7 @@ Scenario: 06 Close via Cross button
 
 @regression
 @smoke
-@tc:113808
+@tc:114044
 Scenario Outline: 07 Add attribute to the first step via Decision Tree
 	When user clicks the "+ Add attribute" button on the first step
 	And clicks "<AttributeName>"
@@ -72,7 +72,7 @@ Examples:
 	| Callers       | GATK_DE_NOVO   |
 
 @regression
-@tc:113809
+@tc:114045
 Scenario Outline: 08 "Drop changes" button
 	Given "<AttributeName>" attribute was added to the first step with "<AttributeValue>"
 	And "Text editor" was opened
@@ -85,7 +85,7 @@ Examples:
 	| Callers       | GATK_DE_NOVO   | GATK_HOMOZYGOUS |
 
 @regression
-@tc:113810
+@tc:114046
 Scenario Outline: 09 Save changes in text editor via Done button
 	Given "<AttributeName>" attribute was added to the first step with "<AttributeValue>"
 	And "Text editor" was opened
@@ -100,7 +100,7 @@ Examples:
 	| Callers       | GATK_DE_NOVO   | GATK_HOMOZYGOUS |
 
 @regression
-@tc:113811
+@tc:114047
 Scenario Outline: 10 Save changes
 	Given "<AttributeName>" attribute was added to the first step with "<AttributeValue>"
 	And "<NewValue>" was written manually in the attribute condition
@@ -113,7 +113,7 @@ Examples:
 	| AttributeName | AttributeValue | NewValue        |
 	| Callers       | GATK_DE_NOVO   | GATK_HOMOZYGOUS |
 
-@tc:113812
+@tc:114048
 Scenario: 11 Saving with invalid boolean value (True, False)
 	Given attribute was added to the first step
 	And "Text editor" was opened
@@ -121,7 +121,7 @@ Scenario: 11 Saving with invalid boolean value (True, False)
 	Then the error message should be displayed
 	And "Save" and "Done" buttons should be disabled
 
-@tc:113813
+@tc:114049
 Scenario: 12 Saving with invalid word instead of "return"
 	Given attribute was added to the first step
 	And "Text editor" was opened
@@ -130,7 +130,7 @@ Scenario: 12 Saving with invalid word instead of "return"
 	And "Save" and "Done" buttons should be disabled
 
 @regression
-@tc:113814
+@tc:114050
 Scenario: 13 Return the valid value back
 	Given attribute was added to the first step
 	And "Text editor" was opened
@@ -140,7 +140,7 @@ Scenario: 13 Return the valid value back
 	And "Save" and "Done" buttons should be enabled
 
 @regression
-@tc:113815
+@tc:114051
 Scenario: 14 Add non-existed value to the attribute
 	Given attribute was added to the first step
 	And "Text editor" was opened
@@ -150,7 +150,7 @@ Scenario: 14 Add non-existed value to the attribute
 	And entered value should be displayed in "Algorithm" section source code
 
 @regression
-@tc:113816
+@tc:114052
 Scenario: 15 Clear all data manually: invalid case
 	Given "Text editor" dialog was opened
 	When user clears all data in the dialog manually
@@ -158,7 +158,7 @@ Scenario: 15 Clear all data manually: invalid case
 	And "Save" and "Done" buttons should be disabled
 
 @regression
-@tc:113817
+@tc:114053
 Scenario: 16 Clear all data manually: Valid case
 	Given "Text editor" dialog was opened
 	When user clears all data in the dialog except "return False" row

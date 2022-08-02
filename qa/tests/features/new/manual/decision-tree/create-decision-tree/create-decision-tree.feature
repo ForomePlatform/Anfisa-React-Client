@@ -5,13 +5,13 @@ Background:
 	Given user opens the "Decision Tree Panel" for the "xl_PGP3140_wgs_NIST-4_2" dataset
 
 @regression
-@tc:113818
+@tc:114054
 Scenario: 01 Create Decision Tree without attributes
 	When user doesn't add attributes
 	Then "Create Decision Tree" button should not be visible
 
 @regression
-@tc:113819
+@tc:114055
 Scenario: 02 "Create Decision Tree" button appears only after adding the attribute
 	Given no attributes were added to the tree
 	When user clicks "+ Add Attribute" button on the first step
@@ -22,7 +22,7 @@ Scenario: 02 "Create Decision Tree" button appears only after adding the attribu
 
 @regression
 @smoke
-@tc:113820
+@tc:114056
 Scenario Outline: 03 Create new Decision Tree with valid "<ValidName>" name
 	Given the attribute was added to the first step of Decision Tree
 	When user clicks "Create Decision Tree" button
@@ -38,7 +38,7 @@ Examples:
 	| test-tree |
 
 @regression
-@tc:113821
+@tc:114057
 Scenario Outline: 04 Create new Decision Tree with invalid "<InvalidName>" name
 	Given the attribute was added to the first step of Decision Tree
 	When user clicks "Create Decision Tree" button
@@ -54,7 +54,7 @@ Examples:
 	| !@#$%       |
 	| an fisa     |
 
-@tc:113822
+@tc:114058
 Scenario: 05 Create new Decision Tree with empty name
 	Given the attribute was added to the first step of Decision Tree
 	When user clicks "Create Decision Tree" button
@@ -62,7 +62,7 @@ Scenario: 05 Create new Decision Tree with empty name
 	And user doesn't write anything in the name field
 	Then "Create" button should be disabled
 
-@tc:113823
+@tc:114059
 Scenario: 06 Cancel custom Decision Tree creation
 	Given the attribute was added to the first step of Decision Tree
 	When user clicks "Create Decision Tree" button
@@ -71,7 +71,7 @@ Scenario: 06 Cancel custom Decision Tree creation
 	And clicks "Cancel" or "x" button
 	Then custom Decision Tree should not be created
 
-@tc:113824
+@tc:114060
 Scenario: 07 Create new Decision Tree with duplicated name
 	Given attribute was added to the first step
 	When clicks "Create Decision Tree" button
@@ -79,7 +79,7 @@ Scenario: 07 Create new Decision Tree with duplicated name
 	Then validation message should be displayed
 	And "Create" button should be disabled
 
-@tc:113825
+@tc:114061
 @regression
 @smoke
 Scenario: 08 Modify custom Decision Tree
@@ -92,7 +92,7 @@ Scenario: 08 Modify custom Decision Tree
 	And user clicks "Modify" button
 	Then custom tree should be modified
 
-@tc:113826
+@tc:114062
 Scenario: 09 Cancel custom Decision Tree modification
 	Given custom Decision Tree was loaded
 	When user adds an attribute to the first step
@@ -103,7 +103,7 @@ Scenario: 09 Cancel custom Decision Tree modification
 	And user clicks "Close" or "x" button
 	Then custom Decision Tree should not be modified
 
-@tc:113827
+@tc:114063
 Scenario: 10 Modify custom Decision Tree without changes
 	Given custom Decision Tree was loaded
 	When user clicks "Select Decision tree" drop-down
@@ -112,7 +112,7 @@ Scenario: 10 Modify custom Decision Tree without changes
 
 @regression
 @smoke
-@tc:113828
+@tc:114064
 Scenario: 11 Delete custom Decision Tree
 	Given custom Decision Tree was loaded
 	When user clicks "Select Decision tree" drop-down
@@ -123,7 +123,7 @@ Scenario: 11 Delete custom Decision Tree
 	Then custom decision tree should be deleted
 	And validation message should be displayed
 
-@tc:113829
+@tc:114065
 Scenario: 12 Cancel custom Decision Tree deletion
 	Given custom Decision Tree was loaded
 	When user clicks "Select Decision tree" drop-down

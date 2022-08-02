@@ -3,7 +3,7 @@ Feature: Main table, Export
 As the Anfisa user I want to export variants list from the Main Table page
 
 @smoke
-@tc:113901
+@tc:114136
 Scenario Outline: 01 "<Format>": Too many variants to export
 
 	Given "Main Table" for the "PGP3140_wgs_panel_hl" dataset was opened
@@ -16,7 +16,7 @@ Examples:
 	| Excel  |
 	| CSV    |
 
-@tc:113902
+@tc:114137
 Scenario Outline: 02 "<Format>" export with filters (Filter Refiner)
 
 	Given "Main Table"  for the "PGP3140_wgs_panel_hl" dataset was opened
@@ -38,7 +38,7 @@ Examples:
      | CSV    |
 
 
-@tc:113903
+@tc:114138
 Scenario Outline: 03 "<Format>" export with filter by Tag(s)
 
 	Given "Main Table" for the "PGP3140_wgs_panel_hl" dataset was opened
@@ -57,7 +57,7 @@ Examples:
 
 
 @smoke
-@tc:113904
+@tc:114139
 Scenario Outline: 04 "<Format>" export with preset
 
 	Given "Main Table" was opened for the "PGP3140_wgs_panel_hl" dataset
@@ -72,7 +72,7 @@ Scenario Outline: 04 "<Format>" export with preset
 	| Excel  |
 	| CSV    |
 
-@tc:113905
+@tc:114140
 Scenario: 05 Export report - No data
 
 	Given "Main Table" was opened for the "PGP3140_wgs_panel_hl" dataset
@@ -80,7 +80,7 @@ Scenario: 05 Export report - No data
 	And Clicks "@BGM_Compound_Het" preset
 	Then "Export report" button should be disabled when there is 0 variants
 
-@tc:113906
+@tc:114141
 Scenario Outline: 06 "<Format>" export without filters
 
 	Given "Main Table" was opened for a dataset with a number of variants less than 300
@@ -93,7 +93,7 @@ Scenario Outline: 06 "<Format>" export without filters
 	| Excel  |
 	| CSV    |
 
-@tc:113907
+@tc:114142
 Scenario Outline: 07  "<Format>" export with Preset + Filter + Zone filter
 
 	Given "Main Table" was opened for the "PGP3140_wgs_panel_hl" dataset

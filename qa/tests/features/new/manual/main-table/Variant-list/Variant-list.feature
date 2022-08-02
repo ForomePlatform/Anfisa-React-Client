@@ -2,7 +2,7 @@
 Feature: Main table, variants list
   As the Anfisa user I want to see variants list on the Main Table page
 
-@tc:113871
+@tc:114106
 Scenario: 01 Choose secondary dataset with drop down menu
 
 	Given "Main table" for the "PGP3140_wgs_panel_hl" dataset was opened
@@ -12,7 +12,7 @@ Scenario: 01 Choose secondary dataset with drop down menu
 	Then "Main Table" page should be updated for the selected secondary dataset
 	And Variants should be filtered according to secondary dataset
 	
-@tc:113872
+@tc:114107
 Scenario: 02 Change secondary dataset with drop down menu
 
 	Given "Main table" for the secondary dataset was opened
@@ -21,7 +21,7 @@ Scenario: 02 Change secondary dataset with drop down menu
 	And User clicks other secondary dataset
 	Then "Main Table" page should be updated for the selected dataset
 
-@tc:113873
+@tc:114108
 Scenario: 03 Copy URL
 
 	Given "Main table" for the secondary dataset was opened

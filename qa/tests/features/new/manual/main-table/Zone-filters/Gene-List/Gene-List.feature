@@ -4,7 +4,7 @@ As the Anfisa user I want to filter variants list by "Gene list"
 Background:
 	Given "Main Table" of "PGP3140_wgs_panel_hl" dataset was opened
 
-@tc:113929
+@tc:114164
 Scenario: 01 Select a "Gene list" without applying
 
 	When User clicks "+ Add Gene List" button
@@ -15,7 +15,7 @@ Scenario: 01 Select a "Gene list" without applying
 
 @smoke
 @regression
-@tc:113930
+@tc:114165
 Scenario: 02 Add filter by one "Gene list"
 
 	Given "+ Add Gene list" dialog was opened
@@ -25,7 +25,7 @@ Scenario: 02 Add filter by one "Gene list"
 	And Selected "Gene list" should be shown instead of "+ Add Gene list" button
 
 @regression
-@tc:113931
+@tc:114166
 Scenario: 03  Add filter by a few "Gene list"-s
 
 	Given "+ Add Gene list" dialog was opened
@@ -34,7 +34,7 @@ Scenario: 03  Add filter by a few "Gene list"-s
 	Then Variants list should be filtered by selected "Gene list"s
 
 @regression
-@tc:113932
+@tc:114167
 Scenario: 04 Edit filter
 
 	Given Few "Gene list"-s were added
@@ -44,7 +44,7 @@ Scenario: 04 Edit filter
 	Then Variants list should be filtered by newly selected "Gene list"
 
 @regression
-@tc:113933
+@tc:114168
 Scenario: 05 Clear All
 
 	Given Few "Gene list"s were added
@@ -55,7 +55,7 @@ Scenario: 05 Clear All
 	And All variants from dataset should be shown
 
 @regression
-@tc:113934
+@tc:114169
 Scenario: 06 Cancel or "X"
 
 	Given "+ Add Gene list" dialog was opened
@@ -64,7 +64,7 @@ Scenario: 06 Cancel or "X"
 	Then Variants should not be filtered by "Gene list" (no filter's changed)
 
 @regression
-@tc:113935
+@tc:114170
 Scenario: 07 Clear applied "Gene list" with "X" button
 
     Given One "Gene list" was applied
@@ -73,7 +73,7 @@ Scenario: 07 Clear applied "Gene list" with "X" button
 	And Variants should be filtered
 
 @regression
-@tc:113936
+@tc:114171
 Scenario: 08 Search by valid "Gene list" name
 
 	Given "+ Add Gene list" dialog was opened
@@ -81,7 +81,7 @@ Scenario: 08 Search by valid "Gene list" name
 	Then The "Gene list" should be searched
 
 @regression
-@tc:113937
+@tc:114172
 Scenario: 09 Search by "Gene list" (substring)
 
 	Given "+ Add Gene list" dialog was opened
@@ -89,7 +89,7 @@ Scenario: 09 Search by "Gene list" (substring)
 	Then The "Gene list" should be searched
 
 @regression
-@tc:113938
+@tc:114173
 Scenario: 10 Search by "Gene list" (lower-case)
 
 	Given "+ Add Gene list" dialog was opened
@@ -97,7 +97,7 @@ Scenario: 10 Search by "Gene list" (lower-case)
 	Then The "Gene list" should be searched
 
 @regression
-@tc:113939
+@tc:114174
 Scenario: 11 Search by "Gene list" (upper-case)
 
 	Given "+ Add Gene list" dialog was opened
@@ -105,7 +105,7 @@ Scenario: 11 Search by "Gene list" (upper-case)
 	Then The "Gene list" should be searched
 
 @regression
-@tc:113940
+@tc:114175
 Scenario: 12 Search by random row
 
 	Given "+ Add Gene list" dialog was opened

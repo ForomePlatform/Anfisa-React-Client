@@ -6,7 +6,7 @@ Background:
 	And clicks "+ Add Attribute" button
 	
 @regression
-@tc:113830
+@tc:114066
 Scenario Outline: 01 Search by attribute's full "<AttibuteName>" value
 	When user enters "<AttributeName>" in the search field
 	Then the "<AttributeName>" should be found
@@ -18,7 +18,7 @@ Examples:
 	| ClinVar_Significance |
 
 @regression
-@tc:113831
+@tc:114067
 Scenario Outline: 02 Search by attribute's substring "<AttributeSubstr>" value
 	When user enters "<AttributeSubstr>" in the search field
 	Then the "<AttributeName>" should be found
@@ -30,7 +30,7 @@ Examples:
 	| gnifican        | ClinVar_Significance |
 
 @regression
-@tc:113832
+@tc:114068
 Scenario Outline: 03 Search by attribute's upper-case "<AttributeUpper>" value
 	When user enters "<AttributeUpper>" in the search field
 	Then the "<AttributeName>" should be found
@@ -42,7 +42,7 @@ Examples:
 	| CLINVAR_SIGNIFICANCE | ClinVar_Significance |
 
 @regression
-@tc:113833
+@tc:114069
 Scenario Outline: 04 Search by attribute's lower-case "<AttributeLower>" value
 	When user enters "<AttributeLower>" in the search field
 	Then the "<AttributeName>" should be found
@@ -53,7 +53,7 @@ Examples:
 	| fs             | FS            |
 
 @regression
-@tc:113834
+@tc:114070
 Scenario Outline: 05 "Select All" button for "<AttributeName>" values
 	When user clicks the "<AttributeName>"
 	And clicks "Select All" button
@@ -65,7 +65,7 @@ Examples:
 	| Has_Variant   |
 
 @regression
-@tc:113835
+@tc:114071
 Scenario Outline: 06 "Clear All" button for "<AttributeName>" values
 	When user clicks the "<AttributeName>"
 	And clicks "<AttributeValue1>"
@@ -78,30 +78,30 @@ Examples:
 	| Callers       | GATK_DE_NOVO    | GATK_HOMO_REC   |
 	| Has_Variant   | father [HG003]  | proband [HG002] |
 
-@tc:113836
+@tc:114072
 Scenario: 07 Collapse all groups
 	When user clicks the "Collapse all groups" button near search field
 	Then all attributes' groups should be collapsed
 
-@tc:113837
+@tc:114073
 Scenario: 08 Expand all groups
 	Given all attributes' groups were collapsed
 	When user clicks the "Expand all groups" button near search field
 	Then all attributes' groups should be expanded
 
-@tc:113838
+@tc:114074
 Scenario: 09 Collapse one group
 	Given all attributes' groups were expanded
 	When user clicks any group name
 	Then the group should be collapsed
 
-@tc:113839
+@tc:114075
 Scenario: 10 Expand one group
 	Given one attribute's group was collapsed
 	When user clicks the collapsed attributes' group name
 	Then the group should be expanded
 
-@tc:113840
+@tc:114076
 Scenario: 11 Back to attributes list - Scroll saving
 	When user scrolls the list down
 	And clicks any attribute

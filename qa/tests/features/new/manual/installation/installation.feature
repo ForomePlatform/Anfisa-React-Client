@@ -1,6 +1,6 @@
 Feature: Anfisa installation
 
-@tc:113746
+@tc:113981
 Scenario: install anfisa with docker
 
     Given user cloned the repository https://github.com/ForomePlatform/anfisa
@@ -8,7 +8,7 @@ Scenario: install anfisa with docker
     And follows the instraction installation with docker from readme
     Then anfisa should be installed locally
 
-@tc:113747
+@tc:113982
 Scenario: install anfisa without docker
 
     Given user cloned the repository https://github.com/ForomePlatform/anfisa
