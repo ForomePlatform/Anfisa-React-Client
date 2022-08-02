@@ -62,7 +62,6 @@ export const WhatsNextCard = observer(
     return (
       <Card
         isNeedToAnimate={wizardStore.isNeedToAnimateCard(id)}
-        className="mt-4"
         position={position}
       >
         <>

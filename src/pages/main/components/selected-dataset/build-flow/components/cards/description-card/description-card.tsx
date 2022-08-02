@@ -73,7 +73,7 @@ export const DescriptionCard = observer(
     return (
       <Card
         isNeedToAnimate={wizardStore.isNeedToAnimateCard(id)}
-        className={cn(styles.descriptionCard, 'mt-4')}
+        className={cn(styles.descriptionCard)}
         position={position}
       >
         <CardTitleWithEdit

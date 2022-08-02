@@ -2,7 +2,7 @@ import cloneDeep from 'lodash/cloneDeep'
 import { makeAutoObservable, reaction } from 'mobx'
 
 import { TExploreGenomeKeys } from '@core/enum/explore-genome-types-enum'
-import { ExploreTypesDictionary } from '@core/enum/explore-types-enum'
+import { ExploreKeys, TExploreKeys } from '@core/enum/explore-types-enum'
 import { ActionsHistoryStore } from '@store/actions-history'
 import { createHistoryObserver } from '@store/common'
 import { datasetStore } from '@store/dataset'
@@ -11,12 +11,13 @@ import { ISolutionWithKind } from '../cards/presets-card/utils/add-solution-kind
 import { WizardCardIds } from './scenarios/wizard-scenarios.constants'
 import { wizardScenarios } from './scenarios/wizard-scenarious'
 import { IWizardScenario } from './wizard.interface'
+import { getActiveCardIds } from './wizard.utils'
 
 class WizardStore {
   public isWizardVisible: boolean = false
   private prevWizardScenario: IWizardScenario[] = []
   public wizardScenario: IWizardScenario[] = []
-  public startWithOption = ''
+  public startWithOption: TExploreKeys = ExploreKeys.Genome
   public whatsNextOption?: TExploreGenomeKeys
   public descriptionOption = ''
   public descriptionTitle = ''
@@ -30,11 +31,11 @@ class WizardStore {
   )
 
   private get scenarioActiveCards() {
-    return this.wizardScenario.filter(card => !card.hidden).length
+    return getActiveCardIds(this.wizardScenario)
   }
 
   private get prevScenarioActiveCards() {
-    return this.prevWizardScenario.filter(card => !card.hidden).length
+    return getActiveCardIds(this.prevWizardScenario)
   }
 
   readonly observeHistory = createHistoryObserver({
@@ -76,6 +77,13 @@ class WizardStore {
         }
       },
     )
+
+    reaction(
+      () => datasetStore.datasetName,
+      () => {
+        this.defineAndSetNewScenario()
+      },
+    )
   }
 
   public toggleIsWizardVisible(value: boolean) {
@@ -97,12 +105,17 @@ class WizardStore {
 
   public defineAndSetNewScenario() {
     this.prevWizardScenario = []
-    if (this.startWithOption === ExploreTypesDictionary.Genome) {
+    if (datasetStore.isXL && this.startWithOption === ExploreKeys.Genome) {
       this.setScenario(wizardScenarios.XlWholeGenome)
-    }
-
-    if (this.startWithOption === ExploreTypesDictionary.Candidate) {
+    } else if (
+      datasetStore.isXL &&
+      this.startWithOption === ExploreKeys.Candidate
+    ) {
       this.setScenario(wizardScenarios.XlCandidateSet)
+    } else if (!this.secondaryDatasets?.length) {
+      this.setScenario(wizardScenarios.WsShortCandidateSet)
+    } else {
+      this.setScenario(wizardScenarios.WsCandidateSet)
     }
 
     this.needToChangeScenario = false
@@ -118,10 +131,11 @@ class WizardStore {
     }
   }
 
-  public setStartWithOption(startWithOption: string, id: WizardCardIds) {
+  public setStartWithOption(startWithOption: TExploreKeys, id: WizardCardIds) {
     this.startWithOption = startWithOption
     this.changeCardValue(id, startWithOption)
     this.enableContinue(id)
+
     if (datasetStore.isXL) {
       this.needToChangeScenario = true
     }
@@ -278,25 +292,21 @@ class WizardStore {
   }
 
   public isNeedToAnimateCard(id: WizardCardIds) {
-    if (this.wizardScenario.length === 1) {
-      return true
-    }
-
-    const cardIndex = this.wizardScenario.reduce((acc, card, index) => {
-      if (card.id === id) {
-        acc = index
+    const scenariosDiff = this.scenarioActiveCards.reduce((acc, addedId) => {
+      if (!this.prevScenarioActiveCards.includes(addedId)) {
+        acc.push(addedId)
       }
       return acc
-    }, -1)
+    }, [] as WizardCardIds[])
 
-    return (
-      this.scenarioActiveCards > this.prevScenarioActiveCards &&
-      cardIndex + 1 === this.scenarioActiveCards
-    )
+    return scenariosDiff.includes(id)
   }
 
   private findCardById(id: WizardCardIds | null, scenario: IWizardScenario[]) {
-    return (scenario || this.wizardScenario).find(card => card.id === id)
+    if (id) {
+      return scenario.find(card => card.id === id)
+    }
+    return undefined
   }
 }
 

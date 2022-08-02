@@ -13,7 +13,6 @@ import {
 import { Transition } from 'react-transition-group'
 import cn, { Argument } from 'classnames'
 
-import { useForkRef } from '@core/hooks/use-fork-ref'
 import { TCardPosition } from '@pages/main/components/selected-dataset/build-flow/components/wizard/wizard.interface'
 
 interface ICardProps {
@@ -37,7 +36,6 @@ export const Card = forwardRef(
   }: ICardProps): ReactElement => {
     const [isMounted, setIsMounted] = useState(false)
     const cardRef = useRef<HTMLDivElement>(null)
-    const ref = useForkRef(cardRef, innerRef)
 
     useEffect(() => {
       window.setTimeout(() => setIsMounted(true), 0)
@@ -45,7 +43,7 @@ export const Card = forwardRef(
 
     const renderCard = (state = '') => (
       <div
-        ref={ref}
+        ref={isNeedToAnimate ? cardRef : innerRef}
         className={cn(
           styles.card,
           styles[`card_${state}`],
@@ -65,7 +63,7 @@ export const Card = forwardRef(
         appear
         in={isMounted}
         timeout={TRANSITION_DURATION}
-        nodeRef={ref}
+        nodeRef={cardRef}
       >
         {state => {
           return renderCard(state)

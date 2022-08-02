@@ -1,7 +1,6 @@
 import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
-import { ExploreKeys } from '@core/enum/explore-types-enum'
 import dirinfoStore from '@store/dirinfo'
 import { Card, CardTitle } from '@ui/card'
 import { DatasetCard } from '@data-testid'
@@ -30,7 +29,7 @@ export const SelectedDatasetStartFlow = observer(
         </div>
 
         <CardExploreType
-          selectedValue={wizardStore.startWithOption || ExploreKeys.Genome}
+          selectedValue={wizardStore.startWithOption}
           editDisabled={true}
           id={WizardCardIds.StartFull}
         />
