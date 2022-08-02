@@ -3,21 +3,12 @@ import { makeAutoObservable, observable, reaction, toJS } from 'mobx'
 
 import { LocalStoreManager } from '@core/storage-management/local-store-manager'
 import { TVariantAspectsGridLayout } from '@components/variant-aspects-layout'
+import { predefinedPresets } from './variant-drawer.data'
 import {
   IVariantDrawerData,
   IVariantDrawerGridPreset,
   VariantDrawerLayoutMode,
-  VariantDrawerPredefinedPresets,
 } from './variant-drawer.interface'
-
-export const defaultPresetName = 'List'
-
-const predefinedPresets: IVariantDrawerGridPreset[] = [
-  {
-    name: 'List',
-    predefinedName: VariantDrawerPredefinedPresets.List,
-  },
-]
 
 const presetsSortComparator = (
   a: IVariantDrawerGridPreset,
@@ -75,6 +66,10 @@ class VariantDrawerStore {
   }
 
   public readonly setGridLayout = (layout: TVariantAspectsGridLayout): void => {
+    if (!layout.length) {
+      this.appliedPreset = predefinedPresets[0].name
+    }
+
     this.currentGridLayout = layout
     this.setIsAbleToModify(layout)
   }
@@ -93,15 +88,9 @@ class VariantDrawerStore {
     if (preset) {
       this.appliedPreset = presetName
 
-      if (preset.predefinedName) {
-        switch (preset.predefinedName) {
-          case VariantDrawerPredefinedPresets.List:
-            this.currentGridLayout = []
-            break
-        }
-      } else if (preset.layout) {
-        this.currentGridLayout = cloneDeep(preset.layout)
-      }
+      this.currentGridLayout = preset.layout?.length
+        ? cloneDeep(preset.layout)
+        : []
     }
   }
 
@@ -148,12 +137,14 @@ class VariantDrawerStore {
       mode: this.layoutMode,
       presets: toJS(this.customGridPresets),
       preset: this.appliedPreset,
+      layout: this.gridLayout,
     })
   }
 
   private static restoreData(): IVariantDrawerData {
     const data: Partial<IVariantDrawerData> | undefined =
       LocalStoreManager.read('variantDrawer')
+
     return {
       mode: data?.mode ?? VariantDrawerLayoutMode.Gallery,
       presets: data?.presets ?? [],

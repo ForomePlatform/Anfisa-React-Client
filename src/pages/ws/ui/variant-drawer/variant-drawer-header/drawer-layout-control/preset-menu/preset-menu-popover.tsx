@@ -11,8 +11,8 @@ import { Popover } from '@ui/popover'
 import { IPopoverBaseProps } from '@ui/popover/popover.interface'
 import { DecisionTreesMenuDataCy } from '@data-testid'
 import { popoverOffset } from '@pages/ws/ws.constants'
+import { defaultPresetsNames } from '../../../variant-drawer.data'
 import { IVariantDrawerGridPreset } from '../../../variant-drawer.interface'
-import { defaultPresetName } from '../../../variant-drawer.store'
 import { ContextMenuPopover } from './context-menu-popover'
 
 interface IPresetMenuProps extends IPopoverBaseProps {
@@ -49,7 +49,7 @@ export const PresetMenuPopover = ({
   const renderActions = (name: string) => {
     const actions: JSX.Element[] = []
 
-    if (name !== defaultPresetName) {
+    if (!defaultPresetsNames.includes(name)) {
       actions.push(
         <button
           key="menu"

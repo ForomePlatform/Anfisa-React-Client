@@ -7,6 +7,7 @@ export enum VariantDrawerLayoutMode {
 
 export enum VariantDrawerPredefinedPresets {
   List = 'list',
+  CardsView = 'cards view',
 }
 
 export interface IVariantDrawerGridPreset {

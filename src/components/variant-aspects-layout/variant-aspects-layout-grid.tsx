@@ -64,6 +64,7 @@ export const VariantAspectsLayoutGrid = ({
         margin={GRID_LAYOUT_MARGIN}
         draggableHandle="[data-drag-handle]"
         onLayoutChange={onChangeLayout}
+        className="-mt-3"
       >
         {aspects.map(aspect => (
           <AspectWindow
