@@ -19,21 +19,12 @@ export const SelectedDatasetBuildFlow = observer(
           <BuildFlowHeader goBack={handleGoBack} />
 
           <div>
-            {wizardStore.wizardScenario.map(scenario => {
+            {wizardStore.wizardScenario.map(({ component, ...rest }) => {
               const Component = () =>
-                scenario.component({
-                  id: scenario.id,
-                  continueDisabled: scenario.continueDisabled,
-                  editDisabled: scenario.editDisabled,
-                  contentDisabled: scenario.contentDisabled,
-                  selectedValue: scenario.selectedValue,
-                  title: scenario.title,
-                  maxHeight: scenario.maxHeight,
-                  position: scenario.position,
+                component({
+                  ...rest,
                 })
-              return (
-                !scenario.hidden && <Component key={scenario.selectedValue} />
-              )
+              return !rest.hidden && <Component key={rest.selectedValue} />
             })}
           </div>
         </div>

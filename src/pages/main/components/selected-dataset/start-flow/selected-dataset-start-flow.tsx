@@ -1,11 +1,14 @@
 import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
+import { ExploreKeys } from '@core/enum/explore-types-enum'
 import dirinfoStore from '@store/dirinfo'
 import { Card, CardTitle } from '@ui/card'
 import { DatasetCard } from '@data-testid'
 import { isDev } from '@pages/main/main.constants'
-import { CardExploreType } from '../build-flow/components/cards/card-explore/card-explore-type'
+import { WizardCardIds } from '../build-flow/components/wizard/scenarios/wizard-scenarios.constants'
+import wizardStore from '../build-flow/components/wizard/wizard.store'
+import { CardExploreType } from '../components/card-explore/card-explore-type'
 import { OpenViewer } from '../components/open-viewer'
 import { DatasetsFieldsList } from './components/dataset-fields-list/dataset-fileds-list'
 import { DatasetGeneral } from './components/dataset-general/dataset-general'
@@ -26,13 +29,18 @@ export const SelectedDatasetStartFlow = observer(
           {isDev && <OpenViewer />}
         </div>
 
-        <CardExploreType />
+        <CardExploreType
+          selectedValue={wizardStore.startWithOption || ExploreKeys.Genome}
+          editDisabled={true}
+          id={WizardCardIds.StartFull}
+        />
       </div>
 
       <div className="flex-grow grid gap-4 grid-cols-4 p-4 overflow-y-auto">
         <Card
           className="col-span-2"
           style={{ paddingLeft: 0, paddingRight: 0 }}
+          position={'stretch'}
         >
           <DatasetGeneral />
 

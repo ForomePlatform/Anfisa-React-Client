@@ -1,7 +1,8 @@
 import cloneDeep from 'lodash/cloneDeep'
 import { makeAutoObservable, reaction } from 'mobx'
 
-import { ExploreTypes } from '@core/enum/explore-types-enum'
+import { TExploreGenomeKeys } from '@core/enum/explore-genome-types-enum'
+import { ExploreTypesDictionary } from '@core/enum/explore-types-enum'
 import { ActionsHistoryStore } from '@store/actions-history'
 import { createHistoryObserver } from '@store/common'
 import { datasetStore } from '@store/dataset'
@@ -16,7 +17,7 @@ class WizardStore {
   private prevWizardScenario: IWizardScenario[] = []
   public wizardScenario: IWizardScenario[] = []
   public startWithOption = ''
-  public whatsNextOption = ''
+  public whatsNextOption?: TExploreGenomeKeys
   public descriptionOption = ''
   public descriptionTitle = ''
   public selectedPreset?: ISolutionWithKind
@@ -96,24 +97,40 @@ class WizardStore {
 
   public defineAndSetNewScenario() {
     this.prevWizardScenario = []
-    if (this.startWithOption === ExploreTypes.Genome) {
+    if (this.startWithOption === ExploreTypesDictionary.Genome) {
       this.setScenario(wizardScenarios.XlWholeGenome)
     }
 
-    if (this.startWithOption === ExploreTypes.Candidate) {
+    if (this.startWithOption === ExploreTypesDictionary.Candidate) {
       this.setScenario(wizardScenarios.XlCandidateSet)
     }
 
     this.needToChangeScenario = false
   }
 
+  private enableContinue(id: WizardCardIds) {
+    const clonedWizard = cloneDeep(this.wizardScenario)
+    const card = this.findCardById(id, clonedWizard)
+
+    if (card) {
+      card.continueDisabled = false
+      this.setScenario(clonedWizard)
+    }
+  }
+
   public setStartWithOption(startWithOption: string, id: WizardCardIds) {
     this.startWithOption = startWithOption
     this.changeCardValue(id, startWithOption)
-    this.needToChangeScenario = true
+    this.enableContinue(id)
+    if (datasetStore.isXL) {
+      this.needToChangeScenario = true
+    }
   }
 
-  public setWhatsNextOption(whatsNextOption: string, id: WizardCardIds) {
+  public setWhatsNextOption(
+    whatsNextOption: TExploreGenomeKeys,
+    id: WizardCardIds,
+  ) {
     this.whatsNextOption = whatsNextOption
     this.changeCardValue(id, whatsNextOption)
   }
@@ -164,7 +181,6 @@ class WizardStore {
     const card = this.findCardById(id, scenario)
     if (card?.nextCard) {
       const nextCard = this.findCardById(card.nextCard, scenario)
-      console.log(nextCard)
 
       if (nextCard) {
         nextCard.hidden = false

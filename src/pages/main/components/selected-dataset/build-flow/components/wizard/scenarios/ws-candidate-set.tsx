@@ -1,36 +1,38 @@
-import { ExploreCandidateTypes } from '@core/enum/explore-candidate-types-enum'
-import { ExploreTypes } from '@core/enum/explore-types-enum'
+import { ExploreCandidateKeys } from '@core/enum/explore-candidate-types-enum'
+import { TExploreGenomeKeys } from '@core/enum/explore-genome-types-enum'
 import { t } from '@i18n'
+import { CardExploreType } from '@pages/main/components/selected-dataset/components/card-explore/card-explore-type'
 import {
   DescriptionCard,
   ExistingCandidatesCard,
   PresetsCard,
-  StartCard,
 } from '../../cards'
 import { ICardProps, IWizardScenario } from '.././wizard.interface'
 import { WizardCardIds } from './wizard-scenarios.constants'
 
 export const wsCandidateSet: IWizardScenario[] = [
   {
-    component: (props: ICardProps) => <StartCard {...props} />,
-    id: WizardCardIds.Start,
+    component: (props: ICardProps) => <CardExploreType {...props} />,
+    id: WizardCardIds.StartFull,
     hidden: false,
     continueDisabled: true,
     editDisabled: false,
-    contentDisabled: true,
-    selectedValue: ExploreTypes.Candidate,
+    contentDisabled: false,
+    selectedValue: '',
     title: t('home.startFlow.startWith'),
-    position: 'left',
+    position: 'stretch',
     nextCard: WizardCardIds.ExistingCandidate,
   },
   {
-    component: (props: ICardProps) => <DescriptionCard {...props} />,
+    component: (props: ICardProps) => (
+      <DescriptionCard {...(props as ICardProps<TExploreGenomeKeys>)} />
+    ),
     id: WizardCardIds.Description,
     hidden: false,
     continueDisabled: false,
     editDisabled: true,
     contentDisabled: false,
-    selectedValue: ExploreCandidateTypes.ViewAllVariants,
+    selectedValue: ExploreCandidateKeys.ViewAllVariants,
     title: '',
     position: 'right',
     nextCard: WizardCardIds.Presets,
@@ -38,7 +40,7 @@ export const wsCandidateSet: IWizardScenario[] = [
   {
     component: (props: ICardProps) => <ExistingCandidatesCard {...props} />,
     id: WizardCardIds.ExistingCandidate,
-    hidden: false,
+    hidden: true,
     continueDisabled: true,
     editDisabled: false,
     contentDisabled: true,

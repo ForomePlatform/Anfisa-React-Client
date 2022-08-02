@@ -1,5 +1,6 @@
-import { ExploreCandidateTypes } from '@core/enum/explore-candidate-types-enum'
-import { ExploreTypes } from '@core/enum/explore-types-enum'
+import { ExploreCandidateKeys } from '@core/enum/explore-candidate-types-enum'
+import { TExploreGenomeKeys } from '@core/enum/explore-genome-types-enum'
+import { ExploreKeys } from '@core/enum/explore-types-enum'
 import { t } from '@i18n'
 import { DescriptionCard, PresetsCard, StartCard } from '../../cards'
 import { ICardProps, IWizardScenario } from '.././wizard.interface'
@@ -13,19 +14,21 @@ export const wsShortCandidateSet: IWizardScenario[] = [
     continueDisabled: true,
     editDisabled: false,
     contentDisabled: true,
-    selectedValue: ExploreTypes.Candidate,
+    selectedValue: ExploreKeys.Candidate,
     title: t('home.startFlow.startWith'),
     position: 'left',
     nextCard: WizardCardIds.Description,
   },
   {
-    component: (props: ICardProps) => <DescriptionCard {...props} />,
+    component: (props: ICardProps) => (
+      <DescriptionCard {...(props as ICardProps<TExploreGenomeKeys>)} />
+    ),
     id: WizardCardIds.Description,
     hidden: false,
     continueDisabled: false,
     editDisabled: true,
     contentDisabled: false,
-    selectedValue: ExploreCandidateTypes.ViewAllVariants,
+    selectedValue: ExploreCandidateKeys.ViewAllVariants,
     title: '',
     position: 'right',
     nextCard: WizardCardIds.Presets,

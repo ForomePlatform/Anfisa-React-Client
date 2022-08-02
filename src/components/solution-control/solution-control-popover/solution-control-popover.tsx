@@ -37,7 +37,7 @@ export const SolutionControlPopover = ({
   ...popoverProps
 }: ISolutionControlPopoverProps): ReactElement => {
   const applyButtonDictionary = {
-    [t('solutionControl.filterPreset')]: t('filter.applyCriterium'),
+    [t('solutionControl.filterPreset')]: t('filter.applyPreset'),
     [t('solutionControl.decisionTree')]: t('dtree.applyFilter'),
   }
 
