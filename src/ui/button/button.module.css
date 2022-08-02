@@ -73,10 +73,6 @@
     }
   }
 
-  &_no-border {
-    border: none
-  }
-
   &_icon-only {
     display: inline-flex;
     align-items: center;
@@ -107,6 +103,7 @@
 
   &_no-border {
     @apply button_text;
+
     border: none;
     padding: 0;
   }
