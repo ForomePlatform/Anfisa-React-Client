@@ -3,6 +3,7 @@ Feature: Filter Refiner, Search field
   Search DOES NOT work by group name (like Inheritance, Genes) and SHOULD NOT.
   Search DOES NOT work by attribute value (like Callers -> GATK_DE_NOVO) and SHOULD NOT.
 
+@tc:113681
 	Scenario Outline: Search attribute name by existed value
 		Given the Main Table was opened
 		When user clicks Edit Filters
@@ -16,6 +17,7 @@ Feature: Filter Refiner, Search field
 		| SIFT             |
 
 
+@tc:113682
 	Scenario Outline: Search attribute name by substring
 
 		Given the Main Table was opened
@@ -29,6 +31,7 @@ Feature: Filter Refiner, Search field
 		| und_H            | Compound_Het              |
 		| criteria         | Clinvar_criteria_provided |
 
+@tc:113683
 	Scenario Outline: Search attribute name by upper-case
 		Given the Main table was opened
 		When user clicks Edit Filters
@@ -41,6 +44,7 @@ Feature: Filter Refiner, Search field
 		| POLYPHEN_2_HVAR         | Polyphen_2_HVAR         |
 		| DISEASES                | Diseases                |
 
+@tc:113684
 	Scenario Outline: Search attribute name by non-existed value
 		Given the Main table was opened
 		When user clicks Edit Filters

@@ -1,7 +1,8 @@
-﻿Feature: Filter Refiner, Filter by range attribute
+Feature: Filter Refiner, Filter by range attribute
 	As a user, I want to work with numeric attributes, filter by their values, ranges.
 	We assume, that all attributes with ranges have the same behavior.
 
+@tc:113719
 Scenario Outline: 01 Filter by range, middle - XL dataset
 	Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was open
 	When user clicks the <Attribute Name>
@@ -26,6 +27,7 @@ Examples:
 	| Number_of_clinvar_submitters | 2               | 22              | 5418             |
 	| Severity                     | 1               | 2               | 52248            |
 
+@tc:113720
 Scenario Outline: 02 Filter by range, boundary values - XL dataset
 	Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was open
 	When user clicks the <Attribute Name>
@@ -50,6 +52,7 @@ Examples:
 	| Number_of_clinvar_submitters | 0               | 30              | 5628753          |
 	| Severity                     | -1              | 3               | 5628753          |
 
+@tc:113721
 Scenario Outline: 03 Filter by two ranges, XL dataset
 	Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was open
 	When user clicks the <Attribute Name#1>
@@ -74,6 +77,7 @@ Examples:
 	| Severity           | -1       | 0        | Proband_GQ         | 100      | 200      | 35994             |
 
 
+@tc:113722
 Scenario Outline: 04 Filter by range with invalid values (Minimum value < MIN)
 	Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was open
 	When user clicks the <Attribute Name>
@@ -95,6 +99,7 @@ Examples:
 	| Number_of_clinvar_submitters | -1              | 30              |
 	| Severity                     | -2              | 3               |
 
+@tc:113723
 Scenario Outline: 05 Filter by range with invalid values (Maximum value > MAX)
 	Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was open
 	When user clicks the <Attribute Name>
@@ -116,6 +121,7 @@ Examples:
 	| Number_of_clinvar_submitters | 0               | 31              |
 	| Severity                     | -1              | 4               |
 
+@tc:113724
 Scenario Outline: 06 Filter by range with invalid values (strings)
 	Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was open
 	When user clicks the <Attribute Name>
@@ -132,6 +138,7 @@ Examples:
 	| Num_Genes        | !@#$%^&         | qwerty          |
 	| Start_Pos        | 1 2 3           | {}:"<>          |
 
+@tc:113725
 Scenario Outline: 07 Clear button
 	Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was open
 	When user clicks the <Attribute Name>

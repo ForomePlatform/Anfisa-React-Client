@@ -1,6 +1,7 @@
-﻿Feature: Filter Refiner, Apply a few filters
+Feature: Filter Refiner, Apply a few filters
   As the Anfisa user I want to have an ability to apply a few filters of different types
 
+@tc:113718
 Scenario Outline: Apply a few filters
 	Given the "Filter Refiner" was open for the "xl_PGP3140_wgs_NIST-4_2" dataset
 	When user selects the <Preset Name> in the presets drop-down

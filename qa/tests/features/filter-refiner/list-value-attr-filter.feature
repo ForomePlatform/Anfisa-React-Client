@@ -2,6 +2,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 	As a user, I want to apply filters with list-value attributes
 
 
+@tc:113685
 	Scenario: 01 Open the Filter Refiner page for the secondary dataset
 		Given Anfisa's Main page was opened
 		When user clicks "PGP3140_wgs_panel_hl" dataset on the left panel
@@ -9,6 +10,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		And clicks the "Filter Refiner" in the "Open in viewer" dropdown
 		Then the "Filter Refiner" should be opened
 
+@tc:113686
 	Scenario: 02 Open the Filter Refiner page for the primary dataset
 		Given Anfisa's Main page was opened
 		When user clicks "xl_PGP3140_wgs_NIST-4_2" dataset on the left panel
@@ -16,6 +18,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		And clicks the "Filter Refiner" in the "Open in viewer" dropdown
 		Then the "Filter Refiner" should be opened
 
+@tc:113687
 	Scenario Outline: 03 Search by attribute value: full value
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the "ClinVar_Significance" attribute
@@ -29,6 +32,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		| drug response       |
 		| protective          |
 
+@tc:113688
 	Scenario Outline: 04 Search by attribute value: substring
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the "Chemicals" attribute
@@ -43,6 +47,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		| prednisolone            | isolo          |
 		| zoledronate             | edron          |
 
+@tc:113689
 	Scenario Outline: 05 Search by attribute value: upper-case
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the "ClinVar_Significance_Invitae" attribute
@@ -56,6 +61,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		| pathogenic        | PATHOGENIC     |
 
 
+@tc:113690
 	Scenario Outline: 06 Search by attribute value: lower-case
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the "Symbol" attribute
@@ -68,6 +74,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		| AACS              | aacs          |
 		| AASDHPPT          | aasdhppt      |
 
+@tc:113691
 	Scenario: 07 Search with pagination
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the "Symbol" attribute
@@ -77,6 +84,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		Then the page should be returned from 4 to 1
 		And list of values with "10" should be displayed
 
+@tc:113692
 	Scenario Outline: 08 No pagination
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the <Attribute Name> with number of values <= 8
@@ -89,6 +97,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		| Region_Worst     |
 
 
+@tc:113693
 	Scenario Outline: 09 Pagination
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the <Attribute Name> with number of values > 8
@@ -99,6 +108,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		| Symbol           |
 		| Chromosome       |
 
+@tc:113694
 	Scenario: 10 Next/Previous pages
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the "Symbol" attribute
@@ -106,6 +116,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		Then user should be able to click the "Next page" button
 		And the "Previous page" button
 
+@tc:113695
 	Scenario Outline: 11 Only "Not" mode (sub-kind = "status")
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the <Attribute Name>
@@ -117,6 +128,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		| Proband_Zygosity |
 		| Variant_Class    |
 
+@tc:113696
 	Scenario: 12 Filtration with "Not" mode 
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the "Proband_Zygosity" attribute
@@ -126,6 +138,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		Then the variants list should be filtered by Not (Unknown) value
 		And number of variants should be equal to 5,593,705
 
+@tc:113697
 	Scenario Outline: 13 "Not" + "All" mode (sub-kind = "multi")
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the <Attribute Name>
@@ -137,6 +150,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		| Callers          |
 		| FATHMM           |
 
+@tc:113698
 	Scenario Outline: 14 Filtration with "All" mode
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the <Attribute Name>
@@ -152,6 +166,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		| <Attribute Name>     | <Value#1>               | <Value#2>               | <Number without All> | <Number with All> |
 		| Canonical_Annotation | coding_sequence_variant | downstream_gene_variant | 185,220              | 2                 |
 
+@tc:113699
 	Scenario: 15 Filtration with "All" + "Not" modes is impossible
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the "Callers" attribute
@@ -160,6 +175,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		And "All" checkbox is displayed
 		Then the user should not be able to check both of them at the same time
 
+@tc:113700
 	Scenario Outline: 16 Filter by one attribute value
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the <Attribute Name>
@@ -179,6 +195,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		| Callers          | INHERITED_FROM: Father | 1,640,680         |
 		| Diseases         | Carcinoma              | 51                |
 
+@tc:113701
 	Scenario Outline: 17 Filter by a few attribute values
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		And there were no added filters
@@ -203,6 +220,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		| Clinvar_stars    | 2                   | 4                   | 4,638             |
                 
 
+@tc:113702
 	Scenario Outline: 18 Check all attribute values manually
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the <Attribute Name>
@@ -221,6 +239,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		| Callers          | 5,041,176         |
 		| Proband_Zygosity | 5,628,753         |
 
+@tc:113703
 	Scenario Outline: 19 Remove one attribute value from the filter
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		And filter by <Attribute value#1> and <Attribute value#2> was applied
@@ -235,6 +254,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		| Clinvar_stars    | 2                   | 1                      |
 		| PrimateAI        | D                   | T                      |
 
+@tc:113704
 	Scenario Outline: 20 Uncheck all of the values from the filter
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		And filter by <Attribute value#1> and <Attribute value#2> was applied
@@ -250,6 +270,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		| Clinvar_stars    | 2                   | 1                      |
 		| PrimateAI        | D                   | T                      |
 
+@tc:113705
 	Scenario Outline: 21 Remove all attribute values from the filter - Delete button case
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		And filter by <Attribute value#1> and <Attribute value#2> was applied
@@ -264,6 +285,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		| Clinvar_stars    | 2                   | 1                      |
 		| PrimateAI        | D                   | T                      |
 
+@tc:113706
 	Scenario Outline: 22 Remove all attribute values from the filter - Clear All button case
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		And filter by <Attribute value#1> and <Attribute value#2> was applied
@@ -277,6 +299,7 @@ Feature: Filter Refiner, Filter by List-value attributes
 		| Clinvar_stars    | 2                   | 1                      |
 		| PrimateAI        | D                   | T                      |
 
+@tc:113707
 	Scenario Outline: 23 Filter by a few attributes
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the <Attribute #1>

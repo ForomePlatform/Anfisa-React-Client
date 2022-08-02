@@ -1,6 +1,7 @@
-﻿Feature: Filter Refiner, Presets
+Feature: Filter Refiner, Presets
 	As a user, I want to apply predefined presets to filter variants
 
+@tc:113726
 	Scenario Outline: 01 load a preset for XL dataset
 		Given "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
 		When user clicks the "Select Filter Preset" dropdown
@@ -14,6 +15,7 @@
 		| @In_Silico_Damaging |
 		| @Impact_Splicing    |
 
+@tc:113727
 	Scenario Outline: 02 load a preset for Secondary dataset
 		Given the "Filter Refiner" for the "PGP3140_wgs_panel_hl" was opened
 		When user clicks the "Select Filter Preset" dropdown
@@ -27,6 +29,7 @@
 		| @SEQaBOO_Hearing_Loss_v_5 |
 		| @SEQaBOO_ACMG59           |
 
+@tc:113728
 	Scenario Outline: 03 Create a preset
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the "Num_Samples" attribute
@@ -63,11 +66,13 @@
 		| preset_preset               |
 		| preset_preset_preset_preset |
 
+@tc:113729
 	Scenario: 04 Create a preset without attributes
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user doesn't add attribute
 		Then There should not be "Create Preset" button shown
 
+@tc:113730
 	Scenario: 05 Modify a custom preset
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the "Select Filter Preset" dropdown
@@ -79,6 +84,7 @@
 		And clicks the "Modify" option
 		Then the preset should be modified
 
+@tc:113731
 	Scenario: 06 Join two presets
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the "Select Filter Preset" dropdown
@@ -91,6 +97,7 @@
 		Then filters from "@Loss_Of_Functions" and "@In_Silico_Damaging" presets should be merged
 		And the number of variants should be 1
 
+@tc:113732
 	Scenario: 07 Delete a custom preset
 		Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" was opened
 		When user clicks the "Select Filter Preset" dropdown
