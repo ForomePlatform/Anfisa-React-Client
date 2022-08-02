@@ -145,6 +145,8 @@ export const en = {
       startWith: 'Start with',
       prevWorkSection: 'In this section your previous work will be displayed',
       prevWorkWith: 'You previously worked with',
+      candidateIsUnavailable: 'Existing candidates are unavailable',
+      genomeIsUnavailable: 'Whole genome/exome is unavailable',
     },
     buildFlow: {
       candidateSet: 'Existing candidate sets',

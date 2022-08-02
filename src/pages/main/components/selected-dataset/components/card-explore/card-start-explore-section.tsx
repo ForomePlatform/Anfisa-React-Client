@@ -71,7 +71,7 @@ export const CardStartExploreSection: FC<ICardProps<TExploreKeys>> = observer(
                   isDisabled: isExploreGenomeDisabled,
                   placeholder: () => (
                     <span className="text-grey-dark">
-                      Whole genome/exome is unavailable
+                      {t('home.startFlow.genomeIsUnavailable')}
                     </span>
                   ),
                 },
@@ -79,7 +79,7 @@ export const CardStartExploreSection: FC<ICardProps<TExploreKeys>> = observer(
                   isDisabled: isExploreCandidateDisabled,
                   placeholder: () => (
                     <span className="text-grey-dark">
-                      Existing candidates are unavailable
+                      {t('home.startFlow.candidateIsUnavailable')}
                     </span>
                   ),
                 },

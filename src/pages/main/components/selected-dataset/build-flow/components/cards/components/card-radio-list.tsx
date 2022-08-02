@@ -13,7 +13,7 @@ interface ICardRadioListProps<T extends string> {
   disabledOptions?: TDisabledOptions<T>
 }
 
-const disabledOptionGuard = (
+const disabledOptionIsObject = (
   value: boolean | IDisabledOption | undefined,
 ): value is IDisabledOption => {
   return typeof value === 'object'
@@ -30,7 +30,10 @@ export const CardRadioList = function <T extends string>({
     <>
       {data.map(({ label, value }) => {
         const disabledOption = disabledOptions?.[value]
-        if (disabledOptionGuard(disabledOption) && disabledOption.isDisabled) {
+        if (
+          disabledOptionIsObject(disabledOption) &&
+          disabledOption.isDisabled
+        ) {
           return (
             <div className="flex mb-2" key={value}>
               {disabledOption.placeholder()}
@@ -45,7 +48,7 @@ export const CardRadioList = function <T extends string>({
                 onChange={() => onChange(value)}
                 disabled={
                   !!isOptionsDisabled ||
-                  (disabledOptionGuard(disabledOption)
+                  (disabledOptionIsObject(disabledOption)
                     ? disabledOption.isDisabled
                     : disabledOption)
                 }
