@@ -5,7 +5,7 @@ Background:
 	Given user opens the "Decision Tree Panel" for "PGP3140_wgs_panel_hl" dataset
 
 @regression
-@tc:113009
+@tc:113841
 Scenario Outline: 01 Search by valid "<ValidNameField>" value
 	When user inputs "<ValidNameField>" in chart search field
 	Then the field should be filtered
@@ -17,7 +17,7 @@ Examples:
 	| SIFT           |
 
 @regression
-@tc:113010
+@tc:113842
 Scenario Outline: 02 Search by invalid "<InvalidNameField>" value
 	When user inputs "<InvalidNameField>" in chart search field
 	Then empty result should be shown
@@ -29,7 +29,7 @@ Examples:
 	| _SIFT            |
 
 @regression
-@tc:113011
+@tc:113843
 Scenario Outline: 03 Search by attribute's substring "<AttributeSubstr>" value
 	When user inputs "<AttributeSubstr>" in chart search field
 	Then the field should be filtered by "<AttributeName>"
@@ -41,7 +41,7 @@ Examples:
 	| all             | Callers        |
 
 @regression
-@tc:113012
+@tc:113844
 Scenario Outline: 04 Search by attribute's upper-case "<AttributeUpper>" value
 	When user inputs "<AttributeUpper>" in chart search field
 	Then the field should be filtered by "<AttributeName>"
@@ -53,7 +53,7 @@ Examples:
 	| CALLERS        | Callers        |
 
 @regression
-@tc:113013
+@tc:113845
 Scenario Outline: 05 Search by attribute's lower-case "<AttributeLower>" value
 	When user inputs "<AttributeLower>" in chart search field
 	Then the field should be filtered by "<AttributeName>"
@@ -65,7 +65,7 @@ Examples:
 
 @regression
 @smoke
-@tc:113014
+@tc:113846
 Scenario Outline: 06 Add few fields ("<NameField1>" and "<NameField2>") with "Join by AND" via charts
 	When user click the "<NameField1>" attribute in charts section
 	And selects "<NameFilter1>"
@@ -86,7 +86,7 @@ Examples:
 
 @regression
 @smoke
-@tc:113015
+@tc:113847
 Scenario Outline: 07 Add few fields ("<NameField1>" and "<NameField2>") with "Join by OR" via charts
 	When user click the "<NameField1>" attribute in charts section
 	And selects "<NameFilter1>"
@@ -107,7 +107,7 @@ Examples:
 
 @regression
 @smoke
-@tc:113016
+@tc:113848
 Scenario Outline: 08 Replace one "<NameField1>" filter with another "<NameField2>" filter
 	When user click the "<NameField1>" attribute in charts section
 	And selects "<NameFilter1>"
@@ -127,7 +127,7 @@ Examples:
 
 @regression
 @smoke
-@tc:113017
+@tc:113849
 Scenario Outline: 09 Add a second step with "<NameField2>" attribute
 	When user click the "<NameField1>" attribute in charts section
 	And selects "<NameFilter1>"
@@ -145,7 +145,7 @@ Examples:
 	| Variant_Class | deletion         | Callers       | BGM_AUTO_DOM     | 2,559            |
 
 @regression
-@tc:113018
+@tc:113850
 Scenario Outline: 10 Expand "<NameField>" attribute graph
 	When user clicks the "v" button near "<NameField>" in charts section
 	Then the graph for "<NameField>" attribute should be expanded
@@ -157,7 +157,7 @@ Examples:
 	| Variant_Class |
 
 @regression
-@tc:113019
+@tc:113851
 Scenario Outline: 11 Collapse "<NameField>" attribute graph
 	Given "<NameField>" attribute graph was expanded
 	When user clicks "^" button near "<NameField>"
@@ -169,31 +169,31 @@ Examples:
 	| Has_Variant   |
 	| Variant_class |
 
-@tc:113020
+@tc:113852
 Scenario: 12 Collapse all groups in charts
 	When user clicks collapse all groups button near search field in charts section
 	Then all groups should be collapsed
 
-@tc:113021
+@tc:113853
 Scenario: 13 Expand all groups in charts
 	Given all groups were collapsed in charts
 	When user clicks expand all groups button near search field in charts section
 	Then all groups should be expanded
 
-@tc:113022
+@tc:113854
 Scenario: 14 Collapse one group in charts
 	Given all groups were expanded in charts
 	When user clicks any group name
 	Then the group should be collapsed
 
-@tc:113023
+@tc:113855
 Scenario: 15 Expand one group in charts
 	Given one group was collapsed
 	When user clicks the collapsed attributes' group name
 	Then the group should be expanded
 
 @regression
-@tc:113024
+@tc:113856
 Scenario Outline: 16 Open "<FunctionalUnitName>" attribute from charts
 	When user clicks the "+" button near "Functional Units"
 	And "Functional Units" list is expanded

@@ -1,20 +1,20 @@
 Feature: Common testcases
 
-@tc:112978
+@tc:113748
     Scenario: 01 Anfisa version
 
         Given Anfisa site is open
         When the user looks at the header
         Then Anfisa version should be displayed
 
-@tc:112979
+@tc:113749
     Scenario: 02 Search for dataset
 
         Given Main page is opened and datasets are presented on the left panel
         When the user enters an existed dataset name in the Search field
         Then the dataset should be found
 
-@tc:112980
+@tc:113750
     Scenario: 03 Search dataset wirh upper-case letters
         
         Given Main page is opened and datasets are presented on the left panel
@@ -26,35 +26,35 @@ Feature: Common testcases
          |XL_NA12878_WGS|
          |XL_PF0005_WES |
     
-@tc:112981
+@tc:113751
     Scenario: 04 Search by part of the dataset name
         
         Given Main page is opened and datasets are presented on the left panel
         When the user enters an part of dataset name in the Search field
         Then the dataset should be found
     
-@tc:112982
+@tc:113752
     Scenario: 05 Sort datasets by creation time
       
        Given Main page is opened and datasets are presented on the left panel
        When the user clicks the "Created at" button
        Then the dataset should be sorted by creation time
 
-@tc:112983
+@tc:113753
     Scenario: 06 Sort datasets by name
       
        Given Main page is opened and datasets are presented on the left panel
        When the user clicks the "Name" button
        Then the dataset should be sorted by name
 
-@tc:112984
+@tc:113754
     Scenario: 07 Expand xl dataset
        
        Given Main page is opened and datasets are presented on the left panel
        When the user clicks an XL dataset with children WS datasets
        Then the XL dataset should be expanded
    
-@tc:112985
+@tc:113755
     Scenario: 08 Check Main table and Decision tree panel in WS dataset's submenu
 
         Given Main page is opened and datasets are presented on the left panel
@@ -62,21 +62,21 @@ Feature: Common testcases
         And clicks the "Open in viewer" button
         Then "Main table" and "Decision Tree panel" options should present in the submenu
 
-@tc:112986
+@tc:113756
     Scenario: 09 Open main table for WS Dataset
      
         Given the "Open in viewer" menu is open for a WS dataset
         When the user clicks the "Main table" submenu
         Then Main table screen should be open for the selected dataset
 
-@tc:112987
+@tc:113757
     Scenario: 10 Move back to the Main page from WS dataset's Main table
 
         Given the "Main table" screen is open for a WS dataset
         When the user clicks the Back button in a browser
         Then Main page should be open
 
-@tc:112988
+@tc:113758
     Scenario: 11 Open WS dataset's decision tree from Main page
          
          Given Main page is opened and datasets are presented on the left panel
@@ -85,35 +85,35 @@ Feature: Common testcases
          And clicks the "Decision Tree panel" submenu
          Then Decision Tree panel should be open for the selected dataset
 
-@tc:112989
+@tc:113759
     Scenario: 12 Move back to the Main page from WS dataset's Decision tree panel
         
         Given the "Decision Tree panel" screen is open for a WS dataset
         When the user clicks the Close button (cross icon)
         Then Main page should be open
     
-@tc:112990
+@tc:113760
     Scenario: 13 Open XL dataset's decision tree from Main page
 
         Given the "Open in viewer" menu is open for the XL dataset
         When the user clicks the "Decision Tree panel" submenu
         Then Decision Tree panel should be open for the selected dataset
 
-@tc:112991
+@tc:113761
     Scenario: 14 Move back to the Main page from XL dataset's Decision tree panel
 
         Given the "Decision Tree panel" screen is open for the XL dataset
         When the user clicks the Close button (cross icon)
         Then Main page should be open
 
-@tc:112992
+@tc:113762
     Scenario: 15 Check the dataset's info
         
         Given Main page is opened and datasets are presented on the left panel
         When the user clicks an dataset
         Then Information about the dataset should be displayed
 
-@tc:112993
+@tc:113763
     Scenario: 16 Export dataset
 
         Given Main page is opened and datasets are presented on the left panel
@@ -123,7 +123,7 @@ Feature: Common testcases
         And clicks on export button on export frame
         Then dataset should be exported
 
-@tc:112994
+@tc:113764
     Scenario: 17 Import dataset  
         
         Given Main page is opened and datasets are presented on the left panel
@@ -133,7 +133,7 @@ Feature: Common testcases
         And uploads dataset field
         Then dataset should be imported
 
-@tc:112995
+@tc:113765
     Scenario: 18 Reload dataset
         
         Given Main page is opened and datasets are presented on the left panel
