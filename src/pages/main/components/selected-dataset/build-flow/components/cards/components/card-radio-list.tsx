@@ -1,9 +1,6 @@
 import { Radio } from '@ui/radio'
-import {
-  ICardRadioItem,
-  IDisabledOption,
-  TDisabledOptions,
-} from './card-radio-list.interface'
+import { disabledOptionIsObject } from './card-radio.utils'
+import { ICardRadioItem, TDisabledOptions } from './card-radio-list.interface'
 
 interface ICardRadioListProps<T extends string> {
   data: ICardRadioItem<T>[]
@@ -11,12 +8,6 @@ interface ICardRadioListProps<T extends string> {
   onChange: (option: T) => void
   isOptionsDisabled?: boolean
   disabledOptions?: TDisabledOptions<T>
-}
-
-const disabledOptionIsObject = (
-  value: boolean | IDisabledOption | undefined,
-): value is IDisabledOption => {
-  return typeof value === 'object'
 }
 
 export const CardRadioList = function <T extends string>({
