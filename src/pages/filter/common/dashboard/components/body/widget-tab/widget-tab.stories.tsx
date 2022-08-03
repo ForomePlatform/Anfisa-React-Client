@@ -24,6 +24,7 @@ Default.args = {
   group: {
     name: 'Inheritance',
     power: 0.22298721274582547,
+    isOpen: false,
     units: [
       {
         name: 'Callers',
@@ -31,6 +32,7 @@ Default.args = {
         'sub-kind': EnumPropertyStatusSubKinds.MULTI,
         vgroup: 'Inheritance',
         power: { value: 0.1, comment: 'no' },
+        isOpen: false,
         variants: [
           ['Variant_1', 78392],
           ['Variant_2', 88392],
@@ -44,6 +46,7 @@ Default.args = {
         'sub-kind': EnumPropertyStatusSubKinds.MULTI,
         vgroup: 'Inheritance',
         power: { value: 0.2, comment: 'no' },
+        isOpen: false,
         variants: [
           ['Variant_5', 18392],
           ['Variant_6', 28392],
@@ -57,6 +60,7 @@ Default.args = {
         'sub-kind': EnumPropertyStatusSubKinds.MULTI,
         vgroup: 'Inheritance',
         power: { value: 0.3, comment: 'no' },
+        isOpen: false,
         variants: [
           ['Variant_9', 8392],
           ['Variant_10', 98392],

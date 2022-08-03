@@ -1,8 +1,7 @@
 import styles from './widget-sub-tab.module.css'
 
-import { ReactElement, useEffect, useMemo } from 'react'
+import { memo, ReactElement, useEffect, useMemo } from 'react'
 import cn from 'classnames'
-import { observer } from 'mobx-react-lite'
 
 import { useToggle } from '@core/hooks/use-toggle'
 import { Icon } from '@ui/icon'
@@ -18,25 +17,27 @@ import { IWidgetSubTabProps } from '../../../../../dashboard.interfaces'
 import { WidgetSubTabEnum } from './components/widget-sub-tab-enum'
 import { WidgetSubTabNumeric } from './components/widget-sub-tab-numeric'
 
-export const WidgetSubTab = observer(
+export const WidgetSubTab = memo(
   ({
     unit,
     id,
     tabIndex,
     disabled,
     isAllTabsOpened,
+    isUnitOpened,
     onChangeSubTabHeight,
   }: IWidgetSubTabProps): ReactElement => {
     const { showInCharts } = dashboardStore
-
-    const [isUnitOpened, openUnit, closeUnit] = useToggle(false)
+    const [isSubTabOpened, openSubTab, closeSubTab] = useToggle(isUnitOpened)
 
     const handleToggleUnit = () => {
       if (isUnitOpened) {
-        closeUnit()
+        unit.isOpen = false
+        closeSubTab()
         onChangeSubTabHeight({ index: tabIndex, id, isOpen: isUnitOpened })
       } else {
-        openUnit()
+        unit.isOpen = true
+        openSubTab()
         setTimeout(
           () =>
             onChangeSubTabHeight({ index: tabIndex, id, isOpen: isUnitOpened }),
@@ -46,9 +47,16 @@ export const WidgetSubTab = observer(
     }
 
     useEffect(() => {
-      isAllTabsOpened ? openUnit() : closeUnit()
+      unit.isOpen = isAllTabsOpened
+      isAllTabsOpened ? openSubTab() : closeSubTab()
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isAllTabsOpened])
+
+    useEffect(() => {
+      unit.isOpen = isUnitOpened
+      isUnitOpened ? openSubTab() : closeSubTab()
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isUnitOpened])
 
     const renderUnit = () => {
       switch (unit.kind) {
@@ -91,7 +99,7 @@ export const WidgetSubTab = observer(
           </div>
 
           <Icon
-            name={isUnitOpened ? 'ArrowDownS' : 'ArrowUpS'}
+            name={isSubTabOpened ? 'ArrowDownS' : 'ArrowUpS'}
             className="h-4 text-white hover:text-blue-bright cursor-pointer"
             onClick={handleToggleUnit}
           />

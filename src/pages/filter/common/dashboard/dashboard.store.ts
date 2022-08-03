@@ -1,5 +1,5 @@
 import { Layout } from 'react-grid-layout'
-import { makeAutoObservable, reaction } from 'mobx'
+import { makeAutoObservable, reaction, toJS } from 'mobx'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModalSources } from '@core/enum/modal-sources'
@@ -31,6 +31,7 @@ export class DashboardStore {
       () => this.dashBoardQuery,
       () => {
         LocalStoreManager.delete('dashboardLayout')
+        LocalStoreManager.delete('dashboardMainTabs')
         this.toggleViewType(ViewTypeDashboard.List)
       },
     )
@@ -56,9 +57,24 @@ export class DashboardStore {
   }
 
   public getLayout(groups: IExtendedTUnitGroups[]): Layout[] {
-    const localStorageLayout = LocalStoreManager.read('dashboardLayout')
+    const savedLayout = LocalStoreManager.read('dashboardLayout')
 
-    return localStorageLayout || getStartLayout(groups)
+    return savedLayout || getStartLayout(groups)
+  }
+
+  public getMainTabs(groups: IExtendedTUnitGroups[]): IExtendedTUnitGroups[] {
+    const savedMainTabs = LocalStoreManager.read('dashboardMainTabs')
+
+    return savedMainTabs || groups.slice(0, 4)
+  }
+
+  public getSpareTabs(groups: IExtendedTUnitGroups[]): IExtendedTUnitGroups[] {
+    const mainTabs: IExtendedTUnitGroups[] =
+      toJS(LocalStoreManager.read('dashboardMainTabs')) || groups.slice(0, 4)
+
+    return groups.filter(
+      group => !mainTabs.some(tab => tab.name === group.name),
+    )
   }
 
   public geExtendedGroups(
@@ -67,13 +83,17 @@ export class DashboardStore {
   ): IExtendedTUnitGroups[] {
     const extendedGroups: IExtendedTUnitGroups[] = groups.map(group => ({
       name: group.name,
-      units: group.units,
+      units: group.units.map(unit => Object.assign(unit, { isOpen: false })),
       power: group.power,
+      isOpen: false,
     }))
 
     extendedGroups.push({
       name: 'Functional Units',
-      units: functionalUnits,
+      units: functionalUnits.map(unit =>
+        Object.assign(unit, { isOpen: false }),
+      ),
+      isOpen: false,
     })
 
     return extendedGroups

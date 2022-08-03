@@ -19,14 +19,16 @@ export const WidgetTab = ({
   onChangeSubTabHeight,
   onChangeTabHeight,
 }: IWidgetTabProps): ReactElement => {
-  const [isAllTabsOpened, openAllTabs, closeAllTabs] = useToggle(false)
+  const [isAllTabsOpened, openAllTabs, closeAllTabs] = useToggle(group.isOpen)
 
   const handleToggleTabs = () => {
     if (isAllTabsOpened) {
+      group.isOpen = false
       closeAllTabs()
       onChangeTabHeight({ index, id, isOpen: isAllTabsOpened })
     } else {
       openAllTabs()
+      group.isOpen = true
       setTimeout(
         () => onChangeTabHeight({ index, id, isOpen: isAllTabsOpened }),
         0,
@@ -71,6 +73,7 @@ export const WidgetTab = ({
               tabIndex={index}
               disabled={!isUnitInSearch}
               isAllTabsOpened={isAllTabsOpened}
+              isUnitOpened={unit.isOpen}
               onChangeSubTabHeight={onChangeSubTabHeight}
             />
           </div>

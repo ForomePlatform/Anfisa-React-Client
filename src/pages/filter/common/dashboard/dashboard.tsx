@@ -18,8 +18,6 @@ export const Dashboard = ({
     functionalUnits,
   )
 
-  const { getLayout } = dashboardStore
-
   const [filterValue, setFilterValue] = useState('')
 
   const preparedFilterValue = filterValue.toLowerCase()
@@ -39,7 +37,6 @@ export const Dashboard = ({
         <DashboardBody
           groups={extendedGroups}
           filteredGroups={filteredGroups}
-          getLayout={getLayout}
         />
       )}
     </div>
