@@ -77,6 +77,7 @@ export interface IWidgetSubTabProps {
   tabIndex: number
   disabled: boolean
   isAllTabsOpened: boolean
+  showInCharts: boolean
   isUnitOpened: boolean
   onChangeSubTabHeight: ({ index, id, isOpen }: IChangeHeightProps) => void
 }

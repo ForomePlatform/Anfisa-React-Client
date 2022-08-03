@@ -25,9 +25,9 @@ export const WidgetSubTab = memo(
     disabled,
     isAllTabsOpened,
     isUnitOpened,
+    showInCharts,
     onChangeSubTabHeight,
   }: IWidgetSubTabProps): ReactElement => {
-    const { showInCharts } = dashboardStore
     const [isSubTabOpened, openSubTab, closeSubTab] = useToggle(isUnitOpened)
 
     const handleToggleUnit = () => {
@@ -40,7 +40,11 @@ export const WidgetSubTab = memo(
         openSubTab()
         setTimeout(
           () =>
-            onChangeSubTabHeight({ index: tabIndex, id, isOpen: isUnitOpened }),
+            onChangeSubTabHeight({
+              index: tabIndex,
+              id,
+              isOpen: isUnitOpened,
+            }),
           0,
         )
       }
