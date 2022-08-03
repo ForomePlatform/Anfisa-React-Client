@@ -43,6 +43,7 @@ import Reload from './reload'
 import Settings from './settings'
 import SettingsFat from './settings-fat'
 import Sort from './sort'
+import Tag from './tag'
 import ThreadAdd from './thread-add'
 import ThreadClose from './thread-close'
 import Undo from './undo'
@@ -94,6 +95,7 @@ export const icons = {
   SettingsFat,
   Sort,
   ThreadAdd,
+  Tag,
   ThreadClose,
   Undo,
 }

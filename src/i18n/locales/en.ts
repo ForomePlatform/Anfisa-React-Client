@@ -165,6 +165,22 @@ export const en = {
     searchColumns: 'Search',
     columns: 'Columns',
     customizeTable: 'Customize Table',
+    macroTagging: 'Macro Tagging',
+    macroTagsModal: {
+      title: 'Macro Tags',
+      apply: 'Action',
+      placeholder: 'Tag name',
+      menu: {
+        apply: 'Apply to All',
+        remove: 'Remove from All',
+      },
+      confirmDialog: {
+        title: 'Confirmation',
+        message: 'Delete {tag} from all genes?',
+      },
+      toastApplied: 'Tag has been successfully set',
+      toastRemoved: 'Tag has been successfully removed',
+    },
     copied: 'Copied successfully',
     editFilters: 'Edit Filters',
     gene: 'Gene',
