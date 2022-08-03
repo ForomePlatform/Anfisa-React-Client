@@ -90,7 +90,7 @@ export const MacroTaggingPopover: FC<IPopoverBaseProps> = observer(
             title={t('ds.macroTagsModal.title')}
             onClose={onClose}
             onApply={e => onToggle(e.currentTarget)}
-            isApplyDisabled={tag === ''}
+            isApplyDisabled={!tag}
             isLoading={isLoading}
             applyText={t('ds.macroTagsModal.apply')}
             applyAppend={
@@ -107,7 +107,7 @@ export const MacroTaggingPopover: FC<IPopoverBaseProps> = observer(
               onChange={onChange}
               value={tag}
               shape="brick"
-              placeholder="Tag name"
+              placeholder={t('ds.macroTagsModal.placeholder')}
               size="m"
             />
             <Popover
