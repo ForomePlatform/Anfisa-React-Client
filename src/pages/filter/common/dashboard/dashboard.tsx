@@ -1,10 +1,10 @@
 import styles from './dashboard.module.css'
 
-import { ReactElement } from 'react'
+import { ReactElement, useState } from 'react'
 
 import { Loader } from '@ui/loader'
-import { DashboardHeader } from './components/dashboard-header'
-import { DashboardPanel } from './components/dashboard-panel'
+import { DashboardBody } from './components/body'
+import { DashboardHeader } from './components/header'
 import { IDashboardProps } from './dashboard.interfaces'
 import dashboardStore from './index'
 
@@ -13,16 +13,32 @@ export const Dashboard = ({
   functionalUnits,
   isFetching,
 }: IDashboardProps): ReactElement => {
-  const extenderGroups = dashboardStore.geExtendedGroups(
+  const extendedGroups = dashboardStore.geExtendedGroups(
     groups,
     functionalUnits,
   )
 
+  const [filterValue, setFilterValue] = useState<string>('')
+
+  const preparedFilterValue = filterValue.toLowerCase()
+
+  const filteredGroups = dashboardStore.getFilteredGroups(
+    extendedGroups,
+    preparedFilterValue,
+  )
+
   return (
     <div className={styles.dashboard}>
-      <DashboardHeader />
+      <DashboardHeader filterValue={filterValue} onChange={setFilterValue} />
 
-      {isFetching ? <Loader /> : <DashboardPanel groups={extenderGroups} />}
+      {isFetching ? (
+        <Loader />
+      ) : (
+        <DashboardBody
+          groups={extendedGroups}
+          filteredGroups={filteredGroups}
+        />
+      )}
     </div>
   )
 }

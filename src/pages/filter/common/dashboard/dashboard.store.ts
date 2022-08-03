@@ -32,4 +32,20 @@ export class DashboardStore {
 
     return extendedGroups
   }
+
+  public getFilteredGroups(
+    groups: IExtendedTUnitGroups[],
+    preparedFilterValue: string,
+  ): IExtendedTUnitGroups[] {
+    return groups
+      .map(group => {
+        return {
+          ...group,
+          attributes: group.units.filter(attr =>
+            attr.name.toLowerCase().includes(preparedFilterValue),
+          ),
+        }
+      })
+      .filter(group => group.attributes.length > 0)
+  }
 }

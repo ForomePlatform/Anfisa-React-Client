@@ -1,0 +1,36 @@
+.tab {
+  display: flex;
+  align-items: center;
+  padding: 0 theme("padding.4");
+  background: theme("colors.blue.darkHover");
+  border-radius: theme("borderRadius.DEFAULT");
+  cursor: pointer;
+
+  &_disabled {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  &__header {
+    @apply typography-m;
+
+    height: 36px;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+
+    &__title {
+      font-weight: theme("fontWeight.medium");
+      color: theme("colors.white");
+      cursor: pointer;
+    }
+
+    &__controls {
+      display: flex;
+      align-items: center;
+      height: theme("height.3");
+      cursor: pointer;
+    }
+  }
+}

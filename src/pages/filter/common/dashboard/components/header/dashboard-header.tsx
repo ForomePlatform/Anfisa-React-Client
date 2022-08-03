@@ -1,6 +1,6 @@
 import styles from './dashboard-header.module.css'
 
-import { ReactElement, useState } from 'react'
+import { ReactElement } from 'react'
 import cn from 'classnames'
 
 import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
@@ -9,17 +9,24 @@ import { Icon } from '@ui/icon'
 import { Switch } from '@ui/switch'
 import { InputSearch } from '@components/input-search'
 import { UnitsViewSwitch } from '@components/units-list/units-list-controls/components'
-import dashboardStore from '../../dashboard'
+import dashboardStore from '../../../dashboard'
 
-export const DashboardHeader = (): ReactElement => {
-  const [searchValue, setSearchValue] = useState('')
+interface IDashboardHeaderProps {
+  filterValue: string
+  onChange: (value: string) => void
+}
+
+export const DashboardHeader = ({
+  filterValue,
+  onChange,
+}: IDashboardHeaderProps): ReactElement => {
   const { viewType, toggleViewType } = dashboardStore
 
-  const onExpand = () => {
+  const handleSwitch = () => {
     //
   }
 
-  const handleSwitch = () => {
+  const onExpand = () => {
     //
   }
 
@@ -46,8 +53,8 @@ export const DashboardHeader = (): ReactElement => {
         </div>
 
         <InputSearch
-          onChange={e => setSearchValue(e.target.value)}
-          value={searchValue}
+          onChange={e => onChange(e.target.value)}
+          value={filterValue}
           placeholder={t('dashboard.searchForAField')}
           className="flex-1 mr-px"
           isDarkBg
