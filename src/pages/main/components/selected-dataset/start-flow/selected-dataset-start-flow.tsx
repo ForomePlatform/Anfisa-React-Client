@@ -39,7 +39,7 @@ export const SelectedDatasetStartFlow = observer(
         <Card
           className="col-span-2"
           style={{ paddingLeft: 0, paddingRight: 0 }}
-          position={'stretch'}
+          position="stretch"
         >
           <DatasetGeneral />
 

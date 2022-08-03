@@ -1,0 +1,143 @@
+.input {
+  @apply typography-s;
+
+  outline-offset: -1px;
+  padding: 4px 12px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  &:focus {
+    outline: 2px solid theme("colors.blue.bright");
+
+    &__icon-close {
+      display: block;
+    }
+  }
+
+  &_error {
+    outline: 2px solid theme("colors.red.light");
+    border: 2px solid theme("colors.red.light");
+
+    &:focus {
+      outline: 2px solid theme("colors.red.light");
+    }
+  }
+
+  &:disabled {
+    opacity: 0.5;
+  }
+
+  &_shape {
+    &_brick {
+      border-radius: 4px;
+    }
+
+    &_round {
+      border-radius: 100vh;
+    }
+  }
+
+  &_variant {
+    &_primary {
+      background-color: theme("colors.white");
+      border: 1px solid theme("colors.grey.blue");
+      color: theme("colors.blue.dark");
+
+      &:hover {
+        border: 1px solid theme("colors.blue.secondary");
+
+        &:disabled {
+          border: 1px solid theme("colors.grey.blue");
+        }
+      }
+
+      &:disabled {
+        color: theme("colors.grey.blue");
+      }
+    }
+
+    &_primary-dark {
+      background-color: theme("colors.blue.lighter");
+      border: 1px solid theme("colors.blue.lighter");
+      color: theme("colors.white");
+
+      &:hover {
+        background-color: theme("colors.blue.secondary");
+        border: 1px solid theme("colors.blue.secondary");
+
+        &:disabled {
+          background-color: theme("colors.blue.lighter");
+          border: 1px solid theme("colors.blue.lighter");
+        }
+      }
+
+      &:disabled {
+        color: theme("colors.blue.dark");
+      }
+    }
+  }
+
+  &__icon-close {
+    color: theme("colors.grey.blue");
+    cursor: pointer;
+
+    &_with-icon {
+      margin-right: 10px;
+    }
+  }
+
+  &__icon_container {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    display: flex;
+    align-items: center;
+    z-index: 1;
+
+    &_primary {
+      color: theme("colors.grey.blue");
+    }
+
+    &_primary-dark {
+      color: theme("colors.white");
+    }
+
+    &_left {
+      left: 12px;
+    }
+
+    &_right {
+      right: 12px;
+    }
+  }
+
+  &__container {
+    width: 100%;
+    height: fit-content;
+
+    &__elements-place {
+      position: relative;
+
+      &_size {
+        &_s {
+          height: 28px;
+        }
+
+        &_m {
+          height: 32px;
+        }
+      }
+    }
+  }
+
+  &__error-title {
+    @apply typography-xs;
+
+    margin: 4px 0;
+    color: theme("colors.red.light");
+    text-align: center;
+  }
+}

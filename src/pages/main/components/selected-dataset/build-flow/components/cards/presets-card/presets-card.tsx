@@ -14,87 +14,88 @@ import wizardStore from '../../wizard/wizard.store'
 import { memorizeLocation } from '../../wizard/wizard.utils'
 import presetsCardStore from './presets-card.store'
 
-export const PresetsCard = observer((props: ICardProps) => {
-  const history = useHistory()
-  const { title, id, selectedValue, maxHeight, position } = props
+export const PresetsCard = observer(
+  ({ title, id, selectedValue, maxHeight, position }: ICardProps) => {
+    const history = useHistory()
 
-  useEffect(() => {
-    presetsCardStore.loadSolutions()
-  }, [])
+    useEffect(() => {
+      presetsCardStore.loadSolutions()
+    }, [])
 
-  const onClickOpen = () => {
-    if (!wizardStore.selectedPreset) return
+    const onClickOpen = () => {
+      if (!wizardStore.selectedPreset) return
 
-    const { kind, name } = wizardStore.selectedPreset
-    let location = ''
+      const { kind, name } = wizardStore.selectedPreset
+      let location = ''
 
-    if (kind === 'preset') {
-      location = `${Routes.Refiner}?ds=${datasetStore.datasetName}&preset=${name}`
-    } else if (kind === 'dtree') {
-      location = `${Routes.Dtree}?ds=${datasetStore.datasetName}&dtree=${name}`
+      if (kind === 'preset') {
+        location = `${Routes.Refiner}?ds=${datasetStore.datasetName}&preset=${name}`
+      } else if (kind === 'dtree') {
+        location = `${Routes.Dtree}?ds=${datasetStore.datasetName}&dtree=${name}`
+      }
+
+      memorizeLocation(location)
+      history.push(location)
     }
 
-    memorizeLocation(location)
-    history.push(location)
-  }
+    const renderPresets = () => {
+      return presetsCardStore
+        .getSolutionsByRubric(wizardStore.whatsNextOption)
+        .map(preset => {
+          const isSelected = selectedValue === preset.name
 
-  const renderPresets = () => {
-    return presetsCardStore
-      .getSolutionsByRubric(wizardStore.whatsNextOption)
-      .map(preset => {
-        const isSelected = selectedValue === preset.name
-
-        return (
-          <div
-            key={preset.name}
-            onClick={() => wizardStore.setSelectedPreset(preset, id)}
-          >
+          return (
             <div
-              className={cn(
-                'w-full flex items-center py-2 leading-5 cursor-pointer px-4',
-                isSelected
-                  ? 'bg-blue-bright text-white'
-                  : 'hover:bg-blue-light',
-              )}
+              key={preset.name}
+              onClick={() => wizardStore.setSelectedPreset(preset, id)}
             >
-              <Icon
-                name="File"
-                className={cn(isSelected ? 'text-white' : 'text-blue-bright')}
-              />
+              <div
+                className={cn(
+                  'w-full flex items-center py-2 leading-5 cursor-pointer px-4',
+                  isSelected
+                    ? 'bg-blue-bright text-white'
+                    : 'hover:bg-blue-light',
+                )}
+              >
+                <Icon
+                  name="File"
+                  className={cn(isSelected ? 'text-white' : 'text-blue-bright')}
+                />
 
-              <div className="ml-1.5">{preset.name}</div>
+                <div className="ml-1.5">{preset.name}</div>
+              </div>
             </div>
-          </div>
-        )
-      })
-  }
+          )
+        })
+    }
 
-  return (
-    <Card
-      isNeedToAnimate={wizardStore.isNeedToAnimateCard(id)}
-      style={{ paddingLeft: 0, paddingRight: 0 }}
-      position={position}
-    >
-      <CardTitle text={title} className="px-4" />
-
-      <div
-        className="mb-4 mt-2 text-14 overflow-y-auto"
-        style={{ maxHeight: maxHeight }}
+    return (
+      <Card
+        isNeedToAnimate={wizardStore.isNeedToAnimateCard(id)}
+        style={{ paddingLeft: 0, paddingRight: 0 }}
+        position={position}
       >
-        {presetsCardStore.isFetchingSolutions ? (
-          <Loader size="m" />
-        ) : (
-          renderPresets()
-        )}
-      </div>
+        <CardTitle text={title} className="px-4" />
 
-      <div className="flex justify-end px-4">
-        <Button
-          onClick={onClickOpen}
-          text="Open"
-          disabled={!wizardStore.selectedPreset}
-        />
-      </div>
-    </Card>
-  )
-})
+        <div
+          className="mb-4 mt-2 text-14 overflow-y-auto"
+          style={{ maxHeight: maxHeight }}
+        >
+          {presetsCardStore.isFetchingSolutions ? (
+            <Loader size="m" />
+          ) : (
+            renderPresets()
+          )}
+        </div>
+
+        <div className="flex justify-end px-4">
+          <Button
+            onClick={onClickOpen}
+            text="Open"
+            disabled={!wizardStore.selectedPreset}
+          />
+        </div>
+      </Card>
+    )
+  },
+)

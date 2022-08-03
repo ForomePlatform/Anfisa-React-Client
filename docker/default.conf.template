@@ -3,15 +3,15 @@ server {
     server_name _;
 
     location /app {
-        proxy_pass ${BACKEND};
+        proxy_pass ${URL_BACKEND};
     }
 
     location ~ /app/ui/images {
-        proxy_pass ${BACKEND};
+        proxy_pass ${URL_BACKEND};
     }
 
     location ~ /app/ui {
-        proxy_pass ${BACKEND};
+        proxy_pass ${URL_BACKEND};
     }
 
     location / {

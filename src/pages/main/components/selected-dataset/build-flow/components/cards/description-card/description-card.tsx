@@ -83,7 +83,7 @@ export const DescriptionCard = observer(
         />
 
         <div className="mb-4">
-          <Card className="w-full mt-4 bg-grey-tertiary" position={'stretch'}>
+          <Card className="w-full mt-4 bg-grey-tertiary" position="stretch">
             <div className="flex items-center mb-2">
               <span className="font-bold">Description</span>
               <Button

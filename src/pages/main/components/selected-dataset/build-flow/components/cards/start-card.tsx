@@ -12,17 +12,15 @@ import { CardTitleWithEdit } from './components/card-edit-title'
 import { useRadioListData } from './components/card-radio.hooks'
 import { CardRadioList } from './components/card-radio-list'
 
-export const StartCard = (props: ICardProps) => {
-  const {
-    title,
-    id,
-    selectedValue,
-    contentDisabled,
-    continueDisabled,
-    editDisabled,
-    position,
-  } = props
-
+export const StartCard = ({
+  title,
+  id,
+  selectedValue,
+  contentDisabled,
+  continueDisabled,
+  editDisabled,
+  position,
+}: ICardProps) => {
   const isExploreGenomeDisabled = !datasetStore.isXL
   const isExploreCandidateDisabled =
     !wizardStore.secondaryDatasets && datasetStore.isXL

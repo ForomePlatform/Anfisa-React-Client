@@ -12,16 +12,19 @@ export const parseLocation = (location: string) => {
   const url = new URL(`${protocol}${host}${location}`)
   let result = ''
 
-  const isFilter = url.pathname === Routes.Refiner
-  const isDtree = url.pathname === Routes.Dtree
-  const isWs = url.pathname === Routes.WS
-
-  if (isFilter) {
-    result += t('home.buildFlow.simpleFilter')
-  } else if (isDtree) {
-    result += t('home.buildFlow.inclusionExclusion')
-  } else if (isWs) {
-    result += t('home.buildFlow.viewVariants')
+  switch (url.pathname) {
+    case Routes.Refiner: {
+      result += t('home.buildFlow.simpleFilter')
+      break
+    }
+    case Routes.Dtree: {
+      result += t('home.buildFlow.inclusionExclusion')
+      break
+    }
+    case Routes.WS: {
+      result += t('home.buildFlow.viewVariants')
+      break
+    }
   }
 
   result = addDelimeter(result)
