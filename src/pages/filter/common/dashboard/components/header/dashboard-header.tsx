@@ -2,6 +2,7 @@ import styles from './dashboard-header.module.css'
 
 import { ReactElement } from 'react'
 import cn from 'classnames'
+import { observer } from 'mobx-react-lite'
 
 import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
 import { t } from '@i18n'
@@ -16,55 +17,57 @@ interface IDashboardHeaderProps {
   onChange: (value: string) => void
 }
 
-export const DashboardHeader = ({
-  filterValue,
-  onChange,
-}: IDashboardHeaderProps): ReactElement => {
-  const { viewType, toggleViewType } = dashboardStore
+export const DashboardHeader = observer(
+  ({ filterValue, onChange }: IDashboardHeaderProps): ReactElement => {
+    const { viewType, toggleViewType, showInCharts, setInCharts } =
+      dashboardStore
 
-  const handleSwitch = () => {
-    //
-  }
+    const onExpand = () => {
+      // TODO
+    }
 
-  const onExpand = () => {
-    //
-  }
+    return (
+      <div className={styles.header}>
+        <div className={styles.header__container}>
+          <div className={styles.header__title}>{t('dashboard.dashboard')}</div>
 
-  return (
-    <div className={styles.header}>
-      <div className={styles.header__container}>
-        <div className={styles.header__title}>{t('dashboard.dashboard')}</div>
-
-        <div className={cn(styles.header__container, 'ml-1')}>
-          <UnitsViewSwitch
-            isListView={viewType === ViewTypeDashboard.List}
-            onToggleViewType={toggleViewType}
-          />
-        </div>
-      </div>
-
-      <div className={styles.header__container} style={{ width: 626 }}>
-        <div className={cn(styles.header__container, 'mr-6')}>
-          <Switch isChecked={false} onChange={handleSwitch} />
-
-          <div className={styles.header__controls__switch}>
-            {t('dashboard.showInCharts')}
+          <div className={cn(styles.header__container, 'ml-1')}>
+            <UnitsViewSwitch
+              isListView={viewType === ViewTypeDashboard.List}
+              onToggleViewType={toggleViewType}
+            />
           </div>
         </div>
 
-        <InputSearch
-          onChange={e => onChange(e.target.value)}
-          value={filterValue}
-          placeholder={t('dashboard.searchForAField')}
-          className="flex-1 mr-px"
-          isDarkBg
-          big
-        />
+        <div className={styles.header__container} style={{ width: 626 }}>
+          <div className={cn(styles.header__container, 'mr-6')}>
+            <Switch
+              isChecked={showInCharts}
+              onChange={() => setInCharts(!showInCharts)}
+            />
 
-        <button className={styles.header__controls__button} onClick={onExpand}>
-          <Icon name="Expand" size={20} className="text-grey-blue" />
-        </button>
+            <div className={styles.header__controls__switch}>
+              {t('dashboard.showInCharts')}
+            </div>
+          </div>
+
+          <InputSearch
+            onChange={e => onChange(e.target.value)}
+            value={filterValue}
+            placeholder={t('dashboard.searchForAField')}
+            className="flex-1 mr-px"
+            isDarkBg
+            big
+          />
+
+          <button
+            className={styles.header__controls__button}
+            onClick={onExpand}
+          >
+            <Icon name="Expand" size={20} className="text-grey-blue" />
+          </button>
+        </div>
       </div>
-    </div>
-  )
-}
+    )
+  },
+)

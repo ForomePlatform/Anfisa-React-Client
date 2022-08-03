@@ -20,6 +20,8 @@ import { IExtendedTUnitGroups } from './dashboard.interfaces'
 import { getStartLayout } from './dashboard.utils'
 
 export class DashboardStore {
+  private _inCharts: boolean = false
+
   public viewType: ViewTypeDashboard = ViewTypeDashboard.List
 
   constructor() {
@@ -32,6 +34,14 @@ export class DashboardStore {
         this.toggleViewType(ViewTypeDashboard.List)
       },
     )
+  }
+
+  public get showInCharts(): boolean {
+    return this._inCharts
+  }
+
+  public setInCharts = (value: boolean) => {
+    this._inCharts = value
   }
 
   private get dashBoardQuery() {
