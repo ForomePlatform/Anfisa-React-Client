@@ -17,7 +17,7 @@ export const WidgetSubTabEnum = ({
     <>
       {unit.variants?.map(([variantName, variantValue]: any, index: number) => (
         <Fragment key={variantName + variantValue}>
-          {index < 41 && (
+          {index <= MAX_SUB_TAB_ROWS_AMOUNT && (
             <div className={styles.subTab__unitContainer__unit}>
               <div className={styles.subTab__unitContainer__unit__name}>
                 {variantName}

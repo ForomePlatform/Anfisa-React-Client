@@ -18,7 +18,7 @@ export const Dashboard = ({
     functionalUnits,
   )
 
-  const [filterValue, setFilterValue] = useState('')
+  const [filterValue, setFilterValue] = useState<string>('')
 
   const preparedFilterValue = filterValue.toLowerCase()
 
