@@ -1,7 +1,7 @@
 import { Layout } from 'react-grid-layout'
 import { Argument } from 'classnames'
 
-import { TStatusWithPredictionPower, TUnit } from '@store/stat-units'
+import { TStatusWithPredictionPower } from '@store/stat-units'
 import { IUnitsProps } from '@pages/filter/refiner/refiner.interfaces'
 import {
   IEnumPropertyStatus,
@@ -11,21 +11,35 @@ import {
 
 export interface IDashboardProps extends IUnitsProps {}
 
+interface IExtendedINumericPropertyStatus
+  extends TStatusWithPredictionPower<INumericPropertyStatus> {
+  isOpen: boolean
+}
+
+interface IExtendedIEnumPropertyStatus
+  extends TStatusWithPredictionPower<IEnumPropertyStatus> {
+  isOpen: boolean
+}
+
+interface IExtendedIFuncPropertyStatus extends IFuncPropertyStatus {
+  isOpen: boolean
+}
+
 type TExtendedUnit =
-  | TStatusWithPredictionPower<INumericPropertyStatus>
-  | TStatusWithPredictionPower<IEnumPropertyStatus>
-  | IFuncPropertyStatus
+  | IExtendedINumericPropertyStatus
+  | IExtendedIEnumPropertyStatus
+  | IExtendedIFuncPropertyStatus
 
 export interface IDashboardBodyProps {
   groups: IExtendedTUnitGroups[]
   filteredGroups: IExtendedTUnitGroups[]
-  getLayout: (groups: IExtendedTUnitGroups[]) => Layout[]
   className?: Argument
 }
 
 export interface IExtendedTUnitGroups {
   name: string
   units: TExtendedUnit[]
+  isOpen: boolean
   power?: number
   attributes?: TExtendedUnit[]
 }
@@ -58,11 +72,12 @@ export interface IWidgetTabProps {
 }
 
 export interface IWidgetSubTabProps {
-  unit: TUnit | IFuncPropertyStatus
+  unit: TExtendedUnit
   id: string
   tabIndex: number
   disabled: boolean
   isAllTabsOpened: boolean
+  isUnitOpened: boolean
   onChangeSubTabHeight: ({ index, id, isOpen }: IChangeHeightProps) => void
 }
 

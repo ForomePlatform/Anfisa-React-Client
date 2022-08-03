@@ -1,9 +1,8 @@
 import styles from './dashboard-body.module.css'
 
-import { ReactElement, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import GridLayout, { Layout, WidthProvider } from 'react-grid-layout'
 import cn from 'classnames'
-import difference from 'lodash/difference'
 
 import { DashboardGroupTypes } from '@core/enum/dashboard-group-types-enum'
 import { LocalStoreManager } from '@core/storage-management'
@@ -24,6 +23,7 @@ import {
   getLayoutOnTabHeightChange,
   getNewTabLayout,
 } from '../../dashboard.utils'
+import dashboardStore from '../../index'
 import { FooterPanel } from './footer-panel'
 import { WidgetTab } from './widget-tab'
 
@@ -32,16 +32,16 @@ const ResponsiveGridLayout = WidthProvider(GridLayout)
 export const DashboardBody = ({
   groups,
   filteredGroups,
-  getLayout,
   className,
 }: IDashboardBodyProps): ReactElement => {
+  const { getLayout, getMainTabs, getSpareTabs } = dashboardStore
+
   const [mainTabs, setMainTabs] = useState<IExtendedTUnitGroups[]>(
-    groups.slice(0, 4),
+    getMainTabs(groups),
   )
   const [spareTabs, setSpareTabs] = useState<IExtendedTUnitGroups[]>(
-    difference(groups, mainTabs),
+    getSpareTabs(groups),
   )
-
   const [mainTabsLayout, setMainTabsLayout] = useState<Layout[]>(
     getLayout(mainTabs),
   )
@@ -90,13 +90,14 @@ export const DashboardBody = ({
   }
 
   const handleLayoutChange = (layout: Layout[]) => {
-    if (mainTabsLayout.length !== layout.length) {
-      return
-    }
-
     LocalStoreManager.write('dashboardLayout', layout)
+
     setMainTabsLayout(layout)
   }
+
+  useEffect(() => {
+    LocalStoreManager.write('dashboardMainTabs', mainTabs)
+  }, [mainTabs, mainTabsLayout])
 
   return (
     <div className={cn(styles.body, className)}>
