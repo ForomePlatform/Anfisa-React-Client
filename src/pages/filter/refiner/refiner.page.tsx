@@ -22,7 +22,11 @@ import { FilterRefiner } from '@pages/filter/refiner/components/filter-refiner'
 import dashboardStore, { Dashboard } from '../common/dashboard'
 import { FilterControlOptionsNames } from '../common/filter-control/filter-control.const'
 import { viewVariantsStore } from '../common/view-variants/store'
+import { ModalsContainer } from '../dtree/components/modals/modals-container'
 import modalsVisibilityStore from '../dtree/components/modals/modals-visibility-store'
+import { refinerAttributeStore } from './components/attributes/refiner-attributes.store'
+import { refinerFunctionsStore } from './components/attributes/refiner-functions.store'
+import { savePanelAttribute } from './components/middle-column/panels/utils/save-pannel-attribute'
 import { SolutionControlRefiner } from './components/solution-control-refiner'
 
 export const RefinerPage = observer((): ReactElement => {
@@ -65,56 +69,69 @@ export const RefinerPage = observer((): ReactElement => {
   }, [])
 
   return (
-    <div className={styles.refinerPage}>
-      <Header className={styles.refinerPage__header}>
-        <VariantsCount
-          variantCounts={allVariants}
-          transcriptsCounts={transcriptsCounts}
-          dnaVariantsCounts={dnaVariantsCounts}
-          showDnaVariants={!isXL}
-          showTranscripts={!isXL}
-        >
-          <ExportReport />
-        </VariantsCount>
-      </Header>
-
-      <FilterControl
-        pageName={FilterControlOptionsNames[GlbPagesNames.Refiner]}
-        SolutionControl={SolutionControlRefiner}
-        createSolutionEntry={createPreset}
-        availableSolutionEntries={availableSolutionEntries}
-        isBackwardAllowed={filterStore.actionHistory.isBackwardAllowed}
-        isForwardAllowed={filterStore.actionHistory.isForwardAllowed}
-        isEntryCreationAllowed={isEntryCreationAllowed}
-        disabledCreateDataset={
-          filterStore.conditions.length === 0 ||
-          !filterCounts ||
-          filterCounts.variants > XL_COUNT_OF_VARIANTS
-        }
-        goForward={filterStore.actionHistory.goForward}
-        goBackward={filterStore.actionHistory.goBackward}
-        className={styles.refinerPage__controls}
+    <>
+      <ModalsContainer
+        attributeStore={refinerAttributeStore}
+        funcStore={refinerFunctionsStore}
+        onAddEnum={savePanelAttribute}
+        onSaveEnum={savePanelAttribute}
+        onAddNumeric={savePanelAttribute}
+        onSaveNumeric={savePanelAttribute}
+        onAddFunc={savePanelAttribute}
+        onSaveFunc={savePanelAttribute}
       />
 
-      <IgvModal
-        isOpen={modalsVisibilityStore.isIgvModalVisible}
-        igvParams={viewVariantsStore.record.igvParams}
-      />
+      <div className={styles.refinerPage}>
+        <Header className={styles.refinerPage__header}>
+          <VariantsCount
+            variantCounts={allVariants}
+            transcriptsCounts={transcriptsCounts}
+            dnaVariantsCounts={dnaVariantsCounts}
+            showDnaVariants={!isXL}
+            showTranscripts={!isXL}
+          >
+            <ExportReport />
+          </VariantsCount>
+        </Header>
 
-      {dashboardStore.viewType === ViewTypeDashboard.List ? (
-        <FilterRefiner
-          className={styles.refinerPage__refiner}
-          groups={unitGroups}
-          functionalUnits={functionalUnits}
-          isFetching={isFetching}
+        <FilterControl
+          pageName={FilterControlOptionsNames[GlbPagesNames.Refiner]}
+          SolutionControl={SolutionControlRefiner}
+          createSolutionEntry={createPreset}
+          availableSolutionEntries={availableSolutionEntries}
+          isBackwardAllowed={filterStore.actionHistory.isBackwardAllowed}
+          isForwardAllowed={filterStore.actionHistory.isForwardAllowed}
+          isEntryCreationAllowed={isEntryCreationAllowed}
+          disabledCreateDataset={
+            filterStore.conditions.length === 0 ||
+            !filterCounts ||
+            filterCounts.variants > XL_COUNT_OF_VARIANTS
+          }
+          goForward={filterStore.actionHistory.goForward}
+          goBackward={filterStore.actionHistory.goBackward}
+          className={styles.refinerPage__controls}
         />
-      ) : (
-        <Dashboard
-          groups={unitGroups}
-          functionalUnits={functionalUnits}
-          isFetching={isFetching}
+
+        <IgvModal
+          isOpen={modalsVisibilityStore.isIgvModalVisible}
+          igvParams={viewVariantsStore.record.igvParams}
         />
-      )}
-    </div>
+
+        {dashboardStore.viewType === ViewTypeDashboard.List ? (
+          <FilterRefiner
+            className={styles.refinerPage__refiner}
+            groups={unitGroups}
+            functionalUnits={functionalUnits}
+            isFetching={isFetching}
+          />
+        ) : (
+          <Dashboard
+            groups={unitGroups}
+            functionalUnits={functionalUnits}
+            isFetching={isFetching}
+          />
+        )}
+      </div>
+    </>
   )
 })

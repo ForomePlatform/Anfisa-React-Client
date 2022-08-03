@@ -10,7 +10,6 @@
   margin-top: 8px;
   background: theme("colors.blue.secondary");
   border-radius: theme("borderRadius.DEFAULT");
-  cursor: grab;
 
   &_disabled {
     opacity: 0.3;
@@ -28,6 +27,10 @@
       font-weight: theme("fontWeight.medium");
       color: theme("colors.white");
       cursor: pointer;
+
+      &:hover {
+        color: theme("colors.grey.blue");
+      }
     }
   }
 

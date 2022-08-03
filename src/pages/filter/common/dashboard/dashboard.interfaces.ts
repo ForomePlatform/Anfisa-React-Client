@@ -19,6 +19,7 @@ type TExtendedUnit =
 export interface IDashboardBodyProps {
   groups: IExtendedTUnitGroups[]
   filteredGroups: IExtendedTUnitGroups[]
+  getLayout: (groups: IExtendedTUnitGroups[]) => Layout[]
   className?: Argument
 }
 

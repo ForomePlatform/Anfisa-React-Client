@@ -24,7 +24,7 @@ export const EnumPanel = observer((): ReactElement => {
   const handleSaveAttribute = useCallback(
     (value, mode) => {
       savePanelAttribute({
-        filterKind: AttributeKinds.ENUM,
+        attributeKind: AttributeKinds.ENUM,
         attributeName,
         selectedVariants: value,
         mode,

@@ -6,6 +6,7 @@ import cn from 'classnames'
 import { useToggle } from '@core/hooks/use-toggle'
 import { Icon } from '@ui/icon'
 import { PredictionPowerIndicator } from '@components/prediction-power-indicator'
+import dashboardStore from '@pages/filter/common/dashboard'
 import {
   AttributeKinds,
   IEnumPropertyStatus,
@@ -65,7 +66,10 @@ export const WidgetSubTab = ({
       id={id}
     >
       <div className={styles.subTab__header}>
-        <div className="flex items-center">
+        <div
+          className="flex items-center"
+          onClick={() => dashboardStore.selectGroup(unit)}
+        >
           {unit.kind !== AttributeKinds.FUNC && (
             <PredictionPowerIndicator
               className="mr-2 rounded"
@@ -73,7 +77,9 @@ export const WidgetSubTab = ({
             />
           )}
 
-          <div className={styles.subTab__header__title}>{unit.name}</div>
+          <div className={cn(styles.subTab__header__title, '')}>
+            {unit.name}
+          </div>
         </div>
 
         <Icon

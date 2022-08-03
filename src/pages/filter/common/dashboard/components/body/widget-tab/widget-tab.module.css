@@ -24,6 +24,10 @@
       font-weight: theme("fontWeight.medium");
       color: theme("colors.white");
       cursor: pointer;
+
+      &:hover {
+        color: theme("colors.grey.blue");
+      }
     }
 
     &__controls {

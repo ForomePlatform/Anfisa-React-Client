@@ -13,12 +13,18 @@ import filterDtreesStore from '@store/filter-dtrees'
 import { Header } from '@components/header'
 import { VariantsCount } from '@components/variants-count'
 import { GlbPagesNames } from '@glb/glb-names'
+import { addAttributeToStep } from '@utils/addAttributeToStep'
+import { changeEnumAttribute } from '@utils/changeAttribute/changeEnumAttribute'
+import { changeNumericAttribute } from '@utils/changeAttribute/changeNumericAttribute'
+import { saveAttribute } from '@utils/changeAttribute/saveAttribute'
 import dashboardStore, { Dashboard } from '../common/dashboard'
 import {
   FilterControl,
   XL_COUNT_OF_VARIANTS,
 } from '../common/filter-control/filter-control'
 import { FilterControlOptionsNames } from '../common/filter-control/filter-control.const'
+import { dtreeAttributeStore } from './components/attributes/dtree-attributes.store'
+import { dtreeFunctionsStore } from './components/attributes/dtree-functions.store'
 import { SolutionControlDtree } from './components/control-panel/solution-control-dtree'
 import { TextEditorButton } from './components/control-panel/text-editor-button'
 import { ModalsContainer } from './components/modals/modals-container'
@@ -29,9 +35,9 @@ const MIN_CODE_LENGTH = 13
 export const DtreePage = observer((): ReactElement => {
   const { isXL } = datasetStore
 
-  const { availableDtrees: availableSolutionEntries } = filterDtreesStore
-
   const { unitGroups, functionalUnits, isFetching } = dtreeStore.stat
+
+  const { availableDtrees: availableSolutionEntries } = filterDtreesStore
 
   const createDtree = (treeName: string): void => {
     filterDtreesStore.createDtree(treeName)
@@ -73,7 +79,16 @@ export const DtreePage = observer((): ReactElement => {
 
   return (
     <>
-      <ModalsContainer />
+      <ModalsContainer
+        attributeStore={dtreeAttributeStore}
+        funcStore={dtreeFunctionsStore}
+        onAddEnum={addAttributeToStep}
+        onSaveEnum={changeEnumAttribute}
+        onAddNumeric={addAttributeToStep}
+        onSaveNumeric={changeNumericAttribute}
+        onAddFunc={addAttributeToStep}
+        onSaveFunc={saveAttribute}
+      />
 
       <div className={styles.dtreePage}>
         <Header className={styles.dtreePage__header}>

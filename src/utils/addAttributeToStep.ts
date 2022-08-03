@@ -1,4 +1,4 @@
-import { ActionType, AttributeType } from '@declarations'
+import { ActionType } from '@declarations'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import dtreeStore from '@store/dtree'
 import stepStore from '@store/dtree/step.store'
@@ -14,27 +14,31 @@ import {
 import { getConditionJoinMode } from '@utils/getConditionJoinMode'
 import datasetStore from '../store/dataset/dataset'
 
-interface IAddAttributeToStepProps {
+export interface IAddAttributeToStepProps {
   action: ActionType
-  attributeType: AttributeType
-  filters: string[] | TNumericConditionBounds
+  attributeKind: AttributeKinds
+  selectedVariants?: string[]
+  value?: TNumericConditionBounds
+  attributeName?: string
   param?: TFuncArgs
   mode?: ModeTypes
 }
 
 export const addAttributeToStep = ({
   action,
-  attributeType,
-  filters,
+  attributeKind,
+  selectedVariants,
+  value,
   param,
   mode,
 }: IAddAttributeToStepProps): void => {
   const code = dtreeStore.dtreeCode ?? 'return False'
+  const isNumeric = attributeKind === AttributeKinds.NUMERIC
+  const shouldTakeAttributeFromStore = !isNumeric
 
-  const shouldTakeAttributeFromStore = attributeType !== AttributeKinds.NUMERIC
-
+  const selectedValue = isNumeric ? value : selectedVariants
   const subGroupName = dtreeStore.selectedGroups[1]
-  const attribute = [attributeType, subGroupName, filters.length && filters]
+  const attribute = [attributeKind, subGroupName, selectedValue]
 
   if (shouldTakeAttributeFromStore) {
     const conditionsJoinMode = getConditionJoinMode(mode)

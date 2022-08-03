@@ -15,27 +15,30 @@ export const WidgetSubTabEnum = ({
 
   return (
     <>
-      {unit.variants?.map(([variantName, variantValue]: any, index: number) => (
-        <Fragment key={variantName + variantValue}>
-          {index <= MAX_SUB_TAB_ROWS_AMOUNT && (
-            <div className={styles.subTab__unitContainer__unit}>
-              <div className={styles.subTab__unitContainer__unit__name}>
-                {variantName}
-              </div>
+      {unit.variants?.map(
+        ([variantName, variantValue]: any, index: number) =>
+          variantValue > 0 && (
+            <Fragment key={variantName + variantValue}>
+              {index < MAX_SUB_TAB_ROWS_AMOUNT && (
+                <div className={styles.subTab__unitContainer__unit}>
+                  <div className={styles.subTab__unitContainer__unit__name}>
+                    {variantName}
+                  </div>
 
-              <div className={styles.subTab__unitContainer__unit__value}>
-                {variantValue} {variantValue > 1 ? 'variants' : 'variant'}
-              </div>
-            </div>
-          )}
+                  <div className={styles.subTab__unitContainer__unit__value}>
+                    {variantValue} {variantValue > 1 ? 'variants' : 'variant'}
+                  </div>
+                </div>
+              )}
 
-          {index === 40 && (
-            <div className={styles.subTab__footer}>
-              {t('dashboard.shownFirst40', { variantsLeft })}
-            </div>
-          )}
-        </Fragment>
-      ))}
+              {index === 40 && (
+                <div className={styles.subTab__footer}>
+                  {t('dashboard.shownFirst40', { variantsLeft })}
+                </div>
+              )}
+            </Fragment>
+          ),
+      )}
     </>
   )
 }

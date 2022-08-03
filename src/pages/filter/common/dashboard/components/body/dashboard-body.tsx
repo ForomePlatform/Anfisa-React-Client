@@ -6,6 +6,7 @@ import cn from 'classnames'
 import difference from 'lodash/difference'
 
 import { DashboardGroupTypes } from '@core/enum/dashboard-group-types-enum'
+import { LocalStoreManager } from '@core/storage-management'
 import {
   DASHBOARD_LAYOUT_COLS,
   DASHBOARD_LAYOUT_CONTAINER_PADDING,
@@ -22,7 +23,6 @@ import {
   getLayoutOnSubTabHeightChange,
   getLayoutOnTabHeightChange,
   getNewTabLayout,
-  getStartLayout,
 } from '../../dashboard.utils'
 import { FooterPanel } from './footer-panel'
 import { WidgetTab } from './widget-tab'
@@ -32,6 +32,7 @@ const ResponsiveGridLayout = WidthProvider(GridLayout)
 export const DashboardBody = ({
   groups,
   filteredGroups,
+  getLayout,
   className,
 }: IDashboardBodyProps): ReactElement => {
   const [mainTabs, setMainTabs] = useState<IExtendedTUnitGroups[]>(
@@ -40,8 +41,9 @@ export const DashboardBody = ({
   const [spareTabs, setSpareTabs] = useState<IExtendedTUnitGroups[]>(
     difference(groups, mainTabs),
   )
+
   const [mainTabsLayout, setMainTabsLayout] = useState<Layout[]>(
-    getStartLayout(mainTabs),
+    getLayout(mainTabs),
   )
 
   const changeTabPlace = ({
@@ -83,7 +85,17 @@ export const DashboardBody = ({
       isOpen,
       mainTabsLayout,
     })
+
     setMainTabsLayout(newLayout)
+  }
+
+  const handleLayoutChange = (layout: Layout[]) => {
+    if (mainTabsLayout.length !== layout.length) {
+      return
+    }
+
+    LocalStoreManager.write('dashboardLayout', layout)
+    setMainTabsLayout(layout)
   }
 
   return (
@@ -97,7 +109,7 @@ export const DashboardBody = ({
         draggableHandle="[data-drag-handle]"
         isResizable={false}
         className={styles.body__gridLayout}
-        onLayoutChange={layout => setMainTabsLayout(layout)}
+        onLayoutChange={layout => handleLayoutChange(layout)}
       >
         {mainTabs.map((group, index) => {
           const groupName = group.name.toLowerCase()
