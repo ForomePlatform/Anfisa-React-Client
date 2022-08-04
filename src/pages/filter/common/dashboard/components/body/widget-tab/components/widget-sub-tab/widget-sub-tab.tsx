@@ -109,7 +109,7 @@ export const WidgetSubTab = memo(
           />
         </div>
 
-        {isUnitOpened && (
+        {isSubTabOpened && (
           <div className={styles.subTab__unitContainer}>
             {showInCharts ? (
               <UnitChart
