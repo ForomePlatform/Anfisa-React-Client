@@ -71,11 +71,12 @@ export const SolutionControlList = ({
   return (
     <>
       <MenuList className={className} wrap="nowrap">
-        {solutions?.map(({ name, standard }) => (
+        {solutions?.map(({ name, standard, 'eval-status': status }) => (
           <MenuListItem
             key={name}
             label={name}
             isSelected={selected === name}
+            disabled={!['ok', null].includes(status)}
             onClick={() => onSelect(name)}
             actions={renderActions(name, standard)}
           />
