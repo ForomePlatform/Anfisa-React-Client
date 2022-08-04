@@ -147,7 +147,7 @@ Scenario: 12 Delete searched parameter in variant drawer
 
 @regression
 @tc:114123
-Scenario: 11 Open Gnomad URL
+Scenario: 13 Open Gnomad URL
 
 	When User expands "GNOMAD" section using a button at the end of the section header
 	And Clicks the value of the URL parameter
@@ -155,14 +155,14 @@ Scenario: 11 Open Gnomad URL
 
 @regression
 @tc:114124
-Scenario: 12 Expand all sections
+Scenario: 14 Expand all sections
 
 	When  User clicks the "Expand" button (four side-directed arrows) 
 	Then All sections should be expanded
 
 @regression
 @tc:114125
-Scenario: 13 Collapse all sections
+Scenario: 15 Collapse all sections
 
 	Given All sections were expanded
 	When User clicks the "Collapse" button (Four inside-directed arrows) 
@@ -170,7 +170,7 @@ Scenario: 13 Collapse all sections
 
 @regression
 @tc:114126
-Scenario: 14 Replace a section
+Scenario: 16 Replace a section
 
 	When User drag-and-drops a section by clicking the section
 	And Moves the section to another place
@@ -178,7 +178,7 @@ Scenario: 14 Replace a section
 
 @regression
 @tc:114127
-Scenario: 15 Change section size
+Scenario: 17 Change section size
 
 	When User drags the button at the right bottom corner of the section
 	And Moves the cursor to the left
@@ -186,14 +186,14 @@ Scenario: 15 Change section size
 
 @regression
 @tc:114128
-Scenario: 16 Change variant drawers with Up-down arrows
+Scenario: 18 Change variant drawers with Up-down arrows
 
 	When User clicks Up/down arrow near the variant name
 	Then User should be able to change variant drawers
 
 @regression
 @tc:114129
-Scenario: 17 Close variant drawer
+Scenario: 19 Close variant drawer
 
 	When User clicks "X" button at the end of header
 	Then Variant drawer should be closed
