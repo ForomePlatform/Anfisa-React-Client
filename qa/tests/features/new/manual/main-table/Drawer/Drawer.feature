@@ -109,16 +109,39 @@ Scenario: 09 Delete note
 
 @regression
 @tc:114122
-Scenario Outline: 10 Search "<Parameter_Name>" in Variant drawer
+Scenario Outline: 10 Search with valid "<Parameter_Name>" in variant drawer
 
-	When User writes "<Parameter_Name>" in the search field
+	When User writes "<Parameter_Name>" in the variant drawer search field
 	Then Searched parameter should be highlighted in yellow
 
 Examples: 
-	| Parameter_Name   |
-	| Gene             |
-	| worst annotation |
-	| Canonical        |
+	| Parameter_Name |
+	| Gene           |
+	| GENE           |
+	| worst anno     |
+	| Canon          |
+
+@regression
+Scenario Outline: 11 Search with invalid "<Invalid_Name>" in variant drawer
+
+	When User writes "<Invalid_Name>" in the variant drawer search field
+	Then All section should stay closed
+	And Nothing should be found
+
+Examples: 
+	| Invalid_Name |
+	| Genne        |
+	| Cannonical   |
+	| @asdd        |
+	| 123          |
+
+@regression
+Scenario: 12 Delete searched parameter in variant drawer
+
+	Given Parameter was searched in variant drawer 
+	When User clicks "X" button at the end of search field
+	Then Written parameter should be deleted
+
 
 @regression
 @tc:114123
