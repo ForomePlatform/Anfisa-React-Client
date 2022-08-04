@@ -22,6 +22,8 @@ export const DashboardHeader = observer(
     const { viewType, toggleViewType, showInCharts, setInCharts } =
       dashboardStore
 
+    const toggleCharts = () => setInCharts(!showInCharts)
+
     const onExpand = () => {
       // TODO
     }
@@ -41,12 +43,12 @@ export const DashboardHeader = observer(
 
         <div className={styles.header__container} style={{ width: 626 }}>
           <div className={cn(styles.header__container, 'mr-6')}>
-            <Switch
-              isChecked={showInCharts}
-              onChange={() => setInCharts(!showInCharts)}
-            />
+            <Switch isChecked={showInCharts} onChange={toggleCharts} />
 
-            <div className={styles.header__controls__switch}>
+            <div
+              className={styles.header__controls__switch}
+              onClick={toggleCharts}
+            >
               {t('dashboard.showInCharts')}
             </div>
           </div>
