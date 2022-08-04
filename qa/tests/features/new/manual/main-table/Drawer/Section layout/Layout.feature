@@ -41,6 +41,7 @@ Examples:
 	| Anfisa      |
 
 @regression
+@tc:114273
 Scenario Outline: 04 Try to save section preset with invalid "<Invalid_Preset_Name>"
 
 	When User expands one of the sections using a down-arrow button at the end of the section header
@@ -65,6 +66,7 @@ Scenario: 05 Open Saved section preset
 	And Saved section should be opened again
 
 @regression
+@tc:114274
 Scenario: 06 Delete saved section preset
 
 	Given Section preset was saved
@@ -75,6 +77,7 @@ Scenario: 06 Delete saved section preset
 	And Preset should not be in the list anymore
 
 @regression
+@tc:114275
 Scenario: 07 Modify section preset
 
 	Given Section preset was saved
