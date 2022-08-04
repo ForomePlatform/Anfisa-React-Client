@@ -152,6 +152,7 @@ export const en = {
       whatsNext: "What's next?",
       relevantPresets: 'Relevant presets',
       additionalPresetFilter: 'Additional preset filters',
+      notApplicableForXl: 'Not applicable for XL dataset',
     },
   },
   ds: {

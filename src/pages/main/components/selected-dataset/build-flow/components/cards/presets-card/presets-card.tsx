@@ -3,12 +3,14 @@ import { useHistory } from 'react-router'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
+import { t } from '@i18n'
 import datasetStore from '@store/dataset/dataset'
 import { Routes } from '@router/routes.enum'
 import { Button } from '@ui/button'
 import { Card, CardTitle } from '@ui/card'
 import { Icon } from '@ui/icon'
 import { Loader } from '@ui/loader'
+import { Tooltip } from '@ui/tooltip'
 import { ICardProps } from '../../wizard/wizard.interface'
 import wizardStore from '../../wizard/wizard.store'
 import { memorizeLocation } from '../../wizard/wizard.utils'
@@ -43,28 +45,40 @@ export const PresetsCard = observer((props: ICardProps) => {
       .getSolutionsByRubric(wizardStore.whatsNextOption)
       .map(preset => {
         const isSelected = selectedValue === preset.name
+        const isDisabled = !['ok', null].includes(preset['eval-status'])
+        const getIconColor = () => {
+          if (isDisabled) return 'text-grey-dark'
+          if (isSelected) return 'text-white'
+          return 'text-blue-bright'
+        }
 
         return (
-          <div
+          <Tooltip
+            theme="light"
             key={preset.name}
-            onClick={() => wizardStore.setSelectedPreset(preset, id)}
+            title={isDisabled && t('home.buildFlow.notApplicableForXl')}
+            placement="top-start"
           >
             <div
-              className={cn(
-                'w-full flex items-center py-2 leading-5 cursor-pointer px-4',
-                isSelected
-                  ? 'bg-blue-bright text-white'
-                  : 'hover:bg-blue-light',
-              )}
+              onClick={() =>
+                !isDisabled && wizardStore.setSelectedPreset(preset, id)
+              }
             >
-              <Icon
-                name="File"
-                className={cn(isSelected ? 'text-white' : 'text-blue-bright')}
-              />
+              <div
+                className={cn(
+                  'w-full flex items-center py-2 leading-5 cursor-pointer px-4',
+                  isSelected
+                    ? 'bg-blue-bright text-white'
+                    : 'hover:bg-blue-light',
+                  isDisabled && 'text-grey-dark',
+                )}
+              >
+                <Icon name="File" className={cn(getIconColor())} />
 
-              <div className="ml-1.5">{preset.name}</div>
+                <div className="ml-1.5">{preset.name}</div>
+              </div>
             </div>
-          </div>
+          </Tooltip>
         )
       })
   }
