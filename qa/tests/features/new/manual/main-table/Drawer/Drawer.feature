@@ -122,6 +122,7 @@ Examples:
 	| Canon          |
 
 @regression
+@tc:114277
 Scenario Outline: 11 Search with invalid "<Invalid_Name>" in variant drawer
 
 	When User writes "<Invalid_Name>" in the variant drawer search field
@@ -136,6 +137,7 @@ Examples:
 	| 123          |
 
 @regression
+@tc:114278
 Scenario: 12 Delete searched parameter in variant drawer
 
 	Given Parameter was searched in variant drawer 
