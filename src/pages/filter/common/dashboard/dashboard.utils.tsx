@@ -19,8 +19,8 @@ export const getStartLayout = (groups: IExtendedTUnitGroups[]): Layout[] => {
 
   return groups.map((group, index) => ({
     i: group.name,
-    x: index < cols ? index : index % cols,
-    y: index < cols ? 0 : Math.floor(index / cols),
+    x: index % cols,
+    y: Math.floor(index / cols),
     w: 1,
     h: group.units.length + 1,
   }))
@@ -38,9 +38,7 @@ const getSortedColsHeight = (layout: Layout[]): IColsHeight[] => {
     colsHeight[layout.x].h += layout.h
   })
 
-  const sortedColsHeight = colsHeight.sort((col1, col2) => col1.h - col2.h)
-
-  return sortedColsHeight
+  return colsHeight.sort((col1, col2) => col1.h - col2.h)
 }
 
 export const getNewTabLayout = (
