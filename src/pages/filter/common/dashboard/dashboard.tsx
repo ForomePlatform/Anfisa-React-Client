@@ -1,42 +1,25 @@
 import styles from './dashboard.module.css'
 
-import { ReactElement, useState } from 'react'
+import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { Loader } from '@ui/loader'
+import { IUnitsProps } from '@pages/filter/refiner/refiner.interfaces'
 import { DashboardBody } from './components/body'
 import { DashboardHeader } from './components/header'
-import { IDashboardProps } from './dashboard.interfaces'
 import dashboardStore from './index'
+
+export interface IDashboardProps extends IUnitsProps {}
 
 export const Dashboard = observer(
   ({ groups, functionalUnits, isFetching }: IDashboardProps): ReactElement => {
-    const extendedGroups = dashboardStore.geExtendedGroups(
-      groups,
-      functionalUnits,
-    )
-
-    const [filterValue, setFilterValue] = useState('')
-
-    const preparedFilterValue = filterValue.toLowerCase()
-
-    const filteredGroups = dashboardStore.getFilteredGroups(
-      extendedGroups,
-      preparedFilterValue,
-    )
+    dashboardStore.setGroups(groups, functionalUnits)
 
     return (
       <div className={styles.dashboard}>
-        <DashboardHeader filterValue={filterValue} onChange={setFilterValue} />
+        <DashboardHeader />
 
-        {isFetching ? (
-          <Loader />
-        ) : (
-          <DashboardBody
-            groups={extendedGroups}
-            filteredGroups={filteredGroups}
-          />
-        )}
+        {isFetching ? <Loader /> : <DashboardBody />}
       </div>
     )
   },

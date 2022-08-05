@@ -10,11 +10,14 @@ import {
 } from './dashboard.constants'
 import {
   IColsHeight,
-  IExtendedTUnitGroups,
+  IExtendedTUnitGroup,
   IGetLayoutOnHeightChange,
 } from './dashboard.interfaces'
 
-export const getStartLayout = (groups: IExtendedTUnitGroups[]): Layout[] => {
+export const tabId = (name: string): string => `widget-tab-${name}`
+export const subTabId = (name: string): string => `widget-sub-tab_${name}`
+
+export const getStartLayout = (groups: IExtendedTUnitGroup[]): Layout[] => {
   const cols = DASHBOARD_LAYOUT_COLS
 
   return groups.map((group, index) => ({
@@ -42,7 +45,7 @@ const getSortedColsHeight = (layout: Layout[]): IColsHeight[] => {
 }
 
 export const getNewTabLayout = (
-  group: IExtendedTUnitGroups,
+  group: IExtendedTUnitGroup,
   mainTabsLayout: Layout[],
 ): Layout[] => {
   const clonedLayout = cloneDeep(mainTabsLayout)

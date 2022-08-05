@@ -1,77 +1,28 @@
 import styles from './widget-sub-tab.module.css'
 
-import { memo, ReactElement, useEffect, useMemo } from 'react'
+import { ReactElement, useMemo } from 'react'
 import cn from 'classnames'
+import { observer } from 'mobx-react-lite'
 
-import { useToggle } from '@core/hooks/use-toggle'
 import { Icon } from '@ui/icon'
 import { PredictionPowerIndicator } from '@components/prediction-power-indicator'
 import { UnitChart } from '@components/units-list/unit-chart'
 import dashboardStore from '@pages/filter/common/dashboard'
-import {
-  AttributeKinds,
-  IEnumPropertyStatus,
-  INumericPropertyStatus,
-} from '@service-providers/common'
-import { IWidgetSubTabProps } from '../../../../../dashboard.interfaces'
-import { WidgetSubTabEnum } from './components/widget-sub-tab-enum'
-import { WidgetSubTabNumeric } from './components/widget-sub-tab-numeric'
+import { WidgetSubTabItem } from '@pages/filter/common/dashboard/components/body/widget-tab/components/widget-sub-tab/components/widget-sub-tab-item'
+import { TExtendedUnit } from '@pages/filter/common/dashboard/dashboard.interfaces'
+import { subTabId } from '@pages/filter/common/dashboard/dashboard.utils'
+import { AttributeKinds } from '@service-providers/common'
 
-export const WidgetSubTab = memo(
-  ({
-    unit,
-    id,
-    tabIndex,
-    disabled,
-    isAllTabsOpened,
-    isUnitOpened,
-    showInCharts,
-    onChangeSubTabHeight,
-  }: IWidgetSubTabProps): ReactElement => {
-    const [isSubTabOpened, openSubTab, closeSubTab] = useToggle(isUnitOpened)
+export interface IWidgetSubTabProps {
+  unit: TExtendedUnit
+  groupName: string
+}
 
-    const handleToggleUnit = () => {
-      if (isUnitOpened) {
-        unit.isOpen = false
-        closeSubTab()
-        onChangeSubTabHeight({ index: tabIndex, id, isOpen: isUnitOpened })
-      } else {
-        unit.isOpen = true
-        openSubTab()
-        setTimeout(
-          () =>
-            onChangeSubTabHeight({
-              index: tabIndex,
-              id,
-              isOpen: isUnitOpened,
-            }),
-          0,
-        )
-      }
-    }
+export const WidgetSubTab = observer(
+  ({ unit, groupName }: IWidgetSubTabProps): ReactElement => {
+    const { showInCharts, filterValue, toggleUnit } = dashboardStore
 
-    useEffect(() => {
-      unit.isOpen = isAllTabsOpened
-      isAllTabsOpened ? openSubTab() : closeSubTab()
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isAllTabsOpened])
-
-    useEffect(() => {
-      unit.isOpen = isUnitOpened
-      isUnitOpened ? openSubTab() : closeSubTab()
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isUnitOpened])
-
-    const renderUnit = () => {
-      switch (unit.kind) {
-        case AttributeKinds.ENUM:
-          return <WidgetSubTabEnum unit={unit as IEnumPropertyStatus} />
-        case AttributeKinds.NUMERIC:
-          return <WidgetSubTabNumeric unit={unit as INumericPropertyStatus} />
-        default:
-          return null
-      }
-    }
+    const disabled = !unit.name.includes(filterValue)
 
     const predictionPowerValue = useMemo(() => {
       if ('power' in unit) {
@@ -83,7 +34,7 @@ export const WidgetSubTab = memo(
     return (
       <div
         className={cn(styles.subTab, disabled && styles.subTab_disabled)}
-        id={id}
+        id={subTabId(unit.name)}
       >
         <div className={styles.subTab__header}>
           <div
@@ -103,13 +54,13 @@ export const WidgetSubTab = memo(
           </div>
 
           <Icon
-            name={isSubTabOpened ? 'ArrowDownS' : 'ArrowUpS'}
+            name={unit.isOpen ? 'ArrowDownS' : 'ArrowUpS'}
             className="h-4 text-white hover:text-blue-bright cursor-pointer"
-            onClick={handleToggleUnit}
+            onClick={() => toggleUnit(unit.name, groupName)}
           />
         </div>
 
-        {isSubTabOpened && (
+        {unit.isOpen && (
           <div className={styles.subTab__unitContainer}>
             {showInCharts ? (
               <UnitChart
@@ -117,7 +68,7 @@ export const WidgetSubTab = memo(
                 className={styles.subTab__unitContainer__chartContainer}
               />
             ) : (
-              renderUnit()
+              <WidgetSubTabItem unit={unit} />
             )}
           </div>
         )}

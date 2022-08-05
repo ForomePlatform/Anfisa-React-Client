@@ -1,88 +1,49 @@
 import styles from './widget-tab.module.css'
 
-import { ReactElement } from 'react'
+import { ReactElement, useMemo } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { DashboardGroupTypes } from '@core/enum/dashboard-group-types-enum'
-import { useToggle } from '@core/hooks/use-toggle'
 import dashboardStore from '@pages/filter/common/dashboard'
-import { IWidgetTabProps } from '../../../dashboard.interfaces'
+import { IExtendedTUnitGroup } from '@pages/filter/common/dashboard/dashboard.interfaces'
 import { WidgetSubTab } from './components/widget-sub-tab'
 import { WidgetTabHeader } from './components/widget-tab-header'
 
+export interface IWidgetTabProps {
+  group: IExtendedTUnitGroup
+  index: number
+}
+
 export const WidgetTab = observer(
-  ({
-    group,
-    filteredGroups,
-    index,
-    id,
-    isGroupInSearch,
-    onChangeTabPlace,
-    onChangeSubTabHeight,
-    onChangeTabHeight,
-  }: IWidgetTabProps): ReactElement => {
-    const [isAllTabsOpened, openAllTabs, closeAllTabs] = useToggle(group.isOpen)
+  ({ group, index }: IWidgetTabProps): ReactElement => {
+    const { changeTabPlace, filterValue, toggleGroup } = dashboardStore
 
-    const handleToggleTabs = () => {
-      if (isAllTabsOpened) {
-        group.isOpen = false
-        closeAllTabs()
-        onChangeTabHeight({ index, id, isOpen: isAllTabsOpened })
-      } else {
-        openAllTabs()
-        group.isOpen = true
-        setTimeout(
-          () => onChangeTabHeight({ index, id, isOpen: isAllTabsOpened }),
-          0,
-        )
-      }
-    }
-
-    const changeTabPlace = () => {
-      onChangeTabPlace({
-        groupType: DashboardGroupTypes.Main,
-        groupName: group.name,
-        groupIndex: index,
-      })
-    }
+    const isGroupInSearch = useMemo(() => {
+      const value = filterValue.toLowerCase()
+      return group.units.some(unit => unit.name.toLowerCase().includes(value))
+    }, [group, filterValue])
 
     return (
       <>
         <div
           className={cn(styles.tab, !isGroupInSearch && styles.tab_disabled)}
-          onClick={changeTabPlace}
+          onClick={() =>
+            changeTabPlace(DashboardGroupTypes.Main, group.name, index)
+          }
         >
           <WidgetTabHeader
             group={group}
-            isAllTabsOpened={isAllTabsOpened}
-            onToggle={handleToggleTabs}
+            isAllTabsOpened={group.isOpen}
+            onToggle={() => toggleGroup(group.name)}
           />
         </div>
 
-        {group.units.map(unit => {
-          const unitName = unit.name.toLowerCase()
-          const isUnitInSearch = filteredGroups.some(group =>
-            group.attributes?.some(attr =>
-              attr.name.toLowerCase().startsWith(unitName),
-            ),
-          )
-
-          return (
-            <div key={unit.name} data-drag-handle={true}>
-              <WidgetSubTab
-                unit={unit}
-                id={`widget-sub-tab_${unit.name}`}
-                tabIndex={index}
-                disabled={!isUnitInSearch}
-                isAllTabsOpened={isAllTabsOpened}
-                isUnitOpened={unit.isOpen}
-                onChangeSubTabHeight={onChangeSubTabHeight}
-                showInCharts={dashboardStore.showInCharts}
-              />
-            </div>
-          )
-        })}
+        {group.units.map(unit => (
+          <div key={unit.name} data-drag-handle={true}>
+            <WidgetSubTab unit={unit} groupName={group.name} />
+          </div>
+        ))}
       </>
     )
   },
