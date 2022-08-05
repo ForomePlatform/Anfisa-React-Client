@@ -32,7 +32,7 @@ Scenario Outline: 04 Create dataset: invalid "<InvalidDatasetName>" name
 	Then error message "Incorrect dataset name" should be displayed 
 	And "Add dataset" button should be disabled
 
-	Examples:
+Examples:
 	| InvalidDatasetName    |
 	| 1test_dataset         |
 	| !test_dataset         |
