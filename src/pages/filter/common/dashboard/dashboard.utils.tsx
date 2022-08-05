@@ -17,13 +17,32 @@ import {
 export const getStartLayout = (groups: IExtendedTUnitGroups[]): Layout[] => {
   const cols = DASHBOARD_LAYOUT_COLS
 
-  return groups.map((group, index) => ({
+  const layout = groups.map((group, index) => ({
     i: group.name,
     x: index < cols ? index : index % cols,
     y: index < cols ? 0 : Math.floor(index / cols),
     w: 1,
     h: group.units.length + 1,
   }))
+
+  return layout
+}
+
+export const getUpdatedLayoutLayout = (
+  groups: IExtendedTUnitGroups[],
+  layout: Layout[],
+): Layout[] => {
+  const cols = DASHBOARD_LAYOUT_COLS
+
+  const newLayout: Layout[] = groups.map((group, index) => ({
+    i: group.name,
+    x: index < cols ? index : index % cols,
+    y: index < cols ? 0 : Math.floor(index / cols),
+    w: 1,
+    h: layout.find(item => item.i === group.name)!.h,
+  }))
+
+  return newLayout
 }
 
 const getSortedColsHeight = (layout: Layout[]): IColsHeight[] => {
@@ -113,4 +132,24 @@ export const getLayoutOnSubTabHeightChange = (
   }
 
   return clonedLayout
+}
+
+export const getSortedTabs = (
+  tabs: IExtendedTUnitGroups[],
+): IExtendedTUnitGroups[] => {
+  return tabs.sort((tab1, tab2) => {
+    if (tab1.isFavorite && !tab2.isFavorite) {
+      return -1
+    }
+
+    if (!tab1.isFavorite && tab2.isFavorite) {
+      return 1
+    }
+
+    if (tab1.isFavorite && tab2.isFavorite) {
+      return tab1.name.localeCompare(tab2.name)
+    }
+
+    return 1
+  })
 }

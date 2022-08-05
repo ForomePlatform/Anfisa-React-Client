@@ -18,6 +18,7 @@ export const WidgetTab = ({
   onChangeTabPlace,
   onChangeSubTabHeight,
   onChangeTabHeight,
+  onMakeTabFavorite,
 }: IWidgetTabProps): ReactElement => {
   const [isAllTabsOpened, openAllTabs, closeAllTabs] = useToggle(group.isOpen)
 
@@ -52,8 +53,10 @@ export const WidgetTab = ({
       >
         <WidgetTabHeader
           group={group}
+          index={index}
           isAllTabsOpened={isAllTabsOpened}
           onToggle={handleToggleTabs}
+          onMakeTabFavorite={onMakeTabFavorite}
         />
       </div>
 

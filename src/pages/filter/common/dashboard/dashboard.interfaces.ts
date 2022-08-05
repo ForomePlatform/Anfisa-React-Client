@@ -1,6 +1,7 @@
 import { Layout } from 'react-grid-layout'
 import { Argument } from 'classnames'
 
+import { DashboardGroupTypes } from '@core/enum/dashboard-group-types-enum'
 import { TStatusWithPredictionPower } from '@store/stat-units'
 import { IUnitsProps } from '@pages/filter/refiner/refiner.interfaces'
 import {
@@ -40,6 +41,7 @@ export interface IExtendedTUnitGroups {
   name: string
   units: TExtendedUnit[]
   isOpen: boolean
+  isFavorite: boolean
   power?: number
   attributes?: TExtendedUnit[]
 }
@@ -69,6 +71,11 @@ export interface IWidgetTabProps {
   onChangeTabPlace: (props: IChangeGroupPlaceProps) => void
   onChangeTabHeight: ({ index, id, isOpen }: IChangeHeightProps) => void
   onChangeSubTabHeight: ({ index, id, isOpen }: IChangeHeightProps) => void
+  onMakeTabFavorite: (
+    groupType: DashboardGroupTypes,
+    groupName: string,
+    groupIndex: number,
+  ) => void
 }
 
 export interface IWidgetSubTabProps {
@@ -91,14 +98,25 @@ export interface IWidgetSubTabEnumProps {
 
 export interface IWidgetTabHeaderProps {
   group: IExtendedTUnitGroups
+  index: number
   isAllTabsOpened?: boolean
   onToggle: () => void
+  onMakeTabFavorite: (
+    groupType: DashboardGroupTypes,
+    groupName: string,
+    groupIndex: number,
+  ) => void
 }
 
 export interface IFooterPanelProps {
   spareTabs: IExtendedTUnitGroups[]
   filteredGroups: IExtendedTUnitGroups[]
   onChange: (props: IChangeGroupPlaceProps) => void
+  onMakeTabFavorite: (
+    groupType: DashboardGroupTypes,
+    groupName: string,
+    grouIndex: number,
+  ) => void
 }
 
 export interface IColsHeight {

@@ -13,6 +13,7 @@ export const FooterPanel = ({
   spareTabs,
   filteredGroups,
   onChange,
+  onMakeTabFavorite,
 }: IFooterPanelProps): ReactElement => (
   <div className={styles.footerPanel}>
     {spareTabs.map((group, index) => {
@@ -51,7 +52,13 @@ export const FooterPanel = ({
 
           <Icon
             name="Favorites"
-            className="text-grey-blue hover:text-yellow-secondary"
+            className={cn('text-grey-blue hover:text-yellow-secondary', {
+              'fill-yellow-secondary text-yellow-secondary': group.isFavorite,
+            })}
+            onClick={e => {
+              e.stopPropagation()
+              onMakeTabFavorite(DashboardGroupTypes.Spare, group.name, index)
+            }}
           />
         </div>
       )

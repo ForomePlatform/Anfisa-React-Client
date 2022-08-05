@@ -1,11 +1,11 @@
 import { Layout } from 'react-grid-layout'
-import { makeAutoObservable, reaction, toJS } from 'mobx'
+import { makeAutoObservable, reaction } from 'mobx'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModalSources } from '@core/enum/modal-sources'
 import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
 import { LocalStoreManager } from '@core/storage-management'
-import datasetStore from '@store/dataset/dataset'
+import { datasetStore } from '@store/dataset'
 import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
 import { TUnitGroups } from '@store/stat-units'
@@ -28,8 +28,6 @@ export class DashboardStore {
     reaction(
       () => this.dashBoardQuery,
       () => {
-        LocalStoreManager.delete('dashboardLayout')
-        LocalStoreManager.delete('dashboardMainTabs')
         this.toggleViewType(ViewTypeDashboard.List)
       },
     )
@@ -47,20 +45,31 @@ export class DashboardStore {
   }
 
   public getLayout(groups: IExtendedTUnitGroups[]): Layout[] {
-    const savedLayout = LocalStoreManager.read('dashboardLayout')
+    const layout =
+      LocalStoreManager.read<Layout[]>(
+        'dashboardLayout',
+        datasetStore.datasetName,
+      ) || getStartLayout(groups)
 
-    return savedLayout || getStartLayout(groups)
+    return layout
   }
 
   public getMainTabs(groups: IExtendedTUnitGroups[]): IExtendedTUnitGroups[] {
-    const savedMainTabs = LocalStoreManager.read('dashboardMainTabs')
+    const mainTabs =
+      LocalStoreManager.read<IExtendedTUnitGroups[]>(
+        'dashboardMainTabs',
+        datasetStore.datasetName,
+      ) || groups.slice(0, 4)
 
-    return savedMainTabs || groups.slice(0, 4)
+    return mainTabs
   }
 
   public getSpareTabs(groups: IExtendedTUnitGroups[]): IExtendedTUnitGroups[] {
-    const mainTabs: IExtendedTUnitGroups[] =
-      toJS(LocalStoreManager.read('dashboardMainTabs')) || groups.slice(0, 4)
+    const mainTabs =
+      LocalStoreManager.read<IExtendedTUnitGroups[]>(
+        'dashboardMainTabs',
+        datasetStore.datasetName,
+      ) || groups.slice(0, 4)
 
     return groups.filter(
       group => !mainTabs.some(tab => tab.name === group.name),
@@ -76,6 +85,7 @@ export class DashboardStore {
       units: group.units.map(unit => Object.assign(unit, { isOpen: false })),
       power: group.power,
       isOpen: false,
+      isFavorite: false,
     }))
 
     extendedGroups.push({
@@ -84,6 +94,7 @@ export class DashboardStore {
         Object.assign(unit, { isOpen: false }),
       ),
       isOpen: false,
+      isFavorite: false,
     })
 
     return extendedGroups

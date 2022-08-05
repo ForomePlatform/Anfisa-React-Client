@@ -25,6 +25,7 @@ Default.args = {
     name: 'Inheritance',
     power: 0.22298721274582547,
     isOpen: false,
+    isFavorite: false,
     units: [
       {
         name: 'Callers',

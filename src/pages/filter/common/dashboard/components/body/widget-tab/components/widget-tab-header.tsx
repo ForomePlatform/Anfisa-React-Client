@@ -1,7 +1,9 @@
 import styles from '../widget-tab.module.css'
 
 import { ReactElement } from 'react'
+import cn from 'classnames'
 
+import { DashboardGroupTypes } from '@core/enum/dashboard-group-types-enum'
 import { Divider } from '@ui/divider'
 import { Icon } from '@ui/icon'
 import { FnLabel } from '@components/fn-label'
@@ -10,8 +12,10 @@ import { IWidgetTabHeaderProps } from '@pages/filter/common/dashboard/dashboard.
 
 export const WidgetTabHeader = ({
   group,
+  index,
   isAllTabsOpened,
   onToggle,
+  onMakeTabFavorite,
 }: IWidgetTabHeaderProps): ReactElement => (
   <div className={styles.tab__header}>
     <div className="flex items-center">
@@ -36,7 +40,13 @@ export const WidgetTabHeader = ({
     >
       <Icon
         name="Favorites"
-        className="text-grey-blue hover:text-yellow-secondary"
+        className={cn('text-grey-blue hover:text-yellow-secondary', {
+          'fill-yellow-secondary text-yellow-secondary': group.isFavorite,
+        })}
+        onClick={e => {
+          e.stopPropagation()
+          onMakeTabFavorite(DashboardGroupTypes.Main, group.name, index)
+        }}
       />
 
       <Divider
