@@ -9,11 +9,7 @@ import {
   DASHBOARD_ROW_OFFSET_HEIGHT,
   HIDDEN_RESIZE_HEIGHT,
 } from './dashboard.constants'
-import {
-  IColsHeight,
-  IExtendedTUnitGroup,
-  IGetLayoutOnHeightChange,
-} from './dashboard.interfaces'
+import { IColsHeight, IExtendedTUnitGroup } from './dashboard.interfaces'
 
 export const tabId = (name: string): string => `widget-tab-${name}`
 export const subTabId = (name: string): string => `widget-sub-tab_${name}`
@@ -30,7 +26,7 @@ export const getStartLayout = (groups: IExtendedTUnitGroup[]): Layout[] => {
   }))
 }
 
-export const getUpdatedLayoutLayout = (
+export const getUpdatedLayout = (
   groups: IExtendedTUnitGroup[],
   layout: Layout[],
 ): Layout[] => {
@@ -82,10 +78,11 @@ export const getNewTabLayout = (
 }
 
 export const getLayoutOnTabHeightChange = (
-  props: IGetLayoutOnHeightChange,
+  id: string,
+  index: number,
+  isOpen: boolean,
+  mainTabsLayout: Layout[],
 ): Layout[] => {
-  const { id, index, isOpen, mainTabsLayout } = props
-
   const tab = document.getElementById(id)
   const tabChildren = tab?.children
   const clonedLayout = cloneDeep(mainTabsLayout)
@@ -112,10 +109,11 @@ export const getLayoutOnTabHeightChange = (
 }
 
 export const getLayoutOnSubTabHeightChange = (
-  props: IGetLayoutOnHeightChange,
+  id: string,
+  index: number,
+  isOpen: boolean,
+  mainTabsLayout: Layout[],
 ): Layout[] => {
-  const { id, index, isOpen, mainTabsLayout } = props
-
   const subTab = document.getElementById(id)
   const subTabHeight = subTab?.getBoundingClientRect().height
   const clonedLayout = cloneDeep(mainTabsLayout)

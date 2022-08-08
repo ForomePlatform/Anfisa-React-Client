@@ -18,7 +18,7 @@ interface IFooterTabProps {
 
 export const FooterTab = observer(
   ({ group, index }: IFooterTabProps): ReactElement => {
-    const { filterValue, changeTabPlace } = dashboardStore
+    const { filterValue, changeTabPlace, onFavorite } = dashboardStore
 
     const isGroupInSearch = useMemo(() => {
       const value = filterValue.toLowerCase()
@@ -51,7 +51,13 @@ export const FooterTab = observer(
 
         <Icon
           name="Favorites"
-          className="text-grey-blue hover:text-yellow-secondary"
+          className={cn('text-grey-blue hover:text-yellow-secondary', {
+            'fill-yellow-secondary text-yellow-secondary': group.isFavorite,
+          })}
+          onClick={e => {
+            e.stopPropagation()
+            onFavorite(DashboardGroupTypes.Spare, group.name, index)
+          }}
         />
       </div>
     )

@@ -1,6 +1,3 @@
-import { Layout } from 'react-grid-layout'
-
-import { DashboardGroupTypes } from '@core/enum/dashboard-group-types-enum'
 import { TStatusWithPredictionPower } from '@store/stat-units'
 import {
   IEnumPropertyStatus,
@@ -36,30 +33,6 @@ export interface IExtendedTUnitGroup {
   isFavorite: boolean
   power?: number
   attributes?: TExtendedUnit[]
-}
-
-export interface IChangeHeightProps {
-  index: number
-  id: string
-  isOpen: boolean
-}
-
-export interface IGetLayoutOnHeightChange extends IChangeHeightProps {
-  mainTabsLayout: Layout[]
-}
-
-export interface IWidgetSubTabNumericProps {
-  unit: INumericPropertyStatus
-}
-
-export interface IWidgetSubTabEnumProps {
-  unit: IEnumPropertyStatus
-}
-
-export interface IWidgetTabHeaderProps {
-  group: IExtendedTUnitGroup
-  isAllTabsOpened?: boolean
-  onToggle: () => void
 }
 
 export interface IColsHeight {

@@ -4,7 +4,11 @@ import { Fragment, ReactElement } from 'react'
 
 import { t } from '@i18n'
 import { MAX_SUB_TAB_ROWS_AMOUNT } from '@pages/filter/common/dashboard/dashboard.constants'
-import { IWidgetSubTabEnumProps } from '@pages/filter/common/dashboard/dashboard.interfaces'
+import { IEnumPropertyStatus } from '@service-providers/common'
+
+interface IWidgetSubTabEnumProps {
+  unit: IEnumPropertyStatus
+}
 
 export const WidgetSubTabEnum = ({
   unit,

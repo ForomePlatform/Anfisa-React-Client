@@ -1,4 +1,5 @@
 import { Layout } from 'react-grid-layout'
+import { cloneDeep } from 'lodash'
 import { makeAutoObservable, reaction } from 'mobx'
 
 import { DashboardGroupTypes } from '@core/enum/dashboard-group-types-enum'
@@ -22,7 +23,9 @@ import {
   getLayoutOnSubTabHeightChange,
   getLayoutOnTabHeightChange,
   getNewTabLayout,
+  getSortedTabs,
   getStartLayout,
+  getUpdatedLayout,
 } from './dashboard.utils'
 
 export class DashboardStore {
@@ -256,23 +259,23 @@ export class DashboardStore {
   }
 
   public changeTabHeight = (index: number, id: string, isOpen: boolean) => {
-    const newLayout = getLayoutOnTabHeightChange({
-      index,
+    const newLayout = getLayoutOnTabHeightChange(
       id,
+      index,
       isOpen,
-      mainTabsLayout: this.mainTabsLayout,
-    })
+      this.mainTabsLayout,
+    )
 
     this.setMainTabsLayout(newLayout)
   }
 
   public changeSubTabHeight = (index: number, id: string, isOpen: boolean) => {
-    const newLayout = getLayoutOnSubTabHeightChange({
-      index,
+    const newLayout = getLayoutOnSubTabHeightChange(
       id,
+      index,
       isOpen,
-      mainTabsLayout: this.mainTabsLayout,
-    })
+      this.mainTabsLayout,
+    )
 
     this.setMainTabsLayout(newLayout)
   }
@@ -305,12 +308,6 @@ export class DashboardStore {
     })
   }
 
-  public openUnit = (unitName: string, groupName: string) =>
-    this.toggleUnit(unitName, groupName, true)
-
-  public closeUnit = (unitName: string, groupName: string) =>
-    this.toggleUnit(unitName, groupName, false)
-
   public toggleGroup = (groupName: string, value?: boolean) => {
     let isOpen = true
 
@@ -330,12 +327,46 @@ export class DashboardStore {
     })
   }
 
-  public openGroup = (groupName: string) => this.toggleGroup(groupName, true)
-
-  public closeGroup = (groupName: string) => this.toggleGroup(groupName, false)
-
   public toggleAll = (value?: boolean) => {
     this._mainTabs.forEach(({ name }) => this.toggleGroup(name, value))
+  }
+
+  public onFavorite = (
+    type: DashboardGroupTypes,
+    groupName: string,
+    groupIndex: number,
+  ) => {
+    if (type === DashboardGroupTypes.Main) {
+      const clonedTabs = cloneDeep(this.mainTabs)
+
+      clonedTabs.forEach((item, index) => {
+        if (item.name === groupName) {
+          clonedTabs[index].isFavorite = !clonedTabs[index].isFavorite
+        }
+      })
+
+      const sortedTabs = getSortedTabs(clonedTabs)
+      this.setMainTabs(sortedTabs)
+      this.setMainTabsLayout(getUpdatedLayout(sortedTabs, this.mainTabsLayout))
+
+      return
+    }
+
+    const selectedGroup = this.groups.find(group => group.name === groupName)
+    this.setSpareTabs(prev => prev.filter((_, index) => index !== groupIndex))
+
+    const newMainTabs = [...this.mainTabs, selectedGroup!]
+    const newLayout = getNewTabLayout(selectedGroup!, this.mainTabsLayout)
+
+    newMainTabs.forEach((item, index) => {
+      if (item.name === groupName) {
+        newMainTabs[index].isFavorite = !newMainTabs[index].isFavorite
+      }
+    })
+
+    const sortedTabs = getSortedTabs(newMainTabs)
+    this.setMainTabs(sortedTabs)
+    this.setMainTabsLayout(getUpdatedLayout(sortedTabs, newLayout))
   }
 
   public reset = () => {
