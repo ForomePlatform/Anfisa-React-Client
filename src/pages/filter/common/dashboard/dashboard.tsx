@@ -1,6 +1,6 @@
 import styles from './dashboard.module.css'
 
-import { ReactElement } from 'react'
+import { ReactElement, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { Loader } from '@ui/loader'
@@ -13,7 +13,11 @@ export interface IDashboardProps extends IUnitsProps {}
 
 export const Dashboard = observer(
   ({ groups, functionalUnits, isFetching }: IDashboardProps): ReactElement => {
-    dashboardStore.setGroups(groups, functionalUnits)
+    useEffect(() => {
+      if (groups.length) {
+        dashboardStore.setGroups(groups, functionalUnits)
+      }
+    }, [functionalUnits, groups, isFetching])
 
     return (
       <div className={styles.dashboard}>

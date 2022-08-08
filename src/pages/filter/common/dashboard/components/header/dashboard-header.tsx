@@ -70,7 +70,7 @@ export const DashboardHeader = observer((): ReactElement => {
 
         <button
           className={styles.header__controls__button}
-          onClick={() => toggleAll()}
+          onClick={() => toggleAll(!isAllTabsOpened)}
         >
           <Icon
             name={isAllTabsOpened ? 'Collapse' : 'Expand'}

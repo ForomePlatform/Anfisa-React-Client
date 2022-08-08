@@ -82,11 +82,11 @@ export const getLayoutOnTabHeightChange = (
     }
   }
 
-  if (!isOpen && tabChildren) {
+  if (isOpen && tabChildren) {
     clonedLayout[index].h =
       (height + HIDDEN_RESIZE_HEIGHT - DASHBOARD_COLS_OFFSET_HEIGHT) /
       DASHBOARD_ROW_OFFSET_HEIGHT
-  } else if (isOpen && tabChildren) {
+  } else if (!isOpen && tabChildren) {
     clonedLayout[index].h = tabChildren.length - 1
   }
 
@@ -102,12 +102,12 @@ export const getLayoutOnSubTabHeightChange = (
   const subTabHeight = subTab?.getBoundingClientRect().height
   const clonedLayout = cloneDeep(mainTabsLayout)
 
-  if (subTabHeight && !isOpen) {
+  if (subTabHeight && isOpen) {
     clonedLayout[index].h =
       (subTabHeight - DASHBOARD_LAYOUT_ROW_HEIGHT) /
         DASHBOARD_ROW_OFFSET_HEIGHT +
       clonedLayout[index].h
-  } else if (subTabHeight && isOpen) {
+  } else if (subTabHeight && !isOpen) {
     clonedLayout[index].h =
       clonedLayout[index].h -
       (subTabHeight - DASHBOARD_LAYOUT_ROW_HEIGHT) / DASHBOARD_ROW_OFFSET_HEIGHT

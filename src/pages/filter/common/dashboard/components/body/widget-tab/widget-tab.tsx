@@ -1,12 +1,13 @@
 import styles from './widget-tab.module.css'
 
-import { ReactElement, useMemo } from 'react'
+import { ReactElement, useLayoutEffect, useMemo } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { DashboardGroupTypes } from '@core/enum/dashboard-group-types-enum'
 import dashboardStore from '@pages/filter/common/dashboard'
 import { IExtendedTUnitGroup } from '@pages/filter/common/dashboard/dashboard.interfaces'
+import { tabId } from '@pages/filter/common/dashboard/dashboard.utils'
 import { WidgetSubTab } from './components/widget-sub-tab'
 import { WidgetTabHeader } from './components/widget-tab-header'
 
@@ -17,12 +18,22 @@ export interface IWidgetTabProps {
 
 export const WidgetTab = observer(
   ({ group, index }: IWidgetTabProps): ReactElement => {
-    const { changeTabPlace, filterValue, toggleGroup } = dashboardStore
+    const {
+      changeTabPlace,
+      filterValue,
+      toggleGroup,
+      showInCharts,
+      changeTabHeight,
+    } = dashboardStore
 
     const isGroupInSearch = useMemo(() => {
       const value = filterValue.toLowerCase()
       return group.units.some(unit => unit.name.toLowerCase().includes(value))
     }, [group, filterValue])
+
+    useLayoutEffect(() => {
+      changeTabHeight(index, tabId(group.name), group.isOpen)
+    }, [group.isOpen, showInCharts])
 
     return (
       <>
@@ -41,7 +52,7 @@ export const WidgetTab = observer(
 
         {group.units.map(unit => (
           <div key={unit.name} data-drag-handle={true}>
-            <WidgetSubTab unit={unit} groupName={group.name} />
+            <WidgetSubTab unit={unit} index={index} groupName={group.name} />
           </div>
         ))}
       </>

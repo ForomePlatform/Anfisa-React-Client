@@ -1,6 +1,6 @@
 import styles from './widget-sub-tab.module.css'
 
-import { ReactElement, useMemo } from 'react'
+import { ReactElement, useLayoutEffect, useMemo } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
@@ -15,12 +15,14 @@ import { AttributeKinds } from '@service-providers/common'
 
 export interface IWidgetSubTabProps {
   unit: TExtendedUnit
+  index: number
   groupName: string
 }
 
 export const WidgetSubTab = observer(
-  ({ unit, groupName }: IWidgetSubTabProps): ReactElement => {
-    const { showInCharts, filterValue, toggleUnit } = dashboardStore
+  ({ unit, index, groupName }: IWidgetSubTabProps): ReactElement => {
+    const { showInCharts, filterValue, toggleUnit, changeSubTabHeight } =
+      dashboardStore
 
     const disabled = !unit.name.includes(filterValue)
 
@@ -30,6 +32,10 @@ export const WidgetSubTab = observer(
       }
       return 0
     }, [unit])
+
+    useLayoutEffect(() => {
+      changeSubTabHeight(index, subTabId(unit.name), unit.isOpen)
+    }, [unit.isOpen, showInCharts])
 
     return (
       <div

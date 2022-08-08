@@ -23,8 +23,6 @@ import {
   getLayoutOnTabHeightChange,
   getNewTabLayout,
   getStartLayout,
-  subTabId,
-  tabId,
 } from './dashboard.utils'
 
 export class DashboardStore {
@@ -162,6 +160,9 @@ export class DashboardStore {
         ? getStartLayout(extendedGroups)
         : savedLayout
 
+    console.log(mainTabs)
+    console.log(extendedGroups)
+
     this._groups = extendedGroups
     this._mainTabs = mainTabs
     this._spareTabs = spareTabs
@@ -282,7 +283,6 @@ export class DashboardStore {
     groupName: string,
     value?: boolean,
   ) => {
-    let index = 0
     let isOpen = true
 
     this._mainTabs = this._mainTabs.map(group => {
@@ -290,12 +290,11 @@ export class DashboardStore {
         return group
       }
 
-      const units = group.units.map((unit, i) => {
+      const units = group.units.map(unit => {
         if (unit.name !== unitName) {
           return unit
         }
 
-        index = i
         isOpen = value || !unit.isOpen
 
         return { ...unit, isOpen }
@@ -305,11 +304,6 @@ export class DashboardStore {
 
       return { ...group, isOpen: groupIsOpen, units }
     })
-
-    setTimeout(
-      () => this.changeSubTabHeight(index, subTabId(unitName), isOpen),
-      0,
-    )
   }
 
   public openUnit = (unitName: string, groupName: string) =>
@@ -319,15 +313,13 @@ export class DashboardStore {
     this.toggleUnit(unitName, groupName, false)
 
   public toggleGroup = (groupName: string, value?: boolean) => {
-    let index = 0
     let isOpen = true
 
-    this._mainTabs = this._mainTabs.map((group, i) => {
+    this._mainTabs = this._mainTabs.map(group => {
       if (group.name !== groupName) {
         return group
       }
 
-      index = i
       isOpen = value || !group.isOpen
 
       const units = group.units.map(unit => ({ ...unit, isOpen }))
@@ -337,8 +329,6 @@ export class DashboardStore {
         isOpen,
       }
     })
-
-    setTimeout(() => this.changeTabHeight(index, tabId(groupName), isOpen), 0)
   }
 
   public openGroup = (groupName: string) => this.toggleGroup(groupName, true)
