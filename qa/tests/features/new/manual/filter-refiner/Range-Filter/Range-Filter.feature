@@ -10,7 +10,7 @@ Scenario Outline: 01 Filter by "<Attribute Name>" range - middle
 	And changes "<" sign with "≤" next to the minimum value
 	And enters the maximum value of range "<Maximum Value>"
 	And clicks the "Apply condition" button to apply the filter
-	Then the range "<Minimum Value>" <= "<Attribute Name>" <= "<Maximum Value>" should be displayed in the right part of the screen
+	Then the range "<Minimum Value>" less than or equals "<Attribute Name>" less than or equals "<Maximum Value>" should be displayed in the right part of the screen
 	And number of variants should equal "<Total Variants>"
 
 Examples:
@@ -31,7 +31,7 @@ Scenario Outline: 02 Filter by "<Attribute Name>" range - boundary values
 	And enters the maximum value of range "<Maximum Value>"
 	And clicks the "Apply condition" button to apply the filter
 	Then filter should be applied
-	And the range "<Minimum Value>" <= "<Attribute Name>" <= "<Maximum Value>" should be displayed in the right part of the screen
+	And the range "<Minimum Value>" less than or equals "<Attribute Name>" less than or equals "<Maximum Value>" should be displayed in the right part of the screen
 	And number of variants should be equal to "<Total Variants>"
 
 Examples:
@@ -50,7 +50,7 @@ Scenario Outline: 03 Empty "<Minimum Value>" field
 	And enters the maximum value of range "<Maximum Value>"
 	And leaves the minimum value field empty
 	And clicks the "Apply condition" button to apply the filter
-	Then the "<Attribute Name>" <= "<Maximum Value>" should be displayed in the right part of the screen
+	Then the "<Attribute Name>" less than or equals "<Maximum Value>" should be displayed in the right part of the screen
 	And the "<Minimum Value>" should be counted as the minimum value
 
 Examples: 
@@ -64,7 +64,7 @@ Scenario Outline: 04 Empty "<Maximum Value>" field
 	And enters the minimum value of range "<Minimum Value>"
 	And leaves the maximum value field empty
 	And clicks the "Apply condition" button to apply the filter
-	Then the "<Attribute Name>" > "<Minimum Value>" should be displayed in the right part of the screen
+	Then the "<Attribute Name>" greater than "<Minimum Value>" should be displayed in the right part of the screen
 	And the "<Maximum Value>" should be counted as the maximum value
 
 Examples: 

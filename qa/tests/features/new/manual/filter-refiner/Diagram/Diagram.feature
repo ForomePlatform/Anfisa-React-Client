@@ -11,9 +11,9 @@ Scenario Outline: 01 Expand the "<Attribute Name>" diagram for attribute with le
 	And the diagram should correspond to attribute by the value's variant number
 
 Examples: 
-| Attribute Name       | Number Of Columns |
-| Callers              | 10                |
-| Canonical_Annotation | 18                |
+	| Attribute Name       | Number Of Columns |
+	| Callers              | 10                |
+	| Canonical_Annotation | 18                |
 
 Scenario Outline: 02 Expand the "<Attribute Name>" diagram for attribute with more than 40 values 
 	When user clicks the down arrow (v) button near "<Attribute Name>" in the left part of the page
@@ -23,10 +23,9 @@ Scenario Outline: 02 Expand the "<Attribute Name>" diagram for attribute with mo
 	And the diagram should correspond to attribute by the value's variant number
 
 Examples: 
-| Attribute Name | Total Number |
-| Symbol         | 490          |
-| EQTL_Gene      | 67           |
-
+	| Attribute Name | Total Number |
+	| Symbol         | 490          |
+	| EQTL_Gene      | 67           |
 
 Scenario: 02 Collapse diagram
 	Given the attribute diagram was expanded
