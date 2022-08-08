@@ -1,5 +1,6 @@
 import { Layout } from 'react-grid-layout'
 
+import { DashboardGroupTypes } from '@core/enum/dashboard-group-types-enum'
 import { TStatusWithPredictionPower } from '@store/stat-units'
 import {
   IEnumPropertyStatus,
@@ -32,6 +33,7 @@ export interface IExtendedTUnitGroup {
   name: string
   units: TExtendedUnit[]
   isOpen: boolean
+  isFavorite: boolean
   power?: number
   attributes?: TExtendedUnit[]
 }

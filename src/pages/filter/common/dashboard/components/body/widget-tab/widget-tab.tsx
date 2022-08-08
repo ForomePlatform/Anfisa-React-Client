@@ -42,6 +42,7 @@ export const WidgetTab = observer(
             group={group}
             isAllTabsOpened={group.isOpen}
             onToggle={() => toggleGroup(group.name)}
+            onMakeTabFavorite={onMakeTabFavorite}
           />
         </div>
 

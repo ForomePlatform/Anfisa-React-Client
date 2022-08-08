@@ -6,7 +6,7 @@ import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModalSources } from '@core/enum/modal-sources'
 import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
 import { LocalStoreManager } from '@core/storage-management'
-import datasetStore from '@store/dataset/dataset'
+import { datasetStore } from '@store/dataset'
 import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
 import { TUnitGroups } from '@store/stat-units'
@@ -128,6 +128,7 @@ export class DashboardStore {
       units: group.units.map(unit => Object.assign(unit, { isOpen: false })),
       power: group.power,
       isOpen: false,
+      isFavorite: false,
     }))
 
     extendedGroups.push({
@@ -136,6 +137,7 @@ export class DashboardStore {
         Object.assign(unit, { isOpen: false }),
       ),
       isOpen: false,
+      isFavorite: false,
     })
 
     const savedTabs = LocalStoreManager.read<IExtendedTUnitGroup[] | undefined>(

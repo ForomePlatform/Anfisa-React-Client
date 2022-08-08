@@ -5,6 +5,7 @@ import {
   DASHBOARD_COLS_OFFSET_HEIGHT,
   DASHBOARD_LAYOUT_COLS,
   DASHBOARD_LAYOUT_ROW_HEIGHT,
+  DASHBOARD_LAYOUT_VERTICAL_MARGIN_CF,
   DASHBOARD_ROW_OFFSET_HEIGHT,
   HIDDEN_RESIZE_HEIGHT,
 } from './dashboard.constants'
@@ -25,7 +26,22 @@ export const getStartLayout = (groups: IExtendedTUnitGroup[]): Layout[] => {
     x: index % cols,
     y: Math.floor(index / cols),
     w: 1,
-    h: group.units.length + 1,
+    h: group.units.length + 1 + DASHBOARD_LAYOUT_VERTICAL_MARGIN_CF,
+  }))
+}
+
+export const getUpdatedLayoutLayout = (
+  groups: IExtendedTUnitGroup[],
+  layout: Layout[],
+): Layout[] => {
+  const cols = DASHBOARD_LAYOUT_COLS
+
+  return groups.map((group, index) => ({
+    i: group.name,
+    x: index % cols,
+    y: Math.floor(index / cols),
+    w: 1,
+    h: layout.find(item => item.i === group.name)!.h,
   }))
 }
 
@@ -57,7 +73,7 @@ export const getNewTabLayout = (
     x: colsHeight[0].x,
     y: colsHeight[0].h + 1,
     w: 1,
-    h: group.units.length + 1,
+    h: group.units.length + 1 + DASHBOARD_LAYOUT_VERTICAL_MARGIN_CF,
   }
 
   clonedLayout.push(newLayout)
@@ -85,9 +101,11 @@ export const getLayoutOnTabHeightChange = (
   if (isOpen && tabChildren) {
     clonedLayout[index].h =
       (height + HIDDEN_RESIZE_HEIGHT - DASHBOARD_COLS_OFFSET_HEIGHT) /
-      DASHBOARD_ROW_OFFSET_HEIGHT
+        DASHBOARD_ROW_OFFSET_HEIGHT +
+      DASHBOARD_LAYOUT_VERTICAL_MARGIN_CF
   } else if (!isOpen && tabChildren) {
-    clonedLayout[index].h = tabChildren.length - 1
+    clonedLayout[index].h =
+      tabChildren.length - 1 + DASHBOARD_LAYOUT_VERTICAL_MARGIN_CF
   }
 
   return clonedLayout
@@ -114,4 +132,24 @@ export const getLayoutOnSubTabHeightChange = (
   }
 
   return clonedLayout
+}
+
+export const getSortedTabs = (
+  tabs: IExtendedTUnitGroup[],
+): IExtendedTUnitGroup[] => {
+  return tabs.sort((tab1, tab2) => {
+    if (tab1.isFavorite && !tab2.isFavorite) {
+      return -1
+    }
+
+    if (!tab1.isFavorite && tab2.isFavorite) {
+      return 1
+    }
+
+    if (tab1.isFavorite && tab2.isFavorite) {
+      return tab1.name.localeCompare(tab2.name)
+    }
+
+    return 1
+  })
 }
