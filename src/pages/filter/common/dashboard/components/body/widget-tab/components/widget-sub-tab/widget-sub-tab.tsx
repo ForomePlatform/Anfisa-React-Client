@@ -36,9 +36,9 @@ export const WidgetSubTab = observer(
       dashboardStore.selectGroup(unit)
     }
 
-    useLayoutEffect(() => {
+    /*useLayoutEffect(() => {
       dashboardStore.changeSubTabHeight(index, subTabId(unit.name), unit.isOpen)
-    }, [unit.isOpen, showInCharts, index, unit.name])
+    }, [unit.isOpen, showInCharts, index, unit.name])*/
 
     return (
       <div

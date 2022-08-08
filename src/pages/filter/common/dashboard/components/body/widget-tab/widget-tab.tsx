@@ -33,7 +33,7 @@ export const WidgetTab = observer(
 
     useLayoutEffect(() => {
       dashboardStore.changeTabHeight(index, tabId(group.name), group.isOpen)
-    }, [group.isOpen, group.name, index, showInCharts])
+    }, [index, showInCharts, group])
 
     return (
       <>

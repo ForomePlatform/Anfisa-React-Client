@@ -119,7 +119,7 @@ export class DashboardStore {
     this.selectedEnumVariants = []
   }
 
-  public setSpareTabs = (tabs: ModifySet<IExtendedTUnitGroup[]>) => {
+  private setSpareTabs = (tabs: ModifySet<IExtendedTUnitGroup[]>) => {
     if (typeof tabs === 'function') {
       this._spareTabs = tabs(this._spareTabs)
       return
@@ -128,7 +128,8 @@ export class DashboardStore {
     this._spareTabs = tabs
   }
 
-  public setMainTabsLayout = (layout: ModifySet<Layout[]>) => {
+  private setMainTabsLayout = (layout: ModifySet<Layout[]>) => {
+    console.log('set layout', layout)
     if (typeof layout === 'function') {
       this._mainTabsLayout = layout(this._mainTabsLayout)
       return
@@ -252,6 +253,7 @@ export class DashboardStore {
     if (groupType === DashboardGroupTypes.Main) {
       this.setMainTabs(prev => prev.filter((_, index) => index !== groupIndex))
       this.setSpareTabs(prev => [selectedGroup!, ...prev])
+      console.log(1)
       this.setMainTabsLayout(prev =>
         prev.filter(group => group.i !== groupName),
       )
@@ -263,12 +265,14 @@ export class DashboardStore {
 
     const newTabLayout = getNewTabLayout(selectedGroup!, this.mainTabsLayout)
 
+    console.log(2)
     this.setMainTabsLayout(newTabLayout)
   }
 
   public layoutChange = (layout: Layout[]) => {
     LocalStoreManager.write(DashboardStore._LAYOUT, layout)
 
+    console.log(3)
     this.setMainTabsLayout(layout)
   }
 
@@ -280,6 +284,7 @@ export class DashboardStore {
       this.mainTabsLayout,
     )
 
+    console.log(4)
     this.setMainTabsLayout(newLayout)
   }
 
@@ -291,6 +296,7 @@ export class DashboardStore {
       this.mainTabsLayout,
     )
 
+    console.log(5)
     this.setMainTabsLayout(newLayout)
   }
 
@@ -361,6 +367,7 @@ export class DashboardStore {
 
       const sortedTabs = getSortedTabs(clonedTabs)
       this.setMainTabs(sortedTabs)
+      console.log(6)
       this.setMainTabsLayout(getUpdatedLayout(sortedTabs, this.mainTabsLayout))
 
       return
@@ -380,6 +387,7 @@ export class DashboardStore {
 
     const sortedTabs = getSortedTabs(newMainTabs)
     this.setMainTabs(sortedTabs)
+    console.log(7)
     this.setMainTabsLayout(getUpdatedLayout(sortedTabs, newLayout))
   }
 

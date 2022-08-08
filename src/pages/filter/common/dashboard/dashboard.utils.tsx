@@ -90,12 +90,20 @@ export const getLayoutOnTabHeightChange = (
   let height = 0
 
   if (tabChildren) {
+    let i = 0
     for (const tabChild of tabChildren) {
+      if (id === tabId('Inheritance')) {
+        console.log(i++, tabChild.getBoundingClientRect().height)
+      }
       height += tabChild.getBoundingClientRect().height
     }
   }
 
-  if (isOpen && tabChildren) {
+  clonedLayout[index].h =
+    height / DASHBOARD_ROW_OFFSET_HEIGHT +
+    2 * DASHBOARD_LAYOUT_VERTICAL_MARGIN_CF
+
+  /*if (isOpen && tabChildren) {
     clonedLayout[index].h =
       (height + HIDDEN_RESIZE_HEIGHT - DASHBOARD_COLS_OFFSET_HEIGHT) /
         DASHBOARD_ROW_OFFSET_HEIGHT +
@@ -103,7 +111,7 @@ export const getLayoutOnTabHeightChange = (
   } else if (!isOpen && tabChildren) {
     clonedLayout[index].h =
       tabChildren.length - 1 + DASHBOARD_LAYOUT_VERTICAL_MARGIN_CF
-  }
+  }*/
 
   return clonedLayout
 }
