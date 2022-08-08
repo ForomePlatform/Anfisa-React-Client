@@ -33,10 +33,7 @@ export const WidgetTabHeader = ({
 
     <div
       className={styles.tab__header__controls}
-      onClick={e => {
-        e.preventDefault()
-        e.stopPropagation()
-      }}
+      onClick={e => e.stopPropagation()}
     >
       <Icon
         name="Favorites"
