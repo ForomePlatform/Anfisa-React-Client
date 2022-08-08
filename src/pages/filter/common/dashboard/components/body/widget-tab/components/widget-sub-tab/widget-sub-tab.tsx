@@ -32,6 +32,10 @@ export const WidgetSubTab = observer(
       return 0
     }, [unit])
 
+    const onSelectUnit = () => {
+      dashboardStore.selectGroup(unit)
+    }
+
     useLayoutEffect(() => {
       dashboardStore.changeSubTabHeight(index, subTabId(unit.name), unit.isOpen)
     }, [unit.isOpen, showInCharts, index, unit.name])
@@ -42,10 +46,7 @@ export const WidgetSubTab = observer(
         id={subTabId(unit.name)}
       >
         <div className={styles.subTab__header}>
-          <div
-            className="flex items-center"
-            onClick={() => dashboardStore.selectGroup(unit)}
-          >
+          <div className="flex items-center" onClick={onSelectUnit}>
             {unit.kind !== AttributeKinds.FUNC && (
               <PredictionPowerIndicator
                 className="mr-2 rounded"
@@ -73,7 +74,7 @@ export const WidgetSubTab = observer(
                 className={styles.subTab__unitContainer__chartContainer}
               />
             ) : (
-              <WidgetSubTabItem unit={unit} />
+              <WidgetSubTabItem unit={unit} onSelectUnit={onSelectUnit} />
             )}
           </div>
         )}

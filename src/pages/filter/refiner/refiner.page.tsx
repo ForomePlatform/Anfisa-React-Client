@@ -126,6 +126,7 @@ export const RefinerPage = observer((): ReactElement => {
           />
         ) : (
           <Dashboard
+            page={GlbPagesNames.Refiner}
             groups={unitGroups}
             functionalUnits={functionalUnits}
             isFetching={isFetching}

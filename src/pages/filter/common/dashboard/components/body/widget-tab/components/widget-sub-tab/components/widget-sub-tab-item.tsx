@@ -11,14 +11,28 @@ import {
 
 interface IWidgetSubTabItemProps {
   unit: TExtendedUnit
+  onSelectUnit: () => void
 }
 
-export const WidgetSubTabItem: FC<IWidgetSubTabItemProps> = ({ unit }) => {
+export const WidgetSubTabItem: FC<IWidgetSubTabItemProps> = ({
+  unit,
+  onSelectUnit,
+}) => {
   switch (unit.kind) {
     case AttributeKinds.ENUM:
-      return <WidgetSubTabEnum unit={unit as IEnumPropertyStatus} />
+      return (
+        <WidgetSubTabEnum
+          unit={unit as IEnumPropertyStatus}
+          onSelectUnit={onSelectUnit}
+        />
+      )
     case AttributeKinds.NUMERIC:
-      return <WidgetSubTabNumeric unit={unit as INumericPropertyStatus} />
+      return (
+        <WidgetSubTabNumeric
+          unit={unit as INumericPropertyStatus}
+          onSelectUnit={onSelectUnit}
+        />
+      )
     default:
       return null
   }

@@ -42,6 +42,8 @@ export class DashboardStore {
   private _mainTabsLayout: Layout[] = []
 
   public viewType: ViewTypeDashboard = ViewTypeDashboard.List
+  public page: GlbPagesNames | undefined
+  public selectedEnumVariants: string[] = []
 
   public get showInCharts(): boolean {
     return this._inCharts
@@ -102,6 +104,19 @@ export class DashboardStore {
     }
 
     this._mainTabs = tabs
+  }
+
+  public setPage(page: GlbPagesNames) {
+    this.page = page
+  }
+
+  public setEnumVariant(filter: string) {
+    this.selectedEnumVariants = []
+    this.selectedEnumVariants.push(filter)
+  }
+
+  public resetEnumVariant() {
+    this.selectedEnumVariants = []
   }
 
   public setSpareTabs = (tabs: ModifySet<IExtendedTUnitGroup[]>) => {
@@ -186,8 +201,7 @@ export class DashboardStore {
     const { kind, name, vgroup } = attribute
     const source = ModalSources.TreeStat
 
-    // TODO: is there any better way?
-    filterStore.method === GlbPagesNames.Refiner
+    this.page === GlbPagesNames.Refiner
       ? filterStore.setAttributeToAdd(name)
       : dtreeStore.addSelectedGroup([vgroup, name])
 
