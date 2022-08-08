@@ -1,0 +1,32 @@
+.not-found {
+  &__wrapper {
+    display: flex;
+    height: 90vh;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  &__error-status {
+    font-weight: bold;
+    font-size: 164px;
+    line-height: 180px;
+    color: theme("colors.grey.disabled");
+  }
+
+  &__title {
+    font-weight: 500;
+    font-size: 36px;
+    line-height: 42px;
+    color: theme("colors.blue.dark");
+  }
+
+  &__info {
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: theme("colors.blue.dark");
+    max-width: 426px;
+    margin: 16px 0 20px;
+  }
+}
