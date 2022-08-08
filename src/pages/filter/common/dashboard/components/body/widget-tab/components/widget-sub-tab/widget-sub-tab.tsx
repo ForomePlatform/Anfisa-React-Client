@@ -11,6 +11,7 @@ import {
   AttributeKinds,
   IEnumPropertyStatus,
   INumericPropertyStatus,
+  TPropertyStatus,
 } from '@service-providers/common'
 import { IWidgetSubTabProps } from '../../../../../dashboard.interfaces'
 import { WidgetSubTabEnum } from './components/widget-sub-tab-enum'
@@ -56,12 +57,22 @@ export const WidgetSubTab = memo(
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isUnitOpened])
 
+    const onSelectUnit = (unit: TPropertyStatus) => {
+      dashboardStore.selectGroup(unit)
+    }
+
     const renderEnumUnit = () => (
-      <WidgetSubTabEnum unit={unit as IEnumPropertyStatus} />
+      <WidgetSubTabEnum
+        unit={unit as IEnumPropertyStatus}
+        onSelectUnit={onSelectUnit}
+      />
     )
 
     const renderNumericUnit = () => (
-      <WidgetSubTabNumeric unit={unit as INumericPropertyStatus} />
+      <WidgetSubTabNumeric
+        unit={unit as INumericPropertyStatus}
+        onSelectUnit={onSelectUnit}
+      />
     )
 
     const predictionPowerValue = useMemo(() => {
@@ -77,10 +88,7 @@ export const WidgetSubTab = memo(
         id={id}
       >
         <div className={styles.subTab__header}>
-          <div
-            className="flex items-center"
-            onClick={() => dashboardStore.selectGroup(unit)}
-          >
+          <div className="flex items-center" onClick={() => onSelectUnit(unit)}>
             {unit.kind !== AttributeKinds.FUNC && (
               <PredictionPowerIndicator
                 className="mr-2 rounded"

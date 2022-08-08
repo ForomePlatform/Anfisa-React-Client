@@ -10,11 +10,18 @@ import { IDashboardProps } from './dashboard.interfaces'
 import dashboardStore from './index'
 
 export const Dashboard = observer(
-  ({ groups, functionalUnits, isFetching }: IDashboardProps): ReactElement => {
+  ({
+    page,
+    groups,
+    functionalUnits,
+    isFetching,
+  }: IDashboardProps): ReactElement => {
     const extendedGroups = dashboardStore.geExtendedGroups(
       groups,
       functionalUnits,
     )
+
+    dashboardStore.setPage(page)
 
     const [filterValue, setFilterValue] = useState('')
 

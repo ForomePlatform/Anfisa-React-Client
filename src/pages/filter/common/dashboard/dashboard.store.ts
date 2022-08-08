@@ -21,6 +21,8 @@ import { getStartLayout } from './dashboard.utils'
 
 export class DashboardStore {
   public viewType: ViewTypeDashboard = ViewTypeDashboard.List
+  public page: GlbPagesNames | undefined
+  public selectedEnumVariants: string[] = []
 
   constructor() {
     makeAutoObservable(this)
@@ -38,6 +40,19 @@ export class DashboardStore {
       datasetName: datasetStore.datasetName,
       method: filterStore.method,
     }
+  }
+
+  public setPage(page: GlbPagesNames) {
+    this.page = page
+  }
+
+  public setEnumVariant(filter: string) {
+    this.selectedEnumVariants = []
+    this.selectedEnumVariants.push(filter)
+  }
+
+  public resetEnumVariant() {
+    this.selectedEnumVariants = []
   }
 
   public toggleViewType = (viewType: ViewTypeDashboard) => {
@@ -120,8 +135,7 @@ export class DashboardStore {
     const { kind, name, vgroup } = attribute
     const source = ModalSources.TreeStat
 
-    // TODO: is there any better way?
-    filterStore.method === GlbPagesNames.Refiner
+    this.page === GlbPagesNames.Refiner
       ? filterStore.setAttributeToAdd(name)
       : dtreeStore.addSelectedGroup([vgroup, name])
 

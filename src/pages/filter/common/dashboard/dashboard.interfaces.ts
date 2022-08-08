@@ -9,8 +9,11 @@ import {
   IFuncPropertyStatus,
   INumericPropertyStatus,
 } from '@service-providers/common'
+import { GlbPagesNames } from './../../../../glb/glb-names'
 
-export interface IDashboardProps extends IUnitsProps {}
+export interface IDashboardProps extends IUnitsProps {
+  page: GlbPagesNames
+}
 
 interface IExtendedINumericPropertyStatus
   extends TStatusWithPredictionPower<INumericPropertyStatus> {
@@ -90,10 +93,12 @@ export interface IWidgetSubTabProps {
 
 export interface IWidgetSubTabNumericProps {
   unit: INumericPropertyStatus
+  onSelectUnit: (unit: INumericPropertyStatus) => void
 }
 
 export interface IWidgetSubTabEnumProps {
   unit: IEnumPropertyStatus
+  onSelectUnit: (unit: IEnumPropertyStatus) => void
 }
 
 export interface IWidgetTabHeaderProps {

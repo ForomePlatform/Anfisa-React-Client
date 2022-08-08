@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite'
 
 import { Dialog } from '@ui/dialog'
 import { DEFAULT_COUNT, EnumCondition } from '@components/conditions/enum'
+import dashboardStore from '@pages/filter/common/dashboard'
 import { AttributeKinds } from '@service-providers/common'
 import { dtreeAttributeStore } from '../../../attributes/dtree-attributes.store'
 import { IEnumDialogProps } from '../../modals.interfaces'
@@ -26,6 +27,8 @@ export const EnumDialog = observer(
     } = attributeStore
 
     const { currentStepGroups } = modalsControlStore
+    const { selectedEnumVariants } = dashboardStore
+    const initialVariants = initialEnumVariants || selectedEnumVariants
 
     const handleModals = () => {
       modalsVisibilityStore.closeEnumDialog()
@@ -42,6 +45,7 @@ export const EnumDialog = observer(
           mode,
         })
 
+        dashboardStore.resetEnumVariant()
         modalsVisibilityStore.closeEnumDialog()
       },
       [attributeName, onAddEnum],
@@ -56,6 +60,7 @@ export const EnumDialog = observer(
           mode,
         })
 
+        dashboardStore.resetEnumVariant()
         modalsVisibilityStore.closeEnumDialog()
       },
       [attributeName, onSaveEnum],
@@ -76,7 +81,7 @@ export const EnumDialog = observer(
           attributeName={attributeName}
           enumVariants={enumVariants}
           attributeSubKind={attributeSubKind}
-          initialEnumVariants={initialEnumVariants}
+          initialVariants={initialVariants}
           initialEnumMode={initialEnumMode}
           isShowZeroes={dtreeAttributeStore.isShowZeroVariants}
           toggleShowZeroes={dtreeAttributeStore.setIsShowZeroVariants}

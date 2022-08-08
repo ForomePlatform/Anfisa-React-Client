@@ -126,6 +126,7 @@ export const DtreePage = observer((): ReactElement => {
           <QueryBuilder className={styles.dtreePage__queryBuilder} />
         ) : (
           <Dashboard
+            page={GlbPagesNames.Dtree}
             groups={unitGroups}
             functionalUnits={functionalUnits}
             isFetching={isFetching}

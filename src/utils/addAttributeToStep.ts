@@ -38,6 +38,7 @@ export const addAttributeToStep = ({
 
   const selectedValue = isNumeric ? value : selectedVariants
   const subGroupName = dtreeStore.selectedGroups[1]
+
   const attribute = [attributeKind, subGroupName, selectedValue]
 
   if (shouldTakeAttributeFromStore) {

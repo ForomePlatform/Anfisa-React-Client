@@ -59,6 +59,11 @@
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        cursor: pointer;
+
+        &:hover {
+          color: theme("colors.grey.blue");
+        }
       }
 
       &__value {
