@@ -4,7 +4,7 @@ import { useHistory } from 'react-router'
 import { LocalStoreManager } from '@core/storage-management'
 import { t } from '@i18n'
 import { CardTitle } from '@ui/card'
-import { PREVIOUS_WORK_LOCATION } from '../../../build-flow/components/wizard/wizard.utils'
+import { PREVIOUS_WORK_LOCATION } from '../../build-flow/components/wizard/wizard.utils'
 import { parseLocation } from './card-sections.utils'
 
 export const CardPreviousExploreSection = (): ReactElement => {
@@ -28,7 +28,7 @@ export const CardPreviousExploreSection = (): ReactElement => {
       return (
         <span
           key={location}
-          className="text-blue-bright cursor-pointer"
+          className="text-blue-bright cursor-pointer mb-[5px]"
           onClick={() => onClickLocation(location)}
         >
           {parseLocation(location)}

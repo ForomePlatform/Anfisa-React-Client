@@ -1,4 +1,6 @@
-import React from 'react'
+import styles from './popup-card.module.css'
+
+import React, { MouseEvent, ReactNode } from 'react'
 import cn, { Argument } from 'classnames'
 
 import { t } from '@i18n'
@@ -12,11 +14,11 @@ export interface IPopupCardProps {
   applyText?: string
   className?: Argument
   onClose?: () => void
-  onApply?: () => void
+  onApply?: (event: MouseEvent<HTMLButtonElement>) => void
   isApplyDisabled?: boolean
   isLoading?: boolean
-  isBlueBg?: boolean
-  additionalBottomButton?: JSX.Element
+  additionalBottomButton?: Element
+  applyAppend?: ReactNode
 }
 
 export const PopupCard = ({
@@ -29,33 +31,26 @@ export const PopupCard = ({
   onApply,
   isLoading,
   isApplyDisabled = false,
-  isBlueBg = false,
   additionalBottomButton,
+  applyAppend,
 }: React.PropsWithChildren<IPopupCardProps>) => (
-  <div
-    className={cn(
-      'shadow-card rounded',
-      `${isBlueBg ? 'bg-blue-light' : 'bg-white'}`,
-      className,
-    )}
-  >
-    <div className="px-4 pt-4">
-      <div className="flex justify-between mb-4 items-center">
-        <span className="text-blue-dark font-medium">{title}</span>
-        <Icon
-          name="Close"
-          onClick={onClose}
-          size={16}
-          className="cursor-pointer"
-        />
-      </div>
-    </div>
-    <div className="w-full px-4">{children}</div>
+  <section className={cn(styles.popupCard, className)}>
+    <header className={cn(styles.popupCard__header)}>
+      <span className={styles.popupCard__header_title}>{title}</span>
+      <Icon
+        name="Close"
+        onClick={onClose}
+        size={16}
+        className={styles.popupCard__header_icon}
+      />
+    </header>
 
-    <div className="flex justify-between pb-4 px-4 mt-4">
+    <div className={styles.popupCard__content}>{children}</div>
+
+    <footer className={styles.popupCard__footer}>
       <div>{additionalBottomButton && additionalBottomButton}</div>
 
-      <div className="flex justify-between">
+      <div className={styles.popupCard__footer_buttonContainer}>
         <Button
           size="sm"
           text={cancelText || t('general.cancel')}
@@ -66,13 +61,15 @@ export const PopupCard = ({
         <Button
           disabled={isApplyDisabled || isLoading}
           size="sm"
+          variant="primary"
           text={applyText || t('general.apply')}
           isLoading={isLoading}
-          className="ml-3"
+          className={styles.popupCard__footer_buttonContainer_button}
           onClick={onApply}
           dataTestId={MainTableDataCy.applyButton}
+          append={applyAppend}
         />
       </div>
-    </div>
-  </div>
+    </footer>
+  </section>
 )

@@ -34,6 +34,7 @@ export const DescriptionCard = observer(
       continueDisabled,
       contentDisabled,
       editDisabled,
+      position,
     } = props
     const history = useHistory()
     const ds = title || datasetStore.datasetName
@@ -60,7 +61,6 @@ export const DescriptionCard = observer(
     }
 
     useEffect(() => {
-      wizardStore.wizardScenario[id].title = ds
       wizardStore.updateSelectedDataset(ds)
       setDsName(ds)
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -73,16 +73,17 @@ export const DescriptionCard = observer(
     return (
       <Card
         isNeedToAnimate={wizardStore.isNeedToAnimateCard(id)}
-        className={cn(styles.descriptionCard, 'mt-4')}
+        className={cn(styles.descriptionCard)}
+        position={position}
       >
         <CardTitleWithEdit
           title={ds}
-          isEditShown={editDisabled}
+          isEditShown={!editDisabled}
           onEdit={() => wizardStore.editCard(id)}
         />
 
         <div className="mb-4">
-          <Card className="w-full mt-4 bg-grey-tertiary">
+          <Card className="w-full mt-4 bg-grey-tertiary" position="stretch">
             <div className="flex items-center mb-2">
               <span className="font-bold">Description</span>
               <Button

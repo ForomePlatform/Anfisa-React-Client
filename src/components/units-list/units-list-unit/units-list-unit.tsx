@@ -61,7 +61,17 @@ export const UnitsListUnit = ({
             isDark && styles.unitTitle__title_dark,
           )}
         />
-        <DropdownArrow size="sm" isOpen={isChartVisible} onClick={openCharts} />
+        {unit.power && (
+          <DropdownArrow
+            className={cn(
+              styles.unitTitle__arrow,
+              isDark && styles.unitTitle__arrow_dark,
+            )}
+            size="sm"
+            isOpen={isChartVisible}
+            onClick={openCharts}
+          />
+        )}
       </div>
       {hasChart && isChartVisible && <UnitChart className="mt-2" unit={unit} />}
     </div>

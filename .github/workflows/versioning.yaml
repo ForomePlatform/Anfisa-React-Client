@@ -9,6 +9,9 @@ on:
       - '.github/workflows/**'
       - '.azure/pipelines/**'
       - 'helm/**'
+      - 'docker/**'
+      - '.dockerignore'
+      - '.gitignore'
 
 jobs:
   build:

@@ -1,43 +1,51 @@
 import { ExploreCandidateKeys } from '@core/enum/explore-candidate-types-enum'
 import { TExploreGenomeKeys } from '@core/enum/explore-genome-types-enum'
-import { ExploreTypesDictionary } from '@core/enum/explore-types-enum'
+import { ExploreKeys } from '@core/enum/explore-types-enum'
 import { t } from '@i18n'
-import { DescriptionCard, PresetsCard, StartCard } from '../../cards'
+import { CardExploreType } from '@pages/main/components/selected-dataset/components/card-explore/card-explore-type'
+import { DescriptionCard, PresetsCard } from '../../cards'
 import { ICardProps, IWizardScenario } from '.././wizard.interface'
+import { WizardCardIds } from './wizard-scenarios.constants'
 
 export const wsShortCandidateSet: IWizardScenario[] = [
   {
-    component: (props: ICardProps) => <StartCard {...props} />,
-    id: 0,
+    component: (props: ICardProps) => <CardExploreType {...props} />,
+    id: WizardCardIds.StartFull,
     hidden: false,
     continueDisabled: true,
     editDisabled: false,
     contentDisabled: true,
-    value: ExploreTypesDictionary.Candidate,
+    selectedValue: ExploreKeys.Candidate,
     title: t('home.startFlow.startWith'),
+    position: 'stretch',
+    nextCard: WizardCardIds.Description,
   },
   {
     component: (props: ICardProps) => (
       <DescriptionCard {...(props as ICardProps<TExploreGenomeKeys>)} />
     ),
-    id: 1,
+    id: WizardCardIds.Description,
     hidden: false,
     continueDisabled: false,
     editDisabled: true,
     contentDisabled: false,
-    value: ExploreCandidateKeys.ViewAllVariants,
+    selectedValue: ExploreCandidateKeys.ViewAllVariants,
     title: '',
+    position: 'right',
+    nextCard: WizardCardIds.Presets,
   },
 
   {
     component: (props: ICardProps) => <PresetsCard {...props} />,
-    id: 2,
+    id: WizardCardIds.Presets,
     hidden: true,
     continueDisabled: false,
     editDisabled: true,
     contentDisabled: false,
-    value: '',
+    selectedValue: '',
     title: t('home.buildFlow.additionalPresetFilter'),
     maxHeight: 'calc(100vh - 285px)',
+    position: 'right',
+    nextCard: null,
   },
 ]

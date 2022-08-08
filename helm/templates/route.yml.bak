@@ -1,0 +1,27 @@
+# {{- if .Values.ingress.enabled -}}
+# {{- $fullName := include "anfisa-front.fullname" . -}}
+# {{- $svcPort := .Values.service.port -}}
+# apiVersion: route.openshift.io/v1
+# kind: Route
+# metadata:
+#   name: {{ include "anfisa-front.fullname" . }}
+#   labels:
+#     {{- include "anfisa-front.labels" . | nindent 4 }}
+# spec:
+#   {{- range .Values.ingress.hosts }}
+#   host: {{ .host | quote }}
+#   {{- range .paths }}
+#   path: {{ .path }}
+#   {{- end }}
+#   to:
+#     kind: Service
+#     name: {{ $fullName }}
+#     weight: 100
+#   port:
+#     targetPort: 80
+#   tls:
+#     insecureEdgeTerminationPolicy: Allow
+#     termination: edge
+#   wildcardPolicy: None
+#   {{- end }}
+# {{- end }}

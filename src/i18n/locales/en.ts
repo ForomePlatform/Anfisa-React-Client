@@ -145,6 +145,8 @@ export const en = {
       startWith: 'Start with',
       prevWorkSection: 'In this section your previous work will be displayed',
       prevWorkWith: 'You previously worked with',
+      candidateIsUnavailable: 'Existing candidates are unavailable',
+      genomeIsUnavailable: 'Whole genome/exome is unavailable',
     },
     buildFlow: {
       candidateSet: 'Existing candidate sets',
@@ -152,6 +154,9 @@ export const en = {
       whatsNext: "What's next?",
       relevantPresets: 'Relevant presets',
       additionalPresetFilter: 'Additional preset filters',
+      simpleFilter: 'Simple Filter',
+      inclusionExclusion: 'Inclusion/Exclusion Criteria',
+      viewVariants: 'View Variants',
     },
   },
   ds: {
@@ -165,6 +170,22 @@ export const en = {
     searchColumns: 'Search',
     columns: 'Columns',
     customizeTable: 'Customize Table',
+    macroTagging: 'Macro Tagging',
+    macroTagsModal: {
+      title: 'Macro Tags',
+      apply: 'Action',
+      placeholder: 'Tag name',
+      menu: {
+        apply: 'Apply to All',
+        remove: 'Remove from All',
+      },
+      confirmDialog: {
+        title: 'Confirmation',
+        message: 'Delete {tag} from all genes?',
+      },
+      toastApplied: 'Tag has been successfully set',
+      toastRemoved: 'Tag has been successfully removed',
+    },
     copied: 'Copied successfully',
     editFilters: 'Edit Filters',
     gene: 'Gene',
