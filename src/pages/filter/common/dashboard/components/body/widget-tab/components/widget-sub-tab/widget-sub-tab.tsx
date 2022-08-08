@@ -21,8 +21,7 @@ export interface IWidgetSubTabProps {
 
 export const WidgetSubTab = observer(
   ({ unit, index, groupName }: IWidgetSubTabProps): ReactElement => {
-    const { showInCharts, filterValue, toggleUnit, changeSubTabHeight } =
-      dashboardStore
+    const { showInCharts, filterValue, toggleUnit } = dashboardStore
 
     const disabled = !unit.name.includes(filterValue)
 
@@ -34,8 +33,8 @@ export const WidgetSubTab = observer(
     }, [unit])
 
     useLayoutEffect(() => {
-      changeSubTabHeight(index, subTabId(unit.name), unit.isOpen)
-    }, [unit.isOpen, showInCharts])
+      dashboardStore.changeSubTabHeight(index, subTabId(unit.name), unit.isOpen)
+    }, [unit.isOpen, showInCharts, index, unit.name])
 
     return (
       <div

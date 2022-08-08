@@ -18,13 +18,8 @@ export interface IWidgetTabProps {
 
 export const WidgetTab = observer(
   ({ group, index }: IWidgetTabProps): ReactElement => {
-    const {
-      changeTabPlace,
-      filterValue,
-      toggleGroup,
-      showInCharts,
-      changeTabHeight,
-    } = dashboardStore
+    const { changeTabPlace, filterValue, toggleGroup, showInCharts } =
+      dashboardStore
 
     const isGroupInSearch = useMemo(() => {
       const value = filterValue.toLowerCase()
@@ -32,8 +27,8 @@ export const WidgetTab = observer(
     }, [group, filterValue])
 
     useLayoutEffect(() => {
-      changeTabHeight(index, tabId(group.name), group.isOpen)
-    }, [group.isOpen, showInCharts])
+      dashboardStore.changeTabHeight(index, tabId(group.name), group.isOpen)
+    }, [group.isOpen, group.name, index, showInCharts])
 
     return (
       <>

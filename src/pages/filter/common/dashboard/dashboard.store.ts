@@ -160,9 +160,6 @@ export class DashboardStore {
         ? getStartLayout(extendedGroups)
         : savedLayout
 
-    console.log(mainTabs)
-    console.log(extendedGroups)
-
     this._groups = extendedGroups
     this._mainTabs = mainTabs
     this._spareTabs = spareTabs
