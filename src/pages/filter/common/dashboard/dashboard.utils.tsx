@@ -5,6 +5,7 @@ import {
   DASHBOARD_COLS_OFFSET_HEIGHT,
   DASHBOARD_LAYOUT_COLS,
   DASHBOARD_LAYOUT_ROW_HEIGHT,
+  DASHBOARD_LAYOUT_VERTICAL_MARGIN_CF,
   DASHBOARD_ROW_OFFSET_HEIGHT,
   HIDDEN_RESIZE_HEIGHT,
 } from './dashboard.constants'
@@ -22,7 +23,7 @@ export const getStartLayout = (groups: IExtendedTUnitGroups[]): Layout[] => {
     x: index < cols ? index : index % cols,
     y: index < cols ? 0 : Math.floor(index / cols),
     w: 1,
-    h: group.units.length + 1,
+    h: group.units.length + 1 + DASHBOARD_LAYOUT_VERTICAL_MARGIN_CF,
   }))
 
   return layout
@@ -75,7 +76,7 @@ export const getNewTabLayout = (
     x: colsHeight[0].x,
     y: colsHeight[0].h + 1,
     w: 1,
-    h: group.units.length + 1,
+    h: group.units.length + 1 + DASHBOARD_LAYOUT_VERTICAL_MARGIN_CF,
   }
 
   clonedLayout.push(newLayout)
@@ -103,9 +104,11 @@ export const getLayoutOnTabHeightChange = (
   if (!isOpen && tabChildren) {
     clonedLayout[index].h =
       (height + HIDDEN_RESIZE_HEIGHT - DASHBOARD_COLS_OFFSET_HEIGHT) /
-      DASHBOARD_ROW_OFFSET_HEIGHT
+        DASHBOARD_ROW_OFFSET_HEIGHT +
+      DASHBOARD_LAYOUT_VERTICAL_MARGIN_CF
   } else if (isOpen && tabChildren) {
-    clonedLayout[index].h = tabChildren.length - 1
+    clonedLayout[index].h =
+      tabChildren.length - 1 + DASHBOARD_LAYOUT_VERTICAL_MARGIN_CF
   }
 
   return clonedLayout
