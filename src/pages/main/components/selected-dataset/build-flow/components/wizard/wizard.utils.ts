@@ -10,7 +10,12 @@ import { LocalStoreManager } from '@core/storage-management/local-store-manager'
 import { datasetStore } from '@store/dataset'
 import { Routes } from '@router/routes.enum'
 import { GlbPagesNames } from '@glb/glb-names'
-import { IWizardRoute, TRouteDictionary } from './wizard.interface'
+import { WizardCardIds } from './scenarios/wizard-scenarios.constants'
+import {
+  IWizardRoute,
+  IWizardScenario,
+  TRouteDictionary,
+} from './wizard.interface'
 
 export const PREVIOUS_WORK_LOCATION = 'prevWorkLocation'
 
@@ -76,4 +81,13 @@ export const memorizeLocation = (location: string) => {
   }
 
   LocalStoreManager.write(PREVIOUS_WORK_LOCATION, locations || [location])
+}
+
+export const getActiveCardIds = (scenario: IWizardScenario[]) => {
+  return scenario.reduce((acc, card) => {
+    if (!card.hidden) {
+      acc.push(card.id)
+    }
+    return acc
+  }, [] as WizardCardIds[])
 }

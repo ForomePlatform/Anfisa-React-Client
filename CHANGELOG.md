@@ -1,7 +1,11 @@
 # Change log 
 
-## <small>0.7.1 (8/1/2022)</small>
+## <small>0.7.1 (8/8/2022)</small>
 
+* fix([FOROME-1424](https://quantori.atlassian.net/browse/FOROME-1424)): add opacity style (#866) ([17b353b5](https://github.com/ForomePlatform/Anfisa-React-Client/commit/17b353b5))
+* feat([FOROME-1425](https://quantori.atlassian.net/browse/FOROME-1425)): Reworking wizard scenarios (#865) ([8fad3290](https://github.com/ForomePlatform/Anfisa-React-Client/commit/8fad3290))
+* fix([FOROME-1407](https://quantori.atlassian.net/browse/FOROME-1407)): remove useless unfold icons (#849) ([8e6a0c25](https://github.com/ForomePlatform/Anfisa-React-Client/commit/8e6a0c25))
+* fix([FOROME-1408](https://quantori.atlassian.net/browse/FOROME-1408)): increase clickable area for dropdown arrow (#852) ([5c2440b6](https://github.com/ForomePlatform/Anfisa-React-Client/commit/5c2440b6))
 * fix([FOROME-1415](https://quantori.atlassian.net/browse/FOROME-1415)): Supported preset rubrics (#850) ([d13c2347](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d13c2347))
 * fix([FOROME-1397](https://quantori.atlassian.net/browse/FOROME-1397)): rename buttons (#844) ([82ba7a6d](https://github.com/ForomePlatform/Anfisa-React-Client/commit/82ba7a6d))
 * fix([FOROME-1373](https://quantori.atlassian.net/browse/FOROME-1373)): invalidate spaces in preset names (#848) ([a0e2a5d2](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a0e2a5d2))
