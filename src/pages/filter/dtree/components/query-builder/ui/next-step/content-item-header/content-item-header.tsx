@@ -1,26 +1,18 @@
+import styles from './content-item-header.module.css'
+
 import { ReactElement } from 'react'
+import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
-import styled from 'styled-components'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
-import { theme } from '@theme'
 import { IStepData } from '@store/dtree/dtree.store'
 import stepStore, { ActiveStepOptions } from '@store/dtree/step.store'
 import { Icon } from '@ui/icon'
 import { FnLabel } from '@components/fn-label'
 import { DecisionTreesResultsDataCy } from '@data-testid'
 import { AttributeKinds } from '@service-providers/common'
-import modalsVisibilityStore from '../../../modals/modals-visibility-store'
-import { InactiveFieldLabel } from '../inactive-field-label'
-
-const NotModeWrapper = styled.div`
-  margin: 8px 4px;
-  width: 25px;
-  height: 20px;
-  color: ${theme('colors.red.light')};
-  background-color: ${theme('colors.red.lighter')};
-  font-size: 12px;
-`
+import modalsVisibilityStore from '../../../../modals/modals-visibility-store'
+import { InactiveFieldLabel } from '../../inactive-field-label'
 
 interface IContentItemHeaderProps {
   currentStep: IStepData
@@ -75,7 +67,12 @@ export const ContentItemHeader = observer(
     }
 
     return (
-      <div className="flex flex-col w-full h-auto mr-2 pl-2 py-3 rounded-md border border-grey-light step-content-area">
+      <div
+        className={cn(
+          styles.contentItemHeader,
+          'flex flex-col w-full h-auto mr-2 pl-2 py-3 rounded-md border border-grey-light step-content-area',
+        )}
+      >
         <div className="flex items-center h-auto w-full pr-2 ">
           <Icon
             name="SettingsFat"
@@ -87,9 +84,14 @@ export const ContentItemHeader = observer(
           />
 
           {isNegateStep && (
-            <NotModeWrapper className="flex items-center justify-center">
+            <div
+              className={cn(
+                styles.contentItemHeader__notModeWrapper,
+                'flex items-center justify-center',
+              )}
+            >
               {'NOT'}
-            </NotModeWrapper>
+            </div>
           )}
 
           <div className="flex items-center text-14">

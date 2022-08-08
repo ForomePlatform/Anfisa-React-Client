@@ -170,7 +170,6 @@
 
       &::before {
         border-color: theme("colors.purple.hover");
-        background: theme("colors.purple.hover");
       }
     }
 
