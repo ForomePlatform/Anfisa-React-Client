@@ -24,7 +24,7 @@ export const Dashboard = observer(
     useEffect(() => {
       dashboardStore.setPage(page)
 
-      if (groups.length) {
+      if (!isFetching) {
         dashboardStore.setGroups(groups, functionalUnits)
       }
     }, [functionalUnits, groups, isFetching, page])

@@ -25,24 +25,22 @@ export const WidgetSubTabEnum = observer(
     }
     return (
       <>
-        {unit.variants?.map(
+        {unit.variants?.slice(0, MAX_SUB_TAB_ROWS_AMOUNT + 1).map(
           ([variantName, variantValue]: any, index: number) =>
             variantValue > 0 && (
               <Fragment key={variantName + variantValue}>
-                {index < MAX_SUB_TAB_ROWS_AMOUNT && (
-                  <div className={styles.subTab__unitContainer__unit}>
-                    <div
-                      className={styles.subTab__unitContainer__unit__name}
-                      onClick={() => handleOpenEnumDialog(variantName)}
-                    >
-                      {variantName}
-                    </div>
-
-                    <div className={styles.subTab__unitContainer__unit__value}>
-                      {variantValue} {variantValue > 1 ? 'variants' : 'variant'}
-                    </div>
+                <div className={styles.subTab__unitContainer__unit}>
+                  <div
+                    className={styles.subTab__unitContainer__unit__name}
+                    onClick={() => handleOpenEnumDialog(variantName)}
+                  >
+                    {variantName}
                   </div>
-                )}
+
+                  <div className={styles.subTab__unitContainer__unit__value}>
+                    {variantValue} {variantValue > 1 ? 'variants' : 'variant'}
+                  </div>
+                </div>
 
                 {index === 40 && (
                   <div className={styles.subTab__footer}>
