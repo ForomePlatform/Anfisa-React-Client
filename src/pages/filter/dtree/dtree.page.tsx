@@ -127,6 +127,7 @@ export const DtreePage = observer((): ReactElement => {
         ) : (
           <Dashboard
             page={GlbPagesNames.Dtree}
+            dataReady={dtreeStore.dataReady === 100}
             groups={unitGroups}
             functionalUnits={functionalUnits}
             isFetching={isFetching}

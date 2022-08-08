@@ -12,11 +12,13 @@ import dashboardStore from './index'
 
 export interface IDashboardProps extends IUnitsProps {
   page: GlbPagesNames
+  dataReady: boolean
 }
 
 export const Dashboard = observer(
   ({
     page,
+    dataReady,
     groups,
     functionalUnits,
     isFetching,
@@ -27,7 +29,7 @@ export const Dashboard = observer(
       if (!isFetching) {
         dashboardStore.setGroups(groups, functionalUnits)
       }
-    }, [functionalUnits, groups, isFetching, page])
+    }, [functionalUnits, groups, isFetching, page, dataReady])
 
     return (
       <div className={styles.dashboard}>
