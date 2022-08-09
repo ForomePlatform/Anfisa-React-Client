@@ -17,8 +17,9 @@ import { PopperMenu } from '@components/popper-menu/popper-menu'
 import { PopperMenuItem } from '@components/popper-menu/popper-menu-item'
 import { PopupCard } from '@components/popup-card/popup-card'
 import { MacroTaggingActions } from '@pages/ws/ui/control-panel/macro-tagging/macro-tagging.constants'
+import operationsProvider from '@service-providers/operations/operations.provider'
 import {
-  IMacroTaggingArguments,
+  IMacroTaggingArgumentsAsync,
   wsDatasetProvider,
 } from '@service-providers/ws-dataset-support'
 import { showToast } from '@utils/notifications'
@@ -40,15 +41,18 @@ export const MacroTaggingPopover: FC<IPopoverBaseProps> = observer(
       setTag(e.target.value)
 
     const onClickMacroAction =
-      (move: MacroTaggingActions, confirmed?: false) => () => {
+      (move: MacroTaggingActions, confirmed?: boolean) => () => {
         if (move === MacroTaggingActions.Remove && confirmed === false) {
           setIsOpenedCD(true)
           return
+        } else {
+          setIsOpenedCD(false)
         }
 
-        const params: IMacroTaggingArguments = {
+        const params: IMacroTaggingArgumentsAsync = {
           ds: datasetStore.datasetName,
           tag,
+          delay: true,
         }
 
         if (move === MacroTaggingActions.Remove) {
@@ -58,24 +62,28 @@ export const MacroTaggingPopover: FC<IPopoverBaseProps> = observer(
         setIsLoading(true)
         onCloseMenu()
         onClose!()
-        wsDatasetProvider.updateMacroTagging(params).then(() => {
-          mainTableStore.wsList.invalidate()
-          setIsLoading(false)
-          setTag('')
-          showToast(
-            t(
-              move !== MacroTaggingActions.Remove
-                ? 'ds.macroTagsModal.toastApplied'
-                : 'ds.macroTagsModal.toastRemoved',
-            ),
-            'success',
-            {
-              position: 'top-right',
-              autoClose: 3500,
-              style: { top: 40 },
-            },
-          )
-        })
+        wsDatasetProvider
+          .updateMacroTaggingAsync(params)
+          .then(({ task_id }) => {
+            operationsProvider.getJobStatusAsync(task_id).then(() => {
+              mainTableStore.wsList.invalidate()
+              setIsLoading(false)
+              setTag('')
+              showToast(
+                t(
+                  move !== MacroTaggingActions.Remove
+                    ? 'ds.macroTagsModal.toastApplied'
+                    : 'ds.macroTagsModal.toastRemoved',
+                ),
+                'success',
+                {
+                  position: 'top-right',
+                  autoClose: 3500,
+                  style: { top: 40 },
+                },
+              )
+            })
+          })
       }
 
     return (
@@ -143,7 +151,7 @@ export const MacroTaggingPopover: FC<IPopoverBaseProps> = observer(
             setIsOpenedCD(false)
             onCloseMenu()
           }}
-          onApply={onClickMacroAction(MacroTaggingActions.Remove)}
+          onApply={onClickMacroAction(MacroTaggingActions.Remove, true)}
           message={t('ds.macroTagsModal.confirmDialog.message', { tag })}
           title={t('ds.macroTagsModal.confirmDialog.title')}
           cancelText={t('general.cancel')}
