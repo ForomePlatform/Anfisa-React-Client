@@ -2,17 +2,21 @@ import { Layout } from 'react-grid-layout'
 import cloneDeep from 'lodash/cloneDeep'
 
 import {
-  DASHBOARD_COLS_OFFSET_HEIGHT,
   DASHBOARD_LAYOUT_COLS,
-  DASHBOARD_LAYOUT_ROW_HEIGHT,
   DASHBOARD_LAYOUT_VERTICAL_MARGIN_CF,
   DASHBOARD_ROW_OFFSET_HEIGHT,
-  HIDDEN_RESIZE_HEIGHT,
 } from './dashboard.constants'
-import { IColsHeight, IExtendedTUnitGroup } from './dashboard.interfaces'
+import {
+  IColsHeight,
+  IExtendedTUnitGroup,
+  IExtendedUnit,
+} from './dashboard.interfaces'
 
 export const tabId = (name: string): string => `widget-tab-${name}`
 export const subTabId = (name: string): string => `widget-sub-tab_${name}`
+
+export const tabUnit = (unit: IExtendedUnit, tab: IExtendedTUnitGroup) =>
+  `unit-${unit.name};tab-${tab.name}`
 
 export const getStartLayout = (groups: IExtendedTUnitGroup[]): Layout[] => {
   const cols = DASHBOARD_LAYOUT_COLS
@@ -80,7 +84,6 @@ export const getNewTabLayout = (
 export const getLayoutOnTabHeightChange = (
   id: string,
   index: number,
-  isOpen: boolean,
   mainTabsLayout: Layout[],
 ): Layout[] => {
   const tab = document.getElementById(id)
@@ -90,11 +93,7 @@ export const getLayoutOnTabHeightChange = (
   let height = 0
 
   if (tabChildren) {
-    let i = 0
     for (const tabChild of tabChildren) {
-      if (id === tabId('Inheritance')) {
-        console.log(i++, tabChild.getBoundingClientRect().height)
-      }
       height += tabChild.getBoundingClientRect().height
     }
   }
@@ -102,40 +101,6 @@ export const getLayoutOnTabHeightChange = (
   clonedLayout[index].h =
     height / DASHBOARD_ROW_OFFSET_HEIGHT +
     2 * DASHBOARD_LAYOUT_VERTICAL_MARGIN_CF
-
-  /*if (isOpen && tabChildren) {
-    clonedLayout[index].h =
-      (height + HIDDEN_RESIZE_HEIGHT - DASHBOARD_COLS_OFFSET_HEIGHT) /
-        DASHBOARD_ROW_OFFSET_HEIGHT +
-      DASHBOARD_LAYOUT_VERTICAL_MARGIN_CF
-  } else if (!isOpen && tabChildren) {
-    clonedLayout[index].h =
-      tabChildren.length - 1 + DASHBOARD_LAYOUT_VERTICAL_MARGIN_CF
-  }*/
-
-  return clonedLayout
-}
-
-export const getLayoutOnSubTabHeightChange = (
-  id: string,
-  index: number,
-  isOpen: boolean,
-  mainTabsLayout: Layout[],
-): Layout[] => {
-  const subTab = document.getElementById(id)
-  const subTabHeight = subTab?.getBoundingClientRect().height
-  const clonedLayout = cloneDeep(mainTabsLayout)
-
-  if (subTabHeight && isOpen) {
-    clonedLayout[index].h =
-      (subTabHeight - DASHBOARD_LAYOUT_ROW_HEIGHT) /
-        DASHBOARD_ROW_OFFSET_HEIGHT +
-      clonedLayout[index].h
-  } else if (subTabHeight && !isOpen) {
-    clonedLayout[index].h =
-      clonedLayout[index].h -
-      (subTabHeight - DASHBOARD_LAYOUT_ROW_HEIGHT) / DASHBOARD_ROW_OFFSET_HEIGHT
-  }
 
   return clonedLayout
 }

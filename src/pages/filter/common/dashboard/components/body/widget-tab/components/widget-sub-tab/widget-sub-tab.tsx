@@ -1,6 +1,6 @@
 import styles from './widget-sub-tab.module.css'
 
-import { ReactElement, useLayoutEffect, useMemo } from 'react'
+import { ReactElement, useMemo } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
@@ -9,18 +9,18 @@ import { PredictionPowerIndicator } from '@components/prediction-power-indicator
 import { UnitChart } from '@components/units-list/unit-chart'
 import dashboardStore from '@pages/filter/common/dashboard'
 import { WidgetSubTabItem } from '@pages/filter/common/dashboard/components/body/widget-tab/components/widget-sub-tab/components/widget-sub-tab-item'
-import { TExtendedUnit } from '@pages/filter/common/dashboard/dashboard.interfaces'
+import { IExtendedUnit } from '@pages/filter/common/dashboard/dashboard.interfaces'
 import { subTabId } from '@pages/filter/common/dashboard/dashboard.utils'
 import { AttributeKinds } from '@service-providers/common'
 
 export interface IWidgetSubTabProps {
-  unit: TExtendedUnit
+  unit: IExtendedUnit
   index: number
   groupName: string
 }
 
 export const WidgetSubTab = observer(
-  ({ unit, index, groupName }: IWidgetSubTabProps): ReactElement => {
+  ({ unit, groupName }: IWidgetSubTabProps): ReactElement => {
     const { showInCharts, filterValue, toggleUnit } = dashboardStore
 
     const disabled = !unit.name.includes(filterValue)
@@ -35,10 +35,6 @@ export const WidgetSubTab = observer(
     const onSelectUnit = () => {
       dashboardStore.selectGroup(unit)
     }
-
-    /*useLayoutEffect(() => {
-      dashboardStore.changeSubTabHeight(index, subTabId(unit.name), unit.isOpen)
-    }, [unit.isOpen, showInCharts, index, unit.name])*/
 
     return (
       <div

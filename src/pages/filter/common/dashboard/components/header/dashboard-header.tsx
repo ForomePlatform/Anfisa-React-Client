@@ -17,17 +17,12 @@ export const DashboardHeader = observer((): ReactElement => {
     viewType,
     toggleViewType,
     showInCharts,
-    setInCharts,
     filterValue,
     setFilterValue,
     toggleAll,
     mainTabs,
+    toggleCharts,
   } = dashboardStore
-
-  const toggleCharts = () => {
-    setInCharts(!showInCharts)
-    toggleAll(true)
-  }
 
   const isAllTabsOpened = useMemo(
     () => !mainTabs.some(tab => !tab.isOpen),

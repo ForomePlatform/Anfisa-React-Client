@@ -2,7 +2,7 @@ import { FC } from 'react'
 
 import { WidgetSubTabEnum } from '@pages/filter/common/dashboard/components/body/widget-tab/components/widget-sub-tab/components/widget-sub-tab-enum'
 import { WidgetSubTabNumeric } from '@pages/filter/common/dashboard/components/body/widget-tab/components/widget-sub-tab/components/widget-sub-tab-numeric'
-import { TExtendedUnit } from '@pages/filter/common/dashboard/dashboard.interfaces'
+import { IExtendedUnit } from '@pages/filter/common/dashboard/dashboard.interfaces'
 import {
   AttributeKinds,
   IEnumPropertyStatus,
@@ -10,7 +10,7 @@ import {
 } from '@service-providers/common'
 
 interface IWidgetSubTabItemProps {
-  unit: TExtendedUnit
+  unit: IExtendedUnit
   onSelectUnit: () => void
 }
 

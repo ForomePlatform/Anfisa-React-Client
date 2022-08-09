@@ -24,12 +24,12 @@ import {
 } from '@service-providers/common'
 import { IExtendedTUnitGroup, ModifySet } from './dashboard.interfaces'
 import {
-  getLayoutOnSubTabHeightChange,
   getLayoutOnTabHeightChange,
   getNewTabLayout,
   getSortedTabs,
   getStartLayout,
   getUpdatedLayout,
+  tabUnit,
 } from './dashboard.utils'
 
 export class DashboardStore {
@@ -41,6 +41,7 @@ export class DashboardStore {
   private _mainTabs: IExtendedTUnitGroup[] = []
   private _spareTabs: IExtendedTUnitGroup[] = []
   private _mainTabsLayout: Layout[] = []
+  private _beforeShowChartsOpened: Set<string> | null = null
 
   public viewType: ViewTypeDashboard = ViewTypeDashboard.List
   public page: GlbPagesNames | undefined
@@ -142,7 +143,6 @@ export class DashboardStore {
   }
 
   private setMainTabsLayout = (layout: ModifySet<Layout[]>) => {
-    console.log('set layout', layout)
     if (typeof layout === 'function') {
       this._mainTabsLayout = layout(this._mainTabsLayout)
       return
@@ -264,7 +264,6 @@ export class DashboardStore {
     if (groupType === DashboardGroupTypes.Main) {
       this.setMainTabs(prev => prev.filter((_, index) => index !== groupIndex))
       this.setSpareTabs(prev => [selectedGroup!, ...prev])
-      console.log(1)
       this.setMainTabsLayout(prev =>
         prev.filter(group => group.i !== groupName),
       )
@@ -276,38 +275,18 @@ export class DashboardStore {
 
     const newTabLayout = getNewTabLayout(selectedGroup!, this.mainTabsLayout)
 
-    console.log(2)
     this.setMainTabsLayout(newTabLayout)
   }
 
   public layoutChange = (layout: Layout[]) => {
     this.saveLayout()
 
-    console.log(3)
     this.setMainTabsLayout(layout)
   }
 
-  public changeTabHeight = (index: number, id: string, isOpen: boolean) => {
-    const newLayout = getLayoutOnTabHeightChange(
-      id,
-      index,
-      isOpen,
-      this.mainTabsLayout,
-    )
+  public changeTabHeight = (index: number, id: string) => {
+    const newLayout = getLayoutOnTabHeightChange(id, index, this.mainTabsLayout)
 
-    console.log(4)
-    this.setMainTabsLayout(newLayout)
-  }
-
-  public changeSubTabHeight = (index: number, id: string, isOpen: boolean) => {
-    const newLayout = getLayoutOnSubTabHeightChange(
-      id,
-      index,
-      isOpen,
-      this.mainTabsLayout,
-    )
-
-    console.log(5)
     this.setMainTabsLayout(newLayout)
   }
 
@@ -362,6 +341,40 @@ export class DashboardStore {
     this._mainTabs.forEach(({ name }) => this.toggleGroup(name, value))
   }
 
+  public toggleCharts = () => {
+    if (this._inCharts) {
+      const openedUnits = this._beforeShowChartsOpened ?? new Set<string>()
+      this._beforeShowChartsOpened = null
+      this.setMainTabs(prev =>
+        prev.map(tab => {
+          const units = tab.units.map(unit => ({
+            ...unit,
+            isOpen: openedUnits.has(tabUnit(unit, tab)),
+          }))
+
+          const groupIsOpen = !units.some(unit => !unit.isOpen)
+
+          return { ...tab, isOpen: groupIsOpen, units }
+        }),
+      )
+      this.setInCharts(false)
+      return
+    }
+
+    const openedUnits = new Set<string>()
+    this.mainTabs.forEach(group =>
+      group.units.forEach(unit => {
+        if (unit.isOpen) {
+          openedUnits.add(tabUnit(unit, group))
+        }
+      }),
+    )
+
+    this._beforeShowChartsOpened = openedUnits
+    this.setInCharts(true)
+    this.toggleAll(true)
+  }
+
   public onFavorite = (
     type: DashboardGroupTypes,
     groupName: string,
@@ -378,7 +391,6 @@ export class DashboardStore {
 
       const sortedTabs = getSortedTabs(clonedTabs)
       this.setMainTabs(sortedTabs)
-      console.log(6)
       this.setMainTabsLayout(getUpdatedLayout(sortedTabs, this.mainTabsLayout))
 
       return
@@ -398,16 +410,16 @@ export class DashboardStore {
 
     const sortedTabs = getSortedTabs(newMainTabs)
     this.setMainTabs(sortedTabs)
-    console.log(7)
     this.setMainTabsLayout(getUpdatedLayout(sortedTabs, newLayout))
   }
 
   public reset = () => {
-    LocalStoreManager.delete(DASHBOARD_LAYOUT)
-    LocalStoreManager.delete(DASHBOARD_TABS)
+    LocalStoreManager.delete(DASHBOARD_LAYOUT, datasetStore.datasetName)
+    LocalStoreManager.delete(DASHBOARD_TABS, datasetStore.datasetName)
 
     this.toggleViewType(ViewTypeDashboard.List)
 
+    this._beforeShowChartsOpened = null
     this._mainTabsLayout = []
     this._mainTabs = []
     this._spareTabs = []

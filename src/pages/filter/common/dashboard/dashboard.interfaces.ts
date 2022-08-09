@@ -21,18 +21,18 @@ interface IExtendedIFuncPropertyStatus extends IFuncPropertyStatus {
   isOpen: boolean
 }
 
-export type TExtendedUnit =
+export type IExtendedUnit =
   | IExtendedINumericPropertyStatus
   | IExtendedIEnumPropertyStatus
   | IExtendedIFuncPropertyStatus
 
 export interface IExtendedTUnitGroup {
   name: string
-  units: TExtendedUnit[]
+  units: IExtendedUnit[]
   isOpen: boolean
   isFavorite: boolean
   power?: number
-  attributes?: TExtendedUnit[]
+  attributes?: IExtendedUnit[]
 }
 
 export interface IColsHeight {
