@@ -1,9 +1,10 @@
-﻿@regression
+@regression
 Feature: Filter Refiner, Filter by range attribute
 
 Background:
 	Given user opens the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" dataset
 
+@tc:114305
 Scenario Outline: 01 Filter by "<Attribute Name>" range - middle
 	When user clicks the "<Attribute Name>"
 	And enters the minimum value of range "<Minimum Value>"
@@ -24,6 +25,7 @@ Examples:
 	| Number_of_clinvar_submitters | 2             | 22            | 5,418          |
 	| Severity                     | 1             | 2             | 52,248         |
 
+@tc:114306
 Scenario Outline: 02 Filter by "<Attribute Name>" range - boundary values
 	When user clicks the "<Attribute Name>"
 	And enters the minimum value of range "<Minimum Value>"
@@ -45,6 +47,7 @@ Examples:
 	| Number_of_clinvar_submitters | 0             | 30            | 5,628,753      |
 	| Severity                     | -1            | 3             | 5,628,753      |
 
+@tc:114307
 Scenario Outline: 03 Empty "<Minimum Value>" field
 	When user clicks the "<Attribute Name>"
 	And enters the maximum value of range "<Maximum Value>"
@@ -59,6 +62,7 @@ Examples:
 	| Num_Genes                    | 0             | 23            | 
 	| Start_Pos                    | 25165         | 248930384     |
 
+@tc:114308
 Scenario Outline: 04 Empty "<Maximum Value>" field
 	When user clicks the "<Attribute Name>"
 	And enters the minimum value of range "<Minimum Value>"
@@ -73,6 +77,7 @@ Examples:
 	| Num_Genes                    | 0             | 23            | 
 	| Start_Pos                    | 25165         | 248930384     |
 
+@tc:114309
 Scenario Outline: 05 "<Attribute Name>" range values on the graph
 	When user clicks the "<Attribute Name>"
 	And enters the minimum value of range "<Minimum Value>"
@@ -86,6 +91,7 @@ Examples:
 	| Num_Genes      | 5             | 10            |
 	| Start_Pos      | 25200         | 255200        |
 
+@tc:114310
 Scenario: 06 Filter by two ranges
 	When user clicks the "Severity" attribute
 	And enters the minimum value of range "-1"
@@ -102,6 +108,7 @@ Scenario: 06 Filter by two ranges
 	And the range "100 <= Proband_GQ <= 200" should be displayed in the right part of the screen
 	And the variants number should equal 35,994
 
+@tc:114311
 Scenario Outline: 07 Filter by "<Attribute Name>" range with invalid values (Minimum value < MIN)
 	When user clicks the "<Attribute Name>"
 	And enters the minimum value of range "<Minimum Value>"
@@ -120,6 +127,7 @@ Examples:
 	| Number_of_clinvar_submitters | -1            | 30            |
 	| Severity                     | -2            | 3             |
 
+@tc:114312
 Scenario Outline: 08 Filter by "<Attribute Name>" range with invalid values (Maximum value > MAX)
 	When user clicks the "<Attribute Name>"
 	And enters the minimum value of range "<Minimum Value>"
@@ -138,6 +146,7 @@ Examples:
 	| Number_of_clinvar_submitters | 0             | 31            |
 	| Severity                     | -1            | 4             |
 
+@tc:114313
 Scenario: 09 Clear button
 	When user clicks the "Num_Samples" attribute
 	And enters the minimum value of range "1"

@@ -1,10 +1,11 @@
-﻿@regression
+@regression
 Feature: Filter Refiner, Dataset Creation
 
 Background: 
 	Given user opens the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" dataset
 
 @smoke
+@tc:114387
 Scenario: 01 Create dataset: valid name
 	Given a filter with less than 9000 variants was loaded
 	And "Add new dataset" dialog was displayed
@@ -12,12 +13,14 @@ Scenario: 01 Create dataset: valid name
 	And clicks "Add dataset" button
 	Then dataset should be created
 
+@tc:114388
 Scenario: 02 Create dataset: empty name
 	Given a filter with less than 9000 variants was loaded
 	And "Add new dataset" dialog was displayed
 	When user doesn't enter a name for the dataset
 	Then "Add dataset" button should be disabled
 
+@tc:114389
 Scenario: 03 Create dataset: duplicated name
 	Given a filter with less than 9000 variants was loaded
 	And "Add new dataset" dialog was displayed
@@ -25,6 +28,7 @@ Scenario: 03 Create dataset: duplicated name
 	And clicks "Add dataset" button
 	Then "Add dataset" button should be disabled
 
+@tc:114390
 Scenario Outline: 04 Create dataset: invalid "<InvalidDatasetName>" name
 	Given a filter with less than 9000 variants was loaded
 	And "Add new dataset" dialog was displayed
@@ -39,6 +43,7 @@ Examples:
 	| test dataset          |
 	| 251_random_characters | #type 251 random symbols here
 
+@tc:114391
 Scenario: 05 Create dataset: too many variants
 	Given a filter with more than 9000 variants was loaded
 	And "Add new dataset" dialog was displayed
@@ -47,6 +52,7 @@ Scenario: 05 Create dataset: too many variants
 	Then dataset should not be created
 	And validation message should appear
 
+@tc:114392
 Scenario: 06 Cancel dataset creation
 	Given a filter with less than 9000 variants was loaded
 	And "Add new dataset" dialog was displayed
@@ -54,6 +60,7 @@ Scenario: 06 Cancel dataset creation
 	And clicks "Cancel" button
 	Then dataset creation should be canceled
 
+@tc:114393
 Scenario: 07 Close "Add new dataset" dialog during creation
 	Given a filter with less than 9000 variants was loaded
 	And "Add new dataset" dialog was displayed

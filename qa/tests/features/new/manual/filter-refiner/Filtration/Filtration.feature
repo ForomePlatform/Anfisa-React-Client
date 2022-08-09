@@ -1,9 +1,10 @@
-﻿@regression
+@regression
 Feature: Filter Refiner, Filtration
 
 Background: 
 	Given user opens the "Filter Refiner" for "xl_PGP3140_wgs_NIST-4_2" dataset
 
+@tc:114347
 Scenario Outline: 01 "<Attribute Name>" attributes with only "Not" mode (sub-kind = "status")
 	When user clicks "<Attribute Name>"
 	Then the "Not" check-box should be displayed
@@ -14,6 +15,7 @@ Examples:
 	| Proband_Zygosity |
 	| Variant_Class    |
 
+@tc:114348
 Scenario: 02 Filtration with "Not" mode
 	Given "Proband_Zygosity" attribute was displayed
 	When user select "Unknown" attribute value
@@ -22,6 +24,7 @@ Scenario: 02 Filtration with "Not" mode
 	Then the variants list should be filtered by Not (Unknown) value
 	And number of variants should be equal to 5,593,705
 
+@tc:114349
 Scenario Outline: 03 "<Attribute Name>" attributes with "Not" + "All" mode (sub-kind = "multi")
 	When user clicks "<Attribute Name>"
 	Then the "Not" check-box should be displayed
@@ -32,6 +35,7 @@ Examples:
 	| Callers        |
 	| FATHMM         |
 
+@tc:114350
 Scenario Outline: 04 Filtration with "All" mode
 	When user clicks the "Canonical_Annotation" attribute
 	And checks the "coding_sequence_variant" and "downstream_gene_variant" value check-boxes
@@ -39,6 +43,7 @@ Scenario Outline: 04 Filtration with "All" mode
 	And clicks the "Apply condition" button
 	Then the number of variants should equal 2
 
+@tc:114351
 Scenario: 05 Filtration with "All" + "Not" modes is impossible
 	Given "Callers" attribute was displayed
 	When user selects any attribute value
@@ -46,6 +51,7 @@ Scenario: 05 Filtration with "All" + "Not" modes is impossible
 	And user clicks "Not" check-box
 	Then user should not be able to check both of them at the same time
 
+@tc:114352
 Scenario Outline: 06 Filter "<Attribute Name>" by one attribute value
 	When user clicks the "<Attribute Name>"
 	And clicks "<Attribute value>" check-box
@@ -60,6 +66,7 @@ Examples:
 	| Callers        | INHERITED_FROM: Father | 1,640,680       |
 	| Diseases       | Carcinoma              | 51              |
 
+@tc:114353
 Scenario Outline: 07 Filter by a few "<Attribute Name>" values
 	When user clicks "<Attribute Name>" attribute
 	And inputs "<First Attribute Value>" in the search field 
@@ -77,6 +84,7 @@ Examples:
 	| Diseases       | Acute                 | Mesothelioma           | 22              |
 	| Clinvar_stars  | 2                     | 4                      | 4,638           |
                 
+@tc:114354
 Scenario Outline: 08 Check all "<Attribute Name>" values manually
 	When user clicks the "<Attribute Name>" attribute
 	And the list of values is displayed in the middle part of the screen
@@ -91,6 +99,7 @@ Examples:
 	| Callers          | 5,041,176       |
 	| Proband_Zygosity | 5,628,753       |
 
+@tc:114355
 Scenario Outline: 09 Filter by a few attributes ("<First Attribute>" and "<Second Attribute>")
 	When user clicks the "<First Attribute>"
 	And checks the "<Value One>" check-box
@@ -109,17 +118,20 @@ Examples:
 	| Callers          | GATK_HOMO_REC | Multiallelic     | True       | 6,133           |
 	| Region_Canonical | exon          | splice_altering  | pathogenic | 70              |
 
+@tc:114356
 Scenario: 10 Select all button
 	Given the "Callers" attribute was displayed
 	When user clicks the "Select all" button
 	Then all attributes should be checked
 
+@tc:114357
 Scenario: 11 Clear all button
 	Given the "Callers" attribute was displayed
 	And all attributes were checked
 	When user clicks the "Clear all" button
 	Then all attributes should be un-checked
 
+@tc:114358
 Scenario: 12 Show zero variants
 	Given the secondary dataset was selected in Secondary dataset drop-down
 	When user clicks the "Rules" attribute

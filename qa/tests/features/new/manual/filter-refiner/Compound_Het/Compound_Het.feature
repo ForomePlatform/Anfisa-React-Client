@@ -1,7 +1,8 @@
-﻿@regression
+@regression
 Feature: Filter Refiner, Filter by Compound_Het
 
 @smoke
+@tc:114294
 Scenario Outline: 01 Filtering by "<Compound_Het Value>" in WS dataset
 	Given the "Filter Refiner" for the "PGP3140_wgs_panel_hl" dataset was opened
 	When user clicks the "+" button near "Functional Units"
@@ -17,6 +18,7 @@ Examples:
 	| shared gene                  | 260             |
 	| non-intersecting transcripts | 248             |
 
+@tc:114295
 Scenario Outline: 02 Filtering by "<Compound_Het Value>" in secondary Dataset - Not Mode
 	Given the "Filter Refiner" for the "PGP3140_wgs_panel_hl" dataset was opened
 	When user clicks the "+" button near "Functional Units"
@@ -33,6 +35,7 @@ Examples:
 	| shared gene                  | 2,332                         |
 	| non-intersecting transcripts | 2,344                         |
 
+@tc:114296
 Scenario: 03 Secondary Dataset - Clear button
 	Given the "Filter Refiner" for the "PGP3140_wgs_panel_hl" dataset was opened
 	When user clicks the "+" button near "Functional Units"
@@ -45,6 +48,7 @@ Scenario: 03 Secondary Dataset - Clear button
 	Then "not" flag should be cleared from the right part of the screen
 
 @smoke
+@tc:114297
 Scenario: 04 Primary dataset
 	Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
 	When user clicks the "+" button near "Functional Units"

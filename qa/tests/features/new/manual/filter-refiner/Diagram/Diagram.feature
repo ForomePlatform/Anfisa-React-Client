@@ -4,6 +4,7 @@ Background:
 	Given user opens the "Filter Refiner" for the "PGP3140_wgs_panel_hl" dataset
 
 @regression
+@tc:114365
 Scenario Outline: 01 Expand the "<Attribute Name>" diagram for attribute with less than 40 values 
 	When user clicks the down arrow (v) button near "<Attribute Name>" in the left part of the page
 	Then the diagram for "<Attribute Name>" should be expanded
@@ -15,6 +16,7 @@ Examples:
 	| Callers              | 10                |
 	| Canonical_Annotation | 18                |
 
+@tc:114366
 Scenario Outline: 02 Expand the "<Attribute Name>" diagram for attribute with more than 40 values 
 	When user clicks the down arrow (v) button near "<Attribute Name>" in the left part of the page
 	Then the diagram for "<Attribute Name>" should be expanded
@@ -27,6 +29,7 @@ Examples:
 	| Symbol         | 490          |
 	| EQTL_Gene      | 67           |
 
+@tc:114367
 Scenario: 02 Collapse diagram
 	Given the attribute diagram was expanded
 	When user clicks the up arrow (^) near expanded attribute name

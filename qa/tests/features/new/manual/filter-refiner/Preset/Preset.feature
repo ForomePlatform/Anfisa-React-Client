@@ -1,7 +1,8 @@
-﻿@regression
+@regression
 Feature: Filter Refiner, Preset
 
 @smoke
+@tc:114378
 Scenario Outline: 01 Load a "<Preset Name>" for XL dataset
 	Given "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
 	When user clicks the "Select Filter Preset" drop-down
@@ -16,6 +17,7 @@ Examples:
 	| @Impact_Splicing    |
 
 @smoke
+@tc:114379
 Scenario Outline: 02 Load a "<Preset Name>" for Secondary dataset
 	Given the "Filter Refiner" for the "PGP3140_wgs_panel_hl" dataset was opened
 	When user clicks the "Select Filter Preset" drop-down
@@ -30,6 +32,7 @@ Examples:
 	| @SEQaBOO_ACMG59           |
 
 @smoke
+@tc:114380
 Scenario Outline: 03 Create a preset with "<Preset Name>"
 	Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
 	And the "Callers" attribute with "GATK_HOMOZYGOUS" value was added
@@ -46,11 +49,13 @@ Examples:
 	| test_preset_two   |
 	| test_preset_three |
 
+@tc:114381
 Scenario: 04 Create a preset without attributes
 	Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
 	When user doesn't add attributes
 	Then "Create Preset" button should not be visible
 
+@tc:114382
 Scenario: 05 Modify a custom preset without changes
 	Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
 	And custom preset was loaded
@@ -59,6 +64,7 @@ Scenario: 05 Modify a custom preset without changes
 	Then the "Modify" button should be disabled
 
 @smoke
+@tc:114383
 Scenario: 06 Modify a custom preset
 	Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
 	And custom preset was loaded
@@ -69,6 +75,7 @@ Scenario: 06 Modify a custom preset
 	Then the preset should be modified
 	And validation message should be displayed in the bottom right corner 
 
+@tc:114384
 Scenario: 07 Join two presets
 	Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
 	And the "@Loss_Of_Functions" preset was loaded
@@ -79,6 +86,7 @@ Scenario: 07 Join two presets
 	And the number of variants should equal 1
 
 @smoke
+@tc:114385
 Scenario: 08 Delete a custom preset
 	Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
 	When user clicks the "Select Filter Preset" drop-down
@@ -88,6 +96,7 @@ Scenario: 08 Delete a custom preset
 	Then the preset should be deleted
 	And validation message should be displayed in the bottom right corner 
 
+@tc:114386
 Scenario: 09 Cancel deleting a custom preset
 	Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
 	When user clicks the "Select Filter Preset" drop-down
