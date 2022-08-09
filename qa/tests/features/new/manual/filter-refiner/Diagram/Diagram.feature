@@ -30,7 +30,7 @@ Examples:
 	| EQTL_Gene      | 67           |
 
 @tc:114367
-Scenario: 02 Collapse diagram
+Scenario: 03 Collapse diagram
 	Given the attribute diagram was expanded
 	When user clicks the up arrow (^) near expanded attribute name
 	Then the diagram should be collapsed
