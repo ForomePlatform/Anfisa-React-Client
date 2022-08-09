@@ -29,13 +29,13 @@ export const Dashboard = observer(
       }
     }, [])
 
-    useEffect(() => {
-      dashboardStore.setPage(page)
+    useEffect(() => dashboardStore.setPage(page), [page])
 
+    useEffect(() => {
       if (!isFetching) {
         dashboardStore.setGroups(groups, functionalUnits)
       }
-    }, [functionalUnits, groups, isFetching, page, dataReady])
+    }, [functionalUnits, groups, isFetching, dataReady])
 
     return (
       <div className={styles.dashboard}>
