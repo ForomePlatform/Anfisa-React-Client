@@ -81,26 +81,28 @@ export const getNewTabLayout = (
   return clonedLayout
 }
 
-export const getLayoutOnTabHeightChange = (
-  id: string,
-  index: number,
+export const getLayoutOnMassiveChange = (
+  mainTabs: IExtendedTUnitGroup[],
   mainTabsLayout: Layout[],
 ): Layout[] => {
-  const tab = document.getElementById(id)
-  const tabChildren = tab?.children
   const clonedLayout = cloneDeep(mainTabsLayout)
 
-  let height = 0
+  mainTabsLayout.forEach((layout, index) => {
+    const tab = document.getElementById(tabId(mainTabs[index].name))
+    const tabChildren = tab?.children
 
-  if (tabChildren) {
-    for (const tabChild of tabChildren) {
-      height += tabChild.getBoundingClientRect().height
+    let height = 0
+
+    if (tabChildren) {
+      for (const tabChild of tabChildren) {
+        height += tabChild.getBoundingClientRect().height
+      }
     }
-  }
 
-  clonedLayout[index].h =
-    height / DASHBOARD_ROW_OFFSET_HEIGHT +
-    2 * DASHBOARD_LAYOUT_VERTICAL_MARGIN_CF
+    clonedLayout[index].h =
+      height / DASHBOARD_ROW_OFFSET_HEIGHT +
+      2 * DASHBOARD_LAYOUT_VERTICAL_MARGIN_CF
+  })
 
   return clonedLayout
 }

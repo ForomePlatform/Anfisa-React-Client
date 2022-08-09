@@ -1,6 +1,6 @@
 import styles from './dashboard-body.module.css'
 
-import { ReactElement } from 'react'
+import { ReactElement, useLayoutEffect } from 'react'
 import GridLayout, { WidthProvider } from 'react-grid-layout'
 import cn, { Argument } from 'classnames'
 import { observer } from 'mobx-react-lite'
@@ -23,31 +23,46 @@ interface IDashboardBodyProps {
 const ResponsiveGridLayout = WidthProvider(GridLayout)
 
 export const DashboardBody = observer(
-  ({ className }: IDashboardBodyProps): ReactElement => (
-    <div className={cn(styles.body, className)}>
-      <ResponsiveGridLayout
-        layout={dashboardStore.mainTabsLayout}
-        cols={DASHBOARD_LAYOUT_COLS}
-        containerPadding={DASHBOARD_LAYOUT_CONTAINER_PADDING}
-        margin={DASHBOARD_LAYOUT_MARGIN}
-        rowHeight={DASHBOARD_LAYOUT_ROW_HEIGHT}
-        draggableHandle="[data-drag-handle]"
-        isResizable={false}
-        className={styles.body__gridLayout}
-        onLayoutChange={dashboardStore.layoutChange}
-      >
-        {dashboardStore.mainTabs.map((group, index) => (
-          <div
-            key={group.name}
-            id={tabId(group.name)}
-            className={styles.body__gridLayout__widgetsContainer}
-          >
-            <WidgetTab group={group} index={index} />
-          </div>
-        ))}
-      </ResponsiveGridLayout>
+  ({ className }: IDashboardBodyProps): ReactElement => {
+    const {
+      changeTabsHeight,
+      mainTabs,
+      mainTabsLayout,
+      showInCharts,
+      layoutChange,
+    } = dashboardStore
 
-      <FooterPanel />
-    </div>
-  ),
+    useLayoutEffect(() => {
+      setTimeout(() => changeTabsHeight(), 0)
+    }, [changeTabsHeight, mainTabs, showInCharts])
+
+    return (
+      <div className={cn(styles.body, className)}>
+        <ResponsiveGridLayout
+          layout={mainTabsLayout}
+          cols={DASHBOARD_LAYOUT_COLS}
+          containerPadding={DASHBOARD_LAYOUT_CONTAINER_PADDING}
+          margin={DASHBOARD_LAYOUT_MARGIN}
+          rowHeight={DASHBOARD_LAYOUT_ROW_HEIGHT}
+          draggableHandle="[data-drag-handle]"
+          isResizable={false}
+          className={styles.body__gridLayout}
+          onLayoutChange={layoutChange}
+          onResize={changeTabsHeight}
+        >
+          {mainTabs.map((group, index) => (
+            <div
+              key={group.name}
+              id={tabId(group.name)}
+              className={styles.body__gridLayout__widgetsContainer}
+            >
+              <WidgetTab group={group} index={index} />
+            </div>
+          ))}
+        </ResponsiveGridLayout>
+
+        <FooterPanel />
+      </div>
+    )
+  },
 )

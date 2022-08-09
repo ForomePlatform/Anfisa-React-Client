@@ -24,7 +24,7 @@ import {
 } from '@service-providers/common'
 import { IExtendedTUnitGroup, ModifySet } from './dashboard.interfaces'
 import {
-  getLayoutOnTabHeightChange,
+  getLayoutOnMassiveChange,
   getNewTabLayout,
   getSortedTabs,
   getStartLayout,
@@ -259,7 +259,7 @@ export class DashboardStore {
     groupName: string,
     groupIndex: number,
   ) => {
-    const selectedGroup = this.groups.find(group => group.name === groupName)
+    const selectedGroup = this.groups.find(group => group.name === groupName)!
 
     if (groupType === DashboardGroupTypes.Main) {
       this.setMainTabs(prev => prev.filter((_, index) => index !== groupIndex))
@@ -271,9 +271,19 @@ export class DashboardStore {
     }
 
     this.setSpareTabs(prev => prev.filter((_, index) => index !== groupIndex))
-    this.setMainTabs(prev => [...prev, selectedGroup!])
+    this.setMainTabs(prev => [
+      ...prev,
+      {
+        ...selectedGroup,
+        isOpen: this._inCharts,
+        units: selectedGroup.units.map(unit => ({
+          ...unit,
+          isOpen: this._inCharts,
+        })),
+      },
+    ])
 
-    const newTabLayout = getNewTabLayout(selectedGroup!, this.mainTabsLayout)
+    const newTabLayout = getNewTabLayout(selectedGroup, this.mainTabsLayout)
 
     this.setMainTabsLayout(newTabLayout)
   }
@@ -284,8 +294,11 @@ export class DashboardStore {
     this.setMainTabsLayout(layout)
   }
 
-  public changeTabHeight = (index: number, id: string) => {
-    const newLayout = getLayoutOnTabHeightChange(id, index, this.mainTabsLayout)
+  public changeTabsHeight = () => {
+    const newLayout = getLayoutOnMassiveChange(
+      this.mainTabs,
+      this.mainTabsLayout,
+    )
 
     this.setMainTabsLayout(newLayout)
   }
