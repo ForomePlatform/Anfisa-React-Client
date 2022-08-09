@@ -12,6 +12,10 @@ import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
 import { TUnitGroups } from '@store/stat-units'
 import { GlbPagesNames } from '@glb/glb-names'
+import {
+  DASHBOARD_LAYOUT,
+  DASHBOARD_TABS,
+} from '@pages/filter/common/dashboard/dashboard.constants'
 import modalsVisibilityStore from '@pages/filter/dtree/components/modals/modals-visibility-store'
 import {
   AttributeKinds,
@@ -29,9 +33,6 @@ import {
 } from './dashboard.utils'
 
 export class DashboardStore {
-  private static _TABS: string = 'dashboardMainTabs'
-  private static _LAYOUT: string = 'dashboardLayout'
-
   private _inCharts: boolean = false
   private _filterValue: string = ''
 
@@ -77,15 +78,27 @@ export class DashboardStore {
     reaction(
       () => this.mainTabs,
       () => {
-        LocalStoreManager.write(DashboardStore._TABS, this.mainTabs)
-        LocalStoreManager.write(DashboardStore._LAYOUT, this.mainTabsLayout)
+        this.saveLayout()
+        this.saveTabs()
       },
     )
 
-    reaction(
-      () => this.mainTabsLayout,
-      () =>
-        LocalStoreManager.write(DashboardStore._LAYOUT, this.mainTabsLayout),
+    reaction(() => this.mainTabsLayout, this.saveLayout)
+  }
+
+  private saveLayout = () => {
+    LocalStoreManager.write(
+      DASHBOARD_LAYOUT,
+      this.mainTabsLayout,
+      datasetStore.datasetName,
+    )
+  }
+
+  private saveTabs = () => {
+    LocalStoreManager.write(
+      DASHBOARD_TABS,
+      this.mainTabs,
+      datasetStore.datasetName,
     )
   }
 
@@ -159,13 +172,11 @@ export class DashboardStore {
       isFavorite: false,
     })
 
-    const savedTabs = LocalStoreManager.read<IExtendedTUnitGroup[] | undefined>(
-      DashboardStore._TABS,
-    )
+    const savedTabs =
+      LocalStoreManager.read<IExtendedTUnitGroup[] | undefined>(DASHBOARD_TABS)
 
-    const savedLayout = LocalStoreManager.read<Layout[] | undefined>(
-      DashboardStore._LAYOUT,
-    )
+    const savedLayout =
+      LocalStoreManager.read<Layout[] | undefined>(DASHBOARD_LAYOUT)
 
     const mainTabs: IExtendedTUnitGroup[] =
       !savedTabs || savedTabs.length === 0
@@ -270,7 +281,7 @@ export class DashboardStore {
   }
 
   public layoutChange = (layout: Layout[]) => {
-    LocalStoreManager.write(DashboardStore._LAYOUT, layout)
+    this.saveLayout()
 
     console.log(3)
     this.setMainTabsLayout(layout)
@@ -392,8 +403,8 @@ export class DashboardStore {
   }
 
   public reset = () => {
-    LocalStoreManager.delete(DashboardStore._LAYOUT)
-    LocalStoreManager.delete(DashboardStore._TABS)
+    LocalStoreManager.delete(DASHBOARD_LAYOUT)
+    LocalStoreManager.delete(DASHBOARD_TABS)
 
     this.toggleViewType(ViewTypeDashboard.List)
 

@@ -46,8 +46,8 @@ export const WidgetTab = observer(
           <WidgetTabHeader
             group={group}
             isAllTabsOpened={group.isOpen}
-            onToggle={() => toggleGroup(group.name)}
-            onFavorite={() =>
+            onToggleExpand={() => toggleGroup(group.name)}
+            onToggleFavorite={() =>
               onFavorite(DashboardGroupTypes.Main, group.name, index)
             }
           />

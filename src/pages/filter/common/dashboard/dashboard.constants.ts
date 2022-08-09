@@ -1,3 +1,6 @@
+export const DASHBOARD_TABS = 'dashboardMainTabs'
+export const DASHBOARD_LAYOUT = 'dashboardLayout'
+
 export const DASHBOARD_LAYOUT_COLS = 4
 export const DASHBOARD_LAYOUT_ROW_HEIGHT = 36
 export const DASHBOARD_LAYOUT_HORIZONTAL_SPACING = 8

@@ -12,15 +12,15 @@ import { IExtendedTUnitGroup } from '../../../../dashboard.interfaces'
 export interface IWidgetTabHeaderProps {
   group: IExtendedTUnitGroup
   isAllTabsOpened: boolean
-  onToggle: () => void
-  onFavorite: () => void
+  onToggleExpand: () => void
+  onToggleFavorite: () => void
 }
 
 export const WidgetTabHeader = ({
   group,
   isAllTabsOpened,
-  onToggle,
-  onFavorite,
+  onToggleExpand,
+  onToggleFavorite,
 }: IWidgetTabHeaderProps): ReactElement => (
   <div className={styles.tab__header}>
     <div className="flex items-center">
@@ -47,7 +47,7 @@ export const WidgetTabHeader = ({
         })}
         onClick={e => {
           e.stopPropagation()
-          onFavorite()
+          onToggleFavorite()
         }}
       />
 
@@ -60,7 +60,7 @@ export const WidgetTabHeader = ({
 
       <Icon
         name={isAllTabsOpened ? 'Collapse' : 'Expand'}
-        onClick={onToggle}
+        onClick={onToggleExpand}
         className="text-grey-blue hover:text-blue-bright"
       />
     </div>
