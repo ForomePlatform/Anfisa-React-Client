@@ -23,11 +23,10 @@ export const SelectPresetPopover = ({
   <Popover onClose={onClose} offset={popoverOffset} {...popoverProps}>
     <section className={styles.solutionControlCard}>
       <MenuList className={styles.solutionControlCard__list} wrap="nowrap">
-        {solutions?.map(({ name, 'eval-status': status }) => (
+        {solutions?.map(({ name }) => (
           <MenuListItem
             key={name}
             label={name}
-            disabled={!['ok', null].includes(status)}
             isSelected={selectedPreset === name}
             onClick={() => onApply(name)}
           />

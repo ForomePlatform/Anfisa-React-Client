@@ -4,6 +4,7 @@ import { ReactElement, useState } from 'react'
 import cn from 'classnames'
 
 import { t } from '@i18n'
+import datasetStore from '@store/dataset/dataset'
 import { Icon } from '@ui/icon'
 import { MenuList, MenuListItem } from '@ui/menu-list'
 import { Popover } from '@ui/popover'
@@ -36,6 +37,14 @@ export const SolutionControlList = ({
 
   const closeContextMenu = () => {
     setContextMenuItem(null)
+  }
+
+  const isItemApplicableForXl = (status: string): boolean => {
+    const { isXL } = datasetStore
+    if (!isXL) {
+      return true
+    }
+    return ['ok', null].includes(status)
   }
 
   const renderActions = (name: string, standard: boolean) => {
@@ -76,7 +85,12 @@ export const SolutionControlList = ({
             key={name}
             label={name}
             isSelected={selected === name}
-            disabled={!['ok', null].includes(status)}
+            disabled={!isItemApplicableForXl(status)}
+            tooltip={
+              isItemApplicableForXl(status)
+                ? ''
+                : t('home.buildFlow.notApplicableForXl')
+            }
             onClick={() => onSelect(name)}
             actions={renderActions(name, standard)}
           />
