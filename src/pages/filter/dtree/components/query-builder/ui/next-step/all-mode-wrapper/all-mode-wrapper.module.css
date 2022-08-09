@@ -1,0 +1,8 @@
+.all-mode-wrapper {
+  margin: 8px 4px;
+  width: 25px;
+  height: 20px;
+  color: theme("colors.green.secondary");
+  background-color: theme("colors.green.medium");
+  font-size: 12px;
+}

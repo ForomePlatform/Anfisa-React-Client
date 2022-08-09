@@ -1,7 +1,4 @@
-import styles from './content-item-header.module.css'
-
 import { ReactElement } from 'react'
-import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
@@ -11,8 +8,9 @@ import { Icon } from '@ui/icon'
 import { FnLabel } from '@components/fn-label'
 import { DecisionTreesResultsDataCy } from '@data-testid'
 import { AttributeKinds } from '@service-providers/common'
-import modalsVisibilityStore from '../../../../modals/modals-visibility-store'
-import { InactiveFieldLabel } from '../../inactive-field-label'
+import modalsVisibilityStore from '../../../modals/modals-visibility-store'
+import { InactiveFieldLabel } from '../inactive-field-label'
+import { NotModeWrapper } from './not-mode-wrapper'
 
 interface IContentItemHeaderProps {
   currentStep: IStepData
@@ -67,12 +65,7 @@ export const ContentItemHeader = observer(
     }
 
     return (
-      <div
-        className={cn(
-          styles.contentItemHeader,
-          'flex flex-col w-full h-auto mr-2 pl-2 py-3 rounded-md border border-grey-light step-content-area',
-        )}
-      >
+      <div className="flex flex-col w-full h-auto mr-2 pl-2 py-3 rounded-md border border-grey-light step-content-area">
         <div className="flex items-center h-auto w-full pr-2 ">
           <Icon
             name="SettingsFat"
@@ -84,14 +77,9 @@ export const ContentItemHeader = observer(
           />
 
           {isNegateStep && (
-            <div
-              className={cn(
-                styles.contentItemHeader__notModeWrapper,
-                'flex items-center justify-center',
-              )}
-            >
+            <NotModeWrapper className="flex items-center justify-center">
               {'NOT'}
-            </div>
+            </NotModeWrapper>
           )}
 
           <div className="flex items-center text-14">
