@@ -25,7 +25,7 @@ interface IVariantDrawerProps {
 export const VariantDrawer = observer(
   ({ className }: IVariantDrawerProps): ReactElement => {
     const {
-      record: { aspects, igvParams, isFetching },
+      record: { aspects, igvParams, isLoading },
     } = variantStore
 
     const igvUrlSearchParams = igvParams?.igvUrlSearchParams
@@ -98,41 +98,44 @@ export const VariantDrawer = observer(
           }}
         />
         <div className={styles.drawer__content}>
-          {isFetching && (
+          {isLoading ? (
             <div className={styles.drawer__loader}>
               <Loader />
             </div>
-          )}
-          <div className={styles.drawer__search}>
-            <InputSearch
-              placeholder={t('variant.searchThroughTheTabs')}
-              value={searchValue}
-              onChange={e => onChange(e.target.value)}
-              onFocus={addListener}
-              foundItems={foundItems}
-            />
-          </div>
+          ) : (
+            <>
+              <div className={styles.drawer__search}>
+                <InputSearch
+                  placeholder={t('variant.searchThroughTheTabs')}
+                  value={searchValue}
+                  onChange={e => onChange(e.target.value)}
+                  onFocus={addListener}
+                  foundItems={foundItems}
+                />
+              </div>
 
-          {layoutMode == VariantDrawerLayoutMode.Grid && (
-            <VariantAspectsLayoutGrid
-              className={styles.drawer__layout}
-              aspects={aspects}
-              onChangeLayout={setGridLayout}
-              layout={gridLayout}
-              handles={gridHandles}
-              searchValue={searchValue}
-              igvUrlSearchParams={igvUrlSearchParams}
-            />
-          )}
-          {layoutMode === VariantDrawerLayoutMode.Gallery && (
-            <VariantAspectsLayoutGallery
-              className={styles.drawer__layout}
-              aspects={aspects}
-              activeAspect={galleryActiveAspect}
-              onChangeActiveAspect={handleChangeActiveAspect}
-              searchValue={searchValue}
-              igvUrlSearchParams={igvUrlSearchParams}
-            />
+              {layoutMode == VariantDrawerLayoutMode.Grid && (
+                <VariantAspectsLayoutGrid
+                  className={styles.drawer__layout}
+                  aspects={aspects}
+                  onChangeLayout={setGridLayout}
+                  layout={gridLayout}
+                  handles={gridHandles}
+                  searchValue={searchValue}
+                  igvUrlSearchParams={igvUrlSearchParams}
+                />
+              )}
+              {layoutMode === VariantDrawerLayoutMode.Gallery && (
+                <VariantAspectsLayoutGallery
+                  className={styles.drawer__layout}
+                  aspects={aspects}
+                  activeAspect={galleryActiveAspect}
+                  onChangeActiveAspect={handleChangeActiveAspect}
+                  searchValue={searchValue}
+                  igvUrlSearchParams={igvUrlSearchParams}
+                />
+              )}
+            </>
           )}
         </div>
       </div>
