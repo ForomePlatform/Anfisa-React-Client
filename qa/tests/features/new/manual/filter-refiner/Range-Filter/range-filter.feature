@@ -1,3 +1,6 @@
+#TODO 
+#after https://quantori.atlassian.net/browse/BAP-133 fix change back "less" and "less or equals" to math symbols
+
 @regression
 Feature: Filter Refiner, Filter by range attribute
 
@@ -8,7 +11,7 @@ Background:
 Scenario Outline: 01 Filter by "<Attribute Name>" range - middle
 	When user clicks the "<Attribute Name>"
 	And enters the minimum value of range "<Minimum Value>"
-	And changes "<" sign with "≤" next to the minimum value
+	And changes "less" sign with "less or equals" sign next to the minimum value
 	And enters the maximum value of range "<Maximum Value>"
 	And clicks the "Apply condition" button to apply the filter
 	Then the range "<Minimum Value>" less than or equals "<Attribute Name>" less than or equals "<Maximum Value>" should be displayed in the right part of the screen
@@ -29,7 +32,7 @@ Examples:
 Scenario Outline: 02 Filter by "<Attribute Name>" range - boundary values
 	When user clicks the "<Attribute Name>"
 	And enters the minimum value of range "<Minimum Value>"
-	And changes "<" sign with "≤" next to the minimum value
+	And changes "less" sign with "less or equals" sign next to the minimum value
 	And enters the maximum value of range "<Maximum Value>"
 	And clicks the "Apply condition" button to apply the filter
 	Then filter should be applied
@@ -81,7 +84,7 @@ Examples:
 Scenario Outline: 05 "<Attribute Name>" range values on the graph
 	When user clicks the "<Attribute Name>"
 	And enters the minimum value of range "<Minimum Value>"
-	And changes "<" sign with "≤" next to the minimum value
+	And changes "less" sign with "less or equals" sign next to the minimum value
 	And enters the maximum value of range "<Maximum Value>"
 	Then the "<Minimum Value>" and "<Maximum Value>" should be displayed on the graph
 
@@ -95,17 +98,17 @@ Examples:
 Scenario: 06 Filter by two ranges
 	When user clicks the "Severity" attribute
 	And enters the minimum value of range "-1"
-	And changes "<" sign with "≤" next to the minimum value
+	And changes "less" sign with "less or equals" next to the minimum value
 	And enters the maximum value of range "0"
 	And clicks the "Apply condition" button to apply the filter
 	And clicks the "Proband_GQ" attribute
 	And enters the minimum value of range "100"
-	And changes "<" sign with "≤" next to the minimum value
+	And changes "less" sign with "less or equals" next to the minimum value
 	And enters the maximum value of range "200"
 	And clicks the "Apply condition" button to apply the filter
 	Then both filters should be applied
-	And the range "-1 <= Severity <= 0" should be displayed in the right part of the screen
-	And the range "100 <= Proband_GQ <= 200" should be displayed in the right part of the screen
+	And the range "-1 less or equals Severity less or equals 0" should be displayed in the right part of the screen
+	And the range "100 less or equals Proband_GQ less or equals 200" should be displayed in the right part of the screen
 	And the variants number should equal 35,994
 
 @tc:114311
@@ -150,7 +153,7 @@ Examples:
 Scenario: 09 Clear button
 	When user clicks the "Num_Samples" attribute
 	And enters the minimum value of range "1"
-	And changes "<" sign with "≤" next to the minimum value
+	And changes "less" sign with "less or equals" next to the minimum value
 	And enters the maximum value of range "2"
 	And clicks the "Apply condition" button to apply the filter
 	And user clicks the "Clear" button
