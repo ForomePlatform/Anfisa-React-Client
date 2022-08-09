@@ -43,7 +43,11 @@ export const DatasetInfo: FC<IDatasetInfoProps> = observer(({ className }) => {
   )
 
   return (
-    <Card innerRef={ref} className={cn(styles.datasetInfo, className)}>
+    <Card
+      innerRef={ref}
+      className={cn(styles.datasetInfo, className)}
+      position="stretch"
+    >
       <header
         className={cn(
           styles.datasetInfo_header,

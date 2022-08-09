@@ -3,4 +3,12 @@ export interface ICardRadioItem<T extends string> {
   value: T
 }
 
-export type TDisabledOptions<T extends string> = Record<T, boolean>
+export interface IDisabledOption {
+  isDisabled: boolean
+  placeholder: () => JSX.Element
+}
+
+export type TDisabledOptions<T extends string> = Record<
+  T,
+  boolean | IDisabledOption
+>

@@ -26,6 +26,7 @@ export const AspectTableView = ({
   shouldAddShadow,
 }: IAspectTableViewProps): ReactElement => {
   const { rows } = aspect
+
   const notApplicableCounter =
     rows.length &&
     rows[0].cells.filter(cell =>
@@ -44,11 +45,15 @@ export const AspectTableView = ({
         </div>
       ) : (
         <>
-          <div className="p-3">
-            {t('mainTable.transcriptsNotApplicable', {
-              counter: notApplicableCounter,
-            })}
-          </div>
+          {notApplicableCounter > 0 && (
+            <div className="w-full p-3">
+              <span>
+                {t('mainTable.transcriptsNotApplicable', {
+                  counter: notApplicableCounter,
+                })}
+              </span>
+            </div>
+          )}
           <table className="min-w-full">
             <tbody>
               {rows?.map((row, index) => {
@@ -65,7 +70,7 @@ export const AspectTableView = ({
                     <td
                       className={cn(
                         style.firstColumn,
-                        shouldAddShadow && 'bg-blue-darkHover',
+                        shouldAddShadow && 'bg-blue-darkHover opacity-100',
                       )}
                       ref={!index ? columnRef : undefined}
                     >
