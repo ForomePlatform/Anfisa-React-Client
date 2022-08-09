@@ -1,6 +1,6 @@
 import styles from './preset-menu-popover.module.css'
 
-import { ReactElement, useState } from 'react'
+import { ReactElement, useCallback, useState } from 'react'
 import cn from 'classnames'
 
 import { t } from '@i18n'
@@ -67,6 +67,14 @@ export const PresetMenuPopover = ({
     return <span className={cn(styles.menuListItemActions)}>{actions}</span>
   }
 
+  const getIsModifyDisabled = useCallback(
+    (contextMenuItemName?: string) => {
+      return !presets.find(preset => preset.name === contextMenuItemName)
+        ?.isAbleToModify
+    },
+    [presets],
+  )
+
   return (
     <Popover onClose={onClose} offset={popoverOffset} {...popoverProps}>
       <section className={styles.presetMenuCard}>
@@ -87,6 +95,7 @@ export const PresetMenuPopover = ({
           onModify={onModify}
           contextMenuItem={contextMenuItem}
           closeContextMenu={closeContextMenu}
+          isModifyDisabled={getIsModifyDisabled(contextMenuItem?.name)}
         />
 
         <footer className={styles.presetMenuCard__actions}>

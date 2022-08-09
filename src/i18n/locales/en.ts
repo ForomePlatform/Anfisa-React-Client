@@ -104,9 +104,33 @@ export const en = {
     general: 'General',
     base: 'Derived from {name}',
     pickDataset: 'Select dataset',
+    datasetDescriptionDefault:
+      'No description available at the moment. You can add description by clicking the plus icon above.',
+    datasetDescriptionSaved: 'Description has been saved',
     table: 'Main Table',
     dtree: 'Decision Tree Panel',
     refiner: 'Filter Refiner',
+    infoPanel: {
+      title: 'Info',
+      annotations: 'Annotation sources versions',
+      filter: {
+        filterHeader: 'Filter applied in',
+        dtreeHeader: 'Decision tree code applied in',
+        filterName: 'Filter name: ',
+        dtreeName: 'Tree name: ',
+        updated: 'updated at {at} from {from}',
+        suppliedPanels: 'Supplied panels for type ',
+      },
+      info: {
+        name: 'Name',
+        kind: 'Kind',
+        variants: 'Variants',
+        createdAt: 'Created At',
+        baseDataset: 'Base dataset',
+        baseLoaded: 'Base loaded at',
+        rootDataset: 'Base dataset',
+      },
+    },
     modals: {
       importDataset: 'Import Dataset',
       exportDataset: 'Export Dataset',
@@ -121,6 +145,8 @@ export const en = {
       startWith: 'Start with',
       prevWorkSection: 'In this section your previous work will be displayed',
       prevWorkWith: 'You previously worked with',
+      candidateIsUnavailable: 'Existing candidates are unavailable',
+      genomeIsUnavailable: 'Whole genome/exome is unavailable',
     },
     buildFlow: {
       candidateSet: 'Existing candidate sets',
@@ -128,6 +154,9 @@ export const en = {
       whatsNext: "What's next?",
       relevantPresets: 'Relevant presets',
       additionalPresetFilter: 'Additional preset filters',
+      simpleFilter: 'Simple Filter',
+      inclusionExclusion: 'Inclusion/Exclusion Criteria',
+      viewVariants: 'View Variants',
     },
   },
   ds: {
@@ -141,6 +170,22 @@ export const en = {
     searchColumns: 'Search',
     columns: 'Columns',
     customizeTable: 'Customize Table',
+    macroTagging: 'Macro Tagging',
+    macroTagsModal: {
+      title: 'Macro Tags',
+      apply: 'Action',
+      placeholder: 'Tag name',
+      menu: {
+        apply: 'Apply to All',
+        remove: 'Remove from All',
+      },
+      confirmDialog: {
+        title: 'Confirmation',
+        message: 'Delete {tag} from all genes?',
+      },
+      toastApplied: 'Tag has been successfully set',
+      toastRemoved: 'Tag has been successfully removed',
+    },
     copied: 'Copied successfully',
     editFilters: 'Edit Filters',
     gene: 'Gene',
@@ -178,6 +223,7 @@ export const en = {
       'Attention: Zone filters (Gene, Gene List, Sample, Tags) do not participate in dataset creation',
     addDataset: 'Add dataset',
     tooManyVariants: 'The number of variants should be less than 9000',
+    openIt: 'Open it',
   },
   mainTable: {
     gene: 'Gene',
@@ -239,6 +285,7 @@ export const en = {
     errors: {
       savePredefinedPresetError: '{presetName} is a predefined preset',
       presetAlreadyExists: '{presetName} already exists',
+      presetIsTooLong: 'The name cannot be longer than 20 symbols',
     },
   },
   condition: {
@@ -272,7 +319,8 @@ export const en = {
     functionalUnits: 'Functional Units',
   },
   filter: {
-    applyCriterium: 'Apply criterium',
+    applyCondition: 'Apply condition',
+    applyPreset: 'Apply preset',
     switcher: 'Only starts with',
     method: 'Filtering method',
     results: 'Results',

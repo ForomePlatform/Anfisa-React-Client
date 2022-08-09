@@ -59,6 +59,8 @@ export const UnitsList = ({
     }
   }
 
+  const showLoader = isLoading && !filteredGroups.length
+
   return (
     <div
       className={cn(
@@ -102,14 +104,13 @@ export const UnitsList = ({
         className={cn(
           styles.unitsList__list,
           isModal && styles.unitsList__list_modal,
-          isLoading && styles.unitsList__list_loading,
+          showLoader && styles.unitsList__list_loading,
         )}
         id={listContainerId}
       >
-        {isLoading ? (
+        {showLoader ? (
           <Loader />
         ) : (
-          filteredGroups.length &&
           filteredGroups.map(group => (
             <UnitsListGroup
               key={group.name}

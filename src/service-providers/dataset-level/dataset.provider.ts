@@ -30,6 +30,12 @@ class DatasetProvider extends ServiceProviderBase {
     super()
   }
 
+  public updateDsInfo(params: IDsInfoArguments): Promise<IDsInfo> {
+    return this.post<IDsInfo>('/dsinfo', {
+      ...params,
+    }).then(res => adaptDataToCamelizedType<IDsInfo>(res.data))
+  }
+
   public getDsInfo(params: IDsInfoArguments): Promise<IDsInfo> {
     return this.get<IDsInfo>('/dsinfo', {
       params,

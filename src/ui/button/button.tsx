@@ -20,6 +20,8 @@ export interface IButtonProps {
     | 'tertiary'
     | 'primary-dark'
     | 'diestruction'
+    | 'no-border'
+  loaderColor?: 'default' | 'white'
   className?: Argument
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void
   onMouseUp?: (event: MouseEvent<HTMLButtonElement>) => void
@@ -40,6 +42,7 @@ export const Button: FC<IButtonProps> = ({
   padding = 'normal',
   disabled = false,
   variant = 'primary',
+  loaderColor = 'white',
   onClick,
   onMouseUp,
   onMouseDown,
@@ -93,7 +96,7 @@ export const Button: FC<IButtonProps> = ({
       onMouseDown={onMouseDownHandler}
       style={style}
     >
-      <LoaderWrapper isLoading={isLoading}>
+      <LoaderWrapper isLoading={isLoading} color={loaderColor}>
         {prepend}
         {text && <span className={textStyle}>{text}</span>}
         {icon}

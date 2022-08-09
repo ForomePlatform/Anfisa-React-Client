@@ -35,3 +35,6 @@ env-config.js
 
 #storybook
 /storybook-static
+
+#helm
+helm/values.secrets.yaml

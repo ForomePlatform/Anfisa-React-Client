@@ -1,7 +1,31 @@
 # Change log 
 
-## <small>0.7.1 (7/21/2022)</small>
+## <small>0.7.1 (8/8/2022)</small>
 
+* fix([FOROME-1424](https://quantori.atlassian.net/browse/FOROME-1424)): add opacity style (#866) ([17b353b5](https://github.com/ForomePlatform/Anfisa-React-Client/commit/17b353b5))
+* feat([FOROME-1425](https://quantori.atlassian.net/browse/FOROME-1425)): Reworking wizard scenarios (#865) ([8fad3290](https://github.com/ForomePlatform/Anfisa-React-Client/commit/8fad3290))
+* fix([FOROME-1407](https://quantori.atlassian.net/browse/FOROME-1407)): remove useless unfold icons (#849) ([8e6a0c25](https://github.com/ForomePlatform/Anfisa-React-Client/commit/8e6a0c25))
+* fix([FOROME-1408](https://quantori.atlassian.net/browse/FOROME-1408)): increase clickable area for dropdown arrow (#852) ([5c2440b6](https://github.com/ForomePlatform/Anfisa-React-Client/commit/5c2440b6))
+* fix([FOROME-1415](https://quantori.atlassian.net/browse/FOROME-1415)): Supported preset rubrics (#850) ([d13c2347](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d13c2347))
+* fix([FOROME-1397](https://quantori.atlassian.net/browse/FOROME-1397)): rename buttons (#844) ([82ba7a6d](https://github.com/ForomePlatform/Anfisa-React-Client/commit/82ba7a6d))
+* fix([FOROME-1373](https://quantori.atlassian.net/browse/FOROME-1373)): invalidate spaces in preset names (#848) ([a0e2a5d2](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a0e2a5d2))
+* feat([FOROME-1410](https://quantori.atlassian.net/browse/FOROME-1410)): Reworked edit behavior (#843) ([8ad5038e](https://github.com/ForomePlatform/Anfisa-React-Client/commit/8ad5038e))
+* feat([FOROME-1367](https://quantori.atlassian.net/browse/FOROME-1367)): made create derived dataset button disabled on empty conditions or too much variants exist (#831) ([e79895f4](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e79895f4))
+* feat([FOROME-1420](https://quantori.atlassian.net/browse/FOROME-1420)): Fixing card shadow (#851) ([33b74eef](https://github.com/ForomePlatform/Anfisa-React-Client/commit/33b74eef))
+* fix([FOROME-1174](https://quantori.atlassian.net/browse/FOROME-1174)): Added preset max length (#846) ([8886dee9](https://github.com/ForomePlatform/Anfisa-React-Client/commit/8886dee9))
+* feat([FOROME-1399](https://quantori.atlassian.net/browse/FOROME-1399)): Added animation for cards (#840) ([ee94c157](https://github.com/ForomePlatform/Anfisa-React-Client/commit/ee94c157))
+* feat([FOROME-1319](https://quantori.atlassian.net/browse/FOROME-1319)): add dataset descriptions (#825) ([bf7c9f40](https://github.com/ForomePlatform/Anfisa-React-Client/commit/bf7c9f40))
+* fix([FOROME-1392](https://quantori.atlassian.net/browse/FOROME-1392)): disable modifying preset without changes ([d3cf0a30](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d3cf0a30))
+* fix([FOROME-1394](https://quantori.atlassian.net/browse/FOROME-1394)): routing between FR,WS pages with ds creation ([68c61824](https://github.com/ForomePlatform/Anfisa-React-Client/commit/68c61824))
+* fix([FOROME-1381](https://quantori.atlassian.net/browse/FOROME-1381)): FR inheritance mode edition ([534a637b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/534a637b))
+* fix([FOROME-1380](https://quantori.atlassian.net/browse/FOROME-1380)): reset active preset ([c6d48378](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c6d48378))
+* fix([FOROME-1402](https://quantori.atlassian.net/browse/FOROME-1402)): whats next card option spelling ([1a1ad307](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1a1ad307))
+* fix([FOROME-1375](https://quantori.atlassian.net/browse/FOROME-1375)): final step include/exclude ([28d368ad](https://github.com/ForomePlatform/Anfisa-React-Client/commit/28d368ad))
+* fix([FOROME-1333](https://quantori.atlassian.net/browse/FOROME-1333)): dont show zero ammount of results (hotfix) (#836) ([6c1c155b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/6c1c155b))
+* fix([FOROME-1391](https://quantori.atlassian.net/browse/FOROME-1391)): remove unnecessary null check ([55ab3cd6](https://github.com/ForomePlatform/Anfisa-React-Client/commit/55ab3cd6))
+* fix([FOROME-1391](https://quantori.atlassian.net/browse/FOROME-1391)): add possible null to object ([13b688e5](https://github.com/ForomePlatform/Anfisa-React-Client/commit/13b688e5))
+* fix([FOROME-1391](https://quantori.atlassian.net/browse/FOROME-1391)): revert idea changes ([a140cc68](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a140cc68))
+* fix([FOROME-1391](https://quantori.atlassian.net/browse/FOROME-1391)): check xl datasets ([dd97c5ee](https://github.com/ForomePlatform/Anfisa-React-Client/commit/dd97c5ee))
 * fix([FOROME-1333](https://quantori.atlassian.net/browse/FOROME-1333)): no results message (#828) ([dd7af174](https://github.com/ForomePlatform/Anfisa-React-Client/commit/dd7af174))
 * fix([FOROME-1377](https://quantori.atlassian.net/browse/FOROME-1377)): typing space symbol in creating drawer custom tag ([bda01ab0](https://github.com/ForomePlatform/Anfisa-React-Client/commit/bda01ab0))
 * fix([FOROME-1349](https://quantori.atlassian.net/browse/FOROME-1349)): ds creation ([b1163249](https://github.com/ForomePlatform/Anfisa-React-Client/commit/b1163249))

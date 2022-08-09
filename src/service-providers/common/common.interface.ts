@@ -245,6 +245,7 @@ export enum SolutionEntryDescriptionEvalStatuses {
 export interface ISolutionEntryDescription {
   name: string
   standard: boolean
+  rubric?: string
   'eval-status': SolutionEntryDescriptionEvalStatuses
   'upd-time'?: string
   'upd-from'?: string

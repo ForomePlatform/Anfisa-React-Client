@@ -14,6 +14,7 @@ export interface IVariantDrawerGridPreset {
   name: string
   predefinedName?: VariantDrawerPredefinedPresets
   layout?: TVariantAspectsGridLayout
+  isAbleToModify?: boolean
 }
 
 export interface IVariantDrawerData {

@@ -14,7 +14,7 @@ export const ConditionOptionsButton = ({
 }: IConditionOptionsButtonProps): ReactElement => (
   <Button
     className={className}
-    variant="text"
+    variant="no-border"
     onClick={e => onShowPopover(e.currentTarget)}
     icon={
       <Icon

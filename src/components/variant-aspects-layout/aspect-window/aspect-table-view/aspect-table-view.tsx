@@ -58,7 +58,7 @@ export const AspectTableView = ({
                   <td
                     className={cn(
                       style.firstColumn,
-                      shouldAddShadow && 'bg-blue-darkHover',
+                      shouldAddShadow && 'bg-blue-darkHover opacity-100',
                     )}
                     ref={!index ? columnRef : undefined}
                   >

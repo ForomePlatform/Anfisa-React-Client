@@ -6,15 +6,20 @@ import { ICardProps } from '../wizard/wizard.interface'
 import wizardStore from '../wizard/wizard.store'
 
 export const ExistingCandidatesCard = observer((props: ICardProps) => {
-  const { title, id, maxHeight } = props
+  const { title, id, maxHeight, position } = props
   const secodaryDatasets = wizardStore.secondaryDatasets
   const onSelect = (ds: string) => {
     wizardStore.setSelectedDataset(ds, id)
   }
 
   return (
-    <Card className="mt-4 px-0">
-      <CardTitle text={title} className="text-16 px-4" />
+    <Card
+      isNeedToAnimate={wizardStore.isNeedToAnimateCard(id)}
+      className="mt-4"
+      style={{ paddingLeft: 0, paddingRight: 0 }}
+      position={position}
+    >
+      <CardTitle text={title} className="px-4" />
 
       <div
         className="mb-4 mt-2 text-14 overflow-y-auto"
