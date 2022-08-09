@@ -1,7 +1,9 @@
 # Change log 
 
-## <small>0.7.1 (8/8/2022)</small>
+## <small>0.7.1 (8/9/2022)</small>
 
+* fix([FOROME-1433](https://quantori.atlassian.net/browse/FOROME-1433)): Fix button styles (#872) ([6c831b00](https://github.com/ForomePlatform/Anfisa-React-Client/commit/6c831b00))
+* feat([FOROME-1447](https://quantori.atlassian.net/browse/FOROME-1447)): Hide macro tagging button (#871) ([5d418ed2](https://github.com/ForomePlatform/Anfisa-React-Client/commit/5d418ed2))
 * fix([FOROME-1424](https://quantori.atlassian.net/browse/FOROME-1424)): add opacity style (#866) ([17b353b5](https://github.com/ForomePlatform/Anfisa-React-Client/commit/17b353b5))
 * feat([FOROME-1425](https://quantori.atlassian.net/browse/FOROME-1425)): Reworking wizard scenarios (#865) ([8fad3290](https://github.com/ForomePlatform/Anfisa-React-Client/commit/8fad3290))
 * fix([FOROME-1407](https://quantori.atlassian.net/browse/FOROME-1407)): remove useless unfold icons (#849) ([8e6a0c25](https://github.com/ForomePlatform/Anfisa-React-Client/commit/8e6a0c25))
