@@ -21,7 +21,7 @@ export const SelectedDatasetStartFlow = observer(
           <CardTitle
             text={dirinfoStore.selectedDirinfoName}
             dataTestId={DatasetCard.datasetHeader}
-            className="mr-3 break-words"
+            className="mr-3 !mb-0 break-words"
             size="md"
           />
 
