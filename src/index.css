@@ -80,3 +80,49 @@
   justify-content: center;
   align-items: center;
 }
+
+/* stylelint-disable-next-line selector-class-pattern */
+.ReactModal__Body--open {
+  overflow: hidden;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+
+.react-switch-handle {
+  width: 12px;
+  height: 12px;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.Toastify__toast--info {
+  background-color: #18a0fb;
+  border-radius: 8px;
+  height: 52px;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.Toastify__toast {
+  max-height: 52px;
+  min-height: auto;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.Toastify__toast-body {
+  font-size: 14px;
+  line-height: 16px;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.Toastify__close-button {
+  margin-top: auto;
+  margin-bottom: auto;
+}
+
+/* stylelint-disable-next-line selector-class-pattern */
+.Toastify__toast-container--bottom-right {
+  bottom: 4px;
+  right: 20px;
+}
