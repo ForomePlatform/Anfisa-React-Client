@@ -46,15 +46,17 @@ export const BuildFlowHeader = observer(
     return (
       <div className={styles.buildFlow__header}>
         <div className="flex items-center">
-          <div
-            onClick={handleGoBack}
-            className={styles.buildFlow__header__button}
-          >
-            <Icon
-              name="Arrow"
-              className={styles.buildFlow__header__button__icon}
-            />
-          </div>
+          {!isXL && wizardStore.actionHistory.historyIndex > 1 && (
+            <div
+              onClick={handleGoBack}
+              className={styles.buildFlow__header__button}
+            >
+              <Icon
+                name="Arrow"
+                className={styles.buildFlow__header__button__icon}
+              />
+            </div>
+          )}
 
           <CardTitle
             text={dirinfoStore.selectedDirinfoName}
