@@ -87,7 +87,7 @@ export const getLayoutOnMassiveChange = (
 ): Layout[] => {
   const clonedLayout = cloneDeep(mainTabsLayout)
 
-  mainTabsLayout.forEach((layout, index) => {
+  clonedLayout.forEach((layout, index) => {
     const tab = document.getElementById(tabId(mainTabs[index].name))
     const tabChildren = tab?.children
 
@@ -99,7 +99,7 @@ export const getLayoutOnMassiveChange = (
       }
     }
 
-    clonedLayout[index].h =
+    layout.h =
       height / DASHBOARD_ROW_OFFSET_HEIGHT +
       2 * DASHBOARD_LAYOUT_VERTICAL_MARGIN_CF
   })

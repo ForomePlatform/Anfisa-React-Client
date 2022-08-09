@@ -48,7 +48,6 @@ export const DashboardBody = observer(
           isResizable={false}
           className={styles.body__gridLayout}
           onLayoutChange={layoutChange}
-          onResize={changeTabsHeight}
         >
           {mainTabs.map((group, index) => (
             <div

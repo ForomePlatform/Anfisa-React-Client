@@ -1,6 +1,6 @@
 import { Layout } from 'react-grid-layout'
 import { cloneDeep } from 'lodash'
-import { makeAutoObservable, reaction } from 'mobx'
+import { makeAutoObservable } from 'mobx'
 
 import { DashboardGroupTypes } from '@core/enum/dashboard-group-types-enum'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
@@ -73,18 +73,6 @@ export class DashboardStore {
 
   constructor() {
     makeAutoObservable(this)
-
-    reaction(() => this.dashBoardQuery, this.reset)
-
-    reaction(
-      () => this.mainTabs,
-      () => {
-        this.saveLayout()
-        this.saveTabs()
-      },
-    )
-
-    reaction(() => this.mainTabsLayout, this.saveLayout)
   }
 
   private saveLayout = () => {
@@ -172,11 +160,15 @@ export class DashboardStore {
       isFavorite: false,
     })
 
-    const savedTabs =
-      LocalStoreManager.read<IExtendedTUnitGroup[] | undefined>(DASHBOARD_TABS)
+    const savedTabs = LocalStoreManager.read<IExtendedTUnitGroup[] | undefined>(
+      DASHBOARD_TABS,
+      datasetStore.datasetName,
+    )
 
-    const savedLayout =
-      LocalStoreManager.read<Layout[] | undefined>(DASHBOARD_LAYOUT)
+    const savedLayout = LocalStoreManager.read<Layout[] | undefined>(
+      DASHBOARD_LAYOUT,
+      datasetStore.datasetName,
+    )
 
     const mainTabs: IExtendedTUnitGroup[] =
       !savedTabs || savedTabs.length === 0
@@ -196,13 +188,6 @@ export class DashboardStore {
     this._mainTabs = mainTabs
     this._spareTabs = spareTabs
     this._mainTabsLayout = layout
-  }
-
-  private get dashBoardQuery() {
-    return {
-      datasetName: datasetStore.datasetName,
-      method: filterStore.method,
-    }
   }
 
   public toggleViewType = (viewType: ViewTypeDashboard) => {
@@ -290,6 +275,7 @@ export class DashboardStore {
 
   public layoutChange = (layout: Layout[]) => {
     this.saveLayout()
+    this.saveTabs()
 
     this.setMainTabsLayout(layout)
   }
@@ -427,9 +413,6 @@ export class DashboardStore {
   }
 
   public reset = () => {
-    LocalStoreManager.delete(DASHBOARD_LAYOUT, datasetStore.datasetName)
-    LocalStoreManager.delete(DASHBOARD_TABS, datasetStore.datasetName)
-
     this.toggleViewType(ViewTypeDashboard.List)
 
     this._beforeShowChartsOpened = null

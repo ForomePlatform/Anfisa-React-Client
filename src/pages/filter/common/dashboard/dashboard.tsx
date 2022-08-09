@@ -24,6 +24,12 @@ export const Dashboard = observer(
     isFetching,
   }: IDashboardProps): ReactElement => {
     useEffect(() => {
+      return () => {
+        dashboardStore.reset()
+      }
+    }, [])
+
+    useEffect(() => {
       dashboardStore.setPage(page)
 
       if (!isFetching) {
