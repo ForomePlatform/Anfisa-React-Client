@@ -44,14 +44,10 @@ export const BuildFlowHeader = observer(
     }
 
     const isShowBackButton = () => {
-      if (!isXL) {
-        if (wizardStore.actionHistory.historyIndex <= 1) {
-          return false
-        }
-        return true
-      } else {
-        return true
+      if (!isXL && wizardStore.actionHistory.historyIndex <= 1) {
+        return false
       }
+      return true
     }
 
     return (
