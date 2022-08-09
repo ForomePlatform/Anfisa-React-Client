@@ -43,17 +43,10 @@ export const BuildFlowHeader = observer(
       return wizardStore.actionHistory.goBackward()
     }
 
-    const isShowBackButton = () => {
-      if (!isXL && wizardStore.actionHistory.historyIndex <= 1) {
-        return false
-      }
-      return true
-    }
-
     return (
       <div className={styles.buildFlow__header}>
         <div className="flex items-center">
-          {isShowBackButton() && (
+          {!isXL && wizardStore.actionHistory.historyIndex <= 1 ? null : (
             <div
               onClick={handleGoBack}
               className={styles.buildFlow__header__button}
