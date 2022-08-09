@@ -146,8 +146,6 @@ class OperationsStore {
       if (this.savingStatus[1] === 'Done') this.setIsCreationOver()
     })
 
-    console.log(result)
-
     return !result[0]
       ? setTimeout(async () => await this.getJobStatusAsync(taskId), 1000)
       : { ok: true, data: result }
