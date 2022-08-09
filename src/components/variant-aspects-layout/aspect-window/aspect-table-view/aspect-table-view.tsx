@@ -45,17 +45,22 @@ export const AspectTableView = ({
         </div>
       ) : (
         <>
-          {notApplicableCounter > 0 && (
-            <div className="w-full p-3">
-              <span>
-                {t('mainTable.transcriptsNotApplicable', {
-                  counter: notApplicableCounter,
-                })}
-              </span>
-            </div>
-          )}
           <table className="min-w-full">
             <tbody>
+              {notApplicableCounter > 0 && (
+                <tr key="notApplicableMessage">
+                  <td
+                    className={cn(
+                      style.firstColumn,
+                      shouldAddShadow && 'bg-blue-darkHover opacity-100',
+                    )}
+                  >
+                    {t('mainTable.transcriptsNotApplicable', {
+                      counter: notApplicableCounter,
+                    })}
+                  </td>
+                </tr>
+              )}
               {rows?.map((row, index) => {
                 if (!row) return <tr key={index} />
 
