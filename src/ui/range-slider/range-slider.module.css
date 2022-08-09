@@ -8,6 +8,7 @@
   &_has-histogram {
     margin-left: 48px;
 
+    /* stylelint-disable-next-line selector-class-pattern */
     .range-slider__ruler {
       margin-top: -6px;
     }
@@ -50,12 +51,14 @@
         background: theme("colors.grey.disabled");
       }
 
+      /* stylelint-disable-next-line selector-class-pattern */
       .range-slider__handle {
         margin-left: 0;
         margin-top: -8px;
       }
     }
 
+    /* stylelint-disable-next-line selector-class-pattern */
     .range-slider__handle {
       margin-left: -8px;
     }
