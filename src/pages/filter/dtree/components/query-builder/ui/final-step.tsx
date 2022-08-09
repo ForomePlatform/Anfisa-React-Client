@@ -1,3 +1,5 @@
+import styles from './next-step/next-step.module.css'
+
 import { ReactElement } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
@@ -11,7 +13,6 @@ import stepStore, {
 import { Button } from '@ui/button'
 import { Radio } from '@ui/radio'
 import { changeStep } from '@utils/changeStep'
-import { ResultsView, TreeView } from './next-step/next-step'
 import { NextStepRoute } from './next-step/next-step-route'
 import { StepDivider } from './step-divider'
 
@@ -45,8 +46,9 @@ export const FinalStep = observer(
     return (
       <div className="flex flex-col mb-2">
         <div className="flex">
-          <TreeView
+          <div
             className={cn(
+              styles.nextStep__treeView,
               'pr-3',
               currentStep.isReturnedVariantsActive ? 'bg-blue-tertiary' : '',
             )}
@@ -57,10 +59,11 @@ export const FinalStep = observer(
               stepNo={stepNo}
               isIncluded={!currentStep.excluded}
             />
-          </TreeView>
+          </div>
 
-          <ResultsView
+          <div
             className={cn(
+              styles.nextStep__resultsView,
               'border-l border-grey-light font-medium px-5 relative',
               currentStep.isActive && 'bg-blue-tertiary',
             )}
@@ -107,7 +110,7 @@ export const FinalStep = observer(
                 stepStore.createEmptyStep(index, CreateEmptyStepPositions.FINAL)
               }
             />
-          </ResultsView>
+          </div>
         </div>
       </div>
     )

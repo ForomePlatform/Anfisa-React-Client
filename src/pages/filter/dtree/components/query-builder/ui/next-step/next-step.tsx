@@ -1,27 +1,14 @@
+import styles from './next-step.module.css'
+
 import { ReactElement, useEffect, useState } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
-import styled from 'styled-components'
 
 import stepStore, { ActiveStepOptions } from '@store/dtree/step.store'
 import { DecisionTreesResultsDataCy } from '@data-testid'
 import { NextStepContent } from './next-step-content'
 import { NextStepHeader } from './next-step-header'
 import { NextStepRoute } from './next-step-route'
-
-export const TreeView = styled.div`
-  width: 13%;
-  min-width: 132px;
-  display: flex;
-  height: 117%;
-`
-
-export const ResultsView = styled.div`
-  width: 87%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-`
 
 interface INextStepProps {
   index: number
@@ -61,12 +48,13 @@ export const NextStep = observer(
 
     return (
       <div
-        className="flex flex-col"
+        className={cn(styles.nextStep, 'flex flex-col')}
         data-testid={DecisionTreesResultsDataCy.stepCard}
       >
         <div className="flex">
-          <TreeView
+          <div
             className={cn(
+              styles.nextStep__treeView,
               'pr-3',
               currentStep.isReturnedVariantsActive ? ' bg-blue-tertiary' : '',
             )}
@@ -77,10 +65,11 @@ export const NextStep = observer(
               stepNo={stepNo}
               isIncluded={!currentStep.excluded}
             />
-          </TreeView>
+          </div>
 
-          <ResultsView
+          <div
             className={cn(
+              styles.nextStep__resultsView,
               'border-b border-l border-grey-light font-medium px-5 relative',
               currentStep.isActive && ' bg-blue-tertiary',
             )}
@@ -94,7 +83,7 @@ export const NextStep = observer(
             />
 
             {isExpanded && <NextStepContent index={index} stepNo={stepNo} />}
-          </ResultsView>
+          </div>
         </div>
       </div>
     )
