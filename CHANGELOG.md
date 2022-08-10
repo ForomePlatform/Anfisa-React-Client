@@ -2,6 +2,7 @@
 
 ## <small>0.7.1 (8/10/2022)</small>
 
+* feat([FOROME-1466](https://quantori.atlassian.net/browse/FOROME-1466)): Hide back button on the first step (#878) ([2b76a371](https://github.com/ForomePlatform/Anfisa-React-Client/commit/2b76a371))
 * fix([FOROME-1469](https://quantori.atlassian.net/browse/FOROME-1469)): Fix header alignment (#879) ([7e5f8325](https://github.com/ForomePlatform/Anfisa-React-Client/commit/7e5f8325))
 * feat([FOROME-1406](https://quantori.atlassian.net/browse/FOROME-1406)): rework the discriminative power icon ([1094314b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1094314b))
 * fix([FOROME-1433](https://quantori.atlassian.net/browse/FOROME-1433)): Fix button styles (#872) ([6c831b00](https://github.com/ForomePlatform/Anfisa-React-Client/commit/6c831b00))
