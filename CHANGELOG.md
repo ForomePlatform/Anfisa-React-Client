@@ -2,6 +2,7 @@
 
 ## <small>0.7.1 (8/10/2022)</small>
 
+* fix([FOROME-1469](https://quantori.atlassian.net/browse/FOROME-1469)): Fix header alignment (#879) ([7e5f8325](https://github.com/ForomePlatform/Anfisa-React-Client/commit/7e5f8325))
 * feat([FOROME-1406](https://quantori.atlassian.net/browse/FOROME-1406)): rework the discriminative power icon ([1094314b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1094314b))
 * fix([FOROME-1433](https://quantori.atlassian.net/browse/FOROME-1433)): Fix button styles (#872) ([6c831b00](https://github.com/ForomePlatform/Anfisa-React-Client/commit/6c831b00))
 * feat([FOROME-1447](https://quantori.atlassian.net/browse/FOROME-1447)): Hide macro tagging button (#871) ([5d418ed2](https://github.com/ForomePlatform/Anfisa-React-Client/commit/5d418ed2))
