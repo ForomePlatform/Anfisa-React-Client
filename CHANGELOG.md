@@ -1,7 +1,8 @@
 # Change log 
 
-## <small>0.7.1 (8/9/2022)</small>
+## <small>0.7.1 (8/10/2022)</small>
 
+* feat([FOROME-1406](https://quantori.atlassian.net/browse/FOROME-1406)): rework the discriminative power icon ([1094314b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1094314b))
 * fix([FOROME-1433](https://quantori.atlassian.net/browse/FOROME-1433)): Fix button styles (#872) ([6c831b00](https://github.com/ForomePlatform/Anfisa-React-Client/commit/6c831b00))
 * feat([FOROME-1447](https://quantori.atlassian.net/browse/FOROME-1447)): Hide macro tagging button (#871) ([5d418ed2](https://github.com/ForomePlatform/Anfisa-React-Client/commit/5d418ed2))
 * fix([FOROME-1424](https://quantori.atlassian.net/browse/FOROME-1424)): add opacity style (#866) ([17b353b5](https://github.com/ForomePlatform/Anfisa-React-Client/commit/17b353b5))
