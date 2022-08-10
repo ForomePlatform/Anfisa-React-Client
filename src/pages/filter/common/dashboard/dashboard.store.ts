@@ -199,10 +199,28 @@ export class DashboardStore {
         ? extendedGroups.slice(0, 4)
         : savedMainTabs
 
+    const updatedMainTabs = mainTabs.map(tab => {
+      const group = extendedGroups.find(group => group.name === tab.name)
+
+      const groupUnits = group
+        ? group.units.map((unit, index) => {
+            return {
+              ...unit,
+              isOpen: tab.units[index].isOpen,
+            }
+          })
+        : tab.units
+
+      return {
+        ...tab,
+        units: groupUnits,
+      }
+    })
+
     const spareTabs =
       !savedSpareTabs || !savedSpareTabs.length
         ? extendedGroups.filter(
-            group => !mainTabs.some(tab => tab.name === group.name),
+            group => !updatedMainTabs.some(tab => tab.name === group.name),
           )
         : savedSpareTabs
 
@@ -212,7 +230,7 @@ export class DashboardStore {
         : savedLayout
 
     this._groups = extendedGroups
-    this._mainTabs = mainTabs
+    this._mainTabs = updatedMainTabs
     this._spareTabs = spareTabs
     this._mainTabsLayout = layout
   }

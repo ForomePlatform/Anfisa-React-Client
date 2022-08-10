@@ -23,6 +23,7 @@ export const WidgetSubTabEnum = observer(
       dashboardStore.setEnumVariant(variantName)
       onSelectUnit()
     }
+
     return (
       <>
         {unit.variants?.slice(0, MAX_SUB_TAB_ROWS_AMOUNT + 1).map(
