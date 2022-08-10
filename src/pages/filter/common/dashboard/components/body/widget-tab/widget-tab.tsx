@@ -17,7 +17,7 @@ export interface IWidgetTabProps {
 
 export const WidgetTab = observer(
   ({ group, index }: IWidgetTabProps): ReactElement => {
-    const { changeTabPlace, filterValue, toggleGroup, onFavorite } =
+    const { changeTabPlace, filterValue, toggleGroup, onToggleFavorite } =
       dashboardStore
 
     const isGroupInSearch = useMemo(() => {
@@ -38,7 +38,7 @@ export const WidgetTab = observer(
             isAllTabsOpened={group.isOpen}
             onToggleExpand={() => toggleGroup(group.name)}
             onToggleFavorite={() =>
-              onFavorite(DashboardGroupTypes.Main, group.name, index)
+              onToggleFavorite(DashboardGroupTypes.Main, group.name, index)
             }
           />
         </div>

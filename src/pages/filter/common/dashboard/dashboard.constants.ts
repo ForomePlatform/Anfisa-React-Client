@@ -1,4 +1,6 @@
-export const DASHBOARD_TABS = 'dashboardMainTabs'
+export const DASHBOARD_MAIN_TABS = 'dashboardMainTabs'
+export const DASHBOARD_SPARE_TABS = 'dashboardSpareTabs'
+
 export const DASHBOARD_LAYOUT = 'dashboardLayout'
 
 export const DASHBOARD_LAYOUT_COLS = 4

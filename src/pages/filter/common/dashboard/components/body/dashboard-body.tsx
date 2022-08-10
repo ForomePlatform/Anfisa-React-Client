@@ -29,7 +29,7 @@ export const DashboardBody = observer(
       mainTabs,
       mainTabsLayout,
       showInCharts,
-      layoutChange,
+      onLayoutChange,
     } = dashboardStore
 
     useLayoutEffect(() => {
@@ -47,7 +47,7 @@ export const DashboardBody = observer(
           draggableHandle="[data-drag-handle]"
           isResizable={false}
           className={styles.body__gridLayout}
-          onLayoutChange={layoutChange}
+          onLayoutChange={onLayoutChange}
         >
           {mainTabs.map((group, index) => (
             <div

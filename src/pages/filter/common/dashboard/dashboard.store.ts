@@ -15,7 +15,8 @@ import { TUnitGroups } from '@store/stat-units'
 import { GlbPagesNames } from '@glb/glb-names'
 import {
   DASHBOARD_LAYOUT,
-  DASHBOARD_TABS,
+  DASHBOARD_MAIN_TABS,
+  DASHBOARD_SPARE_TABS,
 } from '@pages/filter/common/dashboard/dashboard.constants'
 import modalsVisibilityStore from '@pages/filter/dtree/components/modals/modals-visibility-store'
 import {
@@ -95,10 +96,18 @@ export class DashboardStore {
     )
   }
 
-  private saveTabs = () => {
+  private saveMainTabs = () => {
     LocalStoreManager.write(
-      DASHBOARD_TABS,
+      DASHBOARD_MAIN_TABS,
       this.mainTabs,
+      datasetStore.datasetName,
+    )
+  }
+
+  private saveSpareTabs = () => {
+    LocalStoreManager.write(
+      DASHBOARD_SPARE_TABS,
+      this.spareTabs,
       datasetStore.datasetName,
     )
   }
@@ -172,27 +181,33 @@ export class DashboardStore {
       isFavorite: false,
     })
 
-    const savedTabs = LocalStoreManager.read<IExtendedTUnitGroup[] | undefined>(
-      DASHBOARD_TABS,
-      datasetStore.datasetName,
-    )
+    const savedMainTabs = LocalStoreManager.read<
+      IExtendedTUnitGroup[] | undefined
+    >(DASHBOARD_MAIN_TABS, datasetStore.datasetName)
+
+    const savedSpareTabs = LocalStoreManager.read<
+      IExtendedTUnitGroup[] | undefined
+    >(DASHBOARD_SPARE_TABS, datasetStore.datasetName)
 
     const savedLayout = LocalStoreManager.read<Layout[] | undefined>(
       DASHBOARD_LAYOUT,
       datasetStore.datasetName,
     )
 
-    const mainTabs: IExtendedTUnitGroup[] =
-      !savedTabs || savedTabs.length === 0
+    const mainTabs =
+      !savedMainTabs || !savedMainTabs.length
         ? extendedGroups.slice(0, 4)
-        : savedTabs
+        : savedMainTabs
 
-    const spareTabs = extendedGroups.filter(
-      group => !mainTabs.some(tab => tab.name === group.name),
-    )
+    const spareTabs =
+      !savedSpareTabs || !savedSpareTabs.length
+        ? extendedGroups.filter(
+            group => !mainTabs.some(tab => tab.name === group.name),
+          )
+        : savedSpareTabs
 
     const layout =
-      !savedLayout || savedLayout.length === 0
+      !savedLayout || !savedLayout.length
         ? getStartLayout(extendedGroups)
         : savedLayout
 
@@ -256,39 +271,51 @@ export class DashboardStore {
     groupName: string,
     groupIndex: number,
   ) => {
-    const selectedGroup = this.groups.find(group => group.name === groupName)!
-
     if (groupType === DashboardGroupTypes.Main) {
+      const selectedGroup = this.mainTabs.find(
+        group => group.name === groupName,
+      )!
+
       this.setMainTabs(prev => prev.filter((_, index) => index !== groupIndex))
       this.setSpareTabs(prev => [selectedGroup!, ...prev])
       this.setMainTabsLayout(prev =>
         prev.filter(group => group.i !== groupName),
       )
-      return
+    } else {
+      const selectedGroup = this.spareTabs.find(
+        group => group.name === groupName,
+      )!
+
+      if (selectedGroup.isFavorite) {
+        selectedGroup.isFavorite = !selectedGroup.isFavorite
+        this.onToggleFavorite(groupType, groupName, groupIndex)
+      } else {
+        this.setSpareTabs(prev =>
+          prev.filter((_, index) => index !== groupIndex),
+        )
+        this.setMainTabs(prev => [
+          ...prev,
+          {
+            ...selectedGroup,
+            isOpen: this._inCharts,
+            units: selectedGroup.units.map(unit => ({
+              ...unit,
+              isOpen: this._inCharts,
+            })),
+          },
+        ])
+
+        const newTabLayout = getNewTabLayout(selectedGroup, this.mainTabsLayout)
+
+        this.setMainTabsLayout(newTabLayout)
+      }
     }
-
-    this.setSpareTabs(prev => prev.filter((_, index) => index !== groupIndex))
-    this.setMainTabs(prev => [
-      ...prev,
-      {
-        ...selectedGroup,
-        isOpen: this._inCharts,
-        units: selectedGroup.units.map(unit => ({
-          ...unit,
-          isOpen: this._inCharts,
-        })),
-      },
-    ])
-
-    const newTabLayout = getNewTabLayout(selectedGroup, this.mainTabsLayout)
-
-    this.setMainTabsLayout(newTabLayout)
   }
 
-  public layoutChange = (layout: Layout[]) => {
+  public onLayoutChange = (layout: Layout[]) => {
     this.saveLayout()
-    this.saveTabs()
-
+    this.saveMainTabs()
+    this.saveSpareTabs()
     this.setMainTabsLayout(layout)
   }
 
@@ -386,7 +413,7 @@ export class DashboardStore {
     this.toggleAll(true)
   }
 
-  public onFavorite = (
+  public onToggleFavorite = (
     type: DashboardGroupTypes,
     groupName: string,
     groupIndex: number,
@@ -401,27 +428,35 @@ export class DashboardStore {
       })
 
       const sortedTabs = getSortedTabs(clonedTabs)
+
       this.setMainTabs(sortedTabs)
       this.setMainTabsLayout(getUpdatedLayout(sortedTabs, this.mainTabsLayout))
+    } else {
+      const selectedGroup = this.spareTabs.find(
+        group => group.name === groupName,
+      )
 
-      return
-    }
+      if (selectedGroup?.isFavorite) {
+        selectedGroup.isFavorite = !selectedGroup.isFavorite
+      } else {
+        this.setSpareTabs(prev =>
+          prev.filter((_, index) => index !== groupIndex),
+        )
 
-    const selectedGroup = this.groups.find(group => group.name === groupName)
-    this.setSpareTabs(prev => prev.filter((_, index) => index !== groupIndex))
+        const newMainTabs = [...this.mainTabs, selectedGroup!]
+        const newLayout = getNewTabLayout(selectedGroup!, this.mainTabsLayout)
 
-    const newMainTabs = [...this.mainTabs, selectedGroup!]
-    const newLayout = getNewTabLayout(selectedGroup!, this.mainTabsLayout)
+        newMainTabs.forEach((item, index) => {
+          if (item.name === groupName) {
+            newMainTabs[index].isFavorite = !newMainTabs[index].isFavorite
+          }
+        })
 
-    newMainTabs.forEach((item, index) => {
-      if (item.name === groupName) {
-        newMainTabs[index].isFavorite = !newMainTabs[index].isFavorite
+        const sortedTabs = getSortedTabs(newMainTabs)
+        this.setMainTabs(sortedTabs)
+        this.setMainTabsLayout(getUpdatedLayout(sortedTabs, newLayout))
       }
-    })
-
-    const sortedTabs = getSortedTabs(newMainTabs)
-    this.setMainTabs(sortedTabs)
-    this.setMainTabsLayout(getUpdatedLayout(sortedTabs, newLayout))
+    }
   }
 
   public reset = () => {
