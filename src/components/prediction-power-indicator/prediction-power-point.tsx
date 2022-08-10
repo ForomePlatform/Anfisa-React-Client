@@ -9,13 +9,12 @@ interface IPredictionPowerPointProps {
 }
 
 export const PredictionPowerPoint = ({ value }: IPredictionPowerPointProps) => {
-  const powerStyle = getPowerStylesByValue(value)
+  const powerStyles = getPowerStylesByValue(value)
   return (
     <>
-      <div className={cn(styles.powerPoint, powerStyle[0])} />
-      <div className={cn(styles.powerPoint, powerStyle[1])} />
-      <div className={cn(styles.powerPoint, powerStyle[2])} />
-      <div className={cn(styles.powerPoint, powerStyle[3])} />
+      {powerStyles.map(powerStyle => (
+        <div className={cn(styles.powerPoint, powerStyle)} />
+      ))}
     </>
   )
 }
