@@ -126,6 +126,7 @@ export const RefinerPage = observer((): ReactElement => {
           />
         ) : (
           <Dashboard
+            dataReady={filterStore.downloadedAmount === 100}
             page={GlbPagesNames.Refiner}
             groups={unitGroups}
             functionalUnits={functionalUnits}

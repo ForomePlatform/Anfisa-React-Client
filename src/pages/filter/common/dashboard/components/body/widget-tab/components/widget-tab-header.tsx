@@ -3,19 +3,24 @@ import styles from '../widget-tab.module.css'
 import { ReactElement } from 'react'
 import cn from 'classnames'
 
-import { DashboardGroupTypes } from '@core/enum/dashboard-group-types-enum'
 import { Divider } from '@ui/divider'
 import { Icon } from '@ui/icon'
 import { FnLabel } from '@components/fn-label'
 import { PredictionPowerIndicator } from '@components/prediction-power-indicator'
-import { IWidgetTabHeaderProps } from '@pages/filter/common/dashboard/dashboard.interfaces'
+import { IExtendedTUnitGroup } from '../../../../dashboard.interfaces'
+
+export interface IWidgetTabHeaderProps {
+  group: IExtendedTUnitGroup
+  isAllTabsOpened: boolean
+  onToggleExpand: () => void
+  onToggleFavorite: () => void
+}
 
 export const WidgetTabHeader = ({
   group,
-  index,
   isAllTabsOpened,
-  onToggle,
-  onMakeTabFavorite,
+  onToggleExpand,
+  onToggleFavorite,
 }: IWidgetTabHeaderProps): ReactElement => (
   <div className={styles.tab__header}>
     <div className="flex items-center">
@@ -42,7 +47,7 @@ export const WidgetTabHeader = ({
         })}
         onClick={e => {
           e.stopPropagation()
-          onMakeTabFavorite(DashboardGroupTypes.Main, group.name, index)
+          onToggleFavorite()
         }}
       />
 
@@ -55,7 +60,7 @@ export const WidgetTabHeader = ({
 
       <Icon
         name={isAllTabsOpened ? 'Collapse' : 'Expand'}
-        onClick={onToggle}
+        onClick={onToggleExpand}
         className="text-grey-blue hover:text-blue-bright"
       />
     </div>

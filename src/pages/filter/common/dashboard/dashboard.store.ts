@@ -1,6 +1,8 @@
 import { Layout } from 'react-grid-layout'
-import { makeAutoObservable, reaction } from 'mobx'
+import { cloneDeep } from 'lodash'
+import { makeAutoObservable } from 'mobx'
 
+import { DashboardGroupTypes } from '@core/enum/dashboard-group-types-enum'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModalSources } from '@core/enum/modal-sources'
 import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
@@ -10,36 +12,100 @@ import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
 import { TUnitGroups } from '@store/stat-units'
 import { GlbPagesNames } from '@glb/glb-names'
+import {
+  DASHBOARD_LAYOUT,
+  DASHBOARD_TABS,
+} from '@pages/filter/common/dashboard/dashboard.constants'
 import modalsVisibilityStore from '@pages/filter/dtree/components/modals/modals-visibility-store'
 import {
   AttributeKinds,
   IFuncPropertyStatus,
   TPropertyStatus,
 } from '@service-providers/common'
-import { IExtendedTUnitGroups } from './dashboard.interfaces'
-import { getStartLayout } from './dashboard.utils'
+import { IExtendedTUnitGroup, ModifySet } from './dashboard.interfaces'
+import {
+  getLayoutOnMassiveChange,
+  getNewTabLayout,
+  getSortedTabs,
+  getStartLayout,
+  getUpdatedLayout,
+  tabUnit,
+} from './dashboard.utils'
 
 export class DashboardStore {
+  private _inCharts: boolean = false
+  private _filterValue: string = ''
+
+  private _groups: IExtendedTUnitGroup[] = []
+
+  private _mainTabs: IExtendedTUnitGroup[] = []
+  private _spareTabs: IExtendedTUnitGroup[] = []
+  private _mainTabsLayout: Layout[] = []
+  private _beforeShowChartsOpened: Set<string> | null = null
+
   public viewType: ViewTypeDashboard = ViewTypeDashboard.List
   public page: GlbPagesNames | undefined
   public selectedEnumVariants: string[] = []
 
+  public get showInCharts(): boolean {
+    return this._inCharts
+  }
+
+  public get filterValue(): string {
+    return this._filterValue
+  }
+
+  public get groups(): IExtendedTUnitGroup[] {
+    return this._groups
+  }
+
+  public get mainTabs(): IExtendedTUnitGroup[] {
+    return this._mainTabs
+  }
+
+  public get spareTabs(): IExtendedTUnitGroup[] {
+    return this._spareTabs
+  }
+
+  public get mainTabsLayout(): Layout[] {
+    return this._mainTabsLayout
+  }
+
   constructor() {
     makeAutoObservable(this)
+  }
 
-    reaction(
-      () => this.dashBoardQuery,
-      () => {
-        this.toggleViewType(ViewTypeDashboard.List)
-      },
+  private saveLayout = () => {
+    LocalStoreManager.write(
+      DASHBOARD_LAYOUT,
+      this.mainTabsLayout,
+      datasetStore.datasetName,
     )
   }
 
-  private get dashBoardQuery() {
-    return {
-      datasetName: datasetStore.datasetName,
-      method: filterStore.method,
+  private saveTabs = () => {
+    LocalStoreManager.write(
+      DASHBOARD_TABS,
+      this.mainTabs,
+      datasetStore.datasetName,
+    )
+  }
+
+  public setFilterValue = (value: string) => {
+    this._filterValue = value
+  }
+
+  public setInCharts = (value: boolean) => {
+    this._inCharts = value
+  }
+
+  public setMainTabs = (tabs: ModifySet<IExtendedTUnitGroup[]>) => {
+    if (typeof tabs === 'function') {
+      this._mainTabs = tabs(this._mainTabs)
+      return
     }
+
+    this._mainTabs = tabs
   }
 
   public setPage(page: GlbPagesNames) {
@@ -55,47 +121,29 @@ export class DashboardStore {
     this.selectedEnumVariants = []
   }
 
-  public toggleViewType = (viewType: ViewTypeDashboard) => {
-    this.viewType = viewType
+  private setSpareTabs = (tabs: ModifySet<IExtendedTUnitGroup[]>) => {
+    if (typeof tabs === 'function') {
+      this._spareTabs = tabs(this._spareTabs)
+      return
+    }
+
+    this._spareTabs = tabs
   }
 
-  public getLayout(groups: IExtendedTUnitGroups[]): Layout[] {
-    const layout =
-      LocalStoreManager.read<Layout[]>(
-        'dashboardLayout',
-        datasetStore.datasetName,
-      ) || getStartLayout(groups)
+  private setMainTabsLayout = (layout: ModifySet<Layout[]>) => {
+    if (typeof layout === 'function') {
+      this._mainTabsLayout = layout(this._mainTabsLayout)
+      return
+    }
 
-    return layout
+    this._mainTabsLayout = layout
   }
 
-  public getMainTabs(groups: IExtendedTUnitGroups[]): IExtendedTUnitGroups[] {
-    const mainTabs =
-      LocalStoreManager.read<IExtendedTUnitGroups[]>(
-        'dashboardMainTabs',
-        datasetStore.datasetName,
-      ) || groups.slice(0, 4)
-
-    return mainTabs
-  }
-
-  public getSpareTabs(groups: IExtendedTUnitGroups[]): IExtendedTUnitGroups[] {
-    const mainTabs =
-      LocalStoreManager.read<IExtendedTUnitGroups[]>(
-        'dashboardMainTabs',
-        datasetStore.datasetName,
-      ) || groups.slice(0, 4)
-
-    return groups.filter(
-      group => !mainTabs.some(tab => tab.name === group.name),
-    )
-  }
-
-  public geExtendedGroups(
+  public setGroups = (
     groups: TUnitGroups,
     functionalUnits: IFuncPropertyStatus[],
-  ): IExtendedTUnitGroups[] {
-    const extendedGroups: IExtendedTUnitGroups[] = groups.map(group => ({
+  ) => {
+    const extendedGroups: IExtendedTUnitGroup[] = groups.map(group => ({
       name: group.name,
       units: group.units.map(unit => Object.assign(unit, { isOpen: false })),
       power: group.power,
@@ -112,23 +160,38 @@ export class DashboardStore {
       isFavorite: false,
     })
 
-    return extendedGroups
+    const savedTabs = LocalStoreManager.read<IExtendedTUnitGroup[] | undefined>(
+      DASHBOARD_TABS,
+      datasetStore.datasetName,
+    )
+
+    const savedLayout = LocalStoreManager.read<Layout[] | undefined>(
+      DASHBOARD_LAYOUT,
+      datasetStore.datasetName,
+    )
+
+    const mainTabs: IExtendedTUnitGroup[] =
+      !savedTabs || savedTabs.length === 0
+        ? extendedGroups.slice(0, 4)
+        : savedTabs
+
+    const spareTabs = extendedGroups.filter(
+      group => !mainTabs.some(tab => tab.name === group.name),
+    )
+
+    const layout =
+      !savedLayout || savedLayout.length === 0
+        ? getStartLayout(extendedGroups)
+        : savedLayout
+
+    this._groups = extendedGroups
+    this._mainTabs = mainTabs
+    this._spareTabs = spareTabs
+    this._mainTabsLayout = layout
   }
 
-  public getFilteredGroups(
-    groups: IExtendedTUnitGroups[],
-    preparedFilterValue: string,
-  ): IExtendedTUnitGroups[] {
-    return groups
-      .map(group => {
-        return {
-          ...group,
-          attributes: group.units.filter(attr =>
-            attr.name.toLowerCase().includes(preparedFilterValue),
-          ),
-        }
-      })
-      .filter(group => group.attributes.length > 0)
+  public toggleViewType = (viewType: ViewTypeDashboard) => {
+    this.viewType = viewType
   }
 
   public selectGroup = (attribute: TPropertyStatus) => {
@@ -174,5 +237,190 @@ export class DashboardStore {
           break
       }
     }
+  }
+
+  public changeTabPlace = (
+    groupType: DashboardGroupTypes,
+    groupName: string,
+    groupIndex: number,
+  ) => {
+    const selectedGroup = this.groups.find(group => group.name === groupName)!
+
+    if (groupType === DashboardGroupTypes.Main) {
+      this.setMainTabs(prev => prev.filter((_, index) => index !== groupIndex))
+      this.setSpareTabs(prev => [selectedGroup!, ...prev])
+      this.setMainTabsLayout(prev =>
+        prev.filter(group => group.i !== groupName),
+      )
+      return
+    }
+
+    this.setSpareTabs(prev => prev.filter((_, index) => index !== groupIndex))
+    this.setMainTabs(prev => [
+      ...prev,
+      {
+        ...selectedGroup,
+        isOpen: this._inCharts,
+        units: selectedGroup.units.map(unit => ({
+          ...unit,
+          isOpen: this._inCharts,
+        })),
+      },
+    ])
+
+    const newTabLayout = getNewTabLayout(selectedGroup, this.mainTabsLayout)
+
+    this.setMainTabsLayout(newTabLayout)
+  }
+
+  public layoutChange = (layout: Layout[]) => {
+    this.saveLayout()
+    this.saveTabs()
+
+    this.setMainTabsLayout(layout)
+  }
+
+  public changeTabsHeight = () => {
+    const newLayout = getLayoutOnMassiveChange(
+      this.mainTabs,
+      this.mainTabsLayout,
+    )
+
+    this.setMainTabsLayout(newLayout)
+  }
+
+  public toggleUnit = (
+    unitName: string,
+    groupName: string,
+    value?: boolean,
+  ) => {
+    let isOpen = true
+
+    this._mainTabs = this._mainTabs.map(group => {
+      if (group.name !== groupName) {
+        return group
+      }
+
+      const units = group.units.map(unit => {
+        if (unit.name !== unitName) {
+          return unit
+        }
+
+        isOpen = value || !unit.isOpen
+
+        return { ...unit, isOpen }
+      })
+
+      const groupIsOpen = !units.some(unit => !unit.isOpen)
+
+      return { ...group, isOpen: groupIsOpen, units }
+    })
+  }
+
+  public toggleGroup = (groupName: string, value?: boolean) => {
+    let isOpen = true
+
+    this._mainTabs = this._mainTabs.map(group => {
+      if (group.name !== groupName) {
+        return group
+      }
+
+      isOpen = value || !group.isOpen
+
+      const units = group.units.map(unit => ({ ...unit, isOpen }))
+      return {
+        ...group,
+        units,
+        isOpen,
+      }
+    })
+  }
+
+  public toggleAll = (value?: boolean) => {
+    this._mainTabs.forEach(({ name }) => this.toggleGroup(name, value))
+  }
+
+  public toggleCharts = () => {
+    if (this._inCharts) {
+      const openedUnits = this._beforeShowChartsOpened ?? new Set<string>()
+      this._beforeShowChartsOpened = null
+      this.setMainTabs(prev =>
+        prev.map(tab => {
+          const units = tab.units.map(unit => ({
+            ...unit,
+            isOpen: openedUnits.has(tabUnit(unit, tab)),
+          }))
+
+          const groupIsOpen = !units.some(unit => !unit.isOpen)
+
+          return { ...tab, isOpen: groupIsOpen, units }
+        }),
+      )
+      this.setInCharts(false)
+      return
+    }
+
+    const openedUnits = new Set<string>()
+    this.mainTabs.forEach(group =>
+      group.units.forEach(unit => {
+        if (unit.isOpen) {
+          openedUnits.add(tabUnit(unit, group))
+        }
+      }),
+    )
+
+    this._beforeShowChartsOpened = openedUnits
+    this.setInCharts(true)
+    this.toggleAll(true)
+  }
+
+  public onFavorite = (
+    type: DashboardGroupTypes,
+    groupName: string,
+    groupIndex: number,
+  ) => {
+    if (type === DashboardGroupTypes.Main) {
+      const clonedTabs = cloneDeep(this.mainTabs)
+
+      clonedTabs.forEach((item, index) => {
+        if (item.name === groupName) {
+          clonedTabs[index].isFavorite = !clonedTabs[index].isFavorite
+        }
+      })
+
+      const sortedTabs = getSortedTabs(clonedTabs)
+      this.setMainTabs(sortedTabs)
+      this.setMainTabsLayout(getUpdatedLayout(sortedTabs, this.mainTabsLayout))
+
+      return
+    }
+
+    const selectedGroup = this.groups.find(group => group.name === groupName)
+    this.setSpareTabs(prev => prev.filter((_, index) => index !== groupIndex))
+
+    const newMainTabs = [...this.mainTabs, selectedGroup!]
+    const newLayout = getNewTabLayout(selectedGroup!, this.mainTabsLayout)
+
+    newMainTabs.forEach((item, index) => {
+      if (item.name === groupName) {
+        newMainTabs[index].isFavorite = !newMainTabs[index].isFavorite
+      }
+    })
+
+    const sortedTabs = getSortedTabs(newMainTabs)
+    this.setMainTabs(sortedTabs)
+    this.setMainTabsLayout(getUpdatedLayout(sortedTabs, newLayout))
+  }
+
+  public reset = () => {
+    this.toggleViewType(ViewTypeDashboard.List)
+
+    this._beforeShowChartsOpened = null
+    this._mainTabsLayout = []
+    this._mainTabs = []
+    this._spareTabs = []
+    this._groups = []
+    this._filterValue = ''
+    this._inCharts = false
   }
 }

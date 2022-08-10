@@ -1,49 +1,47 @@
 import styles from './dashboard.module.css'
 
-import { ReactElement, useState } from 'react'
+import { ReactElement, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { Loader } from '@ui/loader'
+import { GlbPagesNames } from '@glb/glb-names'
+import { IUnitsProps } from '@pages/filter/refiner/refiner.interfaces'
 import { DashboardBody } from './components/body'
 import { DashboardHeader } from './components/header'
-import { IDashboardProps } from './dashboard.interfaces'
 import dashboardStore from './index'
+
+export interface IDashboardProps extends IUnitsProps {
+  page: GlbPagesNames
+  dataReady: boolean
+}
 
 export const Dashboard = observer(
   ({
     page,
+    dataReady,
     groups,
     functionalUnits,
     isFetching,
   }: IDashboardProps): ReactElement => {
-    const extendedGroups = dashboardStore.geExtendedGroups(
-      groups,
-      functionalUnits,
-    )
+    useEffect(() => {
+      return () => {
+        dashboardStore.reset()
+      }
+    }, [])
 
-    dashboardStore.setPage(page)
+    useEffect(() => dashboardStore.setPage(page), [page])
 
-    const [filterValue, setFilterValue] = useState('')
-
-    const preparedFilterValue = filterValue.toLowerCase()
-
-    const filteredGroups = dashboardStore.getFilteredGroups(
-      extendedGroups,
-      preparedFilterValue,
-    )
+    useEffect(() => {
+      if (!isFetching) {
+        dashboardStore.setGroups(groups, functionalUnits)
+      }
+    }, [functionalUnits, groups, isFetching, dataReady])
 
     return (
       <div className={styles.dashboard}>
-        <DashboardHeader filterValue={filterValue} onChange={setFilterValue} />
+        <DashboardHeader />
 
-        {isFetching ? (
-          <Loader />
-        ) : (
-          <DashboardBody
-            groups={extendedGroups}
-            filteredGroups={filteredGroups}
-          />
-        )}
+        {isFetching ? <Loader /> : <DashboardBody />}
       </div>
     )
   },

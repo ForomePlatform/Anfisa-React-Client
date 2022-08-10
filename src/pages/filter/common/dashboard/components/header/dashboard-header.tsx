@@ -1,7 +1,8 @@
 import styles from './dashboard-header.module.css'
 
-import { ReactElement } from 'react'
+import { ReactElement, useMemo } from 'react'
 import cn from 'classnames'
+import { observer } from 'mobx-react-lite'
 
 import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
 import { t } from '@i18n'
@@ -11,24 +12,22 @@ import { InputSearch } from '@components/input-search'
 import { UnitsViewSwitch } from '@components/units-list/units-list-controls/components'
 import dashboardStore from '../../../dashboard'
 
-interface IDashboardHeaderProps {
-  filterValue: string
-  onChange: (value: string) => void
-}
+export const DashboardHeader = observer((): ReactElement => {
+  const {
+    viewType,
+    toggleViewType,
+    showInCharts,
+    filterValue,
+    setFilterValue,
+    toggleAll,
+    mainTabs,
+    toggleCharts,
+  } = dashboardStore
 
-export const DashboardHeader = ({
-  filterValue,
-  onChange,
-}: IDashboardHeaderProps): ReactElement => {
-  const { viewType, toggleViewType } = dashboardStore
-
-  const handleSwitch = () => {
-    //
-  }
-
-  const onExpand = () => {
-    //
-  }
+  const isAllTabsOpened = useMemo(
+    () => !mainTabs.some(tab => !tab.isOpen),
+    [mainTabs],
+  )
 
   return (
     <div className={styles.header}>
@@ -45,15 +44,18 @@ export const DashboardHeader = ({
 
       <div className={styles.header__container} style={{ width: 626 }}>
         <div className={cn(styles.header__container, 'mr-6')}>
-          <Switch isChecked={false} onChange={handleSwitch} />
+          <Switch isChecked={showInCharts} onChange={toggleCharts} />
 
-          <div className={styles.header__controls__switch}>
+          <div
+            className={styles.header__controls__switch}
+            onClick={toggleCharts}
+          >
             {t('dashboard.showInCharts')}
           </div>
         </div>
 
         <InputSearch
-          onChange={e => onChange(e.target.value)}
+          onChange={e => setFilterValue(e.target.value)}
           value={filterValue}
           placeholder={t('dashboard.searchForAField')}
           className="flex-1 mr-px"
@@ -61,10 +63,17 @@ export const DashboardHeader = ({
           big
         />
 
-        <button className={styles.header__controls__button} onClick={onExpand}>
-          <Icon name="Expand" size={20} className="text-grey-blue" />
+        <button
+          className={styles.header__controls__button}
+          onClick={() => toggleAll(!isAllTabsOpened)}
+        >
+          <Icon
+            name={isAllTabsOpened ? 'Collapse' : 'Expand'}
+            size={20}
+            className="text-grey-blue"
+          />
         </button>
       </div>
     </div>
   )
-}
+})
