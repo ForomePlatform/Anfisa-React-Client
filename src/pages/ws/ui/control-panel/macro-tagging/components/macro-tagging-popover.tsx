@@ -25,6 +25,7 @@ export const MacroTaggingPopover: FC<IPopoverBaseProps> = observer(
       closePopover: onCloseMenu,
       popoverAnchor: menuAnchor,
     } = usePopover()
+    const { isConfirmOpen, isLoading, tag } = macroTaggingStore
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
       macroTaggingStore.setTag(e.target.value)
@@ -54,8 +55,8 @@ export const MacroTaggingPopover: FC<IPopoverBaseProps> = observer(
             title={t('ds.macroTagsModal.title')}
             onClose={onClose}
             onApply={e => onToggle(e.currentTarget)}
-            isApplyDisabled={!macroTaggingStore.tag}
-            isLoading={macroTaggingStore.isLoading}
+            isApplyDisabled={!tag}
+            isLoading={isLoading}
             applyText={t('ds.macroTagsModal.apply')}
             applyAppend={
               <Icon
@@ -69,7 +70,7 @@ export const MacroTaggingPopover: FC<IPopoverBaseProps> = observer(
           >
             <Input
               onChange={onChange}
-              value={macroTaggingStore.tag}
+              value={tag}
               shape="brick"
               placeholder={t('ds.macroTagsModal.placeholder')}
               size="m"
@@ -99,14 +100,14 @@ export const MacroTaggingPopover: FC<IPopoverBaseProps> = observer(
           </PopupCard>
         </Popover>
         <ConfirmDialog
-          isOpen={macroTaggingStore.isConfirmOpen}
+          isOpen={isConfirmOpen}
           onClose={() => {
             macroTaggingStore.setIsConfirmOpen(false)
             onCloseMenu()
           }}
           onApply={onClickMacroAction(MacroTaggingActions.Remove)}
           message={t('ds.macroTagsModal.confirmDialog.message', {
-            tag: macroTaggingStore.tag,
+            tag: tag,
           })}
           title={t('ds.macroTagsModal.confirmDialog.title')}
           cancelText={t('general.cancel')}
