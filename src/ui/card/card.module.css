@@ -1,11 +1,15 @@
 .card {
+  display: flex;
+  flex-direction: column;
   border-radius: theme("spacing.2");
   box-shadow: theme("boxShadow.card");
   padding: theme("spacing.4");
+  width: calc(50% - 8px);
 
   &_title {
     font-weight: 700 !important;
     color: theme("colors.blue.dark");
+    margin-bottom: 8px;
 
     &_md {
       @apply typography-l;
@@ -26,5 +30,21 @@
   &_exited {
     opacity: 0;
     transform: translateY(40px);
+  }
+
+  &_position-right {
+    margin-top: 16px;
+    float: right;
+    clear: right;
+  }
+
+  &_position-left {
+    margin-top: 16px;
+    float: left;
+    clear: left;
+  }
+
+  &_position-stretch {
+    width: 100%;
   }
 }

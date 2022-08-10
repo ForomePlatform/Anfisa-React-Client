@@ -145,6 +145,8 @@ export const en = {
       startWith: 'Start with',
       prevWorkSection: 'In this section your previous work will be displayed',
       prevWorkWith: 'You previously worked with',
+      candidateIsUnavailable: 'Existing candidates are unavailable',
+      genomeIsUnavailable: 'Whole genome/exome is unavailable',
     },
     buildFlow: {
       candidateSet: 'Existing candidate sets',
@@ -153,6 +155,9 @@ export const en = {
       relevantPresets: 'Relevant presets',
       additionalPresetFilter: 'Additional preset filters',
       notApplicableForXl: 'Not applicable for XL dataset',
+      simpleFilter: 'Simple Filter',
+      inclusionExclusion: 'Inclusion/Exclusion Criteria',
+      viewVariants: 'View Variants',
     },
   },
   ds: {
