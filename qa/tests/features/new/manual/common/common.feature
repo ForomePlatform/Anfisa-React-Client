@@ -1,5 +1,6 @@
 Feature: Common testcases
 
+@regression
 @tc:113984
     Scenario: 01 Anfisa version
 
@@ -7,6 +8,7 @@ Feature: Common testcases
         When the user looks at the header
         Then Anfisa version should be displayed
 
+@regression
 @tc:113985
     Scenario: 02 Search for dataset
 
@@ -14,6 +16,7 @@ Feature: Common testcases
         When the user enters an existed dataset name in the Search field
         Then the dataset should be found
 
+@regression
 @tc:113986
     Scenario: 03 Search dataset wirh upper-case letters
         
@@ -25,7 +28,8 @@ Feature: Common testcases
          |<DATASET NAME>|
          |XL_NA12878_WGS|
          |XL_PF0005_WES |
-    
+
+@regression
 @tc:113987
     Scenario: 04 Search by part of the dataset name
         
@@ -113,6 +117,7 @@ Feature: Common testcases
         When the user clicks an dataset
         Then Information about the dataset should be displayed
 
+@regression
 @tc:113999
     Scenario: 16 Export dataset
 
@@ -123,6 +128,7 @@ Feature: Common testcases
         And clicks on export button on export frame
         Then dataset should be exported
 
+@regression
 @tc:114000
     Scenario: 17 Import dataset  
         
