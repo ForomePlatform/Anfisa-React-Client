@@ -13,7 +13,7 @@ export const PredictionPowerPoint = ({ value }: IPredictionPowerPointProps) => {
   return (
     <>
       {powerStyles.map(powerStyle => (
-        <div className={cn(styles.powerPoint, powerStyle)} />
+        <div key={powerStyle} className={cn(styles.powerPoint, powerStyle)} />
       ))}
     </>
   )

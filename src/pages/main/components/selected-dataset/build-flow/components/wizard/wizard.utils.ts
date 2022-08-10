@@ -58,7 +58,7 @@ export const getNextPageData = (
   }
 
   const genomeRoutes: TRouteDictionary<TExploreGenomeKeys> = {
-    [ExploreGenomeKeys.ExploreData]: dtreeRoute,
+    [ExploreGenomeKeys.ExploreData]: refinerRoute,
     [ExploreGenomeKeys.BuildInclusionExclusion]: dtreeRoute,
     [ExploreGenomeKeys.ACMGSecondary]: refinerAndTableRoute,
     [ExploreGenomeKeys.GeneticFirst]: refinerAndTableRoute,
