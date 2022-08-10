@@ -18,7 +18,6 @@ Examples:
 	| xl_PGP3140_wgs_panel_hl |
 	| xl_PGP3140_wgs_NIST-4_2 |
 
-
 Scenario: 02 Open IGV in a modal window
 
 	Given Main table of "PGP3140_wgs_panel_hl" dataset was opened
