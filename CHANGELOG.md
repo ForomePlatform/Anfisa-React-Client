@@ -2,6 +2,7 @@
 
 ## <small>0.7.1 (8/10/2022)</small>
 
+* fix([FOROME-1472](https://quantori.atlassian.net/browse/FOROME-1472)): Fix refiner route (#881) ([df52e701](https://github.com/ForomePlatform/Anfisa-React-Client/commit/df52e701))
 * fix([FOROME-1432](https://quantori.atlassian.net/browse/FOROME-1432)): remove console error in dev (#876) ([cd566cfb](https://github.com/ForomePlatform/Anfisa-React-Client/commit/cd566cfb))
 * feat([FOROME-1466](https://quantori.atlassian.net/browse/FOROME-1466)): Hide back button on the first step (#878) ([2b76a371](https://github.com/ForomePlatform/Anfisa-React-Client/commit/2b76a371))
 * fix([FOROME-1469](https://quantori.atlassian.net/browse/FOROME-1469)): Fix header alignment (#879) ([7e5f8325](https://github.com/ForomePlatform/Anfisa-React-Client/commit/7e5f8325))
