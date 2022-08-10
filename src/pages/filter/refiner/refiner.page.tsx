@@ -63,6 +63,7 @@ export const RefinerPage = observer((): ReactElement => {
   useDatasetName()
 
   filterPresetsStore.observeHistory.useHook()
+  dashboardStore.observeHistory.useHook()
 
   useEffect(() => {
     return () => filterStore.actionHistory.resetHistory()

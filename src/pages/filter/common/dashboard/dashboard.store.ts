@@ -7,6 +7,7 @@ import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModalSources } from '@core/enum/modal-sources'
 import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
 import { LocalStoreManager } from '@core/storage-management'
+import { createHistoryObserver } from '@store/common'
 import { datasetStore } from '@store/dataset'
 import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
@@ -46,6 +47,17 @@ export class DashboardStore {
   public viewType: ViewTypeDashboard = ViewTypeDashboard.List
   public page: GlbPagesNames | undefined
   public selectedEnumVariants: string[] = []
+
+  readonly observeHistory = createHistoryObserver({
+    viewType: {
+      get: () => this.viewType,
+      apply: viewType => {
+        this.toggleViewType(
+          (viewType as ViewTypeDashboard) || ViewTypeDashboard.List,
+        )
+      },
+    },
+  })
 
   public get showInCharts(): boolean {
     return this._inCharts

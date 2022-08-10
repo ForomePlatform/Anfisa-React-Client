@@ -53,6 +53,7 @@ export const DtreePage = observer((): ReactElement => {
 
   useDatasetName()
   filterDtreesStore.observeHistory.useHook()
+  dashboardStore.observeHistory.useHook()
 
   const params = useParams()
   const dsName = params.get('ds') || ''

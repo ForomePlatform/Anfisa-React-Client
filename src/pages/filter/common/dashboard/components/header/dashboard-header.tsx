@@ -70,7 +70,7 @@ export const DashboardHeader = observer((): ReactElement => {
           <Icon
             name={isAllTabsOpened ? 'Collapse' : 'Expand'}
             size={20}
-            className="text-grey-blue"
+            className="text-grey-blue hover:text-blue-bright"
           />
         </button>
       </div>

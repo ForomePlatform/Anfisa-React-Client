@@ -23,7 +23,7 @@ export const WidgetSubTab = observer(
   ({ unit, groupName }: IWidgetSubTabProps): ReactElement => {
     const { showInCharts, filterValue, toggleUnit } = dashboardStore
 
-    const disabled = !unit.name.includes(filterValue)
+    const isUnitInSearch = unit.name.toLowerCase().includes(filterValue)
 
     const predictionPowerValue = useMemo(() => {
       if ('power' in unit) {
@@ -38,7 +38,7 @@ export const WidgetSubTab = observer(
 
     return (
       <div
-        className={cn(styles.subTab, disabled && styles.subTab_disabled)}
+        className={cn(styles.subTab, !isUnitInSearch && styles.subTab_disabled)}
         id={subTabId(unit.name)}
       >
         <div className={styles.subTab__header}>
@@ -57,7 +57,7 @@ export const WidgetSubTab = observer(
 
           <Icon
             name={unit.isOpen ? 'ArrowDownS' : 'ArrowUpS'}
-            className="h-4 text-white hover:text-blue-bright cursor-pointer"
+            className="h-5 text-white hover:text-blue-bright cursor-pointer"
             onClick={() => toggleUnit(unit.name, groupName)}
           />
         </div>
