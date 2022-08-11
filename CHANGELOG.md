@@ -1,5 +1,9 @@
 # Change log 
 
+## <small>0.8.1 (8/11/2022)</small>
+
+* feat([FOROME-1388](https://quantori.atlassian.net/browse/FOROME-1388)): add default preset ([1d2aeda5](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1d2aeda5))
+
 ## <small>0.7.1 (8/10/2022)</small>
 
 * fix([FOROME-1472](https://quantori.atlassian.net/browse/FOROME-1472)): Fix refiner route (#881) ([df52e701](https://github.com/ForomePlatform/Anfisa-React-Client/commit/df52e701))
