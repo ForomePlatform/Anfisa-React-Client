@@ -86,6 +86,7 @@ export const PresetsCard = observer(
     return (
       <Card
         isNeedToAnimate={wizardStore.isNeedToAnimateCard(id)}
+        className="!px-0"
         style={{ paddingLeft: 0, paddingRight: 0 }}
         position={position}
       >
