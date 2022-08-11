@@ -56,7 +56,7 @@ export const WidgetSubTab = observer(
           </div>
 
           <Icon
-            name={unit.isOpen ? 'ArrowDownS' : 'ArrowUpS'}
+            name={unit.isOpen ? 'ArrowUpS' : 'ArrowDownS'}
             className="h-5 text-white hover:text-blue-bright cursor-pointer"
             onClick={() => toggleUnit(unit.name, groupName)}
           />

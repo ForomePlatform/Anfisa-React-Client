@@ -22,7 +22,7 @@ export const WidgetTabHeader = ({
   onToggleExpand,
   onToggleFavorite,
 }: IWidgetTabHeaderProps): ReactElement => (
-  <div className={styles.tab__header}>
+  <div className={styles.tab__header} data-drag-handle={true}>
     <div className="flex items-center">
       {group.name === 'Functional Units' ? (
         <FnLabel className="mr-2" />

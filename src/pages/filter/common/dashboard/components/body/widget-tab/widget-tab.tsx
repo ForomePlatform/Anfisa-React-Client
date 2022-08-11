@@ -29,7 +29,7 @@ export const WidgetTab = observer(
       <>
         <div
           className={cn(styles.tab, !isGroupInSearch && styles.tab_disabled)}
-          onClick={() =>
+          onDoubleClick={() =>
             changeTabPlace(DashboardGroupTypes.Main, group.name, index)
           }
         >

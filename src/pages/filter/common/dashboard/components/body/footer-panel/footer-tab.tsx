@@ -32,7 +32,7 @@ export const FooterTab = observer(
           !isGroupInSearch && styles.footerPanel__tab_disabled,
         )}
         key={group.name}
-        onClick={() =>
+        onDoubleClick={() =>
           changeTabPlace(DashboardGroupTypes.Spare, group.name, index)
         }
       >
