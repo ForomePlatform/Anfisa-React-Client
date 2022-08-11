@@ -2,6 +2,7 @@
 
 ## <small>0.8.1 (8/11/2022)</small>
 
+* fix([FOROME-00](https://quantori.atlassian.net/browse/FOROME-00)): hotfix to replace widget header grabbing style ([15d78433](https://github.com/ForomePlatform/Anfisa-React-Client/commit/15d78433))
 * feat([FOROME-1398](https://quantori.atlassian.net/browse/FOROME-1398)): implement dashboard ([9589df28](https://github.com/ForomePlatform/Anfisa-React-Client/commit/9589df28))
 * feat([FOROME-1418](https://quantori.atlassian.net/browse/FOROME-1418)): disable not applicable presets (#868) ([2ced7e6b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/2ced7e6b))
 * feat([FOROME-1388](https://quantori.atlassian.net/browse/FOROME-1388)): add default preset ([1d2aeda5](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1d2aeda5))
