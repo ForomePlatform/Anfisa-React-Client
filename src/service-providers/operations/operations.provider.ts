@@ -15,6 +15,9 @@ import {
 } from './operations.interface'
 
 class OperationsProvider extends ServiceProviderBase {
+  private _jobStatusResolve: ((value: unknown) => void) | undefined
+  private _jobStatusReject: ((value: unknown) => void) | undefined
+
   constructor() {
     super()
   }
@@ -50,6 +53,32 @@ class OperationsProvider extends ServiceProviderBase {
         },
       })
       .then(res => res.data)
+  }
+
+  public getJobStatusAsync<T>(taskId: string, interval = 1000) {
+    return new Promise((resolve, reject) => {
+      if (!this._jobStatusResolve) {
+        this._jobStatusResolve = resolve
+      }
+      if (!this._jobStatusReject) {
+        this._jobStatusReject = reject
+      }
+      this.get<[boolean | null | T, string]>('job_status', {
+        params: { task: taskId },
+      }).then(({ data }) => {
+        if (data[0] === null) {
+          this._jobStatusReject?.(data[1])
+          this._jobStatusReject = undefined
+          this._jobStatusResolve = undefined
+        } else if (!data[0]) {
+          setTimeout(() => this.getJobStatusAsync<T>(taskId), interval)
+        } else {
+          this._jobStatusResolve?.(data)
+          this._jobStatusReject = undefined
+          this._jobStatusResolve = undefined
+        }
+      })
+    })
   }
 }
 
