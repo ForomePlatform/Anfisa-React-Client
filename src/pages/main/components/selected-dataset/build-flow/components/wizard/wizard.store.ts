@@ -79,9 +79,9 @@ class WizardStore {
     )
 
     reaction(
-      () => datasetStore.datasetName,
-      () => {
-        this.defineAndSetNewScenario()
+      () => datasetStore.dsInfo.isLoading,
+      isLoading => {
+        !isLoading && this.defineAndSetNewScenario()
       },
     )
   }
@@ -105,6 +105,7 @@ class WizardStore {
 
   public defineAndSetNewScenario() {
     this.prevWizardScenario = []
+
     if (datasetStore.isXL && this.startWithOption === ExploreKeys.Genome) {
       this.setScenario(wizardScenarios.XlWholeGenome)
     } else if (
@@ -225,7 +226,7 @@ class WizardStore {
       this.hideNextCards(id, clonedWizard)
       this.wizardScenario = clonedWizard
       this.prevWizardScenario = clonedWizard
-      this.actionHistory.addHistory(clonedWizard)
+      // this.actionHistory.addHistory(clonedWizard)
     }
   }
 
