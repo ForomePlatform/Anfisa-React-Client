@@ -30,6 +30,11 @@ export const EnumDialog = observer(
     const { selectedEnumVariants } = dashboardStore
     const initialVariants = initialEnumVariants || selectedEnumVariants
 
+    const handleClose = () => {
+      modalsVisibilityStore.closeEnumDialog()
+      dashboardStore.resetEnumVariant()
+    }
+
     const handleModals = () => {
       modalsVisibilityStore.closeEnumDialog()
       modalsVisibilityStore.openSelectAttributeDialog()
@@ -44,8 +49,7 @@ export const EnumDialog = observer(
           selectedVariants,
           mode,
         })
-
-        dashboardStore.resetEnumVariant()
+        handleClose()
         modalsVisibilityStore.closeEnumDialog()
       },
       [attributeName, onAddEnum],
@@ -59,8 +63,7 @@ export const EnumDialog = observer(
           selectedVariants,
           mode,
         })
-
-        dashboardStore.resetEnumVariant()
+        handleClose()
         modalsVisibilityStore.closeEnumDialog()
       },
       [attributeName, onSaveEnum],
@@ -72,7 +75,7 @@ export const EnumDialog = observer(
     return (
       <Dialog
         isOpen={modalsVisibilityStore.isEnumDialogVisible}
-        onClose={modalsVisibilityStore.closeEnumDialog}
+        onClose={handleClose}
         title={attributeName}
         width="m"
         isHiddenActions={true}

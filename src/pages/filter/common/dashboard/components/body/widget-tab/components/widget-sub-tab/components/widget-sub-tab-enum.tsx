@@ -1,6 +1,6 @@
 import styles from '../widget-sub-tab.module.css'
 
-import { Fragment, ReactElement } from 'react'
+import { Fragment, ReactElement, useMemo } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
@@ -22,6 +22,19 @@ export const WidgetSubTabEnum = observer(
     const handleOpenEnumDialog = (variantName: string) => {
       dashboardStore.setEnumVariant(variantName)
       onSelectUnit()
+    }
+
+    const isEmptyTab = useMemo(() => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      return unit.variants?.every(([_name, value]) => value === 0)
+    }, [unit.variants])
+
+    if (isEmptyTab) {
+      return (
+        <div className="text-white text-12">
+          {t('dashboard.emptyCondition')}
+        </div>
+      )
     }
 
     return (

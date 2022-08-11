@@ -481,5 +481,6 @@ export const en = {
     showInCharts: 'Show in charts',
     searchForAField: 'Search for a field',
     shownFirst40: 'Shown first 40 of {variantsLeft} variants',
+    emptyCondition: 'Empty condition',
   },
 }

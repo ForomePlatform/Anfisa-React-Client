@@ -36,6 +36,7 @@ export const WidgetSubTab = observer(
       dashboardStore.selectGroup(unit)
     }
 
+    const isFuncAttr = unit.kind === AttributeKinds.FUNC
     return (
       <div
         className={cn(styles.subTab, !isUnitInSearch && styles.subTab_disabled)}
@@ -55,11 +56,13 @@ export const WidgetSubTab = observer(
             </div>
           </div>
 
-          <Icon
-            name={unit.isOpen ? 'ArrowUpS' : 'ArrowDownS'}
-            className="h-5 text-white hover:text-blue-bright cursor-pointer"
-            onClick={() => toggleUnit(unit.name, groupName)}
-          />
+          {!isFuncAttr && (
+            <Icon
+              name={unit.isOpen ? 'ArrowUpS' : 'ArrowDownS'}
+              className="h-5 text-white hover:text-blue-bright cursor-pointer"
+              onClick={() => toggleUnit(unit.name, groupName)}
+            />
+          )}
         </div>
 
         {unit.isOpen && (
