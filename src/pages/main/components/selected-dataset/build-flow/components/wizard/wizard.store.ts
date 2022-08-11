@@ -226,7 +226,7 @@ class WizardStore {
       this.hideNextCards(id, clonedWizard)
       this.wizardScenario = clonedWizard
       this.prevWizardScenario = clonedWizard
-      // this.actionHistory.addHistory(clonedWizard)
+      this.actionHistory.addHistory(clonedWizard)
     }
   }
 
