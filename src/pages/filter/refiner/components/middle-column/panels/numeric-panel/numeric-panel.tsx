@@ -23,7 +23,7 @@ export const NumericPanel = observer((): ReactElement | null => {
   const handleSaveAttribute = useCallback(
     value => {
       savePanelAttribute({
-        filterKind: AttributeKinds.NUMERIC,
+        attributeKind: AttributeKinds.NUMERIC,
         attributeName,
         value,
       })

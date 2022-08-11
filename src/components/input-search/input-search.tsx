@@ -12,6 +12,7 @@ interface IInputSearchProps {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void
   onFocus?: () => void
   big?: boolean
+  isDarkBg?: boolean
   canClearInput?: boolean
   foundItems?: number
   dataTestId?: string
@@ -22,6 +23,7 @@ export const InputSearch = memo(
     const {
       className,
       big = false,
+      isDarkBg,
       canClearInput = true,
       foundItems,
       dataTestId,
@@ -41,7 +43,11 @@ export const InputSearch = memo(
         <input
           type="text"
           data-testid={dataTestId}
-          className={cn(styles.inputSearch, big && styles.inputSearch_big)}
+          className={cn(
+            styles.inputSearch,
+            big && styles.inputSearch_big,
+            isDarkBg && styles.inputSearch_dark,
+          )}
           {...tempRest}
         />
 
@@ -64,7 +70,7 @@ export const InputSearch = memo(
               />
             </>
           )}
-          <Icon name="Loupe" />
+          <Icon name="Loupe" className={cn(isDarkBg && 'text-white')} />
         </div>
       </div>
     )

@@ -24,7 +24,7 @@ export const CustomInheritanceMode = observer(() => {
   const saveAttribute = useCallback(
     (mode, param) => {
       savePanelAttribute({
-        filterKind: AttributeKinds.FUNC,
+        attributeKind: AttributeKinds.FUNC,
         attributeName,
         selectedVariants: ['True'],
         mode,

@@ -20,7 +20,7 @@ export const EnumCondition = observer(
     attributeName,
     enumVariants,
     attributeSubKind,
-    initialEnumVariants,
+    initialVariants,
     initialEnumMode,
     isShowZeroes,
     toggleShowZeroes,
@@ -30,8 +30,9 @@ export const EnumCondition = observer(
   }: IEnumConditionProps): ReactElement => {
     const [mode, setMode] = useState(initialEnumMode)
     const [selectedVariants, setSelectedVariants] = useState(
-      initialEnumVariants ?? [],
+      initialVariants ?? [],
     )
+
     const [searchValue, setSearchValue] = useState('')
 
     useEffect(() => {

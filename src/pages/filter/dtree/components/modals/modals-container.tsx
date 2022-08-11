@@ -15,26 +15,64 @@ import { GeneRegionDialog } from './components/gene-region-dialog'
 import { InheritanceModeDialog } from './components/inheritance-mode-dialog'
 import { NumericDialog } from './components/numeric-dialog'
 import { SelectAttributeDialog } from './components/select-attribute-dialog'
+import { IModalsContainerProps } from './modals.interfaces'
 import modalsVisibilityStore from './modals-visibility-store'
 
 export const ModalsContainer = observer(
-  (): ReactElement => (
+  ({
+    attributeStore,
+    funcStore,
+    onAddEnum,
+    onSaveEnum,
+    onAddNumeric,
+    onSaveNumeric,
+    onAddFunc,
+    onSaveFunc,
+  }: IModalsContainerProps): ReactElement => (
     <>
       <SelectAttributeDialog />
 
-      <EnumDialog />
+      <EnumDialog
+        attributeStore={attributeStore}
+        onAddEnum={onAddEnum}
+        onSaveEnum={onSaveEnum}
+      />
 
-      <NumericDialog />
+      <NumericDialog
+        attributeStore={attributeStore}
+        onAddNumeric={onAddNumeric}
+        onSaveNumeric={onSaveNumeric}
+      />
 
-      <InheritanceModeDialog />
+      <InheritanceModeDialog
+        funcStore={funcStore}
+        onAddFunc={onAddFunc}
+        onSaveFunc={onSaveFunc}
+      />
 
-      <CustomInheritanceModeDialog />
+      <CustomInheritanceModeDialog
+        funcStore={funcStore}
+        onAddFunc={onAddFunc}
+        onSaveFunc={onSaveFunc}
+      />
 
-      <CompoundHetDialog />
+      <CompoundHetDialog
+        funcStore={funcStore}
+        onAddFunc={onAddFunc}
+        onSaveFunc={onSaveFunc}
+      />
 
-      <CompoundRequestDialog />
+      <CompoundRequestDialog
+        funcStore={funcStore}
+        onAddFunc={onAddFunc}
+        onSaveFunc={onSaveFunc}
+      />
 
-      <GeneRegionDialog />
+      <GeneRegionDialog
+        funcStore={funcStore}
+        onAddFunc={onAddFunc}
+        onSaveFunc={onSaveFunc}
+      />
 
       <ViewVariantsModal
         query={dtreeStore.variantsModalQuery}

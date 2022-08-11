@@ -63,8 +63,6 @@ export type ActionType =
   | 'UP-JOIN-AND'
   | 'UP-JOIN-OR'
 
-export type AttributeType = 'enum' | 'numeric' | 'func'
-
 export interface IColumns {
   title: string
   hidden: boolean

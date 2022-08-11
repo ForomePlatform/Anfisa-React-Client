@@ -1,0 +1,39 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: theme("padding[2.5]") theme("padding.4");
+  background: theme("colors.blue.darkHover");
+
+  &__container {
+    display: flex;
+    align-items: center;
+  }
+
+  &__title {
+    font-size: theme("fontSize.24");
+    font-weight: theme("fontWeight.bold");
+    color: theme("colors.white");
+  }
+
+  &__controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    &__button {
+      margin-left: theme("spacing.2");
+      color: theme("colors.grey.blue");
+
+      &:hover {
+        color: theme("colors.blue.bright");
+      }
+    }
+
+    &__switch {
+      margin-left: theme("margin.2");
+      font-size: theme("fontSize.14");
+      color: theme("colors.white");
+    }
+  }
+}

@@ -1,0 +1,42 @@
+.tab {
+  display: flex;
+  align-items: center;
+  padding: 0 theme("padding.4");
+  margin-bottom: theme("margin.2");
+  background: theme("colors.blue.darkHover");
+  border-radius: theme("borderRadius.DEFAULT");
+  cursor: pointer;
+
+  &_disabled {
+    opacity: 0.3;
+    pointer-events: none;
+  }
+
+  &__header {
+    @apply typography-m;
+
+    height: 36px;
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+    cursor: grabbing;
+
+    &__title {
+      font-weight: theme("fontWeight.medium");
+      color: theme("colors.white");
+      cursor: pointer;
+
+      &:hover {
+        color: theme("colors.grey.blue");
+      }
+    }
+
+    &__controls {
+      display: flex;
+      align-items: center;
+      height: theme("height.3");
+      cursor: pointer;
+    }
+  }
+}

@@ -12,10 +12,15 @@ import {
 import { getConditionJoinMode } from '@utils/getConditionJoinMode'
 import modalsVisibilityStore from '../../pages/filter/dtree/components/modals/modals-visibility-store'
 
-export const changeEnumAttribute = (
-  currentMode?: ModeTypes,
-  variants?: string[],
-) => {
+interface IChangeEnumAttributeProps {
+  selectedVariants?: string[]
+  mode?: ModeTypes | undefined
+}
+
+export const changeEnumAttribute = ({
+  selectedVariants,
+  mode,
+}: IChangeEnumAttributeProps) => {
   const code = dtreeStore.dtreeCode ?? 'return False'
 
   const { groupIndexToChange } = modalsVisibilityStore
@@ -32,13 +37,13 @@ export const changeEnumAttribute = (
     if (index <= 1) {
       filteredAttribute.push(element)
     } else if (index === 2) {
-      const conditionsJoinMode = getConditionJoinMode(currentMode)
+      const conditionsJoinMode = getConditionJoinMode(mode)
 
       filteredAttribute.push(conditionsJoinMode)
     }
   })
 
-  filteredAttribute.push(uniq(variants))
+  filteredAttribute.push(uniq(selectedVariants))
 
   dtreeStore.fetchDtreeSetAsync({
     ds: datasetStore.datasetName,
