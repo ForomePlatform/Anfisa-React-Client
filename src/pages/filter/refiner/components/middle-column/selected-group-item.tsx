@@ -26,7 +26,7 @@ export const SelectedGroupItem = ({
   const [variantName, variantValue] = variant
 
   return (
-    <div id={id} className={cn('w-full flex items-center', className, id)}>
+    <div id={id} className={cn('w-full flex items-center', className)}>
       <Checkbox
         id={variantName + variantValue}
         checked={isSelected}

@@ -3,7 +3,7 @@ import InfiniteScroll from 'react-infinite-scroller'
 
 interface IFlatList<T> {
   elements: T[]
-  selectedItemName?: string
+  selectedItemId?: string
   selectedItemIndex?: number
   useWindow?: boolean
   renderRow: (data: T[], index: number) => ReactElement | null
@@ -11,7 +11,7 @@ interface IFlatList<T> {
 
 export const FlatList = <T,>({
   elements,
-  selectedItemName,
+  selectedItemId,
   selectedItemIndex,
   renderRow,
   useWindow = false,
@@ -19,7 +19,7 @@ export const FlatList = <T,>({
   const length = elements.length
   const itemsPerPage = length < 20 ? length : 20
   const noNeedToScroll =
-    !selectedItemIndex || !selectedItemName || selectedItemIndex === -1
+    !selectedItemIndex || !selectedItemId || selectedItemIndex === -1
 
   const [hasMore, setHasMore] = useState(true)
   const [records, setRecords] = useState(itemsPerPage)
@@ -49,10 +49,10 @@ export const FlatList = <T,>({
     if (records < selectedItemIndex) {
       setRecords(records + selectedItemIndex)
     } else {
-      const item = document.getElementById(selectedItemName)
+      const item = document.getElementById(selectedItemId)
       item?.scrollIntoView()
     }
-  }, [noNeedToScroll, records, selectedItemIndex, selectedItemName])
+  }, [noNeedToScroll, records, selectedItemIndex, selectedItemId])
 
   return (
     <InfiniteScroll
