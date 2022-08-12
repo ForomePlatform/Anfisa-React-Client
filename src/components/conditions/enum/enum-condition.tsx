@@ -139,9 +139,9 @@ export const EnumCondition = observer(
 
         <div style={{ height: listHeight }} className="overflow-auto">
           {filteredVariants.length > 0 ? (
-            <FlatList<TVariant>
+            <FlatList
               data={filteredVariants}
-              renderRow={(data: TVariant[], index: number) => (
+              renderRow={(data, index) => (
                 <SelectedGroupItem
                   key={data[index][0]}
                   isSelected={selectedVariants.includes(data[index][0])}
