@@ -69,7 +69,7 @@ export const EnumDialog = observer(
       [attributeName, onSaveEnum],
     )
 
-    const paginationHeight =
+    const listHeight =
       enumVariants.length > DEFAULT_COUNT ? 'calc(580px - 249px)' : 'auto'
 
     return (
@@ -88,7 +88,7 @@ export const EnumDialog = observer(
           initialEnumMode={initialEnumMode}
           isShowZeroes={dtreeAttributeStore.isShowZeroVariants}
           toggleShowZeroes={dtreeAttributeStore.setIsShowZeroVariants}
-          paginationHeight={paginationHeight}
+          listHeight={listHeight}
           controls={({ value, mode }) =>
             renderAttributeDialogControls({
               initialCondition,

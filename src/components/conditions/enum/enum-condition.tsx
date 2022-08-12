@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import { t } from '@i18n'
 import { Divider } from '@ui/divider'
-import { PaginationList } from '@ui/pagination-list'
+import { FlatList } from '@ui/flat-list'
 import { Switch } from '@ui/switch'
 import { QueryBuilderSearch } from '@pages/filter/dtree/components/query-builder/query-builder-search'
 import { AllNotMods } from '@pages/filter/dtree/components/query-builder/ui/all-not-mods'
@@ -26,7 +26,7 @@ export const EnumCondition = observer(
     toggleShowZeroes,
     onTouch,
     controls,
-    paginationHeight,
+    listHeight,
   }: IEnumConditionProps): ReactElement => {
     const [mode, setMode] = useState(initialEnumMode)
     const [selectedVariants, setSelectedVariants] = useState(
@@ -137,17 +137,17 @@ export const EnumCondition = observer(
           />
         </div>
 
-        <div style={{ height: paginationHeight }}>
+        <div style={{ height: listHeight }} className="overflow-auto">
           {filteredVariants.length > 0 ? (
-            <PaginationList
-              elements={filteredVariants}
-              render={variant => (
+            <FlatList<TVariant>
+              data={filteredVariants}
+              renderRow={(data: TVariant[], index: number) => (
                 <SelectedGroupItem
-                  key={variant[0]}
-                  isSelected={selectedVariants.includes(variant[0])}
-                  variant={variant}
+                  key={data[index][0]}
+                  isSelected={selectedVariants.includes(data[index][0])}
+                  variant={data[index]}
                   handleCheckGroupItem={handleCheckGroupItem}
-                  className="last:mb-0"
+                  className="mb-3"
                 />
               )}
             />
