@@ -11,6 +11,6 @@ interface INotModeWrapperProps {
 export const NotModeWrapper = ({
   className,
   children,
-}: INotModeWrapperProps): ReactElement => {
-  return <div className={cn(styles.notModeWrapper, className)}>{children}</div>
-}
+}: INotModeWrapperProps): ReactElement => (
+  <div className={cn(styles.notModeWrapper, className)}>{children}</div>
+)

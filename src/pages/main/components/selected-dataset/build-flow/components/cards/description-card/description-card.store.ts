@@ -82,7 +82,7 @@ export class DescriptionCardStore {
           this.isTyping = false
           this._descriptions[ds] = description
         })
-        showToast(t('home.datasetDescriptionSaved'), 'success')
+        showToast(t('home.datasetDescriptionSaved'), 'info')
       })
       .catch(() => {
         showToast(t('error.smthWentWrong'), 'error')

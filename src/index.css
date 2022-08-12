@@ -96,7 +96,7 @@
 
 /* stylelint-disable-next-line selector-class-pattern */
 .Toastify__toast--info {
-  background-color: #18a0fb;
+  background-color: theme("colors.blue.bright");
   border-radius: 8px;
   height: 52px;
 }
@@ -109,8 +109,8 @@
 
 /* stylelint-disable-next-line selector-class-pattern */
 .Toastify__toast-body {
-  font-size: 14px;
-  line-height: 16px;
+  font-size: theme("fontSize.14");
+  line-height: theme("lineHeight.16");
   letter-spacing: -0.02em;
   color: #fff;
 }

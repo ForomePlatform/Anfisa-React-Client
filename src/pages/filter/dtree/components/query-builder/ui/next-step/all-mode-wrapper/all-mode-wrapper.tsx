@@ -11,6 +11,6 @@ interface IAllModeWrapperProps {
 export const AllModeWrapper = ({
   className,
   children,
-}: IAllModeWrapperProps): ReactElement => {
-  return <div className={cn(styles.allModeWrapper, className)}>{children}</div>
-}
+}: IAllModeWrapperProps): ReactElement => (
+  <div className={cn(styles.allModeWrapper, className)}>{children}</div>
+)

@@ -5,7 +5,7 @@
   width: 100%;
 
   &__start-amount {
-    font-size: 13px;
+    font-size: theme("fontSize.14");
     font-weight: 700;
   }
 
