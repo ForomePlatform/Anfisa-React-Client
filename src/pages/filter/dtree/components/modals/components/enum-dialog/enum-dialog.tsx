@@ -89,6 +89,7 @@ export const EnumDialog = observer(
           isShowZeroes={dtreeAttributeStore.isShowZeroVariants}
           toggleShowZeroes={dtreeAttributeStore.setIsShowZeroVariants}
           listHeight={listHeight}
+          selectedDashboardVariants={selectedEnumVariants}
           controls={({ value, mode }) =>
             renderAttributeDialogControls({
               initialCondition,
