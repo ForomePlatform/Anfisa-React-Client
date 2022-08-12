@@ -16,4 +16,14 @@
     font-size: 14px;
     line-height: 20px;
   }
+
+  &_dark {
+    background: theme("colors.blue.secondary");
+    border: none;
+    color: theme("colors.white");
+
+    &::placeholder {
+      color: theme("colors.grey.blue");
+    }
+  }
 }

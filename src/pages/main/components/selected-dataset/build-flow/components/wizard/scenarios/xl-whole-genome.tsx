@@ -2,43 +2,50 @@ import {
   ExploreGenomeKeys,
   TExploreGenomeKeys,
 } from '@core/enum/explore-genome-types-enum'
-import { ExploreTypesDictionary } from '@core/enum/explore-types-enum'
+import { ExploreKeys } from '@core/enum/explore-types-enum'
 import { t } from '@i18n'
 import { PresetsCard, StartCard, WhatsNextCard } from '../../cards'
 import { ICardProps, IWizardScenario } from '../wizard.interface'
+import { WizardCardIds } from './wizard-scenarios.constants'
 
 export const xlWholeGenome: IWizardScenario[] = [
   {
     component: (props: ICardProps) => <StartCard {...props} />,
-    id: 0,
+    id: WizardCardIds.Start,
     hidden: false,
     continueDisabled: true,
     editDisabled: false,
     contentDisabled: true,
-    value: ExploreTypesDictionary.Genome,
+    selectedValue: ExploreKeys.Genome,
     title: t('home.startFlow.startWith'),
+    position: 'left',
+    nextCard: WizardCardIds.WhatsNext,
+  },
+  {
+    component: (props: ICardProps) => <PresetsCard {...props} />,
+    id: WizardCardIds.Presets,
+    hidden: true,
+    continueDisabled: false,
+    editDisabled: true,
+    contentDisabled: false,
+    selectedValue: '',
+    title: t('home.buildFlow.relevantPresets'),
+    maxHeight: 'calc(100vh - 285px)',
+    position: 'right',
+    nextCard: null,
   },
   {
     component: (props: ICardProps) => (
       <WhatsNextCard {...(props as ICardProps<TExploreGenomeKeys>)} />
     ),
-    id: 1,
+    id: WizardCardIds.WhatsNext,
     hidden: false,
     continueDisabled: false,
     editDisabled: true,
     contentDisabled: false,
-    value: ExploreGenomeKeys.ACMGSecondary,
+    selectedValue: ExploreGenomeKeys.ACMGSecondary,
     title: t('home.buildFlow.whatsNext'),
-  },
-  {
-    component: (props: ICardProps) => <PresetsCard {...props} />,
-    id: 2,
-    hidden: true,
-    continueDisabled: false,
-    editDisabled: true,
-    contentDisabled: false,
-    value: '',
-    title: t('home.buildFlow.relevantPresets'),
-    maxHeight: 'calc(100vh - 285px)',
+    position: 'left',
+    nextCard: WizardCardIds.Presets,
   },
 ]

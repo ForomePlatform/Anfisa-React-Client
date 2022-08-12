@@ -4,7 +4,8 @@ import { adaptDataToCamelizedType } from '@service-providers/common'
 import { ServiceProviderBase } from './../common'
 import {
   IMacroTagging,
-  IMacroTaggingArguments,
+  IMacroTaggingArgumentsAsync,
+  IMacroTaggingArgumentsSync,
   ITagSelect,
   ITagSelectArguments,
   IWsList,
@@ -64,9 +65,17 @@ class WsDatasetSupportProvider extends ServiceProviderBase {
   }
 
   public updateMacroTagging(
-    params: IMacroTaggingArguments,
+    params: IMacroTaggingArgumentsSync,
   ): Promise<IMacroTagging> {
     return this.post<IMacroTagging>('/macro_tagging', params).then(
+      res => res.data,
+    )
+  }
+
+  public updateMacroTaggingAsync(
+    params: IMacroTaggingArgumentsAsync,
+  ): Promise<{ task_id: string }> {
+    return this.post<{ task_id: string }>('/macro_tagging', params).then(
       res => res.data,
     )
   }

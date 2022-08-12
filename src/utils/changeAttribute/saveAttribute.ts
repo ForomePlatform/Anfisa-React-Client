@@ -2,20 +2,13 @@ import { ModeTypes } from '@core/enum/mode-types-enum'
 import datasetStore from '@store/dataset/dataset'
 import dtreeStore from '@store/dtree'
 import modalsControlStore from '@pages/filter/dtree/components/modals/modals-control-store'
+import { ISavePanelAttributeProps } from '@pages/filter/refiner/components/middle-column/panels/utils/save-pannel-attribute'
 import { AttributeKinds, TFuncArgs } from '@service-providers/common'
 import {
   ActionTypes,
   AtomModifyingActionName,
 } from '@service-providers/decision-trees'
 import { getConditionJoinMode } from '@utils/getConditionJoinMode'
-
-interface ISaveAttributeProps {
-  filterKind: AttributeKinds
-  filterName: string
-  values: string[]
-  mode?: ModeTypes
-  param?: TFuncArgs
-}
 
 type TAttribute = [
   filterKind: AttributeKinds,
@@ -26,17 +19,21 @@ type TAttribute = [
 ]
 
 export const saveAttribute = ({
-  filterKind,
-  filterName,
-  values,
+  attributeKind,
+  attributeName,
+  selectedVariants,
   mode,
   param,
-}: ISaveAttributeProps) => {
+}: ISavePanelAttributeProps) => {
   const code = dtreeStore.dtreeCode ?? 'return False'
 
   const { location } = modalsControlStore
 
-  const attribute: TAttribute = [filterKind, filterName, values]
+  const attribute: TAttribute = [
+    attributeKind,
+    attributeName!,
+    selectedVariants!,
+  ]
 
   const conditionsJoinMode = getConditionJoinMode(mode)
 

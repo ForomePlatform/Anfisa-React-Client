@@ -18,7 +18,7 @@ interface ISelectModalButtonsProps {
   handleModals: () => void
   handleClose: () => void
   currentGroup: any
-  disabled: any
+  disabled: boolean
   handleAddAttribute: (action: ActionType) => void
 }
 

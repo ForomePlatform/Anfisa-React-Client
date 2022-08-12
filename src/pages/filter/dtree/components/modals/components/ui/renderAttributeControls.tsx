@@ -1,4 +1,6 @@
 import { ActionType } from '@declarations'
+import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
+import dashboardStore from '@pages/filter/common/dashboard'
 import { TCondition } from '@service-providers/common'
 import { EditModalButtons } from './edit-modal-buttons'
 import { SelectModalButtons } from './select-modal-buttons'
@@ -21,11 +23,25 @@ export const renderAttributeDialogControls = ({
   disabled,
   saveAttribute,
   addAttribute,
-}: IRenderAttributeDialogControlsProps) =>
-  initialCondition ? (
+}: IRenderAttributeDialogControlsProps) => {
+  const handleAddAttribute = (action: ActionType) => {
+    if (dashboardStore.viewType === ViewTypeDashboard.Tile) {
+      dashboardStore.toggleViewType(ViewTypeDashboard.List)
+    }
+    addAttribute(action)
+  }
+
+  const handleSaveChanges = () => {
+    if (dashboardStore.viewType === ViewTypeDashboard.Tile) {
+      dashboardStore.toggleViewType(ViewTypeDashboard.List)
+    }
+    saveAttribute()
+  }
+
+  return initialCondition ? (
     <EditModalButtons
       handleClose={onClose}
-      handleSaveChanges={saveAttribute}
+      handleSaveChanges={handleSaveChanges}
       disabled={disabled}
     />
   ) : (
@@ -34,6 +50,7 @@ export const renderAttributeDialogControls = ({
       handleClose={onClose}
       handleModals={handleModals}
       disabled={disabled}
-      handleAddAttribute={action => addAttribute(action)}
+      handleAddAttribute={action => handleAddAttribute(action)}
     />
   )
+}

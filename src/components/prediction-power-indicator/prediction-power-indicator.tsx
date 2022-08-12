@@ -1,44 +1,23 @@
-import styles from './prediction-power-indicator.module.css'
-
 import { ReactElement, useState } from 'react'
-import cn, { Argument } from 'classnames'
+import cn from 'classnames'
 
 import { Tooltip } from '@ui/tooltip'
 import { DecisionTreesResultsDataCy } from '@data-testid'
+import { PredictionPowerPoint } from './prediction-power-point'
 
 interface IPredictionPowerIndicatorProps {
-  className?: Argument
+  className?: string
   value: number
   comment?: string
-  size?: 'sm' | 'md'
 }
 
 export const PredictionPowerIndicator = ({
   className,
   value,
   comment,
-  size = 'md',
 }: IPredictionPowerIndicatorProps): ReactElement => {
   const [isCommentShown, setCommentShown] = useState(false)
   const valueStr = value.toFixed(3)
-
-  const getColorByValue = (value: number): string => {
-    if (value <= 0.01) {
-      return 'grey'
-    }
-
-    if (value <= 0.1) {
-      return 'yellow'
-    }
-
-    if (value <= 0.2) {
-      return 'greenLight'
-    }
-
-    return 'greenDark'
-  }
-
-  const color = getColorByValue(value)
 
   return (
     <Tooltip
@@ -56,16 +35,13 @@ export const PredictionPowerIndicator = ({
       }
       placement="top-start"
     >
-      <span
-        data-testid={DecisionTreesResultsDataCy.unitPredictionPower}
-        className={cn(
-          className,
-          styles.predictionPowerIndicator,
-          styles[`predictionPowerIndicator_${size}`],
-          styles[`predictionPowerIndicator_${color}`],
-        )}
+      <div
+        className={cn('flex', className)}
         onClick={() => setCommentShown(!isCommentShown)}
-      />
+        data-testid={DecisionTreesResultsDataCy.unitPredictionPower}
+      >
+        <PredictionPowerPoint value={value} />
+      </div>
     </Tooltip>
   )
 }

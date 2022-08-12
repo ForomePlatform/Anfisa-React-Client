@@ -145,6 +145,8 @@ export const en = {
       startWith: 'Start with',
       prevWorkSection: 'In this section your previous work will be displayed',
       prevWorkWith: 'You previously worked with',
+      candidateIsUnavailable: 'Existing candidates are unavailable',
+      genomeIsUnavailable: 'Whole genome/exome is unavailable',
     },
     buildFlow: {
       candidateSet: 'Existing candidate sets',
@@ -152,6 +154,10 @@ export const en = {
       whatsNext: "What's next?",
       relevantPresets: 'Relevant presets',
       additionalPresetFilter: 'Additional preset filters',
+      notApplicableForXl: 'Not applicable for XL dataset',
+      simpleFilter: 'Simple Filter',
+      inclusionExclusion: 'Inclusion/Exclusion Criteria',
+      viewVariants: 'View Variants',
     },
   },
   ds: {
@@ -469,5 +475,13 @@ export const en = {
   },
   paginationList: {
     footer: '{ from } — { to } / { length }',
+  },
+
+  dashboard: {
+    dashboard: 'Dashboard',
+    showInCharts: 'Show in charts',
+    searchForAField: 'Search for a field',
+    shownFirst40: 'Shown first 40 of {variantsLeft} variants',
+    emptyCondition: 'Empty condition',
   },
 }

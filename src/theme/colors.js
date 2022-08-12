@@ -12,6 +12,12 @@ module.exports = {
     active: '#0068ae',
     tertiary: '#f5faff',
     darkHover: '#10233E',
+    /* TODO: naming */
+    indicator1: '#69c4ff',
+    indicator2: '#0493f3',
+    indicator3: '#0373bd',
+    indicator4: '#d1ecfc',
+    indicator5: '#036aae',
   },
   green: {
     light: '#ddf3d9',
