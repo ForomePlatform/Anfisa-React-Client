@@ -51,7 +51,7 @@ export const ControlPanel = observer((): ReactElement => {
         <CreateDataset
           disabled={
             filterStore.conditions.length === 0 &&
-            dtreeStore.dtreeStepIndices.length === 0
+            dtreeStore.stepIndexes.length === 0
           }
         />
       </div>

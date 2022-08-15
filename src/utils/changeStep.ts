@@ -15,10 +15,10 @@ export const changeStep = (
   action: ChangeStepActionType,
 ): void => {
   const code = dtreeStore.dtreeCode ?? 'return False'
-  const locadStepData = toJS(stepStore.steps)
+  const localStepData = toJS(stepStore.steps)
 
-  locadStepData.length = index + 1
-  const emptyStepList = locadStepData.filter(
+  localStepData.length = index + 1
+  const emptyStepList = localStepData.filter(
     element => element.groups.length === 0 && !element.isFinalStep,
   )
 
@@ -30,11 +30,17 @@ export const changeStep = (
 
   const indexOfFinalStep = stepStore.steps.length - 1
   const isFinalStep = index === indexOfFinalStep
-
-  let location = !isFinalStep && isBooleanAction ? stepIndex + 1 : stepIndex
   const isPrevStepEmpty = !stepStore.steps[indexOfFinalStep - 1].groups.length
-  if (stepStore.steps.length > 2 && isPrevStepEmpty) {
-    location = index
+
+  let location = stepIndex
+
+  if (!isFinalStep && isBooleanAction) {
+    location = stepIndex + 1
+  } else if (isFinalStep) {
+    location =
+      isPrevStepEmpty && stepStore.steps.length === 2
+        ? stepIndex
+        : stepIndex + 1
   }
 
   const shouldResetAllData = index === 0 && stepStore.steps.length === 2

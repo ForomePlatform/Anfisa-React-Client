@@ -106,7 +106,7 @@ export const DtreePage = observer((): ReactElement => {
 
         <FilterControl
           disabledCreateDataset={
-            dtreeStore.dtreeStepIndices.length === 0 ||
+            dtreeStore.stepIndexes.length === 0 ||
             !dtreeStore.totalFilteredCounts ||
             dtreeStore.totalFilteredCounts.accepted > XL_COUNT_OF_VARIANTS
           }
