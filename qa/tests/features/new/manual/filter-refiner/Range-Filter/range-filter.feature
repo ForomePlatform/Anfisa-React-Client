@@ -54,7 +54,7 @@ Examples:
 Scenario Outline: 03 Empty "<Minimum Value>" field
 	When user clicks the "<Attribute Name>"
 	And enters the maximum value of range "<Maximum Value>"
-	And leaves the minimum value field empty
+	And minimum value field stays empty
 	And clicks the "Apply condition" button to apply the filter
 	Then the "<Attribute Name>" less than or equals "<Maximum Value>" should be displayed in the right part of the screen
 	And the "<Minimum Value>" should be counted as the minimum value
@@ -69,7 +69,7 @@ Examples:
 Scenario Outline: 04 Empty "<Maximum Value>" field
 	When user clicks the "<Attribute Name>"
 	And enters the minimum value of range "<Minimum Value>"
-	And leaves the maximum value field empty
+	And maximum value field stays empty
 	And clicks the "Apply condition" button to apply the filter
 	Then the "<Attribute Name>" greater than "<Minimum Value>" should be displayed in the right part of the screen
 	And the "<Maximum Value>" should be counted as the maximum value
@@ -148,14 +148,3 @@ Examples:
 	| Min_GQ                       | -1            | 841           |
 	| Number_of_clinvar_submitters | 0             | 31            |
 	| Severity                     | -1            | 4             |
-
-@tc:114313
-Scenario: 09 Clear button
-	When user clicks the "Num_Samples" attribute
-	And enters the minimum value of range "1"
-	And changes "less" sign with "less or equals" next to the minimum value
-	And enters the maximum value of range "2"
-	And clicks the "Apply condition" button to apply the filter
-	And user clicks the "Clear" button
-	Then the filter should be cleared
-	And number of variants should go back to 5,628,753

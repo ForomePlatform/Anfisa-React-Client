@@ -14,7 +14,7 @@ Scenario Outline: 01 Expand the "<Attribute Name>" diagram for attribute with le
 Examples: 
 	| Attribute Name       | Number Of Columns |
 	| Callers              | 10                |
-	| Canonical_Annotation | 18                |
+	| Canonical_Annotation | 21                |
 
 @tc:114366
 Scenario Outline: 02 Expand the "<Attribute Name>" diagram for attribute with more than 40 values 

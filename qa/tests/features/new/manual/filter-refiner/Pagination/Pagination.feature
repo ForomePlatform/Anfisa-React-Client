@@ -29,9 +29,9 @@ Examples:
 Scenario: 03 Search with pagination
 	When user clicks the "Symbol" attribute
 	And clicks the "Next Page" button three times
-	And the fourth page is displayed
+	And the attribute number "25-32" is displayed
 	And user enters "10" in the "Search" field
-	Then the page should be returned from 4 to 1
+	Then the page should be returned from "25-32" to "1-8"
 	And list of values with "10" should be displayed
 
 @tc:114397

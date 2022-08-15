@@ -120,9 +120,10 @@ Scenario Outline: 08 Add one "<Problem Group>" with few Inheritance Modes for Se
 
 Examples:
 	| Problem Group | Mode #1              | Mode #2            | Variants Number |
-	| NA24143       | Homozygous Recessive | Autosomal Dominant | 491             |
-	| NA24149       | Autosomal Dominant   | X-linked           | 298             |
-	| NA24385       | X-linked             | Compensational     | 139             |
+	| HG002         | X-linked             | Compensational     | 139             |
+	| HG004         | Homozygous Recessive | Autosomal Dominant | 491             |
+	| HG003         | Autosomal Dominant   | X-linked           | 298             |
+	
 
 @tc:114376
 Scenario Outline: 09 Clear "<Problem Group>"
@@ -136,9 +137,9 @@ Scenario Outline: 09 Clear "<Problem Group>"
 
 Examples:
 	| Problem Group | Mode Name            |
-	| NA24143       | Homozygous Recessive |
-	| NA24149       | Compensational       |
-	| NA24385       | X-linked             |
+	| HG002         | Homozygous Recessive |
+	| HG004         | Compensational       |
+	| HG003         | X-linked             |
 
 @tc:114377
 Scenario Outline: 10 Select All
@@ -153,6 +154,6 @@ Scenario Outline: 10 Select All
 
 Examples:
 	| Problem Group | Variants Number |
-	| NA24143       | 854             |
-	| NA24149       | 832             |
-	| NA24385       | 239             |
+	| HG002         | 239             |
+	| HG004         | 854             |
+	| HG003         | 832             |
