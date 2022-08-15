@@ -15,6 +15,7 @@ interface IUnitsListControlsProps {
   filterValue: string
   isAllCollapsed: boolean
   isListView: boolean
+  isModal: boolean | undefined
   onToggleViewType: (viewType: ViewTypeDashboard) => void
   onToggleListSize: () => void
   onFilterValueChange: (value: string) => void
@@ -25,6 +26,7 @@ export const UnitsListControls = ({
   filterValue,
   isListView,
   isAllCollapsed,
+  isModal,
   onToggleViewType,
   onToggleListSize,
   onFilterValueChange,
@@ -45,9 +47,11 @@ export const UnitsListControls = ({
       <Icon name={isAllCollapsed ? 'Expand' : 'Collapse'} size={20} />
     </button>
 
-    <UnitsViewSwitch
-      isListView={isListView}
-      onToggleViewType={onToggleViewType}
-    />
+    {!isModal && (
+      <UnitsViewSwitch
+        isListView={isListView}
+        onToggleViewType={onToggleViewType}
+      />
+    )}
   </div>
 )

@@ -71,7 +71,6 @@ export const UnitsList = observer(
     }
 
     const showLoader = isLoading && !filteredGroups.length
-
     return (
       <div
         className={cn(
@@ -105,6 +104,7 @@ export const UnitsList = observer(
           filterValue={filterValue}
           isAllCollapsed={collapsedGroups.length === groups.length}
           isListView={viewType === ViewTypeDashboard.List}
+          isModal={isModal}
           onToggleViewType={toggleViewType}
           onToggleListSize={onToggleListSize}
           onFilterValueChange={setFilterValue}
@@ -128,10 +128,11 @@ export const UnitsList = observer(
               <UnitsListGroup
                 key={group.name}
                 isCollapsed={collapsedGroups.includes(group.name)}
-                onCollapsedChange={handleCollapsedChange}
                 isDark={isDark}
                 withCharts={withCharts}
                 unitsGroup={group}
+                isModal={isModal}
+                onCollapsedChange={handleCollapsedChange}
                 onSelect={onSelect}
               />
             ))

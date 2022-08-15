@@ -19,13 +19,17 @@
       transform: rotate(135deg);
     }
 
-    &_black {
+    &_dark {
       color: theme("colors.blue.darkHover");
     }
 
     &_sm {
       width: 6px;
       height: 6px;
+    }
+
+    &:hover {
+      color: theme("colors.grey.blue");
     }
   }
 }
