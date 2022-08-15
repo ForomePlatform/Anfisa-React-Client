@@ -68,7 +68,7 @@ export class DescriptionCardStore {
     this._typingTimer && clearTimeout(this._typingTimer)
     this._typingTimer = setTimeout(() => {
       this.saveDescription(dsName, description)
-    }, 1000)
+    }, 4000)
   }
 
   public saveDescription = (ds: string, description: string): void => {

@@ -1,76 +1,16 @@
+import styles from './next-step-route.module.css'
+
 import { Fragment, ReactElement } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
-import styled from 'styled-components'
 
 import { t } from '@i18n'
-import { theme } from '@theme'
 import dtreeStore from '@store/dtree'
 import stepStore, { ActiveStepOptions } from '@store/dtree/step.store'
 import { Icon } from '@ui/icon'
 import { Tooltip } from '@ui/tooltip'
 import { DecisionTreesResultsDataCy } from '@data-testid'
 import { StepCount } from '@pages/filter/dtree/components/query-builder/ui/step-count'
-
-const StartAmount = styled.div`
-  font-size: 13px;
-  font-weight: 700;
-`
-
-const CircleStartThread = styled.div`
-  position: absolute;
-  top: 13px;
-  width: 16px;
-  height: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 1000px;
-`
-
-const SubCircleThread = styled.div`
-  width: 8px;
-  height: 8px;
-  border-radius: 100px;
-  background: white;
-`
-
-const LineThread = styled.div`
-  width: 6px;
-  height: 100%;
-`
-
-const ExcludeTurn = styled.div<{ isIncluded: boolean }>`
-  position: absolute;
-  top: 29px;
-  margin-right: 14px;
-  margin-top: 4px;
-  display: flex;
-  width: 20px;
-  height: 60px;
-  border-bottom: 6.5px solid
-    ${props =>
-      props.isIncluded
-        ? theme('colors.green.secondary')
-        : theme('colors.purple.bright')};
-  border-right: 6.5px solid
-    ${props =>
-      props.isIncluded
-        ? theme('colors.green.secondary')
-        : theme('colors.purple.bright')};
-  border-bottom-right-radius: 20px;
-`
-
-const ExcludeAmount = styled.div<{ isIncluded: boolean }>`
-  width: auto;
-  font-size: 13px;
-  font-weight: 700;
-  cursor: pointer;
-  color: ${props =>
-    props.isIncluded
-      ? theme('colors.green.secondary')
-      : theme('colors.purple.bright')};
-`
 
 interface INextStepRouteProps {
   isExpanded: boolean
@@ -111,39 +51,53 @@ export const NextStepRoute = observer(
     const currentStartCounts = isFinalStep ? returnCounts : conditionCounts
 
     return (
-      <div style={{ minHeight: 53 }} className="relative flex h-full w-full">
-        <StartAmount
+      <div style={{ minHeight: 53 }} className={cn(styles.nextStepRoute)}>
+        <div
           className={cn(
+            styles.nextStepRoute__startAmount,
             'w-5/6 flex flex-col justify-between items-end text-blue-bright mr-1 pt-1',
             isFinalStep ? 'mt-1.5' : 'mt-2.5',
           )}
         >
           <StepCount isXl={isXl} pointCount={currentStartCounts} />
-        </StartAmount>
+        </div>
 
         <div className="flex flex-col items-center w-1/6">
-          <CircleStartThread
-            className={cn('bg-blue-bright mt-1', { '-mt-px': isFinalStep })}
+          <div
+            className={cn(
+              styles.nextStepRoute__circleStartThread,
+              'bg-blue-bright mt-1',
+              { '-mt-px': isFinalStep },
+            )}
           >
-            <SubCircleThread />
-          </CircleStartThread>
+            <div className={styles.nextStepRoute__subCircleThread} />
+          </div>
 
-          <LineThread
-            className={cn('bg-blue-bright', {
+          <div
+            className={cn(styles.nextStepRoute__lineThread, 'bg-blue-bright', {
               'mt-5': index === 0,
             })}
           />
 
           {isExpanded && currentStep.groups && currentStep.groups.length > 0 && (
             <Fragment>
-              <ExcludeTurn isIncluded={isIncluded}>
+              <div
+                className={cn(
+                  styles.nextStepRoute__excludeTurn,
+                  isIncluded && styles.nextStepRoute__excludeTurn_included,
+                )}
+              >
                 <div
                   className="absolute w-full right-4 flex justify-end"
                   style={{ top: 48 }}
                 >
                   <Tooltip title={tooltipContent}>
-                    <ExcludeAmount
-                      isIncluded={isIncluded}
+                    <div
+                      className={cn(
+                        styles.nextStepRoute__excludeAmount,
+                        isIncluded &&
+                          styles.nextStepRoute__excludeAmount_included,
+                      )}
                       onClick={() =>
                         stepStore.makeStepActive(
                           stepNo - 1,
@@ -158,7 +112,7 @@ export const NextStepRoute = observer(
                         isXl={isXl}
                         pointCount={returnCounts}
                       />
-                    </ExcludeAmount>
+                    </div>
                   </Tooltip>
 
                   <div className="ml-1 pt-0.5">
@@ -172,7 +126,7 @@ export const NextStepRoute = observer(
                     )}
                   </div>
                 </div>
-              </ExcludeTurn>
+              </div>
             </Fragment>
           )}
         </div>

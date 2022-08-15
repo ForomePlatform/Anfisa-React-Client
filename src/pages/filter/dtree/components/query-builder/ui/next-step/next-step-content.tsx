@@ -1,6 +1,5 @@
 import { ReactElement, useState } from 'react'
 import { observer } from 'mobx-react-lite'
-import styled from 'styled-components'
 
 import { t } from '@i18n'
 import stepStore, { ActiveStepOptions } from '@store/dtree/step.store'
@@ -12,13 +11,6 @@ interface INextStepContentProps {
   index: number
   stepNo: number
 }
-
-const Content = styled.div`
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: auto;
-`
 
 export const NextStepContent = observer(
   ({ index, stepNo }: INextStepContentProps): ReactElement => {
@@ -42,7 +34,7 @@ export const NextStepContent = observer(
 
     return (
       <div className="flex flex-col items-start py-2 h-auto w-full">
-        <Content>
+        <div className="flex flex-row w-full">
           <div className="flex flex-col w-2/3 h-auto justify-between step-content-area">
             {/* TODO: add variable "isEmptyStep" instead of "groups && groups.length > 0" */}
             {groups && groups.length > 0 ? (
@@ -70,7 +62,7 @@ export const NextStepContent = observer(
               codeResult={codeResult}
             />
           )}
-        </Content>
+        </div>
 
         <div
           data-testid={DecisionTreesResultsDataCy.addAttrbute}

@@ -1,3 +1,5 @@
+import styles from './next-step/next-step.module.css'
+
 import { ReactElement } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
@@ -11,8 +13,6 @@ import stepStore, {
 import { Button } from '@ui/button'
 import { Radio } from '@ui/radio'
 import { changeStep } from '@utils/changeStep'
-import { ResultsView, TreeView } from './next-step/next-step'
-import { Operation, Step } from './next-step/next-step-header'
 import { NextStepRoute } from './next-step/next-step-route'
 import { StepDivider } from './step-divider'
 
@@ -46,8 +46,9 @@ export const FinalStep = observer(
     return (
       <div className="flex flex-col mb-2">
         <div className="flex">
-          <TreeView
+          <div
             className={cn(
+              styles.nextStep__treeView,
               'pr-3',
               currentStep.isReturnedVariantsActive ? 'bg-blue-tertiary' : '',
             )}
@@ -58,17 +59,20 @@ export const FinalStep = observer(
               stepNo={stepNo}
               isIncluded={!currentStep.excluded}
             />
-          </TreeView>
+          </div>
 
-          <ResultsView
+          <div
             className={cn(
+              styles.nextStep__resultsView,
               'border-l border-grey-light font-medium px-5 relative',
               currentStep.isActive && 'bg-blue-tertiary',
             )}
             onClick={event => setStepActive(index, event)}
           >
             <div className="flex w-full items-center step-content-area">
-              <Step className="mb-2 mt-2">{t('dtree.finalStep')}</Step>
+              <div className="mb-2 mt-2 text-base font-medium">
+                {t('dtree.finalStep')}
+              </div>
 
               <div className="flex ml-4">
                 <Radio
@@ -77,7 +81,9 @@ export const FinalStep = observer(
                   onChange={() => toggleExclude(index, 'BOOL-TRUE')}
                   className="flex items-center mr-3"
                 >
-                  <Operation>{t('dtree.include')}</Operation>
+                  <div className="text-sm font-normal">
+                    {t('dtree.include')}
+                  </div>
                 </Radio>
 
                 <Radio
@@ -86,7 +92,9 @@ export const FinalStep = observer(
                   onChange={() => toggleExclude(index, 'BOOL-FALSE')}
                   className="flex items-center mr-3"
                 >
-                  <Operation>{t('dtree.exclude')}</Operation>
+                  <div className="text-sm font-normal">
+                    {t('dtree.exclude')}
+                  </div>
                 </Radio>
               </div>
             </div>
@@ -102,7 +110,7 @@ export const FinalStep = observer(
                 stepStore.createEmptyStep(index, CreateEmptyStepPositions.FINAL)
               }
             />
-          </ResultsView>
+          </div>
         </div>
       </div>
     )

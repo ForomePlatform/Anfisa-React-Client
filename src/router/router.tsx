@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { QueryParamProvider } from 'use-query-params'
 
-import { GlobalStyle } from '@theme'
 import { Routes } from '@router/routes.enum'
 import { DtreePage } from '@pages/filter/dtree'
 import { RefinerPage } from '@pages/filter/refiner'
@@ -32,7 +31,6 @@ export const RouterBase = (): ReactElement => {
   return (
     <Router basename={baseName}>
       <QueryParamProvider ReactRouterRoute={Route}>
-        <GlobalStyle />
         <ToastContainer />
 
         <Switch>

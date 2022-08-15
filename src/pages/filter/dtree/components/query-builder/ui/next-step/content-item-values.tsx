@@ -1,8 +1,6 @@
 import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
-import styled from 'styled-components'
 
-import { theme } from '@theme'
 import {
   AttributeKinds,
   ConditionJoinMode,
@@ -10,24 +8,8 @@ import {
   TNumericConditionBounds,
 } from '@service-providers/common'
 import { getNumericExpression } from '@utils/getNumericExpression'
-
-const NotModeWrapper = styled.div`
-  margin: 8px 4px;
-  width: 25px;
-  height: 20px;
-  color: ${theme('colors.red.light')};
-  background-color: ${theme('colors.red.lighter')};
-  font-size: 12px;
-`
-
-const AllModeWrapper = styled.div`
-  margin: 8px 4px;
-  width: 25px;
-  height: 20px;
-  color: ${theme('colors.green.secondary')};
-  background-color: ${theme('colors.green.medium')};
-  font-size: 12px;
-`
+import { AllModeWrapper } from './all-mode-wrapper'
+import { NotModeWrapper } from './not-mode-wrapper'
 
 interface IContentItemValuesProps {
   currentGroup: TCondition

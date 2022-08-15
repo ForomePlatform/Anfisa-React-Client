@@ -1,7 +1,6 @@
 import { ReactElement } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
-import styled from 'styled-components'
 
 import { formatNumber } from '@core/format-number'
 import { usePopover } from '@core/hooks/use-popover'
@@ -15,16 +14,6 @@ import { changeStep } from '@utils/changeStep'
 import { ExpandContentButton } from '../expand-content-button'
 import { StepDivider } from '../step-divider'
 import { DtreeConditionsOptionsPopover } from './dtree-condition-options/dtree-conditions-options-popover'
-
-export const Operation = styled.div`
-  font-size: 15px;
-  font-weight: 400;
-`
-
-export const Step = styled.div`
-  font-size: 17px;
-  font-weight: 500;
-`
 
 interface INextStepHeaderProps {
   isExpanded: boolean
@@ -90,10 +79,10 @@ export const NextStepHeader = observer(
               </>
             )}
 
-            <Step>
+            <div className="text-base font-medium">
               {t('dtree.step')}{' '}
               {dtreeStore.algorithmFilterValue ? currentStep.step : index + 1}
-            </Step>
+            </div>
 
             {!isExpanded && (difference || difference === 0) && (
               <div className="ml-2 text-14 text-grey-blue font-normal">
@@ -114,7 +103,7 @@ export const NextStepHeader = observer(
                 onChange={() => toggleExclude(index, 'BOOL-TRUE')}
                 className="flex items-center mr-3"
               >
-                <Operation>{t('dtree.include')}</Operation>
+                <div className="text-sm font-normal">{t('dtree.include')}</div>
               </Radio>
 
               <Radio
@@ -123,7 +112,7 @@ export const NextStepHeader = observer(
                 onChange={() => toggleExclude(index, 'BOOL-FALSE')}
                 className="flex items-center mr-3"
               >
-                <Operation>{t('dtree.exclude')}</Operation>
+                <div className="text-sm font-normal">{t('dtree.exclude')}</div>
               </Radio>
             </div>
           </div>

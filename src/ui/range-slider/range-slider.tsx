@@ -1,3 +1,5 @@
+import styles from './range-slider.module.css'
+
 import React, {
   ReactElement,
   useEffect,
@@ -17,15 +19,6 @@ import {
   RangeSliderSide,
   RangeSliderValue,
 } from './range-slider.interface'
-import {
-  RangeSliderHandle,
-  RangeSliderLabel,
-  RangeSliderRange,
-  RangeSliderRoot,
-  RangeSliderRuler,
-  RangeSliderTick,
-  RangeSliderVerticalRuler,
-} from './range-slider.styles'
 import {
   adjustLabels,
   normalizeValue,
@@ -273,17 +266,18 @@ export const RangeSlider = ({
 
   const isDisabled = disabled === RangeSliderSide.Both
 
-  const Ruler = isVertical ? RangeSliderVerticalRuler : RangeSliderRuler
-
   return (
     <div className={cn('text-xs text-blue-dark', className)}>
-      <RangeSliderRoot
+      <div
         ref={rootRef}
+        className={cn(
+          styles.rangeSlider,
+          hasHistogram && styles.rangeSlider_hasHistogram,
+          isDisabled && styles.rangeSlider_disabled,
+          isVertical && styles.rangeSlider_vertical,
+          !!dragState && styles.rangeSlider_active,
+        )}
         onMouseDown={!isDisabled ? handleMouseDown : undefined}
-        hasHistogram={hasHistogram}
-        isActive={!!dragState}
-        isDisabled={isDisabled}
-        isVertical={isVertical}
       >
         {histogram && (
           <RangeSliderHistogram
@@ -296,13 +290,24 @@ export const RangeSlider = ({
             barPositions={histogramBarPositions}
           />
         )}
-        <Ruler>
+        <div
+          className={cn(
+            styles.rangeSlider__ruler,
+            isVertical && styles.rangeSlider__ruler_vertical,
+          )}
+        >
           {axis.ticks.map(value => {
             const offset = axis.getOffset(value)
 
             return (
-              <RangeSliderTick
+              <div
                 key={value}
+                className={cn(
+                  styles.rangeSlider__rulerTick,
+                  isVertical
+                    ? styles.rangeSlider__rulerTick_vertical
+                    : styles.rangeSlider__rulerTick_horizontal,
+                )}
                 style={
                   isVertical
                     ? { bottom: `${offset}px` }
@@ -312,32 +317,58 @@ export const RangeSlider = ({
             )
           })}
           {leftValue !== null && (
-            <RangeSliderLabel ref={leftLabelRef}>
+            <div
+              ref={leftLabelRef}
+              className={cn(
+                styles.rangeSlider__label,
+                isVertical
+                  ? styles.rangeSlider__label_vertical
+                  : styles.rangeSlider__label_horizontal,
+              )}
+            >
               {formatNumber(leftValue)}
-            </RangeSliderLabel>
+            </div>
           )}
           {isRangeMode && rightValue !== null && (
-            <RangeSliderLabel ref={rightLabelRef}>
+            <div
+              ref={rightLabelRef}
+              className={cn(
+                styles.rangeSlider__label,
+                isVertical
+                  ? styles.rangeSlider__label_vertical
+                  : styles.rangeSlider__label_horizontal,
+              )}
+            >
               {formatNumber(rightValue)}
-            </RangeSliderLabel>
+            </div>
           )}
           {isRangeMode && (
-            <RangeSliderLabel
+            <div
               ref={dividerLabelRef}
+              className={cn(
+                styles.rangeSlider__label,
+                isVertical
+                  ? styles.rangeSlider__label_vertical
+                  : styles.rangeSlider__label_horizontal,
+              )}
               style={{
                 textAlign: 'center',
                 visibility: 'hidden',
               }}
             >
               –
-            </RangeSliderLabel>
+            </div>
           )}
           {isRangeMode && (leftValue != null || rightValue != null) && (
-            <RangeSliderRange
-              color={color}
-              isDisabled={isDisabled}
-              isLeftHandle={leftOffset != null}
-              isRightHandle={rightOffset != null}
+            <div
+              className={cn(
+                styles.rangeSlider__range,
+                isDisabled && styles.rangeSlider__range_disabled,
+                color === RangeSliderColor.Primary &&
+                  styles.rangeSlider__range_primary,
+                leftOffset != null && styles.rangeSlider__range_leftHandle,
+                rightOffset != null && styles.rangeSlider__range_rightHandle,
+              )}
               style={
                 isVertical
                   ? {
@@ -354,15 +385,22 @@ export const RangeSlider = ({
             />
           )}
           {leftOffset !== null && (
-            <RangeSliderHandle
+            <div
               data-handle="left"
-              color={color}
-              isActive={!!(dragState && !dragState.isRightHandle)}
-              isDisabled={isDisabled || disabled === RangeSliderSide.Left}
-              isStrict={
-                strict === RangeSliderSide.Left ||
-                strict === RangeSliderSide.Both
-              }
+              className={cn(
+                styles.rangeSlider__handle,
+                !!(dragState && !dragState.isRightHandle) &&
+                  styles.rangeSlider__handle_active,
+                color === RangeSliderColor.Primary &&
+                  styles.rangeSlider__handle_primary,
+                (isDisabled || disabled === RangeSliderSide.Left) &&
+                  styles.rangeSlider__handle_disabled,
+                strict &&
+                  [RangeSliderSide.Left, RangeSliderSide.Both].includes(
+                    strict,
+                  ) &&
+                  styles.rangeSlider__handle_strict,
+              )}
               style={{
                 transform: isVertical
                   ? `translateY(${size - leftOffset}px)`
@@ -371,15 +409,22 @@ export const RangeSlider = ({
             />
           )}
           {isRangeMode && rightOffset !== null && (
-            <RangeSliderHandle
+            <div
               data-handle="right"
-              color={color}
-              isActive={!!(dragState && dragState.isRightHandle)}
-              isDisabled={isDisabled || disabled === RangeSliderSide.Right}
-              isStrict={
-                strict === RangeSliderSide.Right ||
-                strict === RangeSliderSide.Both
-              }
+              className={cn(
+                styles.rangeSlider__handle,
+                !!(dragState && !dragState.isRightHandle) &&
+                  styles.rangeSlider__handle_active,
+                color === RangeSliderColor.Primary &&
+                  styles.rangeSlider__handle_primary,
+                (isDisabled || disabled === RangeSliderSide.Right) &&
+                  styles.rangeSlider__handle_disabled,
+                strict &&
+                  [RangeSliderSide.Right, RangeSliderSide.Both].includes(
+                    strict,
+                  ) &&
+                  styles.rangeSlider__handle_strict,
+              )}
               style={{
                 transform: isVertical
                   ? `translateY(${size - rightOffset}px)`
@@ -387,8 +432,8 @@ export const RangeSlider = ({
               }}
             />
           )}
-        </Ruler>
-      </RangeSliderRoot>
+        </div>
+      </div>
     </div>
   )
 }
