@@ -30,9 +30,8 @@ export const addAttributeToStep = ({
   mode,
 }: IAddAttributeToStepProps): void => {
   const code = dtreeStore.dtreeCode ?? 'return False'
-
+  const { stepIndexForApi } = stepStore
   const shouldTakeAttributeFromStore = attributeType !== AttributeKinds.NUMERIC
-
   const subGroupName = dtreeStore.selectedGroups[1]
   const attribute = [attributeType, subGroupName, filters.length && filters]
 
@@ -43,8 +42,6 @@ export const addAttributeToStep = ({
   }
 
   if (param) attribute.push(param)
-
-  const { stepIndexForApi } = stepStore
 
   dtreeStore.fetchDtreeSetAsync({
     ds: datasetStore.datasetName,

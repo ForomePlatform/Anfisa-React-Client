@@ -88,6 +88,10 @@ export class DtreeStore {
     return Object.keys(this.dtreeSetData?.['cond-atoms'] ?? {})
   }
 
+  get stepIndexes(): string[] {
+    return Object.keys(this.dtreeSetData?.['cond-atoms'] ?? {})
+  }
+
   get evalStatus(): string {
     return this.dtreeSetData?.['eval-status'] ?? ''
   }
