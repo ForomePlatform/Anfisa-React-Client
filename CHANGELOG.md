@@ -2,6 +2,7 @@
 
 ## <small>0.8.1 (8/15/2022)</small>
 
+* fix([FOROME-1467](https://quantori.atlassian.net/browse/FOROME-1467)): Fixed card paddings (#883) ([bdcf9d67](https://github.com/ForomePlatform/Anfisa-React-Client/commit/bdcf9d67))
 * refactor([FOROME-955](https://quantori.atlassian.net/browse/FOROME-955)): get rid of styled components (#874) ([c0a7d95c](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c0a7d95c))
 * feat([FOROME-1368](https://quantori.atlassian.net/browse/FOROME-1368)): activate first gene after preset changed (#863) ([97596098](https://github.com/ForomePlatform/Anfisa-React-Client/commit/97596098))
 * feat([FOROME-1446](https://quantori.atlassian.net/browse/FOROME-1446)): Use async macrotagging (#877) ([b62e24ab](https://github.com/ForomePlatform/Anfisa-React-Client/commit/b62e24ab))
