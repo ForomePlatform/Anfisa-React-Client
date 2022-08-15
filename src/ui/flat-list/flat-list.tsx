@@ -18,11 +18,12 @@ export const FlatList = <T,>({
 }: IFlatList<T>) => {
   const length = elements.length
   const itemsPerPage = length < 20 ? length : 20
-  const noNeedToScroll =
-    !selectedItemIndex || !selectedItemId || selectedItemIndex === -1
 
   const [hasMore, setHasMore] = useState(true)
   const [records, setRecords] = useState(itemsPerPage)
+  const [noNeedToScroll, setNoNeedToScroll] = useState(
+    !selectedItemIndex || !selectedItemId || selectedItemIndex === -1,
+  )
 
   const loadMore = () => {
     records === length
@@ -46,11 +47,12 @@ export const FlatList = <T,>({
       return
     }
 
-    if (records < selectedItemIndex) {
+    if (selectedItemIndex && records < selectedItemIndex) {
       setRecords(records + selectedItemIndex)
-    } else {
+    } else if (selectedItemId) {
       const item = document.getElementById(selectedItemId)
       item?.scrollIntoView()
+      setNoNeedToScroll(true)
     }
   }, [noNeedToScroll, records, selectedItemIndex, selectedItemId])
 
