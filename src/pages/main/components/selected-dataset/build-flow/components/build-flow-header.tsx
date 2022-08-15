@@ -43,23 +43,27 @@ export const BuildFlowHeader = observer(
       return wizardStore.actionHistory.goBackward()
     }
 
+    const isBackButtonShown = isXL || wizardStore.actionHistory.historyIndex > 1
+
     return (
       <div className={styles.buildFlow__header}>
         <div className="flex items-center">
-          <div
-            onClick={handleGoBack}
-            className={styles.buildFlow__header__button}
-          >
-            <Icon
-              name="Arrow"
-              className={styles.buildFlow__header__button__icon}
-            />
-          </div>
+          {isBackButtonShown && (
+            <div
+              onClick={handleGoBack}
+              className={styles.buildFlow__header__button}
+            >
+              <Icon
+                name="Arrow"
+                className={styles.buildFlow__header__button__icon}
+              />
+            </div>
+          )}
 
           <CardTitle
             text={dirinfoStore.selectedDirinfoName}
             dataTestId={DatasetCard.datasetHeader}
-            className="mr-3 break-words"
+            className="mr-3 !mb-0 break-words"
             size="md"
           />
 

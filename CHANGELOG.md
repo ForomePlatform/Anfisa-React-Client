@@ -1,7 +1,20 @@
 # Change log 
 
-## <small>0.7.1 (8/9/2022)</small>
+## <small>0.8.1 (8/11/2022)</small>
 
+* feat([FOROME-1446](https://quantori.atlassian.net/browse/FOROME-1446)): Use async macrotagging (#877) ([b62e24ab](https://github.com/ForomePlatform/Anfisa-React-Client/commit/b62e24ab))
+* fix([FOROME-00](https://quantori.atlassian.net/browse/FOROME-00)): hotfix to replace widget header grabbing style ([15d78433](https://github.com/ForomePlatform/Anfisa-React-Client/commit/15d78433))
+* feat([FOROME-1398](https://quantori.atlassian.net/browse/FOROME-1398)): implement dashboard ([9589df28](https://github.com/ForomePlatform/Anfisa-React-Client/commit/9589df28))
+* feat([FOROME-1418](https://quantori.atlassian.net/browse/FOROME-1418)): disable not applicable presets (#868) ([2ced7e6b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/2ced7e6b))
+* feat([FOROME-1388](https://quantori.atlassian.net/browse/FOROME-1388)): add default preset ([1d2aeda5](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1d2aeda5))
+
+## <small>0.7.1 (8/10/2022)</small>
+
+* fix([FOROME-1472](https://quantori.atlassian.net/browse/FOROME-1472)): Fix refiner route (#881) ([df52e701](https://github.com/ForomePlatform/Anfisa-React-Client/commit/df52e701))
+* fix([FOROME-1432](https://quantori.atlassian.net/browse/FOROME-1432)): remove console error in dev (#876) ([cd566cfb](https://github.com/ForomePlatform/Anfisa-React-Client/commit/cd566cfb))
+* feat([FOROME-1466](https://quantori.atlassian.net/browse/FOROME-1466)): Hide back button on the first step (#878) ([2b76a371](https://github.com/ForomePlatform/Anfisa-React-Client/commit/2b76a371))
+* fix([FOROME-1469](https://quantori.atlassian.net/browse/FOROME-1469)): Fix header alignment (#879) ([7e5f8325](https://github.com/ForomePlatform/Anfisa-React-Client/commit/7e5f8325))
+* feat([FOROME-1406](https://quantori.atlassian.net/browse/FOROME-1406)): rework the discriminative power icon ([1094314b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1094314b))
 * fix([FOROME-1433](https://quantori.atlassian.net/browse/FOROME-1433)): Fix button styles (#872) ([6c831b00](https://github.com/ForomePlatform/Anfisa-React-Client/commit/6c831b00))
 * feat([FOROME-1447](https://quantori.atlassian.net/browse/FOROME-1447)): Hide macro tagging button (#871) ([5d418ed2](https://github.com/ForomePlatform/Anfisa-React-Client/commit/5d418ed2))
 * fix([FOROME-1424](https://quantori.atlassian.net/browse/FOROME-1424)): add opacity style (#866) ([17b353b5](https://github.com/ForomePlatform/Anfisa-React-Client/commit/17b353b5))

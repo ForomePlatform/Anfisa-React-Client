@@ -2,7 +2,6 @@ import styles from './card.module.css'
 
 import {
   CSSProperties,
-  forwardRef,
   ReactElement,
   ReactNode,
   Ref,
@@ -26,51 +25,49 @@ interface ICardProps {
 
 const TRANSITION_DURATION = 400
 
-export const Card = forwardRef(
-  ({
-    innerRef,
-    children,
-    className,
-    isNeedToAnimate,
-    position,
-  }: ICardProps): ReactElement => {
-    const [isMounted, setIsMounted] = useState(false)
-    const cardRef = useRef<HTMLDivElement>(null)
+export const Card = ({
+  innerRef,
+  children,
+  className,
+  isNeedToAnimate,
+  position,
+}: ICardProps): ReactElement => {
+  const [isMounted, setIsMounted] = useState(false)
+  const cardRef = useRef<HTMLDivElement>(null)
 
-    useEffect(() => {
-      window.setTimeout(() => setIsMounted(true), 0)
-    }, [])
+  useEffect(() => {
+    window.setTimeout(() => setIsMounted(true), 0)
+  }, [])
 
-    const renderCard = (state = '') => (
-      <div
-        ref={isNeedToAnimate ? cardRef : innerRef}
-        className={cn(
-          styles.card,
-          styles[`card_${state}`],
-          styles[`card_position-${position}`],
-          className,
-        )}
-        style={{
-          transitionDuration: `${TRANSITION_DURATION}ms`,
-        }}
-      >
-        {children}
-      </div>
-    )
+  const renderCard = (state = '') => (
+    <div
+      ref={isNeedToAnimate ? cardRef : innerRef}
+      className={cn(
+        styles.card,
+        styles[`card_${state}`],
+        styles[`card_position-${position}`],
+        className,
+      )}
+      style={{
+        transitionDuration: `${TRANSITION_DURATION}ms`,
+      }}
+    >
+      {children}
+    </div>
+  )
 
-    return isNeedToAnimate ? (
-      <Transition
-        appear
-        in={isMounted}
-        timeout={TRANSITION_DURATION}
-        nodeRef={cardRef}
-      >
-        {state => {
-          return renderCard(state)
-        }}
-      </Transition>
-    ) : (
-      renderCard()
-    )
-  },
-)
+  return isNeedToAnimate ? (
+    <Transition
+      appear
+      in={isMounted}
+      timeout={TRANSITION_DURATION}
+      nodeRef={cardRef}
+    >
+      {state => {
+        return renderCard(state)
+      }}
+    </Transition>
+  ) : (
+    renderCard()
+  )
+}

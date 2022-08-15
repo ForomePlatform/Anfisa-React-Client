@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite'
 import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
 import { Divider } from '@ui/divider'
-// import { MacroTagging } from '@pages/ws/ui/control-panel/macro-tagging/macro-tagging'
+import { MacroTagging } from '@pages/ws/ui/control-panel/macro-tagging/macro-tagging'
 import { CreateDataset } from './create-dataset'
 import { CustomizeTable } from './customize-table'
 import { EditFilter } from './edit-filter'
@@ -44,8 +44,7 @@ export const ControlPanel = observer((): ReactElement => {
 
         <Divider orientation="vertical" />
 
-        {/* TODO: Show it again when macro tagging funtionality is done. */}
-        {/* <MacroTagging /> */}
+        <MacroTagging />
       </div>
 
       <div className={styles.controlPanel__save}>

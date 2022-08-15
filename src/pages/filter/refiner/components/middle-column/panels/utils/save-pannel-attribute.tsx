@@ -8,8 +8,8 @@ import {
 } from '@service-providers/common'
 import { getConditionJoinMode } from '@utils/getConditionJoinMode'
 
-interface IsavePanelAttributeProps {
-  filterKind: AttributeKinds
+export interface ISavePanelAttributeProps {
+  attributeKind: AttributeKinds
   attributeName?: string
   selectedVariants?: string[]
   value?: TNumericConditionBounds
@@ -18,21 +18,21 @@ interface IsavePanelAttributeProps {
 }
 
 export const savePanelAttribute = ({
-  filterKind,
+  attributeKind,
   attributeName,
   selectedVariants,
   value,
   mode,
   param,
-}: IsavePanelAttributeProps) => {
+}: ISavePanelAttributeProps) => {
   if (!attributeName) {
     return
   }
 
-  switch (filterKind) {
+  switch (attributeKind) {
     case AttributeKinds.FUNC:
       filterStore.saveCurrentCondition([
-        filterKind,
+        attributeKind,
         attributeName,
         getConditionJoinMode(mode),
         selectedVariants!,
@@ -41,12 +41,12 @@ export const savePanelAttribute = ({
       break
 
     case AttributeKinds.NUMERIC:
-      filterStore.saveCurrentCondition([filterKind, attributeName, value!])
+      filterStore.saveCurrentCondition([attributeKind, attributeName, value!])
       break
 
     case AttributeKinds.ENUM:
       filterStore.saveCurrentCondition([
-        filterKind,
+        attributeKind,
         attributeName,
         getConditionJoinMode(mode),
         selectedVariants!,

@@ -1,81 +1,87 @@
 import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
-import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { Dialog } from '@ui/dialog'
 import { CompoundHetCondition } from '@components/conditions/compound-het-condition'
 import { AttributeKinds } from '@service-providers/common'
-import { addAttributeToStep } from '@utils/addAttributeToStep'
-import { saveAttribute } from '@utils/changeAttribute/saveAttribute'
-import { dtreeFunctionsStore } from '../../../attributes/dtree-functions.store'
 import { dtreeStatFuncStore } from '../../../attributes/dtree-stat-func.store'
+import { IFuncDialogProps } from '../../modals.interfaces'
 import modalsControlStore from '../../modals-control-store'
 import modalsVisibilityStore from '../../modals-visibility-store'
 import { renderAttributeDialogControls } from '../ui/renderAttributeControls'
 
-export const CompoundHetDialog = observer((): ReactElement => {
-  const {
-    attributeName,
-    initialApprox,
-    initialMode,
-    initialCondition,
-    attributeSubKind,
-  } = dtreeFunctionsStore
+export const CompoundHetDialog = observer(
+  ({ funcStore, onAddFunc, onSaveFunc }: IFuncDialogProps): ReactElement => {
+    const {
+      attributeName,
+      initialApprox,
+      initialMode,
+      initialCondition,
+      attributeSubKind,
+    } = funcStore
 
-  const { currentStepGroups } = modalsControlStore
+    const { currentStepGroups } = modalsControlStore
 
-  const handleModals = () => {
-    modalsVisibilityStore.closeCompoundHetDialog()
-    modalsVisibilityStore.openSelectAttributeDialog()
-  }
+    const handleModals = () => {
+      modalsVisibilityStore.closeCompoundHetDialog()
+      modalsVisibilityStore.openSelectAttributeDialog()
+    }
 
-  const handleSaveChanges = useCallback((mode, param) => {
-    saveAttribute({
-      filterKind: AttributeKinds.FUNC,
-      filterName: FuncStepTypesEnum.CompoundHet,
-      values: ['Proband'],
-      mode,
-      param,
-    })
-    modalsVisibilityStore.closeCompoundHetDialog()
-  }, [])
+    const handleSaveChanges = useCallback(
+      (mode, param) => {
+        onSaveFunc({
+          attributeKind: AttributeKinds.FUNC,
+          attributeName,
+          selectedVariants: ['Proband'],
+          mode,
+          param,
+        })
+        modalsVisibilityStore.closeCompoundHetDialog()
+      },
+      [attributeName, onSaveFunc],
+    )
 
-  const handleAddAttribute = useCallback((action, mode, param) => {
-    addAttributeToStep({
-      action,
-      attributeType: AttributeKinds.FUNC,
-      filters: ['Proband'],
-      param,
-      mode,
-    })
-    modalsVisibilityStore.closeCompoundHetDialog()
-  }, [])
+    const handleAddAttribute = useCallback(
+      (action, mode, param) => {
+        onAddFunc({
+          action,
+          attributeKind: AttributeKinds.FUNC,
+          attributeName,
+          selectedVariants: ['Proband'],
+          param,
+          mode,
+        })
+        modalsVisibilityStore.closeCompoundHetDialog()
+      },
+      [attributeName, onAddFunc],
+    )
 
-  return (
-    <Dialog
-      isOpen={modalsVisibilityStore.isCompoundHetDialogVisible}
-      onClose={modalsVisibilityStore.closeCompoundHetDialog}
-      title={attributeName}
-      width="m"
-      isHiddenActions={true}
-    >
-      <CompoundHetCondition
-        initialApprox={initialApprox}
-        initialMode={initialMode}
-        attributeSubKind={attributeSubKind}
-        statFuncStore={dtreeStatFuncStore}
-        controls={({ hasErrors, param, mode }) =>
-          renderAttributeDialogControls({
-            initialCondition,
-            currentStepGroups,
-            onClose: modalsVisibilityStore.closeCompoundHetDialog,
-            handleModals,
-            disabled: hasErrors,
-            saveAttribute: () => handleSaveChanges(mode, param),
-            addAttribute: action => handleAddAttribute(action, mode, param),
-          })
-        }
-      />
-    </Dialog>
-  )
-})
+    return (
+      <Dialog
+        isOpen={modalsVisibilityStore.isCompoundHetDialogVisible}
+        onClose={modalsVisibilityStore.closeCompoundHetDialog}
+        title={attributeName}
+        width="m"
+        isHiddenActions={true}
+      >
+        <CompoundHetCondition
+          initialApprox={initialApprox}
+          initialMode={initialMode}
+          attributeSubKind={attributeSubKind}
+          statFuncStore={dtreeStatFuncStore}
+          controls={({ hasErrors, param, mode }) =>
+            renderAttributeDialogControls({
+              initialCondition,
+              currentStepGroups,
+              onClose: modalsVisibilityStore.closeCompoundHetDialog,
+              handleModals,
+              disabled: hasErrors,
+              saveAttribute: () => handleSaveChanges(mode, param),
+              addAttribute: action => handleAddAttribute(action, mode, param),
+            })
+          }
+        />
+      </Dialog>
+    )
+  },
+)

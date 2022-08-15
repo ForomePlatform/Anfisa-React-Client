@@ -93,8 +93,18 @@ export interface IMacroTaggingArguments {
   code?: string
   no?: string
   smpcnt?: string
+  delay?: boolean
 }
 
 export interface IMacroTagging {
   task_id: number
 }
+
+type WithRequired<T, K extends keyof T> = T & { [P in K]-?: T[P] }
+
+export type IMacroTaggingArgumentsSync = Omit<IMacroTaggingArguments, 'delay'>
+
+export type IMacroTaggingArgumentsAsync = WithRequired<
+  IMacroTaggingArguments,
+  'delay'
+>

@@ -1,0 +1,37 @@
+.footer-panel {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-flow: wrap row;
+  padding: 0 theme("padding.3");
+  color: theme("colors.white");
+
+  &__tab {
+    height: 36px;
+    flex: 0.3 1 306px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: theme("margin.1");
+    padding: 0 theme("padding.4");
+    background: theme("colors.blue.darkHover");
+    border-radius: theme("borderRadius.DEFAULT");
+    cursor: pointer;
+
+    &_disabled {
+      opacity: 0.3;
+      pointer-events: none;
+    }
+
+    &__title {
+      line-height: 3px;
+      font-size: theme("fontSize.16");
+      font-weight: theme("fontWeight.medium");
+      color: theme("colors.white");
+
+      &:hover {
+        color: theme("colors.grey.blue");
+      }
+    }
+  }
+}

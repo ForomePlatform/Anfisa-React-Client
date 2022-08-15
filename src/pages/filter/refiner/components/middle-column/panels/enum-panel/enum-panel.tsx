@@ -24,7 +24,7 @@ export const EnumPanel = observer((): ReactElement => {
   const handleSaveAttribute = useCallback(
     (value, mode) => {
       savePanelAttribute({
-        filterKind: AttributeKinds.ENUM,
+        attributeKind: AttributeKinds.ENUM,
         attributeName,
         selectedVariants: value,
         mode,
@@ -46,7 +46,7 @@ export const EnumPanel = observer((): ReactElement => {
         attributeName={attributeName}
         enumVariants={enumVariants}
         attributeSubKind={attributeSubKind}
-        initialEnumVariants={initialEnumVariants}
+        initialVariants={initialEnumVariants}
         initialEnumMode={initialEnumMode}
         isShowZeroes={refinerAttributeStore.isShowZeroVariants}
         toggleShowZeroes={refinerAttributeStore.setIsShowZeroVariants}

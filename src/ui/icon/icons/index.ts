@@ -25,6 +25,7 @@ import Edit from './edit'
 import Ellipsis from './ellipsis'
 import Expand from './expand'
 import Export from './export'
+import Favorites from './favorites'
 import File from './file'
 import Filter from './filter'
 import Folder from './folder'
@@ -46,6 +47,7 @@ import Sort from './sort'
 import Tag from './tag'
 import ThreadAdd from './thread-add'
 import ThreadClose from './thread-close'
+import Tile from './tile'
 import Undo from './undo'
 
 export const icons = {
@@ -76,6 +78,7 @@ export const icons = {
   Ellipsis,
   Export,
   Expand,
+  Favorites,
   File,
   Filter,
   Folder,
@@ -97,6 +100,7 @@ export const icons = {
   ThreadAdd,
   Tag,
   ThreadClose,
+  Tile,
   Undo,
 }
 

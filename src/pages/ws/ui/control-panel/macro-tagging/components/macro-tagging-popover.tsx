@@ -1,13 +1,11 @@
 import styles from '../macro-tagging.module.css'
 
-import { ChangeEvent, FC, useState } from 'react'
+import { ChangeEvent, FC } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { usePopover } from '@core/hooks/use-popover'
 import { t } from '@i18n'
-import datasetStore from '@store/dataset/dataset'
-import mainTableStore from '@store/ws/main-table.store'
 import { Icon } from '@ui/icon'
 import { Input } from '@ui/input-text'
 import { Popover } from '@ui/popover'
@@ -17,66 +15,33 @@ import { PopperMenu } from '@components/popper-menu/popper-menu'
 import { PopperMenuItem } from '@components/popper-menu/popper-menu-item'
 import { PopupCard } from '@components/popup-card/popup-card'
 import { MacroTaggingActions } from '@pages/ws/ui/control-panel/macro-tagging/macro-tagging.constants'
-import {
-  IMacroTaggingArguments,
-  wsDatasetProvider,
-} from '@service-providers/ws-dataset-support'
-import { showToast } from '@utils/notifications'
+import macroTaggingStore from '../macro-tagging.store'
 
 export const MacroTaggingPopover: FC<IPopoverBaseProps> = observer(
   ({ isOpen, anchorEl, onClose }) => {
-    const [tag, setTag] = useState<string>('')
-    const [isLoading, setIsLoading] = useState<boolean>(false)
-    const [isOpenedCD, setIsOpenedCD] = useState<boolean>(false)
-
     const {
       isPopoverOpen: isMenuOpen,
       onToggle,
       closePopover: onCloseMenu,
       popoverAnchor: menuAnchor,
     } = usePopover()
+    const { isConfirmOpen, isLoading, tag } = macroTaggingStore
 
-    const onChange = (e: ChangeEvent<HTMLInputElement>) =>
-      setTag(e.target.value)
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+      macroTaggingStore.setTag(e.target.value)
+    }
 
-    const onClickMacroAction =
-      (move: MacroTaggingActions, confirmed?: false) => () => {
-        if (move === MacroTaggingActions.Remove && confirmed === false) {
-          setIsOpenedCD(true)
-          return
-        }
+    const onClickRemove = () => {
+      macroTaggingStore.setIsConfirmOpen(true)
+    }
 
-        const params: IMacroTaggingArguments = {
-          ds: datasetStore.datasetName,
-          tag,
-        }
+    const onClickMacroAction = (action: MacroTaggingActions) => () => {
+      macroTaggingStore.setAction(action)
 
-        if (move === MacroTaggingActions.Remove) {
-          params.off = true
-        }
-
-        setIsLoading(true)
-        onCloseMenu()
-        onClose!()
-        wsDatasetProvider.updateMacroTagging(params).then(() => {
-          mainTableStore.wsList.invalidate()
-          setIsLoading(false)
-          setTag('')
-          showToast(
-            t(
-              move !== MacroTaggingActions.Remove
-                ? 'ds.macroTagsModal.toastApplied'
-                : 'ds.macroTagsModal.toastRemoved',
-            ),
-            'success',
-            {
-              position: 'top-right',
-              autoClose: 3500,
-              style: { top: 40 },
-            },
-          )
-        })
-      }
+      onCloseMenu()
+      onClose!()
+      macroTaggingStore.updateMacroTags()
+    }
 
     return (
       <>
@@ -125,10 +90,7 @@ export const MacroTaggingPopover: FC<IPopoverBaseProps> = observer(
                   {t('ds.macroTagsModal.menu.apply')}
                 </PopperMenuItem>
                 <PopperMenuItem
-                  onClick={onClickMacroAction(
-                    MacroTaggingActions.Remove,
-                    false,
-                  )}
+                  onClick={onClickRemove}
                   className={styles.macroTagging__menu__item_last}
                 >
                   {t('ds.macroTagsModal.menu.remove')}
@@ -138,13 +100,15 @@ export const MacroTaggingPopover: FC<IPopoverBaseProps> = observer(
           </PopupCard>
         </Popover>
         <ConfirmDialog
-          isOpen={isOpenedCD}
+          isOpen={isConfirmOpen}
           onClose={() => {
-            setIsOpenedCD(false)
+            macroTaggingStore.setIsConfirmOpen(false)
             onCloseMenu()
           }}
           onApply={onClickMacroAction(MacroTaggingActions.Remove)}
-          message={t('ds.macroTagsModal.confirmDialog.message', { tag })}
+          message={t('ds.macroTagsModal.confirmDialog.message', {
+            tag: tag,
+          })}
           title={t('ds.macroTagsModal.confirmDialog.title')}
           cancelText={t('general.cancel')}
           applyText={t('general.delete')}

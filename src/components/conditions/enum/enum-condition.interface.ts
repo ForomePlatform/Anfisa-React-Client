@@ -13,7 +13,7 @@ export interface IEnumConditionProps {
   attributeName: string | undefined
   enumVariants: TVariant[]
   attributeSubKind: string | undefined
-  initialEnumVariants: string[] | undefined
+  initialVariants: string[] | undefined
   initialEnumMode: ModeTypes | undefined
   isShowZeroes: boolean
   toggleShowZeroes: (value: boolean) => void
