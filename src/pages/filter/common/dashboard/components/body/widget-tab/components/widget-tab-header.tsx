@@ -14,6 +14,7 @@ export interface IWidgetTabHeaderProps {
   isAllTabsOpened: boolean
   onToggleExpand: () => void
   onToggleFavorite: () => void
+  onClick: () => void
 }
 
 export const WidgetTabHeader = ({
@@ -21,14 +22,15 @@ export const WidgetTabHeader = ({
   isAllTabsOpened,
   onToggleExpand,
   onToggleFavorite,
+  onClick,
 }: IWidgetTabHeaderProps): ReactElement => (
-  <div className={styles.tab__header} data-drag-handle={true}>
-    <div className="flex items-center">
+  <div className={styles.tab__header}>
+    <div className={styles.tab__container} onClick={onClick}>
       {group.name === 'Functional Units' ? (
         <FnLabel className="mr-2" />
       ) : (
         <PredictionPowerIndicator
-          className="mr-2 rounded"
+          className="mr-2 rounded cursor-pointer"
           value={group.power || 0}
         />
       )}
@@ -37,32 +39,37 @@ export const WidgetTabHeader = ({
     </div>
 
     <div
-      className={styles.tab__header__controls}
-      onClick={e => e.stopPropagation()}
+      className={cn(styles.tab__container, styles.tab__container__grab)}
+      data-drag-handle={true}
     >
-      <Icon
-        name="Favorites"
-        className={cn('text-grey-blue hover:text-yellow-secondary', {
-          'fill-yellow-secondary text-yellow-secondary': group.isFavorite,
-        })}
-        onClick={e => {
-          e.stopPropagation()
-          onToggleFavorite()
-        }}
-      />
+      <div
+        className={styles.tab__header__controls}
+        onClick={e => e.stopPropagation()}
+      >
+        <Icon
+          name="Favorites"
+          className={cn('text-grey-blue hover:text-yellow-secondary', {
+            'fill-yellow-secondary text-yellow-secondary': group.isFavorite,
+          })}
+          onClick={e => {
+            e.stopPropagation()
+            onToggleFavorite()
+          }}
+        />
 
-      <Divider
-        spacing="min"
-        orientation="vertical"
-        color="light-blue"
-        className="w-px"
-      />
+        <Divider
+          spacing="min"
+          orientation="vertical"
+          color="light-blue"
+          className="w-px"
+        />
 
-      <Icon
-        name={isAllTabsOpened ? 'Collapse' : 'Expand'}
-        onClick={onToggleExpand}
-        className="text-grey-blue hover:text-blue-bright"
-      />
+        <Icon
+          name={isAllTabsOpened ? 'Collapse' : 'Expand'}
+          onClick={onToggleExpand}
+          className="text-grey-blue hover:text-blue-bright"
+        />
+      </div>
     </div>
   </div>
 )

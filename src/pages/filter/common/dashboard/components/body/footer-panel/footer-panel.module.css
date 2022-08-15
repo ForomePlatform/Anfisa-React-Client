@@ -18,6 +18,12 @@
     border-radius: theme("borderRadius.DEFAULT");
     cursor: pointer;
 
+    &:hover {
+      div {
+        color: theme("colors.grey.blue");
+      }
+    }
+
     &_disabled {
       opacity: 0.3;
       pointer-events: none;
@@ -28,10 +34,6 @@
       font-size: theme("fontSize.16");
       font-weight: theme("fontWeight.medium");
       color: theme("colors.white");
-
-      &:hover {
-        color: theme("colors.grey.blue");
-      }
     }
   }
 }
