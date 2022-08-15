@@ -1,7 +1,8 @@
 # Change log 
 
-## <small>0.8.1 (8/11/2022)</small>
+## <small>0.8.1 (8/15/2022)</small>
 
+* feat([FOROME-1368](https://quantori.atlassian.net/browse/FOROME-1368)): activate first gene after preset changed (#863) ([97596098](https://github.com/ForomePlatform/Anfisa-React-Client/commit/97596098))
 * feat([FOROME-1446](https://quantori.atlassian.net/browse/FOROME-1446)): Use async macrotagging (#877) ([b62e24ab](https://github.com/ForomePlatform/Anfisa-React-Client/commit/b62e24ab))
 * fix([FOROME-00](https://quantori.atlassian.net/browse/FOROME-00)): hotfix to replace widget header grabbing style ([15d78433](https://github.com/ForomePlatform/Anfisa-React-Client/commit/15d78433))
 * feat([FOROME-1398](https://quantori.atlassian.net/browse/FOROME-1398)): implement dashboard ([9589df28](https://github.com/ForomePlatform/Anfisa-React-Client/commit/9589df28))
