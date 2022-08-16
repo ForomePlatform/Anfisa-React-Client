@@ -1,7 +1,6 @@
 import { ReactElement } from 'react'
 import cn, { Argument } from 'classnames'
 
-import { approxOptions } from '@core/approxOptions'
 import { ICompoundHetArgs } from '@service-providers/common/common.interface'
 
 interface ICompoundHetViewProps {
@@ -14,14 +13,17 @@ export const CompoundHetView = ({
   className,
   filterExpression,
 }: ICompoundHetViewProps): ReactElement => {
-  const approx: string = filterExpression['approx'] || approxOptions[2]
+  const approx: string | null = filterExpression['approx']
   const state: string = 'current'
 
   return (
     <div className={cn(className)}>
-      <div className="text-grey-blue">Approx</div>
-
-      <div className="py-1 pt-2">{approx}</div>
+      {approx && (
+        <div className="mt-2">
+          <div className="text-grey-blue">Approx</div>
+          <div className="py-1 pt-2">{approx}</div>
+        </div>
+      )}
 
       <div className="mt-2">
         <div className="text-grey-blue">State</div>
