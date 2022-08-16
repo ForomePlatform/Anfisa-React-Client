@@ -43,6 +43,7 @@ export const EnumPanel = observer((): ReactElement => {
       <DividerHorizontal />
 
       <EnumCondition
+        isDataReady={filterStore.downloadedAmount === 100}
         attributeName={attributeName}
         enumVariants={enumVariants}
         attributeSubKind={attributeSubKind}

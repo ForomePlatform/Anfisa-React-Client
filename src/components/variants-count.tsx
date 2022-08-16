@@ -54,7 +54,7 @@ export const VariantsCount: FC<IVariantsCountProps> = ({
       )}
 
       {(showTranscripts || showVariants) && showDnaVariants && (
-        <CircleDivider size="4px" />
+        <CircleDivider />
       )}
 
       {showDnaVariants && (

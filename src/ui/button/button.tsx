@@ -1,8 +1,7 @@
 import styles from './button.module.css'
 
-import { FC, MouseEvent, ReactNode } from 'react'
+import { CSSProperties, FC, MouseEvent, ReactNode } from 'react'
 import cn, { Argument } from 'classnames'
-import { CSSProperties } from 'styled-components'
 
 import { LoaderWrapper } from '@ui/loader'
 

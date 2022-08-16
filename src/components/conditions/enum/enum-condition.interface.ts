@@ -16,6 +16,7 @@ export interface IEnumConditionProps {
   initialVariants: string[] | undefined
   initialEnumMode: ModeTypes | undefined
   isShowZeroes: boolean
+  isDataReady: boolean
   listHeight: string
   selectedDashboardVariants?: string[]
   toggleShowZeroes: (value: boolean) => void

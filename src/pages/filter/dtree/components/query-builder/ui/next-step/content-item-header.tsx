@@ -1,9 +1,7 @@
 import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
-import styled from 'styled-components'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
-import { theme } from '@theme'
 import { IStepData } from '@store/dtree/dtree.store'
 import stepStore, { ActiveStepOptions } from '@store/dtree/step.store'
 import { Icon } from '@ui/icon'
@@ -12,15 +10,7 @@ import { DecisionTreesResultsDataCy } from '@data-testid'
 import { AttributeKinds } from '@service-providers/common'
 import modalsVisibilityStore from '../../../modals/modals-visibility-store'
 import { InactiveFieldLabel } from '../inactive-field-label'
-
-const NotModeWrapper = styled.div`
-  margin: 8px 4px;
-  width: 25px;
-  height: 20px;
-  color: ${theme('colors.red.light')};
-  background-color: ${theme('colors.red.lighter')};
-  font-size: 12px;
-`
+import { NotModeWrapper } from './not-mode-wrapper'
 
 interface IContentItemHeaderProps {
   currentStep: IStepData

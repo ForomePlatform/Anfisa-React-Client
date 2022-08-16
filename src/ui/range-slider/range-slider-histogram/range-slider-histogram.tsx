@@ -1,11 +1,10 @@
-import React, { ReactElement, useEffect, useMemo, useRef } from 'react'
+import styles from './range-slider-histogram.module.css'
+
+import { ReactElement, useEffect, useMemo, useRef } from 'react'
+import cn, { Argument } from 'classnames'
 
 import { formatNumber } from '@core/format-number'
 import { RangeSliderColor, RangeSliderSide } from '../range-slider.interface'
-import {
-  RangeSliderHistogramAxisLabel,
-  RangeSliderHistogramRoot,
-} from './range-slider-histogram.styles'
 import {
   drawHistogram,
   getYAxis,
@@ -13,7 +12,7 @@ import {
 } from './range-slider-histogram.utils'
 
 export interface IRangeSliderHistogramProps {
-  className?: string
+  className?: Argument
   width: number
   height: number
   data: number[]
@@ -86,7 +85,7 @@ export const RangeSliderHistogram = ({
   }
 
   return (
-    <RangeSliderHistogramRoot>
+    <div className={cn(styles.rangeSliderHistogram)}>
       <canvas
         ref={canvasRef}
         style={{
@@ -95,15 +94,16 @@ export const RangeSliderHistogram = ({
         }}
       />
       {yAxis.ticks.map(value => (
-        <RangeSliderHistogramAxisLabel
+        <span
           key={value}
+          className={cn(styles.rangeSliderHistogram__axisLabel)}
           style={{
             top: `${yAxis.scale(value)}px`,
           }}
         >
           {formatNumber(value)}
-        </RangeSliderHistogramAxisLabel>
+        </span>
       ))}
-    </RangeSliderHistogramRoot>
+    </div>
   )
 }

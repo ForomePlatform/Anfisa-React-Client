@@ -1,39 +1,40 @@
+import styles from './query-builder-tree-header.module.css'
+
 import { ReactElement } from 'react'
-import cn from 'classnames'
+import cn, { Argument } from 'classnames'
 import { observer } from 'mobx-react-lite'
-import styled from 'styled-components'
 
 import { EvalStatus } from '@core/enum/eval-status'
 import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
-import { QueryBuilderSearch } from './query-builder-search'
-
-const TreeHeader = styled.div`
-  width: 13%;
-  min-width: 133px;
-  display: flex;
-  align-items: center;
-`
-
-const ResultsHeader = styled.div`
-  width: 87%;
-  display: flex;
-  align-items: center;
-`
+import { QueryBuilderSearch } from '../query-builder-search'
 
 interface IQueryBuilderTreeHeaderProps {
-  className?: string
+  className?: Argument
 }
 
 export const QueryBuilderTreeHeader = observer(
   ({ className }: IQueryBuilderTreeHeaderProps): ReactElement => {
     return (
-      <div className={cn('flex bg-grey-tertiary', className)}>
-        <TreeHeader className="border-r border-grey-light pl-4">
+      <div
+        className={cn(
+          styles.queryBuilderTreeHeader,
+          'flex bg-grey-tertiary',
+          className,
+        )}
+      >
+        <div
+          className={cn(
+            styles.queryBuilderTreeHeader__treeHeader,
+            'border-r border-grey-light pl-4',
+          )}
+        >
           <div className="font-medium mr-2">{t('dtree.tree')}</div>
-        </TreeHeader>
+        </div>
 
-        <ResultsHeader className="px-4">
+        <div
+          className={cn(styles.queryBuilderTreeHeader__resultsHeader, 'px-4')}
+        >
           {dtreeStore.evalStatus === EvalStatus.Runtime && (
             <>
               <div className="flex px-2 whitespace-nowrap text-red-light text-12 bg-red-lighter rounded-xl">
@@ -53,7 +54,7 @@ export const QueryBuilderTreeHeader = observer(
             isSwitched={dtreeStore.algorithmFilterFullWord}
             onSwitch={dtreeStore.setAlgorithmFilterFullWord}
           />
-        </ResultsHeader>
+        </div>
       </div>
     )
   },
