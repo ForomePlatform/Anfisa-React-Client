@@ -91,7 +91,9 @@ export const EnumCondition = observer(
     }
 
     const showFinder = enumVariants.length > DEFAULT_COUNT
-    const selectedEnumName = selectedDashboardVariants?.[0]
+    const selectedEnumName =
+      selectedDashboardVariants?.[0] || selectedVariants[0]
+
     const selectedEnumIndex = useMemo(() => {
       return filteredVariants.findIndex(([name]) => name === selectedEnumName)
     }, [filteredVariants, selectedEnumName])
