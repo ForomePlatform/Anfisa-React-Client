@@ -1,0 +1,8 @@
+.not-mode-wrapper {
+  margin: 8px 4px;
+  width: 25px;
+  height: 20px;
+  color: theme("colors.red.light");
+  background-color: theme("colors.red.lighter");
+  font-size: theme("fontSize.12");
+}

@@ -235,6 +235,8 @@ export const en = {
     population: 'Population',
     samples: 'Samples',
     filter: 'Filter',
+    transcriptsNotApplicable:
+      'Transcripts not applicable to this filter: {counter}',
   },
   variant: {
     genes: 'Gene(s)',

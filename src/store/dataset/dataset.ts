@@ -8,7 +8,7 @@ import { DsInfoAsyncStore } from './ds-info.async.store'
 
 const CHECK_WORD_FOR_DELETE_DATSET = 'test'
 export class DatasetStore {
-  private readonly dsInfo = new DsInfoAsyncStore()
+  public readonly dsInfo = new DsInfoAsyncStore()
 
   datasetName = ''
 

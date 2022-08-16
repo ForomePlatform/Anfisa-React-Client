@@ -1,0 +1,14 @@
+.query-builder-tree-header {
+  &__tree-header {
+    width: 13%;
+    min-width: 133px;
+    display: flex;
+    align-items: center;
+  }
+
+  &__results-header {
+    width: 87%;
+    display: flex;
+    align-items: center;
+  }
+}

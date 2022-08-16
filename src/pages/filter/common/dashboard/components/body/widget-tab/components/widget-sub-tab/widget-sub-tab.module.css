@@ -32,6 +32,20 @@
         color: theme("colors.grey.blue");
       }
     }
+
+    &__arrow-icon {
+      position: relative;
+      right: -2.5px;
+      width: 20px;
+      height: 20px;
+      padding: 5px;
+      color: theme("colors.white");
+      cursor: pointer;
+
+      &:hover {
+        color: theme("colors.blue.bright")
+      }
+    }
   }
 
   &__unit-container {
