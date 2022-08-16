@@ -81,6 +81,7 @@ export const DtreePage = observer((): ReactElement => {
   return (
     <>
       <ModalsContainer
+        isDataReady={dtreeStore.dataReady === 100}
         attributeStore={dtreeAttributeStore}
         funcStore={dtreeFunctionsStore}
         onAddEnum={addAttributeToStep}

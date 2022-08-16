@@ -5,6 +5,7 @@ import { ModeTypes } from '@core/enum/mode-types-enum'
 import { t } from '@i18n'
 import { Divider } from '@ui/divider'
 import { FlatList } from '@ui/flat-list'
+import { Loader } from '@ui/loader'
 import { Switch } from '@ui/switch'
 import { QueryBuilderSearch } from '@pages/filter/dtree/components/query-builder/query-builder-search'
 import { AllNotMods } from '@pages/filter/dtree/components/query-builder/ui/all-not-mods'
@@ -23,6 +24,7 @@ export const EnumCondition = observer(
     initialVariants,
     initialEnumMode,
     isShowZeroes,
+    isDataReady,
     toggleShowZeroes,
     onTouch,
     controls,
@@ -137,26 +139,30 @@ export const EnumCondition = observer(
           />
         </div>
 
-        <div style={{ height: listHeight }} className="overflow-auto">
-          {filteredVariants.length > 0 ? (
-            <FlatList
-              data={filteredVariants}
-              renderRow={(data, index) => (
-                <SelectedGroupItem
-                  key={data[index][0]}
-                  isSelected={selectedVariants.includes(data[index][0])}
-                  variant={data[index]}
-                  handleCheckGroupItem={handleCheckGroupItem}
-                  className="mb-3"
-                />
-              )}
-            />
-          ) : (
-            <div className="flex justify-center items-center text-14 text-grey-blue">
-              {t('condition.noFilters')}
-            </div>
-          )}
-        </div>
+        {isDataReady ? (
+          <div style={{ height: listHeight }} className="overflow-auto">
+            {filteredVariants.length > 0 ? (
+              <FlatList
+                data={filteredVariants}
+                renderRow={(data, index) => (
+                  <SelectedGroupItem
+                    key={data[index][0]}
+                    isSelected={selectedVariants.includes(data[index][0])}
+                    variant={data[index]}
+                    handleCheckGroupItem={handleCheckGroupItem}
+                    className="mb-3"
+                  />
+                )}
+              />
+            ) : (
+              <div className="flex justify-center items-center text-14 text-grey-blue">
+                {t('condition.noFilters')}
+              </div>
+            )}
+          </div>
+        ) : (
+          <Loader size="m" />
+        )}
 
         {controls &&
           controls({ value: selectedVariants, mode, clearValue: handleClear })}
