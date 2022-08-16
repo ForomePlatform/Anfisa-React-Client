@@ -7,16 +7,14 @@ import { observer } from 'mobx-react-lite'
 import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
 import { useDatasetName } from '@core/hooks/use-dataset-name'
 import datasetStore from '@store/dataset/dataset'
+import defaultsStore from '@store/defaults'
 import filterStore from '@store/filter'
 import filterPresetsStore from '@store/filter-presets'
 import { ExportReport } from '@components/export-report'
 import { Header } from '@components/header'
 import { VariantsCount } from '@components/variants-count'
 import { GlbPagesNames } from '@glb/glb-names'
-import {
-  FilterControl,
-  XL_COUNT_OF_VARIANTS,
-} from '@pages/filter/common/filter-control/filter-control'
+import { FilterControl } from '@pages/filter/common/filter-control/filter-control'
 import { IgvModal } from '@pages/filter/dtree/components/modals/components/igv'
 import { FilterRefiner } from '@pages/filter/refiner/components/filter-refiner'
 import dashboardStore, { Dashboard } from '../common/dashboard'
@@ -31,6 +29,8 @@ import { SolutionControlRefiner } from './components/solution-control-refiner'
 
 export const RefinerPage = observer((): ReactElement => {
   const { isXL } = datasetStore
+
+  const { maxCountOfVariants } = defaultsStore
 
   const {
     stat: { unitGroups, functionalUnits, isFetching },
@@ -106,7 +106,7 @@ export const RefinerPage = observer((): ReactElement => {
           disabledCreateDataset={
             filterStore.conditions.length === 0 ||
             !filterCounts ||
-            filterCounts.variants > XL_COUNT_OF_VARIANTS
+            filterCounts.variants > maxCountOfVariants
           }
           goForward={filterStore.actionHistory.goForward}
           goBackward={filterStore.actionHistory.goBackward}
