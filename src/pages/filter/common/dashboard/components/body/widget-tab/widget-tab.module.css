@@ -1,35 +1,21 @@
 .tab {
   display: flex;
   align-items: center;
+  padding: 0 theme("padding.4");
   margin-bottom: theme("margin.2");
   background: theme("colors.blue.darkHover");
   border-radius: theme("borderRadius.DEFAULT");
-  cursor: auto;
-
-  &__container {
-    width: 55%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    padding: 0 theme("padding.4");
-    cursor: pointer;
-
-    &:hover {
-      div {
-        color: theme("colors.grey.blue");
-      }
-    }
-
-    &__grab {
-      width: 45%;
-      justify-content: flex-end;
-      cursor: grab;
-    }
-  }
+  cursor: pointer;
 
   &_disabled {
     opacity: 0.3;
     pointer-events: none;
+  }
+
+  &:hover {
+    div {
+      color: theme("colors.grey.blue");
+    }
   }
 
   &__header {
@@ -45,6 +31,10 @@
       font-weight: theme("fontWeight.medium");
       color: theme("colors.white");
       cursor: pointer;
+
+      &:hover {
+        color: theme("colors.grey.blue");
+      }
     }
 
     &__controls {
