@@ -1,7 +1,6 @@
 .tab {
   display: flex;
   align-items: center;
-  padding: 0 theme("padding.4");
   margin-bottom: theme("margin.2");
   background: theme("colors.blue.darkHover");
   border-radius: theme("borderRadius.DEFAULT");
@@ -26,6 +25,7 @@
     flex: 1;
     align-items: center;
     justify-content: space-between;
+    padding: 0 theme("padding.4");
 
     &__title {
       font-weight: theme("fontWeight.medium");
