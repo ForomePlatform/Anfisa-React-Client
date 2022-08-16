@@ -2,6 +2,7 @@
 
 ## <small>0.8.1 (8/16/2022)</small>
 
+* fix([FOROME-1498](https://quantori.atlassian.net/browse/FOROME-1498)): Hide approx if no any (#892) ([a0d93784](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a0d93784))
 * fix([FOROME-1490](https://quantori.atlassian.net/browse/FOROME-1490)): increase clickable area for DB sub-tab widget ([ae818ad5](https://github.com/ForomePlatform/Anfisa-React-Client/commit/ae818ad5))
 * fix([FOROME-1479](https://quantori.atlassian.net/browse/FOROME-1479)): Define scenario fix (#884) ([4f627c93](https://github.com/ForomePlatform/Anfisa-React-Client/commit/4f627c93))
 * fix([FOROME-1467](https://quantori.atlassian.net/browse/FOROME-1467)): Fixed card paddings (#883) ([bdcf9d67](https://github.com/ForomePlatform/Anfisa-React-Client/commit/bdcf9d67))
