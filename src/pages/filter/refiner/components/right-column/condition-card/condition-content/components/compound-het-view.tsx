@@ -19,10 +19,10 @@ export const CompoundHetView = ({
   return (
     <div className={cn(className)}>
       {approx && (
-        <>
+        <div className="mt-2">
           <div className="text-grey-blue">Approx</div>
           <div className="py-1 pt-2">{approx}</div>
-        </>
+        </div>
       )}
 
       <div className="mt-2">
