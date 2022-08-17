@@ -15,29 +15,33 @@ export const changeStep = (
   action: ChangeStepActionType,
 ): void => {
   const code = dtreeStore.dtreeCode ?? 'return False'
+  const localStepData = toJS(stepStore.steps)
 
-  // TODO: rename variables
-  const locadStepData = toJS(stepStore.steps)
-
-  locadStepData.length = index + 1
-
-  const emptyStepList = locadStepData.filter(
+  localStepData.length = index + 1
+  const emptyStepList = localStepData.filter(
     element => element.groups.length === 0 && !element.isFinalStep,
   )
 
-  const calculatedIndex = index - emptyStepList.length
-  const stepIndex = dtreeStore.getStepIndexForApi(calculatedIndex)
+  const stepIndex = dtreeStore.getStepIndexForApi(index - emptyStepList.length)
 
   const isIncludeAction = action === InstrModifyingActionNames.BOOL_TRUE
   const isExcludeAction = action === InstrModifyingActionNames.BOOL_FALSE
   const isBooleanAction = isIncludeAction || isExcludeAction
 
-  const indexes = toJS(dtreeStore.dtreeStepIndices)
-  const isFinalStepIndex = calculatedIndex === indexes.length
-  const isEmptyTree = indexes.length === 0
+  const indexOfFinalStep = stepStore.steps.length - 1
+  const isFinalStep = index === indexOfFinalStep
+  const isPrevStepEmpty = !stepStore.steps[indexOfFinalStep - 1].groups.length
 
-  const defaultLocation = isBooleanAction ? stepIndex + 1 : stepIndex
-  const location = isFinalStepIndex && isEmptyTree ? stepIndex : defaultLocation
+  let location = stepIndex
+
+  if (!isFinalStep && isBooleanAction) {
+    location = stepIndex + 1
+  } else if (isFinalStep) {
+    location =
+      isPrevStepEmpty && stepStore.steps.length === 2
+        ? stepIndex
+        : stepIndex + 1
+  }
 
   const shouldResetAllData = index === 0 && stepStore.steps.length === 2
 
@@ -50,7 +54,7 @@ export const changeStep = (
   dtreeStore.fetchDtreeSetAsync({
     ds: datasetStore.datasetName,
     code,
-    instr: [ActionTypes.INSTR, action, location] as TInstrModifyingActions,
+    instr: [ActionTypes.INSTR, action, +location] as TInstrModifyingActions,
   })
 
   dtreeStore.setDtreeModifyed()
