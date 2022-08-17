@@ -2,6 +2,7 @@
 
 ## <small>0.8.1 (8/17/2022)</small>
 
+* fix([FOROME-1464](https://quantori.atlassian.net/browse/FOROME-1464)): wizard undo button style ([0b119101](https://github.com/ForomePlatform/Anfisa-React-Client/commit/0b119101))
 * feat([FOROME-1483](https://quantori.atlassian.net/browse/FOROME-1483)): add autoscroll to the enum list ([352119ae](https://github.com/ForomePlatform/Anfisa-React-Client/commit/352119ae))
 * feat([FOROME-1468](https://quantori.atlassian.net/browse/FOROME-1468)): opening links from popups ([73de6002](https://github.com/ForomePlatform/Anfisa-React-Client/commit/73de6002))
 * fix([FOROME-1489](https://quantori.atlassian.net/browse/FOROME-1489)): remove dbclick from DB widgets ([4fba3be5](https://github.com/ForomePlatform/Anfisa-React-Client/commit/4fba3be5))
