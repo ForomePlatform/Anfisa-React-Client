@@ -2,6 +2,7 @@
 
 ## <small>0.8.1 (8/17/2022)</small>
 
+* feat([FOROME-1468](https://quantori.atlassian.net/browse/FOROME-1468)): opening links from popups ([73de6002](https://github.com/ForomePlatform/Anfisa-React-Client/commit/73de6002))
 * fix([FOROME-1489](https://quantori.atlassian.net/browse/FOROME-1489)): remove dbclick from DB widgets ([4fba3be5](https://github.com/ForomePlatform/Anfisa-React-Client/commit/4fba3be5))
 * fix([FOROME-1429](https://quantori.atlassian.net/browse/FOROME-1429)): select attrs dialog font color ([a34fc76c](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a34fc76c))
 * fix([FOROME-1430](https://quantori.atlassian.net/browse/FOROME-1430)): fix dtree indexes system ([d093f134](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d093f134))
