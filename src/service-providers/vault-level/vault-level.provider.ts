@@ -9,6 +9,7 @@ import {
   IAdmDropDsArguments,
   IAdmReloadDsArguments,
   IDefaults,
+  IDefaultsArguments,
   IDirInfo,
   IJobStatusArgument,
   ISingleCntArgument,
@@ -20,8 +21,10 @@ class VaultProvider extends ServiceProviderBase {
     super()
   }
 
-  public getDefaults() {
-    return this.get<IDefaults>('defaults').then(res => res.data)
+  public async getDefaults(params: IDefaultsArguments): Promise<IDefaults> {
+    const response = await this.post<IDefaults>('/defaults', params)
+
+    return adaptDataToCamelizedType(response.data)
   }
 
   public getDirInfo() {

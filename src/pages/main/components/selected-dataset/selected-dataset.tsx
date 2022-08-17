@@ -15,7 +15,6 @@ export const SelectedDataset = observer((): ReactElement => {
       <span className="m-auto text-grey-blue">{t('home.pickDataset')}</span>
     )
   }
-
   return (
     <>
       {!isFetching &&
