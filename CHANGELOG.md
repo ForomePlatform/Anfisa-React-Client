@@ -1,7 +1,8 @@
 # Change log 
 
-## <small>0.8.1 (8/16/2022)</small>
+## <small>0.8.1 (8/17/2022)</small>
 
+* feat([FOROME-1488](https://quantori.atlassian.net/browse/FOROME-1488)): replace pagination with infinite list ([0bd2e51b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/0bd2e51b))
 * fix([FOROME-1498](https://quantori.atlassian.net/browse/FOROME-1498)): Hide approx if no any (#892) ([a0d93784](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a0d93784))
 * fix([FOROME-1490](https://quantori.atlassian.net/browse/FOROME-1490)): increase clickable area for DB sub-tab widget ([ae818ad5](https://github.com/ForomePlatform/Anfisa-React-Client/commit/ae818ad5))
 * fix([FOROME-1479](https://quantori.atlassian.net/browse/FOROME-1479)): Define scenario fix (#884) ([4f627c93](https://github.com/ForomePlatform/Anfisa-React-Client/commit/4f627c93))
