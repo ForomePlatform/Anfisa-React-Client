@@ -1,8 +1,14 @@
 import { ReactElement, useEffect, useState } from 'react'
 
+import {
+  ExploreGenomeTypesDictionary,
+  genomeTypesOptions,
+  TGenomeOptionsKeys,
+} from '@core/enum/explore-genome-types-enum'
 import { t } from '@i18n'
 import { Dialog } from '@ui/dialog'
 import { Input } from '@ui/input'
+import { Select } from '@ui/select'
 import { ISolutionEntryDescription } from '@service-providers/common'
 import { validatePresetName } from '@utils/validation/validatePresetName'
 
@@ -11,7 +17,7 @@ interface ISolutionCreateDialogProps {
   isOpen?: boolean
   controlName: string
   onClose: () => void
-  onCreate: (solutionName: string) => void
+  onCreate: (solutionName: string, rubric?: TGenomeOptionsKeys) => void
 }
 
 export const SolutionCreateDialog = ({
@@ -22,6 +28,9 @@ export const SolutionCreateDialog = ({
   onCreate,
 }: ISolutionCreateDialogProps): ReactElement => {
   const [solutionName, setSolutionName] = useState('')
+  const [rubric, setRubric] =
+    useState<TGenomeOptionsKeys | undefined>(undefined)
+  const [selectValue, setSelectValue] = useState<string | undefined>(undefined)
   const [isValidationError, setIsValidationError] = useState(false)
   const [isSameNameError, setIsSameNameError] = useState(false)
 
@@ -45,6 +54,22 @@ export const SolutionCreateDialog = ({
     )
   }, [solutionName, solutions])
 
+  const onChangeRubric = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const { value } = e.target
+    setSelectValue(value)
+
+    if (value === 'empty') {
+      setRubric(undefined)
+      return
+    }
+
+    const rubricKey = Object.entries(ExploreGenomeTypesDictionary).find(
+      ([, val]) => val === value,
+    )?.[0]
+
+    setRubric(rubricKey as TGenomeOptionsKeys)
+  }
+
   return (
     <Dialog
       isOpen={isOpen}
@@ -52,7 +77,7 @@ export const SolutionCreateDialog = ({
       title={t('solutionControl.createDialog.title', { controlName })}
       applyText={t('general.create')}
       isApplyDisabled={hasError || !solutionName}
-      onApply={() => onCreate(solutionName)}
+      onApply={() => onCreate(solutionName, rubric)}
     >
       <Input
         value={solutionName}
@@ -62,6 +87,19 @@ export const SolutionCreateDialog = ({
         })}
         onChange={event => setSolutionName(event.target.value)}
       />
+
+      <div className="flex flex-col mt-[16px]">
+        <label>Assign Solution Pack</label>
+        <Select
+          options={genomeTypesOptions}
+          className="py-[5px] px-[4px]"
+          value={selectValue}
+          onChange={onChangeRubric}
+          reset
+          resetText="Choose the type"
+        />
+      </div>
+
       {hasError && (
         <div className="text-red-secondary text-12">{errorText}</div>
       )}

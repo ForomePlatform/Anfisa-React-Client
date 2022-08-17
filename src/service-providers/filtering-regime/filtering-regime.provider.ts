@@ -51,7 +51,11 @@ export class FilteringRegimeProvider extends ServiceProviderBase {
       {
         ds: params.ds,
         conditions: params.conditions,
-        instr: [DsStatArgumentsOptions.UPDATE, params.presetName],
+        instr: [
+          DsStatArgumentsOptions.UPDATE,
+          params.presetName,
+          params.rubric,
+        ],
       },
       options,
     )

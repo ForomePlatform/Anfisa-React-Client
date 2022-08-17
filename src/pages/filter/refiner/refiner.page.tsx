@@ -42,10 +42,6 @@ export const RefinerPage = observer((): ReactElement => {
   const { availablePresets: availableSolutionEntries, activePreset } =
     filterPresetsStore
 
-  const createPreset = (presetName: string): void => {
-    filterPresetsStore.createPreset(presetName, filterStore.conditions)
-  }
-
   const filterCounts = filterStore.stat.filteredCounts
 
   const modifiedPreset = filterStore.isPresetModified
@@ -98,7 +94,6 @@ export const RefinerPage = observer((): ReactElement => {
         <FilterControl
           pageName={FilterControlOptionsNames[GlbPagesNames.Refiner]}
           SolutionControl={SolutionControlRefiner}
-          createSolutionEntry={createPreset}
           availableSolutionEntries={availableSolutionEntries}
           isBackwardAllowed={filterStore.actionHistory.isBackwardAllowed}
           isForwardAllowed={filterStore.actionHistory.isForwardAllowed}

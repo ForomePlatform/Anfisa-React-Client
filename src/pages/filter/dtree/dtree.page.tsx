@@ -39,10 +39,6 @@ export const DtreePage = observer((): ReactElement => {
 
   const { availableDtrees: availableSolutionEntries } = filterDtreesStore
 
-  const createDtree = (treeName: string): void => {
-    filterDtreesStore.createDtree(treeName)
-  }
-
   const modifiedDtree = dtreeStore.isDtreeModified
     ? dtreeStore.currentDtreeName
     : undefined
@@ -112,7 +108,6 @@ export const DtreePage = observer((): ReactElement => {
           }
           pageName={FilterControlOptionsNames[GlbPagesNames.Dtree]}
           SolutionControl={SolutionControlDtree}
-          createSolutionEntry={createDtree}
           availableSolutionEntries={availableSolutionEntries}
           isEntryCreationAllowed={isEntryCreationAllowed}
           isBackwardAllowed={dtreeStore.actionHistory.isBackwardAllowed}
