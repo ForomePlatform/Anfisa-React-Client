@@ -13,14 +13,13 @@
 
     @apply typography-s;
 
-    font-weight: 500;
-
     &:hover {
-      color: theme("colors.blue.dark");
+      color: theme("colors.grey.blue");
     }
 
     &_dark {
       color: theme("colors.white");
+      font-weight: 500;
 
       &:hover {
         color: theme("colors.grey.blue");
