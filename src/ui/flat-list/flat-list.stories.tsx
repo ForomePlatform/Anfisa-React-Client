@@ -24,7 +24,7 @@ Default.args = {
     </div>
   ),
 
-  data: [...new Array(256)].map(() => ({
+  elements: [...new Array(256)].map(() => ({
     id: faker.database.mongodbObjectId(),
   })),
 

@@ -5,6 +5,7 @@ import { Checkbox } from '@ui/checkbox/checkbox'
 import { TVariant } from '@service-providers/common'
 
 interface ISelectedGroupItemProps {
+  id: string
   handleCheckGroupItem: (checked: boolean, variant: TVariant) => void
   variant: TVariant
   isSelected: boolean
@@ -12,6 +13,7 @@ interface ISelectedGroupItemProps {
 }
 
 export const SelectedGroupItem = ({
+  id,
   isSelected,
   variant,
   handleCheckGroupItem,
@@ -24,7 +26,7 @@ export const SelectedGroupItem = ({
   const [variantName, variantValue] = variant
 
   return (
-    <div className={cn('w-full flex items-center', className)}>
+    <div id={id} className={cn('w-full flex items-center', className)}>
       <Checkbox
         id={variantName + variantValue}
         checked={isSelected}

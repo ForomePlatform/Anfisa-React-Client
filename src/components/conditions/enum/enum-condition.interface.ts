@@ -17,8 +17,9 @@ export interface IEnumConditionProps {
   initialEnumMode: ModeTypes | undefined
   isShowZeroes: boolean
   isDataReady: boolean
+  listHeight: string
+  selectedDashboardVariants?: string[]
   toggleShowZeroes: (value: boolean) => void
   controls?: (props: IEnumConditionControlsProps) => ReactElement | null
   onTouch?: () => void
-  listHeight: string
 }

@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useState } from 'react'
+import { ReactElement, useEffect, useMemo, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { ModeTypes } from '@core/enum/mode-types-enum'
@@ -25,10 +25,11 @@ export const EnumCondition = observer(
     initialEnumMode,
     isShowZeroes,
     isDataReady,
+    listHeight,
+    selectedDashboardVariants,
     toggleShowZeroes,
     onTouch,
     controls,
-    listHeight,
   }: IEnumConditionProps): ReactElement => {
     const [mode, setMode] = useState(initialEnumMode)
     const [selectedVariants, setSelectedVariants] = useState(
@@ -90,6 +91,12 @@ export const EnumCondition = observer(
     }
 
     const showFinder = enumVariants.length > DEFAULT_COUNT
+    const selectedEnumName =
+      selectedDashboardVariants?.[0] || selectedVariants[0]
+
+    const selectedEnumIndex = useMemo(() => {
+      return filteredVariants.findIndex(([name]) => name === selectedEnumName)
+    }, [filteredVariants, selectedEnumName])
 
     return (
       <>
@@ -143,9 +150,12 @@ export const EnumCondition = observer(
           <div style={{ height: listHeight }} className="overflow-auto">
             {filteredVariants.length > 0 ? (
               <FlatList
-                data={filteredVariants}
+                elements={filteredVariants}
+                selectedItemId={selectedEnumName}
+                selectedItemIndex={selectedEnumIndex}
                 renderRow={(data, index) => (
                   <SelectedGroupItem
+                    id={data[index][0]}
                     key={data[index][0]}
                     isSelected={selectedVariants.includes(data[index][0])}
                     variant={data[index]}
