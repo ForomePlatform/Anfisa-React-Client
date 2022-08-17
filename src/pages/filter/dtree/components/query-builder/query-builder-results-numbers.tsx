@@ -12,7 +12,13 @@ interface IQueryBuilderResultsNumbersProps {
 
 export const QueryBuilderResultsNumbers = observer(
   ({ className }: IQueryBuilderResultsNumbersProps) => {
-    const { totalFilteredCounts, isXl, dtreeSetData: dtree } = dtreeStore
+    const {
+      totalFilteredCounts,
+      isXl,
+      dtreeSetData: dtree,
+      acceptedVariants,
+      rejectedVariants,
+    } = dtreeStore
     const { steps } = stepStore
 
     if (!dtree) {
@@ -39,12 +45,16 @@ export const QueryBuilderResultsNumbers = observer(
               {t('dtree.accepted', {
                 value: totalFilteredCounts.accepted,
               })}
+              {!isXl &&
+                ` (${t('dtree.variantsCount', { value: acceptedVariants })})`}
             </span>
             <Divider orientation="vertical" color="light" spacing="dense" />
             <span className="whitespace-nowrap">
               {t('dtree.rejected', {
                 value: totalFilteredCounts.rejected,
               })}
+              {!isXl &&
+                ` (${t('dtree.variantsCount', { value: rejectedVariants })})`}
             </span>
             <Divider orientation="vertical" color="light" spacing="dense" />
             <div
