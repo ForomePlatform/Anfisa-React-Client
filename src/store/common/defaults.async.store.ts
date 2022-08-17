@@ -15,7 +15,6 @@ export class DefaultsAsyncStore extends BaseAsyncDataStore<
 > {
   constructor() {
     super()
-    // this.setQuery(null)
   }
 
   protected fetch(query: IDefaultsQuery): Promise<IDefaults> {

@@ -22,7 +22,10 @@ export const DeleteDataset: FC<IDeleteDatasetProps> = observer(
     const handleOnDelete = () => {
       closeDeleteDialog()
       dirinfoStore.deleteDataset(datasetName)
-      dirinfoStore.dirinfo.invalidate()
+
+      setTimeout(() => {
+        dirinfoStore.dirinfo.invalidate()
+      }, 0)
     }
 
     const onClick = (e: React.MouseEvent) => {
@@ -53,7 +56,7 @@ export const DeleteDataset: FC<IDeleteDatasetProps> = observer(
           applyText={t('ds.deleteDialog.confirm')}
           onApply={handleOnDelete}
         >
-          <p>{t('ds.deleteDialog.message', { datasetName })}</p>
+          <span>{t('ds.deleteDialog.message', { datasetName })}</span>
         </Dialog>
       </>
     )

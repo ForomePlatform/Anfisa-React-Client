@@ -9,15 +9,29 @@ const DEFAULT_COUNT_OF_VARIANTS = 9000
 
 class DefaultsStore {
   readonly defaults = new DefaultsAsyncStore()
-  public dropDs: string[] = []
+  public droppedDs: string[] = []
   public isFetchingDropDs = false
+
+  constructor() {
+    makeAutoObservable(this)
+
+    reaction(
+      () => datasetStore.datasetName,
+      ds => {
+        this.defaults.setQuery({ ds })
+      },
+    )
+
+    reaction(
+      () => wizardStore.secondaryDatasets,
+      secondaryDatasets => {
+        this.setDsToBeDropped(secondaryDatasets)
+      },
+    )
+  }
 
   public get maxCountOfVariants() {
     return this.defaults.data?.['ws.max.count'] || DEFAULT_COUNT_OF_VARIANTS
-  }
-
-  public get isAbleToBeDropped() {
-    return this.defaults.data?.canDropDs
   }
 
   public async setDsToBeDropped(secondaryDatasets: string[] | undefined) {
@@ -44,26 +58,8 @@ class DefaultsStore {
       }
     }
 
-    this.dropDs = [...this.dropDs, ...dropDs]
+    this.droppedDs = [...this.droppedDs, ...dropDs]
     this.isFetchingDropDs = false
-  }
-
-  constructor() {
-    makeAutoObservable(this)
-
-    reaction(
-      () => datasetStore.datasetName,
-      ds => {
-        this.defaults.setQuery({ ds })
-      },
-    )
-
-    reaction(
-      () => wizardStore.secondaryDatasets,
-      secondaryDatasets => {
-        this.setDsToBeDropped(secondaryDatasets)
-      },
-    )
   }
 }
 

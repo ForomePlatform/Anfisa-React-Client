@@ -21,7 +21,13 @@ interface IDatasetsListItemProps {
 export const SecondaryDsItem: FC<IDatasetsListItemProps> = observer(
   ({ item, level = 1, onSelect, selectedItem }) => {
     const params = useParams()
-    const { dropDs } = defaultsStore
+    const { droppedDs } = defaultsStore
+
+    const isAbleToBeDropped = useMemo(() => {
+      return droppedDs.includes(item.name)
+    }, [droppedDs, item.name])
+
+    const [isDsHovered, setIsDsHovered] = useState(false)
 
     const isActive: boolean = item.name === selectedItem
 
@@ -30,15 +36,8 @@ export const SecondaryDsItem: FC<IDatasetsListItemProps> = observer(
     const isNullKind = item.kind === null
     const secondaryKeys: string[] = get(item, 'secondary', [])
     const hasChildren = secondaryKeys.length > 0
-
-    const isDropDs = useMemo(() => {
-      return dropDs.includes(item.name)
-    }, [dropDs, item.name])
-
-    useEffect(() => {
-      setIsOpenFolder(secondaryKeys.includes(params.get('ds') || ''))
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    const isBucketVisible = isAbleToBeDropped && (isDsHovered || isActive)
+    const padding = level * LEVEL_DATASET_P
 
     const handleClick = () => {
       if (isNullKind && !hasChildren) {
@@ -52,18 +51,17 @@ export const SecondaryDsItem: FC<IDatasetsListItemProps> = observer(
       }
     }
 
-    const padding = level * LEVEL_DATASET_P
-
-    const [shouldShowBucket, setShouldShowBucket] = useState(false)
-
-    const isBucketVisible = isDropDs && (shouldShowBucket || isActive)
+    useEffect(() => {
+      setIsOpenFolder(secondaryKeys.includes(params.get('ds') || ''))
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
       <>
         <div
           onClick={handleClick}
-          onMouseEnter={() => setShouldShowBucket(true)}
-          onMouseLeave={() => setShouldShowBucket(false)}
+          onMouseEnter={() => setIsDsHovered(true)}
+          onMouseLeave={() => setIsDsHovered(false)}
         >
           <div
             className={cn(
