@@ -20,6 +20,7 @@ import modalsVisibilityStore from './modals-visibility-store'
 
 export const ModalsContainer = observer(
   ({
+    isDataReady,
     attributeStore,
     funcStore,
     onAddEnum,
@@ -36,6 +37,7 @@ export const ModalsContainer = observer(
         attributeStore={attributeStore}
         onAddEnum={onAddEnum}
         onSaveEnum={onSaveEnum}
+        isDataReady={isDataReady}
       />
 
       <NumericDialog

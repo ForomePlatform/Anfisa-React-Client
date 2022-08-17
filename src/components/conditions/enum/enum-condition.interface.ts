@@ -16,8 +16,9 @@ export interface IEnumConditionProps {
   initialVariants: string[] | undefined
   initialEnumMode: ModeTypes | undefined
   isShowZeroes: boolean
+  isDataReady: boolean
   toggleShowZeroes: (value: boolean) => void
   controls?: (props: IEnumConditionControlsProps) => ReactElement | null
   onTouch?: () => void
-  paginationHeight: string
+  listHeight: string
 }
