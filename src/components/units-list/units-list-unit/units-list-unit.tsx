@@ -15,6 +15,7 @@ interface IUnitsListUnitProps {
   isDark: boolean
   withChart: boolean
   unit: TUnit
+  isModal: boolean | undefined
   onSelect: () => void
 }
 
@@ -23,6 +24,7 @@ export const UnitsListUnit = ({
   isDark,
   withChart,
   unit,
+  isModal,
   onSelect,
 }: IUnitsListUnitProps): ReactElement => {
   const { kind, name, tooltip } = unit
@@ -61,7 +63,7 @@ export const UnitsListUnit = ({
             isDark && styles.unitTitle__title_dark,
           )}
         />
-        {unit.power && (
+        {unit.power && !isModal && (
           <DropdownArrow
             className={cn(
               styles.unitTitle__arrow,

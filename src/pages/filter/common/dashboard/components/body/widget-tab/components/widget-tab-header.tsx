@@ -14,6 +14,7 @@ export interface IWidgetTabHeaderProps {
   isAllTabsOpened: boolean
   onToggleExpand: () => void
   onToggleFavorite: () => void
+  onClick: () => void
 }
 
 export const WidgetTabHeader = ({
@@ -21,8 +22,9 @@ export const WidgetTabHeader = ({
   isAllTabsOpened,
   onToggleExpand,
   onToggleFavorite,
+  onClick,
 }: IWidgetTabHeaderProps): ReactElement => (
-  <div className={styles.tab__header} data-drag-handle={true}>
+  <div className={styles.tab__header} onClick={onClick}>
     <div className="flex items-center">
       {group.name === 'Functional Units' ? (
         <FnLabel className="mr-2" />

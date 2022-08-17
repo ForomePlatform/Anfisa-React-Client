@@ -23,7 +23,7 @@ export const DropdownArrow = ({
           styles.dropdownArrow__arrow,
           isOpen && styles.dropdownArrow__arrow_open,
           styles[`dropdownArrow__arrow_${size}`],
-          dark && styles.dropdownArrow__arrow_black,
+          dark && styles.dropdownArrow__arrow_dark,
         )}
       />
     </span>

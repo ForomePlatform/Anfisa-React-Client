@@ -19,6 +19,7 @@ import {
   TTooltipTrigger,
   TTooltipWidth,
 } from './tooltip.interface'
+import { getTooltipWithUrl } from './tooltip.utils'
 
 export interface ITooltipProps {
   title: ReactNode
@@ -61,7 +62,7 @@ const TooltipWrapper = ({
   const titleIsString = typeof title === 'string'
 
   if (titleIsString) {
-    tooltipRef.current = title
+    tooltipRef.current = getTooltipWithUrl(title as string)
   }
 
   useTooltip(childNode, tooltipRef, trigger, {

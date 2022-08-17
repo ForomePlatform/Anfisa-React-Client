@@ -160,8 +160,11 @@ export const setupClickTooltipEvents = (
         if (element.contains(event.target as Node)) {
           event.stopImmediatePropagation()
         }
-        hideTooltip(popperInstance)
-        popperInstance = null
+
+        setTimeout(() => {
+          hideTooltip(popperInstance)
+          popperInstance = null
+        }, 500)
       },
       {
         capture: true,
@@ -174,4 +177,14 @@ export const setupClickTooltipEvents = (
   return () => {
     element.removeEventListener('mousedown', enterHandler)
   }
+}
+
+export const getTooltipWithUrl = (text: string) => {
+  const urlRegex =
+    /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#/%?=~_|!:,.;]*[-A-Z0-9+&@#/%=~_|])/gi
+
+  return text.replace(
+    urlRegex,
+    '<a class="tooltip__link" href="$1" target="_blank">$1</a>',
+  )
 }
