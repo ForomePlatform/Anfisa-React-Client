@@ -29,9 +29,6 @@ export const WidgetTab = observer(
       <>
         <div
           className={cn(styles.tab, !isGroupInSearch && styles.tab_disabled)}
-          onDoubleClick={() =>
-            changeTabPlace(DashboardGroupTypes.Main, group.name, index)
-          }
         >
           <WidgetTabHeader
             group={group}
@@ -39,6 +36,9 @@ export const WidgetTab = observer(
             onToggleExpand={() => toggleGroup(group.name)}
             onToggleFavorite={() =>
               onToggleFavorite(DashboardGroupTypes.Main, group.name, index)
+            }
+            onClick={() =>
+              changeTabPlace(DashboardGroupTypes.Main, group.name, index)
             }
           />
         </div>

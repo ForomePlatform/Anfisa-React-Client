@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react'
+import { MouseEvent, ReactElement, useState } from 'react'
 import cn from 'classnames'
 
 import { Tooltip } from '@ui/tooltip'
@@ -19,6 +19,11 @@ export const PredictionPowerIndicator = ({
   const [isCommentShown, setCommentShown] = useState(false)
   const valueStr = value.toFixed(3)
 
+  const onClick = (e: MouseEvent) => {
+    e.stopPropagation()
+    setCommentShown(!isCommentShown)
+  }
+
   return (
     <Tooltip
       theme="light"
@@ -37,7 +42,7 @@ export const PredictionPowerIndicator = ({
     >
       <div
         className={cn('flex', className)}
-        onClick={() => setCommentShown(!isCommentShown)}
+        onClick={onClick}
         data-testid={DecisionTreesResultsDataCy.unitPredictionPower}
       >
         <PredictionPowerPoint value={value} />
