@@ -36,32 +36,39 @@ export const QueryBuilderResultsNumbers = observer(
         })} (${t('dtree.variantsCount', { value: totalCounts[0] })})`
 
     return (
-      <div className={cn('text-sm font-medium flex align-center', className)}>
-        <span className="whitespace-nowrap">{total}</span>
+      <div
+        className={cn(
+          'text-sm font-medium flex flex-wrap align-center',
+          className,
+        )}
+      >
+        <span className="whitespace-nowrap mb-1">{total}</span>
         {steps.length > 0 && totalFilteredCounts && (
           <>
             <Divider orientation="vertical" color="light" spacing="dense" />
-            <span className="whitespace-nowrap">
-              {t('dtree.accepted', {
-                value: totalFilteredCounts.accepted,
-              })}
-              {!isXl &&
-                ` (${t('dtree.variantsCount', { value: acceptedVariants })})`}
-            </span>
-            <Divider orientation="vertical" color="light" spacing="dense" />
-            <span className="whitespace-nowrap">
-              {t('dtree.rejected', {
-                value: totalFilteredCounts.rejected,
-              })}
-              {!isXl &&
-                ` (${t('dtree.variantsCount', { value: rejectedVariants })})`}
-            </span>
-            <Divider orientation="vertical" color="light" spacing="dense" />
-            <div
-              className="text-blue-bright font-medium cursor-pointer"
-              onClick={() => dtreeStore.clearAll()}
-            >
-              {t('general.clearAll')}
+            <div className="flex align-center whitespace-nowrap mb-1">
+              <span className="whitespace-nowrap mb-1">
+                {t('dtree.accepted', {
+                  value: totalFilteredCounts.accepted,
+                })}
+                {!isXl &&
+                  ` (${t('dtree.variantsCount', { value: acceptedVariants })})`}
+              </span>
+              <Divider orientation="vertical" color="light" spacing="dense" />
+              <span className="whitespace-nowrap mb-1">
+                {t('dtree.rejected', {
+                  value: totalFilteredCounts.rejected,
+                })}
+                {!isXl &&
+                  ` (${t('dtree.variantsCount', { value: rejectedVariants })})`}
+              </span>
+              <Divider orientation="vertical" color="light" spacing="dense" />
+              <div
+                className="text-blue-bright font-medium cursor-pointer"
+                onClick={() => dtreeStore.clearAll()}
+              >
+                {t('general.clearAll')}
+              </div>
             </div>
           </>
         )}
