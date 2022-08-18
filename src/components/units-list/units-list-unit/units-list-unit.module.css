@@ -1,5 +1,11 @@
 .unit {
-  padding: 0 0 theme("spacing.2") theme("spacing.2");
+  padding: 6px 0;
+  padding-left: 14px;
+
+  &__selected {
+    border: 1px solid theme('colors.grey.dark');
+    border-radius: 4px;
+  }
 }
 
 .unit-title {
@@ -7,39 +13,39 @@
   align-items: center;
 
   &__title {
-    margin-right: 4px;
-    color: theme("colors.black");
-    cursor: pointer;
-
     @apply typography-s;
 
+    margin-right: 4px;
+    color: theme('colors.black');
+    cursor: pointer;
+
     &:hover {
-      color: theme("colors.grey.blue");
+      color: theme('colors.grey.blue');
     }
 
     &_dark {
-      color: theme("colors.white");
-      font-weight: 500;
+      color: theme('colors.white');
 
       &:hover {
-        color: theme("colors.grey.blue");
+        color: theme('colors.grey.blue');
       }
     }
   }
 
   &__arrow {
     &:hover {
-      color: theme("colors.grey.blue");
+      color: theme('colors.grey.blue');
     }
 
     &_dark {
       &:hover {
-        color: theme("colors.grey.blue");
+        color: theme('colors.grey.blue');
       }
     }
   }
 
-  &__power {
-    margin: 0 theme("spacing.2") 0 theme("spacing[0.5]");
+  &__powerWrapper {
+    width: 20px;
+    margin: 0 theme('spacing.2') 0 theme('spacing[0.5]');
   }
 }

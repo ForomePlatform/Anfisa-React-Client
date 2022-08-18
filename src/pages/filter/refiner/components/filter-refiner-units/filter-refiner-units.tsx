@@ -12,7 +12,6 @@ export const FilterRefinerUnits = observer((props: IFilterRefinerProps) => {
   return (
     <UnitsList
       isDark
-      withCharts
       className={className}
       groups={groups}
       functionalUnits={functionalUnits}
@@ -21,6 +20,7 @@ export const FilterRefinerUnits = observer((props: IFilterRefinerProps) => {
       onSelect={({ name }) => {
         filterStore.setAttributeToAdd(name)
       }}
+      selectedUnit={filterStore.attributeNameToAdd}
       onFunctionalConditionSelect={condition =>
         filterStore.selectCondition(condition.key as number)
       }
