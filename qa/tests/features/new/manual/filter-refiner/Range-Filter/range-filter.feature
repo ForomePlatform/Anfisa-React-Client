@@ -37,7 +37,7 @@ Scenario Outline: 02 Filter by "<Attribute Name>" range - boundary values
 	And clicks the "Apply condition" button to apply the filter
 	Then filter should be applied
 	And the range "<Minimum Value>" less than or equals "<Attribute Name>" less than or equals "<Maximum Value>" should be displayed in the right part of the screen
-	And number of variants should be equal to "<Total Variants>"
+	And number of variants should equal "<Total Variants>"
 
 Examples:
 	| Attribute Name               | Minimum Value | Maximum Value | Total Variants |
@@ -58,12 +58,13 @@ Scenario Outline: 03 Empty "<Minimum Value>" field
 	And clicks the "Apply condition" button to apply the filter
 	Then the "<Attribute Name>" less than or equals "<Maximum Value>" should be displayed in the right part of the screen
 	And the "<Minimum Value>" should be counted as the minimum value
+	And number of variants should equal "<Total Variants>"
 
 Examples: 
-	| Attribute Name               | Minimum Value | Maximum Value |
-	| Num_Samples                  | 0             | 3             |
-	| Num_Genes                    | 0             | 23            | 
-	| Start_Pos                    | 25165         | 248930384     |
+	| Attribute Name | Minimum Value | Maximum Value | Total Variants |
+	| Num_Samples    | 0             | 2             | 3,281,692      |
+	| Num_Genes      | 0             | 10            | 5,628,362      |
+	| Severity       | 0             | 1             | 5,609,058      |
 
 @tc:114308
 Scenario Outline: 04 Empty "<Maximum Value>" field
@@ -75,10 +76,10 @@ Scenario Outline: 04 Empty "<Maximum Value>" field
 	And the "<Maximum Value>" should be counted as the maximum value
 
 Examples: 
-	| Attribute Name               | Minimum Value | Maximum Value |
-	| Num_Samples                  | 0             | 3             |
-	| Num_Genes                    | 0             | 23            | 
-	| Start_Pos                    | 25165         | 248930384     |
+	| Attribute Name | Minimum Value | Maximum Value | Total Variants |
+	| Num_Samples    | 1             | 3             | 4,244,509      |
+	| Num_Genes      | 3             | 23            | 4,423          |
+	| Severity       | 1             | 3             | 19,695         |
 
 @tc:114309
 Scenario Outline: 05 "<Attribute Name>" range values on the graph

@@ -53,9 +53,7 @@ Examples:
 @tc:114391
 Scenario: 06 Create dataset: too many variants
 	When user adds a filter with more than 9000 variants
-	And clicks the "Create Derived DS" button
 	Then "Create Derived DS" button should be disabled
-	And "Add new dataset" dialog should not be displayed
 
 @tc:114392
 Scenario: 07 Cancel dataset creation
