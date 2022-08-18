@@ -21,6 +21,10 @@
     padding-bottom: theme("spacing.4");
     border-bottom: 1px solid theme("colors.grey.disabled");
 
+    &_progress-bar {
+      margin-top: 8px;
+    }
+
     &_column-list {
       padding-top: theme("spacing.4");
     }
