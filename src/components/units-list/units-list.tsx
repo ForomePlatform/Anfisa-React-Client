@@ -82,9 +82,10 @@ export const UnitsList = observer(
       >
         {fetchedAmount !== 100 && (
           <div className={styles.unitsList__loader}>
-            <ProgressBar status={fetchedAmount} step={10} size="xs" />
+            <ProgressBar size="sm" />
           </div>
         )}
+
         <FunctionalUnits
           className={cn(
             styles.unitsList__functional,
