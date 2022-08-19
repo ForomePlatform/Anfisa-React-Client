@@ -107,8 +107,10 @@ export const EnumCondition = observer(
         selectedVariants.includes(variant)
           ? setSelectedVariants(prev => prev.filter(item => item !== variant))
           : setSelectedVariants(prev => [...prev, variant])
+
+        onTouch?.()
       },
-      [selectedVariants],
+      [onTouch, selectedVariants],
     )
 
     return (

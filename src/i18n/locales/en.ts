@@ -355,6 +355,8 @@ export const en = {
         '{value, plural, one {# transcribed variant} other {# transcribed variants}}',
       transcripts: '{value, plural, one {# transcript} other {# transcripts}}',
       shownSignificantItems: 'Shown {items} significant items (total: {total})',
+      noVisualRepresentation:
+        "The variant you have chosen doesn't have visual representation",
     },
     delete: 'Delete',
     copy: 'Copy',

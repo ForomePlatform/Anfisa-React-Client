@@ -1,6 +1,6 @@
 import styles from './bar-chart.module.css'
 
-import { ReactElement } from 'react'
+import { ReactElement, useMemo } from 'react'
 import cn from 'classnames'
 
 import { t } from '@i18n'
@@ -29,6 +29,25 @@ export const BarChart = ({
   dataTestId,
   onSelectVariantByChart,
 }: IBarChartProps): ReactElement => {
+  const isVariantRepresentedInChart = useMemo(() => {
+    return data.some(item => selectedVariants?.includes(item[0]))
+  }, [data, selectedVariants])
+
+  const renderBarChartLegend = () => {
+    const defaultLegend = t('filter.chart.shownSignificantItems', {
+      items: data.length,
+      total: totalItems,
+    })
+
+    const specialLegent = t('filter.chart.noVisualRepresentation')
+
+    if (!selectedVariants?.length) {
+      return defaultLegend
+    } else {
+      return isVariantRepresentedInChart ? defaultLegend : specialLegent
+    }
+  }
+
   return (
     <div>
       <SvgChart
@@ -43,10 +62,7 @@ export const BarChart = ({
       />
       {totalItems > data.length && (
         <div className="text-xs text-grey-blue text-center mt-1 -mb-1">
-          {t('filter.chart.shownSignificantItems', {
-            items: data.length,
-            total: totalItems,
-          })}
+          {renderBarChartLegend()}
         </div>
       )}
     </div>
