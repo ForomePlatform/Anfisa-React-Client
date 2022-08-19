@@ -8,6 +8,7 @@ import { FlatList } from '@ui/flat-list'
 import { Loader } from '@ui/loader'
 import { Switch } from '@ui/switch'
 import { UnitChart } from '@components/units-list/unit-chart'
+import { GlbPagesNames } from '@glb/glb-names'
 import { QueryBuilderSearch } from '@pages/filter/dtree/components/query-builder/query-builder-search'
 import { AllNotMods } from '@pages/filter/dtree/components/query-builder/ui/all-not-mods'
 import { SelectedGroupItem } from '@pages/filter/refiner/components/middle-column/selected-group-item'
@@ -29,6 +30,7 @@ export const EnumCondition = observer(
     listHeight,
     selectedDashboardVariants,
     selectedAttributeStatus,
+    page,
     toggleShowZeroes,
     onTouch,
     controls,
@@ -129,39 +131,72 @@ export const EnumCondition = observer(
             {selectedVariants.length || 0} {t('dtree.selected')}
           </div>
 
-          <EnumMods
-            selectAllVariants={selectAllVariants}
-            clearAllVariants={clearAllVariants}
-          />
+          {page === GlbPagesNames.Dtree && (
+            <div className="flex items-center">
+              <Switch
+                className="mr-1"
+                isChecked={isShowZeroes}
+                onChange={toggleShowZeroes}
+              />
+
+              <span className="text-grey-blue">
+                {t('enumCondition.showZeroVariants')}
+              </span>
+
+              <Divider
+                spacing="dense"
+                orientation="vertical"
+                color="blue-light"
+              />
+
+              <EnumMods
+                selectAllVariants={selectAllVariants}
+                clearAllVariants={clearAllVariants}
+              />
+            </div>
+          )}
+
+          {page !== GlbPagesNames.Dtree && (
+            <EnumMods
+              selectAllVariants={selectAllVariants}
+              clearAllVariants={clearAllVariants}
+            />
+          )}
         </div>
 
-        <div className="w-full flex justify-end items-center mb-4 text-14">
-          <div className="flex items-center">
-            <Switch
-              className="mr-1"
-              isChecked={isShowZeroes}
-              onChange={toggleShowZeroes}
+        {page !== GlbPagesNames.Dtree && (
+          <div className="w-full flex justify-end items-center mb-4 text-14">
+            <div className="flex items-center">
+              <Switch
+                className="mr-1"
+                isChecked={isShowZeroes}
+                onChange={toggleShowZeroes}
+              />
+
+              <span className="text-grey-blue">
+                {t('enumCondition.showZeroVariants')}
+              </span>
+            </div>
+
+            <Divider
+              spacing="dense"
+              orientation="vertical"
+              color="blue-light"
             />
 
-            <span className="text-grey-blue">
-              {t('enumCondition.showZeroVariants')}
-            </span>
+            <div className="flex items-center">
+              <Switch
+                className="mr-1"
+                isChecked={isChartsVisible}
+                onChange={() => setISChartsVisible(prev => !prev)}
+              />
+
+              <span className="text-grey-blue">
+                {t('enumCondition.showVisually')}
+              </span>
+            </div>
           </div>
-
-          <Divider spacing="dense" orientation="vertical" color="blue-light" />
-
-          <div className="flex items-center">
-            <Switch
-              className="mr-1"
-              isChecked={isChartsVisible}
-              onChange={() => setISChartsVisible(prev => !prev)}
-            />
-
-            <span className="text-grey-blue">
-              {t('enumCondition.showVisually')}
-            </span>
-          </div>
-        </div>
+        )}
 
         <div className="flex justify-end">
           <AllNotMods
@@ -182,6 +217,7 @@ export const EnumCondition = observer(
               selectedVariants={selectedVariants}
               className="w-full !bg-transparent"
               isLight
+              page={page}
               onSelectVariantByChart={onSelectVariantByChart}
             />
           </div>

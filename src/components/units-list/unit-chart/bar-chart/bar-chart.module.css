@@ -6,20 +6,22 @@
       @apply typography-xxs;
 
       font-size: 9px;
-
-      line {
-        /* TODO: replace this for DB charts color: theme("colors.blue.lighter"); */
-        color: theme("colors.grey.disabled");
-      }
     }
 
     line {
-      /* TODO: remove this for DB charts; */
-      stroke: theme("colors.grey.disabled");
+      stroke: theme("colors.blue.lighter");
     }
 
     .domain {
       display: none;
+    }
+  }
+
+  &_light {
+    :global {
+      line {
+        stroke: theme("colors.grey.disabled");
+      }
     }
   }
 }

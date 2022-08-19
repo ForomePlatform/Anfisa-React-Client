@@ -9,6 +9,7 @@ import dtreeStore from '@store/dtree'
 import stepStore from '@store/dtree/step.store'
 import { UnitsList } from '@components/units-list'
 import { DecisionTreesResultsDataCy } from '@data-testid'
+import { GlbPagesNames } from '@glb/glb-names'
 import modalsVisibilityStore from '@pages/filter/dtree/components/modals/modals-visibility-store'
 import { AttributeKinds, TPropertyStatus } from '@service-providers/common'
 
@@ -111,6 +112,7 @@ export const DtreeUnitsList = observer(
 
     return (
       <UnitsList
+        page={GlbPagesNames.Dtree}
         className={className}
         isModal={isModal}
         isDark={!isModal}

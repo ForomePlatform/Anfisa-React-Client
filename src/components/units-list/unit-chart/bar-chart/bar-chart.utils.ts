@@ -4,9 +4,12 @@ import { getBounds, getYScaleAndAxis } from '@core/charts'
 import { theme } from '@theme'
 import { SvgChartRenderParams } from '@components/svg-chart/svg-chart'
 import { TVariant } from '@service-providers/common'
+import { selectedColors } from '../unit.chart.data'
 import { TBarChartData } from '../unit-chart.interface'
 import { getVariantCountsText } from '../utils'
 import { getChartColor } from '../utils/getChartColor'
+import { getDifferentBarColors } from '../utils/getDifferentColors'
+import { GlbPagesNames } from './../../../../glb/glb-names'
 
 const tickColor = theme('colors.grey.blue')
 
@@ -27,11 +30,13 @@ export const drawBarChart = ({
   width,
   height,
   tooltip,
+  page,
   selectedVariants,
   onSelectVariantByChart,
 }: SvgChartRenderParams<TBarChartData>): void => {
   const chartWidth = width - margin.left - margin.right
   const chartHeight = height - margin.top - margin.bottom
+  const shouldAddStrokeColor = page !== GlbPagesNames.Dtree
 
   const chart = d3
     .select(svg)
@@ -75,6 +80,17 @@ export const drawBarChart = ({
     ? (item: TVariant) => yScale(Math.max(item[1], 1.413))
     : (item: TVariant) => yScale(item[1])
 
+  const getFunctionForColorChoice = (index: number, barName: string) => {
+    return page === GlbPagesNames.Refiner
+      ? getChartColor({
+          selectedVariants,
+          barName,
+          index,
+          type: 'fill',
+        })
+      : getDifferentBarColors(index, selectedColors)
+  }
+
   chart
     .selectAll('bar')
     .data(data)
@@ -84,14 +100,7 @@ export const drawBarChart = ({
     .attr('y', item => getY(item))
     .attr('width', barWidth)
     .attr('height', item => chartHeight - getY(item))
-    .attr('fill', (item, index) =>
-      getChartColor({
-        selectedVariants,
-        barName: item[0],
-        index,
-        type: 'fill',
-      }),
-    )
+    .attr('fill', (item, index) => getFunctionForColorChoice(index, item[0]))
     .attr('stroke', (item, index) =>
       getChartColor({
         selectedVariants,

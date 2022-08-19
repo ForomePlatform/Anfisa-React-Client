@@ -9,8 +9,12 @@ export const getChartColor = ({
   index,
   type,
 }: IGetChartColorsProps): string => {
-  if (!selectedVariants?.length) {
+  if (!selectedVariants?.length && type === 'fill') {
     return getDifferentBarColors(index, defaultColors)
+  }
+
+  if (!selectedVariants?.length && type === 'stroke') {
+    return getDifferentBarColors(index, selectedColors)
   }
 
   if (selectedVariants?.includes(barName)) {

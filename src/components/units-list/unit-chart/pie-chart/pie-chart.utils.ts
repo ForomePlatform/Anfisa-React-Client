@@ -4,11 +4,13 @@ import * as d3 from 'd3'
 import { PieArcDatum } from 'd3'
 
 import { SvgChartRenderParams } from '@components/svg-chart'
+import { GlbPagesNames } from '@glb/glb-names'
 import { TVariant } from '@service-providers/common'
-import { defaultColors } from '../unit.chart.data'
+import { defaultColors, selectedColors } from '../unit.chart.data'
 import { TPieChartData } from '../unit-chart.interface'
 import { getVariantCountsText, reduceVariantsData } from '../utils'
 import { getChartColor } from '../utils/getChartColor'
+import { getDifferentBarColors } from '../utils/getDifferentColors'
 
 export const getShortNumber = (value: number): string => {
   if (value < 1000000) {
@@ -29,13 +31,14 @@ export const drawPieChart = ({
   width,
   height,
   tooltip,
+  page,
   selectedVariants,
   onSelectVariantByChart,
 }: SvgChartRenderParams<TPieChartData>): void => {
   const radius = Math.min(width, height) / 2
 
   const slicedData = reduceVariantsData(data, maxItems)
-
+  const shouldAddStrokeColor = page !== GlbPagesNames.Dtree
   const chart = d3
     .select(svg)
     .append('g')
@@ -60,26 +63,35 @@ export const drawPieChart = ({
     }</span>${getVariantCountsText(variant)}`
   }
 
+  const getFunctionForColorChoice = (index: number, barName: string) => {
+    return page === GlbPagesNames.Refiner
+      ? getChartColor({
+          selectedVariants,
+          barName,
+          index,
+          type: 'fill',
+        })
+      : getDifferentBarColors(index, selectedColors)
+  }
+
   chart
     .selectAll('pieSector')
     .data(pie(slicedData))
     .join('path')
     .attr('d', arcPath)
     .attr('fill', (item, index) =>
-      getChartColor({
-        selectedVariants,
-        barName: item.data[0],
-        index,
-        type: 'fill',
-      }),
+      getFunctionForColorChoice(index, item.data[0]),
     )
-    .attr('stroke', (item, index) =>
-      getChartColor({
-        selectedVariants,
-        barName: item.data[0],
-        index,
-        type: 'stroke',
-      }),
+    .attr(
+      'stroke',
+      (item, index) =>
+        shouldAddStrokeColor &&
+        getChartColor({
+          selectedVariants,
+          barName: item.data[0],
+          index,
+          type: 'stroke',
+        }),
     )
     .on('click', (_, item) => {
       onSelectVariantByChart?.(item.data[0])

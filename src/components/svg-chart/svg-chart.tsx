@@ -7,6 +7,7 @@ import {
   useState,
 } from 'react'
 
+import { GlbPagesNames } from '@glb/glb-names'
 import { ChartTooltip, globalTooltip } from './svg-chart.utils'
 
 export type SvgChartRenderParams<Data> = {
@@ -16,6 +17,7 @@ export type SvgChartRenderParams<Data> = {
   data: Data
   tooltip: ChartTooltip
   selectedVariants?: string[]
+  page?: GlbPagesNames
   onSelectVariantByChart?: ((variant: string) => void) | undefined
 }
 
@@ -25,6 +27,7 @@ interface ISvgChartProps<Data> extends SVGProps<SVGSVGElement> {
   component?: 'svg' | ComponentType<SVGProps<SVGSVGElement>>
   data: Data
   selectedVariants?: string[] | undefined
+  page?: GlbPagesNames
   render: (params: SvgChartRenderParams<Data>) => void
   onSelectVariantByChart?: (variant: string) => void
 }
@@ -35,6 +38,7 @@ export const SvgChart = <Data,>({
   data,
   selectedVariants,
   component: Component = 'svg',
+  page,
   render,
   onSelectVariantByChart,
   ...svgProps
@@ -75,10 +79,11 @@ export const SvgChart = <Data,>({
         height,
         tooltip: globalTooltip,
         selectedVariants,
+        page,
         onSelectVariantByChart,
       })
     }
-  }, [data, width, height, onSelectVariantByChart, selectedVariants])
+  }, [data, width, height, onSelectVariantByChart, selectedVariants, page])
 
   return (
     <Component
@@ -86,7 +91,11 @@ export const SvgChart = <Data,>({
       {...svgProps}
       width={width}
       height={height}
-      style={{ width: `${width}px`, height: `${height}px`, ...svgProps.style }}
+      style={{
+        width: `${width}px`,
+        height: `${height}px`,
+        ...svgProps.style,
+      }}
     />
   )
 }

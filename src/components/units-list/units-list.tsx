@@ -9,6 +9,7 @@ import { t } from '@i18n'
 import { TFunctionalUnit, TUnitGroups } from '@store/stat-units'
 import { Loader } from '@ui/loader'
 import { ProgressBar } from '@ui/progress-bar'
+import { GlbPagesNames } from '@glb/glb-names'
 import dashboardStore from '@pages/filter/common/dashboard'
 import { TPropertyStatus } from '@service-providers/common'
 import { FunctionalUnits } from './functional-units'
@@ -18,7 +19,7 @@ import { UnitsListControls } from './units-list-controls'
 import { UnitsListGroup } from './units-list-group'
 
 export interface IUnitsListProps {
-  className?: string
+  page: GlbPagesNames
   isModal?: boolean
   isDark?: boolean
   withCharts?: boolean
@@ -28,14 +29,16 @@ export interface IUnitsListProps {
   groups: TUnitGroups
   functionalUnits: TFunctionalUnit[]
   functionalConditions?: TFunctionalCondition[]
+  className?: string
+  listContainerId?: string
   onSelect: (unit: TPropertyStatus) => void
   onFunctionalConditionSelect?: (condition: TFunctionalCondition) => void
   onFunctionalConditionDelete?: (condition: TFunctionalCondition) => void
-  listContainerId?: string
 }
 
 export const UnitsList = observer(
   ({
+    page,
     className,
     isModal,
     isDark = false,
@@ -126,6 +129,7 @@ export const UnitsList = observer(
           ) : (
             filteredGroups.map(group => (
               <UnitsListGroup
+                page={page}
                 key={group.name}
                 isCollapsed={collapsedGroups.includes(group.name)}
                 isDark={isDark}

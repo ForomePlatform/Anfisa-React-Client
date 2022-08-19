@@ -7,27 +7,30 @@ import { TUnitGroup } from '@store/stat-units'
 import { DropdownArrow } from '@ui/dropdown-arrow'
 import { PredictionPowerIndicator } from '@components/prediction-power-indicator'
 import { DecisionTreesResultsDataCy } from '@data-testid'
+import { GlbPagesNames } from '@glb/glb-names'
 import { TPropertyStatus } from '@service-providers/common'
 import { UnitsListUnit } from '../units-list-unit'
 
 interface IUnitsListGroupProps {
-  className?: string
+  page: GlbPagesNames
   isCollapsed: boolean
   isDark: boolean
   withCharts: boolean
   unitsGroup: TUnitGroup
   isModal: boolean | undefined
+  className?: string
   onCollapsedChange: (isCollapsed: boolean, name: string) => void
   onSelect: (unit: TPropertyStatus) => void
 }
 
 export const UnitsListGroup = ({
-  className,
+  page,
   isCollapsed,
   isDark,
   withCharts,
   unitsGroup,
   isModal,
+  className,
   onCollapsedChange,
   onSelect,
 }: IUnitsListGroupProps): ReactElement => {
@@ -54,6 +57,7 @@ export const UnitsListGroup = ({
         attributes.map(unit => (
           <UnitsListUnit
             key={unit.name}
+            page={page}
             unit={unit}
             isDark={isDark}
             withChart={withCharts}

@@ -7,6 +7,10 @@
     flex: 1 0 0;
     max-width: 67%;
     margin-right: theme("spacing.2");
+
+    &_light {
+      color: theme("colors.black") !important;
+    }
   }
 
   &__chart {
@@ -43,10 +47,7 @@
   @apply typography-xs;
 
   overflow: hidden;
-
-  &_light {
-    color: theme("colors.black");
-  }
+  color: theme("colors.white");
 
   &_collapsed {
     max-height: 120px;

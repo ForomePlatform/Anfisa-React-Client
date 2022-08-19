@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite'
 
 import filterStore from '@store/filter'
 import { DEFAULT_COUNT, EnumCondition } from '@components/conditions/enum'
+import { GlbPagesNames } from '@glb/glb-names'
 import { AttributeKinds } from '@service-providers/common'
 import { refinerAttributeStore } from '../../../attributes/refiner-attributes.store'
 import { AttributeHeader } from '../../attribute-header'
@@ -43,6 +44,7 @@ export const EnumPanel = observer((): ReactElement => {
       <DividerHorizontal />
 
       <EnumCondition
+        page={GlbPagesNames.Refiner}
         selectedAttributeStatus={selectedAttributeStatus}
         isDataReady={filterStore.downloadedAmount === 100}
         attributeName={attributeName}
