@@ -32,6 +32,7 @@ export interface IButtonProps {
   refEl?: any
   dataTestId?: string
   style?: CSSProperties
+  title?: string
 }
 
 export const Button: FC<IButtonProps> = ({
@@ -53,6 +54,7 @@ export const Button: FC<IButtonProps> = ({
   refEl,
   dataTestId,
   style = {},
+  title = '',
 }) => {
   const isOnlyIcon = icon && !append && !prepend && !text
 
@@ -94,6 +96,7 @@ export const Button: FC<IButtonProps> = ({
       onMouseUp={onMouseUpHandler}
       onMouseDown={onMouseDownHandler}
       style={style}
+      title={title}
     >
       <LoaderWrapper isLoading={isLoading} color={loaderColor}>
         {prepend}

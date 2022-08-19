@@ -10,6 +10,7 @@ export interface IFilterControlProps {
   isBackwardAllowed: boolean
   isEntryCreationAllowed: boolean
   disabledCreateDataset: boolean
+  createDatasetTooltip?: string
   pageName: FilterControlOptionsNames
   goForward: () => void
   goBackward: () => void

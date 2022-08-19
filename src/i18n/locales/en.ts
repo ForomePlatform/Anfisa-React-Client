@@ -203,7 +203,7 @@ export const en = {
     notMode: 'NOT Mode',
     variantsWithNotesOnly: 'Variants with notes only',
     tooMuchVariants:
-      'There are too many variants to export. The number of variants should be less than 300',
+      'There are too many variants to export. The number of variants should be less than {max}',
     deleteDataset: 'Delete Dataset',
     deleteDialog: {
       title: 'Delete Dataset',

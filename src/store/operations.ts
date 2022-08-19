@@ -83,7 +83,7 @@ class OperationsStore {
   }
 
   async saveDatasetAsync(wsName: string, pathName: string) {
-    const { maxCountOfVariants } = defaultsStore
+    const { wsMaxCount, tabMaxCount } = defaultsStore
 
     this.resetIsCreationOver()
 
@@ -94,6 +94,7 @@ class OperationsStore {
 
     const isRefiner = pathName === Routes.Refiner
     const isMainTable = pathName === Routes.WS
+    const maxCount = isMainTable ? tabMaxCount : wsMaxCount
 
     let compareValue: number
 
@@ -108,12 +109,12 @@ class OperationsStore {
       params.code = dtreeStore.dtreeCode
     }
 
-    if (!(compareValue > 0 && compareValue < maxCountOfVariants)) {
+    if (!(compareValue > 0 && compareValue < maxCount)) {
       this.setIsCreationOver()
 
       return {
         ok: false,
-        message: t('dsCreation.tooManyVariants', { max: maxCountOfVariants }),
+        message: t('dsCreation.tooManyVariants', { max: maxCount }),
       }
     }
 

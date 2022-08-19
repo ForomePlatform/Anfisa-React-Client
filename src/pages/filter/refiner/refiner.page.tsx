@@ -6,6 +6,7 @@ import { observer } from 'mobx-react-lite'
 
 import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
 import { useDatasetName } from '@core/hooks/use-dataset-name'
+import { t } from '@i18n'
 import datasetStore from '@store/dataset/dataset'
 import defaultsStore from '@store/defaults'
 import filterStore from '@store/filter'
@@ -30,7 +31,7 @@ import { SolutionControlRefiner } from './components/solution-control-refiner'
 export const RefinerPage = observer((): ReactElement => {
   const { isXL } = datasetStore
 
-  const { maxCountOfVariants } = defaultsStore
+  const { wsMaxCount } = defaultsStore
 
   const {
     stat: { unitGroups, functionalUnits, isFetching },
@@ -59,6 +60,8 @@ export const RefinerPage = observer((): ReactElement => {
   const allVariants = isXL
     ? toJS(datasetStore.dsInfoData?.total)
     : variantCounts
+
+  const isTooManyVariants = filterCounts && filterCounts.variants > wsMaxCount
 
   useDatasetName()
 
@@ -106,7 +109,12 @@ export const RefinerPage = observer((): ReactElement => {
           disabledCreateDataset={
             filterStore.conditions.length === 0 ||
             !filterCounts ||
-            filterCounts.variants > maxCountOfVariants
+            filterCounts.variants > wsMaxCount
+          }
+          createDatasetTooltip={
+            isTooManyVariants
+              ? t('dsCreation.tooManyVariants', { max: wsMaxCount })
+              : ''
           }
           goForward={filterStore.actionHistory.goForward}
           goBackward={filterStore.actionHistory.goBackward}
