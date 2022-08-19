@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 
 import { ModeTypes } from '@core/enum/mode-types-enum'
-import { TVariant } from '@service-providers/common'
+import { TPropertyStatus, TVariant } from '@service-providers/common'
 import { ICommonControlProps } from '../conditions.interface'
 
 export interface IEnumConditionControlsProps
@@ -19,6 +19,7 @@ export interface IEnumConditionProps {
   isDataReady: boolean
   listHeight: string
   selectedDashboardVariants?: string[]
+  selectedAttributeStatus?: TPropertyStatus | undefined
   toggleShowZeroes: (value: boolean) => void
   controls?: (props: IEnumConditionControlsProps) => ReactElement | null
   onTouch?: () => void

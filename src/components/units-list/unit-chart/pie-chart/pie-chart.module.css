@@ -32,14 +32,21 @@
 
   &__totalValue {
     color: theme("colors.white");
+
+    &_light {
+      color: theme("colors.black");
+    }
   }
 }
 
 .legend {
   @apply typography-xs;
 
-  color: theme("colors.white");
   overflow: hidden;
+
+  &_light {
+    color: theme("colors.black");
+  }
 
   &_collapsed {
     max-height: 120px;

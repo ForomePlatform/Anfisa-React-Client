@@ -10,13 +10,19 @@ import { ChartType } from './unit-chart.interface'
 import { useChartConfig } from './utils'
 
 interface IUnitChartProps {
-  className?: string
   unit: TPropertyStatus
+  selectedVariants?: string[]
+  isLight?: boolean
+  className?: string
+  onSelectVariantByChart?: (variant: string) => void
 }
 
 export const UnitChart = ({
-  className,
   unit,
+  selectedVariants,
+  isLight,
+  className,
+  onSelectVariantByChart,
 }: IUnitChartProps): ReactElement | null => {
   const chartConfig = useChartConfig(unit)
 
@@ -33,11 +39,21 @@ export const UnitChart = ({
           data={chartConfig.data}
           totalItems={chartConfig.totalItems}
           height={150}
+          isLight={isLight}
+          selectedVariants={selectedVariants}
+          onSelectVariantByChart={onSelectVariantByChart}
         />
       )
       break
     case ChartType.Pie:
-      chart = <PieChart data={chartConfig.data} />
+      chart = (
+        <PieChart
+          data={chartConfig.data}
+          isLight={isLight}
+          selectedVariants={selectedVariants}
+          onSelectVariantByChart={onSelectVariantByChart}
+        />
+      )
       break
     case ChartType.Histogram:
       chart = (

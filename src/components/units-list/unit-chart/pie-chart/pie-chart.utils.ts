@@ -3,11 +3,12 @@ import styles from './pie-chart.module.css'
 import * as d3 from 'd3'
 import { PieArcDatum } from 'd3'
 
-import { theme } from '@theme'
 import { SvgChartRenderParams } from '@components/svg-chart'
 import { TVariant } from '@service-providers/common'
+import { defaultColors } from '../unit.chart.data'
 import { TPieChartData } from '../unit-chart.interface'
 import { getVariantCountsText, reduceVariantsData } from '../utils'
+import { getChartColor } from '../utils/getChartColor'
 
 export const getShortNumber = (value: number): string => {
   if (value < 1000000) {
@@ -17,18 +18,10 @@ export const getShortNumber = (value: number): string => {
   return `${shortedValue} mln`
 }
 
-export const colors: string[] = [
-  theme('colors.blue.bright'),
-  theme('colors.purple.bright'),
-  theme('colors.yellow.secondary'),
-  theme('colors.orange.bright'),
-  theme('colors.grey.blue'),
-]
-
-const maxItems = colors.length
+const maxItems = defaultColors.length
 
 export const getPieChartItemColor = (index: number): string =>
-  colors[index] ?? colors[colors.length - 1]
+  defaultColors[index] ?? defaultColors[defaultColors.length - 1]
 
 export const drawPieChart = ({
   svg,
@@ -36,6 +29,8 @@ export const drawPieChart = ({
   width,
   height,
   tooltip,
+  selectedVariants,
+  onSelectVariantByChart,
 }: SvgChartRenderParams<TPieChartData>): void => {
   const radius = Math.min(width, height) / 2
 
@@ -70,7 +65,25 @@ export const drawPieChart = ({
     .data(pie(slicedData))
     .join('path')
     .attr('d', arcPath)
-    .attr('fill', datum => getPieChartItemColor(datum.index))
+    .attr('fill', (item, index) =>
+      getChartColor({
+        selectedVariants,
+        barName: item.data[0],
+        index,
+        type: 'fill',
+      }),
+    )
+    .attr('stroke', (item, index) =>
+      getChartColor({
+        selectedVariants,
+        barName: item.data[0],
+        index,
+        type: 'stroke',
+      }),
+    )
+    .on('click', (_, item) => {
+      onSelectVariantByChart?.(item.data[0])
+    })
     .on('mouseover', (event, item) => {
       tooltip.show(event.target, renderTooltip(item))
     })

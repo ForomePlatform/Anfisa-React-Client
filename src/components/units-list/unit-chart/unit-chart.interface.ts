@@ -40,3 +40,10 @@ export type TChartConfig =
   | TPieChartConfig
   | TBarChartConfig
   | THistogramChartConfig
+
+export interface IGetChartColorsProps {
+  selectedVariants: string[] | undefined
+  barName: string
+  index: number
+  type: string
+}

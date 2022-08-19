@@ -311,6 +311,7 @@ export const en = {
   },
   enumCondition: {
     showZeroVariants: 'Show zero variants',
+    showVisually: 'Show visually',
   },
   funcCondition: {
     scenario: 'Scenario',

@@ -1,4 +1,4 @@
-import { ReactElement, useEffect, useMemo, useState } from 'react'
+import { ReactElement, useCallback, useEffect, useMemo, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { ModeTypes } from '@core/enum/mode-types-enum'
@@ -7,6 +7,7 @@ import { Divider } from '@ui/divider'
 import { FlatList } from '@ui/flat-list'
 import { Loader } from '@ui/loader'
 import { Switch } from '@ui/switch'
+import { UnitChart } from '@components/units-list/unit-chart'
 import { QueryBuilderSearch } from '@pages/filter/dtree/components/query-builder/query-builder-search'
 import { AllNotMods } from '@pages/filter/dtree/components/query-builder/ui/all-not-mods'
 import { SelectedGroupItem } from '@pages/filter/refiner/components/middle-column/selected-group-item'
@@ -27,14 +28,17 @@ export const EnumCondition = observer(
     isDataReady,
     listHeight,
     selectedDashboardVariants,
+    selectedAttributeStatus,
     toggleShowZeroes,
     onTouch,
     controls,
   }: IEnumConditionProps): ReactElement => {
     const [mode, setMode] = useState(initialEnumMode)
-    const [selectedVariants, setSelectedVariants] = useState(
+    const [selectedVariants, setSelectedVariants] = useState<string[]>(
       initialVariants ?? [],
     )
+
+    const [isChartsVisible, setISChartsVisible] = useState(true)
 
     const [searchValue, setSearchValue] = useState('')
 
@@ -98,6 +102,15 @@ export const EnumCondition = observer(
       return filteredVariants.findIndex(([name]) => name === selectedEnumName)
     }, [filteredVariants, selectedEnumName])
 
+    const onSelectVariantByChart = useCallback(
+      (variant: string) => {
+        selectedVariants.includes(variant)
+          ? setSelectedVariants(prev => prev.filter(item => item !== variant))
+          : setSelectedVariants(prev => [...prev, variant])
+      },
+      [selectedVariants],
+    )
+
     return (
       <>
         {showFinder && (
@@ -114,27 +127,41 @@ export const EnumCondition = observer(
             {selectedVariants.length || 0} {t('dtree.selected')}
           </div>
 
+          <EnumMods
+            selectAllVariants={selectAllVariants}
+            clearAllVariants={clearAllVariants}
+          />
+        </div>
+
+        <div className="w-full flex justify-end items-center mb-4 text-14">
           <div className="flex items-center">
-            <div className="flex items-center">
-              <Switch
-                className="mr-1"
-                isChecked={isShowZeroes}
-                onChange={toggleShowZeroes}
-              />
-              <span className="text-grey-blue">
-                {t('enumCondition.showZeroVariants')}
-              </span>
-            </div>
-
-            <Divider orientation="vertical" color="light" />
-
-            <EnumMods
-              selectAllVariants={selectAllVariants}
-              clearAllVariants={clearAllVariants}
+            <Switch
+              className="mr-1"
+              isChecked={isShowZeroes}
+              onChange={toggleShowZeroes}
             />
+
+            <span className="text-grey-blue">
+              {t('enumCondition.showZeroVariants')}
+            </span>
+          </div>
+
+          <Divider spacing="dense" orientation="vertical" color="blue-light" />
+
+          <div className="flex items-center">
+            <Switch
+              className="mr-1"
+              isChecked={isChartsVisible}
+              onChange={() => setISChartsVisible(prev => !prev)}
+            />
+
+            <span className="text-grey-blue">
+              {t('enumCondition.showVisually')}
+            </span>
           </div>
         </div>
-        <div className="flex justify-end mb-2">
+
+        <div className="flex justify-end">
           <AllNotMods
             groupSubKind={attributeSubKind}
             isAllModeChecked={mode === ModeTypes.All}
@@ -145,6 +172,18 @@ export const EnumCondition = observer(
             toggleNotMode={() => toggleMode(ModeTypes.Not)}
           />
         </div>
+
+        {selectedAttributeStatus && isChartsVisible && (
+          <div className="-mt-1">
+            <UnitChart
+              unit={selectedAttributeStatus}
+              selectedVariants={selectedVariants}
+              className="w-full !bg-transparent"
+              isLight
+              onSelectVariantByChart={onSelectVariantByChart}
+            />
+          </div>
+        )}
 
         {isDataReady ? (
           <div style={{ height: listHeight }} className="overflow-auto">
