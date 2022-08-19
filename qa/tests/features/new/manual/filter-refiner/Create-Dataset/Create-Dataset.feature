@@ -5,6 +5,7 @@ Background:
 	Given user opens the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" dataset
 
 @smoke
+@tc:114670
 Scenario: 01 "Create Derived DS" button 
 	When user loads a filter with less than 9000 variants
 	And clicks the "Create Derived DS" button
