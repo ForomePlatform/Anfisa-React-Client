@@ -9,7 +9,6 @@ import { TBarChartData } from '../unit-chart.interface'
 import { getVariantCountsText } from '../utils'
 import { getChartColor } from '../utils/getChartColor'
 import { getDifferentBarColors } from '../utils/getDifferentColors'
-import { GlbPagesNames } from './../../../../glb/glb-names'
 
 const tickColor = theme('colors.grey.blue')
 
@@ -30,13 +29,12 @@ export const drawBarChart = ({
   width,
   height,
   tooltip,
-  page,
+  isDashboard,
   selectedVariants,
   onSelectVariantByChart,
 }: SvgChartRenderParams<TBarChartData>): void => {
   const chartWidth = width - margin.left - margin.right
   const chartHeight = height - margin.top - margin.bottom
-  const shouldAddStrokeColor = page !== GlbPagesNames.Dtree
 
   const chart = d3
     .select(svg)
@@ -81,7 +79,7 @@ export const drawBarChart = ({
     : (item: TVariant) => yScale(item[1])
 
   const getFunctionForColorChoice = (index: number, barName: string) => {
-    return page === GlbPagesNames.Refiner
+    return !isDashboard
       ? getChartColor({
           selectedVariants,
           barName,

@@ -7,7 +7,6 @@ import { observer } from 'mobx-react-lite'
 import { Icon } from '@ui/icon'
 import { PredictionPowerIndicator } from '@components/prediction-power-indicator'
 import { UnitChart } from '@components/units-list/unit-chart'
-import { GlbPagesNames } from '@glb/glb-names'
 import dashboardStore from '@pages/filter/common/dashboard'
 import { WidgetSubTabItem } from '@pages/filter/common/dashboard/components/body/widget-tab/components/widget-sub-tab/components/widget-sub-tab-item'
 import { IExtendedUnit } from '@pages/filter/common/dashboard/dashboard.interfaces'
@@ -72,7 +71,7 @@ export const WidgetSubTab = observer(
               <UnitChart
                 unit={unit}
                 className={styles.subTab__unitContainer__chartContainer}
-                page={GlbPagesNames.Dtree}
+                isDashboard
               />
             ) : (
               <WidgetSubTabItem unit={unit} onSelectUnit={onSelectUnit} />

@@ -4,7 +4,6 @@ import * as d3 from 'd3'
 import { PieArcDatum } from 'd3'
 
 import { SvgChartRenderParams } from '@components/svg-chart'
-import { GlbPagesNames } from '@glb/glb-names'
 import { TVariant } from '@service-providers/common'
 import { defaultColors, selectedColors } from '../unit.chart.data'
 import { TPieChartData } from '../unit-chart.interface'
@@ -22,23 +21,20 @@ export const getShortNumber = (value: number): string => {
 
 const maxItems = defaultColors.length
 
-export const getPieChartItemColor = (index: number): string =>
-  defaultColors[index] ?? defaultColors[defaultColors.length - 1]
-
 export const drawPieChart = ({
   svg,
   data,
   width,
   height,
   tooltip,
-  page,
+  isDashboard,
   selectedVariants,
   onSelectVariantByChart,
 }: SvgChartRenderParams<TPieChartData>): void => {
   const radius = Math.min(width, height) / 2
 
   const slicedData = reduceVariantsData(data, maxItems)
-  const shouldAddStrokeColor = page !== GlbPagesNames.Dtree
+
   const chart = d3
     .select(svg)
     .append('g')
@@ -56,15 +52,16 @@ export const drawPieChart = ({
   }: PieArcDatum<TVariant>): string => {
     return `<span class='${
       styles.tooltipPoint
-    }' style='background: ${getPieChartItemColor(
+    }' style='background: ${getDifferentBarColors(
       index,
+      defaultColors,
     )}'></span><span class='ml-3'>${
       slicedData[index][0]
     }</span>${getVariantCountsText(variant)}`
   }
 
   const getFunctionForColorChoice = (index: number, barName: string) => {
-    return page === GlbPagesNames.Refiner
+    return !isDashboard
       ? getChartColor({
           selectedVariants,
           barName,
@@ -85,7 +82,7 @@ export const drawPieChart = ({
     .attr(
       'stroke',
       (item, index) =>
-        shouldAddStrokeColor &&
+        !isDashboard &&
         getChartColor({
           selectedVariants,
           barName: item.data[0],

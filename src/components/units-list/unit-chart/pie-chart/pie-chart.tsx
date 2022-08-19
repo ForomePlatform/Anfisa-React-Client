@@ -6,23 +6,22 @@ import cn from 'classnames'
 import { t } from '@i18n'
 import { SvgChart } from '@components/svg-chart'
 import { PieChartLegend } from '@components/units-list/unit-chart/pie-chart/pie-chart-legend'
-import { GlbPagesNames } from '@glb/glb-names'
 import { TPieChartData } from '../unit-chart.interface'
 import { drawPieChart, getShortNumber } from './pie-chart.utils'
 
 interface IPieChartProps {
   data: TPieChartData
   selectedVariants?: string[]
+  isDashboard?: boolean
   isLight?: boolean
-  page?: GlbPagesNames
   onSelectVariantByChart?: (variant: string) => void
 }
 
 export const PieChart = ({
   data,
   selectedVariants,
+  isDashboard,
   isLight,
-  page,
   onSelectVariantByChart,
 }: IPieChartProps): ReactElement | null => {
   const totalCountsOnChart = data.reduce(
@@ -39,6 +38,7 @@ export const PieChart = ({
           isLight && styles.pieChart__legend_light,
         )}
         total={totalCountsOnChart}
+        selectedVariants={selectedVariants}
       />
       <div className={cn(styles.pieChart__chart, styles.chart)}>
         <div className={styles.chart__total}>
@@ -56,7 +56,7 @@ export const PieChart = ({
           data={data}
           selectedVariants={selectedVariants}
           render={drawPieChart}
-          page={page}
+          isDashboard={isDashboard}
           onSelectVariantByChart={onSelectVariantByChart}
         />
       </div>

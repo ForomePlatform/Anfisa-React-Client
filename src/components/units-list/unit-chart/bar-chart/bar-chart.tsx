@@ -5,7 +5,6 @@ import cn from 'classnames'
 
 import { t } from '@i18n'
 import { SvgChart } from '@components/svg-chart/svg-chart'
-import { GlbPagesNames } from '@glb/glb-names'
 import { TBarChartData } from '../unit-chart.interface'
 import { drawBarChart } from './bar-chart.utils'
 
@@ -14,8 +13,8 @@ interface IBarChartProps {
   totalItems: number
   width?: number
   height?: number
+  isDashboard?: boolean
   isLight?: boolean
-  page?: GlbPagesNames
   selectedVariants?: string[]
   dataTestId?: string
   onSelectVariantByChart?: (variant: string) => void
@@ -26,8 +25,8 @@ export const BarChart = ({
   totalItems,
   width,
   height,
+  isDashboard,
   isLight,
-  page,
   selectedVariants,
   dataTestId,
   onSelectVariantByChart,
@@ -62,7 +61,7 @@ export const BarChart = ({
         selectedVariants={selectedVariants}
         render={drawBarChart}
         onSelectVariantByChart={onSelectVariantByChart}
-        page={page}
+        isDashboard={isDashboard}
       />
       {totalItems > data.length && (
         <div className="text-xs text-grey-blue text-center mt-1 -mb-1">

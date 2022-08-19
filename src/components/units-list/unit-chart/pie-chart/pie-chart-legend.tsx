@@ -4,13 +4,15 @@ import { ReactElement, useState } from 'react'
 import cn from 'classnames'
 
 import { t } from '@i18n'
+import { defaultColors, selectedColors } from '../unit.chart.data'
 import { TPieChartData } from '../unit-chart.interface'
-import { getPieChartItemColor } from './pie-chart.utils'
+import { getDifferentBarColors } from '../utils/getDifferentColors'
 
 export interface IPieChartLegendProps {
   className?: string
   data: TPieChartData
   total: number
+  selectedVariants: string[] | undefined
 }
 
 const itemsInCollapsedMode = 4
@@ -19,6 +21,7 @@ export const PieChartLegend = ({
   className,
   data,
   total,
+  selectedVariants,
 }: IPieChartLegendProps): ReactElement => {
   const [isCollapsed, setCollapsed] = useState(true)
 
@@ -39,7 +42,14 @@ export const PieChartLegend = ({
           <div className={styles.legendVariant__label}>
             <span
               className={styles.legendVariant__icon}
-              style={{ backgroundColor: getPieChartItemColor(index) }}
+              style={{
+                backgroundColor: selectedVariants?.includes(name)
+                  ? getDifferentBarColors(index, selectedColors)
+                  : getDifferentBarColors(index, defaultColors),
+                border: selectedVariants?.includes(name)
+                  ? 'none'
+                  : `1px solid ${getDifferentBarColors(index, selectedColors)}`,
+              }}
             />
             <div className={styles.legendVariant__info}>
               <span className={styles.legendVariant__title}>{name}</span>

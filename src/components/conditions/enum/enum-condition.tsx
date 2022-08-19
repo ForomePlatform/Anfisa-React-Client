@@ -216,7 +216,6 @@ export const EnumCondition = observer(
                 selectedVariants={selectedVariants}
                 className="w-full !bg-transparent"
                 isLight
-                page={page}
                 onSelectVariantByChart={onSelectVariantByChart}
               />
             </div>

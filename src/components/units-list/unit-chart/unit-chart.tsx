@@ -2,7 +2,6 @@ import { ReactElement, ReactNode } from 'react'
 import cn from 'classnames'
 
 import { DecisionTreesResultsDataCy } from '@data-testid'
-import { GlbPagesNames } from '@glb/glb-names'
 import { TPropertyStatus } from '@service-providers/common'
 import { BarChart } from './bar-chart'
 import { HistogramChart } from './histogram-chart'
@@ -13,8 +12,8 @@ import { useChartConfig } from './utils'
 interface IUnitChartProps {
   unit: TPropertyStatus
   selectedVariants?: string[]
+  isDashboard?: boolean
   isLight?: boolean
-  page?: GlbPagesNames
   className?: string
   onSelectVariantByChart?: (variant: string) => void
 }
@@ -22,8 +21,8 @@ interface IUnitChartProps {
 export const UnitChart = ({
   unit,
   selectedVariants,
+  isDashboard,
   isLight,
-  page,
   className,
   onSelectVariantByChart,
 }: IUnitChartProps): ReactElement | null => {
@@ -42,8 +41,8 @@ export const UnitChart = ({
           data={chartConfig.data}
           totalItems={chartConfig.totalItems}
           height={150}
+          isDashboard={isDashboard}
           isLight={isLight}
-          page={page}
           selectedVariants={selectedVariants}
           onSelectVariantByChart={onSelectVariantByChart}
         />
@@ -53,8 +52,8 @@ export const UnitChart = ({
       chart = (
         <PieChart
           data={chartConfig.data}
+          isDashboard={isDashboard}
           isLight={isLight}
-          page={page}
           selectedVariants={selectedVariants}
           onSelectVariantByChart={onSelectVariantByChart}
         />
