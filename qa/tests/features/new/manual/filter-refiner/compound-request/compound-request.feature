@@ -113,9 +113,9 @@ Scenario: 10 XL dataset - Not mode
 	Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
 	When user clicks the "+" button near "Functional Units"
 	And selects "Compound_Request" functional attribute
-	And checks the "Not" check-box
 	And checks the "Compensational" check-box
-	And clicks the "+Add attribute" button to apply the filter
+	And checks the "Not" check-box
+	And clicks the "Apply condition" button to apply the filter
 	Then "Compound_Request" should be added to the right part of the page with "not" flag
 	And number of variants should equal 5,519,862
 

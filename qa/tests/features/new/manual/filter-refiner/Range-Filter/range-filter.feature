@@ -37,7 +37,7 @@ Scenario Outline: 02 Filter by "<Attribute Name>" range - boundary values
 	And clicks the "Apply condition" button to apply the filter
 	Then filter should be applied
 	And the range "<Minimum Value>" less than or equals "<Attribute Name>" less than or equals "<Maximum Value>" should be displayed in the right part of the screen
-	And number of variants should be equal to "<Total Variants>"
+	And number of variants should equal "<Total Variants>"
 
 Examples:
 	| Attribute Name               | Minimum Value | Maximum Value | Total Variants |
@@ -51,34 +51,34 @@ Examples:
 	| Severity                     | -1            | 3             | 5,628,753      |
 
 @tc:114307
-Scenario Outline: 03 Empty "<Minimum Value>" field
+Scenario Outline: 03 Only the "<Maximum Value>" is entered
 	When user clicks the "<Attribute Name>"
 	And enters the maximum value of range "<Maximum Value>"
-	And leaves the minimum value field empty
+	And minimum value field stays empty
 	And clicks the "Apply condition" button to apply the filter
 	Then the "<Attribute Name>" less than or equals "<Maximum Value>" should be displayed in the right part of the screen
-	And the "<Minimum Value>" should be counted as the minimum value
+	And number of variants should equal "<Total Variants>"
 
 Examples: 
-	| Attribute Name               | Minimum Value | Maximum Value |
-	| Num_Samples                  | 0             | 3             |
-	| Num_Genes                    | 0             | 23            | 
-	| Start_Pos                    | 25165         | 248930384     |
+	| Attribute Name | Maximum Value | Total Variants |
+	| Num_Samples    | 2             | 3,281,692      |
+	| Num_Genes      | 10            | 5,628,362      |
+	| Severity       | 1             | 5,609,058      |
 
 @tc:114308
-Scenario Outline: 04 Empty "<Maximum Value>" field
+Scenario Outline: 04 Only the "<Minimum Value>" is entered
 	When user clicks the "<Attribute Name>"
 	And enters the minimum value of range "<Minimum Value>"
-	And leaves the maximum value field empty
+	And maximum value field stays empty
 	And clicks the "Apply condition" button to apply the filter
 	Then the "<Attribute Name>" greater than "<Minimum Value>" should be displayed in the right part of the screen
-	And the "<Maximum Value>" should be counted as the maximum value
+	And number of variants should equal "<Total Variants>"
 
 Examples: 
-	| Attribute Name               | Minimum Value | Maximum Value |
-	| Num_Samples                  | 0             | 3             |
-	| Num_Genes                    | 0             | 23            | 
-	| Start_Pos                    | 25165         | 248930384     |
+	| Attribute Name | Minimum Value | Total Variants |
+	| Num_Samples    | 1             | 4,244,509      |
+	| Num_Genes      | 3             | 4,423          |
+	| Severity       | 1             | 19,695         |
 
 @tc:114309
 Scenario Outline: 05 "<Attribute Name>" range values on the graph
@@ -148,14 +148,3 @@ Examples:
 	| Min_GQ                       | -1            | 841           |
 	| Number_of_clinvar_submitters | 0             | 31            |
 	| Severity                     | -1            | 4             |
-
-@tc:114313
-Scenario: 09 Clear button
-	When user clicks the "Num_Samples" attribute
-	And enters the minimum value of range "1"
-	And changes "less" sign with "less or equals" next to the minimum value
-	And enters the maximum value of range "2"
-	And clicks the "Apply condition" button to apply the filter
-	And user clicks the "Clear" button
-	Then the filter should be cleared
-	And number of variants should go back to 5,628,753
