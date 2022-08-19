@@ -14,7 +14,7 @@ export const InheritanceModeSelect: FC<IInheritanceModeSelectProp> = ({
   handleSetPreparedScenario,
 }) => (
   <>
-    <div className="flex justify-between">
+    <div className="flex justify-between px-4">
       <span className="text-14 leading-16px font-medium text-grey-blue mt-0.5 mb-2.5">
         {t('funcCondition.inheritanceMode')}
       </span>
@@ -27,7 +27,7 @@ export const InheritanceModeSelect: FC<IInheritanceModeSelectProp> = ({
       </span>
     </div>
 
-    <div className="flex flex-col pl-2">
+    <div className="flex flex-col pl-6 pr-4">
       {resetOptions.map(option => (
         <Checkbox
           key={option}

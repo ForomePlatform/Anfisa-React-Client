@@ -51,17 +51,17 @@ export const GeneRegionCondition = observer(
 
     return (
       <>
-        <span className="text-14 leading-16px text-grey-blue font-medium mb-1">
+        <span className="px-4 mb-1 text-14 leading-16px text-grey-blue font-medium">
           {t('funcCondition.locus')}
         </span>
 
         <GeneRegionInput
           value={locus}
           onChange={handleSetLocusValue}
-          classname="mb-2"
+          classname="mb-2 px-4"
         />
 
-        <div className="flex justify-between items-center my-3 text-14">
+        <div className="flex justify-between items-center my-3 px-4 text-14">
           <DisabledVariants
             isFetching={isFetching}
             variantsValue={variantsValue}

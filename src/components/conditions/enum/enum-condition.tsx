@@ -11,6 +11,7 @@ import { UnitChart } from '@components/units-list/unit-chart'
 import { GlbPagesNames } from '@glb/glb-names'
 import { QueryBuilderSearch } from '@pages/filter/dtree/components/query-builder/query-builder-search'
 import { AllNotMods } from '@pages/filter/dtree/components/query-builder/ui/all-not-mods'
+import { DividerHorizontal } from '@pages/filter/refiner/components/middle-column/components/divider-horizontal'
 import { SelectedGroupItem } from '@pages/filter/refiner/components/middle-column/selected-group-item'
 import { TVariant } from '@service-providers/common'
 import { IEnumConditionProps } from './enum-condition.interface'
@@ -96,7 +97,6 @@ export const EnumCondition = observer(
       setMode(undefined)
     }
 
-    const showFinder = enumVariants.length > DEFAULT_COUNT
     const selectedEnumName =
       selectedDashboardVariants?.[0] || selectedVariants[0]
 
@@ -117,16 +117,14 @@ export const EnumCondition = observer(
 
     return (
       <>
-        {showFinder && (
-          <QueryBuilderSearch
-            value={searchValue}
-            onChange={handleSearchChange}
-            isSubgroupItemSearch
-            className="mb-4"
-          />
-        )}
+        <QueryBuilderSearch
+          value={searchValue}
+          onChange={handleSearchChange}
+          isSubgroupItemSearch
+          className="mb-4 px-4"
+        />
 
-        <div className="flex justify-between items-center w-full mb-4 text-14">
+        <div className="flex justify-between items-center w-full mb-5 mt-1 px-4 text-14">
           <div className="text-14 text-grey-blue">
             {selectedVariants.length || 0} {t('dtree.selected')}
           </div>
@@ -165,7 +163,7 @@ export const EnumCondition = observer(
         </div>
 
         {page !== GlbPagesNames.Dtree && (
-          <div className="w-full flex justify-end items-center mb-4 text-14">
+          <div className="w-full flex justify-end items-center mb-5 px-4 text-14">
             <div className="flex items-center">
               <Switch
                 className="mr-1"
@@ -198,7 +196,7 @@ export const EnumCondition = observer(
           </div>
         )}
 
-        <div className="flex justify-end">
+        <div className="flex justify-end px-4">
           <AllNotMods
             groupSubKind={attributeSubKind}
             isAllModeChecked={mode === ModeTypes.All}
@@ -211,20 +209,24 @@ export const EnumCondition = observer(
         </div>
 
         {selectedAttributeStatus && isChartsVisible && (
-          <div className="-mt-1">
-            <UnitChart
-              unit={selectedAttributeStatus}
-              selectedVariants={selectedVariants}
-              className="w-full !bg-transparent"
-              isLight
-              page={page}
-              onSelectVariantByChart={onSelectVariantByChart}
-            />
-          </div>
+          <>
+            <div className="-mt-1 px-4">
+              <UnitChart
+                unit={selectedAttributeStatus}
+                selectedVariants={selectedVariants}
+                className="w-full !bg-transparent"
+                isLight
+                page={page}
+                onSelectVariantByChart={onSelectVariantByChart}
+              />
+            </div>
+
+            <DividerHorizontal className="-mt-1" />
+          </>
         )}
 
         {isDataReady ? (
-          <div style={{ height: listHeight }} className="overflow-auto">
+          <div style={{ height: listHeight }} className="overflow-auto px-4">
             {filteredVariants.length > 0 ? (
               <FlatList
                 elements={filteredVariants}
@@ -242,7 +244,7 @@ export const EnumCondition = observer(
                 )}
               />
             ) : (
-              <div className="flex justify-center items-center text-14 text-grey-blue">
+              <div className="flex justify-center items-center px-4 text-14 text-grey-blue">
                 {t('condition.noFilters')}
               </div>
             )}

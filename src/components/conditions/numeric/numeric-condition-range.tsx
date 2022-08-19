@@ -82,7 +82,7 @@ export const NumericConditionRange = ({
 
   return (
     <>
-      <div className="overflow-hidden">
+      <div className="overflow-hidden px-4">
         <div className="relative flex items-center">
           <div className="relative grow flex items-center py-6">
             <div className="absolute top-1 left-0 w-full text-xs text-grey-blue text-left">

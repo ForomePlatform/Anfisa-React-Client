@@ -12,11 +12,11 @@ export const CustomInheritanceModeScenario = ({
   onChangeScenario,
 }: ICustomInheritanceModeScenarioProps): ReactElement => (
   <>
-    <div className="text-14 leading-16px font-medium text-grey-blue mb-2.5">
+    <div className="px-4 mb-2.5 text-14 leading-16px font-medium text-grey-blue">
       {t('funcCondition.scenario')}
     </div>
 
-    <div className="flex items-center justify-between w-full pl-2 text-14">
+    <div className="flex items-center justify-between w-full pr-4 pl-6 text-14">
       {problemGroups.map((group: string, index: number) => (
         <div key={group}>
           <span>{group}</span>

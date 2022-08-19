@@ -183,7 +183,7 @@ export const CompoundRequestCondition = observer(
           onChangeRequestConditionNumber={onChangeRequestConditionNumber}
         />
 
-        <div className="flex items-center justify-end w-full text-14">
+        <div className="flex items-center justify-end w-full px-4 text-14">
           <RequestsAmountControlButtons
             requestCondition={requestCondition}
             activeRequestIndex={activeRequestIndex}
@@ -201,7 +201,7 @@ export const CompoundRequestCondition = observer(
 
         <DividerHorizontal />
 
-        <div className="flex justify-between items-center mb-2 text-14">
+        <div className="flex justify-between items-center mb-2 px-4 text-14">
           <DisabledVariants
             isFetching={isFetching}
             status={status}

@@ -18,7 +18,7 @@ export const AprroxAndState = ({
   onChangeApprox,
   className,
 }: IAprroxAndStateProps): ReactElement => (
-  <div className={cn('flex justify-between text-14', className)}>
+  <div className={cn('flex justify-between text-14 px-4', className)}>
     <div className="flex items-center flex-1">
       <span className="text-18 leading-14px">Approx</span>
 

@@ -14,7 +14,7 @@ export const InheritanceModeVariantsControls = ({
   mode,
   toggleMode,
 }: IInheritanceModeVariantsControlsProps): ReactElement => (
-  <div className="flex justify-between w-full mt-4 -mb-5">
+  <div className="flex justify-between w-full mt-4 px-4 -mb-5">
     <div className="text-14 text-grey-blue">
       {selectedVariants.length} {t('dtree.selected')}
     </div>

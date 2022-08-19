@@ -37,7 +37,7 @@ export const SelectedGroup = observer(
     return (
       <div
         className={cn(
-          'flex flex-col p-4 overflow-y-auto',
+          'flex flex-col py-4 overflow-y-auto',
           isRedactorMode && 'bg-blue-tertiary',
           className,
         )}
