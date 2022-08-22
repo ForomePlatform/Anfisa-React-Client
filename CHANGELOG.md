@@ -2,6 +2,7 @@
 
 ## <small>0.8.1 (8/22/2022)</small>
 
+* feat([FOROME-1393](https://quantori.atlassian.net/browse/FOROME-1393)): display variants counter (#898) ([50672f71](https://github.com/ForomePlatform/Anfisa-React-Client/commit/50672f71))
 * fix([FOROME-1486](https://quantori.atlassian.net/browse/FOROME-1486)): showing prompt for solution select ([008de8ff](https://github.com/ForomePlatform/Anfisa-React-Client/commit/008de8ff))
 * fix([FOROME-1464](https://quantori.atlassian.net/browse/FOROME-1464)): wizard undo button style ([0b119101](https://github.com/ForomePlatform/Anfisa-React-Client/commit/0b119101))
 * feat([FOROME-1483](https://quantori.atlassian.net/browse/FOROME-1483)): add autoscroll to the enum list ([352119ae](https://github.com/ForomePlatform/Anfisa-React-Client/commit/352119ae))
