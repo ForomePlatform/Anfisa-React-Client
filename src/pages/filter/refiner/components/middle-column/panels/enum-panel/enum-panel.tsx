@@ -55,6 +55,7 @@ export const EnumPanel = observer((): ReactElement => {
         isShowZeroes={refinerAttributeStore.isShowZeroVariants}
         toggleShowZeroes={refinerAttributeStore.setIsShowZeroVariants}
         onTouch={() => filterStore.setTouched(true)}
+        className="px-4"
         controls={({ value, mode, clearValue }) =>
           renderPanelControls({
             initialCondition: initialEnumVariants,

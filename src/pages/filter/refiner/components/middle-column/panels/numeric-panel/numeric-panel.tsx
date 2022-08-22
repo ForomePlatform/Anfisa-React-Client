@@ -38,6 +38,7 @@ export const NumericPanel = observer((): ReactElement | null => {
       <DividerHorizontal />
 
       <NumericCondition
+        className="px-4"
         attrData={attributeStatus}
         initialValue={initialNumericValue}
         controls={({ value, hasErrors, clearValue }) => {

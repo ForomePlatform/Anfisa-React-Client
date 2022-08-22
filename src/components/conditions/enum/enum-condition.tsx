@@ -1,4 +1,5 @@
 import { ReactElement, useCallback, useEffect, useMemo, useState } from 'react'
+import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { ModeTypes } from '@core/enum/mode-types-enum'
@@ -32,18 +33,19 @@ export const EnumCondition = observer(
     selectedDashboardVariants,
     selectedAttributeStatus,
     page,
+    className,
     toggleShowZeroes,
     onTouch,
     controls,
   }: IEnumConditionProps): ReactElement => {
-    const [mode, setMode] = useState(initialEnumMode)
+    const [mode, setMode] = useState<ModeTypes | undefined>(initialEnumMode)
     const [selectedVariants, setSelectedVariants] = useState<string[]>(
       initialVariants ?? [],
     )
 
-    const [isChartsVisible, setISChartsVisible] = useState(true)
+    const [isChartsVisible, setIsChartsVisible] = useState<boolean>(true)
 
-    const [searchValue, setSearchValue] = useState('')
+    const [searchValue, setSearchValue] = useState<string>('')
 
     useEffect(() => {
       setSearchValue('')
@@ -121,13 +123,20 @@ export const EnumCondition = observer(
           value={searchValue}
           onChange={handleSearchChange}
           isSubgroupItemSearch
-          className="mb-4 px-4"
+          className={cn('mb-4', className)}
         />
 
-        <div className="flex justify-between items-center w-full mb-5 mt-1 px-4 text-14">
+        <div
+          className={cn(
+            'flex justify-between items-center w-full mb-5 mt-1 text-14',
+            className,
+          )}
+        >
           <div className="text-14 text-grey-dark">
             {selectedVariants.length || 0} {t('dtree.selected')}
           </div>
+
+          {/* TODO: this logic will be removed after dtree enum modal is redesigned too*/}
 
           {page === GlbPagesNames.Dtree && (
             <div className="flex items-center">
@@ -163,7 +172,12 @@ export const EnumCondition = observer(
         </div>
 
         {page !== GlbPagesNames.Dtree && (
-          <div className="w-full flex justify-end items-center mb-5 px-4 text-14">
+          <div
+            className={cn(
+              'w-full flex justify-end items-center mb-5 text-14',
+              className,
+            )}
+          >
             <div className="flex items-center">
               <Switch
                 className="mr-2"
@@ -186,7 +200,7 @@ export const EnumCondition = observer(
               <Switch
                 className="mr-2"
                 isChecked={isChartsVisible}
-                onChange={() => setISChartsVisible(prev => !prev)}
+                onChange={() => setIsChartsVisible(prev => !prev)}
               />
 
               <span className="text-grey-dark">
@@ -196,7 +210,7 @@ export const EnumCondition = observer(
           </div>
         )}
 
-        <div className="flex justify-end px-4">
+        <div className={cn('flex justify-end mb-2', className)}>
           <AllNotMods
             groupSubKind={attributeSubKind}
             isAllModeChecked={mode === ModeTypes.All}
@@ -210,7 +224,7 @@ export const EnumCondition = observer(
 
         {selectedAttributeStatus && isChartsVisible && (
           <>
-            <div className="-mt-1 px-4">
+            <div>
               <UnitChart
                 unit={selectedAttributeStatus}
                 selectedVariants={selectedVariants}
@@ -225,7 +239,10 @@ export const EnumCondition = observer(
         )}
 
         {isDataReady ? (
-          <div style={{ height: listHeight }} className="overflow-auto px-4">
+          <div
+            style={{ height: listHeight }}
+            className={cn('overflow-auto', className)}
+          >
             {filteredVariants.length > 0 ? (
               <FlatList
                 elements={filteredVariants}
@@ -253,7 +270,7 @@ export const EnumCondition = observer(
         )}
 
         {controls && (
-          <div className="px-4">
+          <div className={className as string}>
             {controls({
               value: selectedVariants,
               mode,

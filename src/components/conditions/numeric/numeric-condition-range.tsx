@@ -1,4 +1,5 @@
 import React, { ReactElement, useCallback, useMemo, useState } from 'react'
+import cn from 'classnames'
 
 import { adjustHistogramData } from '@core/histograms'
 import { t } from '@i18n'
@@ -27,6 +28,7 @@ import { StrictnessSelect } from './strictness-select'
 export const NumericConditionRange = ({
   attrData,
   initialValue,
+  className,
   controls,
 }: INumericConditionProps): ReactElement => {
   const isZeroSkipped = useMemo(() => getIsZeroSkipped(attrData), [attrData])
@@ -82,7 +84,7 @@ export const NumericConditionRange = ({
 
   return (
     <>
-      <div className="overflow-hidden px-4">
+      <div className={cn('overflow-hidden', className)}>
         <div className="relative flex items-center">
           <div className="relative grow flex items-center py-6">
             <div className="absolute top-1 left-0 w-full text-xs text-grey-blue text-left">
@@ -192,7 +194,7 @@ export const NumericConditionRange = ({
         )}
       </div>
       {controls && (
-        <div className="px-4">
+        <div className={className}>
           {controls({
             value: prepareValue(value, isZeroSkipped),
             hasErrors: errors.includes(true),

@@ -1,4 +1,5 @@
 import { ReactElement } from 'react'
+import { Argument } from 'classnames'
 
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import { GlbPagesNames } from '@glb/glb-names'
@@ -22,6 +23,7 @@ export interface IEnumConditionProps {
   selectedDashboardVariants?: string[]
   selectedAttributeStatus?: TPropertyStatus | undefined
   page: GlbPagesNames
+  className?: Argument
   toggleShowZeroes: (value: boolean) => void
   controls?: (props: IEnumConditionControlsProps) => ReactElement | null
   onTouch?: () => void
