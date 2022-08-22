@@ -125,7 +125,7 @@ export const EnumCondition = observer(
         />
 
         <div className="flex justify-between items-center w-full mb-5 mt-1 px-4 text-14">
-          <div className="text-14 text-grey-blue">
+          <div className="text-14 text-grey-dark">
             {selectedVariants.length || 0} {t('dtree.selected')}
           </div>
 
@@ -166,12 +166,12 @@ export const EnumCondition = observer(
           <div className="w-full flex justify-end items-center mb-5 px-4 text-14">
             <div className="flex items-center">
               <Switch
-                className="mr-1"
+                className="mr-2"
                 isChecked={isShowZeroes}
                 onChange={toggleShowZeroes}
               />
 
-              <span className="text-grey-blue">
+              <span className="text-grey-dark">
                 {t('enumCondition.showZeroVariants')}
               </span>
             </div>
@@ -184,12 +184,12 @@ export const EnumCondition = observer(
 
             <div className="flex items-center">
               <Switch
-                className="mr-1"
+                className="mr-2"
                 isChecked={isChartsVisible}
                 onChange={() => setISChartsVisible(prev => !prev)}
               />
 
-              <span className="text-grey-blue">
+              <span className="text-grey-dark">
                 {t('enumCondition.showCharts')}
               </span>
             </div>
@@ -252,8 +252,15 @@ export const EnumCondition = observer(
           <Loader size="m" />
         )}
 
-        {controls &&
-          controls({ value: selectedVariants, mode, clearValue: handleClear })}
+        {controls && (
+          <div className="px-4">
+            {controls({
+              value: selectedVariants,
+              mode,
+              clearValue: handleClear,
+            })}
+          </div>
+        )}
       </>
     )
   },

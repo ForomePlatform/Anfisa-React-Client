@@ -7,7 +7,7 @@ import { TRequestCondition } from '@service-providers/common'
 
 export const RequestConditions = observer(
   (props: IRequestConditionsProps): ReactElement => (
-    <div className="flex flex-col w-full text-14 mb-4 px-4 overflow-y-auto">
+    <div className="flex flex-col w-full text-14 mb-4 overflow-y-auto">
       {props.requestCondition.map((item: TRequestCondition, index: number) => (
         <CompoundRequestScenario
           requestItem={item}

@@ -49,7 +49,7 @@ export const CompoundHetCondition = observer(
       <>
         <AprroxAndState approx={approx} onChangeApprox={setApprox} />
 
-        <div className="flex justify-between items-center text-14 my-4 px-4">
+        <div className="flex justify-between items-center text-14 my-4">
           <DisabledVariants
             isFetching={isFetching}
             variantsType={'Proband'}

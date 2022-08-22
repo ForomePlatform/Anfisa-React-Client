@@ -339,7 +339,7 @@ export const en = {
     presets: 'Presets',
     createPreset: '+ Create New',
     actions: 'Actions',
-    searchForAField: 'Search',
+    searchForAField: 'Search for a field',
     decisionTrees: 'Decision Trees',
     tooMuchVariants: 'The number of variants is more than 2600!',
     prohibitToOpen: 'You cannot open XL-dataset on Filter Refiner',

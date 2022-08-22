@@ -28,7 +28,7 @@ export const Divider = ({
       orientation === 'vertical' ? 'w-0.5 h-full' : 'h-0.5 w-full',
       {
         'mx-4': spacing === 'normal' && orientation === 'vertical',
-        'mx-2': spacing === 'dense' && orientation === 'vertical',
+        'mx-2.5': spacing === 'dense' && orientation === 'vertical',
         'mx-1': spacing === 'min' && orientation === 'vertical',
         'my-0': spacing === 'min' && orientation === 'vertical',
         'my-4': spacing === 'normal' && orientation === 'horizontal',

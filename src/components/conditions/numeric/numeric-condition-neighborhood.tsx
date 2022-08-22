@@ -128,8 +128,12 @@ export const NumericConditionNeighborhood = ({
           </div>
         </div>
       </div>
-      {controls &&
-        controls({ value: conditionValue, hasErrors: false, clearValue })}
+
+      {controls && (
+        <div className="px-4">
+          {controls({ value: conditionValue, hasErrors: false, clearValue })}
+        </div>
+      )}
     </>
   )
 }

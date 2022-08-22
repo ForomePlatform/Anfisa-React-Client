@@ -34,20 +34,22 @@ export const GeneRegion = observer(() => {
   )
 
   return (
-    <GeneRegionCondition
-      initialLocusValue={initialLocusValue}
-      initialMode={initialMode}
-      attributeSubKind={attributeSubKind}
-      statFuncStore={refinerStatFuncStore}
-      onTouch={() => filterStore.setTouched(true)}
-      controls={({ mode, hasErrors, param, clearValue }) =>
-        renderPanelControls({
-          initialCondition,
-          disabled: hasErrors || !isFilterTouched,
-          saveAttribute: () => saveAttribute(mode, param),
-          clearValue,
-        })
-      }
-    />
+    <div className="px-4">
+      <GeneRegionCondition
+        initialLocusValue={initialLocusValue}
+        initialMode={initialMode}
+        attributeSubKind={attributeSubKind}
+        statFuncStore={refinerStatFuncStore}
+        onTouch={() => filterStore.setTouched(true)}
+        controls={({ mode, hasErrors, param, clearValue }) =>
+          renderPanelControls({
+            initialCondition,
+            disabled: hasErrors || !isFilterTouched,
+            saveAttribute: () => saveAttribute(mode, param),
+            clearValue,
+          })
+        }
+      />
+    </div>
   )
 })

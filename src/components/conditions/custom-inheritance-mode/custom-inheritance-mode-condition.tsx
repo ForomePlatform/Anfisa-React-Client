@@ -104,7 +104,7 @@ export const CustomInheritanceModeCondition = observer(
 
         <DividerHorizontal />
 
-        <div className="flex justify-between items-center mb-2 px-4 text-14">
+        <div className="flex justify-between items-center mb-2 text-14">
           <DisabledVariants
             isFetching={isFetching}
             variantsValue={variantsValue}

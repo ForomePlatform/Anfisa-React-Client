@@ -26,7 +26,10 @@ export const AttributeHeader = ({
         {isFunc && <FnLabel />}
 
         <span
-          className={cn('text-16 font-bold cursor-pointer', isFunc && 'ml-1.5')}
+          className={cn(
+            'text-16 font-medium cursor-pointer',
+            isFunc && 'ml-1.5',
+          )}
         >
           {name || title}
         </span>

@@ -35,7 +35,7 @@ export const CustomInheritanceMode = observer(() => {
   )
 
   return (
-    <>
+    <div className="px-4">
       <CustomInheritanceModeCondition
         problemGroups={problemGroups}
         initialScenario={initialScenario}
@@ -52,6 +52,6 @@ export const CustomInheritanceMode = observer(() => {
           })
         }
       />
-    </>
+    </div>
   )
 })

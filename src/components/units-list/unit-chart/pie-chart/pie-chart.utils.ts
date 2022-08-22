@@ -31,7 +31,7 @@ export const drawPieChart = ({
   selectedVariants,
   onSelectVariantByChart,
 }: SvgChartRenderParams<TPieChartData>): void => {
-  const radius = Math.min(width, height) / 2
+  const radius = Math.min(width, height) / 2.02
 
   const slicedData = reduceVariantsData(data, maxItems)
 

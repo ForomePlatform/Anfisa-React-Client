@@ -22,7 +22,7 @@ export const renderPanelControls = ({
   clearValue,
   saveAttribute,
 }: IRenderPanelControlsProps) => (
-  <div className="flex items-end justify-end mt-2 pb-3 px-4">
+  <div className="flex items-end justify-end mt-2 pb-3">
     <Button
       variant={'secondary'}
       text={t('general.cancel')}

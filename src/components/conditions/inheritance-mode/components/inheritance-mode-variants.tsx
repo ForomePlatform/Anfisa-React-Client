@@ -13,7 +13,7 @@ export const InheritanceModeVariants = ({
   status,
   handleSetVariants,
 }: IInheritanceModeVariantsProps): ReactElement => (
-  <div className="flex flex-col px-4 text-14">
+  <div className="flex flex-col text-14">
     <>
       {isFetching ? (
         <Loader size="s" className="my-4" />
