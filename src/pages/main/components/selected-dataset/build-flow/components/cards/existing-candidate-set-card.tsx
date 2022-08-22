@@ -19,8 +19,7 @@ export const ExistingCandidatesCard = observer((props: ICardProps) => {
   return (
     <Card
       isNeedToAnimate={wizardStore.isNeedToAnimateCard(id)}
-      className="mt-4"
-      style={{ paddingLeft: 0, paddingRight: 0 }}
+      className="mt-4 !px-0"
       position={position}
     >
       <CardTitle text={title} className="px-4" />

@@ -66,7 +66,7 @@ export const PresetsCard = observer(
               >
                 <div
                   className={cn(
-                    'w-full flex items-center py-2 leading-5 cursor-pointer px-4',
+                    'w-full flex items-center py-2 px-4 leading-5 cursor-pointer',
                     isSelected
                       ? 'bg-blue-bright text-white'
                       : 'hover:bg-blue-light',
@@ -86,7 +86,7 @@ export const PresetsCard = observer(
     return (
       <Card
         isNeedToAnimate={wizardStore.isNeedToAnimateCard(id)}
-        style={{ paddingLeft: 0, paddingRight: 0 }}
+        className="!px-0"
         position={position}
       >
         <CardTitle text={title} className="px-4" />

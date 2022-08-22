@@ -65,7 +65,7 @@ export const SecondaryDsItem: FC<IDatasetsListItemProps> = observer(
         >
           <div
             className={cn(
-              'w-full flex justify-between items-center py-2 leading-5 cursor-pointer',
+              'w-full flex justify-between items-center py-2 px-4 leading-5 cursor-pointer',
               isActive ? 'bg-blue-bright text-white' : 'hover:bg-blue-light',
             )}
             style={{ paddingLeft: `${padding}px` }}

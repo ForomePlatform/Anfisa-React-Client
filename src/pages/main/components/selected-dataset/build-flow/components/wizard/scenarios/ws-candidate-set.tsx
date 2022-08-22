@@ -50,7 +50,6 @@ export const wsCandidateSet: IWizardScenario[] = [
     position: 'left',
     nextCard: WizardCardIds.Description,
   },
-
   {
     component: (props: ICardProps) => <PresetsCard {...props} />,
     id: WizardCardIds.Presets,
