@@ -13,6 +13,7 @@ import { renderAttributeDialogControls } from '../ui/renderAttributeControls'
 
 export const EnumDialog = observer(
   ({
+    isDataReady,
     attributeStore,
     onAddEnum,
     onSaveEnum,
@@ -69,7 +70,7 @@ export const EnumDialog = observer(
       [attributeName, onSaveEnum],
     )
 
-    const paginationHeight =
+    const listHeight =
       enumVariants.length > DEFAULT_COUNT ? 'calc(580px - 249px)' : 'auto'
 
     return (
@@ -87,8 +88,10 @@ export const EnumDialog = observer(
           initialVariants={initialVariants}
           initialEnumMode={initialEnumMode}
           isShowZeroes={dtreeAttributeStore.isShowZeroVariants}
+          isDataReady={isDataReady}
           toggleShowZeroes={dtreeAttributeStore.setIsShowZeroVariants}
-          paginationHeight={paginationHeight}
+          listHeight={listHeight}
+          selectedDashboardVariants={selectedEnumVariants}
           controls={({ value, mode }) =>
             renderAttributeDialogControls({
               initialCondition,

@@ -81,6 +81,7 @@ export const DtreePage = observer((): ReactElement => {
   return (
     <>
       <ModalsContainer
+        isDataReady={dtreeStore.dataReady === 100}
         attributeStore={dtreeAttributeStore}
         funcStore={dtreeFunctionsStore}
         onAddEnum={addAttributeToStep}
@@ -106,7 +107,7 @@ export const DtreePage = observer((): ReactElement => {
 
         <FilterControl
           disabledCreateDataset={
-            dtreeStore.dtreeStepIndices.length === 0 ||
+            dtreeStore.stepIndexes.length === 0 ||
             !dtreeStore.totalFilteredCounts ||
             dtreeStore.totalFilteredCounts.accepted > maxCountOfVariants
           }

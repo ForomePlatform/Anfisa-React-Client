@@ -72,6 +72,7 @@ export const RefinerPage = observer((): ReactElement => {
   return (
     <>
       <ModalsContainer
+        isDataReady={filterStore.downloadedAmount === 100}
         attributeStore={refinerAttributeStore}
         funcStore={refinerFunctionsStore}
         onAddEnum={savePanelAttribute}

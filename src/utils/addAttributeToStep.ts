@@ -35,6 +35,7 @@ export const addAttributeToStep = ({
   const code = dtreeStore.dtreeCode ?? 'return False'
   const isNumeric = attributeKind === AttributeKinds.NUMERIC
   const shouldTakeAttributeFromStore = !isNumeric
+  const { stepIndexForApi } = stepStore
 
   const selectedValue = isNumeric ? value : selectedVariants
   const subGroupName = dtreeStore.selectedGroups[1]
@@ -48,8 +49,6 @@ export const addAttributeToStep = ({
   }
 
   if (param) attribute.push(param)
-
-  const { stepIndexForApi } = stepStore
 
   dtreeStore.fetchDtreeSetAsync({
     ds: datasetStore.datasetName,

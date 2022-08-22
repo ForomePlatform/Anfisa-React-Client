@@ -28,6 +28,7 @@ export const SolutionSelect = ({
       />
 
       <SolutionSelectPopover
+        pageName={pageName}
         anchorEl={popoverAnchor}
         isOpen={isPopoverOpen}
         goToPage={goToPage}

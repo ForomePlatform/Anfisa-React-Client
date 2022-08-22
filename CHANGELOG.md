@@ -1,7 +1,19 @@
 # Change log 
 
-## <small>0.8.1 (8/15/2022)</small>
+## <small>0.8.1 (8/22/2022)</small>
 
+* fix([FOROME-1486](https://quantori.atlassian.net/browse/FOROME-1486)): showing prompt for solution select ([008de8ff](https://github.com/ForomePlatform/Anfisa-React-Client/commit/008de8ff))
+* fix([FOROME-1464](https://quantori.atlassian.net/browse/FOROME-1464)): wizard undo button style ([0b119101](https://github.com/ForomePlatform/Anfisa-React-Client/commit/0b119101))
+* feat([FOROME-1483](https://quantori.atlassian.net/browse/FOROME-1483)): add autoscroll to the enum list ([352119ae](https://github.com/ForomePlatform/Anfisa-React-Client/commit/352119ae))
+* feat([FOROME-1468](https://quantori.atlassian.net/browse/FOROME-1468)): opening links from popups ([73de6002](https://github.com/ForomePlatform/Anfisa-React-Client/commit/73de6002))
+* fix([FOROME-1489](https://quantori.atlassian.net/browse/FOROME-1489)): remove dbclick from DB widgets ([4fba3be5](https://github.com/ForomePlatform/Anfisa-React-Client/commit/4fba3be5))
+* fix([FOROME-1429](https://quantori.atlassian.net/browse/FOROME-1429)): select attrs dialog font color ([a34fc76c](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a34fc76c))
+* fix([FOROME-1430](https://quantori.atlassian.net/browse/FOROME-1430)): fix dtree indexes system ([d093f134](https://github.com/ForomePlatform/Anfisa-React-Client/commit/d093f134))
+* feat([FOROME-1488](https://quantori.atlassian.net/browse/FOROME-1488)): replace pagination with infinite list ([0bd2e51b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/0bd2e51b))
+* fix([FOROME-1498](https://quantori.atlassian.net/browse/FOROME-1498)): Hide approx if no any (#892) ([a0d93784](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a0d93784))
+* fix([FOROME-1490](https://quantori.atlassian.net/browse/FOROME-1490)): increase clickable area for DB sub-tab widget ([ae818ad5](https://github.com/ForomePlatform/Anfisa-React-Client/commit/ae818ad5))
+* fix([FOROME-1479](https://quantori.atlassian.net/browse/FOROME-1479)): Define scenario fix (#884) ([4f627c93](https://github.com/ForomePlatform/Anfisa-React-Client/commit/4f627c93))
+* fix([FOROME-1467](https://quantori.atlassian.net/browse/FOROME-1467)): Fixed card paddings (#883) ([bdcf9d67](https://github.com/ForomePlatform/Anfisa-React-Client/commit/bdcf9d67))
 * refactor([FOROME-955](https://quantori.atlassian.net/browse/FOROME-955)): get rid of styled components (#874) ([c0a7d95c](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c0a7d95c))
 * feat([FOROME-1368](https://quantori.atlassian.net/browse/FOROME-1368)): activate first gene after preset changed (#863) ([97596098](https://github.com/ForomePlatform/Anfisa-React-Client/commit/97596098))
 * feat([FOROME-1446](https://quantori.atlassian.net/browse/FOROME-1446)): Use async macrotagging (#877) ([b62e24ab](https://github.com/ForomePlatform/Anfisa-React-Client/commit/b62e24ab))

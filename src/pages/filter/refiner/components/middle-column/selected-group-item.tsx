@@ -5,6 +5,7 @@ import { Checkbox } from '@ui/checkbox/checkbox'
 import { TVariant } from '@service-providers/common'
 
 interface ISelectedGroupItemProps {
+  id: string
   handleCheckGroupItem: (checked: boolean, variant: TVariant) => void
   variant: TVariant
   isSelected: boolean
@@ -12,6 +13,7 @@ interface ISelectedGroupItemProps {
 }
 
 export const SelectedGroupItem = ({
+  id,
   isSelected,
   variant,
   handleCheckGroupItem,
@@ -24,15 +26,17 @@ export const SelectedGroupItem = ({
   const [variantName, variantValue] = variant
 
   return (
-    <Checkbox
-      id={variantName + variantValue}
-      checked={isSelected}
-      onChange={handleCheck}
-      className={cn('mb-4 text-14 flex items-center w-fit h-fit', className)}
-    >
-      <span>{variantName}</span>
+    <div id={id} className={cn('w-full flex items-center', className)}>
+      <Checkbox
+        id={variantName + variantValue}
+        checked={isSelected}
+        onChange={handleCheck}
+        className={cn('flex items-center text-14 ')}
+      >
+        <span className="leading-6">{variantName}</span>
 
-      <span className="text-grey-blue ml-2">({variantValue})</span>
-    </Checkbox>
+        <span className="text-grey-blue ml-2">({variantValue})</span>
+      </Checkbox>
+    </div>
   )
 }

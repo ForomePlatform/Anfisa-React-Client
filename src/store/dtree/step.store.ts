@@ -52,51 +52,13 @@ class StepStore {
   }
 
   get stepIndexForApi(): string {
-    const { dtreeStepIndices } = dtreeStore
-
-    const lastIndexFromIndexes = dtreeStepIndices[dtreeStepIndices.length - 1]
-
-    // add final step index to dtreeStepIndices
-    if (lastIndexFromIndexes) {
-      const indexForFinalStep = +lastIndexFromIndexes + 2
-
-      dtreeStepIndices.push(String(indexForFinalStep))
+    if (!dtreeStore.stepIndexes.length) {
+      return '0'
     }
 
-    const isTreeEmpty = dtreeStepIndices.length === 0
-    const firstStepIndex = '0'
-
-    const emptyStepIndex = this.steps.findIndex(
-      ({ groups, isFinalStep }) => groups.length === 0 && !isFinalStep,
+    return (
+      dtreeStore.stepIndexes[this.activeStepIndex] ?? this.activeStepIndex * 2
     )
-    const treeHasEmptyStep = emptyStepIndex !== -1
-
-    if (!isTreeEmpty && treeHasEmptyStep) {
-      const copiedIndex = dtreeStepIndices[emptyStepIndex - 1] ?? firstStepIndex
-      dtreeStepIndices.splice(emptyStepIndex, 0, copiedIndex)
-    }
-
-    // index is undefined in First step and Final step in Empty Tree
-    const indexFromIndexes =
-      dtreeStepIndices[this.activeStepIndex] ?? firstStepIndex
-
-    // 1)Case: For adding attribute in empty step
-    const isFirstElement = !dtreeStepIndices[this.activeStepIndex - 1]
-    if (this.activeStepIndex === emptyStepIndex && !isFirstElement) {
-      const nextStepIndex = dtreeStepIndices[this.activeStepIndex + 1]
-
-      return nextStepIndex
-    }
-
-    // 2)Case: For other cases
-    const isReturnedVariants =
-      this.activeStepOption === ActiveStepOptions.ReturnedVariants
-
-    const indexForApi = isReturnedVariants
-      ? String(+indexFromIndexes + 1)
-      : indexFromIndexes
-
-    return indexForApi
   }
 
   constructor() {

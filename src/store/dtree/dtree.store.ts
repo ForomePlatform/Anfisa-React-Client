@@ -84,7 +84,7 @@ export class DtreeStore {
     return counts ?? []
   }
 
-  get dtreeStepIndices(): string[] {
+  get stepIndexes(): string[] {
     return Object.keys(this.dtreeSetData?.['cond-atoms'] ?? {})
   }
 
@@ -225,7 +225,7 @@ export class DtreeStore {
   // 1. Functions to load / draw / edit decision trees
 
   getStepIndexForApi = (index: number) => {
-    const indexes = toJS(this.dtreeStepIndices)
+    const indexes = toJS(this.stepIndexes)
     const shouldGetAnotherIndex = index === indexes.length
 
     const currentIndex = shouldGetAnotherIndex

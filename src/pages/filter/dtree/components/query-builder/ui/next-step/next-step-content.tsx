@@ -27,7 +27,9 @@ export const NextStepContent = observer(
     const codeResult = currentStepData.result || ''
 
     const openModal = () => {
-      stepStore.makeStepActive(stepNo - 1, ActiveStepOptions.StartedVariants)
+      if (groups.length) {
+        stepStore.makeStepActive(stepNo - 1, ActiveStepOptions.StartedVariants)
+      }
 
       modalsVisibilityStore.openSelectAttributeDialog()
     }
@@ -36,7 +38,6 @@ export const NextStepContent = observer(
       <div className="flex flex-col items-start py-2 h-auto w-full">
         <div className="flex flex-row w-full">
           <div className="flex flex-col w-2/3 h-auto justify-between step-content-area">
-            {/* TODO: add variable "isEmptyStep" instead of "groups && groups.length > 0" */}
             {groups && groups.length > 0 ? (
               groups.map((group: any, groupNo: number) => (
                 <NextStepContentItem

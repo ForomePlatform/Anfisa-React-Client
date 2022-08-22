@@ -24,6 +24,8 @@ export const FinalStep = observer(
   ({ index }: IFinalStepProps): ReactElement => {
     const currentStep = stepStore.filteredSteps[index]
     const stepNo = stepStore.filteredSteps[index].step
+    const isPrevStepEmpty =
+      !stepStore.steps[stepStore.steps.length - 2].groups.length
 
     const setStepActive = (stepIndex: number, event: any) => {
       const classList = Array.from(event.target.classList)
@@ -106,6 +108,7 @@ export const FinalStep = observer(
               size="sm"
               text={t('dtree.addStep')}
               className="absolute -bottom-9 z-1000 left-0"
+              disabled={isPrevStepEmpty}
               onClick={() =>
                 stepStore.createEmptyStep(index, CreateEmptyStepPositions.FINAL)
               }

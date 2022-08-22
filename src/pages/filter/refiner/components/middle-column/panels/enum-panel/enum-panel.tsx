@@ -33,7 +33,7 @@ export const EnumPanel = observer((): ReactElement => {
     [attributeName],
   )
 
-  const paginationHeight =
+  const listHeight =
     enumVariants.length > DEFAULT_COUNT ? 'calc(100% - 249px)' : 'auto'
 
   return (
@@ -43,6 +43,7 @@ export const EnumPanel = observer((): ReactElement => {
       <DividerHorizontal />
 
       <EnumCondition
+        isDataReady={filterStore.downloadedAmount === 100}
         attributeName={attributeName}
         enumVariants={enumVariants}
         attributeSubKind={attributeSubKind}
@@ -59,7 +60,7 @@ export const EnumPanel = observer((): ReactElement => {
             clearValue,
           })
         }
-        paginationHeight={paginationHeight}
+        listHeight={listHeight}
       />
     </>
   )

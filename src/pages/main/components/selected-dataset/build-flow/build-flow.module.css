@@ -25,7 +25,7 @@
       margin-right: theme("spacing.4");
       cursor: pointer;
       border: 1px solid theme("colors.blue.bright");
-      border-radius: theme("borderRadius.md");
+      border-radius: theme("borderRadius.DEFAULT");
 
       &:hover {
         border-color: theme("colors.blue.hover");

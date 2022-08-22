@@ -1,6 +1,6 @@
 import styles from '@pages/filter/common/dashboard/components/body/footer-panel/footer-panel.module.css'
 
-import { ReactElement, useMemo } from 'react'
+import { MouseEvent, ReactElement, useMemo } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
@@ -25,6 +25,11 @@ export const FooterTab = observer(
       return group.units.some(unit => unit.name.toLowerCase().includes(value))
     }, [filterValue, group])
 
+    const onClick = (e: MouseEvent) => {
+      e.stopPropagation()
+      onToggleFavorite(DashboardGroupTypes.Spare, group.name, index)
+    }
+
     return (
       <div
         className={cn(
@@ -32,7 +37,7 @@ export const FooterTab = observer(
           !isGroupInSearch && styles.footerPanel__tab_disabled,
         )}
         key={group.name}
-        onDoubleClick={() =>
+        onClick={() =>
           changeTabPlace(DashboardGroupTypes.Spare, group.name, index)
         }
       >
@@ -54,10 +59,7 @@ export const FooterTab = observer(
           className={cn('text-grey-blue hover:text-yellow-secondary', {
             'fill-yellow-secondary text-yellow-secondary': group.isFavorite,
           })}
-          onClick={e => {
-            e.stopPropagation()
-            onToggleFavorite(DashboardGroupTypes.Spare, group.name, index)
-          }}
+          onClick={onClick}
         />
       </div>
     )

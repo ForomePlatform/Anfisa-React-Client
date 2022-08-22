@@ -16,6 +16,7 @@ interface IUnitsListGroupProps {
   isDark: boolean
   withCharts: boolean
   unitsGroup: TUnitGroup
+  isModal: boolean | undefined
   onCollapsedChange: (isCollapsed: boolean, name: string) => void
   onSelect: (unit: TPropertyStatus) => void
 }
@@ -26,6 +27,7 @@ export const UnitsListGroup = ({
   isDark,
   withCharts,
   unitsGroup,
+  isModal,
   onCollapsedChange,
   onSelect,
 }: IUnitsListGroupProps): ReactElement => {
@@ -55,6 +57,7 @@ export const UnitsListGroup = ({
             unit={unit}
             isDark={isDark}
             withChart={withCharts}
+            isModal={isModal}
             onSelect={() => onSelect(unit)}
           />
         ))}
