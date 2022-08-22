@@ -26,9 +26,6 @@ import {
 import { IFilterControlProps } from './filter-control.interface'
 import { SolutionSelect } from './solution-select'
 
-//TODO - we need to receive this number from backend
-export const XL_COUNT_OF_VARIANTS = 9000
-
 export const FilterControl = observer(
   ({
     SolutionControl,
@@ -40,6 +37,7 @@ export const FilterControl = observer(
     isEntryCreationAllowed,
     isBackwardAllowed,
     disabledCreateDataset,
+    createDatasetTooltip,
     pageName,
     goForward,
     goBackward,
@@ -127,7 +125,10 @@ export const FilterControl = observer(
 
             <Divider orientation="vertical" className="h-[75%]" />
 
-            <CreateDataset disabled={disabledCreateDataset} />
+            <CreateDataset
+              disabled={disabledCreateDataset}
+              tooltip={createDatasetTooltip}
+            />
           </div>
 
           <div className="flex items-center">

@@ -8,6 +8,7 @@ import { TRecCntResponse } from './../dataset-level'
 import {
   IAdmDropDsArguments,
   IAdmReloadDsArguments,
+  IDefaults,
   IDirInfo,
   IJobStatusArgument,
   ISingleCntArgument,
@@ -17,6 +18,10 @@ import {
 class VaultProvider extends ServiceProviderBase {
   constructor() {
     super()
+  }
+
+  public getDefaults() {
+    return this.get<IDefaults>('defaults').then(res => res.data)
   }
 
   public getDirInfo() {
