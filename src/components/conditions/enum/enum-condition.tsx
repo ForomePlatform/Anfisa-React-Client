@@ -190,7 +190,7 @@ export const EnumCondition = observer(
               />
 
               <span className="text-grey-blue">
-                {t('enumCondition.showVisually')}
+                {t('enumCondition.showCharts')}
               </span>
             </div>
           </div>

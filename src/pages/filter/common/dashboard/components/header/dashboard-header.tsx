@@ -50,7 +50,7 @@ export const DashboardHeader = observer((): ReactElement => {
             className={styles.header__controls__switch}
             onClick={toggleCharts}
           >
-            {t('dashboard.showInCharts')}
+            {t('dashboard.showCharts')}
           </div>
         </div>
 

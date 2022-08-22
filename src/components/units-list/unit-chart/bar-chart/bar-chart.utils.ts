@@ -7,7 +7,7 @@ import { TVariant } from '@service-providers/common'
 import { selectedColors } from '../unit.chart.data'
 import { TBarChartData } from '../unit-chart.interface'
 import { getVariantCountsText } from '../utils'
-import { getChartColor } from '../utils/getChartColor'
+import { getBarChartColor } from '../utils/getBarChartColor'
 import { getDifferentBarColors } from '../utils/getDifferentColors'
 
 const tickColor = theme('colors.grey.blue')
@@ -80,7 +80,7 @@ export const drawBarChart = ({
 
   const getFunctionForColorChoice = (index: number, barName: string) => {
     return !isDashboard
-      ? getChartColor({
+      ? getBarChartColor({
           selectedVariants,
           barName,
           index,
@@ -100,7 +100,7 @@ export const drawBarChart = ({
     .attr('height', item => chartHeight - getY(item))
     .attr('fill', (item, index) => getFunctionForColorChoice(index, item[0]))
     .attr('stroke', (item, index) =>
-      getChartColor({
+      getBarChartColor({
         selectedVariants,
         barName: item[0],
         index,

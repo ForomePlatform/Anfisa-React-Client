@@ -8,8 +8,8 @@ import { TVariant } from '@service-providers/common'
 import { defaultColors, selectedColors } from '../unit.chart.data'
 import { TPieChartData } from '../unit-chart.interface'
 import { getVariantCountsText, reduceVariantsData } from '../utils'
-import { getChartColor } from '../utils/getChartColor'
 import { getDifferentBarColors } from '../utils/getDifferentColors'
+import { getPieChartColor } from '../utils/getPieChartColor'
 
 export const getShortNumber = (value: number): string => {
   if (value < 1000000) {
@@ -62,7 +62,7 @@ export const drawPieChart = ({
 
   const getFunctionForColorChoice = (index: number, barName: string) => {
     return !isDashboard
-      ? getChartColor({
+      ? getPieChartColor({
           selectedVariants,
           barName,
           index,
@@ -83,7 +83,7 @@ export const drawPieChart = ({
       'stroke',
       (item, index) =>
         !isDashboard &&
-        getChartColor({
+        getPieChartColor({
           selectedVariants,
           barName: item.data[0],
           index,

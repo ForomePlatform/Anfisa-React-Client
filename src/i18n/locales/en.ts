@@ -311,7 +311,7 @@ export const en = {
   },
   enumCondition: {
     showZeroVariants: 'Show zero variants',
-    showVisually: 'Show visually',
+    showCharts: 'Show charts',
   },
   funcCondition: {
     scenario: 'Scenario',
@@ -484,7 +484,7 @@ export const en = {
 
   dashboard: {
     dashboard: 'Dashboard',
-    showInCharts: 'Show in charts',
+    showCharts: 'Show charts',
     searchForAField: 'Search for a field',
     shownFirst40: 'Shown first 40 of {variantsLeft} variants',
     emptyCondition: 'Empty condition',
