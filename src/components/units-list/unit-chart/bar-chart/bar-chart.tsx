@@ -41,12 +41,12 @@ export const BarChart = ({
       total: totalItems,
     })
 
-    const specialLegent = t('filter.chart.noVisualRepresentation')
+    const specialLegend = t('filter.chart.noVisualRepresentation')
 
     if (!selectedVariants?.length) {
       return defaultLegend
     } else {
-      return isVariantRepresentedInChart ? defaultLegend : specialLegent
+      return isVariantRepresentedInChart ? defaultLegend : specialLegend
     }
   }
 
