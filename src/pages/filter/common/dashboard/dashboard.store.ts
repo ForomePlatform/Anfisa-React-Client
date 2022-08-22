@@ -88,28 +88,24 @@ export class DashboardStore {
     makeAutoObservable(this)
   }
 
+  private get lsPrefix(): string {
+    return `${this.page}:${datasetStore.datasetName}`
+  }
+
   private saveLayout = () => {
     LocalStoreManager.write(
       DASHBOARD_LAYOUT,
       this.mainTabsLayout,
-      datasetStore.datasetName,
+      this.lsPrefix,
     )
   }
 
   private saveMainTabs = () => {
-    LocalStoreManager.write(
-      DASHBOARD_MAIN_TABS,
-      this.mainTabs,
-      datasetStore.datasetName,
-    )
+    LocalStoreManager.write(DASHBOARD_MAIN_TABS, this.mainTabs, this.lsPrefix)
   }
 
   private saveSpareTabs = () => {
-    LocalStoreManager.write(
-      DASHBOARD_SPARE_TABS,
-      this.spareTabs,
-      datasetStore.datasetName,
-    )
+    LocalStoreManager.write(DASHBOARD_SPARE_TABS, this.spareTabs, this.lsPrefix)
   }
 
   public setFilterValue = (value: string) => {
@@ -183,21 +179,18 @@ export class DashboardStore {
 
     const savedMainTabs = LocalStoreManager.read<
       IExtendedTUnitGroup[] | undefined
-    >(DASHBOARD_MAIN_TABS, datasetStore.datasetName)
+    >(DASHBOARD_MAIN_TABS, this.lsPrefix)
 
     const savedSpareTabs = LocalStoreManager.read<
       IExtendedTUnitGroup[] | undefined
-    >(DASHBOARD_SPARE_TABS, datasetStore.datasetName)
+    >(DASHBOARD_SPARE_TABS, this.lsPrefix)
 
     const savedLayout = LocalStoreManager.read<Layout[] | undefined>(
       DASHBOARD_LAYOUT,
-      datasetStore.datasetName,
+      this.lsPrefix,
     )
 
-    const mainTabs =
-      !savedMainTabs || !savedMainTabs.length
-        ? extendedGroups.slice(0, 4)
-        : savedMainTabs
+    const mainTabs = !savedMainTabs ? extendedGroups.slice(0, 4) : savedMainTabs
 
     const updatedMainTabs = mainTabs.map(tab => {
       const group = extendedGroups.find(group => group.name === tab.name)
