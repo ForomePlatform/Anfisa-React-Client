@@ -475,6 +475,8 @@ export class DashboardStore {
         this.setMainTabsLayout(getUpdatedLayout(sortedTabs, newLayout))
       }
     }
+    this.saveMainTabs()
+    this.saveSpareTabs()
   }
 
   public reset = () => {
