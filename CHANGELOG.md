@@ -1,7 +1,8 @@
 # Change log 
 
-## <small>0.8.1 (8/17/2022)</small>
+## <small>0.8.1 (8/22/2022)</small>
 
+* fix([FOROME-1486](https://quantori.atlassian.net/browse/FOROME-1486)): showing prompt for solution select ([008de8ff](https://github.com/ForomePlatform/Anfisa-React-Client/commit/008de8ff))
 * fix([FOROME-1464](https://quantori.atlassian.net/browse/FOROME-1464)): wizard undo button style ([0b119101](https://github.com/ForomePlatform/Anfisa-React-Client/commit/0b119101))
 * feat([FOROME-1483](https://quantori.atlassian.net/browse/FOROME-1483)): add autoscroll to the enum list ([352119ae](https://github.com/ForomePlatform/Anfisa-React-Client/commit/352119ae))
 * feat([FOROME-1468](https://quantori.atlassian.net/browse/FOROME-1468)): opening links from popups ([73de6002](https://github.com/ForomePlatform/Anfisa-React-Client/commit/73de6002))
