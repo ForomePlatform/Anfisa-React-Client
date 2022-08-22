@@ -46,6 +46,7 @@ export const SecondaryDsItem: FC<IDatasetsListItemProps> = observer(
     }
 
     const padding = level * LEVEL_DATASET_P
+
     return (
       <>
         <div onClick={handleClick}>

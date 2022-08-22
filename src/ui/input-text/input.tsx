@@ -12,7 +12,7 @@ import cn, { Argument } from 'classnames'
 
 import { Icon } from '@ui/icon'
 
-interface IInputProps {
+export interface IInputProps {
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void
   disabled?: boolean
   type?: 'text' | 'email' | 'password'
