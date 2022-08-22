@@ -47,8 +47,9 @@
 .legend {
   @apply typography-xs;
 
-  overflow: hidden;
+  overflow: auto;
   color: theme("colors.white");
+  max-height: 180px;
 
   &_collapsed {
     max-height: 120px;
