@@ -71,7 +71,7 @@ export const UnitsList = observer(
     }
 
     const showLoader = isLoading && !filteredGroups.length
-    const showPgrogressBar = fetchedAmount !== 100
+    const showProgressBar = fetchedAmount !== 100
     return (
       <div
         className={cn(
@@ -81,7 +81,7 @@ export const UnitsList = observer(
           className,
         )}
       >
-        {showPgrogressBar && (
+        {showProgressBar && (
           <div className={styles.unitsList__loader}>
             <ProgressBar size="sm" />
           </div>
@@ -91,7 +91,6 @@ export const UnitsList = observer(
           className={cn(
             styles.unitsList__functional,
             !isModal && styles.unitsList__functional_columnList,
-            showPgrogressBar && styles.unitsList__functional_progressBar,
           )}
           units={functionalUnits}
           onSelect={onSelect}
