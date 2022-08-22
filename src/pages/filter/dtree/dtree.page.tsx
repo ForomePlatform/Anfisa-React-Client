@@ -7,6 +7,7 @@ import { observer } from 'mobx-react-lite'
 import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
 import { useDatasetName } from '@core/hooks/use-dataset-name'
 import { useParams } from '@core/hooks/use-params'
+import { t } from '@i18n'
 import datasetStore from '@store/dataset/dataset'
 import defaultsStore from '@store/defaults'
 import dtreeStore from '@store/dtree'
@@ -33,7 +34,7 @@ const MIN_CODE_LENGTH = 13
 export const DtreePage = observer((): ReactElement => {
   const { isXL } = datasetStore
 
-  const { maxCountOfVariants } = defaultsStore
+  const { wsMaxCount } = defaultsStore
 
   const { unitGroups, functionalUnits, isFetching } = dtreeStore.stat
 
@@ -50,6 +51,10 @@ export const DtreePage = observer((): ReactElement => {
   const isEntryCreationAllowed = filterDtreesStore.activeDtree
     ? modifiedDtree === filterDtreesStore.activeDtree
     : dtreeStore.dtreeCode.length >= MIN_CODE_LENGTH
+
+  const isTooManyVariants =
+    dtreeStore.totalFilteredCounts &&
+    dtreeStore.totalFilteredCounts.accepted > wsMaxCount
 
   useDatasetName()
   filterDtreesStore.observeHistory.useHook()
@@ -109,7 +114,12 @@ export const DtreePage = observer((): ReactElement => {
           disabledCreateDataset={
             dtreeStore.stepIndexes.length === 0 ||
             !dtreeStore.totalFilteredCounts ||
-            dtreeStore.totalFilteredCounts.accepted > maxCountOfVariants
+            dtreeStore.totalFilteredCounts.accepted > wsMaxCount
+          }
+          createDatasetTooltip={
+            isTooManyVariants
+              ? t('dsCreation.tooManyVariants', { max: wsMaxCount })
+              : ''
           }
           pageName={FilterControlOptionsNames[GlbPagesNames.Dtree]}
           SolutionControl={SolutionControlDtree}

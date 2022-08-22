@@ -5,7 +5,7 @@ import { vaultProvider } from '@service-providers/vault-level'
 import { DefaultsAsyncStore } from './common/defaults.async.store'
 import { datasetStore } from './dataset'
 
-const DEFAULT_COUNT_OF_VARIANTS = 9000
+const DEFAULT_COUNT = 9000
 
 class DefaultsStore {
   readonly defaults = new DefaultsAsyncStore()
@@ -30,8 +30,16 @@ class DefaultsStore {
     )
   }
 
-  public get maxCountOfVariants() {
-    return this.defaults.data?.['ws.max.count'] || DEFAULT_COUNT_OF_VARIANTS
+  public get wsMaxCount() {
+    return this.defaults.data?.['ws.max.count'] || DEFAULT_COUNT
+  }
+
+  public get exportMaxCount() {
+    return this.defaults.data?.['export.max.count'] || DEFAULT_COUNT
+  }
+
+  public get tabMaxCount() {
+    return this.defaults.data?.['tab.max.count'] || DEFAULT_COUNT
   }
 
   public async setDsToBeDropped(secondaryDatasets: string[] | undefined) {

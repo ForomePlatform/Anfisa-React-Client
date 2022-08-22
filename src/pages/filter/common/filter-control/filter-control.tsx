@@ -37,6 +37,7 @@ export const FilterControl = observer(
     isEntryCreationAllowed,
     isBackwardAllowed,
     disabledCreateDataset,
+    createDatasetTooltip,
     pageName,
     goForward,
     goBackward,
@@ -124,7 +125,10 @@ export const FilterControl = observer(
 
             <Divider orientation="vertical" className="h-[75%]" />
 
-            <CreateDataset disabled={disabledCreateDataset} />
+            <CreateDataset
+              disabled={disabledCreateDataset}
+              tooltip={createDatasetTooltip}
+            />
           </div>
 
           <div className="flex items-center">
