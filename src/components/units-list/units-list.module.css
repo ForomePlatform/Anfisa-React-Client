@@ -54,6 +54,7 @@
 
   &__list {
     flex: 1 0 0;
+    padding: 0 1px;
     overflow-y: auto;
 
     &_modal {

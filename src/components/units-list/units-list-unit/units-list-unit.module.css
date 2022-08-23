@@ -2,8 +2,8 @@
   padding: 6px 0;
   padding-left: 14px;
 
-  &__selected {
-    border: 1px solid theme('colors.grey.dark');
+  &_selected {
+    outline: 1px solid theme("colors.grey.dark");
     border-radius: 4px;
   }
 }
@@ -16,36 +16,36 @@
     @apply typography-s;
 
     margin-right: 4px;
-    color: theme('colors.black');
+    color: theme("colors.black");
     cursor: pointer;
 
     &:hover {
-      color: theme('colors.grey.blue');
+      color: theme("colors.grey.blue");
     }
 
     &_dark {
-      color: theme('colors.white');
+      color: theme("colors.white");
 
       &:hover {
-        color: theme('colors.grey.blue');
+        color: theme("colors.grey.blue");
       }
     }
   }
 
   &__arrow {
     &:hover {
-      color: theme('colors.grey.blue');
+      color: theme("colors.grey.blue");
     }
 
     &_dark {
       &:hover {
-        color: theme('colors.grey.blue');
+        color: theme("colors.grey.blue");
       }
     }
   }
 
   &__powerWrapper {
     width: 20px;
-    margin: 0 theme('spacing.2') 0 theme('spacing[0.5]');
+    margin: 0 theme("spacing.2") 0 theme("spacing[0.5]");
   }
 }

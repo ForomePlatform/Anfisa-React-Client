@@ -29,7 +29,7 @@ export const UnitsListUnit = ({
       className={cn(
         styles.unit,
         className,
-        isSelected ? styles.unit__selected : '',
+        isSelected ? styles.unit_selected : '',
       )}
     >
       <div className={styles.unitTitle}>
