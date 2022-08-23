@@ -2,6 +2,7 @@ import { ReactElement, useMemo } from 'react'
 import cn from 'classnames'
 
 import { NumericSelectTypes } from '@core/enum/numeric-select-types-enum'
+import { Icon } from '@ui/icon'
 
 interface IStrictnessSelectButtonProps {
   value: boolean
@@ -17,12 +18,12 @@ export const StrictnessSelectButton = ({
   onChange,
 }: IStrictnessSelectButtonProps): ReactElement => {
   const strictnessSign = useMemo(() => {
-    if (selectType === NumericSelectTypes.Max) {
-      return value ? '≤' : '<'
-    }
+    return value ? <Icon name="LessOrEqualThan" /> : <Icon name="LessThan" />
+  }, [value])
 
-    return value ? '≥' : '>'
-  }, [selectType, value])
+  const signDirection = useMemo(() => {
+    return selectType === NumericSelectTypes.Min ? 'scale(-1,1)' : ''
+  }, [selectType])
 
   return (
     <button
@@ -34,7 +35,8 @@ export const StrictnessSelectButton = ({
       )}
       onClick={() => onChange(value ? false : true)}
     >
-      <span
+      <div
+        style={{ transform: signDirection }}
         className={cn(
           'flex items-center justify-center w-full h-full rounded',
           disabled
@@ -43,7 +45,7 @@ export const StrictnessSelectButton = ({
         )}
       >
         {strictnessSign}
-      </span>
+      </div>
     </button>
   )
 }
