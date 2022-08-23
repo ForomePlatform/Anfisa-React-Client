@@ -1,40 +1,25 @@
 import { ReactElement } from 'react'
 
-import { usePopover } from '@core/hooks/use-popover'
+import { NumericSelectTypes } from '@core/enum/numeric-select-types-enum'
 import { StrictnessSelectButton } from './strictness-select-button'
-import { StrictnessSelectPopover } from './strictness-select-popover'
 
 export interface IStrictnessSelectProps {
   value: boolean
+  selectType: NumericSelectTypes
   onChange: (newValue: boolean) => void
   isDisabled?: boolean
 }
 
 export const StrictnessSelect = ({
   value,
+  selectType,
   onChange,
   isDisabled,
-}: IStrictnessSelectProps): ReactElement => {
-  const { isPopoverOpen, popoverAnchor, onToggle, closePopover } = usePopover()
-
-  return (
-    <>
-      <StrictnessSelectButton
-        isOpen={isPopoverOpen}
-        onShowPopover={onToggle}
-        value={value}
-        disabled={isDisabled}
-      />
-
-      <StrictnessSelectPopover
-        isOpen={isPopoverOpen}
-        anchorEl={popoverAnchor}
-        onClose={closePopover}
-        onSelect={value => {
-          onChange(value)
-          closePopover()
-        }}
-      />
-    </>
-  )
-}
+}: IStrictnessSelectProps): ReactElement => (
+  <StrictnessSelectButton
+    value={value}
+    disabled={isDisabled}
+    selectType={selectType}
+    onChange={onChange}
+  />
+)

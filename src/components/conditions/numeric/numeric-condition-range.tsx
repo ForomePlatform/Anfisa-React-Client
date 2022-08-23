@@ -1,6 +1,7 @@
 import React, { ReactElement, useCallback, useMemo, useState } from 'react'
 import cn from 'classnames'
 
+import { NumericSelectTypes } from '@core/enum/numeric-select-types-enum'
 import { adjustHistogramData } from '@core/histograms'
 import { t } from '@i18n'
 import { Checkbox } from '@ui/checkbox/checkbox'
@@ -36,6 +37,7 @@ export const NumericConditionRange = ({
     initialValue,
     isZeroSkipped,
   )
+
   const [isLimitedRange, setLimitedRange] = useState(() =>
     getLimitedRangeInitialState(initialValue, attrData),
   )
@@ -90,6 +92,7 @@ export const NumericConditionRange = ({
             <div className="absolute top-1 left-0 w-full text-xs text-grey-blue text-left">
               {min}
             </div>
+
             <div className="grow">
               <InputNumeric
                 data-test-id={DecisionTreeModalDataCy.leftInput}
@@ -104,30 +107,38 @@ export const NumericConditionRange = ({
                 }
               />
             </div>
+
             {errors[NumericValueErrorType.MinValue] && (
               <div className="absolute left-0 bottom-0 text-10 text-red-secondary">
                 {t('numericCondition.lowerBoundError')}
               </div>
             )}
+
             <div className="grow-0 mx-2">
               <StrictnessSelect
-                isDisabled={isZeroIncluded}
                 value={minStrictness}
+                selectType={NumericSelectTypes.Min}
                 onChange={v => updateValue(NumericValueIndex.MinStrictness, v)}
+                isDisabled={isZeroIncluded}
               />
             </div>
           </div>
+
           <div className="w-4 h-px bg-grey-blue grow-0" />
+
           <div className="relative grow flex items-center py-6">
             <div className="absolute top-1 left-0 w-full text-xs text-grey-blue text-right">
               {max}
             </div>
+
             <div className="grow-0 mx-2">
               <StrictnessSelect
                 value={maxStrictness}
+                selectType={NumericSelectTypes.Max}
                 onChange={v => updateValue(NumericValueIndex.MaxStrictness, v)}
               />
             </div>
+
             <div className="grow">
               <InputNumeric
                 data-test-id={DecisionTreeModalDataCy.rightInput}
@@ -141,28 +152,32 @@ export const NumericConditionRange = ({
                 }
               />
             </div>
+
             {errors[NumericValueErrorType.MaxValue] && (
               <div className="absolute left-0 bottom-0 text-10 text-red-secondary">
                 {t('numericCondition.upperBoundError')}
               </div>
             )}
           </div>
+
           {errors[NumericValueErrorType.Overlap] && (
             <div className="absolute left-0 top-0 right-0 text-10 text-red-secondary text-center">
               {t('numericCondition.conditionError')}
             </div>
           )}
         </div>
-        <Checkbox
-          id="numeric-range"
-          checked={isLimitedRange}
-          onChange={() => setLimitedRange(prev => !prev)}
-          className="text-sm"
-        >
-          {t('numericCondition.limitedRange')}
-        </Checkbox>
-        {isZeroSkipped && (
-          <div>
+
+        <div className="flex justify-between">
+          <Checkbox
+            id="numeric-range"
+            checked={isLimitedRange}
+            onChange={() => setLimitedRange(prev => !prev)}
+            className="text-sm"
+          >
+            {t('numericCondition.limitedRange')}
+          </Checkbox>
+
+          {isZeroSkipped && (
             <Checkbox
               id="numeric-include"
               checked={isZeroIncluded}
@@ -173,8 +188,9 @@ export const NumericConditionRange = ({
                 count: Math.round(histogram?.[3][0] ?? 0),
               })}
             </Checkbox>
-          </div>
-        )}
+          )}
+        </div>
+
         {min != null && max != null && min < max && (
           <NumericConditionRangeSlider
             className="my-6"

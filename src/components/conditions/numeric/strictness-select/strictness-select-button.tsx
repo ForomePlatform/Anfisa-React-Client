@@ -1,48 +1,49 @@
-import { ReactElement } from 'react'
+import { ReactElement, useMemo } from 'react'
 import cn from 'classnames'
 
-import { Icon } from '@ui/icon'
-import { IPopoverButtonBaseProps } from '@ui/popover/popover.interface'
+import { NumericSelectTypes } from '@core/enum/numeric-select-types-enum'
 
-interface IStrictnessSelectButtonProps extends IPopoverButtonBaseProps {
+interface IStrictnessSelectButtonProps {
   value: boolean
+  selectType: NumericSelectTypes
+  onChange: (newValue: boolean) => void
+  disabled?: boolean
 }
 
 export const StrictnessSelectButton = ({
-  isOpen,
   disabled,
-  onShowPopover,
   value,
-}: IStrictnessSelectButtonProps): ReactElement => (
-  <button
-    className={cn(
-      'flex items-center h-8 w-12 p-1 rounded bg-white border border-grey-disabled shadow-input',
-      disabled
-        ? 'text-grey-blue'
-        : 'cursor-pointer text-black  hover:text-blue-bright',
-      isOpen && 'text-blue-bright',
-    )}
-    onClick={e => onShowPopover(e.currentTarget)}
-  >
-    <span
-      className={cn(
-        'flex items-center justify-center w-3/5 h-full rounded',
-        disabled
-          ? 'bg-grey-light text-grey-blue'
-          : 'bg-blue-light text-blue-bright',
-      )}
-    >
-      {value ? '≤' : '<'}
-    </span>
+  selectType,
+  onChange,
+}: IStrictnessSelectButtonProps): ReactElement => {
+  const strictnessSign = useMemo(() => {
+    if (selectType === NumericSelectTypes.Max) {
+      return value ? '≤' : '<'
+    }
 
-    <span className="flex items-center justify-center pl-1 w-2/5 h-full">
-      <Icon
-        name="Arrow"
-        size={16}
-        className={cn('transform rotate-90 transition-transform', {
-          'transform -rotate-90': !isOpen,
-        })}
-      />
-    </span>
-  </button>
-)
+    return value ? '≥' : '>'
+  }, [selectType, value])
+
+  return (
+    <button
+      className={cn(
+        'flex items-center h-8 w-8 p-1 rounded bg-white border border-grey-disabled shadow-input',
+        disabled
+          ? 'text-grey-blue'
+          : 'cursor-pointer text-black  hover:text-blue-bright',
+      )}
+      onClick={() => onChange(value ? false : true)}
+    >
+      <span
+        className={cn(
+          'flex items-center justify-center w-full h-full rounded',
+          disabled
+            ? 'bg-grey-light text-grey-blue'
+            : 'bg-blue-light text-blue-bright',
+        )}
+      >
+        {strictnessSign}
+      </span>
+    </button>
+  )
+}
