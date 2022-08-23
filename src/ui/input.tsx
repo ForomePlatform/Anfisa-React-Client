@@ -23,7 +23,7 @@ export const Input = ({ ...rest }: IInputProps): ReactElement => {
 
   return (
     <>
-      {label && <span className="text-sm">{label}</span>}
+      {label && <span className="text-xs">{label}</span>}
       <input
         type="text"
         disabled={disabled}

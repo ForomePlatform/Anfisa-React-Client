@@ -88,8 +88,8 @@ export const SolutionCreateDialog = ({
         onChange={event => setSolutionName(event.target.value)}
       />
 
-      <div className="flex flex-col mt-[16px]">
-        <label>Assign Solution Pack</label>
+      <div className="flex flex-col mt-[16px] text-12">
+        <label>{t('solutionControl.createDialog.assignSolutionPack')}</label>
         <Select
           options={genomeTypesOptions}
           className="py-[5px] px-[4px]"

@@ -8,9 +8,9 @@ import filterDtreesStore from '@store/filter-dtrees'
 import filterPresetsStore from '@store/filter-presets'
 import { Button } from '@ui/button'
 import { SolutionCreateDialog } from '@components/solution-control/solution-create-dialog'
+import presetsCardStore from '@pages/main/components/selected-dataset/build-flow/components/cards/presets-card/presets-card.store'
 import { ISolutionEntryDescription } from '@service-providers/common'
 import { FilterControlOptionsNames } from '../filter-control.const'
-
 interface ICreateEntryProps {
   pageName: FilterControlOptionsNames
   availableSolutionEntries: ISolutionEntryDescription[] | undefined
@@ -38,6 +38,10 @@ export const CreateEntryButton = ({
           rubric,
         )
       }
+
+      pageName === FilterControlOptionsNames.dtree
+        ? presetsCardStore.refreshDtrees()
+        : presetsCardStore.refreshPresets()
     },
     [closeCreateDialog, pageName],
   )
