@@ -4,9 +4,9 @@ import { SecondaryDsItem } from './secondary-ds-item'
 
 export const secondaryDsNameByKey =
   (
-    level: number = 0,
     onSelect: (value: string) => void,
     selectedItem: string,
+    level: number = 1,
   ) =>
   (key: string) => {
     const { dirInfoData } = dirinfoStore

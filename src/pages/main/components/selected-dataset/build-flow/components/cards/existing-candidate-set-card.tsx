@@ -32,7 +32,7 @@ export const ExistingCandidatesCard = observer((props: ICardProps) => {
           style={{ maxHeight: maxHeight }}
         >
           {secondaryDatasets?.map(
-            secondaryDsNameByKey(1, onSelect, wizardStore.selectedDataset),
+            secondaryDsNameByKey(onSelect, wizardStore.selectedDataset),
           )}
         </div>
       )}

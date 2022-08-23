@@ -90,7 +90,7 @@ export const SecondaryDsItem: FC<IDatasetsListItemProps> = observer(
         {!isOpenFolder &&
           hasChildren &&
           secondaryKeys.map(
-            secondaryDsNameByKey(level + 1, onSelect, selectedItem),
+            secondaryDsNameByKey(onSelect, selectedItem, level + 1),
           )}
       </>
     )
