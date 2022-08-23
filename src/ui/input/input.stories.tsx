@@ -2,7 +2,7 @@ import { useState } from 'react'
 import cn from 'classnames'
 
 import { Icon } from '@ui/icon'
-import { Input } from '@ui/input-text/input'
+import { Input } from '@ui/input/input'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 export default {
@@ -23,7 +23,7 @@ const Template: ComponentStory<typeof Input> = args => {
         <Input
           {...args}
           value={state}
-          onChange={e => setState(e.target.value)}
+          onChange={(e: any) => setState(e.target.value)}
         />
       </div>
     </div>
@@ -41,4 +41,5 @@ Default.args = {
   shape: 'round',
   size: 's',
   placeholder: 'Placeholder',
+  foundItems: 0,
 }

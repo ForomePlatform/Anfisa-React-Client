@@ -12,9 +12,10 @@ import cn from 'classnames'
 
 // import { useScrollToItem } from '@core/hooks/use-scroll-to-item'
 import { t } from '@i18n'
+import { theme } from '@theme'
 import { Icon } from '@ui/icon'
+import { InputSearch } from '@ui/input'
 import { Loader } from '@ui/loader'
-import { InputSearch } from '@components/input-search'
 import { VariantAspectsLayoutGallery } from '@components/variant-aspects-layout'
 import { ReturnedVariantsDataCy } from '@data-testid'
 import {
@@ -94,6 +95,10 @@ export const VariantContent = ({
               placeholder={t('variant.searchThroughTheTabs')}
               value={searchValue}
               onChange={e => onChange(e.target.value)}
+              variant="primary-dark"
+              style={{
+                backgroundColor: theme('colors.blue.secondary'),
+              }}
               onFocus={addListener}
               foundItems={foundItems}
             />

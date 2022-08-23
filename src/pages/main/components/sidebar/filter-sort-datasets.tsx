@@ -3,8 +3,9 @@ import { observer } from 'mobx-react-lite'
 
 import { SortDatasets } from '@core/enum/sort-datasets.enum'
 import { t } from '@i18n'
+import { theme } from '@theme'
 import dirinfoStore from '@store/dirinfo'
-import { InputSearch } from '@components/input-search/input-search'
+import { InputSearch } from '@ui/input'
 import { FilterDatasetDataCy } from '@data-testid'
 import { SortItem } from './sort-item'
 
@@ -13,11 +14,14 @@ export const FilterSortDatasets = observer(
     <div className="mb-2 px-4">
       <div className="border-b border-blue-secondary">
         <InputSearch
-          data-testid={FilterDatasetDataCy.searchInput}
+          dataTestId={FilterDatasetDataCy.searchInput}
           placeholder={t('home.searchForADataset')}
           value={dirinfoStore.filterValue}
-          className="mb-2.5"
-          big
+          style={{
+            backgroundColor: theme('colors.blue.secondary'),
+          }}
+          size="m"
+          variant="primary-dark"
           onChange={e => {
             dirinfoStore.setFilterValue(e.target.value)
           }}

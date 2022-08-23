@@ -4,10 +4,21 @@
   outline-offset: -1px;
   padding: 4px 12px;
   position: absolute;
+  width: 100%;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+
+  &_size {
+    &_s {
+      height: 28px;
+    }
+
+    &_m {
+      height: 32px;
+    }
+  }
 
   &:focus {
     outline: 2px solid theme("colors.blue.bright");
@@ -112,6 +123,13 @@
     &_right {
       right: 12px;
     }
+
+    &__text {
+      @apply typography-xs;
+
+      margin-right: theme("spacing.2");
+      color: theme("colors.grey.blue");
+    }
   }
 
   &__container {
@@ -138,6 +156,13 @@
 
     margin: 4px 0;
     color: theme("colors.red.light");
+    text-align: center;
+  }
+
+  &__label-title {
+    @apply typography-s;
+
+    margin: 4px 0;
     text-align: center;
   }
 }

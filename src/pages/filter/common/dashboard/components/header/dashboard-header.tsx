@@ -7,8 +7,8 @@ import { observer } from 'mobx-react-lite'
 import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
 import { t } from '@i18n'
 import { Icon } from '@ui/icon'
+import { InputSearch } from '@ui/input'
 import { Switch } from '@ui/switch'
-import { InputSearch } from '@components/input-search'
 import { UnitsViewSwitch } from '@components/units-list/units-list-controls/components'
 import dashboardStore from '../../../dashboard'
 
@@ -54,14 +54,15 @@ export const DashboardHeader = observer((): ReactElement => {
           </div>
         </div>
 
-        <InputSearch
-          onChange={e => setFilterValue(e.target.value)}
-          value={filterValue}
-          placeholder={t('dashboard.searchForAField')}
-          className="flex-1 mr-px"
-          isDarkBg
-          big
-        />
+        <div className="flex-1 mr-px">
+          <InputSearch
+            onChange={e => setFilterValue(e.target.value)}
+            value={filterValue}
+            placeholder={t('dashboard.searchForAField')}
+            variant="primary-dark"
+            size="m"
+          />
+        </div>
 
         <button
           className={styles.header__controls__button}

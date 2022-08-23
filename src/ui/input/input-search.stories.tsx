@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import cn from 'classnames'
 
-import { InputSearch } from '@ui/input-text/input-search'
+import { InputSearch } from '@ui/input/input-search'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
 
 export default {
