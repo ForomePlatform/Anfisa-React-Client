@@ -1,3 +1,5 @@
+import styles from './secondary-ds.module.css'
+
 import { FC, useEffect, useMemo, useState } from 'react'
 import cn from 'classnames'
 import get from 'lodash/get'
@@ -27,8 +29,6 @@ export const SecondaryDsItem: FC<IDatasetsListItemProps> = observer(
       return droppedDs.includes(item.name)
     }, [droppedDs, item.name])
 
-    const [isDsHovered, setIsDsHovered] = useState(false)
-
     const isActive: boolean = item.name === selectedItem
 
     const [isOpenFolder, setIsOpenFolder] = useState(isActive)
@@ -36,7 +36,6 @@ export const SecondaryDsItem: FC<IDatasetsListItemProps> = observer(
     const isNullKind = item.kind === null
     const secondaryKeys: string[] = get(item, 'secondary', [])
     const hasChildren = secondaryKeys.length > 0
-    const isBucketVisible = isAbleToBeDropped && (isDsHovered || isActive)
     const padding = level * LEVEL_DATASET_P
 
     const handleClick = () => {
@@ -58,15 +57,11 @@ export const SecondaryDsItem: FC<IDatasetsListItemProps> = observer(
 
     return (
       <>
-        <div
-          onClick={handleClick}
-          onMouseEnter={() => setIsDsHovered(true)}
-          onMouseLeave={() => setIsDsHovered(false)}
-        >
+        <div onClick={handleClick}>
           <div
             className={cn(
-              'w-full flex justify-between items-center py-2 px-4 leading-5 cursor-pointer',
-              isActive ? 'bg-blue-bright text-white' : 'hover:bg-blue-light',
+              styles.container,
+              isActive ? styles.container_active : styles.container_passive,
             )}
             style={{ paddingLeft: `${padding}px` }}
           >
@@ -81,7 +76,7 @@ export const SecondaryDsItem: FC<IDatasetsListItemProps> = observer(
 
             <DeleteDataset
               datasetName={item.name}
-              isBucketVisible={isBucketVisible}
+              isAbleToBeDropped={isAbleToBeDropped}
               isActive={isActive}
             />
           </div>

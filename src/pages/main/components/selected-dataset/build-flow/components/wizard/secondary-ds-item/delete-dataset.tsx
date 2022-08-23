@@ -1,3 +1,5 @@
+import styles from './secondary-ds.module.css'
+
 import React, { FC } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
@@ -10,12 +12,12 @@ import { Icon } from '@ui/icon'
 
 interface IDeleteDatasetProps {
   datasetName: string
-  isBucketVisible: boolean
+  isAbleToBeDropped: boolean
   isActive: boolean
 }
 
 export const DeleteDataset: FC<IDeleteDatasetProps> = observer(
-  ({ datasetName, isBucketVisible, isActive }) => {
+  ({ datasetName, isAbleToBeDropped, isActive }) => {
     const [deleteDialog, openDeleteDialog, closeDeleteDialog] = useModal()
     const { isOpen } = deleteDialog
 
@@ -35,14 +37,13 @@ export const DeleteDataset: FC<IDeleteDatasetProps> = observer(
 
     return (
       <>
-        {isBucketVisible && (
+        {isAbleToBeDropped && (
           <button onClick={e => onClick(e)}>
             <Icon
               name="Delete"
               className={cn(
-                isActive
-                  ? 'text-white hover:text-grey-blue'
-                  : 'text-blue-bright hover:text-blue-hover',
+                isActive ? styles.deleteBucket_active : styles.deleteBucket,
+                'delete-bucket',
               )}
             />
           </button>

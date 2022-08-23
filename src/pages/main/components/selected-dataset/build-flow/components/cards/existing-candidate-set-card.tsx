@@ -3,7 +3,7 @@ import { observer } from 'mobx-react-lite'
 import defaultsStore from '@store/defaults'
 import { Card, CardTitle } from '@ui/card'
 import { Loader } from '@ui/loader'
-import { secondaryDsNameByKey } from '../secondary-ds-name-by-key'
+import { secondaryDsNameByKey } from '../wizard/secondary-ds-item'
 import { ICardProps } from '../wizard/wizard.interface'
 import wizardStore from '../wizard/wizard.store'
 
