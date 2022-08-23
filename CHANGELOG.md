@@ -2,6 +2,7 @@
 
 ## <small>0.8.1 (8/23/2022)</small>
 
+* feat([FOROME-1417](https://quantori.atlassian.net/browse/FOROME-1417)): Adding a rubric select for solution create dialog ([dcd13b2d](https://github.com/ForomePlatform/Anfisa-React-Client/commit/dcd13b2d))
 * feat([FOROME-1416](https://quantori.atlassian.net/browse/FOROME-1416)): candidate set deletion ([c359b4b1](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c359b4b1))
 * fix([FOROME-1551](https://quantori.atlassian.net/browse/FOROME-1551)): progress bar progress ([c1d1d3df](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c1d1d3df))
 * fix([FOROME-1566](https://quantori.atlassian.net/browse/FOROME-1566)): duplicating widgets in DB ([752e3b9e](https://github.com/ForomePlatform/Anfisa-React-Client/commit/752e3b9e))
