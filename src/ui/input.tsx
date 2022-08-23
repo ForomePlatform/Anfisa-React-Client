@@ -23,12 +23,12 @@ export const Input = ({ ...rest }: IInputProps): ReactElement => {
 
   return (
     <>
-      {label && <span className="text-sm">{label}</span>}
+      {label && <span className="text-xs">{label}</span>}
       <input
         type="text"
         disabled={disabled}
         className={cn(
-          'text-sm rounded-full border w-full leading-tight px-3',
+          'text-sm rounded-[4px] border w-full leading-tight px-3',
           {
             'border-grey-blue': isDefaultBorder,
             'py-1': isModal,

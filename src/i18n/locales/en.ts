@@ -77,6 +77,7 @@ export const en = {
       controlNamePlaceholder: 'Enter {controlName} Name',
       solutionNameAlreadyExists:
         '{controlName} "{solutionName}" already exists',
+      assignSolutionPack: 'Assign Solution Pack',
     },
     deleteDialog: {
       title: 'Delete {controlName}',
@@ -219,7 +220,7 @@ export const en = {
     createDerivedDS: 'Create Derived DS',
     datasetCreation: 'Dataset Creation',
     addDatasetTitle: 'Add new dataset',
-    label: 'Dataset Name:',
+    label: 'Dataset Name',
     attention:
       'Attention: Zone filters (Gene, Gene List, Sample, Tags) do not participate in dataset creation',
     addDataset: 'Add dataset',

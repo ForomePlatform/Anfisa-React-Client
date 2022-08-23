@@ -30,7 +30,6 @@ export const FilterControl = observer(
   ({
     SolutionControl,
     TextEditorButton,
-    createSolutionEntry,
     availableSolutionEntries,
     className,
     isForwardAllowed,
@@ -104,12 +103,7 @@ export const FilterControl = observer(
                 <Divider orientation="vertical" className="h-[75%]" />
 
                 <CreateEntryButton
-                  solutionName={
-                    pageName === FilterControlOptionsNames.dtree
-                      ? pageName
-                      : 'Preset'
-                  }
-                  createSolutionEntry={createSolutionEntry}
+                  pageName={pageName}
                   availableSolutionEntries={availableSolutionEntries}
                 />
               </>

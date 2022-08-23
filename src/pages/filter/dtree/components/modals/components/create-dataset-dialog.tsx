@@ -172,11 +172,10 @@ export const CreateDatasetDialog = observer(
       >
         <div className="flex flex-col">
           <div>
-            <span className="text-14">{t('dsCreation.label')}</span>
-
             <Input
               disabled={!operations.isCreationOver}
               value={value}
+              label={t('dsCreation.label')}
               onChange={e => handleChange(e.target.value)}
               className="mt-1"
               data-testid={DecisionTreesMenuDataCy.datasetNameInput}
