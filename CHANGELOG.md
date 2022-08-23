@@ -2,6 +2,7 @@
 
 ## <small>0.8.1 (8/23/2022)</small>
 
+* fix([FOROME-1551](https://quantori.atlassian.net/browse/FOROME-1551)): progress bar progress ([c1d1d3df](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c1d1d3df))
 * fix([FOROME-1566](https://quantori.atlassian.net/browse/FOROME-1566)): duplicating widgets in DB ([752e3b9e](https://github.com/ForomePlatform/Anfisa-React-Client/commit/752e3b9e))
 * fix([FOROME-1496](https://quantori.atlassian.net/browse/FOROME-1496)): DB saving favorites state ([51737a7a](https://github.com/ForomePlatform/Anfisa-React-Client/commit/51737a7a))
 * feat([FOROME-1431](https://quantori.atlassian.net/browse/FOROME-1431)): remove hardcoded limitations (#893) ([27bac3ed](https://github.com/ForomePlatform/Anfisa-React-Client/commit/27bac3ed))
