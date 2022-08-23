@@ -1,9 +1,8 @@
 .progress-bar {
   width: 100%;
-  min-width: 100%;
-  background-color: theme("colors.grey.blue");
   display: flex;
-  position: relative;
+  background-color: white;
+  border-right: 1px solid theme("colors.blue.lighter");
 
   &_xs {
     height: 4px;
@@ -11,16 +10,11 @@
 
   &_sm {
     height: 8px;
-    border-radius: 4px;
   }
 
   &_md {
     height: 16px;
     border-radius: 8px;
-  }
-
-  &_no-rounding {
-    border-radius: 0;
   }
 
   &__text {

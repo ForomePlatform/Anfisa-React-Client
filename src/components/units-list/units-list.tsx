@@ -71,6 +71,7 @@ export const UnitsList = observer(
     }
 
     const showLoader = isLoading && !filteredGroups.length
+    const showProgressBar = fetchedAmount !== 100
     return (
       <div
         className={cn(
@@ -80,11 +81,12 @@ export const UnitsList = observer(
           className,
         )}
       >
-        {fetchedAmount !== 100 && (
+        {showProgressBar && (
           <div className={styles.unitsList__loader}>
-            <ProgressBar status={fetchedAmount} step={10} size="xs" />
+            <ProgressBar size="sm" />
           </div>
         )}
+
         <FunctionalUnits
           className={cn(
             styles.unitsList__functional,
