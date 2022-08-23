@@ -70,7 +70,7 @@ export const InputSearch = memo(
               />
             </>
           )}
-          <Icon name="Loupe" className={cn(isDarkBg && 'text-white')} />
+          <Icon name="Loupe" className={cn(isDarkBg && 'text-grey-blue')} />
         </div>
       </div>
     )
