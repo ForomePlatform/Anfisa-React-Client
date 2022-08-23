@@ -1,14 +1,23 @@
 import { BaseAsyncDataStore } from '@store/common'
-import { IDefaults } from '@service-providers/vault-level/vault-level.interface'
+import {
+  IDefaults,
+  IDefaultsArguments,
+} from '@service-providers/vault-level/vault-level.interface'
 import vaultProvider from '@service-providers/vault-level/vault-level.provider'
 
-export class DefaultsAsyncStore extends BaseAsyncDataStore<IDefaults, null> {
+interface IDefaultsQuery {
+  ds?: string
+}
+
+export class DefaultsAsyncStore extends BaseAsyncDataStore<
+  IDefaults,
+  IDefaultsArguments
+> {
   constructor() {
     super()
-    this.setQuery(null)
   }
 
-  protected fetch(): Promise<IDefaults> {
-    return vaultProvider.getDefaults()
+  protected fetch(query: IDefaultsQuery): Promise<IDefaults> {
+    return vaultProvider.getDefaults({ ds: query.ds })
   }
 }

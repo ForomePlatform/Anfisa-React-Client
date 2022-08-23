@@ -16,6 +16,11 @@ export interface IDefaults {
   'ws.max.count': number
   'export.max.count': number
   'tab.max.count': number
+  canDropDs: boolean
+}
+
+export interface IDefaultsArguments {
+  ds?: string
 }
 
 export interface IDirInfo {
