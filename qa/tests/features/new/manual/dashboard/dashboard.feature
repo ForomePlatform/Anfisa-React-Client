@@ -2,7 +2,6 @@
 Feature: Filter refiner, Decision tree, Dashboard
 As an anfisa user I want to create custom layout for attributes
 
-
 Background: 
 	
 	Given Filter refiner or Decision tree of "xl_PGP3140_wgs_NIST-4_2" was opened
