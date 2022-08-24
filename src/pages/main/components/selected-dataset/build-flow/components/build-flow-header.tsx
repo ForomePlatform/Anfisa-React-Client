@@ -43,7 +43,7 @@ export const BuildFlowHeader = observer(
       return wizardStore.actionHistory.goBackward()
     }
 
-    const isBackButtonShown = isXL || wizardStore.actionHistory.historyIndex > 1
+    const isBackButtonShown = isXL || wizardStore.actionHistory.historyIndex > 0
 
     return (
       <div className={styles.buildFlow__header}>

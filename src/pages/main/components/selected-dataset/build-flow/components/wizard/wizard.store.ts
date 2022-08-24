@@ -77,13 +77,6 @@ class WizardStore {
         }
       },
     )
-
-    reaction(
-      () => datasetStore.dsInfo.isLoading,
-      isLoading => {
-        !isLoading && this.defineAndSetNewScenario()
-      },
-    )
   }
 
   public toggleIsWizardVisible(value: boolean) {
@@ -99,28 +92,33 @@ class WizardStore {
     return dirinfoStore.dirinfo.data?.dsDict[parentDs]?.secondary
   }
 
-  public setScenario(scenario: IWizardScenario[]) {
+  private setScenario(
+    scenario: IWizardScenario[],
+    shouldSaveInHistory: boolean,
+  ) {
     this.prevWizardScenario = cloneDeep(this.wizardScenario)
 
     this.wizardScenario = scenario
 
-    this.actionHistory.addHistory(scenario)
+    if (shouldSaveInHistory) {
+      this.actionHistory.addHistory(scenario)
+    }
   }
 
   public defineAndSetNewScenario() {
     this.prevWizardScenario = []
 
     if (datasetStore.isXL && this.startWithOption === ExploreKeys.Genome) {
-      this.setScenario(wizardScenarios.XlWholeGenome)
+      this.setScenario(wizardScenarios.XlWholeGenome, true)
     } else if (
       datasetStore.isXL &&
       this.startWithOption === ExploreKeys.Candidate
     ) {
-      this.setScenario(wizardScenarios.XlCandidateSet)
+      this.setScenario(wizardScenarios.XlCandidateSet, true)
     } else if (!this.secondaryDatasets?.length) {
-      this.setScenario(wizardScenarios.WsShortCandidateSet)
+      this.setScenario(wizardScenarios.WsShortCandidateSet, true)
     } else {
-      this.setScenario(wizardScenarios.WsCandidateSet)
+      this.setScenario(wizardScenarios.WsCandidateSet, true)
     }
 
     this.needToChangeScenario = false
@@ -132,7 +130,7 @@ class WizardStore {
 
     if (card) {
       card.continueDisabled = false
-      this.setScenario(clonedWizard)
+      this.setScenario(clonedWizard, false)
     }
   }
 
@@ -171,6 +169,7 @@ class WizardStore {
     this.selectedDataset = selectedDataset
     const clonedWizard = cloneDeep(this.wizardScenario)
     const card = this.findCardById(id, clonedWizard)
+
     if (card) {
       card.selectedValue = selectedDataset
       if (card.nextCard) {
@@ -186,7 +185,7 @@ class WizardStore {
             nextCard.hidden = false
           }
 
-          this.setScenario(clonedWizard)
+          this.setScenario(clonedWizard, true)
         }
       }
     }
@@ -266,7 +265,7 @@ class WizardStore {
 
     if (card) {
       card.selectedValue = value
-      this.setScenario(clonedWizard)
+      this.setScenario(clonedWizard, false)
     }
   }
 
@@ -280,7 +279,7 @@ class WizardStore {
       scenario[2].title = datasetStore.datasetName
     }
 
-    this.setScenario(scenario)
+    this.setScenario(scenario, true)
   }
 
   public resetWizard() {
