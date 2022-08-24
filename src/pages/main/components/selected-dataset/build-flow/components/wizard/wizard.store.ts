@@ -93,7 +93,7 @@ class WizardStore {
 
   public setScenario(
     scenario: IWizardScenario[],
-    shouldSaveInHistory: boolean,
+    shouldSaveInHistory: boolean = true,
   ) {
     this.prevWizardScenario = cloneDeep(this.wizardScenario)
 
@@ -108,16 +108,16 @@ class WizardStore {
     this.prevWizardScenario = []
 
     if (datasetStore.isXL && this.startWithOption === ExploreKeys.Genome) {
-      this.setScenario(wizardScenarios.XlWholeGenome, true)
+      this.setScenario(wizardScenarios.XlWholeGenome)
     } else if (
       datasetStore.isXL &&
       this.startWithOption === ExploreKeys.Candidate
     ) {
-      this.setScenario(wizardScenarios.XlCandidateSet, true)
+      this.setScenario(wizardScenarios.XlCandidateSet)
     } else if (!this.secondaryDatasets?.length) {
-      this.setScenario(wizardScenarios.WsShortCandidateSet, true)
+      this.setScenario(wizardScenarios.WsShortCandidateSet)
     } else {
-      this.setScenario(wizardScenarios.WsCandidateSet, true)
+      this.setScenario(wizardScenarios.WsCandidateSet)
     }
 
     this.needToChangeScenario = false
@@ -184,7 +184,7 @@ class WizardStore {
             nextCard.hidden = false
           }
 
-          this.setScenario(clonedWizard, true)
+          this.setScenario(clonedWizard)
         }
       }
     }
@@ -274,7 +274,7 @@ class WizardStore {
       ? wizardScenarios.WsCandidateSet
       : wizardScenarios.WsShortCandidateSet
 
-    this.setScenario(scenario, true)
+    this.setScenario(scenario)
   }
 
   public resetWizard() {
