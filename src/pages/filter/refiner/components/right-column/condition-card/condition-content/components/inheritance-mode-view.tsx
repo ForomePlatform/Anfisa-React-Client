@@ -20,7 +20,7 @@ export const InheritanceModeView = ({
 
   return (
     <div className={className}>
-      <div className="text-grey-blue">Problem group</div>
+      <div className="text-grey-dark">Problem group</div>
 
       {isProblemGroupExists ? (
         filterExpression['problem_group'].map((subFilterName, idx) => (
@@ -42,7 +42,7 @@ export const InheritanceModeView = ({
       )}
 
       <div className="mt-2">
-        <div className="text-grey-blue">Inheritance type</div>
+        <div className="text-grey-dark">Inheritance type</div>
 
         {filterContent.map((subFilterName, idx) => (
           <div

@@ -27,13 +27,13 @@ export const CompoundRequestView = ({
   return (
     <div className={cn(className)}>
       <div>
-        <div className="text-grey-blue">Approx</div>
+        <div className="text-grey-dark">Approx</div>
 
         <div className="py-1 pt-2">{approx}</div>
       </div>
 
       <div className="mt-2">
-        <div className="text-grey-blue">State</div>
+        <div className="text-grey-dark">State</div>
 
         <div className="py-1 pt-2">{state}</div>
       </div>
@@ -42,7 +42,7 @@ export const CompoundRequestView = ({
         {request.map(([reqNumber, reqCondition], idx) => (
           <div key={idx} className="pb-2">
             <div>
-              <span className="text-grey-blue">Scenario</span>
+              <span className="text-grey-dark">Scenario</span>
 
               <span className="ml-1">{`[${reqNumber}]`}</span>
             </div>
@@ -56,7 +56,7 @@ export const CompoundRequestView = ({
               >
                 <span>{group}</span>
 
-                <span className="ml-1 text-grey-blue">
+                <span className="ml-1 text-grey-dark">
                   {getScenarioValue(group, reqCondition)}
                 </span>
               </div>

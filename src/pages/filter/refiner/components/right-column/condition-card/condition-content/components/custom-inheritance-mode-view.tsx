@@ -23,7 +23,7 @@ export const CustomInheritanceModeView = ({
   return (
     <div className={cn(className)}>
       <div>
-        <div className="text-grey-blue">Scenario</div>
+        <div className="text-grey-dark">Scenario</div>
 
         {problemGroups.map((group, idx) => (
           <div
@@ -34,7 +34,7 @@ export const CustomInheritanceModeView = ({
           >
             <span>{group}</span>
 
-            <span className="ml-1 text-grey-blue">
+            <span className="ml-1 text-grey-dark">
               {getScenarioValue(group, filterExpression.scenario)}
             </span>
           </div>

@@ -38,6 +38,9 @@ export const ConditionCard = observer(
         : undefined
 
     const isArrowShown = useMemo(() => {
+      if (filterType === AttributeKinds.FUNC) {
+        return true
+      }
       if (filterType !== AttributeKinds.ENUM) {
         return false
       }
@@ -49,6 +52,8 @@ export const ConditionCard = observer(
     const [isContentVisible, setContentVisible] = useState(isArrowShown)
 
     const isPreviewMode = isArrowShown && !isContentVisible
+
+    const isContentHidden = filterType === AttributeKinds.FUNC && isPreviewMode
 
     const toggleConditions = (e: React.MouseEvent) => {
       e.stopPropagation()
@@ -97,18 +102,20 @@ export const ConditionCard = observer(
               {filterName}
               <ConditionJoinModeLabel mode={filterMode} />:
             </div>
-            <div
-              className={cn(
-                styles.conditionCard__conditions,
-                isContentVisible && 'mt-2',
-              )}
-            >
-              <ConditionContent
-                isPreview={isPreviewMode}
-                condition={condition}
-              />
-            </div>
-            {isPreviewMode && (
+            {!isContentHidden && (
+              <div
+                className={cn(
+                  styles.conditionCard__conditions,
+                  isContentVisible && 'mt-2',
+                )}
+              >
+                <ConditionContent
+                  isPreview={isPreviewMode}
+                  condition={condition}
+                />
+              </div>
+            )}
+            {isPreviewMode && !isContentHidden && (
               <div className={cn(styles.conditionCard__multipoint)}>...</div>
             )}
           </div>

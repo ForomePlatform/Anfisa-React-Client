@@ -13,7 +13,7 @@ export const GeneRegionView = ({
   filterExpression,
 }: IGeneRegionViewProps): ReactElement => (
   <div className={className}>
-    <div className="text-grey-blue">Locus</div>
+    <div className="text-grey-dark">Locus</div>
 
     <div className="py-1 pt-2">{filterExpression['locus']}</div>
   </div>
