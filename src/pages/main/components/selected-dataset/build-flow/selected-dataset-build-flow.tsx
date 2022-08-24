@@ -24,7 +24,7 @@ export const SelectedDatasetBuildFlow = observer(
                 component({
                   ...rest,
                 })
-              return !rest.hidden && <Component key={rest.selectedValue} />
+              return !rest.hidden && <Component key={rest.id} />
             })}
           </div>
         </div>
