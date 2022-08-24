@@ -1,21 +1,20 @@
-import styles from './condition-content.module.css'
-
 import { ReactElement } from 'react'
-import cn from 'classnames'
 
 import { TEnumCondition } from '@service-providers/common'
 import { IConditionContentProps } from './condition-content.interface'
 
 export const ConditionContentEnum = ({
-  className,
   condition,
+  isPreview = false,
 }: IConditionContentProps<TEnumCondition>): ReactElement => {
+  const conditionsList = condition[3]
+  if (isPreview) {
+    return <div>{conditionsList[0]}</div>
+  }
   return (
-    <div className={cn(styles.conditionContent, className)}>
-      {condition[3].map(item => (
-        <div key={item} className={styles.conditionContent__element}>
-          {item}
-        </div>
+    <div>
+      {conditionsList.map(item => (
+        <div key={item}>{item}</div>
       ))}
     </div>
   )

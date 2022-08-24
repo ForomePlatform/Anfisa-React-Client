@@ -1,6 +1,6 @@
 import styles from './condition-card.module.css'
 
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
@@ -12,7 +12,6 @@ import {
 } from '@service-providers/common'
 import { ConditionContent } from './condition-content'
 import { ConditionJoinModeLabel } from './condition-join-mode-label'
-import { ConditionOptions } from './condition-options'
 
 interface IConditionCardProps {
   className?: string
@@ -29,7 +28,6 @@ export const ConditionCard = observer(
     isActive,
     condition,
     onSelect,
-    onDelete,
     onDragStart,
   }: IConditionCardProps) => {
     const filterType: string = condition[0]
@@ -39,7 +37,22 @@ export const ConditionCard = observer(
         ? (condition[2] as ConditionJoinMode)
         : undefined
 
-    const [isContentVisible, setContentVisible] = useState(true)
+    const isArrowShown = useMemo(() => {
+      if (filterType !== AttributeKinds.ENUM) {
+        return false
+      }
+      const conditionsNumber = condition[3]?.length || 0
+      return conditionsNumber > 1
+    }, [])
+
+    const [isContentVisible, setContentVisible] = useState(isArrowShown)
+
+    const isPreviewMode = isArrowShown && !isContentVisible
+
+    const toggleConditions = (e: React.MouseEvent) => {
+      e.stopPropagation()
+      setContentVisible(!isContentVisible)
+    }
 
     const handleTitleMouseDown = (event: React.MouseEvent<HTMLElement>) => {
       const el = event.currentTarget
@@ -62,47 +75,55 @@ export const ConditionCard = observer(
     }
 
     return (
-      <div
-        className={cn(
-          styles.conditionCard,
-          isActive && styles.conditionCard_active,
-          className,
-        )}
-      >
-        <div className={styles.conditionCard__title}>
+      <>
+        <div
+          className={cn(
+            styles.conditionCard,
+            isActive && styles.conditionCard_active,
+            className,
+            'mx-4 my-2',
+          )}
+          onClick={onSelect}
+          onMouseDown={handleTitleMouseDown}
+        >
           <div
-            className={styles.conditionCard__filterName}
-            onClick={onSelect}
-            onMouseDown={handleTitleMouseDown}
-          >
-            {filterName}
-            <ConditionJoinModeLabel
-              className={styles.conditionCard__joinMode}
-              mode={filterMode}
-            />
-          </div>
-          <button
             className={cn(
-              styles.conditionCard__toggleButton,
-              isContentVisible && styles.conditionCard__toggleButton_open,
+              styles.conditionCard__content,
+              isContentVisible && styles.conditionCard__content_open,
             )}
-            onClick={() => setContentVisible(!isContentVisible)}
           >
-            <Icon name="Arrow" />
-          </button>
-          <ConditionOptions
-            className={styles.conditionCard__options}
-            filterName={filterName}
-            onDelete={onDelete}
-          />
+            <div className={cn(styles.conditionCard__filterName, 'mr-1')}>
+              {filterName}
+              <ConditionJoinModeLabel mode={filterMode} />:
+            </div>
+            <div
+              className={cn(
+                styles.conditionCard__conditions,
+                isContentVisible && 'mt-2',
+              )}
+            >
+              <ConditionContent
+                isPreview={isPreviewMode}
+                condition={condition}
+              />
+            </div>
+            {isPreviewMode && (
+              <div className={cn(styles.conditionCard__multipoint)}>...</div>
+            )}
+          </div>
+          {isArrowShown && (
+            <button
+              className={cn(
+                styles.conditionCard__toggleButton,
+                isContentVisible && styles.conditionCard__toggleButton_open,
+              )}
+              onClick={toggleConditions}
+            >
+              <Icon name="Arrow" />
+            </button>
+          )}
         </div>
-        {isContentVisible && (
-          <ConditionContent
-            condition={condition}
-            className={styles.conditionCard__content}
-          />
-        )}
-      </div>
+      </>
     )
   },
 )

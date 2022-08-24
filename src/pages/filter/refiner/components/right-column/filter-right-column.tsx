@@ -5,6 +5,7 @@ import { useHistory } from 'react-router'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
+import { copyToClipboard } from '@core/copy-to-clipboard'
 import { formatNumber } from '@core/format-number'
 import { useParams } from '@core/hooks/use-params'
 import { t } from '@i18n'
@@ -13,6 +14,7 @@ import filterStore from '@store/filter'
 import filterPresetsStore from '@store/filter-presets'
 import { Routes } from '@router/routes.enum'
 import { Button } from '@ui/button'
+import { Icon } from '@ui/icon'
 import { Loader } from '@ui/loader'
 import { FilterRefinerStatCounts } from '@pages/filter/refiner/components/right-column/filter-refiner-stat-counts'
 import { TCondition } from '@service-providers/common'
@@ -32,6 +34,8 @@ export const FilterRightColumn = observer(
     const {
       conditions,
       isConditionsFetching,
+      selectedConditionIndex,
+      selectedCondition,
       stat: { filteredCounts },
     } = filterStore
 
@@ -50,12 +54,21 @@ export const FilterRightColumn = observer(
           )
     }
 
-    const clearAlSelectedFilters = () => {
-      filterPresetsStore.resetActivePreset()
-      filterStore.clearConditions()
-      filterStore.actionHistory.addHistory(
-        filterStore.conditions as TCondition[],
-      )
+    const clearSelectedFilter = () => {
+      if (!selectedCondition) {
+        return
+      }
+      filterStore.removeCondition(selectedConditionIndex)
+    }
+
+    const copySelectedFilter = (e: React.MouseEvent) => {
+      e.stopPropagation()
+      if (!selectedCondition) {
+        return
+      }
+
+      copyToClipboard(selectedCondition[1])
+      showToast(t('ds.copied'), 'info')
     }
 
     const isDisabledApplyButton =
@@ -97,27 +110,31 @@ export const FilterRightColumn = observer(
             />
           )}
         </div>
-
         {!isConditionsFetching && conditions.length > 0 && (
           <div
             className={cn(
               styles.querySelected__count,
-              'flex items-center justify-between px-4 py-3 border-b border-grey-light text-14',
+              'flex items-center flex-row-reverse px-7 py-3 text-14',
             )}
           >
-            <div className="text-grey-blue">
-              {t('filter.conditionsAdded', { count: conditions.length })}
-            </div>
-
-            <div
-              className="text-blue-bright font-medium cursor-pointer"
-              onClick={clearAlSelectedFilters}
-            >
-              {t('general.clearAll')}
-            </div>
+            <Icon
+              name="Delete"
+              className={cn(
+                'font-medium cursor-pointer mx-[2px]',
+                selectedCondition && 'text-blue-bright',
+              )}
+              onClick={clearSelectedFilter}
+            />
+            <Icon
+              name="Copy"
+              className={cn(
+                'font-medium cursor-pointer mx-[2px]',
+                selectedCondition && 'text-blue-bright',
+              )}
+              onClick={copySelectedFilter}
+            />
           </div>
         )}
-
         {isConditionsFetching ? (
           <Loader />
         ) : (
