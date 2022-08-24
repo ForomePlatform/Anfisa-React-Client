@@ -275,10 +275,6 @@ class WizardStore {
       ? wizardScenarios.WsCandidateSet
       : wizardScenarios.WsShortCandidateSet
 
-    if (hasSecondaryDs) {
-      scenario[2].title = datasetStore.datasetName
-    }
-
     this.setScenario(scenario, true)
   }
 
