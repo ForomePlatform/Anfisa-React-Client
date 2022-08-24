@@ -13,6 +13,7 @@ import {
 } from '@pages/main/components/sidebar/datasets-list/datasets-list.constants'
 import { datasetNameByKey } from '@pages/main/components/sidebar/datasets-list/datasets-list.utils'
 import { IDirInfoDatasetDescriptor } from '@service-providers/vault-level/vault-level.interface'
+import { wizardScenarios } from '../../selected-dataset/build-flow/components/wizard/scenarios/wizard-scenarious'
 import wizardStore from '../../selected-dataset/build-flow/components/wizard/wizard.store'
 import { DatasetType } from './components/dataset-type'
 
@@ -56,6 +57,12 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
       } else {
         if (wizardStore.actionHistory.historyIndex !== -1) {
           wizardStore.actionHistory.resetHistory()
+
+          const scenario = wizardStore.secondaryDatasets?.length
+            ? wizardScenarios.WsShortCandidateSet
+            : wizardScenarios.WsCandidateSet
+
+          wizardStore.setScenario(scenario, true)
         }
       }
 

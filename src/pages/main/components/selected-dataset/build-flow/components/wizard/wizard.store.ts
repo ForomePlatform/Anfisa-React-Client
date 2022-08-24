@@ -84,15 +84,14 @@ class WizardStore {
   }
 
   public get secondaryDatasets(): string[] | undefined {
-    return dirinfoStore.dirinfo.data?.dsDict[datasetStore.datasetName]
-      ?.secondary
+    return dirinfoStore.dirInfoData?.dsDict[datasetStore.datasetName]?.secondary
   }
 
   public getSecondaryDsByParentDs(parentDs: string): string[] | undefined {
     return dirinfoStore.dirinfo.data?.dsDict[parentDs]?.secondary
   }
 
-  private setScenario(
+  public setScenario(
     scenario: IWizardScenario[],
     shouldSaveInHistory: boolean,
   ) {
