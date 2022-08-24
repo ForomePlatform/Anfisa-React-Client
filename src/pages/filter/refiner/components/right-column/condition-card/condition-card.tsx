@@ -43,7 +43,8 @@ export const ConditionCard = observer(
       }
       const conditionsNumber = condition[3]?.length || 0
       return conditionsNumber > 1
-    }, [])
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [condition])
 
     const [isContentVisible, setContentVisible] = useState(isArrowShown)
 

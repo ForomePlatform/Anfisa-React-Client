@@ -1,55 +1,45 @@
 .condition-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: theme("padding.15");
+  border-radius: theme("borderRadius.xl");
+  box-shadow: 0 2px 8px rgb(105 105 105 / 25%);
+
   &_active {
     background: theme("colors.blue.tertiary");
+    border: 1px solid theme("colors.blue.bright");
   }
 
-  &::after {
-    content: "";
-    display: block;
-    height: 0;
-    margin: 0 theme("spacing.4");
-    border-bottom: 1px solid theme("colors.grey.light");
+  &__filterName {
+    font-weight: 500;
   }
 
-  &:last-of-type &::after {
-    display: none;
-  }
-
-  &__title {
-    position: relative;
+  &__content {
     display: flex;
-    align-items: center;
+    width: 100%;
+
+    &_open {
+      display: block;
+    }
   }
 
-  &:first-of-type &__title {
-    border-top: 0;
-  }
-
-  &__filter-name {
-    @apply typography-m;
-
-    flex: 1 0 100%;
-    display: flex;
-    align-items: center;
-    font-weight: theme("fontWeight.bold");
-    padding: theme("spacing.4") theme("spacing.10");
-    cursor: move;
-  }
-
-  &__join-mode {
-    margin-left: theme("spacing.1");
+  &__multipoint {
+    &::before {
+      content: "";
+      display: inline-block;
+      background: theme("colors.grey.disabled");
+      height: 20px;
+      width: 2px;
+      border-radius: 50%;
+      margin: 0 6px -5px;
+    }
   }
 
   &__toggle-button {
-    position: absolute;
-    padding: theme("spacing.2");
-    left: theme("spacing.2");
-    color: theme("colors.grey.blue");
+    color: theme("colors.blue.bright");
     cursor: pointer;
-
-    &:hover {
-      color: theme("colors.blue.bright");
-    }
+    padding: theme("spacing.1");
 
     svg {
       transition: transform 0.15s ease-in-out;
@@ -59,16 +49,5 @@
     &_open svg {
       transform: rotate(90deg);
     }
-  }
-
-  &__options {
-    position: absolute;
-    right: theme("spacing.2");
-  }
-
-  &__content {
-    border-top: 1px solid theme("colors.grey.light");
-    margin: 0 theme("spacing.4");
-    padding: theme("spacing.4") 0 theme("spacing.4") theme("spacing.6");
   }
 }
