@@ -8,9 +8,13 @@ import { CreateDatasetDialog } from '@pages/filter/dtree/components/modals/compo
 
 interface ICreateDatasetProps {
   disabled?: boolean
+  tooltip?: string
 }
 
-export const CreateDataset: FC<ICreateDatasetProps> = ({ disabled }) => {
+export const CreateDataset: FC<ICreateDatasetProps> = ({
+  disabled,
+  tooltip = '',
+}) => {
   const [creationDialog, openCreationDialog, closeCreationDialog] = useModal()
   const { isOpen } = creationDialog
 
@@ -22,6 +26,7 @@ export const CreateDataset: FC<ICreateDatasetProps> = ({ disabled }) => {
         disabled={disabled}
         variant="primary-dark"
         dataTestId={DecisionTreesMenuDataCy.saveDataset}
+        title={tooltip}
       />
 
       <CreateDatasetDialog onClose={closeCreationDialog} isOpen={isOpen} />

@@ -6,17 +6,16 @@ import { observer } from 'mobx-react-lite'
 
 import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
 import { useDatasetName } from '@core/hooks/use-dataset-name'
+import { t } from '@i18n'
 import datasetStore from '@store/dataset/dataset'
+import defaultsStore from '@store/defaults'
 import filterStore from '@store/filter'
 import filterPresetsStore from '@store/filter-presets'
 import { ExportReport } from '@components/export-report'
 import { Header } from '@components/header'
 import { VariantsCount } from '@components/variants-count'
 import { GlbPagesNames } from '@glb/glb-names'
-import {
-  FilterControl,
-  XL_COUNT_OF_VARIANTS,
-} from '@pages/filter/common/filter-control/filter-control'
+import { FilterControl } from '@pages/filter/common/filter-control/filter-control'
 import { IgvModal } from '@pages/filter/dtree/components/modals/components/igv'
 import { FilterRefiner } from '@pages/filter/refiner/components/filter-refiner'
 import dashboardStore, { Dashboard } from '../common/dashboard'
@@ -32,6 +31,8 @@ import { SolutionControlRefiner } from './components/solution-control-refiner'
 export const RefinerPage = observer((): ReactElement => {
   const { isXL } = datasetStore
 
+  const { wsMaxCount } = defaultsStore
+
   const {
     stat: { unitGroups, functionalUnits, isFetching },
   } = filterStore
@@ -41,10 +42,6 @@ export const RefinerPage = observer((): ReactElement => {
 
   const { availablePresets: availableSolutionEntries, activePreset } =
     filterPresetsStore
-
-  const createPreset = (presetName: string): void => {
-    filterPresetsStore.createPreset(presetName, filterStore.conditions)
-  }
 
   const filterCounts = filterStore.stat.filteredCounts
 
@@ -59,6 +56,8 @@ export const RefinerPage = observer((): ReactElement => {
   const allVariants = isXL
     ? toJS(datasetStore.dsInfoData?.total)
     : variantCounts
+
+  const isTooManyVariants = filterCounts && filterCounts.variants > wsMaxCount
 
   useDatasetName()
 
@@ -99,7 +98,6 @@ export const RefinerPage = observer((): ReactElement => {
         <FilterControl
           pageName={FilterControlOptionsNames[GlbPagesNames.Refiner]}
           SolutionControl={SolutionControlRefiner}
-          createSolutionEntry={createPreset}
           availableSolutionEntries={availableSolutionEntries}
           isBackwardAllowed={filterStore.actionHistory.isBackwardAllowed}
           isForwardAllowed={filterStore.actionHistory.isForwardAllowed}
@@ -107,7 +105,12 @@ export const RefinerPage = observer((): ReactElement => {
           disabledCreateDataset={
             filterStore.conditions.length === 0 ||
             !filterCounts ||
-            filterCounts.variants > XL_COUNT_OF_VARIANTS
+            filterCounts.variants > wsMaxCount
+          }
+          createDatasetTooltip={
+            isTooManyVariants
+              ? t('dsCreation.tooManyVariants', { max: wsMaxCount })
+              : ''
           }
           goForward={filterStore.actionHistory.goForward}
           goBackward={filterStore.actionHistory.goBackward}

@@ -54,8 +54,8 @@
 
   &__list {
     flex: 1 0 0;
+    padding: 0 1px;
     overflow-y: auto;
-    padding-right: theme("spacing.4");
 
     &_modal {
       max-height: 70vh;

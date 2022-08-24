@@ -2,8 +2,6 @@ import { ChangeEvent, MouseEvent, ReactElement } from 'react'
 import cn, { Argument } from 'classnames'
 import { observer } from 'mobx-react-lite'
 
-import { t } from '@i18n'
-
 interface ISelectProps {
   placeholder?: string
   className?: Argument
@@ -11,6 +9,7 @@ interface ISelectProps {
   onClick?: (e: MouseEvent<HTMLElement>) => void
   options?: string[]
   reset?: boolean
+  resetText?: string
   value?: any
   disabled?: boolean
   approx?: boolean
@@ -22,6 +21,7 @@ export const Select = observer(({ ...rest }: ISelectProps): ReactElement => {
     className,
     options,
     reset,
+    resetText,
     value,
     disabled,
     approx,
@@ -38,9 +38,7 @@ export const Select = observer(({ ...rest }: ISelectProps): ReactElement => {
     >
       {reset && (
         <>
-          <option />
-
-          <option value="empty">{t('dtree.empty')}</option>
+          {resetText ? <option value="empty">{resetText}</option> : <option />}
         </>
       )}
 

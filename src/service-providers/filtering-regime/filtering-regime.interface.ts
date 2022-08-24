@@ -1,5 +1,4 @@
 // ds_stat
-
 import {
   DatasetKinds,
   IFuncPropertyStatus,
@@ -9,6 +8,8 @@ import {
   TItemsCount,
   TPropertyStatus,
 } from 'service-providers/common'
+
+import { TGenomeOptionsKeys } from '@core/enum/explore-genome-types-enum'
 
 export enum DsStatArgumentsOptions {
   UPDATE = 'UPDATE',
@@ -21,7 +22,11 @@ export interface IDsStatArguments {
   tm?: number
   filter?: string
   conditions?: ReadonlyArray<TCondition>
-  instr?: [option: DsStatArgumentsOptions, filterName: string]
+  instr?: [
+    option: DsStatArgumentsOptions,
+    filterName: string,
+    rubric?: TGenomeOptionsKeys,
+  ]
 }
 
 export interface IDsStatCondSeq {
@@ -106,6 +111,7 @@ export type TUpdateFilterPresetParams = {
   ds: string
   presetName: string
   conditions?: ReadonlyArray<TCondition>
+  rubric?: TGenomeOptionsKeys
 }
 
 export type TJoinFilterPresetParams = {

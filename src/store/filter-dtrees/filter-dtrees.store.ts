@@ -1,5 +1,6 @@
 import { makeAutoObservable, reaction, toJS } from 'mobx'
 
+import { TGenomeOptionsKeys } from '@core/enum/explore-genome-types-enum'
 import { pushQueryParams } from '@core/history'
 import { t } from '@i18n'
 import { createHistoryObserver } from '@store/common'
@@ -85,7 +86,10 @@ export class FilterDtreesStore {
     this.setActiveDtree('')
   }
 
-  public createDtree = (dtreeName: string): void => {
+  public createDtree = (
+    dtreeName: string,
+    rubric?: TGenomeOptionsKeys,
+  ): void => {
     if (!validatePresetName(dtreeName)) {
       showToast(t('filter.notValidName'), 'error')
 
@@ -95,7 +99,12 @@ export class FilterDtreesStore {
       .updateDtree({
         ds: datasetStore.datasetName,
         code: dtreeStore.dtreeCode,
-        instr: [ActionTypes.DTREE, DtreeModifyingActions.UPDATE, dtreeName],
+        instr: [
+          ActionTypes.DTREE,
+          DtreeModifyingActions.UPDATE,
+          dtreeName,
+          rubric,
+        ],
       })
       .then(() => {
         this.dtrees.invalidate()

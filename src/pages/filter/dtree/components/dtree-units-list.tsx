@@ -114,7 +114,6 @@ export const DtreeUnitsList = observer(
         className={className}
         isModal={isModal}
         isDark={!isModal}
-        withCharts={!isModal}
         subHeader={!isModal && <DtreeUnitsListSubHeader />}
         isLoading={isFetchingSet || isFetchingStat}
         groups={unitGroups}

@@ -11,6 +11,7 @@ import { filterPresetsData } from '@utils/filter-presets'
 import { showToast } from '@utils/notifications/showToast'
 import { validatePresetName } from '@utils/validation/validatePresetName'
 import datasetStore from '../dataset/dataset'
+import { TGenomeOptionsKeys } from './../../core/enum/explore-genome-types-enum'
 import { AvailablePresetsAsyncStore } from './available-presets.async.store'
 
 export class FilterPresetsStore {
@@ -72,6 +73,7 @@ export class FilterPresetsStore {
   public createPreset(
     presetName: string,
     conditions: ReadonlyArray<TCondition>,
+    rubric?: TGenomeOptionsKeys,
   ): void {
     if (!validatePresetName(presetName)) {
       showToast(t('filter.notValidName'), 'error')
@@ -84,6 +86,7 @@ export class FilterPresetsStore {
         ds: datasetStore.datasetName,
         conditions,
         presetName,
+        rubric,
       })
       .then(
         () => {

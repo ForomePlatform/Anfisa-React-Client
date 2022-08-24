@@ -21,13 +21,13 @@ export interface IUnitsListProps {
   className?: string
   isModal?: boolean
   isDark?: boolean
-  withCharts?: boolean
   isLoading?: boolean
   fetchedAmount: number
   subHeader?: ReactNode
   groups: TUnitGroups
   functionalUnits: TFunctionalUnit[]
   functionalConditions?: TFunctionalCondition[]
+  selectedUnit?: string
   onSelect: (unit: TPropertyStatus) => void
   onFunctionalConditionSelect?: (condition: TFunctionalCondition) => void
   onFunctionalConditionDelete?: (condition: TFunctionalCondition) => void
@@ -39,13 +39,13 @@ export const UnitsList = observer(
     className,
     isModal,
     isDark = false,
-    withCharts = false,
     subHeader,
     groups,
     functionalUnits,
     functionalConditions,
     fetchedAmount,
     isLoading = false,
+    selectedUnit,
     onSelect,
     onFunctionalConditionSelect,
     onFunctionalConditionDelete,
@@ -71,6 +71,7 @@ export const UnitsList = observer(
     }
 
     const showLoader = isLoading && !filteredGroups.length
+    const showProgressBar = fetchedAmount !== 100
     return (
       <div
         className={cn(
@@ -80,11 +81,12 @@ export const UnitsList = observer(
           className,
         )}
       >
-        {fetchedAmount !== 100 && (
+        {showProgressBar && (
           <div className={styles.unitsList__loader}>
-            <ProgressBar status={fetchedAmount} step={10} size="xs" />
+            <ProgressBar size="sm" />
           </div>
         )}
+
         <FunctionalUnits
           className={cn(
             styles.unitsList__functional,
@@ -129,9 +131,8 @@ export const UnitsList = observer(
                 key={group.name}
                 isCollapsed={collapsedGroups.includes(group.name)}
                 isDark={isDark}
-                withCharts={withCharts}
                 unitsGroup={group}
-                isModal={isModal}
+                selectedUnit={selectedUnit}
                 onCollapsedChange={handleCollapsedChange}
                 onSelect={onSelect}
               />

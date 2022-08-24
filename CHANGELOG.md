@@ -1,7 +1,15 @@
 # Change log 
 
-## <small>0.8.1 (8/22/2022)</small>
+## <small>0.8.1 (8/23/2022)</small>
 
+* feat([FOROME-1555](https://quantori.atlassian.net/browse/FOROME-1555)): Redesign of units list ([c9f580c3](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c9f580c3))
+* feat([FOROME-1417](https://quantori.atlassian.net/browse/FOROME-1417)): Adding a rubric select for solution create dialog ([dcd13b2d](https://github.com/ForomePlatform/Anfisa-React-Client/commit/dcd13b2d))
+* feat([FOROME-1416](https://quantori.atlassian.net/browse/FOROME-1416)): candidate set deletion ([c359b4b1](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c359b4b1))
+* fix([FOROME-1551](https://quantori.atlassian.net/browse/FOROME-1551)): progress bar progress ([c1d1d3df](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c1d1d3df))
+* fix([FOROME-1566](https://quantori.atlassian.net/browse/FOROME-1566)): duplicating widgets in DB ([752e3b9e](https://github.com/ForomePlatform/Anfisa-React-Client/commit/752e3b9e))
+* fix([FOROME-1496](https://quantori.atlassian.net/browse/FOROME-1496)): DB saving favorites state ([51737a7a](https://github.com/ForomePlatform/Anfisa-React-Client/commit/51737a7a))
+* feat([FOROME-1431](https://quantori.atlassian.net/browse/FOROME-1431)): remove hardcoded limitations (#893) ([27bac3ed](https://github.com/ForomePlatform/Anfisa-React-Client/commit/27bac3ed))
+* feat([FOROME-1393](https://quantori.atlassian.net/browse/FOROME-1393)): display variants counter (#898) ([50672f71](https://github.com/ForomePlatform/Anfisa-React-Client/commit/50672f71))
 * fix([FOROME-1486](https://quantori.atlassian.net/browse/FOROME-1486)): showing prompt for solution select ([008de8ff](https://github.com/ForomePlatform/Anfisa-React-Client/commit/008de8ff))
 * fix([FOROME-1464](https://quantori.atlassian.net/browse/FOROME-1464)): wizard undo button style ([0b119101](https://github.com/ForomePlatform/Anfisa-React-Client/commit/0b119101))
 * feat([FOROME-1483](https://quantori.atlassian.net/browse/FOROME-1483)): add autoscroll to the enum list ([352119ae](https://github.com/ForomePlatform/Anfisa-React-Client/commit/352119ae))

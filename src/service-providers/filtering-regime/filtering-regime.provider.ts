@@ -1,5 +1,6 @@
 import { AxiosRequestConfig } from 'axios'
 
+import progressBarStore from '@ui/progress-bar'
 import { adaptDsStatResponse } from '@service-providers/filtering-regime/filtering-regime.adapters'
 import { ServiceProviderBase, TFilteringStat } from '../common'
 import { adaptDataToCamelizedType } from './../common/common.adapters'
@@ -51,7 +52,11 @@ export class FilteringRegimeProvider extends ServiceProviderBase {
       {
         ds: params.ds,
         conditions: params.conditions,
-        instr: [DsStatArgumentsOptions.UPDATE, params.presetName],
+        instr: [
+          DsStatArgumentsOptions.UPDATE,
+          params.presetName,
+          params.rubric,
+        ],
       },
       options,
     )
@@ -132,6 +137,7 @@ export class FilteringRegimeProvider extends ServiceProviderBase {
 
     let result = response
     let incompleteProps = getIncompleteProps(response.units)
+    progressBarStore.incompleteProps = incompleteProps
 
     while (incompleteProps.length > 0) {
       if (abortSignal && abortSignal.aborted) {
@@ -163,6 +169,11 @@ export class FilteringRegimeProvider extends ServiceProviderBase {
       }
 
       incompleteProps = getIncompleteProps(result.units)
+      progressBarStore.incompleteProps = incompleteProps
+    }
+
+    if (!incompleteProps.length) {
+      progressBarStore.incompleteProps = []
     }
 
     return result
