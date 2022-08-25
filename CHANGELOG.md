@@ -1,7 +1,8 @@
 # Change log 
 
-## <small>0.8.1 (8/24/2022)</small>
+## <small>0.8.1 (8/25/2022)</small>
 
+* feat([FOROME-1556](https://quantori.atlassian.net/browse/FOROME-1556)): redesign enum panel ([c31e0dc6](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c31e0dc6))
 * fix([FOROME-1485](https://quantori.atlassian.net/browse/FOROME-1485)): add validation rule (#906) ([71c8ced4](https://github.com/ForomePlatform/Anfisa-React-Client/commit/71c8ced4))
 * feat([FOROME-1555](https://quantori.atlassian.net/browse/FOROME-1555)): Redesign of units list ([c9f580c3](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c9f580c3))
 * feat([FOROME-1417](https://quantori.atlassian.net/browse/FOROME-1417)): Adding a rubric select for solution create dialog ([dcd13b2d](https://github.com/ForomePlatform/Anfisa-React-Client/commit/dcd13b2d))
