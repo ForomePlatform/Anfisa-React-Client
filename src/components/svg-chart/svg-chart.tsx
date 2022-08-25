@@ -25,7 +25,7 @@ interface ISvgChartProps<Data> extends SVGProps<SVGSVGElement> {
   height?: number
   component?: 'svg' | ComponentType<SVGProps<SVGSVGElement>>
   data: Data
-  selectedVariants?: string[] | undefined
+  selectedVariants?: string[]
   isDashboard?: boolean
   render: (params: SvgChartRenderParams<Data>) => void
   onSelectVariantByChart?: (variant: string) => void
