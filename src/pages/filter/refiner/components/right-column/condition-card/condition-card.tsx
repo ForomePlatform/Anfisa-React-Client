@@ -41,9 +41,6 @@ export const ConditionCard = observer(
       if (filterType === AttributeKinds.FUNC) {
         return true
       }
-      if (filterType !== AttributeKinds.ENUM) {
-        return false
-      }
       const conditionsNumber = condition[3]?.length || 0
       return conditionsNumber > 1
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,9 +48,11 @@ export const ConditionCard = observer(
 
     const [isContentVisible, setContentVisible] = useState(isArrowShown)
 
-    const isPreviewMode = isArrowShown && !isContentVisible
+    const isContentHidden =
+      filterType === AttributeKinds.FUNC && !isContentVisible
 
-    const isContentHidden = filterType === AttributeKinds.FUNC && isPreviewMode
+    const isMultipointShown =
+      filterType === AttributeKinds.ENUM && isArrowShown && !isContentVisible
 
     const toggleConditions = (e: React.MouseEvent) => {
       e.stopPropagation()
@@ -63,6 +62,7 @@ export const ConditionCard = observer(
     const handleTitleMouseDown = (event: React.MouseEvent<HTMLElement>) => {
       const el = event.currentTarget
       const handler = (moveEvent: MouseEvent) => {
+        el.classList.add('!cursor-grabbing')
         onDragStart(el, moveEvent)
       }
 
@@ -72,6 +72,7 @@ export const ConditionCard = observer(
       document.addEventListener(
         'mouseup',
         () => {
+          el.classList.remove('!cursor-grabbing')
           document.removeEventListener('mousemove', handler)
         },
         {
@@ -87,7 +88,6 @@ export const ConditionCard = observer(
             styles.conditionCard,
             isActive && styles.conditionCard_active,
             className,
-            'mx-4 my-2',
           )}
           onClick={onSelect}
           onMouseDown={handleTitleMouseDown}
@@ -98,7 +98,7 @@ export const ConditionCard = observer(
               isContentVisible && styles.conditionCard__content_open,
             )}
           >
-            <div className={cn(styles.conditionCard__filterName, 'mr-1')}>
+            <div className={cn(styles.conditionCard__filterName)}>
               {filterName}
               <ConditionJoinModeLabel mode={filterMode} />:
             </div>
@@ -110,12 +110,12 @@ export const ConditionCard = observer(
                 )}
               >
                 <ConditionContent
-                  isPreview={isPreviewMode}
+                  isPreview={!isContentVisible}
                   condition={condition}
                 />
               </div>
             )}
-            {isPreviewMode && !isContentHidden && (
+            {isMultipointShown && (
               <div className={cn(styles.conditionCard__multipoint)}>...</div>
             )}
           </div>

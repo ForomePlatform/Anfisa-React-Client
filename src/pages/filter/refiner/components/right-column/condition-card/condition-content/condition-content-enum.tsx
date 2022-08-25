@@ -14,7 +14,9 @@ export const ConditionContentEnum = ({
   return (
     <div>
       {conditionsList.map(item => (
-        <div key={item}>{item}</div>
+        <div key={item} className={!isPreview && 'mt-2'}>
+          {item}
+        </div>
       ))}
     </div>
   )
