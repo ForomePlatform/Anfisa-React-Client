@@ -18,3 +18,21 @@ export const ExploreGenomeTypesDictionary = {
 } as const
 
 export type TExploreGenomeKeys = keyof typeof ExploreGenomeKeys
+
+export type TGenomeOptionsKeys = Exclude<
+  TExploreGenomeKeys,
+  'BuildInclusionExclusion' | 'ExploreData'
+>
+
+export type TGenomeOptionsValues =
+  typeof ExploreGenomeTypesDictionary[TGenomeOptionsKeys]
+
+export const genomeTypesOptions = Object.entries(ExploreGenomeTypesDictionary)
+  .filter(([key]) =>
+    [
+      ExploreGenomeKeys.ACMGSecondary,
+      ExploreGenomeKeys.PhenotypeBased,
+      ExploreGenomeKeys.GeneticFirst,
+    ].includes(key as any),
+  )
+  .map(([, value]) => value) as TGenomeOptionsValues[]

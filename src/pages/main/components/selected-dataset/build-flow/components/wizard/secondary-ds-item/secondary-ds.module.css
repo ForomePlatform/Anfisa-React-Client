@@ -1,0 +1,43 @@
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  line-height: 1.25rem;
+  cursor: pointer;
+
+  &:hover {
+    .delete-bucket {
+      display: block;
+    }
+  }
+
+  &_active {
+    background: theme("backgroundColor.blue.bright");
+    color: theme("colors.white");
+  }
+
+  &_passive {
+    &:hover {
+      background: theme("backgroundColor.blue.light")
+    }
+  }
+}
+
+.delete-bucket {
+  color: theme("colors.blue.bright");
+  display: none;
+
+  &:hover {
+    color: theme("colors.blue.hover")
+  }
+
+  &_active {
+    color: theme("colors.white");
+
+    &:hover {
+      color: theme("colors.grey.blue");
+    }
+  }
+}

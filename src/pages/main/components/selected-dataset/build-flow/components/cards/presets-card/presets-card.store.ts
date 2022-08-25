@@ -51,6 +51,14 @@ class PresetsCardStore {
     this.loadDTrees()
   }
 
+  public refreshDtrees() {
+    this._dtrees.invalidate()
+  }
+
+  public refreshPresets() {
+    this._presets.invalidate()
+  }
+
   public getSolutionsByRubric(rubric?: TExploreGenomeKeys) {
     if (rubric) {
       return this.solutions.filter(solution => solution.rubric === rubric)

@@ -14,6 +14,7 @@ interface IUnitsListGroupProps {
   isCollapsed: boolean
   isDark: boolean
   unitsGroup: TUnitGroup
+  selectedUnit?: string
   className?: string
   onCollapsedChange: (isCollapsed: boolean, name: string) => void
   onSelect: (unit: TPropertyStatus) => void
@@ -23,6 +24,7 @@ export const UnitsListGroup = ({
   isCollapsed,
   isDark,
   unitsGroup,
+  selectedUnit,
   className,
   onCollapsedChange,
   onSelect,
@@ -50,6 +52,7 @@ export const UnitsListGroup = ({
         attributes.map(unit => (
           <UnitsListUnit
             key={unit.name}
+            isSelected={selectedUnit === unit.name}
             unit={unit}
             isDark={isDark}
             onSelect={() => onSelect(unit)}

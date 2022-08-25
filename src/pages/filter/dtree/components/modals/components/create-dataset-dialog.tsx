@@ -23,6 +23,7 @@ import { DecisionTreesMenuDataCy } from '@data-testid'
 import { showToast } from '@utils/notifications/showToast'
 import {
   noFirstNumberPattern,
+  noSpacesPattern,
   noSymbolPattern,
 } from '@utils/validation/validationPatterns'
 
@@ -145,6 +146,7 @@ export const CreateDatasetDialog = observer(
       if (
         noSymbolPattern.test(name) ||
         noFirstNumberPattern.test(name) ||
+        noSpacesPattern.test(name) ||
         name.length > 250
       ) {
         setError(DatasetCreationErrorsEnum.IncorrectName)
@@ -172,11 +174,10 @@ export const CreateDatasetDialog = observer(
       >
         <div className="flex flex-col">
           <div>
-            <span className="text-14">{t('dsCreation.label')}</span>
-
             <Input
               disabled={!operations.isCreationOver}
               value={value}
+              label={t('dsCreation.label')}
               onChange={e => handleChange(e.target.value)}
               className="mt-1"
               data-testid={DecisionTreesMenuDataCy.datasetNameInput}

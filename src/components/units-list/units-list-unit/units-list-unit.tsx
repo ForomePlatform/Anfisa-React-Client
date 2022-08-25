@@ -10,6 +10,7 @@ import { UnitsListUnitName } from './components/units-list-unit-name'
 interface IUnitsListUnitProps {
   isDark: boolean
   unit: TUnit
+  isSelected: boolean
   className?: Argument
   onSelect: () => void
 }
@@ -17,21 +18,29 @@ interface IUnitsListUnitProps {
 export const UnitsListUnit = ({
   isDark,
   unit,
+  isSelected,
   className,
   onSelect,
 }: IUnitsListUnitProps): ReactElement => {
   const { name, tooltip } = unit
 
   return (
-    <div className={cn(styles.unit, className)}>
+    <div
+      className={cn(
+        styles.unit,
+        className,
+        isSelected ? styles.unit_selected : '',
+      )}
+    >
       <div className={styles.unitTitle}>
-        {unit.power && (
-          <PredictionPowerIndicator
-            className={styles.unitTitle__power}
-            value={unit.power.value}
-            comment={unit.power.comment}
-          />
-        )}
+        <div className={cn(styles.unitTitle__powerWrapper)}>
+          {unit.power && (
+            <PredictionPowerIndicator
+              value={unit.power.value}
+              comment={unit.power.comment}
+            />
+          )}
+        </div>
         <UnitsListUnitName
           tooltip={tooltip}
           name={name}

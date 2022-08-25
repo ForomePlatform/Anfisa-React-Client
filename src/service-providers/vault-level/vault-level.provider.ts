@@ -8,6 +8,8 @@ import { TRecCntResponse } from './../dataset-level'
 import {
   IAdmDropDsArguments,
   IAdmReloadDsArguments,
+  IDefaults,
+  IDefaultsArguments,
   IDirInfo,
   IJobStatusArgument,
   ISingleCntArgument,
@@ -17,6 +19,12 @@ import {
 class VaultProvider extends ServiceProviderBase {
   constructor() {
     super()
+  }
+
+  public async getDefaults(params: IDefaultsArguments): Promise<IDefaults> {
+    const response = await this.post<IDefaults>('/defaults', params)
+
+    return adaptDataToCamelizedType(response.data)
   }
 
   public getDirInfo() {

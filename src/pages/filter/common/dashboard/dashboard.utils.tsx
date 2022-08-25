@@ -85,6 +85,9 @@ export const getLayoutOnMassiveChange = (
   mainTabs: IExtendedTUnitGroup[],
   mainTabsLayout: Layout[],
 ): Layout[] => {
+  if (!mainTabs.length) {
+    return []
+  }
   const clonedLayout = cloneDeep(mainTabsLayout)
 
   clonedLayout.forEach((layout, index) => {

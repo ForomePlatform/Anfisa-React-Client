@@ -7,7 +7,9 @@ import { observer } from 'mobx-react-lite'
 import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
 import { useDatasetName } from '@core/hooks/use-dataset-name'
 import { useParams } from '@core/hooks/use-params'
+import { t } from '@i18n'
 import datasetStore from '@store/dataset/dataset'
+import defaultsStore from '@store/defaults'
 import dtreeStore from '@store/dtree'
 import filterDtreesStore from '@store/filter-dtrees'
 import { Header } from '@components/header'
@@ -18,10 +20,7 @@ import { changeEnumAttribute } from '@utils/changeAttribute/changeEnumAttribute'
 import { changeNumericAttribute } from '@utils/changeAttribute/changeNumericAttribute'
 import { saveAttribute } from '@utils/changeAttribute/saveAttribute'
 import dashboardStore, { Dashboard } from '../common/dashboard'
-import {
-  FilterControl,
-  XL_COUNT_OF_VARIANTS,
-} from '../common/filter-control/filter-control'
+import { FilterControl } from '../common/filter-control/filter-control'
 import { FilterControlOptionsNames } from '../common/filter-control/filter-control.const'
 import { dtreeAttributeStore } from './components/attributes/dtree-attributes.store'
 import { dtreeFunctionsStore } from './components/attributes/dtree-functions.store'
@@ -35,13 +34,11 @@ const MIN_CODE_LENGTH = 13
 export const DtreePage = observer((): ReactElement => {
   const { isXL } = datasetStore
 
+  const { wsMaxCount } = defaultsStore
+
   const { unitGroups, functionalUnits, isFetching } = dtreeStore.stat
 
   const { availableDtrees: availableSolutionEntries } = filterDtreesStore
-
-  const createDtree = (treeName: string): void => {
-    filterDtreesStore.createDtree(treeName)
-  }
 
   const modifiedDtree = dtreeStore.isDtreeModified
     ? dtreeStore.currentDtreeName
@@ -50,6 +47,10 @@ export const DtreePage = observer((): ReactElement => {
   const isEntryCreationAllowed = filterDtreesStore.activeDtree
     ? modifiedDtree === filterDtreesStore.activeDtree
     : dtreeStore.dtreeCode.length >= MIN_CODE_LENGTH
+
+  const isTooManyVariants =
+    dtreeStore.totalFilteredCounts &&
+    dtreeStore.totalFilteredCounts.accepted > wsMaxCount
 
   useDatasetName()
   filterDtreesStore.observeHistory.useHook()
@@ -109,11 +110,15 @@ export const DtreePage = observer((): ReactElement => {
           disabledCreateDataset={
             dtreeStore.stepIndexes.length === 0 ||
             !dtreeStore.totalFilteredCounts ||
-            dtreeStore.totalFilteredCounts.accepted > XL_COUNT_OF_VARIANTS
+            dtreeStore.totalFilteredCounts.accepted > wsMaxCount
+          }
+          createDatasetTooltip={
+            isTooManyVariants
+              ? t('dsCreation.tooManyVariants', { max: wsMaxCount })
+              : ''
           }
           pageName={FilterControlOptionsNames[GlbPagesNames.Dtree]}
           SolutionControl={SolutionControlDtree}
-          createSolutionEntry={createDtree}
           availableSolutionEntries={availableSolutionEntries}
           isEntryCreationAllowed={isEntryCreationAllowed}
           isBackwardAllowed={dtreeStore.actionHistory.isBackwardAllowed}

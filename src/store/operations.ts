@@ -5,6 +5,7 @@ import { ExportTypeEnum } from '@core/enum/export-type.enum'
 import { getApiUrl } from '@core/get-api-url'
 import { t } from '@i18n'
 import datasetStore from '@store/dataset/dataset'
+import defaultsStore from '@store/defaults'
 import dtreeStore from '@store/dtree'
 import filterStore from '@store/filter'
 import mainTableStore from '@store/ws/main-table.store'
@@ -82,6 +83,8 @@ class OperationsStore {
   }
 
   async saveDatasetAsync(wsName: string, pathName: string) {
+    const { wsMaxCount, tabMaxCount } = defaultsStore
+
     this.resetIsCreationOver()
 
     const params: IDs2WsArguments = {
@@ -91,6 +94,7 @@ class OperationsStore {
 
     const isRefiner = pathName === Routes.Refiner
     const isMainTable = pathName === Routes.WS
+    const maxCount = isMainTable ? tabMaxCount : wsMaxCount
 
     let compareValue: number
 
@@ -105,12 +109,12 @@ class OperationsStore {
       params.code = dtreeStore.dtreeCode
     }
 
-    if (!(compareValue > 0 && compareValue < 9000)) {
+    if (!(compareValue > 0 && compareValue < maxCount)) {
       this.setIsCreationOver()
 
       return {
         ok: false,
-        message: t('dsCreation.tooManyVariants'),
+        message: t('dsCreation.tooManyVariants', { max: maxCount }),
       }
     }
 

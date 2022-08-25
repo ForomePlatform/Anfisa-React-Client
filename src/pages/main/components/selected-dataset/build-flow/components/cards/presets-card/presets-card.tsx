@@ -66,7 +66,7 @@ export const PresetsCard = observer(
               >
                 <div
                   className={cn(
-                    'w-full flex items-center py-2 leading-5 cursor-pointer px-4',
+                    'w-full flex items-center py-2 px-4 leading-5 cursor-pointer',
                     isSelected
                       ? 'bg-blue-bright text-white'
                       : 'hover:bg-blue-light',
