@@ -27,8 +27,8 @@ export interface IUnitsListProps {
   subHeader?: ReactNode
   functionalConditions?: TFunctionalCondition[]
   selectedUnit?: string
-  className?: string
   listContainerId?: string
+  className?: string
   onSelect: (unit: TPropertyStatus) => void
   onFunctionalConditionSelect?: (condition: TFunctionalCondition) => void
   onFunctionalConditionDelete?: (condition: TFunctionalCondition) => void

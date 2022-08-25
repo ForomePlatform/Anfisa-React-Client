@@ -21,7 +21,7 @@ export interface IEnumConditionProps {
   isDataReady: boolean
   listHeight: string
   selectedDashboardVariants?: string[]
-  selectedAttributeStatus?: TPropertyStatus | undefined
+  selectedAttributeStatus?: TPropertyStatus
   page: GlbPagesNames
   className?: Argument
   toggleShowZeroes: (value: boolean) => void
