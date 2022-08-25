@@ -110,7 +110,16 @@ export const Input: FC<IInputProps> = ({
 
   return (
     <div className={styles.input__container}>
-      {!!label && <span className={styles.input__labelTitle}>{label}</span>}
+      {!!label && (
+        <span
+          className={cn(
+            styles.input__labelTitle,
+            styles[`input__labelTitle_${size}`],
+          )}
+        >
+          {label}
+        </span>
+      )}
       <div className={inputContainerClassName}>
         {prepend && (
           <div
@@ -155,10 +164,11 @@ export const Input: FC<IInputProps> = ({
                 name="Close"
                 size={16}
                 className={cn(
-                  styles.input__iconClose,
-                  append && styles.input__iconClose_withIcon,
+                  styles.iconClose,
+                  disabled && styles.iconClose_disabled,
+                  append && styles.iconClose_withIcon,
                 )}
-                onClick={onClear}
+                onClick={disabled ? undefined : onClear}
               />
             )}
             {append && append}
