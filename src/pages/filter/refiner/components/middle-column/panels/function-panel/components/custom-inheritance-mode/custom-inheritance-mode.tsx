@@ -35,23 +35,22 @@ export const CustomInheritanceMode = observer(() => {
   )
 
   return (
-    <div className="px-4">
-      <CustomInheritanceModeCondition
-        problemGroups={problemGroups}
-        initialScenario={initialScenario}
-        initialMode={initialMode}
-        attributeSubKind={attributeSubKind}
-        statFuncStore={refinerStatFuncStore}
-        onTouch={() => filterStore.setTouched(true)}
-        controls={({ mode, hasErrors, param, clearValue }) =>
-          renderPanelControls({
-            initialCondition,
-            disabled: hasErrors || !isFilterTouched,
-            saveAttribute: () => saveAttribute(mode, param),
-            clearValue,
-          })
-        }
-      />
-    </div>
+    <CustomInheritanceModeCondition
+      problemGroups={problemGroups}
+      initialScenario={initialScenario}
+      initialMode={initialMode}
+      attributeSubKind={attributeSubKind}
+      statFuncStore={refinerStatFuncStore}
+      className="px-4"
+      onTouch={() => filterStore.setTouched(true)}
+      controls={({ mode, hasErrors, param, clearValue }) =>
+        renderPanelControls({
+          initialCondition,
+          disabled: hasErrors || !isFilterTouched,
+          saveAttribute: () => saveAttribute(mode, param),
+          clearValue,
+        })
+      }
+    />
   )
 })
