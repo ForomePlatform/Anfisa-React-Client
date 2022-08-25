@@ -6,18 +6,21 @@ Background:
 	
 	Given Filter refiner or Decision tree of "xl_PGP3140_wgs_NIST-4_2" was opened
 
+@smoke
 Scenario: 01 Open dashboard
 	
-	When User clicks four-square shaped button near the attribute search panel
+	When User clicks "Card view" button near the attribute search panel
 	Then Dashboard should be opened
 	And All attributes should be presented
 
+@smoke
 Scenario: 02 Close section tab
 
 	When User clicks opened section name or along the name 
 	Then Section should be closed
 	And Section should be moved at the bottom of the site with other sections
 
+@smoke
 Scenario: 03 Open section tab
 
 	When  User clicks closed section name or along the name
@@ -102,6 +105,7 @@ Scenario: 17 Mark attribute as favorite and reopen dataset again
 	Then Previously favorite-marked attribute should be marked as favorite again
 	And Layout should be the same as it was before
 
+@smoke
 Scenario: 18 Add attribute via dashboard
 
 	When User clicks the name of attribute
