@@ -269,15 +269,12 @@ export const EnumCondition = observer(
           <Loader size="m" />
         )}
 
-        {controls && (
-          <div className={className as string}>
-            {controls({
-              value: selectedVariants,
-              mode,
-              clearValue: handleClear,
-            })}
-          </div>
-        )}
+        {controls &&
+          controls({
+            value: selectedVariants,
+            mode,
+            clearValue: handleClear,
+          })}
       </>
     )
   },

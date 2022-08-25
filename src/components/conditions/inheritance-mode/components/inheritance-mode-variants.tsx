@@ -1,5 +1,7 @@
 import { ChangeEvent, ReactElement } from 'react'
+import cn from 'classnames'
 
+import { formatNumber } from '@core/format-number'
 import { t } from '@i18n'
 import filterStore from '@store/filter'
 import { Checkbox } from '@ui/checkbox/checkbox'
@@ -11,12 +13,13 @@ export const InheritanceModeVariants = ({
   selectedVariants,
   isFetching,
   status,
+  className,
   handleSetVariants,
 }: IInheritanceModeVariantsProps): ReactElement => (
-  <div className="flex flex-col text-14">
+  <div className={cn('flex flex-col text-14', className)}>
     <>
       {isFetching ? (
-        <Loader size="s" className="my-4" />
+        <Loader size="s" className="my-[3px]" />
       ) : filteredVariants?.length > 0 ? (
         filteredVariants.map(([variantName, variantValue]) => (
           <Checkbox
@@ -31,8 +34,8 @@ export const InheritanceModeVariants = ({
           >
             <span>{variantName}</span>
 
-            <span className="text-grey-blue ml-2">
-              {variantValue} {t('dtree.variants')}
+            <span className="text-grey-dark text-10 ml-2">
+              {formatNumber(variantValue)} {t('dtree.variants')}
             </span>
           </Checkbox>
         ))

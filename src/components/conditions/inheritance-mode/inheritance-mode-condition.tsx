@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
+import { DividerHorizontal } from '@pages/filter/refiner/components/middle-column/components/divider-horizontal'
 import { InheritanceModeProblemGroups } from './components/inheritance-mode-problem-groups'
 import { InheritanceModeVariants } from './components/inheritance-mode-variants'
 import { InheritanceModeVariantsControls } from './components/inheritance-mode-variants-controls'
@@ -16,6 +17,7 @@ export const InheritanceModeCondition = observer(
     initialMode,
     attributeSubKind,
     statFuncStore,
+    className,
     onTouch,
     controls,
   }: IInheritanceModeConditionProps): ReactElement => {
@@ -105,24 +107,33 @@ export const InheritanceModeCondition = observer(
           selectedPropblemGroups={selectedPropblemGroups}
           handleSetProblemGroups={handleSetProblemGroups}
           handleReset={handleReset}
+          className={className}
         />
 
-        <InheritanceModeVariantsControls
-          selectedVariants={selectedVariants}
-          onSelectAllVariants={onSelectAllVariants}
-          onClearAllVariants={onClearAllVariants}
-          attributeSubKind={attributeSubKind}
-          mode={mode}
-          toggleMode={toggleMode}
-        />
+        {!!selectedPropblemGroups.length && (
+          <>
+            <DividerHorizontal className="my-1" />
 
-        <InheritanceModeVariants
-          filteredVariants={filteredVariants}
-          selectedVariants={selectedVariants}
-          handleSetVariants={handleSetVariants}
-          isFetching={statFuncStore.isFetching}
-          status={status}
-        />
+            <InheritanceModeVariantsControls
+              selectedVariants={selectedVariants}
+              attributeSubKind={attributeSubKind}
+              mode={mode}
+              className={className}
+              onSelectAllVariants={onSelectAllVariants}
+              onClearAllVariants={onClearAllVariants}
+              toggleMode={toggleMode}
+            />
+
+            <InheritanceModeVariants
+              filteredVariants={filteredVariants}
+              selectedVariants={selectedVariants}
+              isFetching={statFuncStore.isFetching}
+              status={status}
+              className={className}
+              handleSetVariants={handleSetVariants}
+            />
+          </>
+        )}
 
         {controls &&
           controls({

@@ -48,4 +48,8 @@
   margin-left: 8px;
   cursor: pointer;
   max-width: calc(100% - 24px);
+
+  &_disabled {
+    color: theme("colors.grey.blue")
+  }
 }
