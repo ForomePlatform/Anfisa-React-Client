@@ -1,4 +1,5 @@
-import { ReactElement, useEffect, useMemo, useState } from 'react'
+import { ReactElement, useCallback, useEffect, useMemo, useState } from 'react'
+import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { ModeTypes } from '@core/enum/mode-types-enum'
@@ -7,8 +8,11 @@ import { Divider } from '@ui/divider'
 import { FlatList } from '@ui/flat-list'
 import { Loader } from '@ui/loader'
 import { Switch } from '@ui/switch'
+import { UnitChart } from '@components/units-list/unit-chart'
+import { GlbPagesNames } from '@glb/glb-names'
 import { QueryBuilderSearch } from '@pages/filter/dtree/components/query-builder/query-builder-search'
 import { AllNotMods } from '@pages/filter/dtree/components/query-builder/ui/all-not-mods'
+import { DividerHorizontal } from '@pages/filter/refiner/components/middle-column/components/divider-horizontal'
 import { SelectedGroupItem } from '@pages/filter/refiner/components/middle-column/selected-group-item'
 import { TVariant } from '@service-providers/common'
 import { IEnumConditionProps } from './enum-condition.interface'
@@ -27,16 +31,21 @@ export const EnumCondition = observer(
     isDataReady,
     listHeight,
     selectedDashboardVariants,
+    selectedAttributeStatus,
+    page,
+    className,
     toggleShowZeroes,
     onTouch,
     controls,
   }: IEnumConditionProps): ReactElement => {
-    const [mode, setMode] = useState(initialEnumMode)
-    const [selectedVariants, setSelectedVariants] = useState(
+    const [mode, setMode] = useState<ModeTypes | undefined>(initialEnumMode)
+    const [selectedVariants, setSelectedVariants] = useState<string[]>(
       initialVariants ?? [],
     )
 
-    const [searchValue, setSearchValue] = useState('')
+    const [isChartsVisible, setIsChartsVisible] = useState<boolean>(true)
+
+    const [searchValue, setSearchValue] = useState<string>('')
 
     useEffect(() => {
       setSearchValue('')
@@ -90,7 +99,6 @@ export const EnumCondition = observer(
       setMode(undefined)
     }
 
-    const showFinder = enumVariants.length > DEFAULT_COUNT
     const selectedEnumName =
       selectedDashboardVariants?.[0] || selectedVariants[0]
 
@@ -98,43 +106,111 @@ export const EnumCondition = observer(
       return filteredVariants.findIndex(([name]) => name === selectedEnumName)
     }, [filteredVariants, selectedEnumName])
 
+    const onSelectVariantByChart = useCallback(
+      (variant: string) => {
+        selectedVariants.includes(variant)
+          ? setSelectedVariants(prev => prev.filter(item => item !== variant))
+          : setSelectedVariants(prev => [...prev, variant])
+
+        onTouch?.()
+      },
+      [onTouch, selectedVariants],
+    )
+
     return (
       <>
-        {showFinder && (
-          <QueryBuilderSearch
-            value={searchValue}
-            onChange={handleSearchChange}
-            isSubgroupItemSearch
-            className="mb-4"
-          />
-        )}
+        <QueryBuilderSearch
+          value={searchValue}
+          onChange={handleSearchChange}
+          isSubgroupItemSearch
+          className={cn('mb-4', className)}
+        />
 
-        <div className="flex justify-between items-center w-full mb-4 text-14">
-          <div className="text-14 text-grey-blue">
+        <div
+          className={cn(
+            'flex justify-between items-center w-full mb-5 mt-1 text-14',
+            className,
+          )}
+        >
+          <div className="text-14 text-grey-dark">
             {selectedVariants.length || 0} {t('dtree.selected')}
           </div>
 
-          <div className="flex items-center">
+          {/* TODO: this logic will be removed after dtree enum modal is redesigned too*/}
+
+          {page === GlbPagesNames.Dtree && (
             <div className="flex items-center">
               <Switch
                 className="mr-1"
                 isChecked={isShowZeroes}
                 onChange={toggleShowZeroes}
               />
+
               <span className="text-grey-blue">
                 {t('enumCondition.showZeroVariants')}
               </span>
+
+              <Divider
+                spacing="dense"
+                orientation="vertical"
+                color="blue-light"
+              />
+
+              <EnumMods
+                selectAllVariants={selectAllVariants}
+                clearAllVariants={clearAllVariants}
+              />
             </div>
+          )}
 
-            <Divider orientation="vertical" color="light" />
-
+          {page !== GlbPagesNames.Dtree && (
             <EnumMods
               selectAllVariants={selectAllVariants}
               clearAllVariants={clearAllVariants}
             />
-          </div>
+          )}
         </div>
-        <div className="flex justify-end mb-2">
+
+        {page !== GlbPagesNames.Dtree && (
+          <div
+            className={cn(
+              'w-full flex justify-end items-center mb-5 text-14',
+              className,
+            )}
+          >
+            <div className="flex items-center">
+              <Switch
+                className="mr-2"
+                isChecked={isShowZeroes}
+                onChange={toggleShowZeroes}
+              />
+
+              <span className="text-grey-dark">
+                {t('enumCondition.showZeroVariants')}
+              </span>
+            </div>
+
+            <Divider
+              spacing="dense"
+              orientation="vertical"
+              color="blue-light"
+            />
+
+            <div className="flex items-center">
+              <Switch
+                className="mr-2"
+                isChecked={isChartsVisible}
+                onChange={() => setIsChartsVisible(prev => !prev)}
+              />
+
+              <span className="text-grey-dark">
+                {t('enumCondition.showCharts')}
+              </span>
+            </div>
+          </div>
+        )}
+
+        <div className={cn('flex justify-end mb-2', className)}>
           <AllNotMods
             groupSubKind={attributeSubKind}
             isAllModeChecked={mode === ModeTypes.All}
@@ -146,8 +222,27 @@ export const EnumCondition = observer(
           />
         </div>
 
+        {selectedAttributeStatus && isChartsVisible && (
+          <>
+            <div>
+              <UnitChart
+                unit={selectedAttributeStatus}
+                selectedVariants={selectedVariants}
+                className="w-full !bg-transparent"
+                isLight
+                onSelectVariantByChart={onSelectVariantByChart}
+              />
+            </div>
+
+            <DividerHorizontal className="-mt-1" />
+          </>
+        )}
+
         {isDataReady ? (
-          <div style={{ height: listHeight }} className="overflow-auto">
+          <div
+            style={{ height: listHeight }}
+            className={cn('overflow-auto', className)}
+          >
             {filteredVariants.length > 0 ? (
               <FlatList
                 elements={filteredVariants}
@@ -165,7 +260,7 @@ export const EnumCondition = observer(
                 )}
               />
             ) : (
-              <div className="flex justify-center items-center text-14 text-grey-blue">
+              <div className="flex justify-center items-center px-4 text-14 text-grey-blue">
                 {t('condition.noFilters')}
               </div>
             )}
@@ -174,8 +269,15 @@ export const EnumCondition = observer(
           <Loader size="m" />
         )}
 
-        {controls &&
-          controls({ value: selectedVariants, mode, clearValue: handleClear })}
+        {controls && (
+          <div className={className as string}>
+            {controls({
+              value: selectedVariants,
+              mode,
+              clearValue: handleClear,
+            })}
+          </div>
+        )}
       </>
     )
   },

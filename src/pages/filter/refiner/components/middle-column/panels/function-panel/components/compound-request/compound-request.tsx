@@ -36,7 +36,7 @@ export const CompoundRequest = observer((): ReactElement => {
   )
 
   return (
-    <>
+    <div className="px-4">
       <CompoundRequestCondition
         problemGroups={problemGroups}
         initialApprox={initialApprox}
@@ -54,6 +54,6 @@ export const CompoundRequest = observer((): ReactElement => {
           })
         }
       />
-    </>
+    </div>
   )
 })

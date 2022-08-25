@@ -4,9 +4,11 @@ import { getBounds, getYScaleAndAxis } from '@core/charts'
 import { theme } from '@theme'
 import { SvgChartRenderParams } from '@components/svg-chart/svg-chart'
 import { TVariant } from '@service-providers/common'
-import { colors } from '../pie-chart/pie-chart.utils'
+import { selectedColors } from '../unit.chart.data'
 import { TBarChartData } from '../unit-chart.interface'
 import { getVariantCountsText } from '../utils'
+import { getBarChartColor } from '../utils/getBarChartColor'
+import { getDifferentBarColors } from '../utils/getDifferentColors'
 
 const tickColor = theme('colors.grey.blue')
 
@@ -27,6 +29,9 @@ export const drawBarChart = ({
   width,
   height,
   tooltip,
+  isDashboard,
+  selectedVariants,
+  onSelectVariantByChart,
 }: SvgChartRenderParams<TBarChartData>): void => {
   const chartWidth = width - margin.left - margin.right
   const chartHeight = height - margin.top - margin.bottom
@@ -73,19 +78,38 @@ export const drawBarChart = ({
     ? (item: TVariant) => yScale(Math.max(item[1], 1.413))
     : (item: TVariant) => yScale(item[1])
 
-  const getDifferentBarColors = (index: number) => {
-    return colors[index % colors.length]
+  const getFunctionForColorChoice = (index: number, barName: string) => {
+    return !isDashboard
+      ? getBarChartColor({
+          selectedVariants,
+          barName,
+          index,
+          type: 'fill',
+        })
+      : getDifferentBarColors(index, selectedColors)
   }
 
   chart
     .selectAll('bar')
     .data(data)
     .join('rect')
+
     .attr('x', item => xScale(item[0]) as number)
     .attr('y', item => getY(item))
     .attr('width', barWidth)
     .attr('height', item => chartHeight - getY(item))
-    .attr('fill', (_, index) => getDifferentBarColors(index))
+    .attr('fill', (item, index) => getFunctionForColorChoice(index, item[0]))
+    .attr('stroke', (item, index) =>
+      getBarChartColor({
+        selectedVariants,
+        barName: item[0],
+        index,
+        type: 'stroke',
+      }),
+    )
+    .on('click', (_, item) => {
+      onSelectVariantByChart?.(item[0])
+    })
     .on('mouseover', (event, item) => {
       tooltip.show(event.target, renderTooltip(item))
     })

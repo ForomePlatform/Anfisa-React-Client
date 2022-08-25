@@ -15,6 +15,9 @@ export type SvgChartRenderParams<Data> = {
   height: number
   data: Data
   tooltip: ChartTooltip
+  selectedVariants?: string[]
+  isDashboard?: boolean
+  onSelectVariantByChart?: ((variant: string) => void) | undefined
 }
 
 interface ISvgChartProps<Data> extends SVGProps<SVGSVGElement> {
@@ -22,15 +25,21 @@ interface ISvgChartProps<Data> extends SVGProps<SVGSVGElement> {
   height?: number
   component?: 'svg' | ComponentType<SVGProps<SVGSVGElement>>
   data: Data
+  selectedVariants?: string[]
+  isDashboard?: boolean
   render: (params: SvgChartRenderParams<Data>) => void
+  onSelectVariantByChart?: (variant: string) => void
 }
 
 export const SvgChart = <Data,>({
   width: widthProp,
   height: heightProp,
   data,
-  render,
+  selectedVariants,
   component: Component = 'svg',
+  isDashboard,
+  render,
+  onSelectVariantByChart,
   ...svgProps
 }: ISvgChartProps<Data>): ReactElement => {
   const renderRef = useRef(render)
@@ -68,9 +77,19 @@ export const SvgChart = <Data,>({
         width,
         height,
         tooltip: globalTooltip,
+        selectedVariants,
+        isDashboard,
+        onSelectVariantByChart,
       })
     }
-  }, [data, width, height])
+  }, [
+    data,
+    width,
+    height,
+    onSelectVariantByChart,
+    selectedVariants,
+    isDashboard,
+  ])
 
   return (
     <Component
@@ -78,7 +97,11 @@ export const SvgChart = <Data,>({
       {...svgProps}
       width={width}
       height={height}
-      style={{ width: `${width}px`, height: `${height}px`, ...svgProps.style }}
+      style={{
+        width: `${width}px`,
+        height: `${height}px`,
+        ...svgProps.style,
+      }}
     />
   )
 }

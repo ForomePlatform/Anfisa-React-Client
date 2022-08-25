@@ -2,6 +2,7 @@ import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
+import { Divider } from '@ui/divider'
 
 interface IEnumModsProps {
   clearAllVariants: () => void
@@ -18,8 +19,10 @@ export const EnumMods = observer(
         {t('general.selectAll')}
       </div>
 
+      <Divider spacing="dense" orientation="vertical" color="blue-light" />
+
       <div
-        className="cursor-pointer text-blue-bright ml-3"
+        className="cursor-pointer text-blue-bright"
         onClick={clearAllVariants}
       >
         {t('general.clearAll')}

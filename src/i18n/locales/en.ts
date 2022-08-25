@@ -312,6 +312,7 @@ export const en = {
   },
   enumCondition: {
     showZeroVariants: 'Show zero variants',
+    showCharts: 'Show charts',
   },
   funcCondition: {
     scenario: 'Scenario',
@@ -323,7 +324,7 @@ export const en = {
     functionalUnits: 'Functional Units',
   },
   filter: {
-    applyCondition: 'Apply condition',
+    applyCondition: 'Add condition',
     applyPreset: 'Apply preset',
     switcher: 'Only starts with',
     method: 'Filtering method',
@@ -339,7 +340,7 @@ export const en = {
     presets: 'Presets',
     createPreset: '+ Create New',
     actions: 'Actions',
-    searchForAField: 'Search',
+    searchForAField: 'Search for a field',
     decisionTrees: 'Decision Trees',
     tooMuchVariants: 'The number of variants is more than 2600!',
     prohibitToOpen: 'You cannot open XL-dataset on Filter Refiner',
@@ -355,6 +356,8 @@ export const en = {
         '{value, plural, one {# transcribed variant} other {# transcribed variants}}',
       transcripts: '{value, plural, one {# transcript} other {# transcripts}}',
       shownSignificantItems: 'Shown {items} significant items (total: {total})',
+      noVisualRepresentation:
+        "The variant you have chosen doesn't have visual representation",
     },
     delete: 'Delete',
     copy: 'Copy',
@@ -402,8 +405,8 @@ export const en = {
     addStepBefore: 'Add Step Before',
     addStepAfter: 'Add Step After',
     fn: 'fn',
-    all: 'All',
-    not: 'Not',
+    all: 'All Mode',
+    not: 'Not Mode',
     reset: 'Reset',
     empty: 'empty',
     split: 'Split',
@@ -482,7 +485,7 @@ export const en = {
 
   dashboard: {
     dashboard: 'Dashboard',
-    showInCharts: 'Show in charts',
+    showCharts: 'Show charts',
     searchForAField: 'Search for a field',
     shownFirst40: 'Shown first 40 of {variantsLeft} variants',
     emptyCondition: 'Empty condition',

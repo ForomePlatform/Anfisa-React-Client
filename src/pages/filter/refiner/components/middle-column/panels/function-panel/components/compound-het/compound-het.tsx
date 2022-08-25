@@ -32,20 +32,22 @@ export const CompundHet = observer((): ReactElement => {
   )
 
   return (
-    <CompoundHetCondition
-      initialMode={initialMode}
-      initialApprox={initialApprox}
-      attributeSubKind={attributeSubKind}
-      statFuncStore={refinerStatFuncStore}
-      onTouch={() => filterStore.setTouched(true)}
-      controls={({ mode, hasErrors, param, clearValue }) =>
-        renderPanelControls({
-          initialCondition,
-          disabled: hasErrors,
-          saveAttribute: () => saveAttribute(mode, param),
-          clearValue,
-        })
-      }
-    />
+    <div className="px-4">
+      <CompoundHetCondition
+        initialMode={initialMode}
+        initialApprox={initialApprox}
+        attributeSubKind={attributeSubKind}
+        statFuncStore={refinerStatFuncStore}
+        onTouch={() => filterStore.setTouched(true)}
+        controls={({ mode, hasErrors, param, clearValue }) =>
+          renderPanelControls({
+            initialCondition,
+            disabled: hasErrors,
+            saveAttribute: () => saveAttribute(mode, param),
+            clearValue,
+          })
+        }
+      />
+    </div>
   )
 })

@@ -51,7 +51,7 @@ export const GeneRegionCondition = observer(
 
     return (
       <>
-        <span className="text-14 leading-16px text-grey-blue font-medium mb-1">
+        <span className="mb-1 text-14 leading-16px text-grey-blue font-medium">
           {t('funcCondition.locus')}
         </span>
 

@@ -3,11 +3,13 @@ import styles from './pie-chart.module.css'
 import * as d3 from 'd3'
 import { PieArcDatum } from 'd3'
 
-import { theme } from '@theme'
 import { SvgChartRenderParams } from '@components/svg-chart'
 import { TVariant } from '@service-providers/common'
+import { defaultColors, selectedColors } from '../unit.chart.data'
 import { TPieChartData } from '../unit-chart.interface'
 import { getVariantCountsText, reduceVariantsData } from '../utils'
+import { getDifferentBarColors } from '../utils/getDifferentColors'
+import { getPieChartColor } from '../utils/getPieChartColor'
 
 export const getShortNumber = (value: number): string => {
   if (value < 1000000) {
@@ -17,18 +19,7 @@ export const getShortNumber = (value: number): string => {
   return `${shortedValue} mln`
 }
 
-export const colors: string[] = [
-  theme('colors.blue.bright'),
-  theme('colors.purple.bright'),
-  theme('colors.yellow.secondary'),
-  theme('colors.orange.bright'),
-  theme('colors.grey.blue'),
-]
-
-const maxItems = colors.length
-
-export const getPieChartItemColor = (index: number): string =>
-  colors[index] ?? colors[colors.length - 1]
+const maxItems = defaultColors.length
 
 export const drawPieChart = ({
   svg,
@@ -36,8 +27,11 @@ export const drawPieChart = ({
   width,
   height,
   tooltip,
+  isDashboard,
+  selectedVariants,
+  onSelectVariantByChart,
 }: SvgChartRenderParams<TPieChartData>): void => {
-  const radius = Math.min(width, height) / 2
+  const radius = Math.min(width, height) / 2.02
 
   const slicedData = reduceVariantsData(data, maxItems)
 
@@ -58,11 +52,23 @@ export const drawPieChart = ({
   }: PieArcDatum<TVariant>): string => {
     return `<span class='${
       styles.tooltipPoint
-    }' style='background: ${getPieChartItemColor(
+    }' style='background: ${getDifferentBarColors(
       index,
+      defaultColors,
     )}'></span><span class='ml-3'>${
       slicedData[index][0]
     }</span>${getVariantCountsText(variant)}`
+  }
+
+  const getFunctionForColorChoice = (index: number, barName: string) => {
+    return !isDashboard
+      ? getPieChartColor({
+          selectedVariants,
+          barName,
+          index,
+          type: 'fill',
+        })
+      : getDifferentBarColors(index, selectedColors)
   }
 
   chart
@@ -70,7 +76,23 @@ export const drawPieChart = ({
     .data(pie(slicedData))
     .join('path')
     .attr('d', arcPath)
-    .attr('fill', datum => getPieChartItemColor(datum.index))
+    .attr('fill', (item, index) =>
+      getFunctionForColorChoice(index, item.data[0]),
+    )
+    .attr(
+      'stroke',
+      (item, index) =>
+        !isDashboard &&
+        getPieChartColor({
+          selectedVariants,
+          barName: item.data[0],
+          index,
+          type: 'stroke',
+        }),
+    )
+    .on('click', (_, item) => {
+      onSelectVariantByChart?.(item.data[0])
+    })
     .on('mouseover', (event, item) => {
       tooltip.show(event.target, renderTooltip(item))
     })

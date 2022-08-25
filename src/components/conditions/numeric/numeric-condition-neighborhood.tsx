@@ -1,4 +1,5 @@
-import React, { ReactElement } from 'react'
+import { ReactElement } from 'react'
+import cn from 'classnames'
 
 import { t } from '@i18n'
 import { InputNumeric } from '@ui/input-numeric/input-numeric'
@@ -21,6 +22,7 @@ import { NumericConditionDistanceChart } from './numeric-condition-distance-char
 export const NumericConditionNeighborhood = ({
   initialValue,
   attrData,
+  className,
   controls,
 }: INumericConditionProps): ReactElement | null => {
   const [value, { setCenter, setDistance, clearValue }] =
@@ -42,7 +44,7 @@ export const NumericConditionNeighborhood = ({
 
   return (
     <>
-      <div className="overflow-hidden">
+      <div className={cn('overflow-hidden', className)}>
         <div className="relative flex items-center mb-3">
           <div className="relative grow flex items-center py-6">
             <div className="absolute top-1 left-0 text-xs text-grey-blue text-left">
@@ -128,8 +130,12 @@ export const NumericConditionNeighborhood = ({
           </div>
         </div>
       </div>
-      {controls &&
-        controls({ value: conditionValue, hasErrors: false, clearValue })}
+
+      {controls && (
+        <div className={className}>
+          {controls({ value: conditionValue, hasErrors: false, clearValue })}
+        </div>
+      )}
     </>
   )
 }

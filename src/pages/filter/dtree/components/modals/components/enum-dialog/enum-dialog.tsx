@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite'
 
 import { Dialog } from '@ui/dialog'
 import { DEFAULT_COUNT, EnumCondition } from '@components/conditions/enum'
+import { GlbPagesNames } from '@glb/glb-names'
 import dashboardStore from '@pages/filter/common/dashboard'
 import { AttributeKinds } from '@service-providers/common'
 import { dtreeAttributeStore } from '../../../attributes/dtree-attributes.store'
@@ -82,6 +83,7 @@ export const EnumDialog = observer(
         isHiddenActions={true}
       >
         <EnumCondition
+          page={GlbPagesNames.Dtree}
           attributeName={attributeName}
           enumVariants={enumVariants}
           attributeSubKind={attributeSubKind}

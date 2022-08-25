@@ -7,6 +7,11 @@
     flex: 1 0 0;
     max-width: 67%;
     margin-right: theme("spacing.2");
+    padding: 0 theme("margin[0.5]");
+
+    &_light {
+      color: theme("colors.black") !important;
+    }
   }
 
   &__chart {
@@ -32,14 +37,19 @@
 
   &__totalValue {
     color: theme("colors.white");
+
+    &_light {
+      color: theme("colors.black");
+    }
   }
 }
 
 .legend {
   @apply typography-xs;
 
+  overflow: auto;
   color: theme("colors.white");
-  overflow: hidden;
+  max-height: 180px;
 
   &_collapsed {
     max-height: 120px;
@@ -69,17 +79,17 @@
   }
 
   &__icon {
-    flex: 0 0 6px;
+    flex: 0 0 8px;
     display: inline-block;
     margin-right: theme("spacing.2");
-    border-radius: 3px;
-    width: 6px;
-    height: 6px;
+    border-radius: 4px;
+    width: 8px;
+    height: 8px;
     overflow: hidden;
   }
 
   &__info {
-    flex: 1 0 0;
+    flex: 1 0 1;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;

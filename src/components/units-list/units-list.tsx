@@ -18,20 +18,20 @@ import { UnitsListControls } from './units-list-controls'
 import { UnitsListGroup } from './units-list-group'
 
 export interface IUnitsListProps {
-  className?: string
+  groups: TUnitGroups
+  functionalUnits: TFunctionalUnit[]
+  fetchedAmount: number
   isModal?: boolean
   isDark?: boolean
   isLoading?: boolean
-  fetchedAmount: number
   subHeader?: ReactNode
-  groups: TUnitGroups
-  functionalUnits: TFunctionalUnit[]
   functionalConditions?: TFunctionalCondition[]
   selectedUnit?: string
+  listContainerId?: string
+  className?: string
   onSelect: (unit: TPropertyStatus) => void
   onFunctionalConditionSelect?: (condition: TFunctionalCondition) => void
   onFunctionalConditionDelete?: (condition: TFunctionalCondition) => void
-  listContainerId?: string
 }
 
 export const UnitsList = observer(

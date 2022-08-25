@@ -11,21 +11,21 @@ import { TPropertyStatus } from '@service-providers/common'
 import { UnitsListUnit } from '../units-list-unit'
 
 interface IUnitsListGroupProps {
-  className?: string
   isCollapsed: boolean
   isDark: boolean
   unitsGroup: TUnitGroup
   selectedUnit?: string
+  className?: string
   onCollapsedChange: (isCollapsed: boolean, name: string) => void
   onSelect: (unit: TPropertyStatus) => void
 }
 
 export const UnitsListGroup = ({
-  className,
   isCollapsed,
   isDark,
   unitsGroup,
   selectedUnit,
+  className,
   onCollapsedChange,
   onSelect,
 }: IUnitsListGroupProps): ReactElement => {

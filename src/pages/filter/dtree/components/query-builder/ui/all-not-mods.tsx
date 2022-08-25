@@ -4,7 +4,7 @@ import { observer } from 'mobx-react-lite'
 import { SubKinds } from '@core/enum/sub-kinds-enum'
 import { t } from '@i18n'
 import { Checkbox } from '@ui/checkbox/checkbox'
-import { ModsDivider } from './mods-divider'
+import { Divider } from '@ui/divider'
 
 interface IAllNotModsProps {
   isNotModeDisabled?: boolean
@@ -37,10 +37,7 @@ export const AllNotMods = observer(
           <>
             <Checkbox
               id="all-mode-checkbox"
-              className={cn(
-                'flex items-center text-center',
-                isAllModeDisabled ? ' text-grey-blue' : 'text-blue-bright',
-              )}
+              className={cn('flex items-center text-center')}
               checked={isAllModeChecked ?? false}
               disabled={isAllModeDisabled}
               onChange={toggleAllMode}
@@ -48,16 +45,17 @@ export const AllNotMods = observer(
               {t('dtree.all')}
             </Checkbox>
 
-            <ModsDivider />
+            <Divider
+              spacing="dense"
+              orientation="vertical"
+              color="blue-light"
+            />
           </>
         )}
 
         <Checkbox
           id="not-mode-checkbox"
-          className={cn(
-            'flex items-center text-center',
-            isNotModeDisabled ? ' text-grey-blue' : 'text-blue-bright',
-          )}
+          className={cn('flex items-center text-center')}
           checked={isNotModeChecked ?? false}
           disabled={isNotModeDisabled}
           onChange={toggleNotMode}
