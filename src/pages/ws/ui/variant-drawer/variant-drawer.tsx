@@ -113,6 +113,7 @@ export const VariantDrawer = observer(
                   size="m"
                   style={{
                     backgroundColor: theme('colors.blue.secondary'),
+                    border: theme('colors.blue.secondary'),
                   }}
                   onChange={e => onChange(e.target.value)}
                   onFocus={addListener}

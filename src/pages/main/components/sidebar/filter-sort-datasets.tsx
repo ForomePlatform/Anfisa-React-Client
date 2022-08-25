@@ -18,13 +18,13 @@ export const FilterSortDatasets = observer(
           placeholder={t('home.searchForADataset')}
           value={dirinfoStore.filterValue}
           style={{
+            //TODO: it is due to design problems, will be fixed in future
             backgroundColor: theme('colors.blue.secondary'),
+            border: theme('colors.blue.secondary'),
           }}
           size="m"
           variant="primary-dark"
-          onChange={e => {
-            dirinfoStore.setFilterValue(e.target.value)
-          }}
+          onChange={e => dirinfoStore.setFilterValue(e.target.value)}
         />
 
         <div className="flex justify-between mt-2.5 mb-1.5">

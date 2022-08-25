@@ -41,6 +41,7 @@ export const UnitsListControls = ({
       variant="primary-dark"
       style={{
         backgroundColor: theme('colors.blue.secondary'),
+        border: theme('colors.blue.secondary'),
       }}
       size="m"
       onChange={e => onFilterValueChange(e.target.value)}

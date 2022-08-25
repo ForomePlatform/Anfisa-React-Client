@@ -98,6 +98,7 @@ export const VariantContent = ({
               variant="primary-dark"
               style={{
                 backgroundColor: theme('colors.blue.secondary'),
+                border: theme('colors.blue.secondary'),
               }}
               onFocus={addListener}
               foundItems={foundItems}
