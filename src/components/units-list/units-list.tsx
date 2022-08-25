@@ -26,8 +26,9 @@ export interface IUnitsListProps {
   isLoading?: boolean
   subHeader?: ReactNode
   functionalConditions?: TFunctionalCondition[]
-  className?: string
+  selectedUnit?: string
   listContainerId?: string
+  className?: string
   onSelect: (unit: TPropertyStatus) => void
   onFunctionalConditionSelect?: (condition: TFunctionalCondition) => void
   onFunctionalConditionDelete?: (condition: TFunctionalCondition) => void
@@ -44,6 +45,7 @@ export const UnitsList = observer(
     functionalConditions,
     fetchedAmount,
     isLoading = false,
+    selectedUnit,
     onSelect,
     onFunctionalConditionSelect,
     onFunctionalConditionDelete,
@@ -69,6 +71,7 @@ export const UnitsList = observer(
     }
 
     const showLoader = isLoading && !filteredGroups.length
+    const showProgressBar = fetchedAmount !== 100
     return (
       <div
         className={cn(
@@ -78,11 +81,12 @@ export const UnitsList = observer(
           className,
         )}
       >
-        {fetchedAmount !== 100 && (
+        {showProgressBar && (
           <div className={styles.unitsList__loader}>
-            <ProgressBar status={fetchedAmount} step={10} size="xs" />
+            <ProgressBar size="sm" />
           </div>
         )}
+
         <FunctionalUnits
           className={cn(
             styles.unitsList__functional,
@@ -128,6 +132,7 @@ export const UnitsList = observer(
                 isCollapsed={collapsedGroups.includes(group.name)}
                 isDark={isDark}
                 unitsGroup={group}
+                selectedUnit={selectedUnit}
                 onCollapsedChange={handleCollapsedChange}
                 onSelect={onSelect}
               />

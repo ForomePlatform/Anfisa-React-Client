@@ -9,6 +9,7 @@ import {
   TPropertyStatus,
 } from '../common'
 import { TGetFullStatUnitsOptions } from '../filtering-regime'
+import { TGenomeOptionsKeys } from './../../core/enum/explore-genome-types-enum'
 
 // dtree_set
 
@@ -28,6 +29,7 @@ export type TDtreeModifyingActions = [
   actionType: ActionTypes.DTREE,
   actionName: DtreeModifyingActions,
   decisionTreeName: string,
+  rubric?: TGenomeOptionsKeys,
 ]
 
 export enum InstrModifyingActionNames {

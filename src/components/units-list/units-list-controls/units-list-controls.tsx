@@ -38,6 +38,8 @@ export const UnitsListControls = ({
       placeholder={t('filter.searchForAField')}
       value={filterValue}
       onChange={e => onFilterValueChange(e.target.value)}
+      isDarkBg
+      big
     />
 
     <button

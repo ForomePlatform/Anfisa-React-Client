@@ -95,6 +95,10 @@ class WizardStore {
       ?.secondary
   }
 
+  public getSecondaryDsByParentDs(parentDs: string): string[] | undefined {
+    return dirinfoStore.dirinfo.data?.dsDict[parentDs]?.secondary
+  }
+
   public setScenario(scenario: IWizardScenario[]) {
     this.prevWizardScenario = cloneDeep(this.wizardScenario)
 

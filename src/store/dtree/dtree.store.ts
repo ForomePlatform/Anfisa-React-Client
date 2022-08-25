@@ -186,6 +186,13 @@ export class DtreeStore {
     }, 0)
   }
 
+  get rejectedVariants(): number {
+    const totalCounts = this.dtreeSetData?.['total-counts']
+    const variants = totalCounts?.[0]
+
+    return Number(variants) - this.acceptedVariants
+  }
+
   /**
    * totalFilteredCounts returns accepted and rejected variants for XL dataset,
    * and transcribed variants for WS
@@ -194,10 +201,8 @@ export class DtreeStore {
     if (!this.dtreeSetData) {
       return undefined
     }
-    const isXl = this.isXl
-    const { points } = this.dtreeSetData
-    const totalCounts = this.dtreeSetData['total-counts']
-    const counts = this.pointCounts
+    const { isXl, pointCounts: counts } = this
+    const { points, 'total-counts': totalCounts } = this.dtreeSetData
 
     let accepted = 0
 

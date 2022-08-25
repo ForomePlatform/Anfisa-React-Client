@@ -5,7 +5,6 @@ import {
   TBaseDataStoreOptions,
 } from '@store/common/base-async-data.store'
 import {
-  AttributeKinds,
   TFilteringStat,
   TFilteringStatCounts,
   TNonFuncPropertyStatus,
@@ -38,11 +37,7 @@ export abstract class BaseStatUnitsStore<
   }
 
   get units(): TNonFuncPropertyStatus[] | undefined {
-    // TODO: we can remove this filter in future, after the backend removes
-    //       functional units from this part of response
-    return toJS(
-      this.data?.units.filter(unit => unit.kind !== AttributeKinds.FUNC),
-    ) as TNonFuncPropertyStatus[] | undefined
+    return toJS(this.data?.units) as TNonFuncPropertyStatus[] | undefined
   }
 
   get functionalUnits(): TFunctionalUnit[] {
@@ -52,6 +47,7 @@ export abstract class BaseStatUnitsStore<
   get dataReady(): number {
     const units = this.data?.units || []
     const downloaded = units.length - units.filter(it => it.incomplete).length
+
     return (downloaded / units.length) * 100
   }
 
