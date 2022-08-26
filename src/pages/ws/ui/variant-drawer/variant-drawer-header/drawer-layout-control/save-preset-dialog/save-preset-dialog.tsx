@@ -43,8 +43,6 @@ export const SavePresetDialog = ({
     if (presetName.length > 20) {
       return t('variant.errors.presetIsTooLong', { presetName })
     }
-
-    return null
   }, [presets, presetName])
 
   useEffect(() => {
@@ -66,8 +64,8 @@ export const SavePresetDialog = ({
       <Input
         value={presetName}
         onChange={event => setPresetName(event.target.value)}
+        error={error}
       />
-      {error && <p className="mt-2 text-red-light text-xs">{error}</p>}
     </Dialog>
   )
 }

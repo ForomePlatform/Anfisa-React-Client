@@ -1,20 +1,28 @@
 .input {
   @apply typography-s;
 
-  outline-offset: -1px;
+  outline-offset: -2px;
   padding: 4px 12px;
   position: absolute;
+  width: 100%;
+  box-sizing: border-box;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
 
+  &_size {
+    &_s {
+      height: 28px;
+    }
+
+    &_m {
+      height: 32px;
+    }
+  }
+
   &:focus {
     outline: 2px solid theme("colors.blue.bright");
-
-    &__icon-close {
-      display: block;
-    }
   }
 
   &_error {
@@ -74,18 +82,13 @@
         }
       }
 
+      &::placeholder {
+        color: theme("colors.white");
+      }
+
       &:disabled {
         color: theme("colors.blue.dark");
       }
-    }
-  }
-
-  &__icon-close {
-    color: theme("colors.grey.blue");
-    cursor: pointer;
-
-    &_with-icon {
-      margin-right: 10px;
     }
   }
 
@@ -112,6 +115,13 @@
     &_right {
       right: 12px;
     }
+
+    &__text {
+      @apply typography-xs;
+
+      margin-right: theme("spacing.2");
+      color: theme("colors.grey.blue");
+    }
   }
 
   &__container {
@@ -131,6 +141,10 @@
         }
       }
     }
+
+    &:focus-within .icon-search {
+      color: theme("colors.blue.bright") !important;
+    }
   }
 
   &__error-title {
@@ -139,5 +153,49 @@
     margin: 4px 0;
     color: theme("colors.red.light");
     text-align: center;
+  }
+
+  &__label-title {
+    &_s {
+      @apply typography-xs;
+    }
+
+    &_m {
+      @apply typography-s;
+    }
+
+    margin: 4px 0;
+    text-align: center;
+  }
+}
+
+.icon-search {
+  &__primary {
+    color: theme("colors.grey.blue");
+
+    &_disabled {
+      color: theme("colors.grey.disabled") !important;
+    }
+  }
+
+  &__primary-dark {
+    color: theme("colors.white");
+
+    &_disabled {
+      color: theme("colors.blue.dark") !important;
+    }
+  }
+}
+
+.icon-close {
+  color: theme("colors.grey.blue");
+  cursor: pointer;
+
+  &_disabled {
+    display: none;
+  }
+
+  &_with-icon {
+    margin-right: 10px;
   }
 }
