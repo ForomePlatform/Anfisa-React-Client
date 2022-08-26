@@ -1,9 +1,9 @@
 import { ReactElement } from 'react'
+import cn from 'classnames'
 
 import { t } from '@i18n'
 import { Select } from '@ui/select'
 import { ICustomInheritanceModeScenarioProps } from '../custom-inheritance-mode.interface'
-
 const selectOptions = ['--', '0', '0-1', '1', '1-2', '2']
 
 export const CustomInheritanceModeScenario = ({
@@ -12,12 +12,12 @@ export const CustomInheritanceModeScenario = ({
   className,
   onChangeScenario,
 }: ICustomInheritanceModeScenarioProps): ReactElement => (
-  <div className={className as string}>
-    <div className="mb-2.5 text-sm text-grey-dark">
+  <div className={cn('-mt-1', className as string)}>
+    <div className="mb-2 text-sm text-grey-dark">
       {t('funcCondition.scenario')}
     </div>
 
-    <div className="flex items-center justify-between w-full mb-1 text-14">
+    <div className="flex items-center justify-between w-full text-14">
       {problemGroups.map((group: string, index: number) => (
         <div key={group}>
           <span>{group}</span>

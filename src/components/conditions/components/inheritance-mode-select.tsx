@@ -1,11 +1,10 @@
 import { FC } from 'react'
-import { Argument } from 'classnames'
+import cn, { Argument } from 'classnames'
 
 import { resetOptions } from '@core/resetOptions'
 import { t } from '@i18n'
 import { Button } from '@ui/button'
 import { Radio } from '@ui/radio'
-
 interface IInheritanceModeSelectProp {
   preparedScenarioName?: string
   className?: Argument
@@ -19,7 +18,7 @@ export const InheritanceModeSelect: FC<IInheritanceModeSelectProp> = ({
   handleSetPreparedScenario,
   setPreparedScenarioName,
 }) => (
-  <div className={className as string}>
+  <div className={cn('-mb-1', className as string)}>
     <div className="flex justify-between items-center -mt-1 mb-1">
       <span className="mb-2.5 text-sm text-grey-dark">
         {t('funcCondition.inheritanceMode')}
