@@ -46,7 +46,7 @@ export const Dashboard = observer(
 
         {!dataReady && (
           <div className={styles.dashboard__loader}>
-            <ProgressBar size="sm" />
+            <ProgressBar size="xs" />
           </div>
         )}
 
