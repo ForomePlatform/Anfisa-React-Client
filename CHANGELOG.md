@@ -2,6 +2,7 @@
 
 ## <small>0.8.1 (8/26/2022)</small>
 
+* fix([FOROME-1560](https://quantori.atlassian.net/browse/FOROME-1560)): add preview of units in dashboard (#912) ([f67f07f7](https://github.com/ForomePlatform/Anfisa-React-Client/commit/f67f07f7))
 * fix([FOROME-1574](https://quantori.atlassian.net/browse/FOROME-1574)): displaying start with card ([0d013064](https://github.com/ForomePlatform/Anfisa-React-Client/commit/0d013064))
 * fix([FOROME-1478](https://quantori.atlassian.net/browse/FOROME-1478)): wizard undo button ([face8ace](https://github.com/ForomePlatform/Anfisa-React-Client/commit/face8ace))
 * feat([FOROME-1556](https://quantori.atlassian.net/browse/FOROME-1556)): redesign enum panel ([c31e0dc6](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c31e0dc6))
