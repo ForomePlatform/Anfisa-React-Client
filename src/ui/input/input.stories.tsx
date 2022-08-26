@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import cn from 'classnames'
 
 import { Icon } from '@ui/icon'
@@ -23,7 +23,9 @@ const Template: ComponentStory<typeof Input> = args => {
         <Input
           {...args}
           value={state}
-          onChange={(e: any) => setState(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            setState(e.target.value)
+          }
         />
       </div>
     </div>
