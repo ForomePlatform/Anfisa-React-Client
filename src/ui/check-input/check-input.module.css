@@ -9,6 +9,7 @@
   &:disabled:checked + .checkmark {
     background-color: theme("colors.grey.disabled");
     border: 1px solid theme("colors.grey.disabled");
+    cursor: not-allowed;
   }
 
   &:checked + .checkmark::after {
@@ -31,6 +32,10 @@
   transition: all 0.2s;
   cursor: pointer;
 
+  &_disabled {
+    cursor: not-allowed;
+  }
+
   &::after {
     content: "";
     position: absolute;
@@ -50,7 +55,8 @@
   max-width: calc(100% - 24px);
 
   &_disabled {
-    color: theme("colors.grey.blue")
+    color: theme("colors.grey.blue");
+    cursor: not-allowed;
   }
 }
 

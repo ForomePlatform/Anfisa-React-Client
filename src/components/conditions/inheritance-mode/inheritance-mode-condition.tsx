@@ -115,7 +115,8 @@ export const InheritanceModeCondition = observer(
             <DividerHorizontal className="my-1" />
 
             <InheritanceModeVariantsControls
-              selectedVariants={selectedVariants}
+              selectedVariantsLength={selectedVariants.length}
+              filteredVariantsLength={filteredVariants.length}
               attributeSubKind={attributeSubKind}
               mode={mode}
               className={className}
