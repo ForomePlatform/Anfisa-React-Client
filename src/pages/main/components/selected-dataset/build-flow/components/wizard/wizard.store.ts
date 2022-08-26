@@ -77,13 +77,6 @@ class WizardStore {
         }
       },
     )
-
-    reaction(
-      () => datasetStore.dsInfo.isLoading,
-      isLoading => {
-        !isLoading && this.defineAndSetNewScenario()
-      },
-    )
   }
 
   public toggleIsWizardVisible(value: boolean) {
@@ -91,20 +84,24 @@ class WizardStore {
   }
 
   public get secondaryDatasets(): string[] | undefined {
-    return dirinfoStore.dirinfo.data?.dsDict[datasetStore.datasetName]
-      ?.secondary
+    return dirinfoStore.dirInfoData?.dsDict[datasetStore.datasetName]?.secondary
   }
 
   public getSecondaryDsByParentDs(parentDs: string): string[] | undefined {
     return dirinfoStore.dirinfo.data?.dsDict[parentDs]?.secondary
   }
 
-  public setScenario(scenario: IWizardScenario[]) {
+  public setScenario(
+    scenario: IWizardScenario[],
+    shouldSaveInHistory: boolean = true,
+  ) {
     this.prevWizardScenario = cloneDeep(this.wizardScenario)
 
     this.wizardScenario = scenario
 
-    this.actionHistory.addHistory(scenario)
+    if (shouldSaveInHistory) {
+      this.actionHistory.addHistory(scenario)
+    }
   }
 
   public defineAndSetNewScenario() {
@@ -132,7 +129,7 @@ class WizardStore {
 
     if (card) {
       card.continueDisabled = false
-      this.setScenario(clonedWizard)
+      this.setScenario(clonedWizard, false)
     }
   }
 
@@ -171,6 +168,7 @@ class WizardStore {
     this.selectedDataset = selectedDataset
     const clonedWizard = cloneDeep(this.wizardScenario)
     const card = this.findCardById(id, clonedWizard)
+
     if (card) {
       card.selectedValue = selectedDataset
       if (card.nextCard) {
@@ -266,7 +264,7 @@ class WizardStore {
 
     if (card) {
       card.selectedValue = value
-      this.setScenario(clonedWizard)
+      this.setScenario(clonedWizard, false)
     }
   }
 
@@ -275,10 +273,6 @@ class WizardStore {
     const scenario = hasSecondaryDs
       ? wizardScenarios.WsCandidateSet
       : wizardScenarios.WsShortCandidateSet
-
-    if (hasSecondaryDs) {
-      scenario[2].title = datasetStore.datasetName
-    }
 
     this.setScenario(scenario)
   }

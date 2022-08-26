@@ -15,6 +15,7 @@ import { Breadcrumbs } from '@components/breadcrumbs'
 import { Logo } from '@components/logo'
 import { GlbPagesNames } from '@glb/glb-names'
 import userIcon from '@images/thomas-hunt.jpg'
+import wizardStore from '@pages/main/components/selected-dataset/build-flow/components/wizard/wizard.store'
 
 interface IHeaderProps {
   className?: string
@@ -55,7 +56,7 @@ export const Header = observer(
         )}
       >
         <div className="flex flex-row justify-between items-center grow-0 shrink-1 min-w-0 mr-4">
-          <Link to={Routes.Root}>
+          <Link to={Routes.Root} onClick={() => wizardStore.resetDatasetKind()}>
             <Logo mode="white" className="mr-4" />
           </Link>
           <span className="text-grey-blue whitespace-pre-line text-xs flex flex-col">
