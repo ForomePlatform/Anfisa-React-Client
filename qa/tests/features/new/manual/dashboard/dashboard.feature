@@ -16,7 +16,8 @@ Scenario: 01 Open dashboard
 @smoke
 Scenario: 02 Close section tab
 
-	When User clicks opened section name or along the name 
+	When User clicks "Card View" button near the attribute search panel
+	And Clicks opened section name or along the name 
 	Then Section should be closed
 	And Section should be moved at the bottom of the site with other sections
 
