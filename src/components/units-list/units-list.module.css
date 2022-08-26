@@ -18,7 +18,7 @@
 
   &__functional {
     flex: 0 0 auto;
-    padding-bottom: theme("spacing.4");
+    padding-bottom: theme("spacing.2");
     border-bottom: 1px solid theme("colors.grey.disabled");
 
     &_column-list {

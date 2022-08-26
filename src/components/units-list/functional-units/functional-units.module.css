@@ -5,8 +5,6 @@
 
   &__label {
     @apply typography-m;
-
-    font-weight: theme("fontWeight.medium");
   }
 
   &__button {
@@ -39,16 +37,22 @@
 }
 
 .condition {
-  margin-top: theme("spacing.3");
+  padding-right: theme("padding.4");
 
   @apply typography-s;
 
-  &_active {
-    font-weight: theme("fontWeight.medium");
-  }
-
   &__label {
-    cursor: pointer
+    padding: 6px 10px;
+    cursor: pointer;
+
+    &:hover {
+      color: theme("colors.grey.blue")
+    }
+
+    &_selected {
+      outline: 1px solid theme("colors.grey.dark");
+      border-radius: 4px;
+    }
   }
 
   &__delete-button {

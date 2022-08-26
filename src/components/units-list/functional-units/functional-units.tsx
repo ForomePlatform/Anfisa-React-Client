@@ -1,9 +1,10 @@
 import styles from './functional-units.module.css'
 
-import { ReactElement, useRef, useState } from 'react'
+import { ReactElement, useMemo, useRef, useState } from 'react'
 import cn from 'classnames'
 
 import { t } from '@i18n'
+import filterStore from '@store/filter'
 import { TFunctionalUnit } from '@store/stat-units'
 import { MenuList, MenuListItem } from '@ui/menu-list'
 import { Popover } from '@ui/popover'
@@ -18,7 +19,6 @@ interface IFunctionalUnitsProps {
   onSelect: (unit: TPropertyStatus) => void
   conditions?: TFunctionalCondition[]
   onConditionSelect?: (condition: TFunctionalCondition) => void
-  onConditionDelete?: (condition: TFunctionalCondition) => void
 }
 
 export const FunctionalUnits = ({
@@ -27,17 +27,22 @@ export const FunctionalUnits = ({
   onSelect,
   conditions,
   onConditionSelect,
-  onConditionDelete,
 }: IFunctionalUnitsProps): ReactElement => {
   const [isMenuOpen, setMenuOpen] = useState(false)
   const titleRef = useRef<HTMLDivElement>(null)
-
   const closeMenu = () => setMenuOpen(false)
+
+  const attributeNameToAdd = filterStore.attributeNameToAdd
+  const selectedAttribute = filterStore.selectedAttributeStatus?.name
+
+  const isFuncUnitToAdd = useMemo(() => {
+    return units.some(unit => unit.name === attributeNameToAdd)
+  }, [units, attributeNameToAdd])
 
   return (
     <>
       <div className={className}>
-        <div ref={titleRef} className={styles.title}>
+        <div ref={titleRef} className={cn(styles.title, 'mb-3')}>
           <FnLabel className="mr-2" />
           <span className={styles.title}>{t('unitsList.functionalUnits')}</span>
           <button
@@ -47,28 +52,29 @@ export const FunctionalUnits = ({
             +
           </button>
         </div>
-        {conditions?.map(condition => (
-          <div
-            key={condition.key}
-            className={cn(
-              styles.condition,
-              condition.isActive && styles.condition_active,
-            )}
-          >
-            <span
-              className={styles.condition__label}
-              onClick={() => onConditionSelect?.(condition)}
-            >
-              {condition.name}
-            </span>
-            <button
-              className={styles.condition__deleteButton}
-              onClick={() => onConditionDelete?.(condition)}
-            >
-              <span>×</span>
-            </button>
+
+        {conditions?.map(condition => {
+          const isSelected = condition.name === selectedAttribute
+          return (
+            <div key={condition.key} className={cn(styles.condition)}>
+              <div
+                className={cn(
+                  styles.condition__label,
+                  isSelected && styles.condition__label_selected,
+                )}
+                onClick={() => onConditionSelect?.(condition)}
+              >
+                {condition.name}
+              </div>
+            </div>
+          )
+        })}
+
+        {isFuncUnitToAdd && (
+          <div className={styles.condition}>
+            <div className={styles.condition__label}>{attributeNameToAdd}</div>
           </div>
-        ))}
+        )}
       </div>
       <Popover
         isOpen={isMenuOpen}

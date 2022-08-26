@@ -24,9 +24,6 @@ export const FilterRefinerUnits = observer((props: IFilterRefinerProps) => {
       onFunctionalConditionSelect={condition =>
         filterStore.selectCondition(condition.key as number)
       }
-      onFunctionalConditionDelete={condition =>
-        filterStore.removeCondition(condition.key as number)
-      }
       fetchedAmount={filterStore.downloadedAmount}
     />
   )
