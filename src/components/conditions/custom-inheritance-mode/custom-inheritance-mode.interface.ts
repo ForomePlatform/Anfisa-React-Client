@@ -16,7 +16,6 @@ export interface ICustomInheritanceModeConditionProps
   extends ICommonFuncConditionProps {
   problemGroups: string[]
   initialScenario: IScenario
-  className?: Argument
   controls?: (props: IControlProps) => ReactElement | null
 }
 export interface IHandleSetComplexScenarioProps {

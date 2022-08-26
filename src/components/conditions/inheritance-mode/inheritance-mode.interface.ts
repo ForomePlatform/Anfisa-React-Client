@@ -18,7 +18,6 @@ export interface IInheritanceModeConditionProps
   problemGroups: string[]
   initialVariants: string[] | undefined
   initialProblemGroups: string[] | undefined
-  className?: Argument
   controls?: (props: IControlProps) => ReactElement | null
 }
 

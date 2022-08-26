@@ -1,8 +1,10 @@
 import { ReactElement, useEffect, useState } from 'react'
+import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { ApproxNameTypes } from '@core/enum/approxNameTypes'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
+import { FuncVariantsTypes } from '@core/enum/func-variants-type-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import { AllNotMods } from '@pages/filter/dtree/components/query-builder/ui/all-not-mods'
 import { AprroxAndState } from '../components/approx-state'
@@ -16,6 +18,7 @@ export const CompoundHetCondition = observer(
     initialMode,
     attributeSubKind,
     statFuncStore,
+    className,
     onTouch,
     controls,
   }: ICompoundHetConditionProps): ReactElement => {
@@ -47,12 +50,21 @@ export const CompoundHetCondition = observer(
 
     return (
       <>
-        <AprroxAndState approx={approx} onChangeApprox={setApprox} />
+        <AprroxAndState
+          approx={approx}
+          onChangeApprox={setApprox}
+          className={className}
+        />
 
-        <div className="flex justify-between items-center text-14 my-4">
+        <div
+          className={cn(
+            'flex justify-between items-center text-14 mt-6 mb-4',
+            className,
+          )}
+        >
           <DisabledVariants
             isFetching={isFetching}
-            variantsType={'Proband'}
+            variantsType={FuncVariantsTypes.Proband}
             variantsValue={variantsValue}
             status={status}
           />

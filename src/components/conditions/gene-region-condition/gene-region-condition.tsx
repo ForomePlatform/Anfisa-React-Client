@@ -2,6 +2,7 @@ import { ReactElement, useEffect, useState } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
+import { FuncVariantsTypes } from '@core/enum/func-variants-type-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import { t } from '@i18n'
 import { GeneRegionInput } from '@components/conditions/gene-region-condition/components/gene-region-input/gene-region-input'
@@ -65,7 +66,7 @@ export const GeneRegionCondition = observer(
           <DisabledVariants
             isFetching={isFetching}
             variantsValue={variantsValue}
-            variantsType={'True'}
+            variantsType={FuncVariantsTypes.True}
             status={status}
           />
 
