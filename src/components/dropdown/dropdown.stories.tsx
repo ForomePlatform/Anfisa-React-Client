@@ -18,4 +18,10 @@ const Template: ComponentStory<typeof Dropdown> = args => {
 
 export const Default = Template.bind({})
 
-Default.args = {}
+Default.args = {
+  options: [
+    { label: 'Dima', value: 'Dima' },
+    { label: 'Vlad', value: 'Vlad' },
+    { label: 'Andrey', value: 'Andrey' },
+  ],
+}

@@ -29,12 +29,14 @@ export const Dropdown = <T,>({
         isOpen={isPopoverOpen}
         onToggle={onToggle}
         variant={variant}
+        placeholder={placeholder}
       />
       <DropdownMenu
         anchorEl={popoverAnchor}
         isOpen={isPopoverOpen}
         onClose={closePopover}
         variant={variant}
+        options={options}
       />
     </>
   )

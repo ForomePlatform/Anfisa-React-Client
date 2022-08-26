@@ -9,10 +9,12 @@ import { IDropdownCommonProps } from '@components/dropdown/dropdown.interfaces'
 interface IDropdownButtonProps extends Required<IDropdownCommonProps> {
   isOpen: boolean
   onToggle: (target: HTMLElement) => void
+  placeholder: string
 }
 
 export const DropdownButton = ({
   isOpen,
+  placeholder,
   onToggle,
   variant,
 }: IDropdownButtonProps): ReactElement => {
@@ -24,7 +26,7 @@ export const DropdownButton = ({
         styles[`dropdown__button_${camelCase(variant)}`],
       )}
     >
-      Button
+      {placeholder}
     </div>
   )
 }

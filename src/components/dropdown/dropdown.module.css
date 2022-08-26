@@ -21,4 +21,59 @@
       }
     }
   }
+
+  &__menu {
+    border-radius: 4px;
+    padding: 8px 0;
+    box-shadow: theme("boxShadow.card");
+
+    &_primary {
+      background-color: theme("colors.white");
+      color: theme("colors.blue.dark")
+    }
+
+    &_primary-dark {
+      background-color: theme("colors.blue.lighter");
+      color: theme("colors.white");
+    }
+
+    &__item {
+      @apply typography-s;
+
+      padding: 6px 16px;
+      cursor: pointer;
+
+      &_primary {
+        &:hover {
+          background-color: theme("colors.blue.light");
+        }
+
+        &_selected {
+          background-color: theme("colors.blue.bright");
+        }
+
+        &_disabled {
+          color: theme("colors.grey.blue") !important;
+          opacity: 50;
+          cursor: none;
+        }
+      }
+
+      &_primary-dark {
+        &:hover {
+          background-color: theme("colors.blue.secondary");
+        }
+
+        &_selected {
+          background-color: theme("colors.blue.bright");
+        }
+
+        &_disabled {
+          color: theme("colors.blue.secondary") !important;
+          opacity: 50;
+          cursor: none;
+        }
+      }
+    }
+  }
 }
