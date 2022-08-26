@@ -51,7 +51,7 @@ export const BarChart = ({
   }
 
   return (
-    <div>
+    <div className="-left-2.5 relative">
       <SvgChart
         data-testid={dataTestId}
         className={cn(styles.barChart, isLight && styles.barChart_light)}
