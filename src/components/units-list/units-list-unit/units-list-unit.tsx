@@ -8,18 +8,18 @@ import { PredictionPowerIndicator } from '@components/prediction-power-indicator
 import { UnitsListUnitName } from './components/units-list-unit-name'
 
 interface IUnitsListUnitProps {
-  className?: Argument
   isDark: boolean
   unit: TUnit
   isSelected: boolean
+  className?: Argument
   onSelect: () => void
 }
 
 export const UnitsListUnit = ({
-  className,
   isDark,
   unit,
   isSelected,
+  className,
   onSelect,
 }: IUnitsListUnitProps): ReactElement => {
   const { name, tooltip } = unit

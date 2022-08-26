@@ -12,7 +12,7 @@ export const CustomInheritanceModeScenario = ({
   onChangeScenario,
 }: ICustomInheritanceModeScenarioProps): ReactElement => (
   <>
-    <div className="text-14 leading-16px font-medium text-grey-blue mb-2.5">
+    <div className="mb-2.5 text-14 leading-16px font-medium text-grey-blue">
       {t('funcCondition.scenario')}
     </div>
 

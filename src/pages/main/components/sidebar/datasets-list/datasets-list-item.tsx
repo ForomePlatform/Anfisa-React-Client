@@ -62,7 +62,7 @@ export const DatasetsListItem: FC<IDatasetsListItemProps> = observer(
             ? wizardScenarios.WsShortCandidateSet
             : wizardScenarios.WsCandidateSet
 
-          wizardStore.setScenario(scenario, true)
+          wizardStore.setScenario(scenario)
         }
       }
 

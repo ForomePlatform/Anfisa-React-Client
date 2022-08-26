@@ -1,6 +1,7 @@
 import { ReactElement } from 'react'
 import cn from 'classnames'
 
+import filterStore from '@store/filter'
 import { Icon } from '@ui/icon'
 import { Tooltip } from '@ui/tooltip'
 import { FnLabel } from '@components/fn-label'
@@ -20,20 +21,29 @@ export const AttributeHeader = ({
   const isFunc = kind === AttributeKinds.FUNC
 
   return (
-    <div className={cn('flex items-center', className)}>
-      {isFunc && <FnLabel />}
+    <div className={cn('flex items-center justify-between px-4', className)}>
+      <div className="flex items-center">
+        {isFunc && <FnLabel />}
 
-      <span
-        className={cn('text-16 font-bold cursor-pointer', isFunc && 'ml-1.5')}
-      >
-        {name || title}
-      </span>
+        <span
+          className={cn(
+            'text-16 font-medium cursor-pointer',
+            isFunc && 'ml-1.5',
+          )}
+        >
+          {name || title}
+        </span>
 
-      {tooltip && (
-        <Tooltip title={tooltip} placement="right" trigger="click">
-          <Icon name="Info" className="ml-1 text-grey-blue cursor-pointer" />
-        </Tooltip>
-      )}
+        {tooltip && (
+          <Tooltip title={tooltip} placement="right" trigger="click">
+            <Icon name="Info" className="ml-1 text-grey-blue cursor-pointer" />
+          </Tooltip>
+        )}
+      </div>
+
+      <button onClick={() => filterStore.setAttributeToAdd('')}>
+        <Icon name="Close" size={16} />
+      </button>
     </div>
   )
 }

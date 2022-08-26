@@ -2,8 +2,8 @@ import { ReactElement } from 'react'
 
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import { t } from '@i18n'
+import { Divider } from '@ui/divider'
 import { AllNotMods } from '@pages/filter/dtree/components/query-builder/ui/all-not-mods'
-import { ModsDivider } from '@pages/filter/dtree/components/query-builder/ui/mods-divider'
 import { IInheritanceModeVariantsControlsProps } from '../inheritance-mode.interface'
 
 export const InheritanceModeVariantsControls = ({
@@ -14,12 +14,12 @@ export const InheritanceModeVariantsControls = ({
   mode,
   toggleMode,
 }: IInheritanceModeVariantsControlsProps): ReactElement => (
-  <div className="flex justify-between w-full mt-4 -mb-5">
+  <div className="flex justify-between w-full mt-4 mb-3">
     <div className="text-14 text-grey-blue">
       {selectedVariants.length} {t('dtree.selected')}
     </div>
 
-    <div className="flex flex-col">
+    <div className="flex flex-col items-end">
       <div className="flex">
         <div
           className="text-14 text-blue-bright cursor-pointer"
@@ -28,7 +28,7 @@ export const InheritanceModeVariantsControls = ({
           {t('general.selectAll')}
         </div>
 
-        <ModsDivider />
+        <Divider spacing="dense" orientation="vertical" color="blue-light" />
 
         <div
           className="text-14 text-blue-bright cursor-pointer"

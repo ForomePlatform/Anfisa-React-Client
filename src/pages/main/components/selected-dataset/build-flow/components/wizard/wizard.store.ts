@@ -93,14 +93,16 @@ class WizardStore {
 
   public setScenario(
     scenario: IWizardScenario[],
-    shouldSaveInHistory: boolean,
+    shouldSaveInHistory: boolean = true,
   ) {
     this.prevWizardScenario = cloneDeep(this.wizardScenario)
 
     this.wizardScenario = scenario
 
     if (shouldSaveInHistory) {
-      this.actionHistory.addHistory(scenario)
+      if (shouldSaveInHistory) {
+        this.actionHistory.addHistory(scenario)
+      }
     }
   }
 
@@ -274,7 +276,7 @@ class WizardStore {
       ? wizardScenarios.WsCandidateSet
       : wizardScenarios.WsShortCandidateSet
 
-    this.setScenario(scenario, true)
+    this.setScenario(scenario)
   }
 
   public resetWizard() {

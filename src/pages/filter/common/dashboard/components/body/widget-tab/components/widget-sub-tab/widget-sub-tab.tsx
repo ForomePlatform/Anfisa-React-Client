@@ -71,6 +71,7 @@ export const WidgetSubTab = observer(
               <UnitChart
                 unit={unit}
                 className={styles.subTab__unitContainer__chartContainer}
+                isDashboard
               />
             ) : (
               <WidgetSubTabItem unit={unit} onSelectUnit={onSelectUnit} />

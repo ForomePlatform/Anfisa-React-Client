@@ -23,6 +23,7 @@ import { DecisionTreesMenuDataCy } from '@data-testid'
 import { showToast } from '@utils/notifications/showToast'
 import {
   noFirstNumberPattern,
+  noSpacesPattern,
   noSymbolPattern,
 } from '@utils/validation/validationPatterns'
 
@@ -145,6 +146,7 @@ export const CreateDatasetDialog = observer(
       if (
         noSymbolPattern.test(name) ||
         noFirstNumberPattern.test(name) ||
+        noSpacesPattern.test(name) ||
         name.length > 250
       ) {
         setError(DatasetCreationErrorsEnum.IncorrectName)
