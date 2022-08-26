@@ -21,9 +21,8 @@ export const StrictnessSelectButton = ({
     return value ? <Icon name="LessOrEqualThan" /> : <Icon name="LessThan" />
   }, [value])
 
-  const signDirection = useMemo(() => {
-    return selectType === NumericSelectTypes.Min ? 'scale(-1,1)' : ''
-  }, [selectType])
+  const signDirection =
+    selectType === NumericSelectTypes.Min ? 'scale(-1,1)' : ''
 
   return (
     <button
