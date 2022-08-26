@@ -1,0 +1,24 @@
+.dropdown {
+  &__button {
+    width: 100%;
+    padding: 6px 16px;
+
+    &_primary {
+      color: theme("colors.blue.dark");
+      background-color: theme("colors.white");
+
+      &:hover {
+        background-color: theme("colors.blue.light");
+      }
+    }
+
+    &_primary-dark {
+      background-color: theme("colors.blue.lighter");
+      color: theme("colors.white");
+
+      &:hover {
+        background-color: theme("colors.blue.secondary");
+      }
+    }
+  }
+}
