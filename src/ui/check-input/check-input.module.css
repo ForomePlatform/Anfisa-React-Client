@@ -58,7 +58,7 @@
   margin-right: theme("margin.1");
   cursor: pointer;
 
-  &_wide {
+  &_m {
     margin-right: 10px;
   }
 }
