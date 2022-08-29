@@ -93,7 +93,6 @@ export const drawBarChart = ({
     .selectAll('bar')
     .data(data)
     .join('rect')
-
     .attr('x', item => xScale(item[0]) as number)
     .attr('y', item => getY(item))
     .attr('width', barWidth)

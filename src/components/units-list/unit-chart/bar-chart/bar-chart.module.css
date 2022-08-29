@@ -18,9 +18,15 @@
   }
 
   &_light {
-    :global {
-      line {
-        stroke: theme("colors.grey.disabled");
+    :global line {
+      stroke: theme("colors.grey.disabled");
+    }
+  }
+
+  &_clickable {
+    :global rect {
+      &:hover {
+        cursor: pointer;
       }
     }
   }

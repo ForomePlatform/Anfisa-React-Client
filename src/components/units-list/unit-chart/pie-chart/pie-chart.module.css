@@ -17,6 +17,10 @@
   &__chart {
     flex: 0 0 110px;
     height: 110px;
+
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 
