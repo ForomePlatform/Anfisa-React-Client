@@ -4,6 +4,7 @@ import React, { useMemo, useState } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
+import filterStore from '@store/filter'
 import { Icon } from '@ui/icon'
 import {
   AttributeKinds,
@@ -17,6 +18,7 @@ interface IConditionCardProps {
   className?: string
   isActive: boolean
   condition: TCondition
+  conditionIndex: number
   onSelect: () => void
   onDelete: () => void
   onDragStart: (el: HTMLElement, event: MouseEvent) => void
@@ -27,6 +29,7 @@ export const ConditionCard = observer(
     className,
     isActive,
     condition,
+    conditionIndex,
     onSelect,
     onDragStart,
   }: IConditionCardProps) => {
@@ -46,7 +49,9 @@ export const ConditionCard = observer(
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [condition])
 
-    const [isContentVisible, setContentVisible] = useState(isArrowShown)
+    const [isContentVisible, setContentVisible] = useState(
+      filterStore.getConditionOpenState(conditionIndex) ?? isArrowShown,
+    )
 
     const isContentHidden =
       filterType === AttributeKinds.FUNC && !isContentVisible
@@ -56,6 +61,7 @@ export const ConditionCard = observer(
 
     const toggleConditions = (e: React.MouseEvent) => {
       e.stopPropagation()
+      filterStore.setConditionOpenState(conditionIndex, !isContentVisible)
       setContentVisible(!isContentVisible)
     }
 
