@@ -164,7 +164,7 @@ export const setupClickTooltipEvents = (
         setTimeout(() => {
           hideTooltip(popperInstance)
           popperInstance = null
-        }, 500)
+        }, 100)
       },
       {
         capture: true,

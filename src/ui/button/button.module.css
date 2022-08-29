@@ -25,6 +25,7 @@
     color: theme("colors.grey.blue");
     background-color: theme("colors.red.disabled");
     border-color: theme("colors.red.disabled");
+    cursor: not-allowed;
   }
 
   &_xs {

@@ -4,6 +4,7 @@ import { FC } from 'react'
 import cn from 'classnames'
 
 import { IGeneRegionInputProps } from '../../gene-region.interface'
+import { LocusPlaceholder } from '../../gene-region-condition.data'
 
 export const GeneRegionInput: FC<IGeneRegionInputProps> = ({
   value,
@@ -18,6 +19,7 @@ export const GeneRegionInput: FC<IGeneRegionInputProps> = ({
         onChange(e.target.value)
       }}
       className={styles.input}
+      placeholder={LocusPlaceholder}
     />
   </div>
 )

@@ -1,14 +1,18 @@
 import { ReactElement, useEffect, useState } from 'react'
+import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { FuncVariantsTypes } from '@core/enum/func-variants-type-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import { t } from '@i18n'
+import { Icon } from '@ui/icon'
+import { Tooltip } from '@ui/tooltip'
 import { GeneRegionInput } from '@components/conditions/gene-region-condition/components/gene-region-input/gene-region-input'
 import { AllNotMods } from '@pages/filter/dtree/components/query-builder/ui/all-not-mods'
 import { DisabledVariants } from '../components/disabled-variants'
 import { IGeneRegionProps } from './gene-region.interface'
+import { LocusExamples } from './gene-region-condition.data'
 
 export const GeneRegionCondition = observer(
   ({
@@ -16,6 +20,7 @@ export const GeneRegionCondition = observer(
     initialMode,
     attributeSubKind,
     statFuncStore,
+    className,
     onTouch,
     controls,
   }: IGeneRegionProps): ReactElement => {
@@ -52,17 +57,31 @@ export const GeneRegionCondition = observer(
 
     return (
       <>
-        <span className="mb-1 text-14 leading-16px text-grey-blue font-medium">
+        <div
+          className={cn(
+            'flex items-center mb-1 text-14 leading-16px text-grey-dark',
+            className,
+          )}
+        >
           {t('funcCondition.locus')}
-        </span>
+
+          <Tooltip title={LocusExamples} placement="right" trigger="click">
+            <Icon name="Info" className="ml-1 text-grey-blue cursor-pointer" />
+          </Tooltip>
+        </div>
 
         <GeneRegionInput
           value={locus}
           onChange={handleSetLocusValue}
-          classname="mb-2"
+          classname={cn('mb-2', className)}
         />
 
-        <div className="flex justify-between items-center my-3 text-14">
+        <div
+          className={cn(
+            'flex justify-between items-center mt-3 mb-4 text-14',
+            className,
+          )}
+        >
           <DisabledVariants
             isFetching={isFetching}
             variantsValue={variantsValue}

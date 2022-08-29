@@ -20,7 +20,7 @@ export const DisabledVariants = ({
   status,
 }: IDisabledVariantsProps): ReactElement => {
   if (status) {
-    return <span>{status}</span>
+    return <span className="text-red-secondary">{status}</span>
   }
 
   const variantString =
