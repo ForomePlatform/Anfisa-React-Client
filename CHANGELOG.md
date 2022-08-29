@@ -2,6 +2,7 @@
 
 ## <small>0.8.1 (8/29/2022)</small>
 
+* feat([FOROME-1581](https://quantori.atlassian.net/browse/FOROME-1581)): redesign compound het panel ([7572c53b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/7572c53b))
 * feat([FOROME-1580](https://quantori.atlassian.net/browse/FOROME-1580)): redesign custom inh mode panel ([18eb4317](https://github.com/ForomePlatform/Anfisa-React-Client/commit/18eb4317))
 * feat([FOROME-1579](https://quantori.atlassian.net/browse/FOROME-1579)): redesign inh mode panel ([eae19774](https://github.com/ForomePlatform/Anfisa-React-Client/commit/eae19774))
 * feat([FOROME-1558](https://quantori.atlassian.net/browse/FOROME-1558)): redesign numeric panel ([c0cae53e](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c0cae53e))
