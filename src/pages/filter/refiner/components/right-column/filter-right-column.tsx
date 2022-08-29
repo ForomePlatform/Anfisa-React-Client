@@ -11,11 +11,13 @@ import { useParams } from '@core/hooks/use-params'
 import { t } from '@i18n'
 import datasetStore from '@store/dataset/dataset'
 import filterStore from '@store/filter'
+import filterPresetsStore from '@store/filter-presets'
 import { Routes } from '@router/routes.enum'
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
 import { Loader } from '@ui/loader'
 import { FilterRefinerStatCounts } from '@pages/filter/refiner/components/right-column/filter-refiner-stat-counts'
+import { TCondition } from '@service-providers/common'
 import { showToast } from '@utils/notifications/showToast'
 import { FilterConditions } from './filter-conditions'
 
@@ -50,6 +52,14 @@ export const FilterRightColumn = observer(
               prevPage: 'refiner',
             },
           )
+    }
+
+    const clearAlSelectedFilters = () => {
+      filterPresetsStore.resetActivePreset()
+      filterStore.clearConditions()
+      filterStore.actionHistory.addHistory(
+        filterStore.conditions as TCondition[],
+      )
     }
 
     const clearSelectedFilter = () => {
@@ -112,25 +122,34 @@ export const FilterRightColumn = observer(
           <div
             className={cn(
               styles.querySelected__count,
-              'flex items-center flex-row-reverse px-7 py-3 text-14',
+              'flex items-center flex-row-reverse px-4 py-3 text-14',
             )}
           >
             <Icon
               name="Delete"
               className={cn(
-                styles.querySelected__actionIcon,
-                selectedCondition && styles.querySelected__actionIcon_active,
+                styles.querySelected__action,
+                selectedCondition && styles.querySelected__action_active,
               )}
               onClick={clearSelectedFilter}
             />
             <Icon
               name="Copy"
               className={cn(
-                styles.querySelected__actionIcon,
-                selectedCondition && styles.querySelected__actionIcon_active,
+                styles.querySelected__action,
+                selectedCondition && styles.querySelected__action_active,
               )}
               onClick={copySelectedFilter}
             />
+            <div
+              className={cn(
+                styles.querySelected__action,
+                styles.querySelected__action_active,
+              )}
+              onClick={clearAlSelectedFilters}
+            >
+              {t('general.clearAll')}
+            </div>
           </div>
         )}
         {isConditionsFetching ? (
