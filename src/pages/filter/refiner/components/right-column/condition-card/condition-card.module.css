@@ -14,7 +14,7 @@
 
   &_active {
     background: theme("colors.blue.tertiary");
-    border: 1px solid theme("colors.blue.bright");
+    outline: 1px solid theme("colors.blue.bright");
   }
 
   &__filter-name {
@@ -47,6 +47,10 @@
     color: theme("colors.blue.bright");
     cursor: pointer;
     padding: theme("spacing.1");
+
+    &:hover {
+      color: theme("colors.blue.lighter");
+    }
 
     svg {
       transition: transform 0.15s ease-in-out;

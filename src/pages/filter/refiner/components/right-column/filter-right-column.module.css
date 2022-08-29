@@ -16,4 +16,18 @@
     flex: 1 0 0;
     overflow: auto;
   }
+
+  &__action-icon {
+    font-weight: 500;
+    margin: 0 2px;
+    cursor: pointer;
+
+    &:hover {
+      color: theme("colors.blue.lighter");
+    }
+
+    &_active {
+      color: theme("colors.blue.bright");
+    }
+  }
 }

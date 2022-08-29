@@ -118,16 +118,16 @@ export const FilterRightColumn = observer(
             <Icon
               name="Delete"
               className={cn(
-                'font-medium cursor-pointer mx-[2px]',
-                selectedCondition && 'text-blue-bright',
+                styles.querySelected__actionIcon,
+                selectedCondition && styles.querySelected__actionIcon_active,
               )}
               onClick={clearSelectedFilter}
             />
             <Icon
               name="Copy"
               className={cn(
-                'font-medium cursor-pointer mx-[2px]',
-                selectedCondition && 'text-blue-bright',
+                styles.querySelected__actionIcon,
+                selectedCondition && styles.querySelected__actionIcon_active,
               )}
               onClick={copySelectedFilter}
             />
