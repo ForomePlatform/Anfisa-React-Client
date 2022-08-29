@@ -28,11 +28,9 @@ export const CustomTagForm = ({
 
   return (
     <div className={className}>
-      <Input
-        isModal
-        value={value}
-        onChange={event => setValue(event.target.value)}
-      />
+      <div className="my-1">
+        <Input value={value} onChange={event => setValue(event.target.value)} />
+      </div>
 
       <div className="flex justify-end items-center pt-2">
         {errorMessage && (

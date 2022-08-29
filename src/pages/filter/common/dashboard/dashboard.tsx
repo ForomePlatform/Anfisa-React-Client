@@ -4,6 +4,7 @@ import { ReactElement, useEffect } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { Loader } from '@ui/loader'
+import { ProgressBar } from '@ui/progress-bar'
 import { GlbPagesNames } from '@glb/glb-names'
 import { IUnitsProps } from '@pages/filter/refiner/refiner.interfaces'
 import { DashboardBody } from './components/body'
@@ -32,16 +33,24 @@ export const Dashboard = observer(
     useEffect(() => dashboardStore.setPage(page), [page])
 
     useEffect(() => {
-      if (!isFetching) {
+      if (groups.length) {
         dashboardStore.setGroups(groups, functionalUnits)
       }
     }, [functionalUnits, groups, isFetching, dataReady])
+
+    const showLoader = isFetching && !groups.length
 
     return (
       <div className={styles.dashboard}>
         <DashboardHeader />
 
-        {isFetching ? <Loader /> : <DashboardBody />}
+        {!dataReady && (
+          <div className={styles.dashboard__loader}>
+            <ProgressBar size="xs" />
+          </div>
+        )}
+
+        {showLoader ? <Loader /> : <DashboardBody />}
       </div>
     )
   },

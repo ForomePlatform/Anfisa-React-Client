@@ -39,7 +39,10 @@ export const WidgetSubTab = observer(
     const isFuncAttr = unit.kind === AttributeKinds.FUNC
     return (
       <div
-        className={cn(styles.subTab, !isUnitInSearch && styles.subTab_disabled)}
+        className={cn(
+          styles.subTab,
+          (!isUnitInSearch || unit.incomplete) && styles.subTab_disabled,
+        )}
         id={subTabId(unit.name)}
       >
         <div className={styles.subTab__header}>

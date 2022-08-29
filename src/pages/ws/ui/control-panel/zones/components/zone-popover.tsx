@@ -1,10 +1,10 @@
 import { ChangeEvent, ReactElement } from 'react'
 
 import { t } from '@i18n'
+import { InputSearch } from '@ui/input'
 import { Loader } from '@ui/loader'
 import { Popover } from '@ui/popover'
 import { IPopoverBaseProps } from '@ui/popover/popover.interface'
-import { InputSearch } from '@components/input-search'
 import { PopupCard } from '@components/popup-card/popup-card'
 import { popoverOffset } from '@pages/ws/ws.constants'
 import { ZoneList } from './zone-list'
