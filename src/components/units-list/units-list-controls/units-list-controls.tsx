@@ -5,8 +5,9 @@ import cn from 'classnames'
 
 import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
 import { t } from '@i18n'
+import { theme } from '@theme'
 import { Icon } from '@ui/icon'
-import { InputSearch } from '@components/input-search'
+import { InputSearch } from '@ui/input'
 import { DecisionTreesResultsDataCy } from '@data-testid'
 import { UnitsViewSwitch } from './components'
 
@@ -37,9 +38,13 @@ export const UnitsListControls = ({
       className={styles.controls__search}
       placeholder={t('filter.searchForAField')}
       value={filterValue}
+      variant="primary-dark"
+      style={{
+        backgroundColor: theme('colors.blue.secondary'),
+        border: theme('colors.blue.secondary'),
+      }}
+      size="m"
       onChange={e => onFilterValueChange(e.target.value)}
-      isDarkBg
-      big
     />
 
     <button

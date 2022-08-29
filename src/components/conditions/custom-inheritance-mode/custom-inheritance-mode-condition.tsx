@@ -109,9 +109,9 @@ export const CustomInheritanceModeCondition = observer(
 
         <InheritanceModeSelect
           preparedScenarioName={preparedScenarioName}
+          className={className}
           handleSetPreparedScenario={handleSetPreparedScenario}
           setPreparedScenarioName={setPreparedScenarioName}
-          className={className}
         />
 
         <DividerHorizontal />

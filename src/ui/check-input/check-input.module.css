@@ -55,8 +55,7 @@
   max-width: calc(100% - 24px);
 
   &_disabled {
-    color: theme("colors.grey.blue");
-    cursor: not-allowed;
+    color: theme("colors.grey.blue")
   }
 }
 
@@ -64,7 +63,7 @@
   margin-right: theme("margin.1");
   cursor: pointer;
 
-  &_wide {
+  &_m {
     margin-right: 10px;
   }
 }

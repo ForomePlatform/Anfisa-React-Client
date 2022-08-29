@@ -18,7 +18,7 @@ export const InheritanceModeSelect: FC<IInheritanceModeSelectProp> = ({
   handleSetPreparedScenario,
   setPreparedScenarioName,
 }) => (
-  <div className={cn('-mb-1', className as string)}>
+  <div className={cn('-mb-1', className)}>
     <div className="flex justify-between items-center -mt-1 mb-1">
       <span className="mb-2.5 text-sm text-grey-dark">
         {t('funcCondition.inheritanceMode')}
@@ -40,7 +40,7 @@ export const InheritanceModeSelect: FC<IInheritanceModeSelectProp> = ({
           id={option}
           onChange={() => handleSetPreparedScenario(option)}
           checked={preparedScenarioName === option}
-          isWide
+          spread="m"
           className="mb-3 last:mb-0"
         >
           {option}

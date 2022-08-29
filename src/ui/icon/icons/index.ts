@@ -33,6 +33,8 @@ import FullScreen from './full-screen'
 import Gallery from './gallery'
 import Import from './import'
 import Info from './info'
+import LessOrEqualThan from './less-or-equal-than'
+import LessThan from './less-than'
 import Lines from './lines'
 import List from './list'
 import Loupe from './loupe'
@@ -86,6 +88,8 @@ export const icons = {
   Gallery,
   Import,
   Info,
+  LessOrEqualThan,
+  LessThan,
   Lines,
   List,
   Loupe,

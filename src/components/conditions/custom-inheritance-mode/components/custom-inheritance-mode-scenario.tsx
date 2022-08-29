@@ -12,7 +12,7 @@ export const CustomInheritanceModeScenario = ({
   className,
   onChangeScenario,
 }: ICustomInheritanceModeScenarioProps): ReactElement => (
-  <div className={cn('-mt-1', className as string)}>
+  <div className={cn('-mt-1', className)}>
     <div className="mb-2 text-sm text-grey-dark">
       {t('funcCondition.scenario')}
     </div>

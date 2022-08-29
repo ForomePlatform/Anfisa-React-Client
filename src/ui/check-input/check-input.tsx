@@ -6,10 +6,10 @@ import cn, { Argument } from 'classnames'
 export interface ICheckInputProps {
   checked: boolean
   type: 'checkbox' | 'radio'
+  spread?: 's' | 'm'
   id?: string | number
   className?: Argument
   disabled?: boolean
-  isWide?: boolean
   datatestId?: string
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
@@ -17,10 +17,10 @@ export interface ICheckInputProps {
 export const CheckInput: FC<ICheckInputProps> = ({
   checked,
   type,
+  spread = 's',
   id,
   className,
   disabled,
-  isWide,
   datatestId,
   children,
   onChange,
@@ -36,7 +36,7 @@ export const CheckInput: FC<ICheckInputProps> = ({
         checked={checked}
         disabled={disabled}
         onChange={onChange}
-        className={cn(styles.input, isWide && styles.input_wide)}
+        className={cn(styles.input, styles[`input_${spread}`])}
       />
       {children}
     </label>

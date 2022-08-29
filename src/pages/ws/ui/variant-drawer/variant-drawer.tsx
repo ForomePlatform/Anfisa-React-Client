@@ -5,9 +5,10 @@ import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
+import { theme } from '@theme'
 import variantStore from '@store/ws/variant'
+import { InputSearch } from '@ui/input'
 import { Loader } from '@ui/loader'
-import { InputSearch } from '@components/input-search'
 import {
   TVariantAspectsGridHandles,
   VariantAspectsLayoutGallery,
@@ -108,6 +109,12 @@ export const VariantDrawer = observer(
                 <InputSearch
                   placeholder={t('variant.searchThroughTheTabs')}
                   value={searchValue}
+                  variant="primary-dark"
+                  size="m"
+                  style={{
+                    backgroundColor: theme('colors.blue.secondary'),
+                    border: theme('colors.blue.secondary'),
+                  }}
                   onChange={e => onChange(e.target.value)}
                   onFocus={addListener}
                   foundItems={foundItems}
