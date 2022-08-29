@@ -47,7 +47,10 @@ export const CheckInput: FC<ICheckInputProps> = ({
 
       <span className={styles.checkmark} />
 
-      <span className={styles.label} data-testid={datatestId}>
+      <span
+        className={cn(styles.label, disabled && styles.label_disabled)}
+        data-testid={datatestId}
+      >
         {children}
       </span>
     </label>

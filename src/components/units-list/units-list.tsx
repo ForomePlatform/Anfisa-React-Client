@@ -31,7 +31,6 @@ export interface IUnitsListProps {
   className?: string
   onSelect: (unit: TPropertyStatus) => void
   onFunctionalConditionSelect?: (condition: TFunctionalCondition) => void
-  onFunctionalConditionDelete?: (condition: TFunctionalCondition) => void
 }
 
 export const UnitsList = observer(
@@ -48,7 +47,6 @@ export const UnitsList = observer(
     selectedUnit,
     onSelect,
     onFunctionalConditionSelect,
-    onFunctionalConditionDelete,
     listContainerId,
   }: IUnitsListProps) => {
     const [collapsedGroups, setCollapsedGroups] = useState<string[]>([])
@@ -96,7 +94,6 @@ export const UnitsList = observer(
           onSelect={onSelect}
           conditions={functionalConditions}
           onConditionSelect={onFunctionalConditionSelect}
-          onConditionDelete={onFunctionalConditionDelete}
         />
         <UnitsListControls
           className={cn(

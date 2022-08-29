@@ -209,15 +209,12 @@ export const NumericConditionRange = ({
           />
         )}
       </div>
-      {controls && (
-        <div className={className}>
-          {controls({
-            value: prepareValue(value, isZeroSkipped),
-            hasErrors: errors.includes(true),
-            clearValue,
-          })}
-        </div>
-      )}
+      {controls &&
+        controls({
+          value: prepareValue(value, isZeroSkipped),
+          hasErrors: errors.includes(true),
+          clearValue,
+        })}
     </>
   )
 }
