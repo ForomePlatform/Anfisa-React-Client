@@ -26,10 +26,10 @@ export const CompoundRequestView = ({
 
   return (
     <div className={cn(className)}>
-      <div>
+      <div className="mt-4">
         <div className="text-grey-dark">Approx</div>
 
-        <div className="py-1 pt-2">{approx}</div>
+        <div className="py-2 pt-2">{approx}</div>
       </div>
 
       <div className="mt-2">
@@ -38,9 +38,9 @@ export const CompoundRequestView = ({
         <div className="py-1 pt-2">{state}</div>
       </div>
 
-      <div className="flex flex-wrap mt-2">
+      <div className="flex flex-wrap mt-3">
         {request.map(([reqNumber, reqCondition], idx) => (
-          <div key={idx} className="pb-2">
+          <div key={idx} className="pb-2 mr-3">
             <div>
               <span className="text-grey-dark">Scenario</span>
 
