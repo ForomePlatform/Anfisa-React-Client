@@ -1,5 +1,6 @@
 import { ReactElement } from 'react'
 
+import { FuncVariantsTypes } from '@core/enum/func-variants-type-enum'
 import { formatNumber } from '@core/format-number'
 import { t } from '@i18n'
 import { Loader } from '@ui/loader'
@@ -8,7 +9,7 @@ import { DecisionTreesResultsDataCy } from '@data-testid'
 interface IDisabledVariantsProps {
   isFetching: boolean
   variantsValue: number | undefined
-  variantsType: string
+  variantsType: FuncVariantsTypes
   status: string | undefined
 }
 
@@ -19,17 +20,22 @@ export const DisabledVariants = ({
   status,
 }: IDisabledVariantsProps): ReactElement => {
   if (status) {
-    return <span>{status}</span>
+    return <span className="text-red-secondary">{status}</span>
   }
 
+  const variantString =
+    variantsType === FuncVariantsTypes.True
+      ? `${variantsType} for`
+      : variantsType
+
   return (
-    <div className="flex h-5 w-3/4 mb-3">
+    <div className="flex h-5 w-3/4">
       {isFetching ? (
         <Loader size="xs" />
       ) : (
         <div>
           <span data-testid={DecisionTreesResultsDataCy.variantsList}>
-            {`${variantsType} for`}{' '}
+            {variantString}{' '}
             <span className="text-grey-dark">
               {formatNumber(variantsValue)} {t('dtree.variants')}
             </span>

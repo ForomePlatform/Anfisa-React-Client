@@ -4,6 +4,7 @@ import isEmpty from 'lodash/isEmpty'
 import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
+import { FuncVariantsTypes } from '@core/enum/func-variants-type-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import { t } from '@i18n'
 import { InheritanceModeSelect } from '@components/conditions/components/inheritance-mode-select'
@@ -108,16 +109,16 @@ export const CustomInheritanceModeCondition = observer(
 
         <InheritanceModeSelect
           preparedScenarioName={preparedScenarioName}
+          className={className}
           handleSetPreparedScenario={handleSetPreparedScenario}
           setPreparedScenarioName={setPreparedScenarioName}
-          className={className}
         />
 
         <DividerHorizontal />
 
         <div
           className={cn(
-            'flex justify-between items-center mb-2 text-14',
+            'flex justify-between items-center mb-4 text-14',
             className,
           )}
         >
@@ -130,7 +131,7 @@ export const CustomInheritanceModeCondition = observer(
               <DisabledVariants
                 isFetching={isFetching}
                 variantsValue={variantsValue}
-                variantsType={'True'}
+                variantsType={FuncVariantsTypes.True}
                 status={status}
               />
 

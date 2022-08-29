@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite'
 
 import { ApproxNameTypes } from '@core/enum/approxNameTypes'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
+import { FuncVariantsTypes } from '@core/enum/func-variants-type-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import { AprroxAndState } from '@components/conditions/components/approx-state'
 import { InheritanceModeSelect } from '@components/conditions/components/inheritance-mode-select'
@@ -206,7 +207,7 @@ export const CompoundRequestCondition = observer(
             isFetching={isFetching}
             status={status}
             variantsValue={variantsValue}
-            variantsType={'True'}
+            variantsType={FuncVariantsTypes.True}
           />
 
           <AllNotMods

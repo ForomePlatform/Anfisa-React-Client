@@ -9,6 +9,7 @@
   &:disabled:checked + .checkmark {
     background-color: theme("colors.grey.disabled");
     border: 1px solid theme("colors.grey.disabled");
+    cursor: not-allowed;
   }
 
   &:checked + .checkmark::after {
@@ -30,6 +31,10 @@
   border-radius: 0.125rem;
   transition: all 0.2s;
   cursor: pointer;
+
+  &_disabled {
+    cursor: not-allowed;
+  }
 
   &::after {
     content: "";

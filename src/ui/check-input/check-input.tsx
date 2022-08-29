@@ -10,7 +10,6 @@ export interface ICheckInputProps {
   id?: string | number
   className?: Argument
   disabled?: boolean
-  isWide?: boolean
   datatestId?: string
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
@@ -51,7 +50,9 @@ export const CheckInput: FC<ICheckInputProps> = ({
         disabled={disabled}
       />
 
-      <span className={styles.checkmark} />
+      <span
+        className={cn(styles.checkmark, disabled && styles.checkmark_disabled)}
+      />
 
       <span
         className={cn(styles.label, disabled && styles.label_disabled)}

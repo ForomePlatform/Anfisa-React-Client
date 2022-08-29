@@ -31,7 +31,8 @@ export interface IInheritanceModeProblemGroupsProps {
 }
 
 export interface IInheritanceModeVariantsControlsProps {
-  selectedVariants: string[]
+  selectedVariantsLength: number
+  filteredVariantsLength: number
   attributeSubKind: string | undefined
   mode: ModeTypes | undefined
   className?: Argument
