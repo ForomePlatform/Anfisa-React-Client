@@ -1,7 +1,8 @@
 # Change log 
 
-## <small>0.8.1 (8/26/2022)</small>
+## <small>0.8.1 (8/29/2022)</small>
 
+* feat([FOROME-1579](https://quantori.atlassian.net/browse/FOROME-1579)): redesign inh mode panel ([eae19774](https://github.com/ForomePlatform/Anfisa-React-Client/commit/eae19774))
 * feat([FOROME-1558](https://quantori.atlassian.net/browse/FOROME-1558)): redesign numeric panel ([c0cae53e](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c0cae53e))
 * fix([FOROME-1560](https://quantori.atlassian.net/browse/FOROME-1560)): add preview of units in dashboard (#912) ([f67f07f7](https://github.com/ForomePlatform/Anfisa-React-Client/commit/f67f07f7))
 * fix([FOROME-1574](https://quantori.atlassian.net/browse/FOROME-1574)): displaying start with card ([0d013064](https://github.com/ForomePlatform/Anfisa-React-Client/commit/0d013064))
