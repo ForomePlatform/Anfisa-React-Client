@@ -319,6 +319,8 @@ export const en = {
     locus: 'Locus',
     affected: 'Affected:',
     inheritanceMode: 'Inheritance mode',
+    customInhModeNotice:
+      'Create the Scenario or choose from existing Inheritance mode',
   },
   unitsList: {
     functionalUnits: 'Functional Units',

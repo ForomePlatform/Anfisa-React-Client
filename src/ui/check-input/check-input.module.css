@@ -53,3 +53,12 @@
     color: theme("colors.grey.blue")
   }
 }
+
+.input {
+  margin-right: theme("margin.1");
+  cursor: pointer;
+
+  &_m {
+    margin-right: 10px;
+  }
+}

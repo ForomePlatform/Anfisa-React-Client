@@ -4,34 +4,40 @@ import { ChangeEvent, FC } from 'react'
 import cn, { Argument } from 'classnames'
 
 export interface ICheckInputProps {
-  id?: string | number
-  type: 'checkbox' | 'radio'
   checked: boolean
-  onChange?: (e: ChangeEvent<HTMLInputElement>) => void
+  type: 'checkbox' | 'radio'
+  spread?: 's' | 'm'
+  id?: string | number
   className?: Argument
   disabled?: boolean
+  isWide?: boolean
   datatestId?: string
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 export const CheckInput: FC<ICheckInputProps> = ({
   checked,
-  disabled,
-  onChange,
+  type,
+  spread = 's',
   id,
   className,
-  type,
-  children,
+  disabled,
   datatestId,
+  children,
+  onChange,
 }) => {
   return type === 'radio' ? (
-    <label htmlFor={id?.toString()} className={cn(className, 'cursor-pointer')}>
+    <label
+      htmlFor={id?.toString()}
+      className={cn(className, 'cursor-pointer inline-flex items-center')}
+    >
       <input
         type="radio"
         id={id?.toString()}
         checked={checked}
         disabled={disabled}
         onChange={onChange}
-        className="mr-1 cursor-pointer"
+        className={cn(styles.input, styles[`input_${spread}`])}
       />
       {children}
     </label>
