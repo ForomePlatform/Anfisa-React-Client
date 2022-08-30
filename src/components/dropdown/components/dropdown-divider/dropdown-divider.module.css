@@ -1,0 +1,7 @@
+.divider {
+  height: 1px;
+  width: calc(100% - 24px);
+  background-color: theme("colors.grey.blue");
+  margin: 4px 12px;
+  box-sizing: border-box;
+}

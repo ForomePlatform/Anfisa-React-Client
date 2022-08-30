@@ -4,6 +4,9 @@ export interface IDropdownValue<T> {
   disabled?: boolean
 }
 
-export interface IDropdownCommonProps {
+export interface IDropdownCommonProps<T> {
+  onChange: (item: IDropdownValue<T>) => void
+  values: IDropdownValue<T>[]
   variant?: 'primary' | 'primary-dark'
+  showCheckboxes?: boolean
 }

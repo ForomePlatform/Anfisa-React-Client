@@ -1,0 +1,19 @@
+.dropdown-clear-all-menu {
+  padding: 6px 12px;
+  display: flex;
+  justify-content: space-between;
+
+  &__text {
+    @apply typography-s;
+
+    color: theme("colors.grey.blue");
+    margin-right: 16px;
+  }
+
+  &__button {
+    @apply typography-s;
+
+    font-weight: 500;
+    color: theme("colors.blue.bright");
+  }
+}
