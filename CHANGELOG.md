@@ -2,6 +2,7 @@
 
 ## <small>0.8.1 (8/30/2022)</small>
 
+* feat([FOROME-1589](https://quantori.atlassian.net/browse/FOROME-1589)): add diagrams for enum modals ([8738b721](https://github.com/ForomePlatform/Anfisa-React-Client/commit/8738b721))
 * fix([FOROME-1424](https://quantori.atlassian.net/browse/FOROME-1424)): drawer inner shadows ([b36d782e](https://github.com/ForomePlatform/Anfisa-React-Client/commit/b36d782e))
 * feat([FOROME-1581](https://quantori.atlassian.net/browse/FOROME-1581)): redesign compound het panel ([7572c53b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/7572c53b))
 * feat([FOROME-1580](https://quantori.atlassian.net/browse/FOROME-1580)): redesign custom inh mode panel ([18eb4317](https://github.com/ForomePlatform/Anfisa-React-Client/commit/18eb4317))
