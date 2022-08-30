@@ -4,8 +4,11 @@ import { ElementType, FC, Ref, useRef } from 'react'
 import cn, { Argument } from 'classnames'
 
 import { Color } from '@core/colors'
+import {
+  ScrollDirection,
+  useComplexScroll,
+} from '@core/hooks/use-complex-scroll'
 import { useForkRef } from '@core/hooks/use-fork-ref'
-import { ScrollDirection, useGrabScroll } from '@core/hooks/use-grab-scroll'
 import { useScrollShadows } from '@ui/shadow-scroller/shadow-scroller.hook'
 
 interface IShadowScrollerProp {
@@ -39,7 +42,7 @@ export const ShadowScroller: FC<IShadowScrollerProp> = ({
   const scrollableRef = useRef<HTMLDivElement>(null)
   const shadowsRef = useRef<HTMLDivElement>(null)
 
-  useGrabScroll(scrollableRef, onScroll, direction, grabScroll)
+  useComplexScroll(scrollableRef, onScroll, direction, grabScroll)
 
   useScrollShadows({
     scrollableRef,

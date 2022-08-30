@@ -1,7 +1,7 @@
 import { RefObject, useEffect } from 'react'
 
 import { alpha, Color, color2str, parseColor } from '@core/colors'
-import { ScrollDirection } from '@core/hooks/use-grab-scroll'
+import { ScrollDirection } from '@core/hooks/use-complex-scroll'
 import {
   createShadow,
   createTrigger,

@@ -26,9 +26,7 @@ const getMouseDownHandler =
         element.scrollLeft = origScrollLeft + origX - event.clientX
       }
 
-      if (onScroll) {
-        onScroll()
-      }
+      onScroll?.()
     }
 
     element.style.cursor = 'grabbing'
@@ -58,7 +56,7 @@ const getMouseDownHandler =
     )
   }
 
-export const useGrabScroll = (
+export const useComplexScroll = (
   ref: RefObject<HTMLElement>,
   onScroll?: () => void,
   direction: ScrollDirection = 'both',
@@ -67,12 +65,19 @@ export const useGrabScroll = (
   useEffect(() => {
     const el = ref.current
     if (el && enabled) {
-      const handler = getMouseDownHandler(direction, onScroll)
-      el.addEventListener('mousedown', handler, {
+      const mouseHandler = getMouseDownHandler(direction, onScroll)
+      const wheelHandler = () => onScroll?.()
+
+      el.addEventListener('mousedown', mouseHandler, {
         capture: true,
       })
 
-      return () => el.removeEventListener('mousedown', handler)
+      el.addEventListener('wheel', wheelHandler)
+
+      return () => {
+        el.removeEventListener('mousedown', mouseHandler)
+        el.removeEventListener('wheel', wheelHandler)
+      }
     }
   }, [ref, direction, enabled, onScroll])
 }
