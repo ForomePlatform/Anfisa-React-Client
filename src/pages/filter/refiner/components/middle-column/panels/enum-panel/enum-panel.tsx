@@ -3,7 +3,6 @@ import { observer } from 'mobx-react-lite'
 
 import filterStore from '@store/filter'
 import { DEFAULT_COUNT, EnumCondition } from '@components/conditions/enum'
-import { GlbPagesNames } from '@glb/glb-names'
 import { AttributeKinds } from '@service-providers/common'
 import { refinerAttributeStore } from '../../../attributes/refiner-attributes.store'
 import { AttributeHeader } from '../../attribute-header'
@@ -13,6 +12,7 @@ import { savePanelAttribute } from '../utils/save-pannel-attribute'
 
 export const EnumPanel = observer((): ReactElement => {
   const {
+    attributeStatus,
     attributeName,
     enumVariants,
     attributeSubKind,
@@ -20,7 +20,7 @@ export const EnumPanel = observer((): ReactElement => {
     initialEnumMode,
   } = refinerAttributeStore
 
-  const { isFilterTouched, selectedAttributeStatus } = filterStore
+  const { isFilterTouched } = filterStore
 
   const handleSaveAttribute = useCallback(
     (value, mode) => {
@@ -39,13 +39,12 @@ export const EnumPanel = observer((): ReactElement => {
 
   return (
     <>
-      <AttributeHeader attrStatus={selectedAttributeStatus!} />
+      <AttributeHeader attrStatus={attributeStatus!} />
 
       <DividerHorizontal />
 
       <EnumCondition
-        page={GlbPagesNames.Refiner}
-        selectedAttributeStatus={selectedAttributeStatus}
+        selectedAttributeStatus={attributeStatus}
         isDataReady={filterStore.downloadedAmount === 100}
         attributeName={attributeName}
         enumVariants={enumVariants}

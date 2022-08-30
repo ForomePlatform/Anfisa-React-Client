@@ -3,7 +3,6 @@ import { observer } from 'mobx-react-lite'
 
 import { Dialog } from '@ui/dialog'
 import { DEFAULT_COUNT, EnumCondition } from '@components/conditions/enum'
-import { GlbPagesNames } from '@glb/glb-names'
 import dashboardStore from '@pages/filter/common/dashboard'
 import { AttributeKinds } from '@service-providers/common'
 import { dtreeAttributeStore } from '../../../attributes/dtree-attributes.store'
@@ -20,6 +19,7 @@ export const EnumDialog = observer(
     onSaveEnum,
   }: IEnumDialogProps): ReactElement => {
     const {
+      attributeStatus,
       attributeName,
       enumVariants,
       attributeSubKind,
@@ -72,7 +72,7 @@ export const EnumDialog = observer(
     )
 
     const listHeight =
-      enumVariants.length > DEFAULT_COUNT ? 'calc(580px - 249px)' : 'auto'
+      enumVariants.length > DEFAULT_COUNT ? 'calc(580px - 319px)' : 'auto'
 
     return (
       <Dialog
@@ -81,9 +81,10 @@ export const EnumDialog = observer(
         title={attributeName}
         width="m"
         isHiddenActions={true}
+        style={{ top: '50%' }}
       >
         <EnumCondition
-          page={GlbPagesNames.Dtree}
+          selectedAttributeStatus={attributeStatus}
           attributeName={attributeName}
           enumVariants={enumVariants}
           attributeSubKind={attributeSubKind}
