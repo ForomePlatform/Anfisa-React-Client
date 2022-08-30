@@ -8,6 +8,7 @@ import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { FuncVariantsTypes } from '@core/enum/func-variants-type-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
 import { t } from '@i18n'
+import filterStore from '@store/filter'
 import { AprroxAndState } from '@components/conditions/components/approx-state'
 import { InheritanceModeSelect } from '@components/conditions/components/inheritance-mode-select'
 import { AllNotMods } from '@pages/filter/dtree/components/query-builder/ui/all-not-mods'
@@ -192,6 +193,7 @@ export const CompoundRequestCondition = observer(
           requestCondition={requestCondition}
           activeRequestIndex={activeRequestIndex}
           spacing={className}
+          isRedactorMode={filterStore.isRedactorMode}
           onChangeScenario={onChangeScenario}
           handleSetActiveRequestCondition={handleSetActiveRequestCondition}
           onChangeRequestConditionNumber={onChangeRequestConditionNumber}
