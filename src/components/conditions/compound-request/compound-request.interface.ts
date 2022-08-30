@@ -32,6 +32,7 @@ export interface IRequestConditionsProps {
   problemGroups: string[]
   requestCondition: TRequestCondition[]
   activeRequestIndex: number
+  spacing?: Argument
   onChangeRequestConditionNumber: (
     requestBlockIndex: number,
     value: number,

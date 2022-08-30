@@ -1,10 +1,13 @@
-import { ReactElement, useEffect, useState } from 'react'
+import { ReactElement, useEffect, useMemo, useState } from 'react'
+import cn from 'classnames'
+import isEmpty from 'lodash/isEmpty'
 import { observer } from 'mobx-react-lite'
 
 import { ApproxNameTypes } from '@core/enum/approxNameTypes'
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
 import { FuncVariantsTypes } from '@core/enum/func-variants-type-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
+import { t } from '@i18n'
 import { AprroxAndState } from '@components/conditions/components/approx-state'
 import { InheritanceModeSelect } from '@components/conditions/components/inheritance-mode-select'
 import { AllNotMods } from '@pages/filter/dtree/components/query-builder/ui/all-not-mods'
@@ -32,6 +35,7 @@ export const CompoundRequestCondition = observer(
     initialRequestCondition,
     attributeSubKind,
     statFuncStore,
+    className,
     onTouch,
     controls,
   }: ICompoundRequestProps): ReactElement => {
@@ -51,6 +55,10 @@ export const CompoundRequestCondition = observer(
     const [activeRequestIndex, setActiveRequestIndex] = useState<number>(
       requestCondition.length - 1,
     )
+
+    const isEmptyScenario = useMemo(() => {
+      return !preparedScenarioName && isEmpty(requestCondition[0][1])
+    }, [preparedScenarioName, requestCondition])
 
     const toggleMode = (mode: ModeTypes) => {
       setMode(currentMode => (currentMode === mode ? undefined : mode))
@@ -171,7 +179,11 @@ export const CompoundRequestCondition = observer(
 
     return (
       <>
-        <AprroxAndState approx={approx} onChangeApprox={onChangeApprox} />
+        <AprroxAndState
+          approx={approx}
+          onChangeApprox={onChangeApprox}
+          className={className}
+        />
 
         <DividerHorizontal />
 
@@ -179,12 +191,18 @@ export const CompoundRequestCondition = observer(
           problemGroups={problemGroups}
           requestCondition={requestCondition}
           activeRequestIndex={activeRequestIndex}
+          spacing={className}
           onChangeScenario={onChangeScenario}
           handleSetActiveRequestCondition={handleSetActiveRequestCondition}
           onChangeRequestConditionNumber={onChangeRequestConditionNumber}
         />
 
-        <div className="flex items-center justify-end w-full text-14">
+        <div
+          className={cn(
+            'flex items-center justify-end w-full text-14',
+            className,
+          )}
+        >
           <RequestsAmountControlButtons
             requestCondition={requestCondition}
             activeRequestIndex={activeRequestIndex}
@@ -196,26 +214,41 @@ export const CompoundRequestCondition = observer(
         <DividerHorizontal />
 
         <InheritanceModeSelect
-          handleSetPreparedScenario={handleSetPreparedScenario}
           preparedScenarioName={preparedScenarioName}
+          className={className}
+          handleSetPreparedScenario={handleSetPreparedScenario}
+          resetPreparedScenario={() => setPreparedScenarioName('')}
         />
 
         <DividerHorizontal />
 
-        <div className="flex justify-between items-center mb-2 text-14">
-          <DisabledVariants
-            isFetching={isFetching}
-            status={status}
-            variantsValue={variantsValue}
-            variantsType={FuncVariantsTypes.True}
-          />
+        <div
+          className={cn(
+            'flex justify-between items-center mb-4 text-14',
+            className,
+          )}
+        >
+          {isEmptyScenario ? (
+            <div className="flex justify-center items-center text-grey-dark">
+              {t('funcCondition.customInhModeNotice')}
+            </div>
+          ) : (
+            <>
+              <DisabledVariants
+                isFetching={isFetching}
+                status={status}
+                variantsValue={variantsValue}
+                variantsType={FuncVariantsTypes.True}
+              />
 
-          <AllNotMods
-            groupSubKind={attributeSubKind}
-            isNotModeChecked={mode === ModeTypes.Not}
-            isNotModeDisabled={!variants?.length}
-            toggleNotMode={() => toggleMode(ModeTypes.Not)}
-          />
+              <AllNotMods
+                groupSubKind={attributeSubKind}
+                isNotModeChecked={mode === ModeTypes.Not}
+                isNotModeDisabled={!variants?.length}
+                toggleNotMode={() => toggleMode(ModeTypes.Not)}
+              />
+            </>
+          )}
         </div>
 
         {controls &&
