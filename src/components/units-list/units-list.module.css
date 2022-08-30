@@ -7,10 +7,6 @@
   background: theme("colors.white");
   position: relative;
 
-  &_column-list {
-    padding-left: theme("spacing.4");
-  }
-
   &_dark {
     color: theme("colors.white");
     background: theme("colors.blue.lighter");
@@ -23,6 +19,7 @@
 
     &_column-list {
       padding-top: theme("spacing.4");
+      padding-left: theme("spacing.4");
     }
   }
 
@@ -44,12 +41,14 @@
 
     &_column-list {
       padding-right: theme("spacing.4");
+      padding-left: theme("spacing.4");
     }
   }
 
   &__sub-header {
     flex: 0 0 auto;
     padding-bottom: theme("spacing.4");
+    padding-left: theme("spacing.4");
   }
 
   &__list {
@@ -59,6 +58,10 @@
 
     &_modal {
       max-height: 70vh;
+    }
+
+    &_column-list {
+      padding-left: theme("spacing.4");
     }
 
     &_loading {
