@@ -1,8 +1,12 @@
-import { ReactElement, useEffect, useState } from 'react'
+import { ReactElement, useEffect, useMemo, useState } from 'react'
+import cn from 'classnames'
+import isEmpty from 'lodash/isEmpty'
 import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
+import { FuncVariantsTypes } from '@core/enum/func-variants-type-enum'
 import { ModeTypes } from '@core/enum/mode-types-enum'
+import { t } from '@i18n'
 import { InheritanceModeSelect } from '@components/conditions/components/inheritance-mode-select'
 import { AllNotMods } from '@pages/filter/dtree/components/query-builder/ui/all-not-mods'
 import { DividerHorizontal } from '@pages/filter/refiner/components/middle-column/components/divider-horizontal'
@@ -24,6 +28,7 @@ export const CustomInheritanceModeCondition = observer(
     initialMode,
     attributeSubKind,
     statFuncStore,
+    className,
     onTouch,
     controls,
   }: ICustomInheritanceModeConditionProps): ReactElement => {
@@ -37,6 +42,10 @@ export const CustomInheritanceModeCondition = observer(
     const [scenario, setScenario] = useState<IScenario>(initialScenario || {})
 
     const [selectValues, setSelectValues] = useState<string[]>([])
+
+    const isEmptyScenario = useMemo(() => {
+      return !preparedScenarioName && isEmpty(scenario)
+    }, [preparedScenarioName, scenario])
 
     const toggleMode = (mode: ModeTypes) => {
       setMode(currentMode => (currentMode === mode ? undefined : mode))
@@ -93,31 +102,47 @@ export const CustomInheritanceModeCondition = observer(
           problemGroups={problemGroups}
           selectValues={selectValues}
           onChangeScenario={onChangeScenario}
+          className={className}
         />
 
         <DividerHorizontal />
 
         <InheritanceModeSelect
           preparedScenarioName={preparedScenarioName}
+          className={className}
           handleSetPreparedScenario={handleSetPreparedScenario}
+          setPreparedScenarioName={setPreparedScenarioName}
         />
 
         <DividerHorizontal />
 
-        <div className="flex justify-between items-center mb-2 text-14">
-          <DisabledVariants
-            isFetching={isFetching}
-            variantsValue={variantsValue}
-            variantsType={'True'}
-            status={status}
-          />
+        <div
+          className={cn(
+            'flex justify-between items-center mb-4 text-14',
+            className,
+          )}
+        >
+          {isEmptyScenario ? (
+            <div className="flex justify-center items-center text-grey-dark">
+              {t('funcCondition.customInhModeNotice')}
+            </div>
+          ) : (
+            <>
+              <DisabledVariants
+                isFetching={isFetching}
+                variantsValue={variantsValue}
+                variantsType={FuncVariantsTypes.True}
+                status={status}
+              />
 
-          <AllNotMods
-            groupSubKind={attributeSubKind}
-            isNotModeChecked={mode === ModeTypes.Not}
-            isNotModeDisabled={!variants?.length}
-            toggleNotMode={() => toggleMode(ModeTypes.Not)}
-          />
+              <AllNotMods
+                groupSubKind={attributeSubKind}
+                isNotModeChecked={mode === ModeTypes.Not}
+                isNotModeDisabled={!variants?.length}
+                toggleNotMode={() => toggleMode(ModeTypes.Not)}
+              />
+            </>
+          )}
         </div>
 
         {controls &&

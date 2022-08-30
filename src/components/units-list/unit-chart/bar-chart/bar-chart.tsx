@@ -54,7 +54,11 @@ export const BarChart = ({
     <div>
       <SvgChart
         data-testid={dataTestId}
-        className={cn(styles.barChart, isLight && styles.barChart_light)}
+        className={cn(
+          styles.barChart,
+          isLight && styles.barChart_light,
+          !isDashboard && styles.barChart_clickable,
+        )}
         width={width}
         height={height}
         data={data}

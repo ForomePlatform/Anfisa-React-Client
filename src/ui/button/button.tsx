@@ -8,7 +8,7 @@ import { LoaderWrapper } from '@ui/loader'
 export interface IButtonProps {
   text?: ReactNode
   textSize?: 'xs' | 'sm'
-  size?: 'xs' | 'sm' | 'md'
+  size?: 'xs' | 's' | 'sm' | 'md'
   padding?: 'normal' | 'dense' | 'none'
   disabled?: boolean
   variant?:

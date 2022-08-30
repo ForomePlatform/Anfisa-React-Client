@@ -6,8 +6,8 @@ import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
 import { Divider } from '@ui/divider'
 import { Icon } from '@ui/icon'
+import { InputSearch } from '@ui/input'
 import { Switch } from '@ui/switch'
-import { InputSearch } from '@components/input-search/input-search'
 import { DecisionTreesResultsDataCy } from '@data-testid'
 
 interface IQueryBuilderSearchProps {
@@ -38,14 +38,16 @@ export const QueryBuilderSearch = observer(
 
     return (
       <div className={cn('flex w-full items-center', className)}>
-        <InputSearch
-          className="flex-1"
-          placeholder={t('filter.searchForAField')}
-          value={value}
-          onChange={e => {
-            onChange(e.target.value)
-          }}
-        />
+        <div className="flex-1">
+          <InputSearch
+            placeholder={t('filter.searchForAField')}
+            value={value}
+            size="m"
+            onChange={e => {
+              onChange(e.target.value)
+            }}
+          />
+        </div>
 
         {!isSubgroupItemSearch && (
           <div className="flex items-center justify-between pl-2 text-grey-blue">

@@ -11,9 +11,9 @@ interface IFnLabelProps {
 export const FnLabel: FC<IFnLabelProps> = ({ isActive, className }) => {
   return (
     <div
-      style={{ width: 18, height: 18 }}
+      style={{ width: 20, height: 20 }}
       className={cn(
-        'flex items-center justify-center text-12 rounded-sm font-mono',
+        'flex items-center justify-center text-10 rounded-sm font-mono',
         isActive
           ? 'text-blue-bright bg-blue-medium'
           : 'text-green-secondary bg-green-light',

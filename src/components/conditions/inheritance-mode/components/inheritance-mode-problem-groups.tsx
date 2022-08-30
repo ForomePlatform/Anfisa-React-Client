@@ -1,18 +1,24 @@
 import { ChangeEvent, ReactElement } from 'react'
+import cn from 'classnames'
 
 import { t } from '@i18n'
 import { Button } from '@ui/button'
 import { Checkbox } from '@ui/checkbox/checkbox'
 import { IInheritanceModeProblemGroupsProps } from '../inheritance-mode.interface'
-
 export const InheritanceModeProblemGroups = ({
   problemGroups,
-  handleSetProblemGroups,
   selectedPropblemGroups,
+  className,
+  handleSetProblemGroups,
   handleReset,
 }: IInheritanceModeProblemGroupsProps): ReactElement => (
-  <div className="flex items-center justify-between w-full text-14">
-    <div>{t('funcCondition.problemGroup')}</div>
+  <div
+    className={cn(
+      'flex items-center justify-between w-full mt-2 mb-5 text-14',
+      className,
+    )}
+  >
+    <div>{t('funcCondition.affected')}</div>
 
     {problemGroups?.map((problemGroup: string) => (
       <Checkbox
@@ -32,7 +38,8 @@ export const InheritanceModeProblemGroups = ({
       onClick={handleReset}
       text="Reset"
       variant="secondary"
-      className="h-4/5"
+      size="s"
+      disabled={!selectedPropblemGroups.length}
     />
   </div>
 )

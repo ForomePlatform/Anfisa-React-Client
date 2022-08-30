@@ -3,7 +3,6 @@ import cn, { Argument } from 'classnames'
 
 import { approxOptions } from '@core/approxOptions'
 import { ApproxNameTypes } from '@core/enum/approxNameTypes'
-import { t } from '@i18n'
 import datasetStore from '@store/dataset/dataset'
 import { Select } from '@ui/select'
 
@@ -15,8 +14,8 @@ interface IAprroxAndStateProps {
 
 export const AprroxAndState = ({
   approx,
-  onChangeApprox,
   className,
+  onChangeApprox,
 }: IAprroxAndStateProps): ReactElement => (
   <div className={cn('flex justify-between text-14', className)}>
     <div className="flex items-center flex-1">
@@ -29,17 +28,7 @@ export const AprroxAndState = ({
         onChange={(e: ChangeEvent<HTMLSelectElement>) =>
           onChangeApprox(e.target.value as ApproxNameTypes)
         }
-        className="ml-1.5 py-1 pl-3 pr-3.5 flex-1 bg-white"
-      />
-    </div>
-
-    <div className="flex items-center ml-6">
-      <span>{t('dtree.state')}</span>
-
-      <Select
-        options={['current']}
-        className="w-full ml-1.5 py-1 pl-3 pr-3.5 opacity-50"
-        disabled={true}
+        className="ml-1.5 py-1.5 pl-2 flex-1 bg-white border-grey-blue"
       />
     </div>
   </div>

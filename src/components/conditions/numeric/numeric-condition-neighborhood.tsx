@@ -131,11 +131,8 @@ export const NumericConditionNeighborhood = ({
         </div>
       </div>
 
-      {controls && (
-        <div className={className}>
-          {controls({ value: conditionValue, hasErrors: false, clearValue })}
-        </div>
-      )}
+      {controls &&
+        controls({ value: conditionValue, hasErrors: false, clearValue })}
     </>
   )
 }

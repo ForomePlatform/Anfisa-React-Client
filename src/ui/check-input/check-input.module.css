@@ -9,6 +9,7 @@
   &:disabled:checked + .checkmark {
     background-color: theme("colors.grey.disabled");
     border: 1px solid theme("colors.grey.disabled");
+    cursor: not-allowed;
   }
 
   &:checked + .checkmark::after {
@@ -35,6 +36,10 @@
     border: 1px solid theme("colors.blue.bright");
   }
 
+  &_disabled {
+    cursor: not-allowed;
+  }
+
   &::after {
     content: "";
     position: absolute;
@@ -52,4 +57,17 @@
   margin-left: 8px;
   cursor: pointer;
   max-width: calc(100% - 24px);
+
+  &_disabled {
+    color: theme("colors.grey.blue")
+  }
+}
+
+.input {
+  margin-right: theme("margin.1");
+  cursor: pointer;
+
+  &_m {
+    margin-right: 10px;
+  }
 }

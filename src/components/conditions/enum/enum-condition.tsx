@@ -9,7 +9,6 @@ import { FlatList } from '@ui/flat-list'
 import { Loader } from '@ui/loader'
 import { Switch } from '@ui/switch'
 import { UnitChart } from '@components/units-list/unit-chart'
-import { GlbPagesNames } from '@glb/glb-names'
 import { QueryBuilderSearch } from '@pages/filter/dtree/components/query-builder/query-builder-search'
 import { AllNotMods } from '@pages/filter/dtree/components/query-builder/ui/all-not-mods'
 import { DividerHorizontal } from '@pages/filter/refiner/components/middle-column/components/divider-horizontal'
@@ -32,7 +31,6 @@ export const EnumCondition = observer(
     listHeight,
     selectedDashboardVariants,
     selectedAttributeStatus,
-    page,
     className,
     toggleShowZeroes,
     onTouch,
@@ -136,79 +134,48 @@ export const EnumCondition = observer(
             {selectedVariants.length || 0} {t('dtree.selected')}
           </div>
 
-          {/* TODO: this logic will be removed after dtree enum modal is redesigned too*/}
-
-          {page === GlbPagesNames.Dtree && (
-            <div className="flex items-center">
-              <Switch
-                className="mr-1"
-                isChecked={isShowZeroes}
-                onChange={toggleShowZeroes}
-              />
-
-              <span className="text-grey-blue">
-                {t('enumCondition.showZeroVariants')}
-              </span>
-
-              <Divider
-                spacing="dense"
-                orientation="vertical"
-                color="blue-light"
-              />
-
-              <EnumMods
-                selectAllVariants={selectAllVariants}
-                clearAllVariants={clearAllVariants}
-              />
-            </div>
-          )}
-
-          {page !== GlbPagesNames.Dtree && (
-            <EnumMods
-              selectAllVariants={selectAllVariants}
-              clearAllVariants={clearAllVariants}
-            />
-          )}
+          <EnumMods
+            selectAllVariants={selectAllVariants}
+            clearAllVariants={clearAllVariants}
+            isClearAllDisabled={!selectedVariants.length}
+            isSelectAllDisabled={
+              filteredVariants.length === selectedVariants.length
+            }
+          />
         </div>
 
-        {page !== GlbPagesNames.Dtree && (
-          <div
-            className={cn(
-              'w-full flex justify-end items-center mb-5 text-14',
-              className,
-            )}
-          >
-            <div className="flex items-center">
-              <Switch
-                className="mr-2"
-                isChecked={isShowZeroes}
-                onChange={toggleShowZeroes}
-              />
-
-              <span className="text-grey-dark">
-                {t('enumCondition.showZeroVariants')}
-              </span>
-            </div>
-
-            <Divider
-              spacing="dense"
-              orientation="vertical"
-              color="blue-light"
+        <div
+          className={cn(
+            'w-full flex justify-end items-center mb-5 text-14',
+            className,
+          )}
+        >
+          <div className="flex items-center">
+            <Switch
+              className="mr-2"
+              isChecked={isShowZeroes}
+              onChange={toggleShowZeroes}
             />
 
-            <div className="flex items-center">
-              <Switch
-                className="mr-2"
-                isChecked={isChartsVisible}
-                onChange={() => setIsChartsVisible(prev => !prev)}
-              />
-
-              <span className="text-grey-dark">
-                {t('enumCondition.showCharts')}
-              </span>
-            </div>
+            <span className="text-grey-dark">
+              {t('enumCondition.showZeroVariants')}
+            </span>
           </div>
-        )}
+
+          <Divider spacing="dense" orientation="vertical" color="blue-light" />
+
+          <div className="flex items-center">
+            <Switch
+              className="mr-2"
+              isChecked={isChartsVisible}
+              onChange={() => setIsChartsVisible(prev => !prev)}
+            />
+
+            <span className="text-grey-dark">
+              {t('enumCondition.showCharts')}
+            </span>
+          </div>
+        </div>
 
         <div className={cn('flex justify-end mb-2', className)}>
           <AllNotMods
@@ -269,15 +236,12 @@ export const EnumCondition = observer(
           <Loader size="m" />
         )}
 
-        {controls && (
-          <div className={className as string}>
-            {controls({
-              value: selectedVariants,
-              mode,
-              clearValue: handleClear,
-            })}
-          </div>
-        )}
+        {controls &&
+          controls({
+            value: selectedVariants,
+            mode,
+            clearValue: handleClear,
+          })}
       </>
     )
   },

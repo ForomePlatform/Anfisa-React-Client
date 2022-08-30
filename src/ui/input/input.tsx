@@ -4,6 +4,7 @@ import {
   ChangeEvent,
   CSSProperties,
   FC,
+  FocusEvent,
   ReactNode,
   useLayoutEffect,
   useRef,
@@ -12,12 +13,15 @@ import cn, { Argument } from 'classnames'
 
 import { Icon } from '@ui/icon'
 
-interface IInputProps {
+export interface IInputProps {
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void
+  onFocus?: (e: FocusEvent<HTMLInputElement>) => void
   disabled?: boolean
+  foundItems?: number
   type?: 'text' | 'email' | 'password'
   placeholder?: string
   value?: string
+  label?: string
   error?: string
   variant?: 'primary' | 'primary-dark'
   size?: 's' | 'm'
@@ -31,9 +35,12 @@ interface IInputProps {
 
 export const Input: FC<IInputProps> = ({
   onChange,
+  onFocus,
   disabled,
+  foundItems,
   type = 'text',
   value,
+  label,
   prepend,
   append,
   variant = 'primary',
@@ -53,6 +60,7 @@ export const Input: FC<IInputProps> = ({
     styles.input,
     styles[`input_shape_${shape}`],
     styles[`input_variant_${variant}`],
+    styles[`input_size_${size}`],
     error && styles.input_error,
     className,
   )
@@ -91,10 +99,27 @@ export const Input: FC<IInputProps> = ({
         (prependContainer.current?.clientWidth || 0) + 22
       }px`
     }
-  }, [prepend, showAppend, prependContainer, appendContainer])
+  }, [
+    prepend,
+    showAppend,
+    prependContainer,
+    appendContainer,
+    foundItems,
+    value,
+  ])
 
   return (
     <div className={styles.input__container}>
+      {!!label && (
+        <span
+          className={cn(
+            styles.input__labelTitle,
+            styles[`input__labelTitle_${size}`],
+          )}
+        >
+          {label}
+        </span>
+      )}
       <div className={inputContainerClassName}>
         {prepend && (
           <div
@@ -113,6 +138,7 @@ export const Input: FC<IInputProps> = ({
           type={type}
           placeholder={placeholder}
           onChange={onChange}
+          onFocus={onFocus}
           disabled={disabled}
           value={value}
           className={inputClassName}
@@ -128,15 +154,21 @@ export const Input: FC<IInputProps> = ({
               styles.input__icon_container_right,
             )}
           >
+            {!!foundItems && !!value && (
+              <span className={styles.input__icon_container__text}>
+                {foundItems} found
+              </span>
+            )}
             {value && (
               <Icon
                 name="Close"
                 size={16}
                 className={cn(
-                  styles.input__iconClose,
-                  append && styles.input__iconClose_withIcon,
+                  styles.iconClose,
+                  disabled && styles.iconClose_disabled,
+                  append && styles.iconClose_withIcon,
                 )}
-                onClick={onClear}
+                onClick={disabled ? undefined : onClear}
               />
             )}
             {append && append}

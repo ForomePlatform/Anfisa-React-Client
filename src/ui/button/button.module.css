@@ -25,6 +25,7 @@
     color: theme("colors.grey.blue");
     background-color: theme("colors.red.disabled");
     border-color: theme("colors.red.disabled");
+    cursor: not-allowed;
   }
 
   &_xs {
@@ -37,6 +38,18 @@
   }
 
   &_xs&_none {
+    padding: 2px;
+  }
+
+  &_s {
+    padding: 2px 16px;
+  }
+
+  &_s&_dense {
+    padding: 2px 16px;
+  }
+
+  &_s&_none {
     padding: 2px;
   }
 
