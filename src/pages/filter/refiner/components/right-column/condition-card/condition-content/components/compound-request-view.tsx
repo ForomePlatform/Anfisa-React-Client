@@ -42,9 +42,9 @@ export const CompoundRequestView = ({
         {request.map(([reqNumber, reqCondition], idx) => (
           <div key={idx} className="pb-2 mr-3">
             <div>
-              <span className="text-grey-dark">Scenario</span>
-
-              <span className="ml-1">{`[${reqNumber}]`}</span>
+              <span className="text-grey-dark">At least</span>
+              <span className="mx-1">{`[${reqNumber}]`}</span>
+              <span className="text-grey-dark">counts</span>
             </div>
 
             {problemGroups.map((group, idx) => (
