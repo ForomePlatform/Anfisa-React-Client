@@ -3,11 +3,19 @@ import cn from 'classnames'
 
 import { t } from '@i18n'
 import { InputNumeric } from '@ui/input-numeric/input-numeric'
-import { Select } from '@ui/select'
+import { Dropdown } from '@components/dropdown'
+import { IDropdownValue } from '@components/dropdown/dropdown.interfaces'
 import { ICompoundRequestScenarioProps } from '../compound-request.interface'
 import { getSelectedValue } from '../compound-request.utils'
 
-const selectOptions = ['--', '0', '0-1', '1', '1-2', '2']
+const selectOptions: IDropdownValue<string>[] = [
+  '--',
+  '0',
+  '0-1',
+  '1',
+  '1-2',
+  '2',
+].map(value => ({ value, label: value }))
 
 export const CompoundRequestScenario = ({
   className,
@@ -62,13 +70,12 @@ export const CompoundRequestScenario = ({
               <div className="flex flex-col items-start" key={group}>
                 <span>{group}</span>
 
-                <Select
-                  onChange={e =>
-                    onChangeScenario(requestIndex, e.target.value, groupIndex)
+                <Dropdown
+                  onChange={option =>
+                    onChangeScenario(requestIndex, option.value, groupIndex)
                   }
-                  className="w-auto pl-2 pr-3 py-1 bg-white"
+                  values={[{ value, label: value }]}
                   options={selectOptions}
-                  value={value}
                 />
               </div>
             )
