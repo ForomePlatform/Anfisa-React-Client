@@ -21,6 +21,8 @@
     font-weight: 500;
     margin: 0 0 0 8px;
     cursor: pointer;
+    color: theme("colors.grey.blue");
+    user-select: none;
 
     &:hover {
       color: theme("colors.blue.lighter");
