@@ -5,6 +5,8 @@
   cursor: pointer;
   display: flex;
   align-items: center;
+  overflow-x: hidden;
+  flex-wrap: wrap;
 
   &__checkbox {
     margin-right: 8px;
