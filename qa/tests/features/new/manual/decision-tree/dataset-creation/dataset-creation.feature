@@ -79,11 +79,7 @@ Scenario: 07 Create dataset: too many variants
 	And clicks "Callers" attribute
 	And checks the "GATK_DE_NOVO" check-box
 	And clicks "+ Add Attribute" button
-	And clicks "Create Derive DS" button
-	And inputs a valid dataset name
-	And clicks "Add dataset" button
-	Then "Add dataset" button should be disabled
-	And the validation message should be displayed
+	Then "Create Derive DS" button should be disabled
 
 @tc:114035
 Scenario: 08 Cancel dataset creation

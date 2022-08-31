@@ -80,8 +80,8 @@ Scenario Outline: 06 Add few fields ("<NameField1>" and "<NameField2>") with "Jo
 
 Examples:
 	| NameField1    | NameFilter1      | NameField2       | NameFilter2  | AcceptedVariants |
-	| Callers       | BGM_AUTO_DOM     | Proband_Zygosity | Heterozygous | 153              |
-	| Has_Variant   | father [NA24149] | Variant_Class    | SNV          | 21,038           |
+	| Callers       | BGM_AUTO_DOM     | Proband_Zygosity | Heterozygous | 139              |
+	| Has_Variant   | father [HG003]   | Variant_Class    | SNV          | 18,552           |
 	| Variant_Class | deletion         | Callers          | BGM_AUTO_DOM | 9                |
 
 @regression
@@ -101,9 +101,9 @@ Scenario Outline: 07 Add few fields ("<NameField1>" and "<NameField2>") with "Jo
 
 Examples:
 	| NameField1    | NameFilter1      | NameField2       | NameFilter2  | AcceptedVariants |
-	| Callers       | BGM_AUTO_DOM     | Proband_Zygosity | Heterozygous | 14,343           |
-	| Has_Variant   | father [NA24149] | Variant_Class    | SNV          | 31,436           |
-	| Variant_Class | deletion         | Callers          | BGM_AUTO_DOM | 2,559            |
+	| Callers       | BGM_AUTO_DOM     | Proband_Zygosity | Heterozygous | 12,515           |
+	| Has_Variant   | father [HG003]   | Variant_Class    | SNV          | 27,695           |
+	| Variant_Class | deletion         | Callers          | BGM_AUTO_DOM | 2,259            |
 
 @regression
 @smoke
@@ -121,9 +121,9 @@ Scenario Outline: 08 Replace one "<NameField1>" filter with another "<NameField2
 
 Examples:
 	| NameField1    | NameFilter1      | NameField2       | NameFilter2  | AcceptedVariants |
-	| Callers       | BGM_AUTO_DOM     | Proband_Zygosity | Heterozygous | 14,334           |
-	| Has_Variant   | father [NA24149] | Variant_Class    | SNV          | 28,195           |
-	| Variant_Class | deletion         | Callers          | BGM_AUTO_DOM | 162              |
+	| Callers       | BGM_AUTO_DOM     | Proband_Zygosity | Heterozygous | 12,506           |
+	| Has_Variant   | father [HG003]   | Variant_Class    | SNV          | 24,884           |
+	| Variant_Class | deletion         | Callers          | BGM_AUTO_DOM | 148              |
 
 @regression
 @smoke
@@ -140,61 +140,36 @@ Scenario Outline: 09 Add a second step with "<NameField2>" attribute
 
 Examples:
 	| NameField1    | NameFilter1      | NameField2    | NameFilter2      | AcceptedVariants |
-	| Callers       | BGM_AUTO_DOM     | Has_Variant   | mother [NA24143] | 23,817           |
-	| Has_Variant   | father [NA24149] | Variant_Class | SNV              | 31,436           |
-	| Variant_Class | deletion         | Callers       | BGM_AUTO_DOM     | 2,559            |
-
-@regression
-@tc:114086
-Scenario Outline: 10 Expand "<NameField>" attribute graph
-	When user clicks the "v" button near "<NameField>" in charts section
-	Then the graph for "<NameField>" attribute should be expanded
-
-Examples:
-	| NameField     |
-	| Callers       |
-	| Has_Variant   |
-	| Variant_Class |
-
-@regression
-@tc:114087
-Scenario Outline: 11 Collapse "<NameField>" attribute graph
-	Given "<NameField>" attribute graph was expanded
-	When user clicks "^" button near "<NameField>"
-	Then "<NameField>" graph should be collapsed
-
-Examples:
-	| NameField     |
-	| Callers       |
-	| Has_Variant   |
-	| Variant_class |
+	| Callers       | BGM_AUTO_DOM     | Has_Variant   | mother [HG004]   | 20,705           |
+	| Has_Variant   | father [HG003]   | Variant_Class | SNV              | 27,695           |
+	| Variant_Class | deletion         | Callers       | BGM_AUTO_DOM     | 2,259            |
 
 @tc:114088
-Scenario: 12 Collapse all groups in charts
+Scenario: 10 Collapse all groups in charts
 	When user clicks collapse all groups button near search field in charts section
 	Then all groups should be collapsed
 
 @tc:114089
-Scenario: 13 Expand all groups in charts
+Scenario: 11 Expand all groups in charts
 	Given all groups were collapsed in charts
 	When user clicks expand all groups button near search field in charts section
 	Then all groups should be expanded
 
 @tc:114090
-Scenario: 14 Collapse one group in charts
+Scenario: 12 Collapse one group in charts
 	Given all groups were expanded in charts
 	When user clicks any group name
 	Then the group should be collapsed
 
 @tc:114091
-Scenario: 15 Expand one group in charts
+Scenario: 13 Expand one group in charts
 	Given one group was collapsed
 	When user clicks the collapsed attributes' group name
 	Then the group should be expanded
 
 @regression
 @tc:114092
-Scenario Outline: 16 Open "<FunctionalUnitName>" attribute from charts
+Scenario Outline: 14 Open "<FunctionalUnitName>" attribute from charts
 	When user clicks the "+" button near "Functional Units"
 	And "Functional Units" list is expanded
 	And user clicks "<FunctionalUnitName>"

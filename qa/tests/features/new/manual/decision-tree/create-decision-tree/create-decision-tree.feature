@@ -132,3 +132,38 @@ Scenario: 12 Cancel custom Decision Tree deletion
 	And "Delete Decision Tree" dialog is shown
 	And user clicks "No, Keep Decision Tree" or "x" button
 	Then custom Decision Tree should not be deleted
+
+@regression
+Scenario Outline: 13 Create Custom decision tree with Solution pack "<Value1>"
+	Given Attribute was added to the first step of Decision Tree
+	When user clicks "Create Decision Tree" button
+	And user writes valid name in the name field
+	And clicks "Choose the type" drop-down menu
+	And Chooses "<Value1>" 
+	And Clicks "Create" button
+	Then Custom decision tree should be created
+	And Message about creation should be shown
+
+Examples: 
+	| Value                    |
+	| ACMG analysis            |
+	| Phenotype based analysis |
+	| Genetic first analysis   |
+
+@regression
+Scenario Outline: 14 Open Created custom Decision tree from "<Analysis1>"
+	When User clicks "Forome" logo after creation of custom decision tree with one of the Solution pack value
+	And Clicks "xl_PGP3140_wgs_NIST-4_2" dataset
+	And Clicks "Continue" when "Whole genome/exome" radio button is checked
+	And Clicks "<Analysis1>" radio button
+	And Clicks "Continue" on "What's next?" panel
+	And Created custom presets according to current Solution pack are shown
+	And Clicks one of the preset
+	And Clicks "Open" button
+	Then Decision tree of chosen preset should be opened
+
+Examples: 
+	| Analysis1                |
+	| ACMG analysis            |
+	| Phenotype based analysis |
+	| Genetic first analysis   |
