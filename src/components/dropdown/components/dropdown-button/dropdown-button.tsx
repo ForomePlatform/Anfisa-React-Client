@@ -16,6 +16,7 @@ interface IDropdownButtonProps<T> extends Required<IDropdownCommonProps<T>> {
   hasError: boolean
   onToggle: (target: HTMLElement) => void
   placeholder: string
+  disabled: boolean
   prepend?: JSX.Element | null
   append?: JSX.Element | null
   isLoading: boolean
@@ -30,6 +31,7 @@ export const DropdownButton = <T,>({
   placeholder,
   onToggle,
   variant,
+  disabled,
   values,
   prepend,
   append,
@@ -40,7 +42,7 @@ export const DropdownButton = <T,>({
   const color = variant === 'primary' ? 'default' : 'white'
 
   const onOpen = (e: MouseEvent<HTMLDivElement>) => {
-    if (!isLoading) {
+    if (!isLoading && !disabled) {
       onToggle(e.currentTarget)
     }
   }
@@ -52,6 +54,7 @@ export const DropdownButton = <T,>({
         styles.dropdownButton,
         styles[`dropdownButton_${camelCase(variant)}`],
         isOpen && styles[`dropdownButton_${camelCase(variant)}_active`],
+        disabled && styles.dropdownButton_disabled,
         hasError && styles.dropdownButton_error,
         className,
       )}

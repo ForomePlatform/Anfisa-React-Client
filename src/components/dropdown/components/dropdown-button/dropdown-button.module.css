@@ -9,12 +9,16 @@
   outline-offset: -2px;
   border-radius: 4px;
 
+  &_disabled {
+    opacity: 50;
+  }
+
   &_error {
     outline: 2px solid theme("colors.red.secondary");
   }
 
   &_primary {
-    color: theme("colors.grey.blue");
+    color: theme("colors.blue.dark");
     background-color: theme("colors.white");
     border: 1px solid theme("colors.grey.blue");
 

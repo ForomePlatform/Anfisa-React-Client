@@ -171,7 +171,10 @@ export const CompoundRequestCondition = observer(
 
     return (
       <>
-        <AprroxAndState approx={approx} onChangeApprox={onChangeApprox} />
+        <AprroxAndState
+          approx={[{ value: approx, label: approx }]}
+          onChangeApprox={option => onChangeApprox(option.value)}
+        />
 
         <DividerHorizontal />
 

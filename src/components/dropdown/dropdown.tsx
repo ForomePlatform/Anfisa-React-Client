@@ -13,6 +13,7 @@ import { popoverOffset } from '@pages/ws/ws.constants'
 interface IDropdownProps<T> extends IDropdownCommonProps<T> {
   options?: IDropdownValue<T>[]
   extraOptions?: IDropdownValue<T>[]
+  disabled?: boolean
   isLoading?: boolean
   isMulti?: boolean
   hasError?: boolean
@@ -42,6 +43,7 @@ export const Dropdown = <T,>({
   prepend,
   append,
   isLoading = false,
+  disabled = false,
   isMulti = false,
   className,
 }: IDropdownProps<T>): ReactElement => {
@@ -62,6 +64,7 @@ export const Dropdown = <T,>({
         isLoading={isLoading}
         hasError={hasError}
         className={className}
+        disabled={disabled}
       />
       <DropdownMenu
         anchorEl={popoverAnchor}
