@@ -1,3 +1,5 @@
+import { IDropdownValue } from '@components/dropdown/dropdown.interfaces'
+
 export const ExploreGenomeKeys = {
   PhenotypeBased: 'PhenotypeBased',
   GeneticFirst: 'GeneticFirst',
@@ -24,15 +26,13 @@ export type TGenomeOptionsKeys = Exclude<
   'BuildInclusionExclusion' | 'ExploreData'
 >
 
-export type TGenomeOptionsValues =
-  typeof ExploreGenomeTypesDictionary[TGenomeOptionsKeys]
-
-export const genomeTypesOptions = Object.entries(ExploreGenomeTypesDictionary)
-  .filter(([key]) =>
-    [
-      ExploreGenomeKeys.ACMGSecondary,
-      ExploreGenomeKeys.PhenotypeBased,
-      ExploreGenomeKeys.GeneticFirst,
-    ].includes(key as any),
-  )
-  .map(([, value]) => value) as TGenomeOptionsValues[]
+export const genomeTypesOptions: IDropdownValue<TGenomeOptionsKeys>[] =
+  Object.entries(ExploreGenomeTypesDictionary)
+    .filter(([key]) =>
+      [
+        ExploreGenomeKeys.ACMGSecondary,
+        ExploreGenomeKeys.PhenotypeBased,
+        ExploreGenomeKeys.GeneticFirst,
+      ].includes(key as any),
+    )
+    .map(([key, value]) => ({ label: value, value: key as TGenomeOptionsKeys }))

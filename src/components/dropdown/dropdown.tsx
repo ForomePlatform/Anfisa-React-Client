@@ -13,6 +13,7 @@ import { popoverOffset } from '@pages/ws/ws.constants'
 interface IDropdownProps<T> extends IDropdownCommonProps<T> {
   options?: IDropdownValue<T>[]
   extraOptions?: IDropdownValue<T>[]
+  reset?: () => void
   disabled?: boolean
   isLoading?: boolean
   isMulti?: boolean
@@ -45,6 +46,7 @@ export const Dropdown = <T,>({
   isLoading = false,
   disabled = false,
   isMulti = false,
+  reset,
   className,
 }: IDropdownProps<T>): ReactElement => {
   const { isPopoverOpen, onToggle, closePopover, popoverAnchor } = usePopover()
@@ -68,6 +70,7 @@ export const Dropdown = <T,>({
         hasError={hasError}
         className={className}
         disabled={disabled}
+        reset={reset}
       />
       <DropdownMenu
         refOfButton={ref}

@@ -53,6 +53,13 @@
 
   &__append {
     margin-left: 10px;
+    display: flex;
+    align-items: center;
+
+    &__close_icon {
+      margin-right: 10px;
+      cursor: pointer;
+    }
 
     &__arrow {
       transition-property: transform;

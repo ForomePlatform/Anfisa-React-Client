@@ -8,7 +8,8 @@ import {
 import { t } from '@i18n'
 import { Dialog } from '@ui/dialog'
 import { Input } from '@ui/input'
-import { Select } from '@ui/select'
+import { Dropdown } from '@components/dropdown'
+import { IDropdownValue } from '@components/dropdown/dropdown.interfaces'
 import { ISolutionEntryDescription } from '@service-providers/common'
 import { validatePresetName } from '@utils/validation/validatePresetName'
 
@@ -30,7 +31,6 @@ export const SolutionCreateDialog = ({
   const [solutionName, setSolutionName] = useState('')
   const [rubric, setRubric] =
     useState<TGenomeOptionsKeys | undefined>(undefined)
-  const [selectValue, setSelectValue] = useState<string | undefined>(undefined)
   const [isValidationError, setIsValidationError] = useState(false)
   const [isSameNameError, setIsSameNameError] = useState(false)
 
@@ -54,21 +54,9 @@ export const SolutionCreateDialog = ({
     )
   }, [solutionName, solutions])
 
-  const onChangeRubric = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { value } = e.target
-    setSelectValue(value)
-
-    if (value === 'empty') {
-      setRubric(undefined)
-      return
-    }
-
-    const rubricKey = Object.entries(ExploreGenomeTypesDictionary).find(
-      ([, val]) => val === value,
-    )?.[0]
-
-    setRubric(rubricKey as TGenomeOptionsKeys)
-  }
+  const value: IDropdownValue<TGenomeOptionsKeys>[] = !rubric
+    ? []
+    : [{ value: rubric, label: ExploreGenomeTypesDictionary[rubric] }]
 
   return (
     <Dialog
@@ -90,13 +78,13 @@ export const SolutionCreateDialog = ({
 
       <div className="flex flex-col mt-[16px] text-12">
         <label>{t('solutionControl.createDialog.assignSolutionPack')}</label>
-        <Select
+
+        <Dropdown
+          onChange={option => setRubric(option.value)}
+          values={value}
           options={genomeTypesOptions}
-          className="py-[5px] px-[4px]"
-          value={selectValue}
-          onChange={onChangeRubric}
-          reset
-          resetText="Choose the type"
+          reset={() => setRubric(undefined)}
+          placeholder="Choose the type"
         />
       </div>
 

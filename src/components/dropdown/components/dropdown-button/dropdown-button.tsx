@@ -18,6 +18,7 @@ interface IDropdownButtonProps<T> extends Required<IDropdownCommonProps<T>> {
   placeholder: string
   disabled: boolean
   refOfButton: RefObject<HTMLDivElement>
+  reset?: () => void
   prepend?: JSX.Element | null
   append?: JSX.Element | null
   isLoading: boolean
@@ -34,6 +35,7 @@ export const DropdownButton = <T,>({
   refOfButton,
   variant,
   disabled,
+  reset,
   values,
   prepend,
   append,
@@ -48,6 +50,16 @@ export const DropdownButton = <T,>({
       onToggle(e.currentTarget)
     }
   }
+
+  const onReset = (e: MouseEvent<HTMLOrSVGElement>) => {
+    e.stopPropagation()
+    if (reset) {
+      reset()
+    }
+  }
+
+  const showResetButton: boolean = !!reset && !!values.length
+  const showAppend: boolean = append !== null || showResetButton
 
   return (
     <div
@@ -74,8 +86,15 @@ export const DropdownButton = <T,>({
             : values.map(value => value.value).join(', ')}
         </LoaderWrapper>
       </div>
-      {append !== null && (
+      {showAppend && (
         <div className={styles.dropdownButton__append}>
+          {showResetButton && (
+            <Icon
+              name="CloseMD"
+              onClick={onReset}
+              className={styles.dropdownButton__append__close_icon}
+            />
+          )}
           {append || (
             <Icon
               name="ArrowDownS"
