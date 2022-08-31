@@ -20,7 +20,7 @@
   &__action {
     font-weight: 500;
     margin: 0 0 0 8px;
-    cursor: pointer;
+    cursor: not-allowed;
     color: theme("colors.grey.blue");
     user-select: none;
 
@@ -30,6 +30,7 @@
 
     &_active {
       color: theme("colors.blue.bright");
+      cursor: pointer;
     }
   }
 }
