@@ -21,3 +21,4 @@ RUN chmod +x /docker-entrypoint.d/*.sh && \
     chown -R nginx:nginx /etc/nginx/conf.d
 RUN touch /var/run/nginx.pid && chown -R nginx:nginx /var/run/nginx.pid
 USER nginx
+expose 8080
