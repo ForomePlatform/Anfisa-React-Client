@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
+import { Argument } from 'classnames'
 
 import { usePopover } from '@core/hooks/use-popover'
-import { Icon } from '@ui/icon'
 import { DropdownButton } from '@components/dropdown/components/dropdown-button/dropdown-button'
 import { DropdownMenu } from '@components/dropdown/components/dropdown-menu/dropdown-menu'
 import {
@@ -14,6 +14,7 @@ interface IDropdownProps<T> extends IDropdownCommonProps<T> {
   options?: IDropdownValue<T>[]
   extraOptions?: IDropdownValue<T>[]
   isLoading?: boolean
+  isMulti?: boolean
   hasError?: boolean
   placeholder?: string
   offset?: [number | undefined | null, number | undefined | null]
@@ -22,6 +23,7 @@ interface IDropdownProps<T> extends IDropdownCommonProps<T> {
   renderChosen?: (item: IDropdownValue<T>) => ReactElement
   prepend?: JSX.Element | null
   append?: JSX.Element | null
+  className?: Argument
 }
 
 export const Dropdown = <T,>({
@@ -37,9 +39,11 @@ export const Dropdown = <T,>({
   offset = popoverOffset,
   renderItem,
   renderChosen,
-  prepend = <Icon name="Folder" />,
-  append = <Icon name="Loupe" />,
+  prepend,
+  append,
   isLoading = false,
+  isMulti = false,
+  className,
 }: IDropdownProps<T>): ReactElement => {
   const { isPopoverOpen, onToggle, closePopover, popoverAnchor } = usePopover()
   return (
@@ -57,6 +61,7 @@ export const Dropdown = <T,>({
         append={append}
         isLoading={isLoading}
         hasError={hasError}
+        className={className}
       />
       <DropdownMenu
         anchorEl={popoverAnchor}
@@ -71,6 +76,7 @@ export const Dropdown = <T,>({
         renderItem={renderItem}
         showCheckboxes={showCheckboxes}
         clearAll={clearAll}
+        isMulti={isMulti}
       />
     </>
   )

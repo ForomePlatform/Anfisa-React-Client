@@ -19,6 +19,7 @@ interface IDropdownMenu<T>
     Required<IDropdownCommonProps<T>> {
   options: IDropdownValue<T>[]
   extraOptions: IDropdownValue<T>[]
+  isMulti: boolean
   offset?: [number | undefined | null, number | undefined | null]
   renderItem?: (item: IDropdownValue<T>) => ReactElement
   clearAll?: () => void
@@ -36,6 +37,7 @@ export const DropdownMenu = <T,>({
   extraOptions,
   showCheckboxes,
   offset,
+  isMulti,
   renderItem,
 }: IDropdownMenu<T>): ReactElement => {
   const selectedOptionsValues = useMemo(
@@ -74,6 +76,8 @@ export const DropdownMenu = <T,>({
                 key={option.label}
                 variant={variant}
                 renderItem={renderItem}
+                isMulti={isMulti}
+                onClose={onClose}
               />
             ))}
 
@@ -90,6 +94,8 @@ export const DropdownMenu = <T,>({
             values={values}
             showCheckboxes={showCheckboxes}
             renderItem={renderItem}
+            isMulti={isMulti}
+            onClose={onClose}
           />
         ))}
       </div>

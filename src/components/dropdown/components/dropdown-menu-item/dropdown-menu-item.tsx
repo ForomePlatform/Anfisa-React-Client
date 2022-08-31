@@ -13,6 +13,8 @@ import {
 interface IDropdownMenuItemProps<T> extends Required<IDropdownCommonProps<T>> {
   selected: boolean
   option: IDropdownValue<T>
+  isMulti: boolean
+  onClose?: () => void
   disabled?: boolean
   renderItem?: (item: IDropdownValue<T>) => ReactElement
 }
@@ -25,10 +27,16 @@ export const DropdownMenuItem = <T,>({
   showCheckboxes,
   renderItem,
   selected,
+  isMulti,
+  onClose,
 }: IDropdownMenuItemProps<T>): ReactElement => {
   const onClick = () => {
     if (!disabled && onChange) {
       onChange(option)
+    }
+
+    if (!isMulti) {
+      onClose?.()
     }
   }
 

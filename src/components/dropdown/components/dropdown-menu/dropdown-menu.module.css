@@ -2,10 +2,10 @@
   border-radius: 4px;
   padding: 8px 0;
   box-shadow: theme("boxShadow.card");
+  min-width: 260px;
+  width: fit-content;
   display: flex;
   flex-direction: column;
-  width: fit-content;
-  min-width: 260px;
 
   &_primary {
     background-color: theme("colors.white");

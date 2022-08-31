@@ -5,15 +5,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-sizing: border-box;
   outline-offset: -2px;
+  border-radius: 4px;
 
   &_error {
     outline: 2px solid theme("colors.red.secondary");
   }
 
   &_primary {
-    color: theme("colors.blue.dark");
+    color: theme("colors.grey.blue");
     background-color: theme("colors.white");
+    border: 1px solid theme("colors.grey.blue");
 
     &:hover {
       background-color: theme("colors.blue.light");
@@ -21,6 +24,7 @@
 
     &_active {
       background-color: theme("colors.blue.bright");
+      border-color: theme("colors.blue.bright");
       color: theme("colors.white");
     }
   }
@@ -45,11 +49,18 @@
 
   &__append {
     margin-left: 10px;
-  }
 
-  &__container {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+    &__arrow {
+      transition-property: transform;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-duration: 150ms;
+      transform: rotate(180deg);
+    }
+
+    &__container {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
   }
 }
