@@ -33,6 +33,10 @@
     }
   }
 
+  &__join-mode {
+    margin: 0 4px;
+  }
+
   &__multipoint {
     &::before {
       content: "";

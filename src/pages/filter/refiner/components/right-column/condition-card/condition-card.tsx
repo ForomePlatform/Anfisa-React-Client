@@ -106,7 +106,11 @@ export const ConditionCard = observer(
           >
             <div className={cn(styles.conditionCard__filterName)}>
               {filterName}
-              <ConditionJoinModeLabel mode={filterMode} />:
+              <ConditionJoinModeLabel
+                mode={filterMode}
+                className={cn(styles.conditionCard__joinMode)}
+              />
+              :
             </div>
             {!isContentHidden && (
               <div
