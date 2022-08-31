@@ -1,6 +1,6 @@
 import styles from './dropdown-button.module.css'
 
-import { MouseEvent, ReactElement } from 'react'
+import { MouseEvent, ReactElement, RefObject } from 'react'
 import cn, { Argument } from 'classnames'
 import { camelCase } from 'lodash'
 
@@ -17,6 +17,7 @@ interface IDropdownButtonProps<T> extends Required<IDropdownCommonProps<T>> {
   onToggle: (target: HTMLElement) => void
   placeholder: string
   disabled: boolean
+  refOfButton: RefObject<HTMLDivElement>
   prepend?: JSX.Element | null
   append?: JSX.Element | null
   isLoading: boolean
@@ -30,6 +31,7 @@ export const DropdownButton = <T,>({
   hasError,
   placeholder,
   onToggle,
+  refOfButton,
   variant,
   disabled,
   values,
@@ -50,6 +52,7 @@ export const DropdownButton = <T,>({
   return (
     <div
       onClick={onOpen}
+      ref={refOfButton}
       className={cn(
         styles.dropdownButton,
         styles[`dropdownButton_${camelCase(variant)}`],

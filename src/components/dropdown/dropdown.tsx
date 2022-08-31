@@ -1,4 +1,4 @@
-import { ReactElement } from 'react'
+import { ReactElement, useRef } from 'react'
 import { Argument } from 'classnames'
 
 import { usePopover } from '@core/hooks/use-popover'
@@ -48,9 +48,12 @@ export const Dropdown = <T,>({
   className,
 }: IDropdownProps<T>): ReactElement => {
   const { isPopoverOpen, onToggle, closePopover, popoverAnchor } = usePopover()
+  const ref = useRef<HTMLDivElement>(null)
+
   return (
     <>
       <DropdownButton
+        refOfButton={ref}
         isOpen={isPopoverOpen}
         onToggle={onToggle}
         variant={variant}
@@ -67,6 +70,7 @@ export const Dropdown = <T,>({
         disabled={disabled}
       />
       <DropdownMenu
+        refOfButton={ref}
         anchorEl={popoverAnchor}
         isOpen={isPopoverOpen}
         onClose={closePopover}

@@ -1,6 +1,6 @@
 import styles from './dropdown-menu.module.css'
 
-import { ReactElement, useMemo } from 'react'
+import { ReactElement, RefObject, useMemo } from 'react'
 import cn from 'classnames'
 import { camelCase } from 'lodash'
 
@@ -20,6 +20,7 @@ interface IDropdownMenu<T>
   options: IDropdownValue<T>[]
   extraOptions: IDropdownValue<T>[]
   isMulti: boolean
+  refOfButton: RefObject<HTMLDivElement>
   offset?: [number | undefined | null, number | undefined | null]
   renderItem?: (item: IDropdownValue<T>) => ReactElement
   clearAll?: () => void
@@ -27,6 +28,7 @@ interface IDropdownMenu<T>
 
 export const DropdownMenu = <T,>({
   anchorEl,
+  refOfButton,
   isOpen,
   onClose,
   variant,
@@ -60,6 +62,9 @@ export const DropdownMenu = <T,>({
           styles.dropdownMenu,
           styles[`dropdownMenu_${camelCase(variant)}`],
         )}
+        style={{
+          width: `${refOfButton.current?.clientWidth}px`,
+        }}
       >
         {showClearAllMenu && (
           <DropdownClearAllMenu count={values.length} clearAll={clearAll!} />
