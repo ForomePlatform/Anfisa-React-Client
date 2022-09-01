@@ -2,6 +2,7 @@
 
 ## <small>0.8.1 (9/1/2022)</small>
 
+* feat([FOROME-1583](https://quantori.atlassian.net/browse/FOROME-1583)): redesign compound request panel ([18de0cc4](https://github.com/ForomePlatform/Anfisa-React-Client/commit/18de0cc4))
 * fix([FOROME-00](https://quantori.atlassian.net/browse/FOROME-00)): hotfix for units list style ([edafde54](https://github.com/ForomePlatform/Anfisa-React-Client/commit/edafde54))
 * feat([FOROME-1589](https://quantori.atlassian.net/browse/FOROME-1589)): add diagrams for enum modals ([8738b721](https://github.com/ForomePlatform/Anfisa-React-Client/commit/8738b721))
 * fix([FOROME-1424](https://quantori.atlassian.net/browse/FOROME-1424)): drawer inner shadows ([b36d782e](https://github.com/ForomePlatform/Anfisa-React-Client/commit/b36d782e))
