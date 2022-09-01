@@ -2,7 +2,10 @@ import { ApproxNameTypes } from '@core/enum/approxNameTypes'
 import { ApproxValueTypes } from '@core/enum/approxValueTypes'
 import { InheritanceModeEnum } from '@core/enum/inheritance-mode-enum'
 import { IScenario } from '@service-providers/common'
-import { IGetPreparedScenarioProps } from '../conditions.interface'
+import {
+  IGetPreparedScenarioProps,
+  IGetScenarioNameProps,
+} from '../conditions.interface'
 
 export const getApproxName = (
   approxValue?: ApproxValueTypes | null,
@@ -76,11 +79,11 @@ export const getPreparedScenario = ({
   return preparedScenario
 }
 
-export const getScenarioName = (
-  scenario: IScenario,
-  affectedGroup: string[],
-  problemGroupsLength: number,
-): string => {
+export const getScenarioName = ({
+  scenario,
+  affectedGroup,
+  groupsLength,
+}: IGetScenarioNameProps): string => {
   const affected = affectedGroup[0]
   let scenarioName = ''
   const scenarioLength = Object.keys(scenario).length
@@ -93,10 +96,7 @@ export const getScenarioName = (
             scenarioName = InheritanceModeEnum.HomozygousRecessive_XLinked
           } else {
             for (const key in scenario) {
-              if (
-                key === '0-1' &&
-                scenario[key].length === problemGroupsLength - 1
-              ) {
+              if (key === '0-1' && scenario[key].length === groupsLength - 1) {
                 scenarioName = InheritanceModeEnum.HomozygousRecessive_XLinked
               }
             }
@@ -107,10 +107,7 @@ export const getScenarioName = (
             scenarioName = InheritanceModeEnum.AutosomalDominant
           } else {
             for (const key in scenario) {
-              if (
-                key === '0' &&
-                scenario[key].length === problemGroupsLength - 1
-              ) {
+              if (key === '0' && scenario[key].length === groupsLength - 1) {
                 scenarioName = InheritanceModeEnum.AutosomalDominant
               }
             }
@@ -121,10 +118,7 @@ export const getScenarioName = (
             scenarioName = InheritanceModeEnum.Compensational
           } else {
             for (const key in scenario) {
-              if (
-                key === '1-2' &&
-                scenario[key].length === problemGroupsLength - 1
-              ) {
+              if (key === '1-2' && scenario[key].length === groupsLength - 1) {
                 scenarioName = InheritanceModeEnum.Compensational
               }
             }

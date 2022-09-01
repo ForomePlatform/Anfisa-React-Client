@@ -1,5 +1,6 @@
 import { ReactElement, useEffect, useMemo, useState } from 'react'
 import cn from 'classnames'
+import cloneDeep from 'lodash/cloneDeep'
 import isEmpty from 'lodash/isEmpty'
 import { observer } from 'mobx-react-lite'
 
@@ -75,7 +76,7 @@ export const CompoundRequestCondition = observer(
         affectedGroup,
       })
 
-      const clonedRequestCondition = [...requestCondition]
+      const clonedRequestCondition = cloneDeep(requestCondition)
       clonedRequestCondition[activeRequestIndex][1] = preparedScenario
 
       setRequestCondition(clonedRequestCondition)
@@ -116,7 +117,11 @@ export const CompoundRequestCondition = observer(
       const currentRequest = requestCondition[requestBlockIndex]
 
       setPreparedScenarioName(
-        getScenarioName(currentRequest[1], affectedGroup, problemGroups.length),
+        getScenarioName({
+          scenario: currentRequest[1],
+          affectedGroup,
+          groupsLength: problemGroups.length,
+        }),
       )
       onTouch?.()
     }
@@ -153,11 +158,11 @@ export const CompoundRequestCondition = observer(
         setActiveRequestIndex(newRequestCondition.length - 1)
         setRequestCondition(newRequestCondition)
         setPreparedScenarioName(
-          getScenarioName(
-            newRequestCondition[newRequestCondition.length - 1][1],
+          getScenarioName({
+            scenario: newRequestCondition[newRequestCondition.length - 1][1],
             affectedGroup,
-            problemGroups.length,
-          ),
+            groupsLength: problemGroups.length,
+          }),
         )
       }
     }
@@ -179,11 +184,11 @@ export const CompoundRequestCondition = observer(
 
     useEffect(() => {
       setPreparedScenarioName(
-        getScenarioName(
-          requestCondition[activeRequestIndex][1],
+        getScenarioName({
+          scenario: requestCondition[activeRequestIndex][1],
           affectedGroup,
-          problemGroups.length,
-        ),
+          groupsLength: problemGroups.length,
+        }),
       )
     }, [activeRequestIndex, affectedGroup, problemGroups, requestCondition])
 

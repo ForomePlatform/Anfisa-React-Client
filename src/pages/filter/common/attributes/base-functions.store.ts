@@ -105,6 +105,6 @@ export class BaseFunctionsStore {
   public get affectedGroup(): string[] {
     const status = this.attributeStatus as IFuncPropertyStatus
 
-    return status?.affected
+    return status?.affected || []
   }
 }

@@ -97,7 +97,11 @@ export const CustomInheritanceModeCondition = observer(
       setSelectValues(getSelectValues(scenario, problemGroups))
 
       setPreparedScenarioName(
-        getScenarioName(scenario, affectedGroup, problemGroups.length),
+        getScenarioName({
+          scenario,
+          affectedGroup,
+          groupsLength: problemGroups.length,
+        }),
       )
     }, [affectedGroup, problemGroups, scenario])
 
