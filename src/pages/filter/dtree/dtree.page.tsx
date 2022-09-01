@@ -11,6 +11,7 @@ import { t } from '@i18n'
 import datasetStore from '@store/dataset/dataset'
 import defaultsStore from '@store/defaults'
 import dtreeStore from '@store/dtree'
+import { MIN_CODE_LENGTH } from '@store/dtree/dtree.store'
 import filterDtreesStore from '@store/filter-dtrees'
 import { Header } from '@components/header'
 import { VariantsCount } from '@components/variants-count'
@@ -28,8 +29,6 @@ import { SolutionControlDtree } from './components/control-panel/solution-contro
 import { TextEditorButton } from './components/control-panel/text-editor-button'
 import { ModalsContainer } from './components/modals/modals-container'
 import { QueryBuilder } from './components/query-builder/query-builder'
-
-const MIN_CODE_LENGTH = 13
 
 export const DtreePage = observer((): ReactElement => {
   const { isXL } = datasetStore

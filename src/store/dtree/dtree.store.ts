@@ -16,7 +16,7 @@ import { DtreeSetAsyncStore } from './dtree-set.async.store'
 import { DtreeStatStore } from './dtree-stat.store'
 import stepStore, { ActiveStepOptions } from './step.store'
 
-const MIN_CODE_LENGTH = 13
+export const MIN_CODE_LENGTH = 13
 
 export type IStepData = {
   step: number

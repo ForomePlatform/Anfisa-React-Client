@@ -3,6 +3,7 @@ import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
+import { MIN_CODE_LENGTH } from '@store/dtree/dtree.store'
 import stepStore from '@store/dtree/step.store'
 import { Divider } from '@ui/divider'
 
@@ -20,6 +21,8 @@ export const QueryBuilderResultsNumbers = observer(
       rejectedVariants,
     } = dtreeStore
     const { steps } = stepStore
+
+    const isEmptyTree = dtreeStore.dtreeCode.length <= MIN_CODE_LENGTH
 
     if (!dtree) {
       return null
@@ -62,13 +65,22 @@ export const QueryBuilderResultsNumbers = observer(
                 {!isXl &&
                   ` (${t('dtree.variantsCount', { value: rejectedVariants })})`}
               </span>
-              <Divider orientation="vertical" color="light" spacing="dense" />
-              <div
-                className="text-blue-bright font-medium cursor-pointer"
-                onClick={() => dtreeStore.clearAll()}
-              >
-                {t('general.clearAll')}
-              </div>
+
+              {!isEmptyTree && (
+                <>
+                  <Divider
+                    orientation="vertical"
+                    color="light"
+                    spacing="dense"
+                  />
+                  <div
+                    className="text-blue-bright font-medium cursor-pointer"
+                    onClick={() => dtreeStore.clearAll()}
+                  >
+                    {t('general.clearAll')}
+                  </div>
+                </>
+              )}
             </div>
           </>
         )}
