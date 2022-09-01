@@ -2,6 +2,7 @@
 
 ## <small>0.8.1 (9/1/2022)</small>
 
+* feat([FOROME-1554](https://quantori.atlassian.net/browse/FOROME-1554)): redesign condition panel (#911) ([6299c543](https://github.com/ForomePlatform/Anfisa-React-Client/commit/6299c543))
 * fix([FOROME-1569](https://quantori.atlassian.net/browse/FOROME-1569)): exception in storybook ([76db7baf](https://github.com/ForomePlatform/Anfisa-React-Client/commit/76db7baf))
 * feat([FOROME-1493](https://quantori.atlassian.net/browse/FOROME-1493)): remove clear all button if the tree is empty ([a4478fbc](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a4478fbc))
 * feat([FOROME-1583](https://quantori.atlassian.net/browse/FOROME-1583)): redesign compound request panel ([18de0cc4](https://github.com/ForomePlatform/Anfisa-React-Client/commit/18de0cc4))
