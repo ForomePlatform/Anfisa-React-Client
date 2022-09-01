@@ -321,6 +321,8 @@ export const en = {
     inheritanceMode: 'Inheritance mode',
     customInhModeNotice:
       'Create the Scenario or choose from existing Inheritance mode',
+    atLeast: 'At least',
+    counts: 'counts',
   },
   unitsList: {
     functionalUnits: 'Functional Units',
