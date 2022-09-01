@@ -37,25 +37,24 @@ export const CompoundRequest = observer((): ReactElement => {
   )
 
   return (
-    <div className="px-4">
-      <CompoundRequestCondition
-        affectedGroup={affectedGroup}
-        problemGroups={problemGroups}
-        initialApprox={initialApprox}
-        initialRequestCondition={initialRequestCondition}
-        initialMode={initialMode}
-        attributeSubKind={attributeSubKind}
-        statFuncStore={refinerStatFuncStore}
-        onTouch={() => filterStore.setTouched(true)}
-        controls={({ mode, hasErrors, param, clearValue }) =>
-          renderPanelControls({
-            initialCondition,
-            disabled: hasErrors || !isFilterTouched,
-            saveAttribute: () => saveAttribute(mode, param),
-            clearValue,
-          })
-        }
-      />
-    </div>
+    <CompoundRequestCondition
+      affectedGroup={affectedGroup}
+      problemGroups={problemGroups}
+      initialApprox={initialApprox}
+      initialRequestCondition={initialRequestCondition}
+      initialMode={initialMode}
+      attributeSubKind={attributeSubKind}
+      statFuncStore={refinerStatFuncStore}
+      className="px-4"
+      onTouch={() => filterStore.setTouched(true)}
+      controls={({ mode, hasErrors, param, clearValue }) =>
+        renderPanelControls({
+          initialCondition,
+          disabled: hasErrors || !isFilterTouched,
+          saveAttribute: () => saveAttribute(mode, param),
+          clearValue,
+        })
+      }
+    />
   )
 })

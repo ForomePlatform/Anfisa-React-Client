@@ -75,7 +75,6 @@ export const UnitsList = observer(
         className={cn(
           styles.unitsList,
           isDark && styles.unitsList_dark,
-          !isModal && styles.unitsList_columnList,
           className,
         )}
       >
@@ -116,6 +115,7 @@ export const UnitsList = observer(
           className={cn(
             styles.unitsList__list,
             isModal && styles.unitsList__list_modal,
+            !isModal && styles.unitsList__list_columnList,
             showLoader && styles.unitsList__list_loading,
           )}
           id={listContainerId}
