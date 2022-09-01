@@ -36,6 +36,7 @@ export const FilterConditions = observer(
             key={`${condition[1]}_${index}`}
             isActive={index === selectedConditionIndex}
             condition={condition}
+            conditionIndex={index}
             onSelect={() => filterStore.selectCondition(index)}
             onDelete={() => filterStore.removeCondition(index)}
             onDragStart={onDragStart}

@@ -33,6 +33,7 @@ export class FilterStore {
   method!: GlbPagesNames | FilterControlOptions
 
   private _conditions: TCondition[] = []
+  private _conditionsOpenStates: Array<boolean | undefined> = []
 
   private _isConditionsFetching = false
   private _selectedConditionIndex: number = -1
@@ -219,6 +220,7 @@ export class FilterStore {
 
   public addCondition(condition: TCondition): number {
     this._conditions.push(condition)
+    this._conditionsOpenStates.push(undefined)
 
     this.actionHistory.addHistory(this._conditions)
 
@@ -228,11 +230,21 @@ export class FilterStore {
   public setConditions(conditions: ReadonlyArray<TCondition>): void {
     this._selectedConditionIndex = -1
     this._attributeNameToAdd = ''
+    this._conditionsOpenStates = new Array(conditions.length)
     this._conditions = cloneDeep(conditions) as TCondition[]
+  }
+
+  public setConditionOpenState(index: number, state: boolean): void {
+    this._conditionsOpenStates[index] = state
+  }
+
+  public getConditionOpenState(index: number): boolean | undefined {
+    return this._conditionsOpenStates[index]
   }
 
   public removeCondition(index: number): void {
     this._conditions.splice(index, 1)
+    this._conditionsOpenStates.splice(index, 1)
 
     this.actionHistory.addHistory(this._conditions)
 
@@ -256,6 +268,12 @@ export class FilterStore {
         insertionIndex,
         0,
         ...this._conditions.splice(fromIndex, 1),
+      )
+
+      this._conditionsOpenStates.splice(
+        insertionIndex,
+        0,
+        ...this._conditionsOpenStates.splice(fromIndex, 1),
       )
 
       const selectedIndex = this._selectedConditionIndex
@@ -287,6 +305,7 @@ export class FilterStore {
 
   public clearConditions() {
     this._conditions.splice(0)
+    this._conditionsOpenStates.splice(0)
     this._selectedConditionIndex = -1
   }
 

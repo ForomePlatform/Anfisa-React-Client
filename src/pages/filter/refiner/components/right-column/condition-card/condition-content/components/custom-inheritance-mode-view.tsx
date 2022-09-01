@@ -22,19 +22,14 @@ export const CustomInheritanceModeView = ({
 
   return (
     <div className={cn(className)}>
-      <div>
-        <div className="text-grey-blue">Scenario</div>
+      <div className="mt-4">
+        <div className="text-grey-dark">Scenario</div>
 
-        {problemGroups.map((group, idx) => (
-          <div
-            className={cn('flex items-center py-1', {
-              'pt-2': idx === 0,
-            })}
-            key={group}
-          >
+        {problemGroups.map(group => (
+          <div className={cn('flex items-center py-2')} key={group}>
             <span>{group}</span>
 
-            <span className="ml-1 text-grey-blue">
+            <span className="ml-1 text-grey-dark">
               {getScenarioValue(group, filterExpression.scenario)}
             </span>
           </div>

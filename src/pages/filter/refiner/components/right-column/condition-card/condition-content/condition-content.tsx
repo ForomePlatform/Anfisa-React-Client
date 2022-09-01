@@ -11,26 +11,27 @@ import { ConditionContentFunc } from './condition-content-func'
 import { ConditionContentNumeric } from './condition-content-numeric'
 
 export const ConditionContent = observer(
-  ({ condition, ...props }: IConditionContentProps) => {
+  ({ condition, isPreview = false, ...props }: IConditionContentProps) => {
     const conditionType = condition[0]
 
     switch (conditionType) {
       case AttributeKinds.NUMERIC:
         return <ConditionContentNumeric condition={condition} {...props} />
       case AttributeKinds.ENUM:
-        return <ConditionContentEnum condition={condition} {...props} />
+        return (
+          <ConditionContentEnum
+            isPreview={isPreview}
+            condition={condition}
+            {...props}
+          />
+        )
       case AttributeKinds.FUNC:
         return <ConditionContentFunc condition={condition} {...props} />
       case AttributeKinds.ERROR:
         return (
-          <div
-            className={cn(
-              styles.conditionContent,
-              styles.conditionContent_error,
-            )}
-          >
+          <span className={cn(styles.condition__error)}>
             {t('filter.inactiveField')}
-          </div>
+          </span>
         )
     }
   },

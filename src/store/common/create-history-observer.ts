@@ -28,7 +28,7 @@ export const createHistoryObserver = <T extends string>(
     const state = {} as Record<T, string | null>
 
     for (const key of names) {
-      state[key] = params[key].get() || null
+      state[key] = params[key].get() ?? null
     }
 
     return state

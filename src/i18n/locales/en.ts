@@ -350,7 +350,6 @@ export const en = {
     prohibitToOpen: 'You cannot open XL-dataset on Filter Refiner',
     chooseProblemGroup: 'Choose any problem group first',
     notValidName: 'Preset name is not valid',
-    conditionsAdded: '{count} added',
     chart: {
       seeAll: 'See all',
       hide: 'Hide',
