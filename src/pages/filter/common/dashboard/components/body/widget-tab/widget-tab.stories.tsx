@@ -1,5 +1,9 @@
+import {
+  AttributeKinds,
+  EnumPropertyStatusSubKinds,
+} from '@service-providers/common'
 import { ComponentMeta, ComponentStory } from '@storybook/react'
-import { WidgetTab } from './widget-tab'
+import { WidgetTab } from './index'
 
 export default {
   title: 'Widget tab',
@@ -16,7 +20,6 @@ const Template: ComponentStory<typeof WidgetTab> = args => {
 
 export const Default = Template.bind({})
 
-/*
 Default.args = {
   group: {
     name: 'Inheritance',
@@ -69,4 +72,3 @@ Default.args = {
     ],
   },
 }
-*/
