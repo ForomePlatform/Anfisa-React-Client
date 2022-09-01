@@ -69,7 +69,7 @@ export const DropdownButton = <T,>({
         styles.dropdownButton,
         styles[`dropdownButton_${camelCase(variant)}`],
         isOpen && styles[`dropdownButton_${camelCase(variant)}_active`],
-        disabled && styles.dropdownButton_disabled,
+        disabled && styles[`dropdownButton_${camelCase(variant)}_disabled`],
         hasError && styles.dropdownButton_error,
         className,
       )}

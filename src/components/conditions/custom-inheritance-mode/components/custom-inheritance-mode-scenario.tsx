@@ -28,10 +28,10 @@ export const CustomInheritanceModeScenario = ({
 
     <div className="flex items-center justify-between w-full text-14">
       {problemGroups.map((group: string, index: number) => (
-        <div key={group} className="flex items-center">
+        <div key={group} className="flex items-center flex-1 mr-2 last:mr-0">
           <span>{group}</span>
 
-          <div className="ml-2">
+          <div className="ml-2 flex-1 max-w-[75px]">
             <Dropdown
               onChange={option => onChangeScenario(index, option.value)}
               values={[

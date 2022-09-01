@@ -35,6 +35,7 @@ const Template: ComponentStory<typeof Dropdown> = args => {
           values={chosen}
           onChange={onChange}
           clearAll={() => setChosen([])}
+          disabled={args.disabled}
           placeholder={args.placeholder}
           hasError={args.hasError}
           offset={args.offset}

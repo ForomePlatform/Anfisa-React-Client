@@ -8,6 +8,7 @@
   box-sizing: border-box;
   outline-offset: -2px;
   border-radius: 4px;
+  cursor: pointer;
 
   &_disabled {
     opacity: 50;
@@ -31,6 +32,17 @@
       border-color: theme("colors.blue.bright");
       color: theme("colors.white");
     }
+
+    &_disabled {
+      background-color: theme("colors.white");
+      color: theme("colors.grey.blue");
+      opacity: 0.5;
+      cursor: not-allowed;
+
+      &:hover {
+        background-color: theme("colors.white");
+      }
+    }
   }
 
   &_primary-dark {
@@ -44,6 +56,16 @@
     &_active {
       background-color: theme("colors.blue.bright");
       color: theme("colors.white");
+    }
+
+    &_disabled {
+      background-color: theme("colors.blue.lighter");
+      color: theme("colors.blue.secondary");
+      cursor: not-allowed;
+
+      &:hover {
+        background-color: theme("colors.blue.lighter");
+      }
     }
   }
 
