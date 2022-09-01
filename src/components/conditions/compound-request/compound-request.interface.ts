@@ -16,6 +16,7 @@ export interface IControlProps extends ICommonControlProps {
 }
 
 export interface ICompoundRequestProps extends ICommonFuncConditionProps {
+  affectedGroup: string[]
   problemGroups: string[]
   initialApprox: ApproxNameTypes
   initialRequestCondition: TRequestCondition[]

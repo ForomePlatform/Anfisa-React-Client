@@ -101,4 +101,10 @@ export class BaseFunctionsStore {
     const condition = this.initialCondition?.[4] as IGeneRegionArgs
     return condition?.locus
   }
+
+  public get affectedGroup(): string[] {
+    const status = this.attributeStatus as IFuncPropertyStatus
+
+    return status?.affected
+  }
 }

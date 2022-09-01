@@ -17,3 +17,9 @@ export interface ICommonFuncConditionProps {
   className?: Argument
   onTouch?: () => void
 }
+
+export interface IGetPreparedScenarioProps {
+  preparedScenarioName: string
+  problemGroups: string[]
+  affectedGroup: string[]
+}

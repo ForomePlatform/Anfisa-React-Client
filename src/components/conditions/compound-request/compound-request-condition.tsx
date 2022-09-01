@@ -27,6 +27,7 @@ import {
 export const CompoundRequestCondition = observer(
   ({
     problemGroups,
+    affectedGroup,
     initialMode,
     initialApprox,
     initialRequestCondition,
@@ -37,7 +38,6 @@ export const CompoundRequestCondition = observer(
   }: ICompoundRequestProps): ReactElement => {
     const { variants, isFetching, status } = statFuncStore
     const variantsValue = variants && variants[0][1]
-
     const [requestCondition, setRequestCondition] = useState<
       TRequestCondition[]
     >(initialRequestCondition)
@@ -60,10 +60,11 @@ export const CompoundRequestCondition = observer(
     const handleSetPreparedScenario = (preparedScenarioName: string) => {
       setPreparedScenarioName(preparedScenarioName)
 
-      const preparedScenario = getPreparedScenario(
+      const preparedScenario = getPreparedScenario({
         preparedScenarioName,
         problemGroups,
-      )
+        affectedGroup,
+      })
 
       const clonedRequestCondition = [...requestCondition]
       clonedRequestCondition[activeRequestIndex][1] = preparedScenario
@@ -105,7 +106,9 @@ export const CompoundRequestCondition = observer(
 
       const currentRequest = requestCondition[requestBlockIndex]
 
-      setPreparedScenarioName(getScenarioName(currentRequest[1]) || '')
+      setPreparedScenarioName(
+        getScenarioName(currentRequest[1], affectedGroup, problemGroups.length),
+      )
       onTouch?.()
     }
 
@@ -143,6 +146,8 @@ export const CompoundRequestCondition = observer(
         setPreparedScenarioName(
           getScenarioName(
             newRequestCondition[newRequestCondition.length - 1][1],
+            affectedGroup,
+            problemGroups.length,
           ),
         )
       }
@@ -165,9 +170,13 @@ export const CompoundRequestCondition = observer(
 
     useEffect(() => {
       setPreparedScenarioName(
-        getScenarioName(requestCondition[requestCondition.length - 1][1]),
+        getScenarioName(
+          requestCondition[activeRequestIndex][1],
+          affectedGroup,
+          problemGroups.length,
+        ),
       )
-    }, [requestCondition])
+    }, [activeRequestIndex, affectedGroup, problemGroups, requestCondition])
 
     return (
       <>
@@ -198,6 +207,7 @@ export const CompoundRequestCondition = observer(
         <InheritanceModeSelect
           handleSetPreparedScenario={handleSetPreparedScenario}
           preparedScenarioName={preparedScenarioName}
+          setPreparedScenarioName={setPreparedScenarioName}
         />
 
         <DividerHorizontal />

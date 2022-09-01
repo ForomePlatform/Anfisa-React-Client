@@ -14,6 +14,7 @@ export interface IControlProps extends ICommonControlProps {
 
 export interface ICustomInheritanceModeConditionProps
   extends ICommonFuncConditionProps {
+  affectedGroup: string[]
   problemGroups: string[]
   initialScenario: IScenario
   className?: Argument

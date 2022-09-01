@@ -2,6 +2,7 @@ import { ApproxNameTypes } from '@core/enum/approxNameTypes'
 import { ApproxValueTypes } from '@core/enum/approxValueTypes'
 import { InheritanceModeEnum } from '@core/enum/inheritance-mode-enum'
 import { IScenario } from '@service-providers/common'
+import { IGetPreparedScenarioProps } from '../conditions.interface'
 
 export const getApproxName = (
   approxValue?: ApproxValueTypes | null,
@@ -29,31 +30,45 @@ export const getApproxValue = (
   return null
 }
 
-export const getPreparedScenario = (
-  preparedValue: string,
-  problemGroups: string[],
-): IScenario => {
+export const getPreparedScenario = ({
+  preparedScenarioName,
+  problemGroups,
+  affectedGroup,
+}: IGetPreparedScenarioProps): IScenario => {
   let preparedScenario: IScenario = {}
 
-  switch (preparedValue) {
+  const nonAffectedGroups = problemGroups.filter(
+    group => group !== affectedGroup?.[0],
+  )
+
+  switch (preparedScenarioName) {
     case InheritanceModeEnum.HomozygousRecessive_XLinked:
       preparedScenario = {
-        '2': [problemGroups[0]],
-        '0-1': [problemGroups[1], problemGroups[2]],
+        '2': affectedGroup,
+      }
+
+      if (nonAffectedGroups.length) {
+        Object.assign(preparedScenario, { '0-1': nonAffectedGroups })
       }
       break
 
     case InheritanceModeEnum.AutosomalDominant:
       preparedScenario = {
-        '1-2': [problemGroups[0]],
-        '0': [problemGroups[1], problemGroups[2]],
+        '1-2': affectedGroup,
+      }
+
+      if (nonAffectedGroups.length) {
+        Object.assign(preparedScenario, { '0': nonAffectedGroups })
       }
       break
 
     case InheritanceModeEnum.Compensational:
       preparedScenario = {
-        '0': [problemGroups[0]],
-        '1-2': [problemGroups[1], problemGroups[2]],
+        '0': affectedGroup,
+      }
+
+      if (nonAffectedGroups.length) {
+        Object.assign(preparedScenario, { '1-2': nonAffectedGroups })
       }
       break
   }
@@ -61,35 +76,65 @@ export const getPreparedScenario = (
   return preparedScenario
 }
 
-export const getScenarioName = (scenario: IScenario) => {
-  if (Object.keys(scenario).length > 2) return ''
+export const getScenarioName = (
+  scenario: IScenario,
+  affectedGroup: string[],
+  problemGroupsLength: number,
+): string => {
+  const affected = affectedGroup[0]
+  let scenarioName = ''
+  const scenarioLength = Object.keys(scenario).length
 
-  if (Object.keys(scenario)[0] === '0' && Object.keys(scenario)[1] === '1-2') {
-    if (
-      Object.values(scenario)[0].length === 1 &&
-      Object.values(scenario)[1].length === 2
-    ) {
-      return InheritanceModeEnum.Compensational
-    }
-
-    if (
-      Object.values(scenario)[0].length === 2 &&
-      Object.values(scenario)[1].length === 1
-    ) {
-      return InheritanceModeEnum.AutosomalDominant
+  for (const key in scenario) {
+    if (scenario[key].includes(affected) && scenario[key].length === 1) {
+      switch (key) {
+        case '2':
+          if (scenarioLength === 1) {
+            scenarioName = InheritanceModeEnum.HomozygousRecessive_XLinked
+          } else {
+            for (const key in scenario) {
+              if (
+                key === '0-1' &&
+                scenario[key].length === problemGroupsLength - 1
+              ) {
+                scenarioName = InheritanceModeEnum.HomozygousRecessive_XLinked
+              }
+            }
+          }
+          break
+        case '1-2':
+          if (scenarioLength === 1) {
+            scenarioName = InheritanceModeEnum.AutosomalDominant
+          } else {
+            for (const key in scenario) {
+              if (
+                key === '0' &&
+                scenario[key].length === problemGroupsLength - 1
+              ) {
+                scenarioName = InheritanceModeEnum.AutosomalDominant
+              }
+            }
+          }
+          break
+        case '0':
+          if (scenarioLength === 1) {
+            scenarioName = InheritanceModeEnum.Compensational
+          } else {
+            for (const key in scenario) {
+              if (
+                key === '1-2' &&
+                scenario[key].length === problemGroupsLength - 1
+              ) {
+                scenarioName = InheritanceModeEnum.Compensational
+              }
+            }
+          }
+          break
+      }
     }
   }
 
-  if (
-    Object.keys(scenario)[0] === '2' &&
-    Object.keys(scenario)[1] === '0-1' &&
-    Object.values(scenario)[0].length === 1 &&
-    Object.values(scenario)[1].length === 2
-  ) {
-    return InheritanceModeEnum.HomozygousRecessive_XLinked
-  }
-
-  return ''
+  return scenarioName
 }
 
 export const getSelectValues = (
