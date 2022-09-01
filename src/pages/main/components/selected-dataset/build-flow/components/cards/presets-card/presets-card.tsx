@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
 import { useHistory } from 'react-router'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
@@ -24,11 +24,6 @@ export const PresetsCard = observer(
       presetsCardStore.loadSolutions()
     }, [])
 
-    const presets = useMemo(
-      () => presetsCardStore.getSolutionsByRubric(wizardStore.whatsNextOption),
-      [],
-    )
-
     const onClickOpen = () => {
       if (!wizardStore.selectedPreset) return
 
@@ -43,6 +38,49 @@ export const PresetsCard = observer(
 
       memorizeLocation(location)
       history.push(location)
+    }
+
+    const renderPresets = () => {
+      return presetsCardStore
+        .getSolutionsByRubric(wizardStore.whatsNextOption)
+        .map(preset => {
+          const isSelected = selectedValue === preset.name
+          const isDisabled = !['ok', null].includes(preset['eval-status'])
+          const getIconColor = () => {
+            if (isDisabled) return 'text-grey-dark'
+            if (isSelected) return 'text-white'
+            return 'text-blue-bright'
+          }
+
+          return (
+            <Tooltip
+              theme="light"
+              key={preset.name}
+              title={isDisabled && t('home.buildFlow.notApplicableForXl')}
+              placement="top-start"
+            >
+              <div
+                onClick={() =>
+                  !isDisabled && wizardStore.setSelectedPreset(preset, id)
+                }
+              >
+                <div
+                  className={cn(
+                    'w-full flex items-center py-2 px-4 leading-5 cursor-pointer',
+                    isSelected
+                      ? 'bg-blue-bright text-white'
+                      : 'hover:bg-blue-light',
+                    isDisabled && 'text-grey-dark',
+                  )}
+                >
+                  <Icon name="File" className={cn(getIconColor())} />
+
+                  <div className="ml-1.5">{preset.name}</div>
+                </div>
+              </div>
+            </Tooltip>
+          )
+        })
     }
 
     return (
@@ -60,44 +98,7 @@ export const PresetsCard = observer(
           {presetsCardStore.isFetchingSolutions ? (
             <Loader size="m" />
           ) : (
-            presets.map(preset => {
-              const isSelected = selectedValue === preset.name
-              const isDisabled = !['ok', null].includes(preset['eval-status'])
-              const getIconColor = () => {
-                if (isDisabled) return 'text-grey-dark'
-                if (isSelected) return 'text-white'
-                return 'text-blue-bright'
-              }
-
-              return (
-                <Tooltip
-                  theme="light"
-                  key={preset.name}
-                  title={isDisabled && t('home.buildFlow.notApplicableForXl')}
-                  placement="top-start"
-                >
-                  <div
-                    onClick={() =>
-                      !isDisabled && wizardStore.setSelectedPreset(preset, id)
-                    }
-                  >
-                    <div
-                      className={cn(
-                        'w-full flex items-center py-2 px-4 leading-5 cursor-pointer',
-                        isSelected
-                          ? 'bg-blue-bright text-white'
-                          : 'hover:bg-blue-light',
-                        isDisabled && 'text-grey-dark',
-                      )}
-                    >
-                      <Icon name="File" className={cn(getIconColor())} />
-
-                      <div className="ml-1.5">{preset.name}</div>
-                    </div>
-                  </div>
-                </Tooltip>
-              )
-            })
+            renderPresets()
           )}
         </div>
 
