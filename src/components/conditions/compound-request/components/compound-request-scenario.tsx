@@ -23,35 +23,37 @@ export const CompoundRequestScenario = ({
     handleSetActiveRequestCondition,
     onChangeRequestConditionNumber,
   } = props
+
   return (
     <>
       <div
         className={cn(
-          'flex items-center justify-between w-full text-14 py-2 px-2 my-0.5 border border-grey-light rounded-md',
+          'flex flex-col w-full text-14 py-2 px-2 mb-2 last:mb-0 border border-grey-light',
           className,
         )}
         onClick={() => {
           handleSetActiveRequestCondition(requestIndex)
         }}
       >
-        <div className="flex flex-col leading-16px font-medium text-grey-blue">
-          <span className="mb-1 items-center">
-            {t('funcCondition.scenario')}
-          </span>
+        <div className="flex flex-1 justify-start items-center mb-2 px-4">
+          <span>{t('funcCondition.atLeast')}</span>
 
           <InputNumeric
             value={requestItem[0]}
             min={1}
+            max={99}
             onChange={value => {
               if (value !== null) {
                 onChangeRequestConditionNumber(requestIndex, value)
               }
             }}
-            className="cursor-pointer h-7 w-[80px]"
+            className="cursor-pointer h-7 w-[60px] mx-2"
           />
+
+          <span>{t('funcCondition.counts')}</span>
         </div>
 
-        <div className="flex flex-1 justify-between ml-8">
+        <div className="flex flex-1 justify-between pr-4 pl-5">
           {problemGroups.map((group: string, groupIndex: number) => {
             const value = getSelectedValue({
               group,
@@ -59,14 +61,14 @@ export const CompoundRequestScenario = ({
               requestCondition,
             })
             return (
-              <div className="flex flex-col items-start" key={group}>
+              <div className="flex items-center" key={group}>
                 <span>{group}</span>
 
                 <Select
                   onChange={e =>
                     onChangeScenario(requestIndex, e.target.value, groupIndex)
                   }
-                  className="w-auto pl-2 pr-3 py-1 bg-white"
+                  className="pl-2 pr-3 py-1 ml-2 w-[60px] bg-white"
                   options={selectOptions}
                   value={value}
                 />

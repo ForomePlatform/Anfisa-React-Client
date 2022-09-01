@@ -8,15 +8,15 @@ import { Radio } from '@ui/radio'
 interface IInheritanceModeSelectProp {
   preparedScenarioName?: string
   className?: Argument
-  setPreparedScenarioName?: (value: string) => void
   handleSetPreparedScenario: (value: string) => void
+  resetPreparedScenario: () => void
 }
 
 export const InheritanceModeSelect: FC<IInheritanceModeSelectProp> = ({
   preparedScenarioName,
   className,
   handleSetPreparedScenario,
-  setPreparedScenarioName,
+  resetPreparedScenario,
 }) => (
   <div className={cn('-mb-1', className)}>
     <div className="flex justify-between items-center -mt-1 mb-1">
@@ -25,7 +25,7 @@ export const InheritanceModeSelect: FC<IInheritanceModeSelectProp> = ({
       </span>
 
       <Button
-        onClick={() => setPreparedScenarioName?.('')}
+        onClick={resetPreparedScenario}
         text="Reset"
         variant="secondary"
         size="s"
