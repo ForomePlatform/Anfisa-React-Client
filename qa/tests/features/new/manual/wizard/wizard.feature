@@ -126,7 +126,7 @@ Examples:
 	| @Impact_Splicing    |
 	| @Loss_Of_Function   |
 
-Scenario: 15 Open "Decision Tree Panel" with "<PresetName>" for "Genetic first analysis" 
+Scenario Outline: 15 Open "Decision Tree Panel" with "<PresetName>" for "Genetic first analysis" 
 	Given "What's next?" dialog for "xl_PGP3140_wgs_NIST-4_2" dataset was displayed
 	When user checks "Genetic first analysis" radio button
 	And clicks "continue" button 
