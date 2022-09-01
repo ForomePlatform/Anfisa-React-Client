@@ -38,10 +38,10 @@ export const UnitsListControls = ({
       className={styles.controls__search}
       placeholder={t('filter.searchForAField')}
       value={filterValue}
-      variant="primary-dark"
+      variant={isModal ? 'primary' : 'primary-dark'}
       style={{
-        backgroundColor: theme('colors.blue.secondary'),
-        border: theme('colors.blue.secondary'),
+        backgroundColor: !isModal && theme('colors.blue.secondary'),
+        border: !isModal && theme('colors.blue.secondary'),
       }}
       size="m"
       onChange={e => onFilterValueChange(e.target.value)}
