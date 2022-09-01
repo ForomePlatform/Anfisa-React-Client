@@ -154,6 +154,7 @@ export const en = {
       candidateName: 'Candidate set name',
       whatsNext: "What's next?",
       relevantPresets: 'Relevant presets',
+      presetNameWithKind: '{ name } (kind: { kind })',
       additionalPresetFilter: 'Additional preset filters',
       notApplicableForXl: 'Not applicable for XL dataset',
       simpleFilter: 'Simple Filter',

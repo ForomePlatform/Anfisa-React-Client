@@ -17,7 +17,7 @@ import { memorizeLocation } from '../../wizard/wizard.utils'
 import presetsCardStore from './presets-card.store'
 
 export const PresetsCard = observer(
-  ({ title, id, selectedValue, maxHeight, position }: ICardProps) => {
+  ({ title, id, maxHeight, position }: ICardProps) => {
     const history = useHistory()
 
     useEffect(() => {
@@ -41,46 +41,65 @@ export const PresetsCard = observer(
     }
 
     const renderPresets = () => {
-      return presetsCardStore
-        .getSolutionsByRubric(wizardStore.whatsNextOption)
-        .map(preset => {
-          const isSelected = selectedValue === preset.name
-          const isDisabled = !['ok', null].includes(preset['eval-status'])
-          const getIconColor = () => {
-            if (isDisabled) return 'text-grey-dark'
-            if (isSelected) return 'text-white'
-            return 'text-blue-bright'
-          }
+      const presets = presetsCardStore.getSolutionsByRubric(
+        wizardStore.whatsNextOption,
+      )
 
-          return (
-            <Tooltip
-              theme="light"
-              key={preset.name}
-              title={isDisabled && t('home.buildFlow.notApplicableForXl')}
-              placement="top-start"
+      const names = presets.reduce((acc, preset) => {
+        const value = acc.get(preset.name) || 0
+        acc.set(preset.name, value + 1)
+        return acc
+      }, new Map<string, number>())
+
+      return presets.map(preset => {
+        const selectedPreset = wizardStore.selectedPreset
+        const isSelected =
+          selectedPreset?.name === preset.name &&
+          selectedPreset?.kind === preset.kind
+        const isDisabled = !['ok', null].includes(preset['eval-status'])
+        const getIconColor = () => {
+          if (isDisabled) return 'text-grey-dark'
+          if (isSelected) return 'text-white'
+          return 'text-blue-bright'
+        }
+        const countWithSameNames = names.get(preset.name) || 0
+        const showingName =
+          countWithSameNames > 1
+            ? t('home.buildFlow.presetNameWithKind', {
+                name: preset.name,
+                kind: preset.kind,
+              })
+            : preset.name
+
+        return (
+          <Tooltip
+            theme="light"
+            key={preset.name + preset.kind}
+            title={isDisabled && t('home.buildFlow.notApplicableForXl')}
+            placement="top-start"
+          >
+            <div
+              onClick={() =>
+                !isDisabled && wizardStore.setSelectedPreset(preset, id)
+              }
             >
               <div
-                onClick={() =>
-                  !isDisabled && wizardStore.setSelectedPreset(preset, id)
-                }
+                className={cn(
+                  'w-full flex items-center py-2 px-4 leading-5 cursor-pointer',
+                  isSelected
+                    ? 'bg-blue-bright text-white'
+                    : 'hover:bg-blue-light',
+                  isDisabled && 'text-grey-dark',
+                )}
               >
-                <div
-                  className={cn(
-                    'w-full flex items-center py-2 px-4 leading-5 cursor-pointer',
-                    isSelected
-                      ? 'bg-blue-bright text-white'
-                      : 'hover:bg-blue-light',
-                    isDisabled && 'text-grey-dark',
-                  )}
-                >
-                  <Icon name="File" className={cn(getIconColor())} />
+                <Icon name="File" className={cn(getIconColor())} />
 
-                  <div className="ml-1.5">{preset.name}</div>
-                </div>
+                <div className="ml-1.5">{showingName}</div>
               </div>
-            </Tooltip>
-          )
-        })
+            </div>
+          </Tooltip>
+        )
+      })
     }
 
     return (

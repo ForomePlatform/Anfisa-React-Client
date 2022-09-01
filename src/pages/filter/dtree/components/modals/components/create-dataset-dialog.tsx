@@ -80,12 +80,6 @@ export const CreateDatasetDialog = observer(
     }, [isOpen, pathName])
 
     const saveDatasetAsync = async () => {
-      if (toJS(dirinfoStore.dsDistKeys).includes(value)) {
-        setError(DatasetCreationErrorsEnum.DatasetExists)
-
-        return
-      }
-
       const result = await operations.saveDatasetAsync(value, pathName)
 
       if (!result.ok && result.message) {
@@ -144,12 +138,16 @@ export const CreateDatasetDialog = observer(
       }
 
       if (
-        noSymbolPattern.test(name) ||
-        noFirstNumberPattern.test(name) ||
-        noSpacesPattern.test(name) ||
-        name.length > 250
+        noSymbolPattern.test(value) ||
+        noFirstNumberPattern.test(value) ||
+        noSpacesPattern.test(value) ||
+        value.length > 250
       ) {
         setError(DatasetCreationErrorsEnum.IncorrectName)
+      } else if (
+        toJS(dirinfoStore.dsDistKeys).some(dsName => dsName === name)
+      ) {
+        setError(DatasetCreationErrorsEnum.DatasetExists)
       } else {
         setError('')
       }
@@ -173,18 +171,15 @@ export const CreateDatasetDialog = observer(
         width="s"
       >
         <div className="flex flex-col">
-          <div>
-            <div className="mt-1">
-              <Input
-                disabled={!operations.isCreationOver}
-                value={value}
-                label={t('dsCreation.label')}
-                onChange={e => handleChange(e.target.value)}
-                dataTestId={DecisionTreesMenuDataCy.datasetNameInput}
-              />
-            </div>
-
-            <span className="text-12 text-red-secondary mt-2">{error}</span>
+          <div className="mt-1">
+            <Input
+              disabled={!operations.isCreationOver}
+              value={value}
+              label={t('dsCreation.label')}
+              onChange={e => handleChange(e.target.value)}
+              error={error}
+              dataTestId={DecisionTreesMenuDataCy.datasetNameInput}
+            />
           </div>
 
           {!isDone && pathName === PatnNameEnum.Ws && (

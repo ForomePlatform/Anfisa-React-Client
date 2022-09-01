@@ -86,6 +86,7 @@ export const SolutionCreateDialog = ({
           controlName,
         })}
         onChange={event => setSolutionName(event.target.value)}
+        error={hasError ? errorText : undefined}
       />
 
       <div className="flex flex-col mt-[16px] text-12">
@@ -99,10 +100,6 @@ export const SolutionCreateDialog = ({
           resetText="Choose the type"
         />
       </div>
-
-      {hasError && (
-        <div className="text-red-secondary text-12">{errorText}</div>
-      )}
     </Dialog>
   )
 }
