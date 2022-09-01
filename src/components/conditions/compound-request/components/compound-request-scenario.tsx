@@ -61,7 +61,7 @@ export const CompoundRequestScenario = ({
           <span>{t('funcCondition.counts')}</span>
         </div>
 
-        <div className="flex flex-1 justify-between pr-4 pl-5">
+        <div className="flex flex-1 justify-between px-2">
           {problemGroups.map((group: string, groupIndex: number) => {
             const value = getSelectedValue({
               group,
@@ -69,16 +69,21 @@ export const CompoundRequestScenario = ({
               requestCondition,
             })
             return (
-              <div className="flex items-center" key={group}>
+              <div
+                className="flex items-center flex-1 mr-2 last:mr-0"
+                key={group}
+              >
                 <span>{group}</span>
 
-                <Dropdown
-                  onChange={option =>
-                    onChangeScenario(requestIndex, option.value, groupIndex)
-                  }
-                  values={[{ value, label: value }]}
-                  options={selectOptions}
-                />
+                <div className="ml-2 flex-1 max-w-[75px]">
+                  <Dropdown
+                    onChange={option =>
+                      onChangeScenario(requestIndex, option.value, groupIndex)
+                    }
+                    values={[{ value, label: value }]}
+                    options={selectOptions}
+                  />
+                </div>
               </div>
             )
           })}
