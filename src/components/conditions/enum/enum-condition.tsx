@@ -52,7 +52,7 @@ export const EnumCondition = observer(
 
     const [searchValue, setSearchValue] = useState<string>('')
 
-    const scrollConrainerRef = useRef<HTMLDivElement>(null)
+    const scrollContainerRef = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
       setSearchValue('')
@@ -65,7 +65,7 @@ export const EnumCondition = observer(
     )
 
     useEffect(() => {
-      scrollConrainerRef.current?.scrollTo(0, 0)
+      scrollContainerRef.current?.scrollTo(0, 0)
     }, [filteredVariants.length])
 
     const handleCheckGroupItem = (checked: boolean, variant: TVariant) => {
@@ -220,7 +220,7 @@ export const EnumCondition = observer(
 
         {isDataReady ? (
           <div
-            ref={scrollConrainerRef}
+            ref={scrollContainerRef}
             style={{ height: listHeight }}
             className={cn('overflow-auto', className)}
           >
