@@ -73,6 +73,7 @@ export const NumericDialog = observer(
         <NumericCondition
           className="pt-3"
           attrData={attributeStatus}
+          isDataReady={!attributeStatus.incomplete}
           initialValue={initialNumericValue}
           controls={({ value, hasErrors }) => {
             const disabled =

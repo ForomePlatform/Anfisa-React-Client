@@ -6,6 +6,7 @@ import { adjustHistogramData } from '@core/histograms'
 import { t } from '@i18n'
 import { Checkbox } from '@ui/checkbox/checkbox'
 import { InputNumeric } from '@ui/input-numeric/input-numeric'
+import { Loader } from '@ui/loader'
 import { RangeSliderSide } from '@ui/range-slider'
 import { DecisionTreeModalDataCy } from '@data-testid'
 import { NumericPropertyStatusSubKinds } from '@service-providers/common/common.interface'
@@ -28,6 +29,7 @@ import { StrictnessSelect } from './strictness-select'
 
 export const NumericConditionRange = ({
   attrData,
+  isDataReady,
   initialValue,
   className,
   controls,
@@ -82,6 +84,10 @@ export const NumericConditionRange = ({
     updateValue(NumericValueIndex.IsZeroIncluded, event.target.checked)
     updateValue(NumericValueIndex.MinValue, null)
     updateValue(NumericValueIndex.MinStrictness, false)
+  }
+
+  if (!isDataReady) {
+    return <Loader size="m" />
   }
 
   return (

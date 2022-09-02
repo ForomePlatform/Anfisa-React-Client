@@ -40,6 +40,7 @@ export const NumericPanel = observer((): ReactElement | null => {
       <NumericCondition
         className="px-4"
         attrData={attributeStatus}
+        isDataReady={!attributeStatus.incomplete}
         initialValue={initialNumericValue}
         controls={({ value, hasErrors, clearValue }) => {
           const disabled =
