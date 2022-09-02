@@ -136,7 +136,8 @@ export class FilteringRegimeProvider extends ServiceProviderBase {
     const { response, unitsRequest } = await baseRequest()
 
     let result = response
-    let incompleteProps = getIncompleteProps(response.units)
+
+    let incompleteProps = getIncompleteProps(result.units)
     progressBarStore.incompleteProps = incompleteProps
 
     while (incompleteProps.length > 0) {
@@ -145,7 +146,7 @@ export class FilteringRegimeProvider extends ServiceProviderBase {
       }
 
       if (onPartialResponse) {
-        onPartialResponse(response)
+        onPartialResponse(result)
       }
 
       const { units } = await this.getStatUnits(
