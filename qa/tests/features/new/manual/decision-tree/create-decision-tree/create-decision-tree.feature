@@ -149,21 +149,3 @@ Examples:
 	| ACMG analysis            |
 	| Phenotype based analysis |
 	| Genetic first analysis   |
-
-@regression
-Scenario Outline: 14 Open Created custom Decision tree from "<Analysis1>"
-	When User clicks "Forome" logo after creation of custom decision tree with one of the Solution pack value
-	And Clicks "xl_PGP3140_wgs_NIST-4_2" dataset
-	And Clicks "Continue" when "Whole genome/exome" radio button is checked
-	And Clicks "<Analysis1>" radio button
-	And Clicks "Continue" on "What's next?" panel
-	And Created custom presets according to current Solution pack are shown
-	And Clicks one of the preset
-	And Clicks "Open" button
-	Then Decision tree of chosen preset should be opened
-
-Examples: 
-	| Analysis1                |
-	| ACMG analysis            |
-	| Phenotype based analysis |
-	| Genetic first analysis   |
