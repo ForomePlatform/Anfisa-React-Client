@@ -45,7 +45,7 @@ export const EnumPanel = observer((): ReactElement => {
 
       <EnumCondition
         selectedAttributeStatus={attributeStatus}
-        isDataReady={filterStore.downloadedAmount === 100}
+        isDataReady={!attributeStatus?.incomplete}
         attributeName={attributeName}
         enumVariants={enumVariants}
         attributeSubKind={attributeSubKind}

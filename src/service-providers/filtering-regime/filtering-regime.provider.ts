@@ -136,7 +136,6 @@ export class FilteringRegimeProvider extends ServiceProviderBase {
     const { response, unitsRequest } = await baseRequest()
 
     let result = response
-
     let incompleteProps = getIncompleteProps(result.units)
     progressBarStore.incompleteProps = incompleteProps
 
