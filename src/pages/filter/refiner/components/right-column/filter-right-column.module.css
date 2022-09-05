@@ -16,4 +16,21 @@
     flex: 1 0 0;
     overflow: auto;
   }
+
+  &__action {
+    font-weight: 500;
+    margin-left: 8px;
+    cursor: not-allowed;
+    color: theme("colors.grey.blue");
+    user-select: none;
+
+    &:hover {
+      color: theme("colors.blue.lighter");
+    }
+
+    &_active {
+      color: theme("colors.blue.bright");
+      cursor: pointer;
+    }
+  }
 }

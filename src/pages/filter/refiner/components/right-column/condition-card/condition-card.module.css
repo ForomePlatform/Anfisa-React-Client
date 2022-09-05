@@ -1,54 +1,61 @@
 .condition-card {
+  @apply typography-s;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: theme("padding.15");
+  margin: 12px 16px;
+  border-radius: theme("borderRadius.lg");
+  box-shadow: 0 2px 8px rgb(105 105 105 / 25%);
+  cursor: grab;
+
+  &:first-child {
+    margin-top: 5px;
+  }
+
   &_active {
     background: theme("colors.blue.tertiary");
-  }
-
-  &::after {
-    content: "";
-    display: block;
-    height: 0;
-    margin: 0 theme("spacing.4");
-    border-bottom: 1px solid theme("colors.grey.light");
-  }
-
-  &:last-of-type &::after {
-    display: none;
-  }
-
-  &__title {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
-
-  &:first-of-type &__title {
-    border-top: 0;
+    outline: 1px solid theme("colors.blue.bright");
   }
 
   &__filter-name {
-    @apply typography-m;
+    font-weight: 700;
+    margin-right: 6px;
+  }
 
-    flex: 1 0 100%;
+  &__content {
     display: flex;
-    align-items: center;
-    font-weight: theme("fontWeight.bold");
-    padding: theme("spacing.4") theme("spacing.10");
-    cursor: move;
+    width: 100%;
+
+    &_open {
+      display: block;
+    }
   }
 
   &__join-mode {
-    margin-left: theme("spacing.1");
+    margin: 0 4px;
+  }
+
+  &__multipoint {
+    &::before {
+      content: "";
+      display: inline-block;
+      background: theme("colors.grey.disabled");
+      height: 20px;
+      width: 2px;
+      border-radius: 50%;
+      margin: 0 6px -5px;
+    }
   }
 
   &__toggle-button {
-    position: absolute;
-    padding: theme("spacing.2");
-    left: theme("spacing.2");
-    color: theme("colors.grey.blue");
+    color: theme("colors.blue.bright");
     cursor: pointer;
+    padding: theme("spacing.1");
 
     &:hover {
-      color: theme("colors.blue.bright");
+      color: theme("colors.blue.lighter");
     }
 
     svg {
@@ -59,16 +66,5 @@
     &_open svg {
       transform: rotate(90deg);
     }
-  }
-
-  &__options {
-    position: absolute;
-    right: theme("spacing.2");
-  }
-
-  &__content {
-    border-top: 1px solid theme("colors.grey.light");
-    margin: 0 theme("spacing.4");
-    padding: theme("spacing.4") 0 theme("spacing.4") theme("spacing.6");
   }
 }
