@@ -134,6 +134,7 @@ Scenario: 12 Cancel custom Decision Tree deletion
 	Then custom Decision Tree should not be deleted
 
 @regression
+@tc:114778
 Scenario Outline: 13 Create Custom decision tree with Solution pack "<Value1>"
 	Given Attribute was added to the first step of Decision Tree
 	When user clicks "Create Decision Tree" button
