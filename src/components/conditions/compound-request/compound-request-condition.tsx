@@ -190,7 +190,8 @@ export const CompoundRequestCondition = observer(
           groupsLength: problemGroups.length,
         }),
       )
-    }, [activeRequestIndex, affectedGroup, problemGroups, requestCondition])
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
       <>

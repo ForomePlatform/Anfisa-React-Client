@@ -95,7 +95,9 @@ export const CustomInheritanceModeCondition = observer(
 
     useEffect(() => {
       setSelectValues(getSelectValues(scenario, problemGroups))
+    }, [affectedGroup, problemGroups, scenario])
 
+    useEffect(() => {
       setPreparedScenarioName(
         getScenarioName({
           scenario,
@@ -103,7 +105,8 @@ export const CustomInheritanceModeCondition = observer(
           groupsLength: problemGroups.length,
         }),
       )
-    }, [affectedGroup, problemGroups, scenario])
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 
     return (
       <>
