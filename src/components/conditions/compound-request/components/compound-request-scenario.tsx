@@ -43,7 +43,7 @@ export const CompoundRequestScenario = ({
           handleSetActiveRequestCondition(requestIndex)
         }}
       >
-        <div className="flex flex-1 justify-start items-center mb-2 px-4">
+        <div className="flex flex-1 justify-start items-center mb-2 px-1">
           <span>{t('funcCondition.atLeast')}</span>
 
           <InputNumeric
@@ -55,7 +55,7 @@ export const CompoundRequestScenario = ({
                 onChangeRequestConditionNumber(requestIndex, value)
               }
             }}
-            className="cursor-pointer h-7 w-[60px] mx-2"
+            className="cursor-pointer h-8 max-w-[75px] mx-2"
           />
 
           <span>{t('funcCondition.counts')}</span>

@@ -27,7 +27,7 @@
       }
 
       &_selected {
-        color: theme("colors.blue.bright");
+        color: theme("colors.blue.bright") !important;
         font-weight: 500 !important;
 
         & > label > span {
@@ -85,9 +85,11 @@
 
     &_selected {
       background-color: theme("colors.blue.bright");
+      color: theme("colors.white");
 
       &:hover {
         background-color: theme("colors.blue.bright");
+        color: theme("colors.white");
       }
     }
 
@@ -109,9 +111,11 @@
 
     &_selected {
       background-color: theme("colors.blue.bright");
+      color: theme("colors.white");
 
       &:hover {
         background-color: theme("colors.blue.bright");
+        color: theme("colors.white");
       }
     }
 
