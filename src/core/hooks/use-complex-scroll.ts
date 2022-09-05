@@ -33,6 +33,7 @@ const getMouseDownHandler =
     element.style.userSelect = 'none'
 
     document.addEventListener('mousemove', mouseMoveHandler)
+
     document.addEventListener(
       'mouseup',
       () => {
@@ -66,17 +67,17 @@ export const useComplexScroll = (
     const el = ref.current
     if (el && enabled) {
       const mouseHandler = getMouseDownHandler(direction, onScroll)
-      const wheelHandler = () => onScroll?.()
+      const scrollHandler = () => onScroll?.()
 
       el.addEventListener('mousedown', mouseHandler, {
         capture: true,
       })
 
-      el.addEventListener('wheel', wheelHandler)
+      el.addEventListener('scroll', scrollHandler)
 
       return () => {
         el.removeEventListener('mousedown', mouseHandler)
-        el.removeEventListener('wheel', wheelHandler)
+        el.removeEventListener('scroll', scrollHandler)
       }
     }
   }, [ref, direction, enabled, onScroll])
