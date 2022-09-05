@@ -79,7 +79,7 @@ Scenario Outline: 07 Add one "<NameField>" field containing one filter
 Examples:
 	| NameField     | NameFilter       |
 	| Callers       | BGM_AUTO_DOM     |
-	| Has_Variant   | father [NA24149] |
+	| Has_Variant   | father [HG003]   |
 	| Variant_Class | deletion         |
 
 @regression
@@ -95,7 +95,7 @@ Scenario Outline: 08 Add one "<NameField>" field containing few filters
 Examples:
 	| NameField     | NameFilter1      | NameFilter2      |
 	| Callers       | BGM_AUTO_DOM     | BGM_CMPD_HET     |
-	| Has_Variant   | father [NA24149] | mother [NA24143] |
+	| Has_Variant   | father [HG003]   | mother [HG004]   |
 	| Variant_Class | deletion         | SNV              |
 
 @regression
@@ -128,8 +128,8 @@ Scenario Outline: 11 Join "<NameField1>" and "<NameField2>" by AND
 
 Examples:
 	| NameField1    | NameFilter1      | NameField2    | NameFilter2      |
-	| Callers       | BGM_AUTO_DOM     | Has_Variant   | mother [NA24143] |
-	| Has_Variant   | father [NA24149] | Variant_Class | SNV              |
+	| Callers       | BGM_AUTO_DOM     | Has_Variant   | mother [HG004]   |
+	| Has_Variant   | father [HG003]   | Variant_Class | SNV              |
 	| Variant_Class | deletion         | Callers       | BGM_AUTO_DOM     |
 
 @regression
@@ -146,8 +146,8 @@ Scenario Outline: 12 Join "<NameField1>" and "<NameField2>" by OR
 
 Examples:
 	| NameField1    | NameFilter1      | NameField2    | NameFilter2      |
-	| Callers       | BGM_AUTO_DOM     | Has_Variant   | mother [NA24143] |
-	| Has_Variant   | father [NA24149] | Variant_Class | SNV              |
+	| Callers       | BGM_AUTO_DOM     | Has_Variant   | mother [HG004]   |
+	| Has_Variant   | father [HG003]   | Variant_Class | SNV              |
 	| Variant_Class | deletion         | Callers       | BGM_AUTO_DOM     |
 
 @regression
@@ -162,8 +162,8 @@ Scenario Outline: 13 Replace "<NameField1>" with "<NameField2>"
 
 Examples:
 	| NameField1    | NameFilter1      | NameField2    | NameFilter2      |
-	| Callers       | BGM_AUTO_DOM     | Has_Variant   | mother [NA24143] |
-	| Has_Variant   | father [NA24149] | Variant_Class | SNV              |
+	| Callers       | BGM_AUTO_DOM     | Has_Variant   | mother [HG004]   |
+	| Has_Variant   | father [HG003]   | Variant_Class | SNV              |
 	| Variant_Class | deletion         | Callers       | BGM_AUTO_DOM     |
 
 @regression
@@ -202,8 +202,8 @@ Scenario Outline: 17 Add "<NameField2>" attribute to second step
 
 Examples:
 	| NameField1    | NameFilter1      | NameField2    | NameFilter2      |
-	| Callers       | BGM_AUTO_DOM     | Has_Variant   | mother [NA24143] |
-	| Has_Variant   | father [NA24149] | Variant_Class | SNV              |
+	| Callers       | BGM_AUTO_DOM     | Has_Variant   | mother [HG004]   |
+	| Has_Variant   | father [HG003]   | Variant_Class | SNV              |
 	| Variant_Class | deletion         | Callers       | BGM_AUTO_DOM     |
 
 @tc:114019

@@ -132,3 +132,20 @@ Scenario: 12 Cancel custom Decision Tree deletion
 	And "Delete Decision Tree" dialog is shown
 	And user clicks "No, Keep Decision Tree" or "x" button
 	Then custom Decision Tree should not be deleted
+
+@regression
+Scenario Outline: 13 Create Custom decision tree with Solution pack "<Value1>"
+	Given Attribute was added to the first step of Decision Tree
+	When user clicks "Create Decision Tree" button
+	And user writes valid name in the name field
+	And clicks "Choose the type" drop-down menu
+	And Chooses "<Value1>" 
+	And Clicks "Create" button
+	Then Custom decision tree should be created
+	And Message about creation should be shown
+
+Examples: 
+	| Value                    |
+	| ACMG analysis            |
+	| Phenotype based analysis |
+	| Genetic first analysis   |
