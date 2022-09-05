@@ -1,5 +1,6 @@
 import { ReactElement, useEffect, useMemo, useState } from 'react'
 import cn from 'classnames'
+import cloneDeep from 'lodash/cloneDeep'
 import isEmpty from 'lodash/isEmpty'
 import { observer } from 'mobx-react-lite'
 
@@ -31,6 +32,7 @@ import {
 export const CompoundRequestCondition = observer(
   ({
     problemGroups,
+    affectedGroup,
     initialMode,
     initialApprox,
     initialRequestCondition,
@@ -42,7 +44,6 @@ export const CompoundRequestCondition = observer(
   }: ICompoundRequestProps): ReactElement => {
     const { variants, isFetching, status } = statFuncStore
     const variantsValue = variants && variants[0][1]
-
     const [requestCondition, setRequestCondition] = useState<
       TRequestCondition[]
     >(initialRequestCondition)
@@ -69,12 +70,13 @@ export const CompoundRequestCondition = observer(
     const handleSetPreparedScenario = (preparedScenarioName: string) => {
       setPreparedScenarioName(preparedScenarioName)
 
-      const preparedScenario = getPreparedScenario(
+      const preparedScenario = getPreparedScenario({
         preparedScenarioName,
         problemGroups,
-      )
+        affectedGroup,
+      })
 
-      const clonedRequestCondition = [...requestCondition]
+      const clonedRequestCondition = cloneDeep(requestCondition)
       clonedRequestCondition[activeRequestIndex][1] = preparedScenario
 
       setRequestCondition(clonedRequestCondition)
@@ -114,7 +116,13 @@ export const CompoundRequestCondition = observer(
 
       const currentRequest = requestCondition[requestBlockIndex]
 
-      setPreparedScenarioName(getScenarioName(currentRequest[1]) || '')
+      setPreparedScenarioName(
+        getScenarioName({
+          scenario: currentRequest[1],
+          affectedGroup,
+          groupsLength: problemGroups.length,
+        }),
+      )
       onTouch?.()
     }
 
@@ -150,9 +158,11 @@ export const CompoundRequestCondition = observer(
         setActiveRequestIndex(newRequestCondition.length - 1)
         setRequestCondition(newRequestCondition)
         setPreparedScenarioName(
-          getScenarioName(
-            newRequestCondition[newRequestCondition.length - 1][1],
-          ),
+          getScenarioName({
+            scenario: newRequestCondition[newRequestCondition.length - 1][1],
+            affectedGroup,
+            groupsLength: problemGroups.length,
+          }),
         )
       }
     }
@@ -174,9 +184,13 @@ export const CompoundRequestCondition = observer(
 
     useEffect(() => {
       setPreparedScenarioName(
-        getScenarioName(requestCondition[requestCondition.length - 1][1]),
+        getScenarioName({
+          scenario: requestCondition[activeRequestIndex][1],
+          affectedGroup,
+          groupsLength: problemGroups.length,
+        }),
       )
-    }, [requestCondition])
+    }, [activeRequestIndex, affectedGroup, problemGroups, requestCondition])
 
     return (
       <>

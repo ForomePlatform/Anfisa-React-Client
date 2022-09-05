@@ -11,6 +11,7 @@ import { savePanelAttribute } from '../../../utils/save-pannel-attribute'
 
 export const CustomInheritanceMode = observer(() => {
   const {
+    affectedGroup,
     attributeName,
     problemGroups,
     initialScenario,
@@ -36,6 +37,7 @@ export const CustomInheritanceMode = observer(() => {
 
   return (
     <CustomInheritanceModeCondition
+      affectedGroup={affectedGroup}
       problemGroups={problemGroups}
       initialScenario={initialScenario}
       initialMode={initialMode}

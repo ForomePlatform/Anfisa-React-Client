@@ -18,6 +18,8 @@ interface IAspectTableViewProps {
   columnRef?: Ref<HTMLTableDataCellElement>
 }
 
+const titleRowWithLinks = 'IGV' // Contains outdated links
+
 export const AspectTableView = ({
   className,
   aspect,
@@ -62,7 +64,9 @@ export const AspectTableView = ({
                 </tr>
               )}
               {rows?.map((row, index) => {
-                if (!row) return <tr key={index} />
+                if (!row || row.title === titleRowWithLinks) {
+                  return <tr key={index} />
+                }
 
                 const isSearched = searchValue.trim()
                   ? row.title

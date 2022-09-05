@@ -23,6 +23,7 @@ import { getNewScenario } from './custom-inheritance-mode.utils'
 
 export const CustomInheritanceModeCondition = observer(
   ({
+    affectedGroup,
     problemGroups,
     initialScenario,
     initialMode,
@@ -56,10 +57,11 @@ export const CustomInheritanceModeCondition = observer(
     const handleSetPreparedScenario = (preparedScenarioName: string) => {
       setPreparedScenarioName(preparedScenarioName)
 
-      const preparedScenario = getPreparedScenario(
+      const preparedScenario = getPreparedScenario({
         preparedScenarioName,
         problemGroups,
-      )
+        affectedGroup,
+      })
 
       setScenario(preparedScenario)
 
@@ -93,8 +95,15 @@ export const CustomInheritanceModeCondition = observer(
 
     useEffect(() => {
       setSelectValues(getSelectValues(scenario, problemGroups))
-      setPreparedScenarioName(getScenarioName(scenario))
-    }, [problemGroups, scenario])
+
+      setPreparedScenarioName(
+        getScenarioName({
+          scenario,
+          affectedGroup,
+          groupsLength: problemGroups.length,
+        }),
+      )
+    }, [affectedGroup, problemGroups, scenario])
 
     return (
       <>
