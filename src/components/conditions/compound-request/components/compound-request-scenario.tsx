@@ -47,7 +47,7 @@ export const CompoundRequestScenario = ({
                 onChangeRequestConditionNumber(requestIndex, value)
               }
             }}
-            className="cursor-pointer h-7 w-[60px] mx-2"
+            className="cursor-pointer h-7 w-[65px] mx-2"
           />
 
           <span>{t('funcCondition.counts')}</span>
@@ -68,7 +68,7 @@ export const CompoundRequestScenario = ({
                   onChange={e =>
                     onChangeScenario(requestIndex, e.target.value, groupIndex)
                   }
-                  className="pl-2 pr-3 py-1 ml-2 w-[60px] bg-white"
+                  className="pl-2 pr-3 py-1 ml-2 w-[65px] bg-white"
                   options={selectOptions}
                   value={value}
                 />

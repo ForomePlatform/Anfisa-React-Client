@@ -13,6 +13,7 @@ import { renderAttributeDialogControls } from '../ui/renderAttributeControls'
 export const CustomInheritanceModeDialog = observer(
   ({ funcStore, onAddFunc, onSaveFunc }: IFuncDialogProps): ReactElement => {
     const {
+      affectedGroup,
       attributeName,
       problemGroups,
       initialScenario,
@@ -66,6 +67,7 @@ export const CustomInheritanceModeDialog = observer(
         isHiddenActions={true}
       >
         <CustomInheritanceModeCondition
+          affectedGroup={affectedGroup}
           problemGroups={problemGroups}
           initialScenario={initialScenario}
           initialMode={initialMode}

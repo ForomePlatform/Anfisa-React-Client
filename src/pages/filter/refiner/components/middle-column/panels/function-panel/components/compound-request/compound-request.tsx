@@ -12,6 +12,7 @@ import { savePanelAttribute } from '../../../utils/save-pannel-attribute'
 export const CompoundRequest = observer((): ReactElement => {
   const {
     attributeName,
+    affectedGroup,
     problemGroups,
     initialApprox,
     initialRequestCondition,
@@ -37,6 +38,7 @@ export const CompoundRequest = observer((): ReactElement => {
 
   return (
     <CompoundRequestCondition
+      affectedGroup={affectedGroup}
       problemGroups={problemGroups}
       initialApprox={initialApprox}
       initialRequestCondition={initialRequestCondition}

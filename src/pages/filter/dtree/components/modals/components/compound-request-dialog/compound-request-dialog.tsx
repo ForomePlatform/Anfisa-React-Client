@@ -13,6 +13,7 @@ import { renderAttributeDialogControls } from '../ui/renderAttributeControls'
 export const CompoundRequestDialog = observer(
   ({ funcStore, onAddFunc, onSaveFunc }: IFuncDialogProps): ReactElement => {
     const {
+      affectedGroup,
       problemGroups,
       attributeName,
       initialApprox,
@@ -68,6 +69,7 @@ export const CompoundRequestDialog = observer(
         isHiddenActions={true}
       >
         <CompoundRequestCondition
+          affectedGroup={affectedGroup}
           problemGroups={problemGroups}
           initialApprox={initialApprox}
           initialRequestCondition={initialRequestCondition}

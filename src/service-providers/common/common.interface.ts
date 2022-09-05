@@ -203,6 +203,7 @@ export interface IFuncPropertyStatus
   request?: [string, string[]][]
   family?: string[]
   'approx-modes'?: string[][]
+  affected: string[]
 }
 
 export type TPropertyStatus =
