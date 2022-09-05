@@ -32,6 +32,10 @@
   transition: all 0.2s;
   cursor: pointer;
 
+  &:hover {
+    border: 1px solid theme("colors.blue.bright");
+  }
+
   &_disabled {
     cursor: not-allowed;
   }

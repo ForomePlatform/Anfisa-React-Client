@@ -1,0 +1,18 @@
+.dropdown-menu {
+  border-radius: 4px;
+  padding: 8px 0;
+  box-shadow: theme("boxShadow.card");
+  display: flex;
+  flex-direction: column;
+  min-width: fit-content !important;
+
+  &_primary {
+    background-color: theme("colors.white");
+    color: theme("colors.blue.dark")
+  }
+
+  &_primary-dark {
+    background-color: theme("colors.blue.lighter");
+    color: theme("colors.white");
+  }
+}

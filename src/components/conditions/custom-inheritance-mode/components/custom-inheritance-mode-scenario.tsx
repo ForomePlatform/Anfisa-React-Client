@@ -2,9 +2,18 @@ import { ReactElement } from 'react'
 import cn from 'classnames'
 
 import { t } from '@i18n'
-import { Select } from '@ui/select'
+import { Dropdown } from '@components/dropdown'
+import { IDropdownValue } from '@components/dropdown/dropdown.interfaces'
 import { ICustomInheritanceModeScenarioProps } from '../custom-inheritance-mode.interface'
-const selectOptions = ['--', '0', '0-1', '1', '1-2', '2']
+
+const selectOptions: IDropdownValue<string>[] = [
+  '--',
+  '0',
+  '0-1',
+  '1',
+  '1-2',
+  '2',
+].map(value => ({ value, label: value }))
 
 export const CustomInheritanceModeScenario = ({
   problemGroups,
@@ -19,15 +28,18 @@ export const CustomInheritanceModeScenario = ({
 
     <div className="flex items-center justify-between w-full text-14">
       {problemGroups.map((group: string, index: number) => (
-        <div key={group}>
+        <div key={group} className="flex items-center flex-1 mr-2 last:mr-0">
           <span>{group}</span>
 
-          <Select
-            onChange={e => onChangeScenario(index, e.target.value)}
-            className="w-auto ml-2 pl-2 pr-3 py-1 bg-white border-grey-disabled"
-            options={selectOptions}
-            value={selectValues[index]}
-          />
+          <div className="ml-2 flex-1 max-w-[75px]">
+            <Dropdown
+              onChange={option => onChangeScenario(index, option.value)}
+              values={[
+                { value: selectValues[index], label: selectValues[index] },
+              ]}
+              options={selectOptions}
+            />
+          </div>
         </div>
       ))}
     </div>

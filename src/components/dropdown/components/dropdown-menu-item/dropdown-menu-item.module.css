@@ -1,0 +1,128 @@
+.dropdown-menu-item {
+  @apply typography-s;
+
+  padding: 6px 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  overflow-x: hidden;
+  flex-wrap: wrap;
+
+  &__checkbox {
+    margin-right: 8px;
+  }
+
+  &__checkboxed {
+    &_primary {
+      &:hover {
+        color: theme("colors.blue.bright");
+
+        & > label > span {
+          border-color: theme("colors.blue.bright");
+        }
+      }
+
+      &_hover {
+        color: theme("colors.blue.bright");
+      }
+
+      &_selected {
+        color: theme("colors.blue.bright") !important;
+        font-weight: 500 !important;
+
+        & > label > span {
+          font-weight: 500 !important;
+        }
+      }
+
+      &_disabled {
+        color: theme("colors.grey.blue") !important;
+        opacity: 50;
+        cursor: none;
+      }
+    }
+
+    &_primary-dark {
+      &:hover {
+        color: theme("colors.blue.bright");
+        background-color: theme("colors.blue.secondary");
+
+        & > label > span {
+          border-color: theme("colors.blue.bright");
+        }
+      }
+
+      &_hover {
+        color: theme("colors.blue.bright");
+        background-color: theme("colors.blue.secondary");
+      }
+
+      &_selected {
+        color: theme("colors.blue.bright");
+        font-weight: 500 !important;
+
+        & > label > span {
+          font-weight: 500 !important;
+        }
+      }
+
+      &_disabled {
+        color: theme("colors.blue.secondary") !important;
+        opacity: 50;
+        cursor: none;
+      }
+    }
+  }
+
+  &_primary {
+    &:hover {
+      background-color: theme("colors.blue.light");
+    }
+
+    &_hover {
+      background-color: theme("colors.blue.light");
+    }
+
+    &_selected {
+      background-color: theme("colors.blue.bright");
+      color: theme("colors.white");
+
+      &:hover {
+        background-color: theme("colors.blue.bright");
+        color: theme("colors.white");
+      }
+    }
+
+    &_disabled {
+      color: theme("colors.grey.blue") !important;
+      opacity: 50;
+      cursor: none;
+    }
+  }
+
+  &_primary-dark {
+    &:hover {
+      background-color: theme("colors.blue.secondary");
+    }
+
+    &_hover {
+      background-color: theme("colors.blue.secondary");
+    }
+
+    &_selected {
+      background-color: theme("colors.blue.bright");
+      color: theme("colors.white");
+
+      &:hover {
+        background-color: theme("colors.blue.bright");
+        color: theme("colors.white");
+      }
+    }
+
+    &_disabled {
+      color: theme("colors.blue.secondary") !important;
+      opacity: 50;
+      cursor: none;
+    }
+  }
+}

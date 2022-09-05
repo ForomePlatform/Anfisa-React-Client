@@ -51,8 +51,8 @@ export const CompoundHetCondition = observer(
     return (
       <>
         <AprroxAndState
-          approx={approx}
-          onChangeApprox={setApprox}
+          approx={[{ value: approx, label: approx }]}
+          onChangeApprox={option => setApprox(option.value)}
           className={className}
         />
 

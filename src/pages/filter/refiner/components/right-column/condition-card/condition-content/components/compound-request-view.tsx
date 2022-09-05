@@ -20,7 +20,7 @@ export const CompoundRequestView = ({
   const problemGroups = getDefaultProblemGroups(
     FuncStepTypesEnum.CompoundRequest,
   )
-  const approx: string = filterExpression['approx'] || approxOptions[2]
+  const approx: string = filterExpression['approx'] || approxOptions[2].value
   const state: string = filterExpression['state'] || 'current'
   const request = filterExpression['request']
 

@@ -3,11 +3,19 @@ import cn from 'classnames'
 
 import { t } from '@i18n'
 import { InputNumeric } from '@ui/input-numeric/input-numeric'
-import { Select } from '@ui/select'
+import { Dropdown } from '@components/dropdown'
+import { IDropdownValue } from '@components/dropdown/dropdown.interfaces'
 import { ICompoundRequestScenarioProps } from '../compound-request.interface'
 import { getSelectedValue } from '../compound-request.utils'
 
-const selectOptions = ['--', '0', '0-1', '1', '1-2', '2']
+const selectOptions: IDropdownValue<string>[] = [
+  '--',
+  '0',
+  '0-1',
+  '1',
+  '1-2',
+  '2',
+].map(value => ({ value, label: value }))
 
 export const CompoundRequestScenario = ({
   className,
@@ -35,7 +43,7 @@ export const CompoundRequestScenario = ({
           handleSetActiveRequestCondition(requestIndex)
         }}
       >
-        <div className="flex flex-1 justify-start items-center mb-2 px-4">
+        <div className="flex flex-1 justify-start items-center mb-2 px-1">
           <span>{t('funcCondition.atLeast')}</span>
 
           <InputNumeric
@@ -47,13 +55,13 @@ export const CompoundRequestScenario = ({
                 onChangeRequestConditionNumber(requestIndex, value)
               }
             }}
-            className="cursor-pointer h-7 w-[65px] mx-2"
+            className="cursor-pointer h-8 max-w-[75px] mx-2"
           />
 
           <span>{t('funcCondition.counts')}</span>
         </div>
 
-        <div className="flex flex-1 justify-between pr-4 pl-5">
+        <div className="flex flex-1 justify-between px-2">
           {problemGroups.map((group: string, groupIndex: number) => {
             const value = getSelectedValue({
               group,
@@ -61,17 +69,21 @@ export const CompoundRequestScenario = ({
               requestCondition,
             })
             return (
-              <div className="flex items-center" key={group}>
+              <div
+                className="flex items-center flex-1 mr-2 last:mr-0"
+                key={group}
+              >
                 <span>{group}</span>
 
-                <Select
-                  onChange={e =>
-                    onChangeScenario(requestIndex, e.target.value, groupIndex)
-                  }
-                  className="pl-2 pr-3 py-1 ml-2 w-[65px] bg-white"
-                  options={selectOptions}
-                  value={value}
-                />
+                <div className="ml-2 flex-1 max-w-[75px]">
+                  <Dropdown
+                    onChange={option =>
+                      onChangeScenario(requestIndex, option.value, groupIndex)
+                    }
+                    values={[{ value, label: value }]}
+                    options={selectOptions}
+                  />
+                </div>
               </div>
             )
           })}
