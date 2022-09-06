@@ -3,30 +3,36 @@ import styles from './dataset-info.module.css'
 import { FC, useMemo, useRef } from 'react'
 import cn, { Argument } from 'classnames'
 import { startCase } from 'lodash'
-import { observer } from 'mobx-react-lite'
 
 import { useFullScreenView } from '@core/hooks/use-fullscreen-view'
 import { t } from '@i18n'
-import datasetStore from '@store/dataset/dataset'
 import { Card, CardTitle } from '@ui/card'
 import { Icon } from '@ui/icon'
 import { Loader } from '@ui/loader'
+import { TCardPosition } from '@pages/main/components/selected-dataset/build-flow/components/wizard/wizard.interface'
 import { Ancestors } from '@pages/main/components/selected-dataset/components/dataset-info/components/ancestors'
 import { TableRows } from '@pages/main/components/selected-dataset/components/dataset-info/components/table-rows'
-import { Versions } from '@service-providers/dataset-level'
+import { IDsInfo, Versions } from '@service-providers/dataset-level'
 import { INFO } from './dataset-info.constants'
 import { Row } from './dataset-info.interfaces'
 
 interface IDatasetInfoProps {
+  info?: IDsInfo
+  isLoading: boolean
+  position?: TCardPosition
   className?: Argument
 }
 
-export const DatasetInfo: FC<IDatasetInfoProps> = observer(({ className }) => {
+export const DatasetInfo: FC<IDatasetInfoProps> = ({
+  className,
+  info,
+  isLoading,
+  position = 'stretch',
+}) => {
   const ref = useRef<HTMLDivElement>(null)
 
   const [isExpanded, toggle] = useFullScreenView(ref)
 
-  const { dsInfoData: info, isLoading } = datasetStore
   const versions = info?.meta.versions
   const receipts = info?.receipts
 
@@ -46,7 +52,7 @@ export const DatasetInfo: FC<IDatasetInfoProps> = observer(({ className }) => {
     <Card
       innerRef={ref}
       className={cn(styles.datasetInfo, className)}
-      position="stretch"
+      position={position}
     >
       <header
         className={cn(
@@ -91,4 +97,4 @@ export const DatasetInfo: FC<IDatasetInfoProps> = observer(({ className }) => {
       )}
     </Card>
   )
-})
+}
