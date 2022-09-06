@@ -12,8 +12,9 @@ export interface INumericConditionControlsProps
 }
 
 export interface INumericConditionProps {
-  className?: string
   attrData: INumericPropertyStatus
+  isDataReady: boolean
   initialValue?: TNumericConditionBounds
+  className?: string
   controls?: (props: INumericConditionControlsProps) => ReactElement | null
 }

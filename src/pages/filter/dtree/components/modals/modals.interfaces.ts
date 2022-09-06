@@ -7,7 +7,6 @@ import { IAddAttributeToStepProps } from '@utils/addAttributeToStep'
 export interface IModalsContainerProps {
   attributeStore: BaseAttributeStore
   funcStore: BaseFunctionsStore
-  isDataReady: boolean
   onAddEnum: (props: IAddAttributeToStepProps) => void
   onSaveEnum: (props: ISavePanelAttributeProps) => void
   onAddNumeric: (props: IAddAttributeToStepProps) => void
@@ -21,7 +20,6 @@ export interface ICommonDialogProps {
 }
 
 export interface IEnumDialogProps extends ICommonDialogProps {
-  isDataReady: boolean
   onAddEnum: (props: IAddAttributeToStepProps) => void
   onSaveEnum: (props: ISavePanelAttributeProps) => void
 }

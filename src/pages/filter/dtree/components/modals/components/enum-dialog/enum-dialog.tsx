@@ -13,7 +13,6 @@ import { renderAttributeDialogControls } from '../ui/renderAttributeControls'
 
 export const EnumDialog = observer(
   ({
-    isDataReady,
     attributeStore,
     onAddEnum,
     onSaveEnum,
@@ -91,7 +90,7 @@ export const EnumDialog = observer(
           initialVariants={initialVariants}
           initialEnumMode={initialEnumMode}
           isShowZeroes={dtreeAttributeStore.isShowZeroVariants}
-          isDataReady={isDataReady}
+          isDataReady={!attributeStatus?.incomplete}
           toggleShowZeroes={dtreeAttributeStore.setIsShowZeroVariants}
           listHeight={listHeight}
           selectedDashboardVariants={selectedEnumVariants}

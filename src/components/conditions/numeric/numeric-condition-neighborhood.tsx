@@ -3,6 +3,7 @@ import cn from 'classnames'
 
 import { t } from '@i18n'
 import { InputNumeric } from '@ui/input-numeric/input-numeric'
+import { Loader } from '@ui/loader'
 import {
   RangeSlider,
   RangeSliderMode,
@@ -21,6 +22,7 @@ import { NumericConditionDistanceChart } from './numeric-condition-distance-char
 
 export const NumericConditionNeighborhood = ({
   initialValue,
+  isDataReady,
   attrData,
   className,
   controls,
@@ -41,6 +43,10 @@ export const NumericConditionNeighborhood = ({
     (center !== null && (center < min || center > max)) ||
     (distance !== null && distance < 0)
   const maxDistance = isFloat ? (max - min) / 2 : Math.ceil((max - min) / 2)
+
+  if (!isDataReady) {
+    return <Loader size="m" />
+  }
 
   return (
     <>

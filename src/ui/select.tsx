@@ -44,10 +44,7 @@ export const Select = observer(({ ...rest }: ISelectProps): ReactElement => {
 
       {options &&
         options.map((option, index) => (
-          <option
-            key={Math.random()}
-            value={approx && values ? values[index] : option}
-          >
+          <option key={index} value={approx && values ? values[index] : option}>
             {option}
           </option>
         ))}
