@@ -26,7 +26,7 @@ export const changeNumericAttribute = (props: ISavePanelAttributeProps) => {
     if (index <= 1) filteredAttribute.push(element)
   })
 
-  filteredAttribute.push(props)
+  filteredAttribute.push(props.value)
 
   dtreeStore.fetchDtreeSetAsync({
     ds: datasetStore.datasetName,
