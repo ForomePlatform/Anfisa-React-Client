@@ -1,5 +1,9 @@
 # Change log 
 
+## <small>0.9.1 (9/6/2022)</small>
+
+* feat([FOROME-1593](https://quantori.atlassian.net/browse/FOROME-1593)): rework getting data via statunits method ([6020d71a](https://github.com/ForomePlatform/Anfisa-React-Client/commit/6020d71a))
+
 ## <small>0.8.1 (9/5/2022)</small>
 
 * fix([FOROME-1601](https://quantori.atlassian.net/browse/FOROME-1601)): compound request panel error ([2931d26c](https://github.com/ForomePlatform/Anfisa-React-Client/commit/2931d26c))
