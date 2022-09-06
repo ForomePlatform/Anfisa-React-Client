@@ -8,7 +8,6 @@ import {
   AttributeKinds,
   TNumericConditionBounds,
 } from '@service-providers/common'
-import { changeNumericAttribute } from '@utils/changeAttribute/changeNumericAttribute'
 import { INumericDialogProps } from '../../modals.interfaces'
 import modalsControlStore from '../../modals-control-store'
 import modalsVisibilityStore from '../../modals-visibility-store'
@@ -44,7 +43,6 @@ export const NumericDialog = observer(
         attributeName,
         value,
       })
-      changeNumericAttribute({ attributeKind: AttributeKinds.NUMERIC, value })
       modalsVisibilityStore.closeNumericDialog()
     }
 
