@@ -1,12 +1,10 @@
 import { ReactElement, useMemo } from 'react'
 import cn from 'classnames'
 
-import { NumericSelectTypes } from '@core/enum/numeric-select-types-enum'
 import { Icon } from '@ui/icon'
 
 interface IStrictnessSelectButtonProps {
   value: boolean
-  selectType: NumericSelectTypes
   onChange: (newValue: boolean) => void
   disabled?: boolean
 }
@@ -14,15 +12,11 @@ interface IStrictnessSelectButtonProps {
 export const StrictnessSelectButton = ({
   disabled,
   value,
-  selectType,
   onChange,
 }: IStrictnessSelectButtonProps): ReactElement => {
   const strictnessSign = useMemo(() => {
     return value ? <Icon name="LessOrEqualThan" /> : <Icon name="LessThan" />
   }, [value])
-
-  const signDirection =
-    selectType === NumericSelectTypes.Min ? 'scale(-1,1)' : ''
 
   return (
     <button
@@ -35,7 +29,6 @@ export const StrictnessSelectButton = ({
       onClick={() => onChange(value ? false : true)}
     >
       <div
-        style={{ transform: signDirection }}
         className={cn(
           'flex items-center justify-center w-full h-full rounded',
           disabled
