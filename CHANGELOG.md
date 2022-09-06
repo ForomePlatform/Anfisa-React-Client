@@ -2,6 +2,7 @@
 
 ## <small>0.9.1 (9/6/2022)</small>
 
+* fix([FOROME-1626](https://quantori.atlassian.net/browse/FOROME-1626)): numeric condition strictness signs ([ecc7bad2](https://github.com/ForomePlatform/Anfisa-React-Client/commit/ecc7bad2))
 * fix([FOROME-1618](https://quantori.atlassian.net/browse/FOROME-1618)): DT numeric condition editing ([06e39300](https://github.com/ForomePlatform/Anfisa-React-Client/commit/06e39300))
 * fix([FOROME-1424](https://quantori.atlassian.net/browse/FOROME-1424)): drawer scroll shadows ([1426bbd1](https://github.com/ForomePlatform/Anfisa-React-Client/commit/1426bbd1))
 * fix([FOROME-1599](https://quantori.atlassian.net/browse/FOROME-1599)): reset button in func attrs ([fc1537b2](https://github.com/ForomePlatform/Anfisa-React-Client/commit/fc1537b2))
