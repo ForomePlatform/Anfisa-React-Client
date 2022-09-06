@@ -1,7 +1,6 @@
 import React, { ReactElement, useCallback, useMemo, useState } from 'react'
 import cn from 'classnames'
 
-import { NumericSelectTypes } from '@core/enum/numeric-select-types-enum'
 import { adjustHistogramData } from '@core/histograms'
 import { t } from '@i18n'
 import { Checkbox } from '@ui/checkbox/checkbox'
@@ -123,7 +122,6 @@ export const NumericConditionRange = ({
             <div className="grow-0 mx-2">
               <StrictnessSelect
                 value={minStrictness}
-                selectType={NumericSelectTypes.Min}
                 onChange={v => updateValue(NumericValueIndex.MinStrictness, v)}
                 isDisabled={isZeroIncluded}
               />
@@ -140,7 +138,6 @@ export const NumericConditionRange = ({
             <div className="grow-0 mx-2">
               <StrictnessSelect
                 value={maxStrictness}
-                selectType={NumericSelectTypes.Max}
                 onChange={v => updateValue(NumericValueIndex.MaxStrictness, v)}
               />
             </div>
