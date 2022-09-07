@@ -44,11 +44,16 @@ export const NumericConditionRange = ({
   )
 
   const [scale] = (attrData['render-mode'] || '').split(',')
-  const { max: attrMax, histogram, 'sub-kind': subKind } = attrData
+  const {
+    max: attrMax,
+    min: attrMin,
+    histogram,
+    'sub-kind': subKind,
+  } = attrData
 
   const [minStep, setMinStep] = useState(0)
 
-  const min = isLimitedRange ? getFixedMinValue(minStep) : undefined
+  const min = isLimitedRange ? getFixedMinValue(minStep, attrMin) : undefined
   const max = isLimitedRange ? attrMax : undefined
 
   const histogramData = useMemo(
@@ -63,8 +68,8 @@ export const NumericConditionRange = ({
     value
 
   const errors = useMemo(
-    () => validateNumericValue(value, minStep, max),
-    [value, minStep, max],
+    () => validateNumericValue(value, min, max),
+    [value, min, max],
   )
 
   const handleRangeSliderChange = useCallback<
