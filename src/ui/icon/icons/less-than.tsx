@@ -9,8 +9,8 @@ export default {
       <path
         d="M7 9L1 5L7 1"
         stroke="#18A0FB"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   ),
