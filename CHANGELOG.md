@@ -1,7 +1,10 @@
 # Change log 
 
-## <small>0.9.1 (9/7/2022)</small>
+## <small>0.9.1 (9/6/2022)</small>
 
+* fix([FOROME-1626](https://quantori.atlassian.net/browse/FOROME-1626)): numeric condition strictness signs ([c1526eb8](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c1526eb8))
+* fix([FOROME-1625](https://quantori.atlassian.net/browse/FOROME-1625)): fix bug with min value (#940) ([3e3e8772](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3e3e8772))
+* fix([FOROME-1618](https://quantori.atlassian.net/browse/FOROME-1618)): DT numeric condition editing ([67544550](https://github.com/ForomePlatform/Anfisa-React-Client/commit/67544550))
 * fix([FOROME-1625](https://quantori.atlassian.net/browse/FOROME-1625)): fix bug with min value (#940) ([c4c16c73](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c4c16c73))
 * fix([FOROME-1626](https://quantori.atlassian.net/browse/FOROME-1626)): numeric condition strictness signs ([ecc7bad2](https://github.com/ForomePlatform/Anfisa-React-Client/commit/ecc7bad2))
 * fix([FOROME-1618](https://quantori.atlassian.net/browse/FOROME-1618)): DT numeric condition editing ([06e39300](https://github.com/ForomePlatform/Anfisa-React-Client/commit/06e39300))
@@ -152,6 +155,7 @@
 * feat([FOROME-1271](https://quantori.atlassian.net/browse/FOROME-1271)): implemented base history observer helper (#771) ([4676a6b3](https://github.com/ForomePlatform/Anfisa-React-Client/commit/4676a6b3))
 * fix([FOROME-1280](https://quantori.atlassian.net/browse/FOROME-1280)): enum modals and panels height ([9971be63](https://github.com/ForomePlatform/Anfisa-React-Client/commit/9971be63))
 * fix([FOROME-1265](https://quantori.atlassian.net/browse/FOROME-1265)): Changed copy for view variants btn (#759) ([79581c0f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/79581c0f))
+* feat([FOROME-1293](https://quantori.atlassian.net/browse/FOROME-1293)) Added changelog generator ([0de35283](https://github.com/ForomePlatform/Anfisa-React-Client/commit/0de35283))
 * feat([FOROME-1100](https://quantori.atlassian.net/browse/FOROME-1100)): fix comments ([e363fed0](https://github.com/ForomePlatform/Anfisa-React-Client/commit/e363fed0))
 * refactor([FOROME-1260](https://quantori.atlassian.net/browse/FOROME-1260)): implemented async stores for zones (#760) ([479dd0ff](https://github.com/ForomePlatform/Anfisa-React-Client/commit/479dd0ff))
 * feat([FOROME-1227](https://quantori.atlassian.net/browse/FOROME-1227)): fix comments ([c29e2e16](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c29e2e16))
@@ -236,7 +240,6 @@
 * refactor([FOROME-1103](https://quantori.atlassian.net/browse/FOROME-1103)): refactored stores for variant drawer and modal (#690) ([086aee28](https://github.com/ForomePlatform/Anfisa-React-Client/commit/086aee28))
 * refactor([FOROME-954](https://quantori.atlassian.net/browse/FOROME-954)): add async stores for dtree_set & dtree_counts ([af4f1722](https://github.com/ForomePlatform/Anfisa-React-Client/commit/af4f1722))
 * fix([FOROME-000](https://quantori.atlassian.net/browse/FOROME-000)): fixed ModalContent styles (#702) ([51d5fb96](https://github.com/ForomePlatform/Anfisa-React-Client/commit/51d5fb96))
-* fix([FOROME-000](https://quantori.atlassian.net/browse/FOROME-000)): fixed ModalContent styles ([dd5307c5](https://github.com/ForomePlatform/Anfisa-React-Client/commit/dd5307c5))
 * fix([FOROME-1143](https://quantori.atlassian.net/browse/FOROME-1143)): fixed adding numeric attributes with joining in dtree (#696) ([64b058a7](https://github.com/ForomePlatform/Anfisa-React-Client/commit/64b058a7))
 * fix([FOROME-1137](https://quantori.atlassian.net/browse/FOROME-1137)): fixes scroll in attributes modal on dtree (#699) ([dd45dfde](https://github.com/ForomePlatform/Anfisa-React-Client/commit/dd45dfde))
 * fix([FOROME-1138](https://quantori.atlassian.net/browse/FOROME-1138)): fixed adding functional attributes in dtree (#701) ([a7219947](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a7219947))
