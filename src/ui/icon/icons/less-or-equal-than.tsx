@@ -9,14 +9,14 @@ export default {
       <path
         d="M15 14L9 10L15 6"
         stroke="#18A0FB"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M8 17H16"
         stroke="#18A0FB"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   ),

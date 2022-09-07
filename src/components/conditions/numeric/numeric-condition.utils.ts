@@ -319,7 +319,11 @@ export const getLimitedRangeInitialState = (
   )
 }
 
-export const getFixedMinValue = (value: number) => {
+export const getFixedMinValue = (value: unknown, attrMin: unknown) => {
+  if (typeof attrMin === 'number') {
+    return attrMin
+  }
+
   if (typeof value !== 'number') {
     return
   }
