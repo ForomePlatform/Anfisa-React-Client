@@ -260,6 +260,11 @@ class WizardStore {
       card.contentDisabled = true
       card.editDisabled = false
 
+      const info = this.findCardById(WizardCardIds.Info, clonedWizard)
+      if (info) {
+        info.hidden = true
+      }
+
       const nextCard = this.findCardById(card.nextCard, clonedWizard)
       if (nextCard) {
         nextCard.continueDisabled = false

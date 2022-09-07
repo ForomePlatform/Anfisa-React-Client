@@ -1,6 +1,6 @@
 import styles from './dataset-info.module.css'
 
-import { FC, useMemo, useRef } from 'react'
+import { CSSProperties, FC, useMemo, useRef } from 'react'
 import cn, { Argument } from 'classnames'
 import { startCase } from 'lodash'
 
@@ -19,6 +19,7 @@ import { Row } from './dataset-info.interfaces'
 interface IDatasetInfoProps {
   info?: IDsInfo
   isLoading: boolean
+  style?: CSSProperties
   position?: TCardPosition
   className?: Argument
 }
@@ -27,6 +28,7 @@ export const DatasetInfo: FC<IDatasetInfoProps> = ({
   className,
   info,
   isLoading,
+  style,
   position = 'stretch',
 }) => {
   const ref = useRef<HTMLDivElement>(null)
@@ -53,6 +55,7 @@ export const DatasetInfo: FC<IDatasetInfoProps> = ({
       innerRef={ref}
       className={cn(styles.datasetInfo, className)}
       position={position}
+      style={style}
     >
       <header
         className={cn(
