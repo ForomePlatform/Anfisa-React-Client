@@ -34,6 +34,7 @@ jobs:
         git fetch --tags
         yarn config set version-git-message "[RELEASE] %s"
         yarn config set version-commit-hooks false
+        yarn config set version-tag-prefix "develop-v"
         yarn create:changelog
         git add .
         yarn version --new-version `node ./tools/getNextVersion.js`
