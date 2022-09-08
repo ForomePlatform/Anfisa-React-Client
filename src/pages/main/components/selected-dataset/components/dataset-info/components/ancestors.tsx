@@ -32,7 +32,7 @@ export const Ancestors = ({
         const fdName = isFilter ? receipt['filter-name'] : receipt['dtree-name']
         const conditions = isFilter
           ? receipt['f-presentation']
-          : receipt['dtree-code']?.split(/\n/)
+          : receipt['p-presentation']
 
         const updated = receipt['eval-update-info']
         const panelSupply = receipt['panels-supply']
@@ -58,9 +58,15 @@ export const Ancestors = ({
               </span>
             )}
             <div className={styles.datasetInfo__ancestor__conditions}>
-              {conditions?.map((item, i) => (
-                <span key={i}>{item}</span>
-              ))}
+              {conditions?.map((item, i) => {
+                if (isFilter) {
+                  return <span key={i}>{item}</span>
+                }
+
+                return (
+                  <span key={i} dangerouslySetInnerHTML={{ __html: item[0] }} />
+                )
+              })}
             </div>
             {panelSupply && (
               <div className={styles.datasetInfo__ancestor__supplyPanel}>
