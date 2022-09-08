@@ -14,7 +14,7 @@ export const PresetsInfoCard = observer(
         info={info}
         isLoading={isLoading}
         position="left"
-        style={{ height: maxHeight }}
+        style={{ height: maxHeight, minHeight: '500px' }}
       />
     )
   },

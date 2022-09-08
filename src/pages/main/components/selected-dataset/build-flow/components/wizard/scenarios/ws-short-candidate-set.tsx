@@ -2,6 +2,7 @@ import { ExploreCandidateKeys } from '@core/enum/explore-candidate-types-enum'
 import { TExploreGenomeKeys } from '@core/enum/explore-genome-types-enum'
 import { ExploreKeys } from '@core/enum/explore-types-enum'
 import { t } from '@i18n'
+import { PresetsInfoCard } from '@pages/main/components/selected-dataset/build-flow/components/cards/presets-info-card/presets-info-card'
 import { CardExploreType } from '@pages/main/components/selected-dataset/components/card-explore/card-explore-type'
 import { DescriptionCard, PresetsCard } from '../../cards'
 import { ICardProps, IWizardScenario } from '.././wizard.interface'
@@ -21,6 +22,19 @@ export const wsShortCandidateSet: IWizardScenario[] = [
     nextCard: WizardCardIds.Description,
   },
   {
+    component: (props: ICardProps) => <PresetsInfoCard {...props} />,
+    id: WizardCardIds.Info,
+    hidden: false,
+    contentDisabled: false,
+    editDisabled: false,
+    continueDisabled: false,
+    selectedValue: '',
+    maxHeight: 'calc(100vh - 416px)',
+    title: '',
+    position: 'left',
+    nextCard: null,
+  },
+  {
     component: (props: ICardProps) => (
       <DescriptionCard {...(props as ICardProps<TExploreGenomeKeys>)} />
     ),
@@ -34,7 +48,6 @@ export const wsShortCandidateSet: IWizardScenario[] = [
     position: 'right',
     nextCard: WizardCardIds.Presets,
   },
-
   {
     component: (props: ICardProps) => <PresetsCard {...props} />,
     id: WizardCardIds.Presets,
