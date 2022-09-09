@@ -1,17 +1,18 @@
-import { makeAutoObservable, reaction, toJS } from 'mobx'
+import { makeAutoObservable, reaction, runInAction, toJS } from 'mobx'
 
 import { t } from '@i18n'
 import { ActionsHistoryStore } from '@store/actions-history'
 import filterDtrees from '@store/filter-dtrees'
 import { IDsListArguments } from '@service-providers/dataset-level'
 import {
+  dtreeProvider,
   DtreeSetPointKinds,
   IDtreeSetArguments,
 } from '@service-providers/decision-trees'
+import { PointCount } from '@service-providers/decision-trees/decision-trees.interface'
 import { showToast } from '@utils/notifications'
 import datasetStore from '../dataset/dataset'
 import { DtreeModifiedState } from '../filter-dtrees/filter-dtrees.store'
-import { DtreeCountsAsyncStore } from './dtree-counts.async.store'
 import { DtreeSetAsyncStore } from './dtree-set.async.store'
 import { DtreeStatStore } from './dtree-stat.store'
 import stepStore, { ActiveStepOptions } from './step.store'
@@ -40,10 +41,10 @@ interface IDtreeFilteredCounts {
 
 export class DtreeStore {
   readonly dtreeSet = new DtreeSetAsyncStore()
-  readonly dtreeCounts = new DtreeCountsAsyncStore()
   readonly stat = new DtreeStatStore()
   private _dtreeModifiedState: DtreeModifiedState = DtreeModifiedState.NotDtree
   private _previousDtreeCode = ''
+  private _XlPointCounts: PointCount[] = []
 
   public startDtreeCode = ''
   public localDtreeCode = ''
@@ -78,7 +79,7 @@ export class DtreeStore {
 
   get pointCounts() {
     const counts = this.isXl
-      ? this.dtreeCounts.data?.['point-counts']
+      ? this._XlPointCounts
       : this.dtreeSetData?.['point-counts']
 
     return counts ?? []
@@ -129,13 +130,31 @@ export class DtreeStore {
           stepStore.makeStepActive(index, ActiveStepOptions.StartedVariants)
         }
         if (response?.kind === 'xl') {
-          this.dtreeCounts.setQuery({
-            ds: datasetStore.datasetName,
-            tm: '1',
-            code: response.code,
-            points: [...new Array(response['point-counts'].length).keys()],
-            rq_id: response['rq-id'],
-          })
+          dtreeProvider
+            .getFullDtreeCounts(
+              {
+                ds: datasetStore.datasetName,
+                tm: '1',
+                code: response.code,
+                points: [...new Array(response['point-counts'].length).keys()],
+                rq_id: response['rq-id'],
+              },
+              {
+                onPartialResponse: data => {
+                  runInAction(() => {
+                    this._XlPointCounts = [
+                      ...toJS(this._XlPointCounts),
+                      ...data['point-counts'],
+                    ]
+                  })
+                },
+              },
+            )
+            .then(data => {
+              runInAction(() => {
+                this._XlPointCounts = data['point-counts']
+              })
+            })
         }
       },
     )
