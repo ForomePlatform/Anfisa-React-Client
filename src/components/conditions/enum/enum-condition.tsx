@@ -1,4 +1,11 @@
-import { ReactElement, useCallback, useEffect, useMemo, useState } from 'react'
+import {
+  ReactElement,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
@@ -45,6 +52,8 @@ export const EnumCondition = observer(
 
     const [searchValue, setSearchValue] = useState<string>('')
 
+    const scrollContainerRef = useRef<HTMLDivElement>(null)
+
     useEffect(() => {
       setSearchValue('')
     }, [attributeName])
@@ -54,6 +63,10 @@ export const EnumCondition = observer(
     const filteredVariants = enumVariants.filter(variant =>
       variant[0].toLocaleLowerCase().includes(preparedSearchValue),
     )
+
+    useEffect(() => {
+      scrollContainerRef.current?.scrollTo(0, 0)
+    }, [filteredVariants.length])
 
     const handleCheckGroupItem = (checked: boolean, variant: TVariant) => {
       const variantName = variant[0]
@@ -207,6 +220,7 @@ export const EnumCondition = observer(
 
         {isDataReady ? (
           <div
+            ref={scrollContainerRef}
             style={{ height: listHeight }}
             className={cn('overflow-auto', className)}
           >
