@@ -47,10 +47,8 @@ export const FilterControl = observer(
 
     const isNeedToShowPrompt = () => {
       if (pageName === FilterControlOptionsNames.refiner) {
-        return (
-          (isBackwardAllowed && filterStore.isNotPreset) ||
-          filterStore.isPresetModified
-        )
+        const { conditions, isNotPreset, isPresetModified } = filterStore
+        return (conditions.length && isNotPreset) || isPresetModified
       } else if (pageName === FilterControlOptionsNames.dtree) {
         return (
           (isBackwardAllowed && dtreeStore.isNotDtree) ||
