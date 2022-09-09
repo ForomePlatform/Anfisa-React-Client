@@ -21,7 +21,7 @@ export const Modal = (props: IModalProps): ReactElement => {
     isOpen,
     isKeepMounted,
     isBackdropInvisible,
-    onClose,
+    onClose = () => {},
     transitionDuration,
   } = props
   const rootRef = useRef<HTMLDivElement>(null)
@@ -30,9 +30,7 @@ export const Modal = (props: IModalProps): ReactElement => {
   useKeydown([
     {
       eventCode: 'Escape',
-      callback: () => {
-        onClose?.()
-      },
+      callback: onClose,
     },
   ])
 
