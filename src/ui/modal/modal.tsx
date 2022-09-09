@@ -1,10 +1,11 @@
 import styles from './modal.module.css'
 
-import React, { ReactElement, useEffect, useRef, useState } from 'react'
+import { ReactElement, useEffect, useRef, useState } from 'react'
 import ReactDOM from 'react-dom'
 import { Transition } from 'react-transition-group'
 import cn from 'classnames'
 
+import { useKeydown } from '@core/hooks/use-keydown'
 import { Backdrop } from '../backdrop'
 import { IModalProps } from './modal.interface'
 import {
@@ -25,6 +26,15 @@ export const Modal = (props: IModalProps): ReactElement => {
   } = props
   const rootRef = useRef<HTMLDivElement>(null)
   const [isMounted, setMounted] = useState(!!isOpen)
+
+  useKeydown([
+    {
+      eventCode: 'Escape',
+      callback: () => {
+        onClose?.()
+      },
+    },
+  ])
 
   useEffect(() => {
     if (isOpen) {
