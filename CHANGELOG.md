@@ -2,6 +2,7 @@
 
 ## <small>0.9.1 (9/9/2022)</small>
 
+* fix([FOROME-1576](https://quantori.atlassian.net/browse/FOROME-1576)): dont show data saving message if no changes (#927) ([52c60831](https://github.com/ForomePlatform/Anfisa-React-Client/commit/52c60831))
 * feat([FOROME-1563](https://quantori.atlassian.net/browse/FOROME-1563)): attributes list gets to top when searching (#931) ([a08b6f98](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a08b6f98))
 * fix([FOROME-1626](https://quantori.atlassian.net/browse/FOROME-1626)): numeric condition strictness signs ([c1526eb8](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c1526eb8))
 * fix([FOROME-1625](https://quantori.atlassian.net/browse/FOROME-1625)): fix bug with min value (#940) ([3e3e8772](https://github.com/ForomePlatform/Anfisa-React-Client/commit/3e3e8772))
