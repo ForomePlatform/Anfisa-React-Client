@@ -4,7 +4,6 @@ import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
-import datasetStore from '@store/dataset/dataset'
 import { Routes } from '@router/routes.enum'
 import { Button } from '@ui/button'
 import { Card, CardTitle } from '@ui/card'
@@ -31,9 +30,9 @@ export const PresetsCard = observer(
       let location = ''
 
       if (kind === 'preset') {
-        location = `${Routes.Refiner}?ds=${datasetStore.datasetName}&preset=${name}`
+        location = `${Routes.Refiner}?ds=${wizardStore.selectedDataset}&preset=${name}`
       } else if (kind === 'dtree') {
-        location = `${Routes.Dtree}?ds=${datasetStore.datasetName}&dtree=${name}`
+        location = `${Routes.Dtree}?ds=${wizardStore.selectedDataset}&dtree=${name}`
       }
 
       memorizeLocation(location)
@@ -90,7 +89,6 @@ export const PresetsCard = observer(
         position={position}
       >
         <CardTitle text={title} className="px-4" />
-
         <div
           className="mb-4 mt-2 text-14 overflow-y-auto"
           style={{ maxHeight: maxHeight }}
@@ -101,7 +99,6 @@ export const PresetsCard = observer(
             renderPresets()
           )}
         </div>
-
         <div className="flex justify-end px-4">
           <Button
             onClick={onClickOpen}
