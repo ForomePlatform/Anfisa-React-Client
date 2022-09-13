@@ -15,6 +15,12 @@ export enum CreateEmptyStepPositions {
   FINAL = 'FINAL',
 }
 
+type IActiveStep = {
+  index: number
+  option: ActiveStepOptions
+  isIncreasedStepIndex?: boolean
+}
+
 class StepStore {
   activeStepIndex: number = 0
   activeStepOption: ActiveStepOptions = ActiveStepOptions.StartedVariants
@@ -97,9 +103,15 @@ class StepStore {
     })
   }
 
-  makeStepActive(index: number, option: ActiveStepOptions) {
+  makeStepActive({ index, option, isIncreasedStepIndex = false }: IActiveStep) {
     this.setActiveStep(index, option)
-    this.changeStepDataActiveStep(index, option, this.stepIndexForApi)
+    this.changeStepDataActiveStep(
+      index,
+      option,
+      isIncreasedStepIndex
+        ? `${+this.stepIndexForApi + 1}`
+        : this.stepIndexForApi,
+    )
   }
 
   insertEmptyStep(position: CreateEmptyStepPositions, index: number) {
@@ -142,19 +154,28 @@ class StepStore {
       case CreateEmptyStepPositions.FINAL:
         this.insertEmptyStep(position, previousStepIndex)
 
-        this.makeStepActive(stepIndex, ActiveStepOptions.StartedVariants)
+        this.makeStepActive({
+          index: stepIndex,
+          option: ActiveStepOptions.StartedVariants,
+        })
         break
 
       case CreateEmptyStepPositions.BEFORE:
         this.insertEmptyStep(position, stepIndex)
 
-        this.makeStepActive(stepIndex, ActiveStepOptions.StartedVariants)
+        this.makeStepActive({
+          index: stepIndex,
+          option: ActiveStepOptions.StartedVariants,
+        })
         break
 
       case CreateEmptyStepPositions.AFTER:
         this.insertEmptyStep(position, stepIndex)
 
-        this.makeStepActive(nextStepIndex, ActiveStepOptions.StartedVariants)
+        this.makeStepActive({
+          index: nextStepIndex,
+          option: ActiveStepOptions.StartedVariants,
+        })
         break
 
       default:
@@ -175,7 +196,10 @@ class StepStore {
       item.step = currNo + 1
     })
 
-    this.makeStepActive(stepData.length - 1, ActiveStepOptions.StartedVariants)
+    this.makeStepActive({
+      index: stepData.length - 1,
+      option: ActiveStepOptions.StartedVariants,
+    })
   }
 }
 

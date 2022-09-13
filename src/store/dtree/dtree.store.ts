@@ -126,7 +126,10 @@ export class DtreeStore {
 
           const index = shouldUseFinalIndex ? finalStepIndex : activeStepIndex
 
-          stepStore.makeStepActive(index, ActiveStepOptions.StartedVariants)
+          stepStore.makeStepActive({
+            index,
+            option: ActiveStepOptions.StartedVariants,
+          })
         }
         if (response?.kind === 'xl') {
           this.dtreeCounts.setQuery({

@@ -42,7 +42,10 @@ export const NextStep = observer(
       const shouldMakeActive = classList.includes('step-content-area')
 
       if (shouldMakeActive) {
-        stepStore.makeStepActive(stepNo - 1, ActiveStepOptions.StartedVariants)
+        stepStore.makeStepActive({
+          index: stepNo - 1,
+          option: ActiveStepOptions.StartedVariants,
+        })
       }
     }
 

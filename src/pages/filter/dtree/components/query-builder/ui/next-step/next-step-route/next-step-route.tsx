@@ -99,10 +99,11 @@ export const NextStepRoute = observer(
                           styles.nextStepRoute__excludeAmount_included,
                       )}
                       onClick={() =>
-                        stepStore.makeStepActive(
-                          stepNo - 1,
-                          ActiveStepOptions.ReturnedVariants,
-                        )
+                        stepStore.makeStepActive({
+                          index: stepNo - 1,
+                          option: ActiveStepOptions.ReturnedVariants,
+                          isIncreasedStepIndex: true,
+                        })
                       }
                       data-testid={DecisionTreesResultsDataCy.excludeInfo}
                     >
