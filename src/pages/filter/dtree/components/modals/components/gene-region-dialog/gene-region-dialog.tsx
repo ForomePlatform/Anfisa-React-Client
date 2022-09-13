@@ -1,8 +1,10 @@
 import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
+import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
 import { Dialog } from '@ui/dialog'
 import { GeneRegionCondition } from '@components/conditions/gene-region-condition/gene-region-condition'
+import dashboardStore from '@pages/filter/common/dashboard'
 import { AttributeKinds } from '@service-providers/common'
 import { dtreeStatFuncStore } from '../../../attributes/dtree-stat-func.store'
 import { IFuncDialogProps } from '../../modals.interfaces'
@@ -56,6 +58,9 @@ export const GeneRegionDialog = observer(
       [attributeName, onAddFunc],
     )
 
+    const isOnDashboard: boolean =
+      dashboardStore.viewType === ViewTypeDashboard.Tile
+
     return (
       <Dialog
         isOpen={modalsVisibilityStore.isGeneRegionDialogVisible}
@@ -75,7 +80,7 @@ export const GeneRegionDialog = observer(
               currentStepGroups,
               onClose: modalsVisibilityStore.closeGeneRegionDialog,
               handleModals,
-              disabled: hasErrors,
+              disabled: hasErrors || isOnDashboard,
               saveAttribute: () => handleSaveChanges(mode, param),
               addAttribute: action => handleAddAttribute(action, mode, param),
             })

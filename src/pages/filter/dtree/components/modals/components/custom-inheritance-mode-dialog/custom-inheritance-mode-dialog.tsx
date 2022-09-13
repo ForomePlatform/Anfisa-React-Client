@@ -1,8 +1,10 @@
 import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
+import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
 import { Dialog } from '@ui/dialog'
 import { CustomInheritanceModeCondition } from '@components/conditions/custom-inheritance-mode'
+import dashboardStore from '@pages/filter/common/dashboard'
 import { AttributeKinds } from '@service-providers/common'
 import { dtreeStatFuncStore } from '../../../attributes/dtree-stat-func.store'
 import { IFuncDialogProps } from '../../modals.interfaces'
@@ -58,6 +60,9 @@ export const CustomInheritanceModeDialog = observer(
       [attributeName, onAddFunc],
     )
 
+    const isOnDashboard: boolean =
+      dashboardStore.viewType === ViewTypeDashboard.Tile
+
     return (
       <Dialog
         isOpen={modalsVisibilityStore.isCustomInheritanceModeDialogVisible}
@@ -79,7 +84,7 @@ export const CustomInheritanceModeDialog = observer(
               currentStepGroups,
               onClose: modalsVisibilityStore.closeCustomInheritanceModeDialog,
               handleModals,
-              disabled: hasErrors,
+              disabled: hasErrors || isOnDashboard,
               saveAttribute: () => handleSaveChanges(mode, param),
               addAttribute: action => handleAddAttribute(action, mode, param),
             })

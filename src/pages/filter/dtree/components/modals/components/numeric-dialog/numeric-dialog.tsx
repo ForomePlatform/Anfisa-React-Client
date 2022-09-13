@@ -2,8 +2,10 @@ import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { ActionType } from '@declarations'
+import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
 import { Dialog } from '@ui/dialog'
 import { NumericCondition } from '@components/conditions/numeric'
+import dashboardStore from '@pages/filter/common/dashboard'
 import {
   AttributeKinds,
   TNumericConditionBounds,
@@ -60,6 +62,9 @@ export const NumericDialog = observer(
       modalsVisibilityStore.closeNumericDialog()
     }
 
+    const isOnDashboard: boolean =
+      dashboardStore.viewType === ViewTypeDashboard.Tile
+
     return (
       <Dialog
         isOpen={modalsVisibilityStore.isNumericDialogVisible}
@@ -75,6 +80,7 @@ export const NumericDialog = observer(
           initialValue={initialNumericValue}
           controls={({ value, hasErrors }) => {
             const disabled =
+              isOnDashboard ||
               hasErrors ||
               (value[0] == null && value[2] == null) ||
               (typeof attributeStatus.min !== 'number' &&

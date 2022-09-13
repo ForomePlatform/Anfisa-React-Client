@@ -1,8 +1,10 @@
 import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
+import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
 import { Dialog } from '@ui/dialog'
 import { CompoundHetCondition } from '@components/conditions/compound-het-condition'
+import dashboardStore from '@pages/filter/common/dashboard'
 import { AttributeKinds } from '@service-providers/common'
 import { dtreeStatFuncStore } from '../../../attributes/dtree-stat-func.store'
 import { IFuncDialogProps } from '../../modals.interfaces'
@@ -56,6 +58,9 @@ export const CompoundHetDialog = observer(
       [attributeName, onAddFunc],
     )
 
+    const isOnDashboard: boolean =
+      dashboardStore.viewType === ViewTypeDashboard.Tile
+
     return (
       <Dialog
         isOpen={modalsVisibilityStore.isCompoundHetDialogVisible}
@@ -75,7 +80,7 @@ export const CompoundHetDialog = observer(
               currentStepGroups,
               onClose: modalsVisibilityStore.closeCompoundHetDialog,
               handleModals,
-              disabled: hasErrors,
+              disabled: hasErrors || isOnDashboard,
               saveAttribute: () => handleSaveChanges(mode, param),
               addAttribute: action => handleAddAttribute(action, mode, param),
             })
