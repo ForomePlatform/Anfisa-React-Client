@@ -1,11 +1,12 @@
 import styles from './solution-control-popover.module.css'
 
-import { ReactElement } from 'react'
+import { ReactElement, useState } from 'react'
 
 import { t } from '@i18n'
 import { Button } from '@ui/button'
 import { Popover } from '@ui/popover'
 import { IPopoverBaseProps } from '@ui/popover/popover.interface'
+import { ConfirmDialog } from '@components/confirm-dialog'
 import { DecisionTreesMenuDataCy } from '@data-testid'
 import { popoverOffset } from '@pages/ws/ws.constants'
 import { ISolutionEntryDescription } from '@service-providers/common'
@@ -13,7 +14,7 @@ import { SolutionControlList } from '../solution-control-list'
 
 interface ISolutionControlPopoverProps extends IPopoverBaseProps {
   onApply: (solutionName: string) => void
-  onJoin?: (solutionName: string) => void
+  onReset: (solutionName: string) => void
   onSelect: (solutionName: string) => void
   onModify: (solutionName: string) => void
   onDelete: (solutionName: string) => void
@@ -21,6 +22,7 @@ interface ISolutionControlPopoverProps extends IPopoverBaseProps {
   solutions: ISolutionEntryDescription[] | undefined
   modifiedSolution?: string
   selected: string
+  isResetActive: boolean
 }
 
 export const SolutionControlPopover = ({
@@ -28,10 +30,11 @@ export const SolutionControlPopover = ({
   selected,
   modifiedSolution,
   controlName,
+  isResetActive,
   onSelect,
   onApply,
-  onJoin,
   onDelete,
+  onReset,
   onModify,
   onClose,
   ...popoverProps
@@ -41,7 +44,14 @@ export const SolutionControlPopover = ({
     [t('solutionControl.decisionTree')]: t('dtree.applyFilter'),
   }
 
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false)
+
   const applyButtonText = applyButtonDictionary[controlName]
+
+  const onApplyReset = () => {
+    onClose?.()
+    onReset(selected)
+  }
 
   return (
     <Popover onClose={onClose} offset={popoverOffset} {...popoverProps}>
@@ -73,21 +83,16 @@ export const SolutionControlPopover = ({
             text={t('general.cancel')}
             onClick={onClose}
           />
-          {onJoin && (
-            <Button
-              size="xs"
-              textSize="sm"
-              padding="dense"
-              className={styles.solutionControlCard__button}
-              variant="secondary"
-              text={t('solutionControl.join')}
-              disabled={!selected}
-              onClick={() => {
-                onClose?.()
-                onJoin(selected)
-              }}
-            />
-          )}
+          <Button
+            size="xs"
+            textSize="sm"
+            padding="dense"
+            className={styles.solutionControlCard__button}
+            variant="diestruction"
+            text={t('solutionControl.reset')}
+            disabled={!isResetActive}
+            onClick={() => setIsConfirmOpen(true)}
+          />
           <Button
             dataTestId={DecisionTreesMenuDataCy.applyFilter}
             size="xs"
@@ -103,6 +108,15 @@ export const SolutionControlPopover = ({
           />
         </footer>
       </section>
+      <ConfirmDialog
+        isOpen={isConfirmOpen}
+        onClose={() => setIsConfirmOpen(false)}
+        onApply={onApplyReset}
+        message={t('solutionControl.confirmReset.message', { controlName })}
+        title={t('solutionControl.confirmReset.title', { controlName })}
+        cancelText={t('solutionControl.confirmReset.cancel')}
+        applyText={t('solutionControl.confirmReset.apply')}
+      />
     </Popover>
   )
 }

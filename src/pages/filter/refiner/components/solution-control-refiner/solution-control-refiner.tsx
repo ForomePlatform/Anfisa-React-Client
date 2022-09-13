@@ -8,8 +8,8 @@ import { SolutionControl } from '@components/solution-control'
 import {
   applyPreset,
   deletePreset,
-  joinPreset,
   modifyPreset,
+  resetPreset,
 } from './solution-control-refiner.utils'
 
 export const SolutionControlRefiner = observer((): ReactElement => {
@@ -28,7 +28,8 @@ export const SolutionControlRefiner = observer((): ReactElement => {
           : undefined
       }
       onApply={applyPreset}
-      onJoin={joinPreset}
+      onReset={resetPreset}
+      isResetActive={!!filterPresetsStore.activePreset}
       onModify={modifyPreset}
       onDelete={deletePreset}
     />

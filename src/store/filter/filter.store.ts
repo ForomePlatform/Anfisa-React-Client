@@ -391,7 +391,7 @@ export class FilterStore {
     )
   }
 
-  private resetPreset(): void {
+  public resetPreset(): void {
     if (this._presetModifiedState !== PresetModifiedState.Modified) {
       this.clearConditions()
     }

@@ -19,6 +19,8 @@ export const SolutionControlDtree = observer((): ReactElement => {
       }
       controlName={t('solutionControl.decisionTree')}
       onApply={filterDtreesStore.setActiveDtree}
+      onReset={dtreeStore.clearAll}
+      isResetActive={!!filterDtreesStore.activeDtree}
       onModify={filterDtreesStore.modifyDtree}
       onDelete={filterDtreesStore.deleteDtree}
     />
