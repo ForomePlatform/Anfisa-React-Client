@@ -31,6 +31,7 @@ export const Card = ({
   className,
   isNeedToAnimate,
   position,
+  style = {},
 }: ICardProps): ReactElement => {
   const [isMounted, setIsMounted] = useState(false)
   const cardRef = useRef<HTMLDivElement>(null)
@@ -38,6 +39,11 @@ export const Card = ({
   useEffect(() => {
     window.setTimeout(() => setIsMounted(true), 0)
   }, [])
+
+  const stylesCSS: CSSProperties = {
+    ...style,
+    transitionDuration: `${TRANSITION_DURATION}ms`,
+  }
 
   const renderCard = (state = '') => (
     <div
@@ -48,9 +54,7 @@ export const Card = ({
         styles[`card_position-${position}`],
         className,
       )}
-      style={{
-        transitionDuration: `${TRANSITION_DURATION}ms`,
-      }}
+      style={stylesCSS}
     >
       {children}
     </div>

@@ -1,6 +1,7 @@
 import { ExploreCandidateKeys } from '@core/enum/explore-candidate-types-enum'
 import { TExploreGenomeKeys } from '@core/enum/explore-genome-types-enum'
 import { t } from '@i18n'
+import { PresetsInfoCard } from '@pages/main/components/selected-dataset/build-flow/components/cards/presets-info-card/presets-info-card'
 import { CardExploreType } from '@pages/main/components/selected-dataset/components/card-explore/card-explore-type'
 import {
   DescriptionCard,
@@ -22,6 +23,19 @@ export const wsCandidateSet: IWizardScenario[] = [
     title: t('home.startFlow.startWith'),
     position: 'stretch',
     nextCard: WizardCardIds.ExistingCandidate,
+  },
+  {
+    component: (props: ICardProps) => <PresetsInfoCard {...props} />,
+    id: WizardCardIds.Info,
+    hidden: false,
+    contentDisabled: false,
+    editDisabled: false,
+    continueDisabled: false,
+    selectedValue: '',
+    maxHeight: 'calc(100vh - 416px)',
+    title: '',
+    position: 'left',
+    nextCard: null,
   },
   {
     component: (props: ICardProps) => (
