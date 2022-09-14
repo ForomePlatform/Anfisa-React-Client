@@ -158,7 +158,7 @@ Scenario: 19 Apply preset
 
 	When User clicks "Card View" button near the attribute search panel
 	And User clicks "Select Filter Preset" drop-down button
-	And Clicks "@Impact_Splicing" preset
+	And Selects any preset
 	And Clicks "Apply preset" button
 	Then The same layout should be shown after loading
-	And "@Impact_Splicing" should be written instead of "Select Filter Preset"
+	And Chosen preset name should be written instead of "Select Filter Preset"
