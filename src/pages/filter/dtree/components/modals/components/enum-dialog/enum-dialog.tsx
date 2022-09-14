@@ -1,7 +1,7 @@
 import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
-import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
+import dtreeStore from '@store/dtree'
 import { Dialog } from '@ui/dialog'
 import { DEFAULT_COUNT, EnumCondition } from '@components/conditions/enum'
 import dashboardStore from '@pages/filter/common/dashboard'
@@ -27,6 +27,8 @@ export const EnumDialog = observer(
       initialEnumMode,
       initialCondition,
     } = attributeStore
+
+    const { isOnDashboard } = dtreeStore
 
     const { currentStepGroups } = modalsControlStore
     const { selectedEnumVariants } = dashboardStore
@@ -73,9 +75,6 @@ export const EnumDialog = observer(
 
     const listHeight =
       enumVariants.length > DEFAULT_COUNT ? 'calc(580px - 319px)' : 'auto'
-
-    const isOnDashboard: boolean =
-      dashboardStore.viewType === ViewTypeDashboard.Tile
 
     return (
       <Dialog

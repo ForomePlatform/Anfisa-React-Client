@@ -15,7 +15,7 @@ export enum CreateEmptyStepPositions {
   FINAL = 'FINAL',
 }
 
-type IActiveStep = {
+interface IActiveStep {
   index: number
   option: ActiveStepOptions
   isIncreasedStepIndex?: boolean

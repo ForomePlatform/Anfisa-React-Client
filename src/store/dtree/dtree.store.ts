@@ -1,8 +1,10 @@
 import { makeAutoObservable, reaction, toJS } from 'mobx'
 
+import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
 import { t } from '@i18n'
 import { ActionsHistoryStore } from '@store/actions-history'
 import filterDtrees from '@store/filter-dtrees'
+import dashboardStore from '@pages/filter/common/dashboard'
 import { IDsListArguments } from '@service-providers/dataset-level'
 import {
   DtreeSetPointKinds,
@@ -44,6 +46,7 @@ export class DtreeStore {
   readonly stat = new DtreeStatStore()
   private _dtreeModifiedState: DtreeModifiedState = DtreeModifiedState.NotDtree
   private _previousDtreeCode = ''
+  private _viewType: ViewTypeDashboard = ViewTypeDashboard.List
 
   public startDtreeCode = ''
   public localDtreeCode = ''
@@ -102,6 +105,10 @@ export class DtreeStore {
 
   public get isNotDtree(): boolean {
     return this._dtreeModifiedState === DtreeModifiedState.NotDtree
+  }
+
+  public get isOnDashboard(): boolean {
+    return this._viewType === ViewTypeDashboard.Tile
   }
 
   constructor() {
@@ -163,6 +170,13 @@ export class DtreeStore {
           this.setDtreeModifiedState()
         }
         this._previousDtreeCode = code
+      },
+    )
+
+    reaction(
+      () => dashboardStore.viewType,
+      viewType => {
+        this._viewType = viewType
       },
     )
   }

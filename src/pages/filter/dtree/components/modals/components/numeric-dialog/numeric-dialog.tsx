@@ -2,10 +2,9 @@ import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { ActionType } from '@declarations'
-import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
+import dtreeStore from '@store/dtree'
 import { Dialog } from '@ui/dialog'
 import { NumericCondition } from '@components/conditions/numeric'
-import dashboardStore from '@pages/filter/common/dashboard'
 import {
   AttributeKinds,
   TNumericConditionBounds,
@@ -27,6 +26,8 @@ export const NumericDialog = observer(
       initialNumericValue,
       attributeName,
     } = attributeStore
+
+    const { isOnDashboard } = dtreeStore
 
     const { currentStepGroups } = modalsControlStore
 
@@ -61,9 +62,6 @@ export const NumericDialog = observer(
 
       modalsVisibilityStore.closeNumericDialog()
     }
-
-    const isOnDashboard: boolean =
-      dashboardStore.viewType === ViewTypeDashboard.Tile
 
     return (
       <Dialog
