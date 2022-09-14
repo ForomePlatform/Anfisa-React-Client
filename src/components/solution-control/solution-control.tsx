@@ -17,8 +17,9 @@ interface ISolutionControlProps {
   selected: string
   isFetchingSolutions: boolean
   modifiedSolution?: string
+  isResetActive: boolean
   onApply: (solutionName: string) => void
-  onJoin?: (solutionName: string) => void
+  onReset: (solutionName: string) => void
   onModify: (solutionName: string) => void
   onDelete: (solutionName: string) => void
 }
@@ -30,8 +31,9 @@ export const SolutionControl = ({
   selected: selectedProp,
   isFetchingSolutions,
   modifiedSolution,
+  isResetActive,
   onApply,
-  onJoin,
+  onReset,
   onModify,
   onDelete,
 }: ISolutionControlProps): ReactElement => {
@@ -86,8 +88,9 @@ export const SolutionControl = ({
         solutions={solutions}
         modifiedSolution={modifiedSolution}
         selected={selected}
+        isResetActive={isResetActive}
         onSelect={setSelected}
-        onJoin={onJoin}
+        onReset={onReset}
         onApply={onApply}
         onModify={solutionName => openModifyDialog({ solutionName })}
         onDelete={solutionName => openDeleteDialog({ solutionName })}

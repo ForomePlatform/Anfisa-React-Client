@@ -315,7 +315,7 @@ export class DtreeStore {
     this.setDtreeModifiedState(DtreeModifiedState.NotDtree)
   }
 
-  public async clearAll() {
+  public clearAll = async () => {
     this.actionHistory.resetHistory()
     this.localDtreeCode = ''
     this._previousDtreeCode = ''

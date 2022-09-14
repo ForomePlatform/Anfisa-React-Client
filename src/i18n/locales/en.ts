@@ -68,8 +68,15 @@ export const en = {
     selectSolution: 'Select {controlName}',
     createEntry: 'Create {solutionName}',
     join: 'Join',
+    reset: 'Reset',
     delete: 'Delete',
     modify: 'Modify',
+    confirmReset: {
+      message: 'Are you sure you want to reset {controlName}?',
+      title: 'Reset {controlName}',
+      cancel: 'Cancel',
+      apply: 'Reset',
+    },
     createDialog: {
       title: 'Create {controlName}',
       create: 'Create',
