@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import { useHistory } from 'react-router'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
@@ -18,10 +18,15 @@ import presetsCardStore from './presets-card.store'
 export const PresetsCard = observer(
   ({ title, id, selectedValue, maxHeight, position }: ICardProps) => {
     const history = useHistory()
+    const ref = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
       presetsCardStore.loadSolutions()
     }, [])
+
+    useLayoutEffect(() => {
+      ref.current?.scrollTo({ top: presetsCardStore.offsetOfTop(id) })
+    }, [id, selectedValue])
 
     const onClickOpen = () => {
       if (!wizardStore.selectedPreset) return
@@ -59,9 +64,12 @@ export const PresetsCard = observer(
               placement="top-start"
             >
               <div
-                onClick={() =>
-                  !isDisabled && wizardStore.setSelectedPreset(preset, id)
-                }
+                onClick={() => {
+                  if (!isDisabled) {
+                    presetsCardStore.setTopOffset(id, ref.current?.scrollTop)
+                    wizardStore.setSelectedPreset(preset, id)
+                  }
+                }}
               >
                 <div
                   className={cn(
@@ -92,6 +100,7 @@ export const PresetsCard = observer(
         <div
           className="mb-4 mt-2 text-14 overflow-y-auto"
           style={{ maxHeight: maxHeight }}
+          ref={ref}
         >
           {presetsCardStore.isFetchingSolutions ? (
             <Loader size="m" />

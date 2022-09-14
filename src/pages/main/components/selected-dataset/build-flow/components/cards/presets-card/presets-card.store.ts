@@ -4,11 +4,22 @@ import { TExploreGenomeKeys } from '@core/enum/explore-genome-types-enum'
 import datasetStore from '@store/dataset/dataset'
 import { DtreeSetAsyncStore } from '@store/dtree/dtree-set.async.store'
 import { AvailablePresetsAsyncStore } from '@store/filter-presets/available-presets.async.store'
+import { WizardCardIds } from '@pages/main/components/selected-dataset/build-flow/components/wizard/scenarios/wizard-scenarios.constants'
 import { addSolutionKind } from './utils/add-solution-kind'
 
 class PresetsCardStore {
   private readonly _presets = new AvailablePresetsAsyncStore()
   private readonly _dtrees = new DtreeSetAsyncStore()
+
+  private _offsetOfTop: Map<WizardCardIds, number> = new Map()
+
+  public offsetOfTop(id: WizardCardIds): number {
+    return this._offsetOfTop.get(id) || 0
+  }
+
+  public setTopOffset(id: WizardCardIds, offset?: number) {
+    this._offsetOfTop.set(id, offset || 0)
+  }
 
   public get solutions() {
     return [
@@ -53,10 +64,12 @@ class PresetsCardStore {
 
   public refreshDtrees() {
     this._dtrees.invalidate()
+    this._offsetOfTop = new Map<WizardCardIds, number>()
   }
 
   public refreshPresets() {
     this._presets.invalidate()
+    this._offsetOfTop = new Map<WizardCardIds, number>()
   }
 
   public getSolutionsByRubric(rubric?: TExploreGenomeKeys) {
