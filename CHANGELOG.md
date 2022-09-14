@@ -2,6 +2,7 @@
 
 ## <small>0.9.1 (9/14/2022)</small>
 
+* fix([FOROME-1617](https://quantori.atlassian.net/browse/FOROME-1617)): get dtree counts without async store (#943) ([31d007e8](https://github.com/ForomePlatform/Anfisa-React-Client/commit/31d007e8))
 * feat([FOROME-1628](https://quantori.atlassian.net/browse/FOROME-1628)): close modal by escape key (#944) ([c485cd9d](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c485cd9d))
 * fix([FOROME-1621](https://quantori.atlassian.net/browse/FOROME-1621)): load derived dataset from wizard (#942) ([83df451b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/83df451b))
 * fix([FOROME-1576](https://quantori.atlassian.net/browse/FOROME-1576)): dont show data saving message if no changes (#927) ([52c60831](https://github.com/ForomePlatform/Anfisa-React-Client/commit/52c60831))
