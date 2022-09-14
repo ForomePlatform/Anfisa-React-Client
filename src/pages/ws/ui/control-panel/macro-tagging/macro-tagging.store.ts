@@ -3,7 +3,13 @@ import { makeAutoObservable } from 'mobx'
 
 import { t } from '@i18n'
 import { datasetStore } from '@store/dataset'
+import dtreeStore from '@store/dtree'
+import filterStore from '@store/filter'
+import filterPresetsStore from '@store/filter-presets'
 import mainTableStore from '@store/ws/main-table.store'
+import zoneStore from '@store/ws/zone.store'
+import { ZoneName } from '@pages/ws/ui/control-panel/macro-tagging/macro-tagging.interfaces'
+import { TZoneSetting } from '@service-providers/common'
 import operationsProvider from '@service-providers/operations/operations.provider'
 import {
   IMacroTaggingArgumentsAsync,
@@ -18,11 +24,55 @@ class MacroTaggingStore {
   public isConfirmOpen: boolean = false
   public action?: MacroTaggingActions
 
+  private get zone(): undefined | TZoneSetting[] {
+    const result: TZoneSetting[] = []
+
+    if (zoneStore.selectedGenes.length) {
+      result.push([ZoneName.Symbol, zoneStore.selectedGenes])
+    }
+
+    if (zoneStore.selectedGenesList.length) {
+      result.push([ZoneName.GeneLists, zoneStore.selectedGenesList])
+    }
+
+    if (zoneStore.selectedSamples.length) {
+      result.push([ZoneName.HasVariant, zoneStore.selectedSamples])
+    }
+
+    if (zoneStore.selectedTags.length) {
+      result.push([ZoneName.Tags, zoneStore.selectedTags])
+
+      if (zoneStore.isModeNOT) {
+        result.slice(-1)[0].push(false)
+      }
+    }
+
+    return result.length ? result : undefined
+  }
+
   private get params() {
+    const filter =
+      filterPresetsStore.activePreset || dtreeStore.currentDtreeName
+
+    const zone = this.zone
+    const conditions = filterStore.conditions
+
     const params: IMacroTaggingArgumentsAsync = {
       ds: datasetStore.datasetName,
       tag: this.tag,
       delay: true,
+    }
+
+    if (filter) {
+      params.filter = filter
+    }
+
+    if (zone) {
+      params.zone = zone
+    }
+
+    if (conditions && conditions.length) {
+      params.conditions = conditions
     }
 
     if (this.action === MacroTaggingActions.Remove) {

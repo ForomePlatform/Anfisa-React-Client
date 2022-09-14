@@ -1,5 +1,6 @@
 import { makeAutoObservable, reaction, toJS } from 'mobx'
 
+import { TGenomeOptionsKeys } from '@core/enum/explore-genome-types-enum'
 import { t } from '@i18n'
 import { createHistoryObserver } from '@store/common'
 import {
@@ -11,7 +12,6 @@ import { filterPresetsData } from '@utils/filter-presets'
 import { showToast } from '@utils/notifications/showToast'
 import { validatePresetName } from '@utils/validation/validatePresetName'
 import datasetStore from '../dataset/dataset'
-import { TGenomeOptionsKeys } from './../../core/enum/explore-genome-types-enum'
 import { AvailablePresetsAsyncStore } from './available-presets.async.store'
 
 export class FilterPresetsStore {
