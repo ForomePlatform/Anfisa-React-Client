@@ -1,10 +1,9 @@
-import { useEffect } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import { useHistory } from 'react-router'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
-import datasetStore from '@store/dataset/dataset'
 import { Routes } from '@router/routes.enum'
 import { Button } from '@ui/button'
 import { Card, CardTitle } from '@ui/card'
@@ -19,10 +18,15 @@ import presetsCardStore from './presets-card.store'
 export const PresetsCard = observer(
   ({ title, id, selectedValue, maxHeight, position }: ICardProps) => {
     const history = useHistory()
+    const ref = useRef<HTMLDivElement>(null)
 
     useEffect(() => {
       presetsCardStore.loadSolutions()
     }, [])
+
+    useLayoutEffect(() => {
+      ref.current?.scrollTo({ top: presetsCardStore.offsetOfTop(id) })
+    }, [id, selectedValue])
 
     const onClickOpen = () => {
       if (!wizardStore.selectedPreset) return
@@ -31,9 +35,9 @@ export const PresetsCard = observer(
       let location = ''
 
       if (kind === 'preset') {
-        location = `${Routes.Refiner}?ds=${datasetStore.datasetName}&preset=${name}`
+        location = `${Routes.Refiner}?ds=${wizardStore.selectedDataset}&preset=${name}`
       } else if (kind === 'dtree') {
-        location = `${Routes.Dtree}?ds=${datasetStore.datasetName}&dtree=${name}`
+        location = `${Routes.Dtree}?ds=${wizardStore.selectedDataset}&dtree=${name}`
       }
 
       memorizeLocation(location)
@@ -60,9 +64,12 @@ export const PresetsCard = observer(
               placement="top-start"
             >
               <div
-                onClick={() =>
-                  !isDisabled && wizardStore.setSelectedPreset(preset, id)
-                }
+                onClick={() => {
+                  if (!isDisabled) {
+                    presetsCardStore.setTopOffset(id, ref.current?.scrollTop)
+                    wizardStore.setSelectedPreset(preset, id)
+                  }
+                }}
               >
                 <div
                   className={cn(
@@ -90,10 +97,10 @@ export const PresetsCard = observer(
         position={position}
       >
         <CardTitle text={title} className="px-4" />
-
         <div
           className="mb-4 mt-2 text-14 overflow-y-auto"
           style={{ maxHeight: maxHeight }}
+          ref={ref}
         >
           {presetsCardStore.isFetchingSolutions ? (
             <Loader size="m" />
@@ -101,7 +108,6 @@ export const PresetsCard = observer(
             renderPresets()
           )}
         </div>
-
         <div className="flex justify-end px-4">
           <Button
             onClick={onClickOpen}

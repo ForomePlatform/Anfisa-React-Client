@@ -89,6 +89,7 @@ export interface IMacroTaggingArguments {
   off?: true | any
   filter?: string
   conditions?: ReadonlyArray<TCondition>
+  zone?: TZoneSetting[]
   dtree?: string
   code?: string
   no?: string

@@ -5,4 +5,5 @@ export enum WizardCardIds {
   ExistingCandidate = 'existing-candidate',
   Presets = 'presets',
   WhatsNext = 'whats-next',
+  Info = 'info',
 }

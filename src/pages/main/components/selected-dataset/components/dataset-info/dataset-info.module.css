@@ -83,6 +83,25 @@
         font-weight: 500;
       }
 
+      :global {
+        /* Styles for python comment class */
+        .c1 {
+          display: flex;
+          margin-bottom: 7px;
+        }
+
+        .ow {
+          color: theme("colors.purple.bright");
+          font-weight: bold;
+        }
+
+        .k,
+        .kc {
+          color: theme("colors.green.secondary");
+          font-weight: bold;
+        }
+      }
+
       white-space: pre-wrap;
       color: theme("colors.grey.dark") !important;
       display: flex;

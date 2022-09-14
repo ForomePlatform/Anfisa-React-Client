@@ -1,4 +1,5 @@
 import { ApproxValueTypes } from '@core/enum/approxValueTypes'
+import { ZoneName } from '@pages/ws/ui/control-panel/macro-tagging/macro-tagging.interfaces'
 
 export enum DatasetKinds {
   WS = 'ws',
@@ -254,7 +255,7 @@ export interface ISolutionEntryDescription {
 }
 
 export type TZoneSetting = [
-  zoneName: string,
+  zoneName: ZoneName,
   variants: string[],
   isNegationRequired?: false,
 ]

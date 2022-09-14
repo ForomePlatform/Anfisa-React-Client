@@ -1,7 +1,13 @@
 # Change log 
 
-## <small>0.9.1 (9/9/2022)</small>
+## <small>0.9.1 (9/14/2022)</small>
 
+* feat([FOROME-1322](https://quantori.atlassian.net/browse/FOROME-1322)): add macro tagging (#945) ([ddd964c2](https://github.com/ForomePlatform/Anfisa-React-Client/commit/ddd964c2))
+* fix([FOROME-1587](https://quantori.atlassian.net/browse/FOROME-1587)): add scrolling to prev state on rerendering (#933) ([016d9e4e](https://github.com/ForomePlatform/Anfisa-React-Client/commit/016d9e4e))
+* feat([FOROME-1620](https://quantori.atlassian.net/browse/FOROME-1620)): add info panel in secondary datasets in wizard (#939) ([389d7c97](https://github.com/ForomePlatform/Anfisa-React-Client/commit/389d7c97))
+* fix([FOROME-1617](https://quantori.atlassian.net/browse/FOROME-1617)): get dtree counts without async store (#943) ([31d007e8](https://github.com/ForomePlatform/Anfisa-React-Client/commit/31d007e8))
+* feat([FOROME-1628](https://quantori.atlassian.net/browse/FOROME-1628)): close modal by escape key (#944) ([c485cd9d](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c485cd9d))
+* fix([FOROME-1621](https://quantori.atlassian.net/browse/FOROME-1621)): load derived dataset from wizard (#942) ([83df451b](https://github.com/ForomePlatform/Anfisa-React-Client/commit/83df451b))
 * fix([FOROME-1576](https://quantori.atlassian.net/browse/FOROME-1576)): dont show data saving message if no changes (#927) ([52c60831](https://github.com/ForomePlatform/Anfisa-React-Client/commit/52c60831))
 * feat([FOROME-1563](https://quantori.atlassian.net/browse/FOROME-1563)): attributes list gets to top when searching (#931) ([a08b6f98](https://github.com/ForomePlatform/Anfisa-React-Client/commit/a08b6f98))
 * fix([FOROME-1626](https://quantori.atlassian.net/browse/FOROME-1626)): numeric condition strictness signs ([c1526eb8](https://github.com/ForomePlatform/Anfisa-React-Client/commit/c1526eb8))

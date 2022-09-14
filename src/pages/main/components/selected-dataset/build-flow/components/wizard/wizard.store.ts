@@ -6,6 +6,7 @@ import { ExploreKeys, TExploreKeys } from '@core/enum/explore-types-enum'
 import { ActionsHistoryStore } from '@store/actions-history'
 import { createHistoryObserver } from '@store/common'
 import { datasetStore } from '@store/dataset'
+import { DsInfoAsyncStore } from '@store/dataset/ds-info.async.store'
 import dirinfoStore from '@store/dirinfo'
 import { ISolutionWithKind } from '../cards/presets-card/utils/add-solution-kind'
 import { WizardCardIds } from './scenarios/wizard-scenarios.constants'
@@ -14,6 +15,8 @@ import { IWizardScenario } from './wizard.interface'
 import { getActiveCardIds } from './wizard.utils'
 
 class WizardStore {
+  public readonly dsInfo = new DsInfoAsyncStore()
+
   public isWizardVisible: boolean = false
   private prevWizardScenario: IWizardScenario[] = []
   public wizardScenario: IWizardScenario[] = []
@@ -55,6 +58,16 @@ class WizardStore {
 
   constructor() {
     makeAutoObservable(this)
+
+    reaction(
+      () => this.selectedDataset,
+      () => {
+        const datasetName = this.selectedDataset
+        if (datasetName) {
+          this.dsInfo.setQuery({ datasetName })
+        }
+      },
+    )
 
     reaction(
       () => this.datasetKind,
@@ -246,6 +259,11 @@ class WizardStore {
       card.continueDisabled = true
       card.contentDisabled = true
       card.editDisabled = false
+
+      const info = this.findCardById(WizardCardIds.Info, clonedWizard)
+      if (info) {
+        info.hidden = true
+      }
 
       const nextCard = this.findCardById(card.nextCard, clonedWizard)
       if (nextCard) {
