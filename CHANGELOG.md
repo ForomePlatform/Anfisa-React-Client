@@ -2,6 +2,7 @@
 
 ## <small>0.9.1 (9/14/2022)</small>
 
+* feat([FOROME-1322](https://quantori.atlassian.net/browse/FOROME-1322)): add macro tagging (#945) ([ddd964c2](https://github.com/ForomePlatform/Anfisa-React-Client/commit/ddd964c2))
 * fix([FOROME-1587](https://quantori.atlassian.net/browse/FOROME-1587)): add scrolling to prev state on rerendering (#933) ([016d9e4e](https://github.com/ForomePlatform/Anfisa-React-Client/commit/016d9e4e))
 * feat([FOROME-1620](https://quantori.atlassian.net/browse/FOROME-1620)): add info panel in secondary datasets in wizard (#939) ([389d7c97](https://github.com/ForomePlatform/Anfisa-React-Client/commit/389d7c97))
 * fix([FOROME-1617](https://quantori.atlassian.net/browse/FOROME-1617)): get dtree counts without async store (#943) ([31d007e8](https://github.com/ForomePlatform/Anfisa-React-Client/commit/31d007e8))
