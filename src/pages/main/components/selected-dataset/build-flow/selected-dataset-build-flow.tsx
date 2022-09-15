@@ -19,13 +19,39 @@ export const SelectedDatasetBuildFlow = observer(
           <BuildFlowHeader goBack={handleGoBack} />
 
           <div>
-            {wizardStore.wizardScenario.map(({ component, ...rest }) => {
-              const Component = () =>
-                component({
-                  ...rest,
-                })
-              return !rest.hidden && <Component key={rest.id} />
-            })}
+            {wizardStore.wizardScenario
+              .filter(it => it.position !== 'left' && it.position !== 'right')
+              .map(({ component, ...rest }) => {
+                const Component = () =>
+                  component({
+                    ...rest,
+                  })
+                return !rest.hidden && <Component key={rest.id} />
+              })}
+            <div className="flex">
+              <div className="w-[calc(50%-8px)]">
+                {wizardStore.wizardScenario
+                  .filter(it => it.position === 'left')
+                  .map(({ component, ...rest }) => {
+                    const Component = () =>
+                      component({
+                        ...rest,
+                      })
+                    return !rest.hidden && <Component key={rest.id} />
+                  })}
+              </div>
+              <div className="ml-4 w-[calc(50%-8px)]">
+                {wizardStore.wizardScenario
+                  .filter(it => it.position === 'right')
+                  .map(({ component, ...rest }) => {
+                    const Component = () =>
+                      component({
+                        ...rest,
+                      })
+                    return !rest.hidden && <Component key={rest.id} />
+                  })}
+              </div>
+            </div>
           </div>
         </div>
       </div>

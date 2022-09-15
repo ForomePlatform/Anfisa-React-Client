@@ -4,7 +4,8 @@
   border-radius: theme("spacing.2");
   box-shadow: theme("boxShadow.card");
   padding: theme("spacing.4");
-  width: calc(50% - 8px);
+  width: 100%;
+  margin-top: 16px;
 
   &_title {
     font-weight: 700 !important;
@@ -32,19 +33,7 @@
     transform: translateY(40px);
   }
 
-  &_position-right {
-    margin-top: 16px;
-    float: right;
-    clear: right;
-  }
-
-  &_position-left {
-    margin-top: 16px;
-    float: left;
-    clear: left;
-  }
-
   &_position-stretch {
-    width: 100%;
+    margin-top: 0;
   }
 }
