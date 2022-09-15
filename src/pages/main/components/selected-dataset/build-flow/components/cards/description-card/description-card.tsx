@@ -16,6 +16,7 @@ import { Button } from '@ui/button'
 import { Card } from '@ui/card'
 import { Icon } from '@ui/icon'
 import { GlbPagesNames } from '@glb/glb-names'
+import handleDatasetStore from '@pages/main/components/handle-dataset/handle-dataset.store'
 import { optionsForOpenButton } from '../../wizard/wizard.data'
 import { ICardProps } from '../../wizard/wizard.interface'
 import wizardStore from '../../wizard/wizard.store'
@@ -51,6 +52,8 @@ export const DescriptionCard = observer(
     } = descriptionCardStore
 
     const isOpenButton = optionsForOpenButton.includes(selectedValue)
+    const { selectedDatasetName } = handleDatasetStore
+    handleDatasetStore.setDsName(ds)
 
     const openNextPage = () => {
       const nextPageData = getNextPageData(selectedValue, ds)
@@ -130,6 +133,13 @@ export const DescriptionCard = observer(
 
           {editDisabled && (
             <div className="flex justify-end">
+              <Button
+                text="Export"
+                variant="secondary"
+                className="mr-2"
+                disabled={!selectedDatasetName}
+                onClick={() => handleDatasetStore.toggleExportModal(true)}
+              />
               <Button
                 text={isOpenButton ? 'Open' : 'Continue'}
                 onClick={
