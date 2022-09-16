@@ -2,6 +2,7 @@
 
 ## <small>0.9.1 (9/16/2022)</small>
 
+* feat([FOROME-1632](https://quantori.atlassian.net/browse/FOROME-1632)): change a request for included/excluded variants (#946) ([5679295d](https://github.com/ForomePlatform/Anfisa-React-Client/commit/5679295d))
 * feat([FOROME-1634](https://quantori.atlassian.net/browse/FOROME-1634)): add export button to description card (#950) ([97260ffd](https://github.com/ForomePlatform/Anfisa-React-Client/commit/97260ffd))
 * fix([FOROME-1636](https://quantori.atlassian.net/browse/FOROME-1636)): fix flow of wizard (#949) ([adc957c0](https://github.com/ForomePlatform/Anfisa-React-Client/commit/adc957c0))
 * fix([FOROME-1635](https://quantori.atlassian.net/browse/FOROME-1635)): selecting dataset (#948) ([aa5c18b7](https://github.com/ForomePlatform/Anfisa-React-Client/commit/aa5c18b7))
