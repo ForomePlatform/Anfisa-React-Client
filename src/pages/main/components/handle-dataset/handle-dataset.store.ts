@@ -1,5 +1,5 @@
 import { toast } from 'react-toastify'
-import { makeAutoObservable } from 'mobx'
+import { makeAutoObservable, reaction } from 'mobx'
 
 import { getApiUrl } from '@core/get-api-url'
 import datasetStore from '@store/dataset/dataset'
@@ -16,12 +16,15 @@ class HandleDatasetStore {
   public uploadedFiles?: FileList = undefined
   public isExporting = false
   public isImporting = false
+  private _dsName = ''
+  private _isDsNameSet = false
 
   public get isImportDisabled() {
     return !this.uploadedFiles?.length || !this.importDatasetName
   }
 
   public get isExportDisabled() {
+    if (this._isDsNameSet) return false
     return (
       (datasetStore.dsInfoData &&
         !Object.keys(datasetStore.dsInfoData).length) ||
@@ -36,6 +39,18 @@ class HandleDatasetStore {
 
   constructor() {
     makeAutoObservable(this)
+    reaction(
+      () => datasetStore.dsInfoData,
+      dsInfo => {
+        this._dsName = dsInfo?.name || ''
+        this._isDsNameSet = false
+      },
+    )
+  }
+
+  public setDsName(dsName: string) {
+    this._dsName = dsName
+    this._isDsNameSet = true
   }
 
   public toggleImportModal(isShown: boolean) {
@@ -76,17 +91,22 @@ class HandleDatasetStore {
     this.isSupportSelected = true
   }
 
+  public resetDsName() {
+    this._isDsNameSet = false
+  }
+
   public exportDataset = async () => {
+    const ds = this._isDsNameSet ? this._dsName : this.selectedDatasetName
     this.isExporting = true
     const response = await operationsProvider.exportDataset({
-      ds: this.selectedDatasetName,
+      ds,
       support: this.isSupportSelected,
       doc: this.isDocumentationSelected,
     })
 
     const { kind, url } = response
 
-    downloadFile(getApiUrl(url), `${this.selectedDatasetName}.${kind}`)
+    downloadFile(getApiUrl(url), `${ds}.${kind}`)
     this.isExporting = false
     this.isExportModalShown = false
   }

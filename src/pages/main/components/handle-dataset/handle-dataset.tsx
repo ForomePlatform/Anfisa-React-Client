@@ -15,6 +15,11 @@ export const HandleDataset = observer(() => {
     handleDatasetStore.toggleImportModal(true)
   }
 
+  const handlePopoverOpening = (target: HTMLElement) => {
+    handleDatasetStore.resetDsName()
+    onToggle(target)
+  }
+
   const handleOpenExportDialog = () => {
     if (handleDatasetStore.isExportDisabled) {
       return
@@ -25,7 +30,7 @@ export const HandleDataset = observer(() => {
   }
   return (
     <div className="ml-4 flex">
-      <HandleDatasetButton onShowPopover={onToggle} />
+      <HandleDatasetButton onShowPopover={handlePopoverOpening} />
 
       <HandleDatasetPopover
         isOpen={isPopoverOpen}
