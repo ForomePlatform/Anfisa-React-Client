@@ -2,6 +2,7 @@
 
 ## <small>0.9.1 (9/16/2022)</small>
 
+* feat([FOROME-1634](https://quantori.atlassian.net/browse/FOROME-1634)): add export button to description card (#950) ([97260ffd](https://github.com/ForomePlatform/Anfisa-React-Client/commit/97260ffd))
 * fix([FOROME-1636](https://quantori.atlassian.net/browse/FOROME-1636)): fix flow of wizard (#949) ([adc957c0](https://github.com/ForomePlatform/Anfisa-React-Client/commit/adc957c0))
 * fix([FOROME-1635](https://quantori.atlassian.net/browse/FOROME-1635)): selecting dataset (#948) ([aa5c18b7](https://github.com/ForomePlatform/Anfisa-React-Client/commit/aa5c18b7))
 * feat([FOROME-1631](https://quantori.atlassian.net/browse/FOROME-1631)): Replacing 'Join' by 'Reset' (#947) ([45a774a6](https://github.com/ForomePlatform/Anfisa-React-Client/commit/45a774a6))
