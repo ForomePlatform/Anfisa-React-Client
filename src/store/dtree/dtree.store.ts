@@ -1,8 +1,10 @@
 import { makeAutoObservable, reaction, runInAction, toJS } from 'mobx'
 
+import { ViewTypeDashboard } from '@core/enum/view-type-dashboard-enum'
 import { t } from '@i18n'
 import { ActionsHistoryStore } from '@store/actions-history'
 import filterDtrees from '@store/filter-dtrees'
+import dashboardStore from '@pages/filter/common/dashboard'
 import { IDsListArguments } from '@service-providers/dataset-level'
 import {
   dtreeProvider,
@@ -44,6 +46,7 @@ export class DtreeStore {
   readonly stat = new DtreeStatStore()
   private _dtreeModifiedState: DtreeModifiedState = DtreeModifiedState.NotDtree
   private _previousDtreeCode = ''
+  private _viewType: ViewTypeDashboard = ViewTypeDashboard.List
   private _XlPointCounts: PointCount[] = []
 
   public startDtreeCode = ''
@@ -105,6 +108,10 @@ export class DtreeStore {
     return this._dtreeModifiedState === DtreeModifiedState.NotDtree
   }
 
+  public get isOnDashboard(): boolean {
+    return this._viewType === ViewTypeDashboard.Tile
+  }
+
   constructor() {
     reaction(
       () => this.dtreeSetData,
@@ -127,7 +134,10 @@ export class DtreeStore {
 
           const index = shouldUseFinalIndex ? finalStepIndex : activeStepIndex
 
-          stepStore.makeStepActive(index, ActiveStepOptions.StartedVariants)
+          stepStore.makeStepActive({
+            index,
+            option: ActiveStepOptions.StartedVariants,
+          })
         }
         if (response?.kind === 'xl') {
           dtreeProvider
@@ -179,6 +189,13 @@ export class DtreeStore {
           this.setDtreeModifiedState()
         }
         this._previousDtreeCode = code
+      },
+    )
+
+    reaction(
+      () => dashboardStore.viewType,
+      viewType => {
+        this._viewType = viewType
       },
     )
   }

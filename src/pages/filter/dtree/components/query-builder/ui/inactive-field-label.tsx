@@ -15,7 +15,10 @@ interface IInactiveFieldProps {
 export const InactiveFieldLabel = observer(
   ({ stepNo, groupIndex }: IInactiveFieldProps) => {
     const handleDeleteAttribute = () => {
-      stepStore.makeStepActive(stepNo - 1, ActiveStepOptions.StartedVariants)
+      stepStore.makeStepActive({
+        index: stepNo - 1,
+        option: ActiveStepOptions.StartedVariants,
+      })
 
       deleteAttribute(groupIndex)
     }

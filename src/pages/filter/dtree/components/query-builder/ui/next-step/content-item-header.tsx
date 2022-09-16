@@ -35,7 +35,10 @@ export const ContentItemHeader = observer(
       !stepType
 
     const handleModals = () => {
-      stepStore.makeStepActive(stepNo - 1, ActiveStepOptions.StartedVariants)
+      stepStore.makeStepActive({
+        index: stepNo - 1,
+        option: ActiveStepOptions.StartedVariants,
+      })
 
       stepType === AttributeKinds.ENUM &&
         modalsVisibilityStore.openEnumDialog(groupName, groupNo)

@@ -2,6 +2,7 @@ import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { ActionType } from '@declarations'
+import dtreeStore from '@store/dtree'
 import { Dialog } from '@ui/dialog'
 import { NumericCondition } from '@components/conditions/numeric'
 import {
@@ -25,6 +26,8 @@ export const NumericDialog = observer(
       initialNumericValue,
       attributeName,
     } = attributeStore
+
+    const { isOnDashboard } = dtreeStore
 
     const { currentStepGroups } = modalsControlStore
 
@@ -75,6 +78,7 @@ export const NumericDialog = observer(
           initialValue={initialNumericValue}
           controls={({ value, hasErrors }) => {
             const disabled =
+              isOnDashboard ||
               hasErrors ||
               (value[0] == null && value[2] == null) ||
               (typeof attributeStatus.min !== 'number' &&

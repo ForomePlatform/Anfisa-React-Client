@@ -1,6 +1,7 @@
 import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
+import dtreeStore from '@store/dtree'
 import { Dialog } from '@ui/dialog'
 import { GeneRegionCondition } from '@components/conditions/gene-region-condition/gene-region-condition'
 import { AttributeKinds } from '@service-providers/common'
@@ -19,6 +20,8 @@ export const GeneRegionDialog = observer(
       initialCondition,
       attributeSubKind,
     } = funcStore
+
+    const { isOnDashboard } = dtreeStore
 
     const { currentStepGroups } = modalsControlStore
 
@@ -75,7 +78,7 @@ export const GeneRegionDialog = observer(
               currentStepGroups,
               onClose: modalsVisibilityStore.closeGeneRegionDialog,
               handleModals,
-              disabled: hasErrors,
+              disabled: hasErrors || isOnDashboard,
               saveAttribute: () => handleSaveChanges(mode, param),
               addAttribute: action => handleAddAttribute(action, mode, param),
             })

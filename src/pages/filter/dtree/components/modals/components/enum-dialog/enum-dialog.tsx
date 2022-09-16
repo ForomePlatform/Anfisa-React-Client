@@ -1,6 +1,7 @@
 import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
+import dtreeStore from '@store/dtree'
 import { Dialog } from '@ui/dialog'
 import { DEFAULT_COUNT, EnumCondition } from '@components/conditions/enum'
 import dashboardStore from '@pages/filter/common/dashboard'
@@ -26,6 +27,8 @@ export const EnumDialog = observer(
       initialEnumMode,
       initialCondition,
     } = attributeStore
+
+    const { isOnDashboard } = dtreeStore
 
     const { currentStepGroups } = modalsControlStore
     const { selectedEnumVariants } = dashboardStore
@@ -100,7 +103,7 @@ export const EnumDialog = observer(
               currentStepGroups,
               onClose: modalsVisibilityStore.closeEnumDialog,
               handleModals,
-              disabled: value.length === 0,
+              disabled: value.length === 0 || isOnDashboard,
               saveAttribute: () => handleSaveChanges(mode, value),
               addAttribute: action => handleAddAttribute(action, mode, value),
             })

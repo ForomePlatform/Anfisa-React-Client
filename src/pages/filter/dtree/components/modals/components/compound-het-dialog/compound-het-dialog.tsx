@@ -1,6 +1,7 @@
 import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
+import dtreeStore from '@store/dtree'
 import { Dialog } from '@ui/dialog'
 import { CompoundHetCondition } from '@components/conditions/compound-het-condition'
 import { AttributeKinds } from '@service-providers/common'
@@ -19,6 +20,8 @@ export const CompoundHetDialog = observer(
       initialCondition,
       attributeSubKind,
     } = funcStore
+
+    const { isOnDashboard } = dtreeStore
 
     const { currentStepGroups } = modalsControlStore
 
@@ -75,7 +78,7 @@ export const CompoundHetDialog = observer(
               currentStepGroups,
               onClose: modalsVisibilityStore.closeCompoundHetDialog,
               handleModals,
-              disabled: hasErrors,
+              disabled: hasErrors || isOnDashboard,
               saveAttribute: () => handleSaveChanges(mode, param),
               addAttribute: action => handleAddAttribute(action, mode, param),
             })

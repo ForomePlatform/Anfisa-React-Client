@@ -33,7 +33,10 @@ export const FinalStep = observer(
       const shouldMakeActive = classList.includes('step-content-area')
 
       if (shouldMakeActive) {
-        stepStore.makeStepActive(stepNo, ActiveStepOptions.StartedVariants)
+        stepStore.makeStepActive({
+          index: stepNo,
+          option: ActiveStepOptions.StartedVariants,
+        })
       }
     }
 

@@ -1,6 +1,7 @@
 import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
+import dtreeStore from '@store/dtree'
 import { Dialog } from '@ui/dialog'
 import { CompoundRequestCondition } from '@components/conditions/compound-request/compound-request-condition'
 import { AttributeKinds } from '@service-providers/common'
@@ -24,6 +25,7 @@ export const CompoundRequestDialog = observer(
     } = funcStore
 
     const { currentStepGroups } = modalsControlStore
+    const { isOnDashboard } = dtreeStore
 
     const handleModals = () => {
       modalsVisibilityStore.closeCompoundRequestDialog()
@@ -82,7 +84,7 @@ export const CompoundRequestDialog = observer(
               currentStepGroups,
               onClose: modalsVisibilityStore.closeCompoundRequestDialog,
               handleModals,
-              disabled: hasErrors,
+              disabled: hasErrors || isOnDashboard,
               saveAttribute: () => handleSaveChanges(mode, param),
               addAttribute: action => handleAddAttribute(action, mode, param),
             })

@@ -1,6 +1,7 @@
 import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
 
+import dtreeStore from '@store/dtree'
 import { Dialog } from '@ui/dialog'
 import { InheritanceModeCondition } from '@components/conditions/inheritance-mode'
 import { AttributeKinds } from '@service-providers/common'
@@ -21,6 +22,8 @@ export const InheritanceModeDialog = observer(
       initialCondition,
       attributeSubKind,
     } = funcStore
+
+    const { isOnDashboard } = dtreeStore
 
     const { currentStepGroups } = modalsControlStore
 
@@ -79,7 +82,7 @@ export const InheritanceModeDialog = observer(
               currentStepGroups,
               onClose: modalsVisibilityStore.closeInheritanceModeDialog,
               handleModals,
-              disabled: hasErrors,
+              disabled: hasErrors || isOnDashboard,
               saveAttribute: () => handleSaveChanges(values, mode, param),
               addAttribute: action =>
                 handleAddAttribute(action, values, mode, param),
