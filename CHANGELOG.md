@@ -1,7 +1,8 @@
 # Change log 
 
-## <small>0.9.1 (9/14/2022)</small>
+## <small>0.9.1 (9/16/2022)</small>
 
+* fix([FOROME-1635](https://quantori.atlassian.net/browse/FOROME-1635)): selecting dataset (#948) ([aa5c18b7](https://github.com/ForomePlatform/Anfisa-React-Client/commit/aa5c18b7))
 * feat([FOROME-1631](https://quantori.atlassian.net/browse/FOROME-1631)): Replacing 'Join' by 'Reset' (#947) ([45a774a6](https://github.com/ForomePlatform/Anfisa-React-Client/commit/45a774a6))
 * feat([FOROME-1322](https://quantori.atlassian.net/browse/FOROME-1322)): add macro tagging (#945) ([ddd964c2](https://github.com/ForomePlatform/Anfisa-React-Client/commit/ddd964c2))
 * fix([FOROME-1587](https://quantori.atlassian.net/browse/FOROME-1587)): add scrolling to prev state on rerendering (#933) ([016d9e4e](https://github.com/ForomePlatform/Anfisa-React-Client/commit/016d9e4e))
