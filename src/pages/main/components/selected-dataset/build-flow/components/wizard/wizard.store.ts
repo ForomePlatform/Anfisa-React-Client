@@ -70,6 +70,11 @@ class WizardStore {
     )
 
     reaction(
+      () => dirinfoStore.selectedDirinfoName,
+      () => (this.selectedDataset = dirinfoStore.selectedDirinfoName),
+    )
+
+    reaction(
       () => this.datasetKind,
       datasetKind => {
         if (!datasetKind) {
