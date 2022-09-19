@@ -26,7 +26,7 @@ Examples:
 	| InvalidNameField |
 	| rECallers        |
 	| 1Multiallelic    |
-	| _SIFT            |
+	| _Symbol          |
 
 @regression
 @tc:114079
