@@ -23,10 +23,10 @@ Scenario Outline: 02 "<Format>" export with filters (Filter Refiner)
 	When User clicks "Edit Filters" button
 	And User clicks "Rules" 
 	And Chooses "@Possibly_Damaging_Predictions" value
-	And Clicks  "+Add Attribute" button
+	And Clicks  "Add condition" button
 	And Clicks "View variants" button
 	And Clicks "OK" on preset saving window
-	And "Main Table" page is open with 58 variants
+	And "Main Table" page is open with 56 variants
 	And User clicks "Export report"
 	And Clicks "<Format>"
 	Then Dataset should be exported in correct format
@@ -103,7 +103,7 @@ Scenario Outline: 07  "<Format>" export with Preset + Filter + Zone filter
 	And User clicks "Edit Filters" button
 	And User clicks "Callers"
 	And Chooses "GATK_Haplotype_Caller" value
-	And Clicks "+Add Attribute" button
+	And Clicks "Add condition" button
 	And Clicks "View variants" button
 	And Clicks "OK" on preset saving window
 	And User Clicks "Select Filter Preset" 
