@@ -21,7 +21,6 @@ Examples:
 	| Attribute Name               | Minimum Value | Maximum Value | Total Variants |
 	| Num_Samples                  | 1             | 2             | 3,281,689      |
 	| Num_Genes                    | 5             | 10            | 652            |
-	| Start_Pos                    | 25200         | 255200        | 5,524          |
 	| gnomAD_PopMax_AN             | 20            | 100           | 4,632          |
 	| Number_submitters            | 2             | 16            | 5,165          |
 	| Min_GQ                       | 0             | 750           | 5,591,394      |
@@ -43,7 +42,6 @@ Examples:
 	| Attribute Name               | Minimum Value | Maximum Value | Total Variants |
 	| Num_Samples                  | 0             | 3             | 5,628,753      |
 	| Num_Genes                    | 0             | 23            | 5,628,753      |
-	| Start_Pos                    | 25165         | 248930384     | 5,628,753      |
 	| gnomAD_PopMax_AN             | 0             | 249160        | 5,628,753      |
 	| Number_submitters            | 0             | 30            | 5,628,753      |
 	| Min_GQ                       | -1            | 840           | 5,628,753      |
@@ -92,7 +90,6 @@ Examples:
 	| Attribute Name | Minimum Value | Maximum Value |
 	| Num_Samples    | 1             | 2             |
 	| Num_Genes      | 5             | 10            |
-	| Start_Pos      | 25200         | 255200        |
 
 @tc:114310
 Scenario: 06 Filter by two ranges
@@ -123,7 +120,6 @@ Examples:
 	| Attribute Name               | Minimum Value | Maximum Value |
 	| Num_Samples                  | -1            | 3             |
 	| Num_Genes                    | -1            | 23            |
-	| Start_Pos                    | 0             | 248930384     |
 	| gnomAD_PopMax_AN             | -1            | 249160        |
 	| Number_submitters            | -1            | 30            |
 	| Min_GQ                       | -2            | 840           |
@@ -142,7 +138,6 @@ Examples:
 	| Attribute Name               | Minimum Value | Maximum Value |
 	| Num_Samples                  | 0             | 4             |
 	| Num_Genes                    | 0             | 24            |
-	| Start_Pos                    | 25165         | 248930385     |
 	| gnomAD_PopMax_AN             | 0             | 249161        |
 	| Number_submitters            | 0             | 31            |
 	| Min_GQ                       | -1            | 841           |
