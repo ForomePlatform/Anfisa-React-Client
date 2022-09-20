@@ -2,7 +2,8 @@ server {
     listen 8080;
     server_name _;
     client_max_body_size 100M;
-
+    add_header Access-Control-Allow-Origin $host;
+    add_header X-Frame-Options "SAMEORIGIN";
     location /app {
         proxy_pass ${URL_BACKEND};
     }
