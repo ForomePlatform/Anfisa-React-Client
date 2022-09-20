@@ -36,27 +36,24 @@ Scenario: 03 Try to save dataset with only zone filters
 
 	When User clicks "+ Add Gene"
 	And Checks "ABCD1" check-box
-	And Clicks "Apply" 
-	And User clicks "Create Derive DS"
-	Then "Add Dataset" button should be disabled
-	And Validation message should be shown
+	And Clicks "Apply"
+	Then "Create Derive DS" button should be disabled
 
 @regression
 @tc:114096
 Scenario: 04 Save a new dataset without any applied filters
 
 	When User clicks "Create Derive DS" without applying Filter Preset or Filter Refiner condition
-	Then "Add Dataset" button should be disabled
-	And Validation message should be shown
+	Then "Create Derive DS" button should be disabled
 
 @regression
 @tc:114097
 Scenario: 05 Save a new dataset with filter by "Gene" And preset
 
 	Given User applied "@InSilico_Possibly_Damaging" preset
-	And 45 variants are shown
-	When User clicks "+Add Gene" button
-	And User checks "ABHD12" gene
+	And 43 variants are shown
+	When User clicks "+ Add Gene" button
+	And Checks "ABHD12" gene
 	And Clicks "Apply" button
 	And 1 variant is shown
 	And Clicks "Create Derive DS"
@@ -64,33 +61,33 @@ Scenario: 05 Save a new dataset with filter by "Gene" And preset
 	And Clicks "Add dataset"
 	And Clicks "Open It"
 	Then Main table of newly created dataset should be opened
-	And 45 variant should be shown again
+	And 43 variant should be shown again
 
 @regression
 @tc:114098
 Scenario: 06 Save a new dataset with filter by "Gene List" And preset
 
 	Given User applied "@InSilico_Possibly_Damaging" preset
-	And 45 variants are shown
-	When Clicks "+Add Gene List" button
+	And 43 variants are shown
+	When User clicks "+ Add Gene List" button
 	And Clicks "All_Hearing_Loss" gene list
 	And Clicks "Apply" button
-	And 38 variants are shown
+	And 36 variants are shown
 	And Clicks "Create Derive DS"
 	And Writes name for the dataset
 	And Clicks "Add dataset"
 	And Clicks "Open It"
 	Then Main table of newly created dataset should be opened
-	And 45 variant should be shown again
+	And 43 variant should be shown again
 
 @regression
 @tc:114099
 Scenario: 07 Save a new dataset with filter by "Sample" And preset
 
 	Given User applied "@InSilico_Possibly_Damaging" preset
-	And 45 variants are shown
-	When Clicks "+Add Samples" button
-	And User checks "mother [NA24143]" sample
+	And 43 variants are shown
+	When User clicks "+ Add Samples" button
+	And Checks "mother [HG004]" sample
 	And Clicks "Apply" button
 	And 24 variants are shown
 	And Clicks "Create Derive DS"
@@ -98,16 +95,16 @@ Scenario: 07 Save a new dataset with filter by "Sample" And preset
 	And Clicks "Add dataset"
 	And Clicks "Open It"
 	Then Main table of newly created dataset should be opened
-	And 45 variant should be shown again
+	And 43 variant should be shown again
 
 @regression
 @tc:114100
 Scenario: 08 Save a new dataset with filter by "Tag" And preset
 
 	Given User applied "@InSilico_Possibly_Damaging" preset
-	And 45 variants are shown
+	And 43 variants are shown
 	When User adds custom tag to the first variant
-	And User clicks "+Add Tag" button
+	And User clicks "+ Add Tag" button
 	And Checks newly created custom tag
 	And Clicks "Apply" button
 	And 1 variant is shown
@@ -116,7 +113,7 @@ Scenario: 08 Save a new dataset with filter by "Tag" And preset
 	And Clicks "Add dataset"
 	And Clicks "Open It"
 	Then Main table of newly created dataset should be opened
-	And 45 variant should be shown again
+	And 43 variant should be shown again
 
 @regression
 @tc:114101
@@ -161,8 +158,8 @@ Scenario: 12 Cancel dataset
 	Given User applied "@InSilico_Possibly_Damaging" preset
 	When User clicks "Create Derive DS"
 	And Writes valid name for the dataset
-	And Clicks "Cancel"
-	Then Dataset should be canceled
+	And Clicks "Cancel" button
+	Then Dataset creation should be canceled
 
 @tc:114105
 Scenario: 13 Creation dataset process cannot be canceled

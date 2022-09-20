@@ -17,7 +17,7 @@ Scenario: 02 Apply filter
 	Given "Filter Refiner" was opened from the "Main Table"
 	When  User chooses "Callers" filter
 	And Chooses "INHERITED_FROM: Father" value
-	And Clicks "+ Add Attribute" button
+	And Clicks "Add condition" button
 	And clicks "View variants" button
 	And Clicks "OK" on data saving message
 	Then Main table should be opened
@@ -29,10 +29,10 @@ Scenario: 03 Apply few filters
 	Given "Filter Refiner" was opened from the "Main Table"
 	When User clicks "Callers" filter
 	And Chooses "INHERITED_FROM: Father" value
-	And Clicks "+ Add Attribute" button
+	And Clicks "Add condition" button
 	And Clicks the "Variant_Class" filter
 	And Chooses the "deletion" value
-	And Clicks "+ Add Attribute" button
+	And Clicks "Add condition" button
 	And clicks "View variants" button
 	And Clicks "OK" on data saving message
 	Then Main table should be opened
