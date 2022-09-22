@@ -35,21 +35,9 @@ Examples:
 	| shared gene                  | 2,332                         |
 	| non-intersecting transcripts | 2,344                         |
 
-@tc:114296
-Scenario: 03 Secondary Dataset - Clear button
-	Given the "Filter Refiner" for the "PGP3140_wgs_panel_hl" dataset was opened
-	When user clicks the "+" button near "Functional Units"
-	And selects "Compound_het" functional attribute
-	And selects the "Shared gene" value in the drop-down
-	And checks the "Not" check-box
-	And clicks the "Apply condition" button
-	And clicks the "Clear" button
-	And clicks the "Save Changes" button
-	Then "not" flag should be cleared from the right part of the screen
-
 @smoke
 @tc:114297
-Scenario: 04 Primary dataset
+Scenario: 03 Primary dataset
 	Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
 	When user clicks the "+" button near "Functional Units"
 	And selects the "Compound_Het" Functional attribute

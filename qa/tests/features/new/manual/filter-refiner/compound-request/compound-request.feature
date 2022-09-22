@@ -24,7 +24,7 @@ Scenario: 03 XL dataset - 1 row, MIN count = 1
 	When user clicks the "+" button near "Functional Units"
 	And selects "Compound_Request" functional attribute
 	And checks the "Compensational" check-box
-	And enters "1" in the "Scenario" input
+	And enters "1" as the "At least counts" value
 	And clicks the "Apply condition" button
 	Then "Compound_Request" should be added to the right part of the page
 	And number of variants should equal 108,891
@@ -35,21 +35,22 @@ Scenario: 04 XL dataset - 1 row, MIN count = 10
 	When user clicks the "+" button near "Functional Units"
 	And selects "Compound_Request" functional attribute
 	And checks the "Compensational" check-box
-	And enters "10" in the "Scenario" input
+	And enters "10" as the "At least counts" value
 	And clicks the "Apply condition" button
 	Then "Compound_Request" should be added to the right part of the page
 	And number of variants should equal 95,159
 
 @tc:114324
-Scenario: 05 XL dataset - 1 row, MIN count = 1000
+Scenario: 05 XL dataset - 1 row, MIN count = 100
 	Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
 	When user clicks the "+" button near "Functional Units"
 	And selects "Compound_Request" functional attribute
 	And checks the "Compensational" check-box
-	And enters "1000" in the "Scenario" input
+	And enters "100" as the "At least counts" value
 	And clicks the "Apply condition" button
-	Then "Compound_Request" should be added to the right part of the page
-	And number of variants should equal 0
+	Then Value should be corrected itself
+	And 99 should be written as the "At least counts" value
+	And Variant number should be equal to 30,932
 
 @tc:114325
 Scenario: 06 XL dataset - 2 rows
@@ -57,14 +58,14 @@ Scenario: 06 XL dataset - 2 rows
 	When user clicks the "+" button near "Functional Units"
 	And selects "Compound_Request" functional attribute
 	And checks the "Compensational" check-box
-	And enters "1" in the "Scenario" input
+	And enters "1" as the "At least counts" value
 	And clicks the "Add" button to add the second row
 	And checks the "Homozygous Recessive/X-Linked" check-box
-	And enters "2" in the "Scenario" input
+	And enters "2" as the "At least counts" value
 	And clicks "Apply condition" button
 	Then "Compound_Request" should be added to the right part of the page
 	And variants list should be filtered
-	And number of variants should equal 110,102
+	And number of variants should equal 183,389
 
 @tc:114326
 Scenario: 07 XL dataset - 5 rows
@@ -72,19 +73,19 @@ Scenario: 07 XL dataset - 5 rows
 	When user clicks the "+" button near "Functional Units"
 	And selects "Compound_Request" functional attribute
 	And checks the "Homozygous Recessive/X-Linked" check-box
-	And enters "1" in the "Scenario" input
+	And enters "1" as the "At least counts" value
 	And clicks the "Add" button to add the second row
 	And checks the "Autosomal Dominant" check-box
-	And enters "2" in the "Scenario" input
+	And enters "2" as the "At least counts" value
 	And clicks the "Add" button to add the third row
 	And checks the "Compensational" check-box
-	And enters "3" in the "Scenario" input
+	And enters "3" as the "At least counts" value
 	And clicks the "Add" button to add the fourth row
 	And checks the "Homozygous Recessive/X-Linked" check-box
-	And enters "4" in the "Scenario" input
+	And enters "4" as the "At least counts" value
 	And clicks the "Add" button to add the fifth row
 	And checks the "Autosomal Dominant" check-box
-	And enters "5" in the "Scenario" input
+	And enters "5" as the "At least counts" value
 	And clicks the "Apply condition" button to apply the filter
 	Then "Compound_Request" should be added to the right part of the page
 	And number of variants should equal 115,096
@@ -128,19 +129,9 @@ Scenario: 11 XL dataset - "Reset" button
 	And clicks the "Reset" button
 	Then "Inheritance mode" should be un-checked
 
-@tc:114331
-Scenario: 12 XL dataset - "Clear" button
-	Given the "Filter Refiner" for the "xl_PGP3140_wgs_NIST-4_2" dataset was opened
-	When user clicks the "+" button near "Functional Units"
-	And selects "Compound_Request" functional attribute
-	And adds some rows
-	And clicks the "Clear" button
-	Then added rows should be removed
-	And everything should be back to default
-
 @smoke
 @tc:114332
-Scenario Outline: 13 Secondary dataset - filter by "<approx drop-down value>"
+Scenario Outline: 12 Secondary dataset - filter by "<approx drop-down value>"
 	Given the "Filter Refiner" for the "PGP3140_wgs_panel_hl" dataset was opened
 	When user clicks the "+" button near "Functional Units"
 	And selects "Compound_Request" functional attribute

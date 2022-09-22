@@ -13,12 +13,19 @@ Scenario: 01 "Create Derived DS" button
 
 @smoke
 @tc:114387
-Scenario: 02 Create dataset: valid name
+Scenario Outline: 02 Create dataset: valid "<Name1>"
+
 	Given a filter with less than 9000 variants was loaded
 	And "Add new dataset" dialog was displayed
-	When user enters valid name for the dataset
+	When user enters valid "<Name1>" for the dataset
 	And clicks "Add dataset" button
 	Then dataset should be created
+
+Examples: 
+	| Name1         |
+	| test_dataset1 |
+	| TEST_DATASET2 |
+	| Test dataset  |
 
 @tc:114388
 Scenario: 03 Create dataset: empty name
@@ -34,6 +41,7 @@ Scenario: 04 Create dataset: duplicated name
 	When user enters name for the dataset that already exists
 	And clicks "Add dataset" button
 	Then "Add dataset" button should be disabled
+	And Validation message should be shown
 
 @tc:114390
 Scenario Outline: 05 Create dataset: invalid "<InvalidDatasetName>" name
