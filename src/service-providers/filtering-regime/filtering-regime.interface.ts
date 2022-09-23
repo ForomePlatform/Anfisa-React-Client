@@ -62,6 +62,7 @@ export interface IStatunitsArguments {
   code?: string
   no?: string
   units: string[]
+  ctx?: { 'druid-rq': number }
 }
 
 export interface IStatunits {
