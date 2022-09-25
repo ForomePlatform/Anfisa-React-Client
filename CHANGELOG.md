@@ -1,5 +1,9 @@
 # Change log 
 
+## <small>0.10.1 (9/25/2022)</small>
+
+* feat([FOROME-1645](https://quantori.atlassian.net/browse/FOROME-1645)): Added debug button (#954) ([581a047f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/581a047f))
+
 ## <small>0.9.1 (9/16/2022)</small>
 
 * feat([FOROME-1632](https://quantori.atlassian.net/browse/FOROME-1632)): change a request for included/excluded variants (#946) ([5679295d](https://github.com/ForomePlatform/Anfisa-React-Client/commit/5679295d))
