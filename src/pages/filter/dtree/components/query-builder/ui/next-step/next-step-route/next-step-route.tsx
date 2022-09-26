@@ -4,16 +4,13 @@ import { Fragment, ReactElement } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
-import { useParams } from '@core/hooks/use-params'
 import { t } from '@i18n'
-import { datasetStore } from '@store/dataset'
 import dtreeStore from '@store/dtree'
 import stepStore, { ActiveStepOptions } from '@store/dtree/step.store'
 import { Icon } from '@ui/icon'
 import { Tooltip } from '@ui/tooltip'
 import { DecisionTreesResultsDataCy } from '@data-testid'
 import { StepCount } from '@pages/filter/dtree/components/query-builder/ui/step-count'
-import { DebugButton } from './components/DebugButton'
 
 interface INextStepRouteProps {
   isExpanded: boolean
@@ -29,9 +26,6 @@ export const NextStepRoute = observer(
     stepNo,
     isIncluded,
   }: INextStepRouteProps): ReactElement => {
-    const params = useParams()
-    const isDebug = params.get('debug')
-
     const isXl = dtreeStore.isXl
     const currentStep = stepStore.filteredSteps[index]
     const { conditionPointIndex, returnPointIndex } = currentStep
@@ -55,8 +49,6 @@ export const NextStepRoute = observer(
       : null
 
     const currentStartCounts = isFinalStep ? returnCounts : conditionCounts
-    const firstUnit = currentStep.groups?.[0]?.[1]
-    const isDebugButtonShown = isDebug && firstUnit && datasetStore.isXL
 
     return (
       <div style={{ minHeight: 53 }} className={cn(styles.nextStepRoute)}>
@@ -68,13 +60,6 @@ export const NextStepRoute = observer(
           )}
         >
           <StepCount isXl={isXl} pointCount={currentStartCounts} />
-          {isDebugButtonShown && (
-            <DebugButton
-              isFullStep={true}
-              stepIndex={stepNo}
-              unit={firstUnit}
-            />
-          )}
         </div>
 
         <div className="flex flex-col items-center w-1/6">
@@ -113,13 +98,14 @@ export const NextStepRoute = observer(
                         isIncluded &&
                           styles.nextStepRoute__excludeAmount_included,
                       )}
-                      onClick={() =>
+                      onClick={() => {
                         stepStore.makeStepActive({
                           index: stepNo - 1,
                           option: ActiveStepOptions.ReturnedVariants,
                           isIncreasedStepIndex: true,
+                          isFullStep: false,
                         })
-                      }
+                      }}
                       data-testid={DecisionTreesResultsDataCy.excludeInfo}
                     >
                       <StepCount
@@ -128,13 +114,6 @@ export const NextStepRoute = observer(
                         isXl={isXl}
                         pointCount={returnCounts}
                       />
-                      {isDebugButtonShown && (
-                        <DebugButton
-                          isFullStep={false}
-                          stepIndex={stepNo}
-                          unit={firstUnit}
-                        />
-                      )}
                     </div>
                   </Tooltip>
 

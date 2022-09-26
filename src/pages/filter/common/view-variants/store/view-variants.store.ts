@@ -1,5 +1,6 @@
 import { IReactionDisposer, makeAutoObservable, reaction, toJS } from 'mobx'
 
+import stepStore from '@store/dtree/step.store'
 import { VariantAspectsAsyncStore } from '@store/variant-aspects.async.store'
 import { IRecordDescriptor } from '@service-providers/common'
 import { IReccntArguments } from '@service-providers/dataset-level'
@@ -86,11 +87,27 @@ class ViewVariantsStore {
   private get recordQuery(): IReccntArguments | undefined {
     const ds = this.dsList.query?.ds
     const rec = this.selectedVariant?.no
+    const { shouldNegateDetails } = stepStore
+
+    const details = this.dsList.data?.records?.find(record => record.no === rec)
+
+    const detailsQuery = shouldNegateDetails
+      ? {
+          details: details
+            ? details.dt
+                ?.replace(/0/g, '-1')
+                .replace(/1/g, '0')
+                .replace(/-1/g, '1')
+            : undefined,
+        }
+      : {}
 
     if (ds && rec !== undefined) {
+      //@ts-ignore
       return {
         ds,
         rec,
+        ...detailsQuery,
       }
     }
 

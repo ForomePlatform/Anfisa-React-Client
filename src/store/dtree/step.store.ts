@@ -19,11 +19,14 @@ interface IActiveStep {
   index: number
   option: ActiveStepOptions
   isIncreasedStepIndex?: boolean
+  isFullStep?: boolean
 }
 
 class StepStore {
   activeStepIndex: number = 0
   activeStepOption: ActiveStepOptions = ActiveStepOptions.StartedVariants
+
+  public shouldNegateDetails?: boolean = false
 
   private _steps: IStepData[] = []
 
@@ -80,6 +83,7 @@ class StepStore {
     index: number,
     option: ActiveStepOptions,
     indexForApi: string,
+    isFullStep?: boolean,
   ) => {
     if (!this._steps[index]) {
       return
@@ -96,6 +100,11 @@ class StepStore {
       this._steps[index].isReturnedVariantsActive = true
     }
 
+    this._steps[index].isFullStep = isFullStep
+
+    this.shouldNegateDetails =
+      this._steps[index].decision === false && !isFullStep
+
     dtreeStore.stat.setQuery({
       datasetName: datasetStore.datasetName,
       code: dtreeStore.dtreeCode,
@@ -103,7 +112,12 @@ class StepStore {
     })
   }
 
-  makeStepActive({ index, option, isIncreasedStepIndex = false }: IActiveStep) {
+  makeStepActive({
+    index,
+    option,
+    isIncreasedStepIndex = false,
+    isFullStep = true,
+  }: IActiveStep) {
     this.setActiveStep(index, option)
     this.changeStepDataActiveStep(
       index,
@@ -111,6 +125,7 @@ class StepStore {
       isIncreasedStepIndex
         ? `${+this.stepIndexForApi + 1}`
         : this.stepIndexForApi,
+      isFullStep,
     )
   }
 

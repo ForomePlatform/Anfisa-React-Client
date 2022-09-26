@@ -34,6 +34,8 @@ export type IStepData = {
   condition?: string
   result?: string
   isFinalStep?: boolean
+  isFullStep?: boolean
+  decision?: boolean | null
 }
 
 interface IDtreeFilteredCounts {
@@ -375,7 +377,7 @@ export class DtreeStore {
   openModalViewVariants(index?: number) {
     this.isModalViewVariantsVisible = true
 
-    if (index) this.tableModalIndexNumber = index
+    if (index !== undefined) this.tableModalIndexNumber = index
   }
 
   closeModalViewVariants = () => {

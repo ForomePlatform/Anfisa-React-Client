@@ -36,9 +36,14 @@ export const QueryBuilderResults = observer(
       })
 
       const indexForApi = dtreeStore.getStepIndexForApi(stepIndex)
+
       const nextStepIndex = isReturnedVariants ? indexForApi + 1 : indexForApi
+      const { isFullStep } = stepStore.steps[stepIndex]
+
       const fixedNextStepIndex = hasEmptyStep
         ? nextStepIndex - 1
+        : !isFullStep
+        ? nextStepIndex + 1
         : nextStepIndex
       dtreeStore.openModalViewVariants(fixedNextStepIndex)
     }

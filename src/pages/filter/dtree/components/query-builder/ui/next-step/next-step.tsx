@@ -9,6 +9,7 @@ import { DecisionTreesResultsDataCy } from '@data-testid'
 import { NextStepContent } from './next-step-content'
 import { NextStepHeader } from './next-step-header'
 import { NextStepRoute } from './next-step-route'
+import { toJS } from 'mobx'
 
 interface INextStepProps {
   index: number
@@ -45,6 +46,7 @@ export const NextStep = observer(
         stepStore.makeStepActive({
           index: stepNo - 1,
           option: ActiveStepOptions.StartedVariants,
+          isFullStep: true,
         })
       }
     }
