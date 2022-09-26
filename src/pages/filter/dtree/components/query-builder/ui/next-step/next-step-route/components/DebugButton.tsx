@@ -19,14 +19,19 @@ export const DebugButton: FC<IDebugButtonProps> = ({
 }) => {
   const indexForApi = dtreeStore.getStepIndexForApi(stepIndex)
   const onClickSendDruidReq = () => {
-    filteringRegimeProvider.getStatUnits({
-      ds: datasetStore.datasetName,
-      no: String(indexForApi - (isFullStep ? 2 : 1)),
-      rq_id: new Date().toISOString(),
-      units: [unit],
-      dtree: dtreeStore.currentDtreeName || undefined,
-      ctx: { 'druid-rq': 1 },
-    })
+    filteringRegimeProvider
+      .getStatUnits({
+        ds: datasetStore.datasetName,
+        no: String(indexForApi - (isFullStep ? 2 : 1)),
+        rq_id: new Date().toISOString(),
+        units: [unit],
+        dtree: dtreeStore.currentDtreeName || undefined,
+        ctx: { 'druid-rq': 1 },
+      })
+      .then(res => {
+        // eslint-disable-next-line no-console
+        console.log(res)
+      })
   }
 
   return (
