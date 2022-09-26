@@ -103,7 +103,6 @@ class ViewVariantsStore {
       : {}
 
     if (ds && rec !== undefined) {
-      //@ts-ignore
       return {
         ds,
         rec,
