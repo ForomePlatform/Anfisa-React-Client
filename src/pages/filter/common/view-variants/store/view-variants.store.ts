@@ -93,12 +93,10 @@ class ViewVariantsStore {
 
     const detailsQuery = shouldNegateDetails
       ? {
-          details: details
-            ? details.dt
-                ?.replace(/0/g, '-1')
-                .replace(/1/g, '0')
-                .replace(/-1/g, '1')
-            : undefined,
+          details: details?.dt
+            ?.replace(/0/g, '-1')
+            .replace(/1/g, '0')
+            .replace(/-1/g, '1'),
         }
       : {}
 
