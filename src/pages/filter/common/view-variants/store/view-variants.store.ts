@@ -91,12 +91,23 @@ class ViewVariantsStore {
 
     const details = this.dsList.data?.records?.find(record => record.no === rec)
 
+    const invertedDetails = details?.dt
+      ?.split('')
+      .map(d => {
+        switch (d) {
+          case '0':
+            return '-1'
+          case '1':
+            return '0'
+          case '-1':
+            return '1'
+        }
+      })
+      .join('')
+
     const detailsQuery = shouldNegateDetails
       ? {
-          details: details?.dt
-            ?.replace(/0/g, '-1')
-            .replace(/1/g, '0')
-            .replace(/-1/g, '1'),
+          details: invertedDetails,
         }
       : {}
 
