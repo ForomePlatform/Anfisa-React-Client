@@ -118,6 +118,7 @@ export const NextStepRoute = observer(
                           index: stepNo - 1,
                           option: ActiveStepOptions.ReturnedVariants,
                           isIncreasedStepIndex: true,
+                          isFullStep: false,
                         })
                       }
                       data-testid={DecisionTreesResultsDataCy.excludeInfo}
