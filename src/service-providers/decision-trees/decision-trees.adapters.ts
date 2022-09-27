@@ -5,6 +5,7 @@ import { createCodeFrags } from './../../utils/createCodeFrags'
 import { getDataFromFrags } from './../../utils/getDataFromFrags'
 import {
   IDtreeSet,
+  IDtreeSetPoint,
   IDtreeStatResponse,
   TDtreeStat,
 } from './decision-trees.interface'
@@ -39,6 +40,7 @@ export const adaptDtreeSetResponse = (
 
   const localSteps: IStepData[] = []
   const atomsEntries = Object.entries(response['cond-atoms'] ?? {})
+  const points: IDtreeSetPoint[] | undefined = response.points
 
   atomsEntries.forEach(([key, atom], index) => {
     const conditionPointIndex = parseInt(key, 10)
@@ -54,12 +56,11 @@ export const adaptDtreeSetResponse = (
       condition: stepCodes[index].condition,
       result: stepCodes[index].result,
       isNegate: stepCodes[index].isNegate,
+      decision: points?.[conditionPointIndex + 1].decision,
     })
   })
 
   const newSteps = localSteps.length === 0 ? [initialStep] : localSteps
-
-  const points: unknown[] | undefined = response.points
 
   const finalStep: IStepData = {
     step: newSteps.length,
