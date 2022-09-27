@@ -1,7 +1,8 @@
 # Change log 
 
-## <small>0.10.1 (9/25/2022)</small>
+## <small>0.10.1 (9/27/2022)</small>
 
+* feat([FOROME-1633](https://quantori.atlassian.net/browse/FOROME-1633)): Fixing transcripts (#955) ([11b9adc9](https://github.com/ForomePlatform/Anfisa-React-Client/commit/11b9adc9))
 * feat([FOROME-1645](https://quantori.atlassian.net/browse/FOROME-1645)): Added debug button (#954) ([581a047f](https://github.com/ForomePlatform/Anfisa-React-Client/commit/581a047f))
 * fix(nginx): add cors for front container ([2e535880](https://github.com/ForomePlatform/Anfisa-React-Client/commit/2e535880))
 
