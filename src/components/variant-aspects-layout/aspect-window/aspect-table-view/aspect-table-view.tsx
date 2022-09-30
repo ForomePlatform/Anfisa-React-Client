@@ -111,6 +111,10 @@ export const AspectTableView = ({
                             : !cell[1]?.includes(
                                 AspectCellRenderClass.NoTrHit,
                               ) && 'text-white',
+                          cell[1]
+                            ?.split(' ')
+                            .some(cls => cls === AspectCellRenderClass.Hit) &&
+                            '!font-bold',
                           style.linkContainer,
                         )}
                       >
