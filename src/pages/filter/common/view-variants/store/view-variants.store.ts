@@ -98,7 +98,9 @@ class ViewVariantsStore {
             .replaceAll('1', '0')
             .replaceAll('-', '1'),
         }
-      : {}
+      : {
+          details: details?.dt,
+        }
 
     if (ds && rec !== undefined) {
       return {
