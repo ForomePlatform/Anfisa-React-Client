@@ -16,7 +16,7 @@ Scenario: 02 "Create Decision Tree" button appears only after adding the attribu
 	Given no attributes were added to the tree
 	When user clicks "+ Add Attribute" button on the first step
 	And clicks the "Callers" attribute
-	And selects the "BGM_AUTO_DOM" Value
+	And selects the "GATK_DE_NOVO" Value
 	And clicks the "+ Add Attribute" button
 	Then "Create Decision Tree" button should appear at the top of the page
 
