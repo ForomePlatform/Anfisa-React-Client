@@ -131,13 +131,20 @@ export class FilteringRegimeProvider extends ServiceProviderBase {
     }>,
     options: TGetFullStatUnitsOptions<Response> = {},
   ): Promise<Response> {
-    const { abortSignal, onPartialResponse } = options
+    const { abortSignal, onPartialResponse, priorityUnit } = options
 
     const { response, unitsRequest } = await baseRequest()
 
     let result = response
     let incompleteProps = getIncompleteProps(result.units)
     progressBarStore.incompleteProps = incompleteProps
+    let priorityProp: string[] | undefined = priorityUnit
+
+    if (priorityProp) {
+      incompleteProps = incompleteProps.filter(
+        prop => prop !== priorityProp?.[0],
+      )
+    }
 
     while (incompleteProps.length > 0) {
       if (abortSignal && abortSignal.aborted) {
@@ -152,7 +159,7 @@ export class FilteringRegimeProvider extends ServiceProviderBase {
         {
           ...unitsRequest,
           tm: '1',
-          units: incompleteProps,
+          units: priorityProp || incompleteProps,
         },
         {
           signal: abortSignal,
@@ -166,6 +173,13 @@ export class FilteringRegimeProvider extends ServiceProviderBase {
 
           return units.find(item => item.name === name) ?? prop
         }),
+      }
+
+      if (
+        priorityProp &&
+        result.units.some(unit => unit.name === priorityProp?.[0])
+      ) {
+        priorityProp = undefined
       }
 
       incompleteProps = getIncompleteProps(result.units)

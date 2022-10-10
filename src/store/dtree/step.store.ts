@@ -20,11 +20,13 @@ interface IActiveStep {
   option: ActiveStepOptions
   isIncreasedStepIndex?: boolean
   isFullStep?: boolean
+  priorityUnit?: string
 }
 
 class StepStore {
   activeStepIndex: number = 0
   activeStepOption: ActiveStepOptions = ActiveStepOptions.StartedVariants
+  priorityUnit?: string
 
   public shouldNegateDetails?: boolean = false
 
@@ -74,6 +76,10 @@ class StepStore {
     makeAutoObservable(this)
   }
 
+  setPriorityUnit(unit: string | undefined) {
+    this.priorityUnit = unit
+  }
+
   setActiveStep(index: number, option: ActiveStepOptions) {
     this.activeStepIndex = index
     this.activeStepOption = option
@@ -109,6 +115,7 @@ class StepStore {
       datasetName: datasetStore.datasetName,
       code: dtreeStore.dtreeCode,
       stepIndex: indexForApi,
+      priorityUnit: this.priorityUnit ? [this.priorityUnit] : undefined,
     })
   }
 
@@ -117,7 +124,9 @@ class StepStore {
     option,
     isIncreasedStepIndex = false,
     isFullStep = true,
+    priorityUnit,
   }: IActiveStep) {
+    this.setPriorityUnit(priorityUnit)
     this.setActiveStep(index, option)
     this.changeStepDataActiveStep(
       index,
