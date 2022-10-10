@@ -104,6 +104,7 @@ export type TGetFullStatUnitsOptions<
 > = {
   abortSignal?: AbortSignal
   onPartialResponse?: (response: Response) => void
+  priorityUnit?: string[]
 }
 
 export type TGetFullDsStatOptions = TGetFullStatUnitsOptions<TDsStat>

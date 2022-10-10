@@ -38,6 +38,7 @@ export const ContentItemHeader = observer(
       stepStore.makeStepActive({
         index: stepNo - 1,
         option: ActiveStepOptions.StartedVariants,
+        priorityUnit: groupName,
       })
 
       stepType === AttributeKinds.ENUM &&

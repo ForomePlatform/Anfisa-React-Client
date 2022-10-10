@@ -8,6 +8,7 @@ type TDtreeStatQuery = {
   datasetName: string
   code: string
   stepIndex: string
+  priorityUnit?: string[]
 }
 
 export class DtreeStatStore extends BaseStatUnitsStore<
@@ -50,6 +51,7 @@ export class DtreeStatStore extends BaseStatUnitsStore<
         onPartialResponse: data => {
           this.setData(data)
         },
+        priorityUnit: query.priorityUnit,
       },
     )
   }
