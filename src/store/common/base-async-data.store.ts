@@ -38,7 +38,7 @@ export abstract class BaseAsyncDataStore<Data, Query> {
   private _data: Data | undefined
   private lastOnlineQuery: Query | undefined
 
-  private abortController: AbortController | null = null
+  public abortController: AbortController | null = null
   private readonly cache: Map<string, { lastUpdate: number; data: Data }> =
     new Map()
 

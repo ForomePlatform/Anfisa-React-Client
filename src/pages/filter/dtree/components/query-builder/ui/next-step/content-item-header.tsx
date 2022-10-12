@@ -2,6 +2,7 @@ import { ReactElement } from 'react'
 import { observer } from 'mobx-react-lite'
 
 import { FuncStepTypesEnum } from '@core/enum/func-step-types-enum'
+import dtreeStore from '@store/dtree'
 import { IStepData } from '@store/dtree/dtree.store'
 import stepStore, { ActiveStepOptions } from '@store/dtree/step.store'
 import { Icon } from '@ui/icon'
@@ -35,6 +36,7 @@ export const ContentItemHeader = observer(
       !stepType
 
     const handleModals = () => {
+      dtreeStore.stat.abortController?.abort()
       stepStore.makeStepActive({
         index: stepNo - 1,
         option: ActiveStepOptions.StartedVariants,
