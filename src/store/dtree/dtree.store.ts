@@ -118,6 +118,8 @@ export class DtreeStore {
     reaction(
       () => this.dtreeSetData,
       response => {
+        this._XlPointCounts = []
+
         if (response) {
           stepStore.setSteps(response.steps)
 
