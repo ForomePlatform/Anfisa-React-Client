@@ -149,9 +149,7 @@ Scenario: 18 Add attribute via dashboard
 	And User clicks the name of attribute
 	And Attribute panel is opened
 	And User checks any attribute
-	And Clicks "+ Add Attribute" button
-	Then Dashboard should be switched to panel again 
-	And Checked attribute should be added to Filter refiner or Decision tree
+	Then "+ Add Attribute" button should be disabled
 
 @tc:114797
 Scenario: 19 Apply preset

@@ -284,3 +284,19 @@ Examples:
 	| Compiund_Het            |
 	| Custom_Inheritance_Mode |
 	| Compound_Request        |
+
+Scenario: 27 Included variants in the tree 
+	Given "@Hearing Loss, v.5" decision tree was loaded 
+	When user clicks the green "+" button near any step 
+	And clicks "View variants" button 
+	And expands the "Transcripts" section 
+	And clicks "Show included only" radio button
+	Then included variants should be shown 
+
+Scenario: 28 Excluded variants in the tree 
+	Given "@Hearing Loss, v.5" decision tree was loaded 
+	When user clicks the purple "X" button near any step 
+	And clicks "View variants" button 
+	And expands the "Transcripts" section 
+	And clicks "Show excluded only" radio button
+	Then excluded variants should be shown 
