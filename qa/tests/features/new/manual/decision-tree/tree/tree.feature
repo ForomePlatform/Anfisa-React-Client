@@ -285,6 +285,7 @@ Examples:
 	| Custom_Inheritance_Mode |
 	| Compound_Request        |
 
+@tc:115311
 Scenario: 27 Included variants in the tree 
 	Given "@Hearing Loss, v.5" decision tree was loaded 
 	When user clicks the green "+" button near any step 
@@ -293,6 +294,7 @@ Scenario: 27 Included variants in the tree
 	And clicks "Show included only" radio button
 	Then included variants should be shown 
 
+@tc:115312
 Scenario: 28 Excluded variants in the tree 
 	Given "@Hearing Loss, v.5" decision tree was loaded 
 	When user clicks the purple "X" button near any step 
