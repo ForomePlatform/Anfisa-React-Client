@@ -88,7 +88,7 @@ export const CompoundRequestCondition = observer(
       value: string,
       selectIndex: number,
     ) => {
-      const clonedRequestCondition = [...requestCondition]
+      const clonedRequestCondition = cloneDeep(requestCondition)
 
       const newRequestCondition = getNewRequestCondition({
         clonedRequestCondition,
@@ -132,7 +132,7 @@ export const CompoundRequestCondition = observer(
     ): void => {
       if (value < 0) return
 
-      const newRequestCondition = [...requestCondition]
+      const newRequestCondition = cloneDeep(requestCondition)
       newRequestCondition[requestBlockIndex][0] = value
 
       setRequestCondition(newRequestCondition)
@@ -143,9 +143,10 @@ export const CompoundRequestCondition = observer(
       type: string,
       activeRequestIndex: number,
     ): void => {
-      if (type === 'ADD') {
+       if (type === 'ADD') {
+         const clonedCondition = cloneDeep(requestCondition)
         const emptyBlock: [number, any] = [1, {}]
-        const newRequestCondition = [...requestCondition, emptyBlock]
+        const newRequestCondition = [...clonedCondition, emptyBlock]
 
         setActiveRequestIndex(newRequestCondition.length - 1)
         setRequestCondition(newRequestCondition)
