@@ -24,9 +24,9 @@ export const CompoundRequest = observer((): ReactElement => {
   const { isFilterTouched } = filterStore
 
   const saveAttribute = useCallback(
-     (mode, param) => {
-        filterStore.initialStat.abortController?.abort()
-        filterStore.filteredStat.abortController?.abort()
+    (mode, param) => {
+      filterStore.initialStat.abortController?.abort()
+      filterStore.filteredStat.abortController?.abort()
       savePanelAttribute({
         attributeKind: AttributeKinds.FUNC,
         attributeName,

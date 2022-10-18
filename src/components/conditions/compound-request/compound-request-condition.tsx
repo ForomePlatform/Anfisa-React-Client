@@ -143,8 +143,8 @@ export const CompoundRequestCondition = observer(
       type: string,
       activeRequestIndex: number,
     ): void => {
-       if (type === 'ADD') {
-         const clonedCondition = cloneDeep(requestCondition)
+      if (type === 'ADD') {
+        const clonedCondition = cloneDeep(requestCondition)
         const emptyBlock: [number, any] = [1, {}]
         const newRequestCondition = [...clonedCondition, emptyBlock]
 
