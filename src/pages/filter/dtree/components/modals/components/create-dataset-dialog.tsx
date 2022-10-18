@@ -76,6 +76,8 @@ export const CreateDatasetDialog = observer(
         }
 
         setError('')
+      } else {
+        setValue('')
       }
     }, [isOpen, pathName])
 
