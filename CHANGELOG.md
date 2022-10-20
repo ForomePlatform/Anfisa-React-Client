@@ -1,5 +1,9 @@
 # Change log 
 
+## <small>0.11.1 (10/20/2022)</small>
+
+* fix([FOROME-1655](https://quantori.atlassian.net/browse/FOROME-1655)): Fixing reset popover (#965) ([013cdb6c](https://github.com/ForomePlatform/Anfisa-React-Client/commit/013cdb6c))
+
 ## <small>0.10.1 (9/25/2022)</small>
 
 * feat([FOROME-1645](https://quantori.atlassian.net/browse/FOROME-1645)): Added debug button (#954) ([00b09fd3](https://github.com/ForomePlatform/Anfisa-React-Client/commit/00b09fd3))
