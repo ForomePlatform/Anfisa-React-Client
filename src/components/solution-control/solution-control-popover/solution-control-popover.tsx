@@ -51,6 +51,7 @@ export const SolutionControlPopover = ({
   const onApplyReset = () => {
     onClose?.()
     onReset(selected)
+    setIsConfirmOpen(false)
   }
 
   return (
