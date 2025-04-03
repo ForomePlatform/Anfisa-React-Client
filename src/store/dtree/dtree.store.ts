@@ -36,6 +36,7 @@ export type IStepData = {
   isFinalStep?: boolean
   isFullStep?: boolean
   decision?: boolean | null
+  errString?: string | undefined
 }
 
 interface IDtreeFilteredCounts {

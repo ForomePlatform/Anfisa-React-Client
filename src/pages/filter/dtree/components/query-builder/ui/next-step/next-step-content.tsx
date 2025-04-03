@@ -64,6 +64,7 @@ export const NextStepContent = observer(
             <ContentCode
               codeCondition={codeCondition}
               codeResult={codeResult}
+              errString={currentStepData.errString}
             />
           )}
         </div>

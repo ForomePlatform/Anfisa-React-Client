@@ -19,6 +19,7 @@ interface INextStepHeaderProps {
   isExpanded: boolean
   expandContent: () => void
   index: number
+  errString: string | undefined
   isExcluded: boolean
 }
 
@@ -27,6 +28,7 @@ export const NextStepHeader = observer(
     isExpanded,
     expandContent,
     index,
+    errString,
     isExcluded,
   }: INextStepHeaderProps): ReactElement => {
     const { isPopoverOpen, popoverAnchor, onToggle, closePopover } =
@@ -51,12 +53,16 @@ export const NextStepHeader = observer(
     const isEmptyStep = currentStep.groups.length === 0
     const isFirstStep = index === 0
     const isEmptyFirstStep = isEmptyStep && isFirstStep
+    const errClassExtra = !isExpanded && errString ? ' bg-red-lighter' : ''
 
     return (
       <>
         <div
           style={{ minHeight: 43 }}
-          className="flex w-full justify-between items-center mt-1 step-content-area"
+          className={
+            'flex w-full justify-between items-center mt-1 step-content-area' +
+            errClassExtra
+          }
         >
           <div className="relative flex items-center">
             {!isEmptyFirstStep && (

@@ -82,6 +82,7 @@ export const NextStep = observer(
               isExpanded={isExpanded}
               expandContent={expandContent}
               index={index}
+              errString={currentStep.errString}
               isExcluded={currentStep.excluded}
             />
 

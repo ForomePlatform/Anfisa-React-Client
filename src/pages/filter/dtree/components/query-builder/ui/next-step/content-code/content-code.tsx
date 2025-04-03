@@ -2,27 +2,35 @@ import styles from './content-code.module.css'
 
 import { memo, ReactElement } from 'react'
 
+import { Tooltip } from '@ui/tooltip'
 import { DecisionTreesResultsDataCy } from '@data-testid'
 
 interface IContentCodeProps {
   codeCondition: string
   codeResult: string
+  errString: string | undefined
 }
 
 export const ContentCode = memo(
-  ({ codeCondition, codeResult }: IContentCodeProps): ReactElement => (
+  ({
+    codeCondition,
+    codeResult,
+    errString,
+  }: IContentCodeProps): ReactElement => (
     <div className={styles.contentCode}>
-      <div
-        className={styles.contentCode__wrapper}
-        data-testid={DecisionTreesResultsDataCy.contentEditor}
-      >
-        <div dangerouslySetInnerHTML={{ __html: codeCondition }} />
-
+      <Tooltip theme="light" title={errString} placement="left-start">
         <div
-          dangerouslySetInnerHTML={{ __html: codeResult }}
-          className={styles.contentCode__result}
-        />
-      </div>
+          className={styles.contentCode__wrapper}
+          style={errString ? { border: '3px solid red' } : {}}
+          data-testid={DecisionTreesResultsDataCy.contentEditor}
+        >
+          <div dangerouslySetInnerHTML={{ __html: codeCondition }} />
+          <div
+            dangerouslySetInnerHTML={{ __html: codeResult }}
+            className={styles.contentCode__result}
+          />
+        </div>
+      </Tooltip>
     </div>
   ),
 )
