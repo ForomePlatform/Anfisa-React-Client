@@ -121,6 +121,7 @@ export interface IDtreeSetResponse {
   code: string
   points: IDtreeSetPoint[]
   'cond-atoms': Record<string, TCondition[]>
+  'err-atoms': Record<string, Map<string, string>>
   labels: string[]
   error?: string
   line?: number

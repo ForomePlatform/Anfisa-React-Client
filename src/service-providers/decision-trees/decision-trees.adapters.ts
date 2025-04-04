@@ -40,11 +40,19 @@ export const adaptDtreeSetResponse = (
 
   const localSteps: IStepData[] = []
   const atomsEntries = Object.entries(response['cond-atoms'] ?? {})
+  const errEntries = Object.entries(response['err-atoms'] ?? {})
   const points: IDtreeSetPoint[] | undefined = response.points
+
+  const errMap = new Map(errEntries)
 
   atomsEntries.forEach(([key, atom], index) => {
     const conditionPointIndex = parseInt(key, 10)
-
+    let errString: string | undefined
+    const errors = errMap.get(key)
+    if (errors) {
+      errString = ''
+      Object.entries(errors).forEach(([, val]) => (errString += val + '<br>'))
+    }
     localSteps.push({
       step: index + 1,
       groups: atom.filter((elem: any[]) => elem.length > 0),
@@ -57,6 +65,7 @@ export const adaptDtreeSetResponse = (
       result: stepCodes[index].result,
       isNegate: stepCodes[index].isNegate,
       decision: points?.[conditionPointIndex + 1].decision,
+      errString,
     })
   })
 
