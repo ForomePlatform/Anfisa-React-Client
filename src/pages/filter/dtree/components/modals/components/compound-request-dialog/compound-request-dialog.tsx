@@ -1,8 +1,9 @@
 import { ReactElement, useCallback } from 'react'
 import { observer } from 'mobx-react-lite'
-import filterStore from '@store/filter'
 
+import { ModeTypes } from '@core/enum/mode-types-enum'
 import dtreeStore from '@store/dtree'
+import filterStore from '@store/filter'
 import { Dialog } from '@ui/dialog'
 import { CompoundRequestCondition } from '@components/conditions/compound-request/compound-request-condition'
 import { AttributeKinds, TFuncArgs } from '@service-providers/common'
@@ -11,7 +12,6 @@ import { IFuncDialogProps } from '../../modals.interfaces'
 import modalsControlStore from '../../modals-control-store'
 import modalsVisibilityStore from '../../modals-visibility-store'
 import { renderAttributeDialogControls } from '../ui/renderAttributeControls'
-import { ModeTypes } from '@core/enum/mode-types-enum'
 
 export const CompoundRequestDialog = observer(
   ({ funcStore, onAddFunc, onSaveFunc }: IFuncDialogProps): ReactElement => {
