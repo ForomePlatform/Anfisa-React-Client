@@ -18,7 +18,7 @@ export const ContentCode = memo(
     errString,
   }: IContentCodeProps): ReactElement => (
     <div className={styles.contentCode}>
-      <Tooltip theme="light" title={errString} placement="left-start">
+      <Tooltip title={errString} placement="left-start">
         <div
           className={styles.contentCode__wrapper}
           style={errString ? { border: '3px solid red' } : {}}

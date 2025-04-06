@@ -188,6 +188,7 @@ export interface IDtreeCheck {
   error?: string
   line?: number
   pos?: number
+  warnings?: Array<any>
 }
 
 // dtree_cmp

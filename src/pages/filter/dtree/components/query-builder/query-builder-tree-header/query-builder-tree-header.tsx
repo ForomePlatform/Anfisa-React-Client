@@ -7,6 +7,8 @@ import { observer } from 'mobx-react-lite'
 import { EvalStatus } from '@core/enum/eval-status'
 import { t } from '@i18n'
 import dtreeStore from '@store/dtree'
+import stepStore from '@store/dtree/step.store'
+import { Tooltip } from '@ui/tooltip'
 import { QueryBuilderSearch } from '../query-builder-search'
 
 interface IQueryBuilderTreeHeaderProps {
@@ -15,6 +17,15 @@ interface IQueryBuilderTreeHeaderProps {
 
 export const QueryBuilderTreeHeader = observer(
   ({ className }: IQueryBuilderTreeHeaderProps): ReactElement => {
+    let tooltipTxt: string | undefined
+    stepStore.steps.map(step => {
+      if (step.errString) {
+        tooltipTxt =
+          (tooltipTxt || '') +
+          `${t('dtree.step')} ${step.step}: ${step.errString}`
+      }
+    })
+
     return (
       <div
         className={cn(
@@ -37,10 +48,11 @@ export const QueryBuilderTreeHeader = observer(
         >
           {dtreeStore.evalStatus === EvalStatus.Runtime && (
             <>
-              <div className="flex px-2 whitespace-nowrap text-red-light text-12 bg-red-lighter rounded-xl">
-                {t('error.runtimeProblem')}
-              </div>
-
+              <Tooltip title={tooltipTxt} placement="bottom">
+                <div className="flex px-2 whitespace-nowrap text-red-light text-12 bg-red-lighter rounded-xl">
+                  {t('error.runtimeProblem')}
+                </div>
+              </Tooltip>
               <div className="h-1/3 w-1 bg-grey-disabled mx-3" />
             </>
           )}
