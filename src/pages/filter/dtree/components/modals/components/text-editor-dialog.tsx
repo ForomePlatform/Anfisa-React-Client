@@ -35,6 +35,9 @@ const fetchDtreeCheckAsync = async function (dsName: string, code: string) {
   return response
 }
 
+const WARNING = 1
+const ERROR = 2
+
 const emptyError = {
   error: '',
   line: 0,
@@ -99,14 +102,14 @@ export const TextEditorDialog = observer(
             error: result.error,
             line: result.line as number,
             pos: result.pos as number,
-            severity: 2,
+            severity: ERROR,
           })
         } else if (result.warnings) {
           setError({
             error: result.warnings[0].error,
             line: result.warnings[0].line,
             pos: 0,
-            severity: 1,
+            severity: WARNING,
           })
         } else {
           setError(emptyError)
@@ -119,7 +122,7 @@ export const TextEditorDialog = observer(
           error: errorNormalized.message,
           line: 0,
           pos: 0,
-          severity: 2,
+          severity: ERROR,
         })
       }
 
@@ -171,7 +174,7 @@ export const TextEditorDialog = observer(
         <Button
           text="Done"
           size="md"
-          disabled={!checked || errorSeverity(error) > 1}
+          disabled={!checked || errorSeverity(error) > WARNING}
           onClick={handleDone}
           variant={theme === 'light' ? 'secondary' : 'secondary-dark'}
         />
@@ -179,7 +182,7 @@ export const TextEditorDialog = observer(
         <Button
           text="Save"
           size="md"
-          disabled={!checked || errorSeverity(error) > 1}
+          disabled={!checked || errorSeverity(error) > WARNING}
           onClick={handleSave}
           variant={theme === 'light' ? 'primary' : 'primary-dark'}
         />
@@ -198,7 +201,7 @@ export const TextEditorDialog = observer(
         isOpen={isOpen}
         onClose={onClose}
         title={t('dtree.editCurrentDecisionTreeCode')}
-        isApplyDisabled={!checked || errorSeverity(error) > 1}
+        isApplyDisabled={!checked || errorSeverity(error) > WARNING}
         width="xl"
         data-testid={DecisionTreeModalDataCy.modalHeader}
         handleChangeTheme={handleChangeTheme}
