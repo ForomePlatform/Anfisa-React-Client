@@ -183,11 +183,17 @@ export interface IDtreeCheckArguments {
   code: string
 }
 
+export interface IWarning {
+  error: string
+  line: number
+  pos: number
+}
 export interface IDtreeCheck {
   code: string
   error?: string
   line?: number
   pos?: number
+  warnings?: Array<IWarning>
 }
 
 // dtree_cmp

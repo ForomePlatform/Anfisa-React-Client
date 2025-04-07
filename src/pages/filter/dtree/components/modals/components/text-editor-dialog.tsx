@@ -35,14 +35,18 @@ const fetchDtreeCheckAsync = async function (dsName: string, code: string) {
   return response
 }
 
+const WARNING = 1
+const ERROR = 2
+
 const emptyError = {
   error: '',
   line: 0,
   pos: 0,
+  severity: 0,
 }
 
-const hasError = function (error: typeof emptyError) {
-  return error.error?.length > 0
+const errorSeverity = function (error: typeof emptyError) {
+  return error.severity
 }
 
 export const TextEditorDialog = observer(
@@ -83,28 +87,33 @@ export const TextEditorDialog = observer(
         codeToCheck,
       )
 
-      setError(
-        response.status === 500
-          ? {
-              error: t('dtree.expressionIsNotCorrect'),
-              line: 0,
-              pos: 0,
-            }
-          : emptyError,
-      )
-
-      if (response.ok) {
+      if (response.status === 500) {
+        setError({
+          error: t('dtree.expressionIsNotCorrect'),
+          line: 0,
+          pos: 0,
+          severity: 0,
+        })
+      } else if (response.ok) {
         const result: IDtreeCheck = await response.json()
 
-        setError(
-          result.error
-            ? {
-                error: result.error,
-                line: result.line as number,
-                pos: result.pos as number,
-              }
-            : emptyError,
-        )
+        if (result.error) {
+          setError({
+            error: result.error,
+            line: result.line as number,
+            pos: result.pos as number,
+            severity: ERROR,
+          })
+        } else if (result.warnings) {
+          setError({
+            error: result.warnings[0].error,
+            line: result.warnings[0].line,
+            pos: 0,
+            severity: WARNING,
+          })
+        } else {
+          setError(emptyError)
+        }
       } else {
         const errorText = await response.text()
         const errorNormalized = getMessageFromError(errorText, response.status)
@@ -113,6 +122,7 @@ export const TextEditorDialog = observer(
           error: errorNormalized.message,
           line: 0,
           pos: 0,
+          severity: ERROR,
         })
       }
 
@@ -164,7 +174,7 @@ export const TextEditorDialog = observer(
         <Button
           text="Done"
           size="md"
-          disabled={!checked || hasError(error)}
+          disabled={!checked || errorSeverity(error) > WARNING}
           onClick={handleDone}
           variant={theme === 'light' ? 'secondary' : 'secondary-dark'}
         />
@@ -172,19 +182,26 @@ export const TextEditorDialog = observer(
         <Button
           text="Save"
           size="md"
-          disabled={!checked || hasError(error)}
+          disabled={!checked || errorSeverity(error) > WARNING}
           onClick={handleSave}
           variant={theme === 'light' ? 'primary' : 'primary-dark'}
         />
       </>
     )
 
+    const errClassName =
+      error.severity === 2
+        ? 'text-red-secondary bg-yellow-bright'
+        : error.severity === 1
+        ? 'text-grey-dark bg-yellow-bright'
+        : ''
+
     return (
       <Dialog
         isOpen={isOpen}
         onClose={onClose}
         title={t('dtree.editCurrentDecisionTreeCode')}
-        isApplyDisabled={!checked || hasError(error)}
+        isApplyDisabled={!checked || errorSeverity(error) > WARNING}
         width="xl"
         data-testid={DecisionTreeModalDataCy.modalHeader}
         handleChangeTheme={handleChangeTheme}
@@ -193,11 +210,12 @@ export const TextEditorDialog = observer(
         actions={<Controls />}
       >
         <div className="flex items-center">
-          {hasError(error) && (
-            <div className="text-red-secondary bg-yellow-bright">
-              {error.line !== 0 && error.pos !== 0
-                ? `At line ${error.line} pos ${error.pos}: ${error.error}`
-                : `${error.error}`}
+          {errorSeverity(error) > 0 && (
+            <div className={errClassName}>
+              {(error.line !== 0 ? `At line ${error.line}` : '') +
+                (error.line * error.pos !== 0 ? ` pos ${error.pos}` : '') +
+                (error.line !== 0 ? ': ' : '') +
+                error.error}
             </div>
           )}
         </div>
