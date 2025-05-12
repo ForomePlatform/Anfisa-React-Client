@@ -9,7 +9,7 @@ export interface ShowManyTracesProps {
 export const TraceVariantMany = ({
   data,
 }: ShowManyTracesProps): ReactElement => (
-  <div style={{ marginTop: '0.5em' }}>
+  <div style={{ marginTop: '0.5em', maxHeight: '25em', overflow: 'auto' }}>
     {data.traces?.map(trace => (
       <div style={{ marginTop: '0.3em' }}>
         <div
