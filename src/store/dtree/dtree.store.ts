@@ -316,6 +316,7 @@ export class DtreeStore {
   }
 
   private loadDtree(dtreeName: string): void {
+    this.traceStore.reset()
     this.fetchDtreeSetAsync({
       ds: datasetStore.datasetName,
       dtree: dtreeName,
@@ -330,6 +331,7 @@ export class DtreeStore {
   }
 
   private setDtreeModifiedState(state?: DtreeModifiedState): void {
+    this.traceStore.reset()
     if (state === undefined) {
       if (this._dtreeModifiedState === DtreeModifiedState.NotModified) {
         this._dtreeModifiedState = DtreeModifiedState.Modified
