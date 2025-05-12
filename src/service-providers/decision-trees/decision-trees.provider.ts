@@ -12,6 +12,7 @@ import {
   IDtreeSetResponse,
   IDtreeStatArguments,
   IDtreeStatResponse,
+  IDtreeTraceVariantArguments,
   IGetFullDreeCountsOptions,
   IGetFullDtreeStatParams,
   IUpdateDecisionTreeParams,
@@ -112,6 +113,19 @@ class DecisionTreesProvider extends ServiceProviderBase {
   ): Promise<IDtreeSetResponse> {
     const response = await this.post<IDtreeSetResponse>(
       '/dtree_set',
+      params,
+      options,
+    )
+
+    return response.data
+  }
+
+  public async traceVariant(
+    params: IDtreeTraceVariantArguments,
+    options: Partial<AxiosRequestConfig<string>> = {},
+  ): Promise<{ task_id: string }> {
+    const response = await this.post<{ task_id: string }>(
+      '/dtree_variant_trace',
       params,
       options,
     )

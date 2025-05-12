@@ -1,0 +1,29 @@
+.trace-variant {
+  &__popover {
+    width: 342px;
+    margin-top: 12px;
+  }
+
+  &__button-icon {
+    &_arrow {
+      transition-property: transform;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-duration: 150ms;
+      transform: rotate(-90deg);
+
+      &_opened {
+        transform: rotate(90deg);
+      }
+    }
+
+    &_loading {
+      animation: load-rotate 3s infinite;
+    }
+
+    @keyframes load-rotate {
+      100% { transform: rotate(360deg); }
+    }
+
+    color: theme("colors.blue.bright");
+  }
+}

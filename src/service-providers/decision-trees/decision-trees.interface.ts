@@ -88,11 +88,13 @@ export type TModifyingAction =
 
 // dtree_set
 
-export interface IDtreeSetArguments {
+export interface IDtreeSetArgumentsBase {
   ds: string
+  dtree?: string // used first if present
+  code?: string // used second if present, must be present if dtree is not
+}
+export interface IDtreeSetArguments extends IDtreeSetArgumentsBase {
   tm?: string
-  dtree?: string
-  code?: string
   instr?: TModifyingAction
 }
 
@@ -138,13 +140,9 @@ export interface IDtreeSet extends IDtreeSetResponse {
 }
 
 // dtree_counts
-
-export interface IDtreeCountsArguments {
-  ds: string
+export interface IDtreeCountsArguments extends IDtreeSetArgumentsBase {
   tm?: string
   rq_id: string
-  dtree?: string
-  code?: string
   points: number[]
 }
 
@@ -160,11 +158,8 @@ export interface IGetFullDreeCountsOptions {
 
 // dtree_stat
 
-export interface IDtreeStatArguments {
-  ds: string
+export interface IDtreeStatArguments extends IDtreeSetArgumentsBase {
   tm?: number
-  dtree?: string
-  code?: string
   no?: string
 }
 
@@ -198,10 +193,7 @@ export interface IDtreeCheck {
 
 // dtree_cmp
 
-export interface IDtreeCmpArguments {
-  ds: string
-  dtree?: string
-  code?: string
+export interface IDtreeCmpArguments extends IDtreeSetArgumentsBase {
   other: string
 }
 
@@ -236,3 +228,35 @@ export interface ICodeFrags {
   result: string | undefined
   decision: boolean | null
 }
+
+// trace variant (optional transcript)
+
+export interface IDtreeTraceVariantData {
+  variant: string
+  transcript?: string
+}
+
+export interface IDtreeTraceVariantArguments
+  extends IDtreeSetArgumentsBase,
+    IDtreeTraceVariantData {}
+
+export type TDtreeTraceBase = {
+  'point-no': number
+  status: string
+}
+
+export type TDtreeTrace = TDtreeTraceBase & {
+  transcripts: [string]
+}
+
+export type TDtreeTraceResultData = {
+  variant: string
+  'dtree-name': string
+  status?: string
+  error?: string
+  traces?: [TDtreeTrace]
+  'transcript-id'?: string
+  trace: TDtreeTraceBase
+}
+
+export type TDtreeTraceVariantResult = [TDtreeTraceResultData, string]
