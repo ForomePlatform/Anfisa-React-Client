@@ -233,7 +233,7 @@ export interface ICodeFrags {
 
 export interface IDtreeTraceVariantData {
   variant: string
-  transcript?: string
+  transcript: string
 }
 
 export interface IDtreeTraceVariantArguments

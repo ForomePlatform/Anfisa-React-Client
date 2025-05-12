@@ -464,7 +464,7 @@ export const en = {
     },
     textEditor: 'Text editor',
     traceVariant: {
-      title: 'Trace variant',
+      title: 'Trace a variant',
       go: 'Trace',
     },
   },

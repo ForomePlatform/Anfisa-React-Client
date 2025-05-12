@@ -4,7 +4,7 @@ import { FC } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
-// import { t } from '@i18n'
+import { t } from '@i18n'
 import { Button } from '@ui/button'
 import { Icon } from '@ui/icon'
 // import { MainTableDataCy } from '@data-testid'
@@ -18,7 +18,7 @@ export const TraceVariantButton: FC<ITraceVariantButtonProps> = observer(
   ({ onClick, isOpen }) => (
     <Button
       dataTestId="TODO"
-      text="Trace variant"
+      text={t('dtree.traceVariant.title')}
       append={
         <Icon
           name="Arrow"
@@ -32,7 +32,6 @@ export const TraceVariantButton: FC<ITraceVariantButtonProps> = observer(
       onClick={e => onClick(e.currentTarget)}
       variant="secondary"
       size="sm"
-      className="w-[180px]"
     />
   ),
 )
