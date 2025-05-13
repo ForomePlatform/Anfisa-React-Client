@@ -85,10 +85,6 @@ export class DtreeStore {
     return this.dtreeSet.data
   }
 
-  get traceVariantData() {
-    return this.traceStore.data
-  }
-
   get dtreeCode(): string {
     return this.dtreeSetData?.code ?? ''
   }

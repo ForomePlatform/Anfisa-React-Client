@@ -5,6 +5,7 @@ import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
+import { IStepData } from '@store/dtree/dtree.store'
 import { DtreeTraceAsyncStore } from '@store/dtree/dtree-trace.async.store'
 import { Icon } from '@ui/icon'
 import { Input } from '@ui/input'
@@ -15,13 +16,24 @@ import { TraceVariantMany } from './trace-variant-show-many'
 
 export interface ITraceVariantButtonProps extends IPopoverBaseProps {
   traceStore: DtreeTraceAsyncStore
+  steps: IStepData[]
 }
 
+export type PointToStep = (p: number) => number | undefined
+
 export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
-  ({ isOpen, anchorEl, onClose, traceStore }) => {
+  ({ isOpen, anchorEl, onClose, traceStore, steps }) => {
     const { data, isFetching, isLoading } = traceStore
     const [variant, setVariant] = useState<string>('')
     const [transcript, setTranscript] = useState<string>('')
+
+    const point2step: PointToStep = p => {
+      const theStep = steps.find(
+        step => step.returnPointIndex === p || step.conditionPointIndex === p,
+      )
+      return theStep?.step
+    }
+
     return (
       <>
         <Popover
@@ -63,11 +75,16 @@ export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
               />
             ) : data && data[1] === 'Finished' ? (
               data[0].traces ? (
-                <TraceVariantMany data={data[0]} />
+                <TraceVariantMany
+                  data={data[0]}
+                  point2step={point2step.bind(this)}
+                />
               ) : (
                 data[0].trace && (
                   <div style={{ paddingLeft: '2ch', marginTop: '0.5em' }}>
-                    {`${data[0].trace.status} at ${data[0].trace['point-no']}`}
+                    {`${data[0].trace.status} at step ${point2step(
+                      data[0].trace['point-no'],
+                    )}`}
                   </div>
                 )
               )

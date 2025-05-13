@@ -30,10 +30,8 @@ export class DtreeTraceAsyncStore extends BaseAsyncDataStore<
       },
     )
 
-    const theData =
-      await operationsProvider.getJobStatusAsync<TDtreeTraceVariantResult>(
-        response.task_id,
-      )
-    return theData as TDtreeTraceVariantResult
+    return (await operationsProvider.getJobStatusAsync<TDtreeTraceVariantResult>(
+      response.task_id,
+    )) as TDtreeTraceVariantResult
   }
 }

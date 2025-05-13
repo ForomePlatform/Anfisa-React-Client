@@ -256,7 +256,7 @@ export type TDtreeTraceResultData = {
   error?: string
   traces?: [TDtreeTrace]
   'transcript-id'?: string
-  trace: TDtreeTraceBase
+  trace?: TDtreeTraceBase
 }
 
 export type TDtreeTraceVariantResult = [TDtreeTraceResultData, string]
