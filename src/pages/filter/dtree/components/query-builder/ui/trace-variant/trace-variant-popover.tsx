@@ -1,37 +1,51 @@
 import styles from './trace-variant.module.css'
 
 import { FC, useState } from 'react'
-import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
 import { t } from '@i18n'
-import { IStepData } from '@store/dtree/dtree.store'
 import { DtreeTraceAsyncStore } from '@store/dtree/dtree-trace.async.store'
-import { Icon } from '@ui/icon'
+import stepStore, { ActiveStepOptions } from '@store/dtree/step.store'
 import { Input } from '@ui/input'
+import { Loader } from '@ui/loader'
 import { Popover } from '@ui/popover'
 import { IPopoverBaseProps } from '@ui/popover/popover.interface'
 import { PopupCard } from '@components/popup-card/popup-card'
-import { TraceVariantMany } from './trace-variant-show-many'
+import { TracesResultView } from './trace-variant-show-many'
 
 export interface ITraceVariantButtonProps extends IPopoverBaseProps {
   traceStore: DtreeTraceAsyncStore
-  steps: IStepData[]
 }
 
 export type PointToStep = (p: number) => number | undefined
 
 export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
-  ({ isOpen, anchorEl, onClose, traceStore, steps }) => {
+  ({ isOpen, anchorEl, onClose, traceStore }) => {
     const { data, isFetching, isLoading } = traceStore
     const [variant, setVariant] = useState<string>('')
-    const [transcript, setTranscript] = useState<string>('')
+    const [transcript] = useState<string>('') // reserved for future use
 
-    const point2step: PointToStep = p => {
-      const theStep = steps.find(
+    const point2stepIdx: PointToStep = p => {
+      const idx = stepStore.steps.findIndex(
         step => step.returnPointIndex === p || step.conditionPointIndex === p,
       )
-      return theStep?.step
+      return idx < 0 ? undefined : idx
+    }
+
+    const point2step: PointToStep = p => {
+      const idx = point2stepIdx(p)
+      return idx ? stepStore.steps[idx].step : undefined
+    }
+
+    const selectStep = (pointNo: number) => {
+      const theStepIdx = point2stepIdx(pointNo)
+      if (pointNo) {
+        stepStore.makeStepActive({
+          index: theStepIdx ?? -1,
+          option: ActiveStepOptions.ReturnedVariants,
+        })
+        stepStore.scrollToStep(theStepIdx)
+      }
     }
 
     return (
@@ -59,35 +73,22 @@ export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
               placeholder="enter variant id"
               size="m"
             />
-            <div style={{ height: '10px' }} />
-            <Input
+            {/* <div style={{ height: '10px' }} />
+             <Input
               onChange={e => setTranscript(e.target.value.trim())}
               value={transcript}
               shape="brick"
               placeholder="optional, transcript id"
               size="m"
-            />
+            /> */}
             {isFetching || isLoading ? (
-              <Icon
-                name="Reload"
-                size={16}
-                className={cn(styles.traceVariant__buttonIcon_loading)}
-              />
+              <Loader size="s" />
             ) : data && data[1] === 'Finished' ? (
-              data[0].traces ? (
-                <TraceVariantMany
-                  data={data[0]}
-                  point2step={point2step.bind(this)}
-                />
-              ) : (
-                data[0].trace && (
-                  <div style={{ paddingLeft: '2ch', marginTop: '0.5em' }}>
-                    {`${data[0].trace.status} at step ${point2step(
-                      data[0].trace['point-no'],
-                    )}`}
-                  </div>
-                )
-              )
+              <TracesResultView
+                data={data[0]}
+                point2step={point2step.bind(this)}
+                selectStep={selectStep.bind(this)}
+              />
             ) : data ? (
               <div
                 style={{ color: 'red', marginTop: '0.5em' }}

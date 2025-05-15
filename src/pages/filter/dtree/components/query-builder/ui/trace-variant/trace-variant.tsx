@@ -2,7 +2,6 @@ import { ReactElement } from 'react'
 
 import { usePopover } from '@core/hooks/use-popover'
 import dtreeStore from '@store/dtree'
-import stepStore from '@store/dtree/step.store'
 import { TraceVariantButton } from './trace-variant-button'
 import { TraceVariantPopover } from './trace-variant-popover'
 export const TraceVariant = (): ReactElement => {
@@ -15,7 +14,6 @@ export const TraceVariant = (): ReactElement => {
         isOpen={isPopoverOpen}
         anchorEl={popoverAnchor}
         traceStore={dtreeStore.traceStore}
-        steps={stepStore.steps}
       />
     </>
   )

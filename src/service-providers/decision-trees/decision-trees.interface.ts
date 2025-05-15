@@ -246,7 +246,7 @@ export type TDtreeTraceBase = {
 }
 
 export type TDtreeTrace = TDtreeTraceBase & {
-  transcripts: [string]
+  transcripts: Array<string>
 }
 
 export type TDtreeTraceResultData = {

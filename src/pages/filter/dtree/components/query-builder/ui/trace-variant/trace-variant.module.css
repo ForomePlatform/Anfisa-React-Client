@@ -16,14 +16,6 @@
       }
     }
 
-    &_loading {
-      animation: load-rotate 3s infinite;
-    }
-
-    @keyframes load-rotate {
-      100% { transform: rotate(360deg); }
-    }
-
     color: theme("colors.blue.bright");
   }
 }
