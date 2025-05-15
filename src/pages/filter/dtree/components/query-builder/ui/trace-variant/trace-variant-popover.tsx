@@ -53,6 +53,24 @@ export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
       }
     }
 
+    const displayData = () => {
+      if (isLoading) return <Loader size="s" />
+      if (!data || data[0].variant.split(' ')[0] !== variant.split(' ')[0]) {
+        return null
+      }
+      return data[1] === 'Finished' ? (
+        <TracesResultView
+          data={data[0]}
+          point2step={point2step.bind(this)}
+          selectStep={selectStep.bind(this)}
+        />
+      ) : (
+        <div
+          style={{ color: 'red', marginTop: '0.5em' }}
+        >{`Error: ${data[0].error}`}</div>
+      )
+    }
+
     return (
       <>
         <Popover
@@ -65,6 +83,7 @@ export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
             title={t('dtree.traceVariant.title')}
             onClose={onClose}
             onApply={() => {
+              setVariant(variant.trim())
               traceStore.setQuery({ variant, transcript })
             }}
             isApplyDisabled={variant.length < 10}
@@ -72,7 +91,7 @@ export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
             applyText={t('dtree.traceVariant.go')}
           >
             <Input
-              onChange={e => setVariant(e.target.value.trim())}
+              onChange={e => setVariant(e.target.value)}
               value={variant}
               shape="brick"
               placeholder="enter variant id"
@@ -86,19 +105,7 @@ export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
               placeholder="optional, transcript id"
               size="m"
             /> */}
-            {isLoading ? (
-              <Loader size="s" />
-            ) : data && data[1] === 'Finished' ? (
-              <TracesResultView
-                data={data[0]}
-                point2step={point2step.bind(this)}
-                selectStep={selectStep.bind(this)}
-              />
-            ) : data ? (
-              <div
-                style={{ color: 'red', marginTop: '0.5em' }}
-              >{`Error: ${data[0].error}`}</div>
-            ) : null}
+            {displayData()}
           </PopupCard>
         </Popover>
       </>

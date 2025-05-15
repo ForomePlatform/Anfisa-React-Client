@@ -31,7 +31,7 @@ export const TraceVariantButton: FC<ITraceVariantButtonProps> = observer(
       }
       onClick={e => onClick(e.currentTarget)}
       variant="secondary"
-      size="sm"
+      className="ml-auto min-h-32"
     />
   ),
 )
