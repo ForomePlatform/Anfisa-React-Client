@@ -34,7 +34,7 @@ export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
 
     const point2step: PointToStep = p => {
       const idx = point2stepIdx(p)
-      return idx ? stepStore.steps[idx].step : undefined
+      return idx != null ? stepStore.steps[idx].step : undefined
     }
 
     const selectStep = (pointNo: number) => {
