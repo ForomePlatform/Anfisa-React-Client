@@ -11,7 +11,7 @@ import { Loader } from '@ui/loader'
 import { Popover } from '@ui/popover'
 import { IPopoverBaseProps } from '@ui/popover/popover.interface'
 import { PopupCard } from '@components/popup-card/popup-card'
-import { TracesResultView } from './trace-variant-show-many'
+import { TracesResultView } from './trace-variant-results'
 
 export interface ITraceVariantButtonProps extends IPopoverBaseProps {
   traceStore: DtreeTraceAsyncStore
