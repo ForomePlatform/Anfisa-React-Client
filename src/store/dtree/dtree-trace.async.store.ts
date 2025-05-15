@@ -16,7 +16,7 @@ export class DtreeTraceAsyncStore extends BaseAsyncDataStore<
   }
 
   protected getCacheKey(query: IDtreeTraceVariantData): string | undefined {
-    return query.variant + ':' + query.transcript
+    return query.variant.split(' ')[0] + ':' + query.transcript
   }
 
   protected async fetch(

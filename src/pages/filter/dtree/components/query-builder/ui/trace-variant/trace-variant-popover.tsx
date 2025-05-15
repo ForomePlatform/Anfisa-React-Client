@@ -17,24 +17,29 @@ export interface ITraceVariantButtonProps extends IPopoverBaseProps {
   traceStore: DtreeTraceAsyncStore
 }
 
-export type PointToStep = (p: number) => number | undefined
+export type PointToStepIdx = (p: number) => number | undefined
+export type PointToStepName = (p: number) => string | undefined
 
 export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
   ({ isOpen, anchorEl, onClose, traceStore }) => {
-    const { data, isFetching, isLoading } = traceStore
+    const { data, isLoading } = traceStore
     const [variant, setVariant] = useState<string>('')
     const [transcript] = useState<string>('') // reserved for future use
 
-    const point2stepIdx: PointToStep = p => {
+    const point2stepIdx: PointToStepIdx = p => {
       const idx = stepStore.steps.findIndex(
         step => step.returnPointIndex === p || step.conditionPointIndex === p,
       )
       return idx < 0 ? undefined : idx
     }
 
-    const point2step: PointToStep = p => {
+    const point2step: PointToStepName = p => {
       const idx = point2stepIdx(p)
-      return idx != null ? stepStore.steps[idx].step : undefined
+      if (idx != null) {
+        return stepStore.steps[idx].isFinalStep
+          ? 'Final Step'
+          : `Step ${stepStore.steps[idx].step}`
+      }
     }
 
     const selectStep = (pointNo: number) => {
@@ -81,7 +86,7 @@ export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
               placeholder="optional, transcript id"
               size="m"
             /> */}
-            {isFetching || isLoading ? (
+            {isLoading ? (
               <Loader size="s" />
             ) : data && data[1] === 'Finished' ? (
               <TracesResultView

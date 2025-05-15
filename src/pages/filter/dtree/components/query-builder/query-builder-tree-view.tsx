@@ -17,7 +17,10 @@ export const QueryBuilderTreeView = observer(
 
     const activeElement = useRef<HTMLDivElement>(null)
     useEffect(() => {
-      activeElement?.current?.scrollIntoView({ behavior: 'auto' })
+      activeElement?.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
       stepStore.scrollToStep(undefined)
     })
 
@@ -28,9 +31,7 @@ export const QueryBuilderTreeView = observer(
             ? JSON.stringify(element.groups) + index
             : index
 
-          return element.isFinalStep ? (
-            <FinalStep key={key} index={index} />
-          ) : (
+          return (
             <div
               ref={
                 index === stepStore.scrollToStepIndex
@@ -38,12 +39,16 @@ export const QueryBuilderTreeView = observer(
                   : undefined
               }
             >
-              <NextStep
-                key={key}
-                index={index}
-                changeIndicator={dtreeStore.resultsChangeIndicator}
-                isContentExpanded={dtreeStore.isResultsContentExpanded}
-              />
+              {element.isFinalStep ? (
+                <FinalStep key={key} index={index} />
+              ) : (
+                <NextStep
+                  key={key}
+                  index={index}
+                  changeIndicator={dtreeStore.resultsChangeIndicator}
+                  isContentExpanded={dtreeStore.isResultsContentExpanded}
+                />
+              )}
             </div>
           )
         })}

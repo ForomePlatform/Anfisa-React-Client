@@ -4,11 +4,11 @@ import {
   TDtreeTrace,
   TDtreeTraceResultData,
 } from '@service-providers/decision-trees/decision-trees.interface'
-import { PointToStep } from './trace-variant-popover'
+import { PointToStepName } from './trace-variant-popover'
 
 export interface TracesResultViewProps {
   data: TDtreeTraceResultData
-  point2step: PointToStep
+  point2step: PointToStepName
   selectStep: (p: number) => void
 }
 
@@ -43,7 +43,7 @@ export const TracesResultView = ({
             }}
             onClick={() => select(idx)}
           >
-            {`${trace.status} at step ${point2step(trace['point-no'])}`}
+            {`${trace.status} at ${point2step(trace['point-no'])}`}
             {trace.transcripts.map(transcript => (
               <div style={{ paddingLeft: '2ch' }} key={transcript}>
                 {transcript}
