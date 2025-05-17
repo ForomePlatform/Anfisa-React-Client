@@ -85,8 +85,10 @@ export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
               <MenuListItem
                 label={key}
                 onClick={() => {
+                  setImmediate(() =>
+                    traceStore.setQuery({ variant: key, transcript }),
+                  )
                   setVariant(key)
-                  traceStore.setQuery({ variant, transcript })
                   toggleShowHistory(false)
                 }}
               />
