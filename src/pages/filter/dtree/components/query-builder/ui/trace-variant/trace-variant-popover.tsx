@@ -9,11 +9,11 @@ import stepStore, { ActiveStepOptions } from '@store/dtree/step.store'
 import { Button } from '@ui/button'
 import { Input } from '@ui/input'
 import { Loader } from '@ui/loader'
+import { MenuList, MenuListItem } from '@ui/menu-list'
 import { Popover } from '@ui/popover'
 import { IPopoverBaseProps } from '@ui/popover/popover.interface'
 import { PopupCard } from '@components/popup-card/popup-card'
 import { TracesResultView } from './trace-variant-results'
-import { MenuList, MenuListItem } from '@ui/menu-list'
 
 export interface ITraceVariantButtonProps extends IPopoverBaseProps {
   traceStore: DtreeTraceAsyncStore
