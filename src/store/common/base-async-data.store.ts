@@ -222,6 +222,10 @@ export abstract class BaseAsyncDataStore<Data, Query> {
     return false
   }
 
+  protected getCacheKeys(): Array<string> {
+    return Array.from(this.cache.keys())
+  }
+
   private resetState(): void {
     this._lastUpdate = 0
     this._didInvalidate = false
@@ -282,7 +286,7 @@ export abstract class BaseAsyncDataStore<Data, Query> {
       error => {
         if (!(error instanceof DOMException) || error.name !== 'AbortError') {
           runInAction(() => {
-            this._isFetching = false
+            this.resetState()
             this._error = error
           })
         }

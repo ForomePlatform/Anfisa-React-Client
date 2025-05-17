@@ -1,4 +1,7 @@
+import styles from './trace-variant.module.css'
+
 import { ReactElement, useState } from 'react'
+import cn from 'classnames'
 
 import {
   TDtreeTrace,
@@ -32,24 +35,23 @@ export const TracesResultView = ({
   }
 
   return (
-    <div style={{ marginTop: '0.5em', maxHeight: '25em', overflowY: 'auto' }}>
+    <div style={{ maxHeight: '25em', overflowY: 'auto' }}>
       {traces.map((trace, idx) => (
-        <div style={{ marginTop: '0.3em' }} key={trace['point-no']}>
-          <div
-            style={{
-              paddingLeft: '2ch',
-              background: selected === idx ? 'lightblue' : undefined,
-              cursor: 'pointer',
-            }}
-            onClick={() => select(idx)}
-          >
-            {`${trace.status} at ${point2step(trace['point-no'])}`}
-            {trace.transcripts.map(transcript => (
-              <div style={{ paddingLeft: '2ch' }} key={transcript}>
-                {transcript}
-              </div>
-            ))}
-          </div>
+        <div
+          className={cn(
+            styles.traceVariant__results,
+            selected === idx
+              ? styles.traceVariant__results_selected
+              : styles.traceVariant__results_unselected,
+          )}
+          onClick={() => select(idx)}
+        >
+          {`${trace.status} at ${point2step(trace['point-no'])}`}
+          {trace.transcripts.map(transcript => (
+            <div style={{ paddingLeft: '2ch' }} key={transcript}>
+              {transcript}
+            </div>
+          ))}
         </div>
       ))}
     </div>

@@ -16,22 +16,33 @@ export class DtreeTraceAsyncStore extends BaseAsyncDataStore<
   }
 
   protected getCacheKey(query: IDtreeTraceVariantData): string | undefined {
-    return query.variant.split(' ')[0] + ':' + query.transcript
+    return query.variant.split(' ')[0] // + ':' + query.transcript // reserved for future use
+  }
+
+  public getCacheKeys(): Array<string> {
+    return super.getCacheKeys()
   }
 
   protected async fetch(
     query: IDtreeTraceVariantData,
     options: TBaseDataStoreFetchOptions,
   ): Promise<TDtreeTraceVariantResult> {
-    const response = await decisionTreesProvider.traceVariant(
-      dtreeStore.getTraceVariantQuery(query),
-      {
-        signal: options.abortSignal,
-      },
-    )
-
-    return (await operationsProvider.getJobStatusAsync<TDtreeTraceVariantResult>(
-      response.task_id,
-    )) as TDtreeTraceVariantResult
+    try {
+      const response = await decisionTreesProvider.traceVariant(
+        dtreeStore.getTraceVariantQuery(query),
+        {
+          signal: options.abortSignal,
+        },
+      )
+      const data =
+        (await operationsProvider.getJobStatusAsync<TDtreeTraceVariantResult>(
+          response.task_id,
+          500,
+          options.abortSignal,
+        )) as TDtreeTraceVariantResult
+      return data
+    } catch (error) {
+      return Promise.reject(error)
+    }
   }
 }

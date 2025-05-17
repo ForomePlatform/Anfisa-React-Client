@@ -55,7 +55,11 @@ class OperationsProvider extends ServiceProviderBase {
       .then(res => res.data)
   }
 
-  public getJobStatusAsync<T>(taskId: string, interval = 1000) {
+  public getJobStatusAsync<T>(
+    taskId: string,
+    interval = 1000,
+    signal?: AbortSignal,
+  ) {
     return new Promise((resolve, reject) => {
       if (!this._jobStatusResolve) {
         this._jobStatusResolve = resolve
@@ -66,12 +70,15 @@ class OperationsProvider extends ServiceProviderBase {
       this.get<[boolean | null | T, string]>('job_status', {
         params: { task: taskId },
       }).then(({ data }) => {
-        if (data[0] === null) {
+        if (data[0] === null || signal?.aborted) {
           this._jobStatusReject?.(data[1])
           this._jobStatusReject = undefined
           this._jobStatusResolve = undefined
         } else if (!data[0]) {
-          setTimeout(() => this.getJobStatusAsync<T>(taskId), interval)
+          setTimeout(
+            () => this.getJobStatusAsync<T>(taskId, interval, signal),
+            interval,
+          )
         } else {
           this._jobStatusResolve?.(data)
           this._jobStatusReject = undefined

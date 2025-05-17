@@ -17,7 +17,7 @@ export interface IPopupCardProps {
   onApply?: (event: MouseEvent<HTMLButtonElement>) => void
   isApplyDisabled?: boolean
   isLoading?: boolean
-  additionalBottomButton?: Element
+  additionalBottomButton?: JSX.Element
   applyAppend?: ReactNode
 }
 

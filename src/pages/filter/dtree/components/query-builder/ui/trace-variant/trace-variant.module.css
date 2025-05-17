@@ -18,4 +18,21 @@
 
     color: theme("colors.blue.bright");
   }
+
+  &__results {
+    padding-left: 2ch;
+    padding-top: 0.5em;
+
+    &_selected {
+      background-color: theme("colors.blue.light");
+    }
+
+    &_unselected {
+      &:hover {
+        color: theme("colors.blue.hover");
+      }
+
+      cursor: pointer;
+    }
+  }
 }

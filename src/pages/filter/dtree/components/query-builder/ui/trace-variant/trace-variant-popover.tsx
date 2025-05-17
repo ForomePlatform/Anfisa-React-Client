@@ -6,12 +6,14 @@ import { observer } from 'mobx-react-lite'
 import { t } from '@i18n'
 import { DtreeTraceAsyncStore } from '@store/dtree/dtree-trace.async.store'
 import stepStore, { ActiveStepOptions } from '@store/dtree/step.store'
+import { Button } from '@ui/button'
 import { Input } from '@ui/input'
 import { Loader } from '@ui/loader'
 import { Popover } from '@ui/popover'
 import { IPopoverBaseProps } from '@ui/popover/popover.interface'
 import { PopupCard } from '@components/popup-card/popup-card'
 import { TracesResultView } from './trace-variant-results'
+import { MenuList, MenuListItem } from '@ui/menu-list'
 
 export interface ITraceVariantButtonProps extends IPopoverBaseProps {
   traceStore: DtreeTraceAsyncStore
@@ -24,7 +26,10 @@ export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
   ({ isOpen, anchorEl, onClose, traceStore }) => {
     const { data, isLoading } = traceStore
     const [variant, setVariant] = useState<string>('')
-    const [transcript] = useState<string>('') // reserved for future use
+    const [stopClicked, disableStop] = useState<boolean>(true)
+    const [showHistory, toggleShowHistory] = useState<boolean>(false)
+    //const [transcript] = useState<string>('') // reserved for future use
+    const transcript = ''
 
     const point2stepIdx: PointToStepIdx = p => {
       const idx = stepStore.steps.findIndex(
@@ -42,6 +47,8 @@ export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
       }
     }
 
+    const keys = traceStore.getCacheKeys()
+
     const selectStep = (pointNo: number) => {
       const theStepIdx = point2stepIdx(pointNo)
       if (pointNo) {
@@ -53,8 +60,60 @@ export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
       }
     }
 
+    const historyButton = () => {
+      if (keys.length > 0) {
+        return (
+          <Button
+            onClick={() => {
+              toggleShowHistory(!showHistory)
+            }}
+            text={showHistory ? 'show results' : 'show history'}
+            variant="tertiary"
+          />
+        )
+      }
+    }
+
+    const displayHistory = () => {
+      return (
+        <div
+          className={styles.menuCard}
+          onMouseUp={event => event.stopPropagation()}
+        >
+          <MenuList>
+            {keys.map(key => (
+              <MenuListItem
+                label={key}
+                onClick={() => {
+                  setVariant(key)
+                  traceStore.setQuery({ variant, transcript })
+                  toggleShowHistory(false)
+                }}
+              />
+            ))}
+          </MenuList>
+        </div>
+      )
+    }
+
     const displayData = () => {
-      if (isLoading) return <Loader size="s" />
+      if (isLoading) {
+        return (
+          <div className="flex">
+            <Button
+              onClick={() => {
+                disableStop(true)
+                traceStore.abortController?.abort()
+                traceStore.invalidate()
+              }}
+              text="Stop"
+              variant="diestruction"
+              disabled={stopClicked}
+            />
+            <Loader size="xs" />
+          </div>
+        )
+      }
       if (!data || data[0].variant.split(' ')[0] !== variant.split(' ')[0]) {
         return null
       }
@@ -65,9 +124,7 @@ export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
           selectStep={selectStep.bind(this)}
         />
       ) : (
-        <div
-          style={{ color: 'red', marginTop: '0.5em' }}
-        >{`Error: ${data[0].error}`}</div>
+        <div style={{ color: 'red' }}>{`Error: ${data[0].error}`}</div>
       )
     }
 
@@ -83,12 +140,15 @@ export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
             title={t('dtree.traceVariant.title')}
             onClose={onClose}
             onApply={() => {
+              disableStop(false)
               setVariant(variant.trim())
               traceStore.setQuery({ variant, transcript })
             }}
-            isApplyDisabled={variant.length < 10}
+            isApplyDisabled={variant.length < 7 || isLoading}
             isLoading={false}
+            cancelText={'Close'}
             applyText={t('dtree.traceVariant.go')}
+            additionalBottomButton={historyButton()}
           >
             <Input
               onChange={e => setVariant(e.target.value)}
@@ -97,15 +157,8 @@ export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
               placeholder="enter variant id"
               size="m"
             />
-            {/* <div style={{ height: '10px' }} />
-             <Input
-              onChange={e => setTranscript(e.target.value.trim())}
-              value={transcript}
-              shape="brick"
-              placeholder="optional, transcript id"
-              size="m"
-            /> */}
-            {displayData()}
+            <div style={{ height: '0.7em' }} />
+            {showHistory ? displayHistory() : displayData()}
           </PopupCard>
         </Popover>
       </>
