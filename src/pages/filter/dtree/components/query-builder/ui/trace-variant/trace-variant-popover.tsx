@@ -61,7 +61,7 @@ export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
     }
 
     const historyButton = () => {
-      if (keys.length > 0) {
+      if (keys.length > 0 && !isLoading) {
         return (
           <Button
             onClick={() => {
