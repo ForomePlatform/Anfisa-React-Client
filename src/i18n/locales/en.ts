@@ -466,6 +466,10 @@ export const en = {
     traceVariant: {
       title: 'Trace a variant',
       go: 'Trace',
+      history: 'History',
+      results: 'Results',
+      stop: 'Stop',
+      close: 'Close',
     },
   },
   error: {

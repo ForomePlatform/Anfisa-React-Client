@@ -64,7 +64,7 @@ export const VariantsListTable = ({
             >
               <td
                 className={styles.variantsTable__cell}
-                dangerouslySetInnerHTML={{ __html: `${index + 1}: ${gene}` }}
+                dangerouslySetInnerHTML={{ __html: gene }}
               />
 
               <td
