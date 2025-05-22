@@ -24,7 +24,7 @@ export type PointToStepName = (p: number) => string | undefined
 
 export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
   ({ isOpen, anchorEl, onClose, traceStore }) => {
-    const { data, isLoading } = traceStore
+    const { data, isLoading, activeJobStatus } = traceStore
     const [variant, setVariant] = useState<string>('')
     const [isStopped, setStopped] = useState<boolean>(true)
     const [isHistoryShown, showHistory] = useState<boolean>(false)
@@ -112,10 +112,10 @@ export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
 
     const displayData = () => {
       if (isLoading) {
-        return (
-          <div className="flex">
-            <Loader size="xs" />
-          </div>
+        return activeJobStatus ? (
+          <div>{activeJobStatus}</div>
+        ) : (
+          <Loader size="xs" />
         )
       }
       if (!data || data[0].variant.split(' ')[0] !== variant.split(' ')[0]) {
