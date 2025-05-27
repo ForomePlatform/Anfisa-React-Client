@@ -23,6 +23,11 @@
     padding-left: 2ch;
     padding-top: 0.5em;
 
+    &__container {
+      max-height: 23rem;
+      overflow-y: auto;
+    }
+
     &_selected {
       background-color: theme("colors.blue.light");
     }

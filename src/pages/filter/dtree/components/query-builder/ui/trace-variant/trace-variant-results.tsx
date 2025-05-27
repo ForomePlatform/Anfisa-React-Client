@@ -35,7 +35,7 @@ export const TracesResultView = ({
   }
 
   return (
-    <div style={{ maxHeight: '25em', overflowY: 'auto' }}>
+    <div className={styles.traceVariant__results__container}>
       {traces.map((trace, idx) => (
         <div
           className={cn(

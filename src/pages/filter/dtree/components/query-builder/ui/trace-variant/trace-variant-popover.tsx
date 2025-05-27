@@ -92,7 +92,7 @@ export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
     const displayHistory = () => {
       return (
         <div onMouseUp={event => event.stopPropagation()}>
-          <MenuList>
+          <MenuList className={styles.traceVariant__results__container}>
             {keys.map(key => (
               <MenuListItem
                 label={key}
