@@ -3,13 +3,13 @@ import styles from './trace-variant.module.css'
 import { ReactElement, useState } from 'react'
 import cn from 'classnames'
 
+import { t } from '@i18n'
 import { Input } from '@ui/input'
 import {
   TDtreeTrace,
   TDtreeTraceResultData,
 } from '@service-providers/decision-trees/decision-trees.interface'
 import { PointToStepName } from './trace-variant-popover'
-import { t } from '@i18n'
 
 export interface TracesResultViewProps {
   data: TDtreeTraceResultData
