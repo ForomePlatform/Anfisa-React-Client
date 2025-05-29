@@ -470,6 +470,7 @@ export const en = {
       results: 'Results',
       stop: 'Stop',
       close: 'Close',
+      filteredOut: 'filtered out',
     },
   },
   error: {
