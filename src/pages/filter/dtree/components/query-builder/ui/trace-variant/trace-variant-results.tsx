@@ -70,6 +70,7 @@ export const TracesResultView = ({
     return children
   }
 
+  let countForKey = 1
   return (
     <>
       {showFilter && (
@@ -91,6 +92,7 @@ export const TracesResultView = ({
                 : styles.traceVariant__results_unselected,
             )}
             onClick={() => select(idx)}
+            key={`ret_${countForKey++}`}
           >
             {`${trace.status} at ${point2step(trace['point-no'])}`}
             {getFilteredTraces(trace.transcripts)}
