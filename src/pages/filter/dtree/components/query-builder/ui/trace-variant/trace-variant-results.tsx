@@ -60,7 +60,7 @@ export const TracesResultView = ({
         )
       }
     })
-    if (children.length === 0) {
+    if (children.length === 0 && filter.length > 0) {
       children.push(
         <div style={{ paddingLeft: '2ch', fontStyle: 'italic' }}>
           {t('dtree.traceVariant.filteredOut')}
