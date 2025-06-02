@@ -118,7 +118,7 @@ export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
           <Loader size="xs" />
         )
       }
-      if (!data || data[0].variant.split(' ')[0] !== variant.split(' ')[0]) {
+      if (!data || data[0].variant !== variant) {
         return null
       }
       return data[1] === 'Finished' ? (
