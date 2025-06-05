@@ -31,6 +31,10 @@ export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
     //const [transcript] = useState<string>('') // reserved for future use
     const transcript = ''
 
+    const dataReady: boolean = !!(
+      data && data[0].variant.trim() === variant.trim()
+    )
+
     const point2stepIdx: PointToStepIdx = p => {
       const idx = stepStore.steps.findIndex(
         step => step.returnPointIndex === p || step.conditionPointIndex === p,
@@ -118,18 +122,17 @@ export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
           <Loader size="xs" />
         )
       }
-      if (!data || data[0].variant !== variant) {
-        return null
+      if (data && dataReady) {
+        return data[1] === 'Finished' ? (
+          <TracesResultView
+            data={data[0]}
+            point2step={point2step.bind(this)}
+            selectStep={selectStep.bind(this)}
+          />
+        ) : (
+          <div style={{ color: 'red' }}>{`Error: ${data[0].error}`}</div>
+        )
       }
-      return data[1] === 'Finished' ? (
-        <TracesResultView
-          data={data[0]}
-          point2step={point2step.bind(this)}
-          selectStep={selectStep.bind(this)}
-        />
-      ) : (
-        <div style={{ color: 'red' }}>{`Error: ${data[0].error}`}</div>
-      )
     }
 
     return (
@@ -145,11 +148,12 @@ export const TraceVariantPopover: FC<ITraceVariantButtonProps> = observer(
             onClose={onClose}
             onApply={() => {
               setStopped(false)
-              setVariant(variant.trim())
-              traceStore.setQuery({ variant, transcript })
+              const v = variant.trim()
+              if (v !== variant) setVariant(v)
+              traceStore.setQuery({ variant: v, transcript })
               showHistory(false)
             }}
-            isApplyDisabled={variant.length < 7 || isLoading}
+            isApplyDisabled={variant.length < 7 || isLoading || dataReady}
             isLoading={false}
             cancelText={t('dtree.traceVariant.close')}
             applyText={t('dtree.traceVariant.go')}
