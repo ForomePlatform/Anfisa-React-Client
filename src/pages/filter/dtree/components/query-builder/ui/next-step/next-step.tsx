@@ -59,7 +59,7 @@ export const NextStep = observer(
             className={cn(
               styles.nextStep__treeView,
               'pr-3',
-              currentStep.isReturnedVariantsActive ? ' bg-blue-tertiary' : '',
+              currentStep.isReturnedVariantsActive ? ' bg-blue-medium' : '',
             )}
           >
             <NextStepRoute
@@ -74,7 +74,7 @@ export const NextStep = observer(
             className={cn(
               styles.nextStep__resultsView,
               'border-b border-l border-grey-light font-medium px-5 relative',
-              currentStep.isActive && ' bg-blue-tertiary',
+              currentStep.isActive && ' bg-blue-medium',
             )}
             onClick={event => setStepActive(event)}
           >

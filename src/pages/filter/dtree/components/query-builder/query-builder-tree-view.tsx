@@ -1,4 +1,4 @@
-import { ReactElement } from 'react'
+import { ReactElement, useEffect, useRef } from 'react'
 import cn from 'classnames'
 import { observer } from 'mobx-react-lite'
 
@@ -15,6 +15,15 @@ export const QueryBuilderTreeView = observer(
   ({ className }: IQueryBuilderTreeViewProps): ReactElement => {
     const { filteredSteps } = stepStore
 
+    const activeElement = useRef<HTMLDivElement>(null)
+    useEffect(() => {
+      activeElement?.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+      stepStore.scrollToStep(undefined)
+    })
+
     return (
       <div id="parent" className={cn('flex flex-col', className)}>
         {filteredSteps.map((element, index: number) => {
@@ -22,15 +31,25 @@ export const QueryBuilderTreeView = observer(
             ? JSON.stringify(element.groups) + index
             : index
 
-          return element.isFinalStep ? (
-            <FinalStep key={key} index={index} />
-          ) : (
-            <NextStep
-              key={key}
-              index={index}
-              changeIndicator={dtreeStore.resultsChangeIndicator}
-              isContentExpanded={dtreeStore.isResultsContentExpanded}
-            />
+          return (
+            <div
+              ref={
+                index === stepStore.scrollToStepIndex
+                  ? activeElement
+                  : undefined
+              }
+            >
+              {element.isFinalStep ? (
+                <FinalStep key={key} index={index} />
+              ) : (
+                <NextStep
+                  key={key}
+                  index={index}
+                  changeIndicator={dtreeStore.resultsChangeIndicator}
+                  isContentExpanded={dtreeStore.isResultsContentExpanded}
+                />
+              )}
+            </div>
           )
         })}
       </div>

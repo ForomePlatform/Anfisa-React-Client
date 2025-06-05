@@ -71,7 +71,10 @@ class OperationsProvider extends ServiceProviderBase {
           this._jobStatusReject = undefined
           this._jobStatusResolve = undefined
         } else if (!data[0]) {
-          setTimeout(() => this.getJobStatusAsync<T>(taskId), interval)
+          setTimeout(
+            () => this.getJobStatusAsync<T>(taskId, interval),
+            interval,
+          )
         } else {
           this._jobStatusResolve?.(data)
           this._jobStatusReject = undefined

@@ -11,12 +11,17 @@ import {
   DtreeSetPointKinds,
   IDtreeSetArguments,
 } from '@service-providers/decision-trees'
-import { PointCount } from '@service-providers/decision-trees/decision-trees.interface'
+import {
+  IDtreeTraceVariantArguments,
+  IDtreeTraceVariantData,
+  PointCount,
+} from '@service-providers/decision-trees/decision-trees.interface'
 import { showToast } from '@utils/notifications'
 import datasetStore from '../dataset/dataset'
 import { DtreeModifiedState } from '../filter-dtrees/filter-dtrees.store'
 import { DtreeSetAsyncStore } from './dtree-set.async.store'
 import { DtreeStatStore } from './dtree-stat.store'
+import { DtreeTraceAsyncStore } from './dtree-trace.async.store'
 import stepStore, { ActiveStepOptions } from './step.store'
 
 export const MIN_CODE_LENGTH = 13
@@ -47,6 +52,7 @@ interface IDtreeFilteredCounts {
 export class DtreeStore {
   readonly dtreeSet = new DtreeSetAsyncStore()
   readonly stat = new DtreeStatStore()
+  readonly traceStore = new DtreeTraceAsyncStore()
   private _dtreeModifiedState: DtreeModifiedState = DtreeModifiedState.NotDtree
   private _previousDtreeCode = ''
   private _viewType: ViewTypeDashboard = ViewTypeDashboard.List
@@ -306,6 +312,7 @@ export class DtreeStore {
   }
 
   private loadDtree(dtreeName: string): void {
+    this.traceStore.reset()
     this.fetchDtreeSetAsync({
       ds: datasetStore.datasetName,
       dtree: dtreeName,
@@ -320,6 +327,7 @@ export class DtreeStore {
   }
 
   private setDtreeModifiedState(state?: DtreeModifiedState): void {
+    this.traceStore.reset()
     if (state === undefined) {
       if (this._dtreeModifiedState === DtreeModifiedState.NotModified) {
         this._dtreeModifiedState = DtreeModifiedState.Modified
@@ -435,5 +443,12 @@ export class DtreeStore {
     if (this._dtreeModifiedState === DtreeModifiedState.NotModified) {
       this._dtreeModifiedState = DtreeModifiedState.Modified
     }
+  }
+
+  public getTraceVariantQuery(
+    query: IDtreeTraceVariantData,
+  ): IDtreeTraceVariantArguments {
+    const ds = datasetStore.datasetName
+    return { ...query, ds, code: this.dtreeCode }
   }
 }

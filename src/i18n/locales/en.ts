@@ -463,6 +463,15 @@ export const en = {
       loadDtree: 'Failed to load dtree "{dtreeName}"',
     },
     textEditor: 'Text editor',
+    traceVariant: {
+      title: 'Trace a variant',
+      go: 'Trace',
+      history: 'History',
+      results: 'Results',
+      stop: 'Stop',
+      close: 'Close',
+      filteredOut: 'filtered out',
+    },
   },
   error: {
     getBack: 'Back to home',

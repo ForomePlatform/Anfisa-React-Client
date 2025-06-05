@@ -36,6 +36,16 @@ class StepStore {
     return this._steps
   }
 
+  private _scrollToStepIndex: number | undefined
+
+  get scrollToStepIndex() {
+    return this._scrollToStepIndex
+  }
+
+  scrollToStep(stepIndex: number | undefined) {
+    this._scrollToStepIndex = stepIndex
+  }
+
   get filteredSteps(): IStepData[] {
     const searchValue = dtreeStore.algorithmFilterValue.toLowerCase()
 

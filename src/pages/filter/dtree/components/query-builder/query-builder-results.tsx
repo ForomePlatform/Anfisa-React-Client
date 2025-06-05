@@ -8,6 +8,7 @@ import stepStore from '@store/dtree/step.store'
 import { Button } from '@ui/button'
 import { DecisionTreesResultsDataCy } from '@data-testid'
 import { QueryBuilderResultsNumbers } from './query-builder-results-numbers'
+import { TraceVariant } from './ui/trace-variant/trace-variant'
 
 interface IQueryBuilderResultsProps {
   className?: string
@@ -55,13 +56,14 @@ export const QueryBuilderResults = observer(
           <QueryBuilderResultsNumbers className="mt-1" />
         </div>
         <div className="flex">
+          {(shouldShowReturnedVariants || hasStartVariants) && <TraceVariant />}
           {shouldShowReturnedVariants && (
             <Button
               dataTestId={DecisionTreesResultsDataCy.viewReturnedVariants}
               onClick={() => openTableModal(true)}
               text={t('dtree.viewReturnedVariants')}
               variant="secondary"
-              className="ml-auto min-h-32"
+              className="ml-5 min-h-32"
             />
           )}
 

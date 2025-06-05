@@ -1,0 +1,43 @@
+.trace-variant {
+  &__popover {
+    width: 342px;
+    margin-top: 12px;
+  }
+
+  &__button-icon {
+    &_arrow {
+      transition-property: transform;
+      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+      transition-duration: 150ms;
+      transform: rotate(-90deg);
+
+      &_opened {
+        transform: rotate(90deg);
+      }
+    }
+
+    color: theme("colors.blue.bright");
+  }
+
+  &__results {
+    padding-left: 2ch;
+    padding-top: 0.5em;
+
+    &__container {
+      max-height: 23rem;
+      overflow-y: auto;
+    }
+
+    &_selected {
+      background-color: theme("colors.blue.light");
+    }
+
+    &_unselected {
+      &:hover {
+        color: theme("colors.blue.hover");
+      }
+
+      cursor: pointer;
+    }
+  }
+}
